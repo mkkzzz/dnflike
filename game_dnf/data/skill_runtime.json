@@ -27,10 +27,18 @@
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
    "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
+   "skillfx_epidemicrasaareaappear1_a9cc3101": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear1.ani",
+   "skillfx_epidemicrasaareaappear2_c53c1d39": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear2.ani",
+   "skillfx_epidemicrasaareadisappear_d8f553de": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareadisappear.ani",
+   "skillfx_epidemicrasaareastay_04c48edd": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareastay.ani",
    "skillfx_exp1_99b066d8": "character/swordman/effect/animation/kalla/exp1.ani",
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
+   "skillfx_grab_3189b870": "passiveobject/character/swordman/animation/epidemicrasa/grab.ani",
+   "skillfx_grab_ldodge_5188bbe5": "passiveobject/character/swordman/animation/epidemicrasa/grab_ldodge.ani",
+   "skillfx_grab_stay_741ff61f": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay.ani",
+   "skillfx_grab_stay_ldodge_19279fcb": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay_ldodge.ani",
    "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
    "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
@@ -49,6 +57,8 @@
    "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
    "skillfx_outragebreak_stone_part_1_18a07756": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_1.ani",
    "skillfx_outragebreak_stone_part_2_376e63de": "character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_2.ani",
+   "skillfx_rasa_be541dd4": "passiveobject/character/swordman/animation/epidemicrasa/rasa.ani",
+   "skillfx_rasa_ldodge_91e196e9": "passiveobject/character/swordman/animation/epidemicrasa/rasa_ldodge.ani",
    "skillfx_saya2_078bfa10": "passiveobject/character/swordman/animation/saya2.ani",
    "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
    "skillfx_sayaareaappear1_d0189262": "passiveobject/character/swordman/animation/sayaareaappear1.ani",
@@ -59,6 +69,9 @@
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
    "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
+   "skillfx_startup_ldodge_0030e5f5": "passiveobject/character/swordman/animation/epidemicrasa/startup_ldodge.ani",
+   "skillfx_stay_633ceea4": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
+   "skillfx_stay_ldodge_e8328c3d": "passiveobject/character/swordman/animation/epidemicrasa/stay_ldodge.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
@@ -70,6 +83,7 @@
    "passiveobject/character/swordman/bloodyrave.obj": "passiveobject/character/swordman/bloodyrave.obj",
    "passiveobject/character/swordman/bremen.obj": "passiveobject/character/swordman/bremen.obj",
    "passiveobject/character/swordman/epidemicrasa.obj": "passiveobject/character/swordman/epidemicrasa.obj",
+   "passiveobject/character/swordman/epidemicrasacreater.obj": "passiveobject/character/swordman/epidemicrasacreater.obj",
    "passiveobject/character/swordman/firewavebig.obj": "passiveobject/character/swordman/firewavebig.obj",
    "passiveobject/character/swordman/firewavebigsub.obj": "passiveobject/character/swordman/firewavebigsub.obj",
    "passiveobject/character/swordman/grabblastblood.obj": "passiveobject/character/swordman/grabblastblood.obj",
@@ -1337,20 +1351,80 @@
    ]
   },
   "epidemicrasa": {
+   "fidelity_pending": [
+    "attachment_abnormal_ticks",
+    "monster_rank_factors",
+    "attack_speed_quantization",
+    "attachment_offsets",
+    "area_draw_order",
+    "object_random_stream"
+   ],
    "name": "瘟疫之罗刹",
+   "native_charge_ani": "throw1",
+   "native_state": "ghost_cast",
    "skill": "skill/swordman/epidemicrasa.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "throw2",
      "atk": "",
+     "fx": [],
      "hits": [
       {
-       "at": 360,
-       "effects": [],
-       "life_ms": 12000,
-       "object": "passiveobject/character/swordman/epidemicrasa.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "native_controller": {
+        "appear_fx": [
+         "skillfx_epidemicrasaareaappear1_a9cc3101",
+         "skillfx_epidemicrasaareaappear2_c53c1d39"
+        ],
+        "appear_ms": 1040.0,
+        "area_scale": 1.0729613733905579,
+        "child": {
+         "native_controller": {
+          "attachment_duration_col": 19,
+          "attachment_limit": 3,
+          "attack_speed_col": 2,
+          "defense_col": 3,
+          "duration_col": 1,
+          "grab_fx": "skillfx_grab_3189b870",
+          "grab_ms": 900.0,
+          "grab_overlay": "skillfx_grab_ldodge_5188bbe5",
+          "grab_stay_fx": "skillfx_grab_stay_741ff61f",
+          "grab_stay_overlay": "skillfx_grab_stay_ldodge_19279fcb",
+          "kind": "rasa_child",
+          "recovery_col": 4,
+          "startup_ms": 1200.0,
+          "startup_overlay": "skillfx_startup_ldodge_0030e5f5",
+          "stay_ani": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
+          "stay_fx": "skillfx_stay_633ceea4",
+          "stay_overlay": "skillfx_stay_ldodge_e8328c3d"
+         },
+         "object": "passiveobject/character/swordman/epidemicrasa.obj",
+         "percent": 0
+        },
+        "child_count": 4,
+        "depth_scale": 0.29,
+        "disappear_fx": "skillfx_epidemicrasaareadisappear_d8f553de",
+        "disappear_ms": 320.0,
+        "duration_col": 0,
+        "ghost_base_fx": "skillfx_rasa_be541dd4",
+        "ghost_fx": "skillfx_rasa_ldodge_91e196e9",
+        "kind": "rasa_field",
+        "pulse_ms": 1000,
+        "radius": 233,
+        "stay_fx": "skillfx_epidemicrasaareastay_04c48edd"
+       },
+       "object": "passiveobject/character/swordman/epidemicrasacreater.obj",
+       "offset": [
+        122,
+        0,
+        0
+       ],
+       "percent": 0
+      }
+     ],
+     "sounds": [
+      {
+       "at": 0,
+       "key": "SM_RASA"
       }
      ]
     }

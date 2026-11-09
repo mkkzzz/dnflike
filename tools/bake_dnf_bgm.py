@@ -2,7 +2,7 @@
 
 来源：原版库 catalog 的 kind='audio' 记录。输出：
   game_dnf/assets_local/audio/bgm/*.ogg   曲目原字节
-  game_dnf/data/bgm.json                  场景/界面/环境音映射（新场景只需在此加一行）
+  game_dnf/data/bgm.json                  场景/界面/环境音映射，新副本从原 MAP 与 audio.xml 解析
 
 用法：python tools/bake_dnf_bgm.py [--library DIR]
 """
@@ -13,6 +13,7 @@ import hashlib
 import json
 import sqlite3
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -73,6 +74,45 @@ AMBIENCE = {
 }
 
 
+def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str]) -> dict[str, str]:
+    dungeon = export['dungeon']
+    placements = {p['id']: p['map'] for p in dungeon['placements']}
+    tracks = {'normal': set(), 'boss': set()}
+    for room in rooms:
+        map_path = placements[room['placement']]
+        keys = dungeon['rooms'][map_path].get('sound', [])
+        candidates = {music[key] for key in keys if key in music}
+        if len(candidates) != 1:
+            raise ValueError(f'{map_path}: expected one audio.xml music cue, found {keys}')
+        tracks['boss' if room.get('boss') else 'normal'].update(candidates)
+    for role, candidates in tracks.items():
+        if len(candidates) != 1:
+            raise ValueError(f'{dungeon["path"]}: expected one {role} track, found {sorted(candidates)}')
+    return {role: next(iter(candidates)) for role, candidates in tracks.items()}
+
+
+def dungeon_music_sources(cat, library: Path) -> dict:
+    routes = json.loads((GAME / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
+    missing = sorted(routes.keys() - DUNGEONS.keys())
+    if not missing:
+        return DUNGEONS
+    row = cat.execute("select local_path, sha256 from assets where lower(original_path)='audio.xml'").fetchone()
+    if row is None:
+        raise ValueError('Original audio.xml required to resolve dungeon music')
+    raw = (library / row['local_path']).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != row['sha256']:
+        raise ValueError('Original audio.xml hash mismatch')
+    music = {node.attrib['ID']: node.attrib['FILE'].replace('\\', '/').lower()
+             for node in ET.fromstring(raw).findall('MUSIC')}
+    result = DUNGEONS.copy()
+    for key in missing:
+        route = routes[key]
+        export_path = route['map_export'].removeprefix('res://')
+        export = json.loads((GAME / export_path).read_text(encoding='utf-8'))
+        result[key] = source_dungeon_tracks(export, route['rooms'], music)
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path, default=None)
@@ -102,9 +142,10 @@ def main() -> int:
         return key
 
     try:
+        dungeon_sources = dungeon_music_sources(cat, lib.path)
         screens = {name: take(source) for name, source in SCREENS.items()}
         scenes = {name: take(source) for name, source in TOWNS.items()}
-        dungeons = {name: {slot: take(source) for slot, source in slots.items()} for name, slots in DUNGEONS.items()}
+        dungeons = {name: {slot: take(source) for slot, source in slots.items()} for name, slots in dungeon_sources.items()}
         ambience = {name: [take(source) for source in sources] for name, sources in AMBIENCE.items()}
     finally:
         cat.close()

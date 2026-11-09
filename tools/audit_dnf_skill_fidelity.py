@@ -131,7 +131,7 @@ def native_cast_families(runtime, combat, records):
             skill = runtime["skills"].get(key, {})
             move = effective_base(key, runtime, combat) if key else {}
             stage = next(iter(move.get("stages", [move])), {})
-            emissions = [{"path": hit["object"], "at": hit.get("at")}
+            emissions = [{"path": hit["object"], "at": hit.get("at", 0)}
                          for hit in stage.get("hits", []) if "object" in hit]
             expected_emission = {"path": SWORDMAN_OBJECT + object_name + ".obj", "at": at}
             actual = {"state": move.get("native_state", ""), "charge_ani": move.get("native_charge_ani", ""),

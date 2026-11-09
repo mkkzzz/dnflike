@@ -133,7 +133,7 @@ func _build_player() -> void:
 	player = {"hp_max":float(base.get("hp_max",0)),"mp_max":float(base.get("mp_max",0)),
 		"jump_power":float(base.get("jump_power",0)),"hit_recovery":float(base.get("hit_recovery",500)),
 		"move_speed":float(base.get("move_speed",850)),"weapon_wav":chr.get("weapon_wav",[]),
-		"weapon_hit_info":chr.get("weapon_hit_info",[]),
+		"weapon_hit_info":chr.get("weapon_hit_info",[]),"width":chr.get("width",[0,0]),
 		"motions":{"damage1":"damage1","damage2":"damage2","down":"down","overturn":"overturn"}}
 	if player["hp_max"] <= 0:problems.append("CHR initial HP missing")
 
@@ -328,10 +328,21 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 				if controller.get("kind","") == "icewave_chain":
 					controller["count"] = int(row[int(controller["count_col"])])
 					controller["frame2_at_ms"] = float(row[int(controller["frame2_at_col"])])
-				elif controller.get("kind","") in ["khazan_field","bremen_field","saya_field"]:
+				elif controller.get("kind","") in ["khazan_field","bremen_field","saya_field","rasa_field","rasa_child"]:
 					var column := int(controller["duration_col"])
 					if row.size() <= column or float(row[column]) <= 0.0:continue
 					hit["life_ms"] = float(row[column])
+					if controller["kind"] == "rasa_field":
+						var children: Array = _build_stage({"hits":[controller["child"]]},skill)["hits"]
+						if children.is_empty():continue
+						controller["child"] = children[0]
+					elif controller["kind"] == "rasa_child":
+						if row.size() <= int(controller["attachment_duration_col"]):continue
+						controller["attachment_ms"] = float(row[int(controller["attachment_duration_col"])])
+						controller["attack_speed"] = float(row[int(controller["attack_speed_col"])])*0.001
+						controller["defense"] = float(row[int(controller["defense_col"])])
+						controller["recovery"] = float(row[int(controller["recovery_col"])])
+						controller["stay_timeline"] = timeline(String(controller["stay_ani"]))
 				elif controller.get("kind","") == "firewave_chain":
 					# Resolve the successor's own ATK and fixed column, not a copy
 					# of the travelling-front reaction/damage definition.
@@ -428,7 +439,8 @@ func _action_ani(act_path: String) -> String:
 
 func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	var path := String(spec["mob"])
-	var mob: Dictionary = db.record(path).get("decoded",{})
+	var record: Dictionary = db.record(path)
+	var mob: Dictionary = record.get("decoded",{})
 	if mob.is_empty():
 		problems.append("MOB not found: "+path)
 		return {}
@@ -475,9 +487,13 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
 		"motions":motions, "ani_paths":ani_paths}
+	if record.has("native_attack_selection"):m["native_attack_selection"] = record["native_attack_selection"]
 	var attack_infos: Array = mob.get("attack_infos", [])
 	var cooltimes: Array = mob.get("cooltimes", mob.get("cooltime", []))
 	var moves: Array = []
+	var emissions := {}
+	for emission: Dictionary in record.get("native_attack_emissions", []):
+		emissions[int(emission["slot"])] = emission
 	# Newmonsters: [attack action] aligns by index with [attack info] and [cooltime].
 	var attack_actions: Array = mob.get("attack_actions", [])
 	for index in attack_actions.size():
@@ -496,6 +512,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 				move["atk_path"] = atk_path
 		if index < cooltimes.size():
 			move["cool_ms"] = float(cooltimes[index])
+		if emissions.has(index):_attach_attack_emission(move,emissions[index],path)
 		moves.append(move)
 	# Some newmonsters index locomotion as an attack action rather than a dedicated
 	# [move action] (chainbiker2 slots 3-5 are move/move_up/move_down).
@@ -517,6 +534,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 					move["atk"] = atk(atk_path)
 					move["atk_path"] = atk_path
 			if index < cooltimes.size():move["cool_ms"] = float(cooltimes[index])
+			if emissions.has(index):_attach_attack_emission(move,emissions[index],path)
 			moves.append(move)
 	if not moves.is_empty():m["moves"] = moves
 	var first_attack: Dictionary = moves[0] if not moves.is_empty() else {}
@@ -571,6 +589,24 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			m["atk"]=template["atk"].duplicate(true)
 		else:problems.append("monster attack template unavailable: "+key)
 	return m
+
+func _attach_attack_emission(move: Dictionary, emission: Dictionary, mob_path: String) -> void:
+	var frame := int(emission["frame"])
+	var motion: Dictionary = db.record(String(emission["ptl_path"])).get("decoded",{})
+	var obj := object(String(emission["object_path"]))
+	var timeline: Array = move["timeline"]
+	if frame < 0 or frame >= timeline.size() or obj.is_empty() or motion.is_empty():
+		problems.append("attack emission dependencies missing for %s slot %s" % [mob_path,emission["slot"]])
+		return
+	var offset: Array = emission["offset"]
+	move["emission"] = {
+		"at":float(timeline[frame]["start_ms"]),
+		"sound":String(emission["sound"]),
+		"hit":{"object":obj["path"],"atk":obj["atk"],"atk_path":obj["atk_path"],
+			"percent":100.0+float(obj["atk"].get("damage_bonus",0)),"lift":-1.0,
+			"offset":Vector3(offset[0],offset[1],offset[2]),"life_ms":float(motion["life_time"]),
+			"ptl_motion":motion},
+	}
 
 ## 一招能覆盖的水平区间（相对锚点，含朝向翻转前的正值侧）。
 func reach_of(tl: Array) -> Array:

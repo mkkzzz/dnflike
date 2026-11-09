@@ -27,8 +27,57 @@ from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 4
+COMPILER_VERSION = 5
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
+
+# These bindings come from native state handlers, outside the MOB field tree.
+# Keep each source payload pinned before admitting an engine-derived binding.
+NATIVE_ATTACK_EMISSIONS = {
+    'monster/vehicle/catapult.mob': {
+        'mob_id': 270,
+        'slots': [
+            {'slot': 0, 'frame': 11, 'object_int_index': 0, 'object_id': 30034,
+             'ptl_path': 'monster/vehicle/particle/cannonballangle.ptl', 'offset': [70, 0, 50],
+             'sound': 'DRGCANNON_SHOOT'},
+            {'slot': 1, 'frame': 11, 'object_int_index': 0, 'object_id': 30034,
+             'ptl_path': 'monster/vehicle/particle/cannonballdirect.ptl', 'offset': [70, 0, 50],
+             'sound': 'DRGCANNON_SHOOT'},
+        ],
+        'sha256': {
+            'monster/vehicle/catapult.mob': 'fa9ca03ece94f84a37ffe3d937f63877a3ffb785a6f1a85b02e6b34e37db11ff',
+            'monster/vehicle/catapultani/fire.ani': 'c9f71d55421bae61c900012a2b89fb22b6f4d475f3e03ad7dd13d918d5e4990d',
+            'monster/vehicle/attackinfo/ctfire.atk': '754ed0ad14b0704d7b5926594e39faac697f6cbc6ff4dd96a65b87b590b9236e',
+            'monster/vehicle/particle/cannonballangle.ptl': 'b864ddbb1b955cebebe0c758bd11877d0471fa51b10cc557bfa9aa3b874d33ea',
+            'monster/vehicle/particle/cannonballdirect.ptl': '13b4bdf73a5b01db151839a9dbb9f1a87ccc911915fa810859c3c2dfeb5f3316',
+            'passiveobject/monster/vehicle/cannonball.obj': '844fc4cbdf1c8bb380f01930d822379ae0be1a89da273b532766e83e9a015c70',
+            'passiveobject/monster/vehicle/ani/cannonball.ani': '3a1c4c5b786e50c227b2cd39fe6a3746f50b5c8ec194b6b593680b3dbab23056',
+            'passiveobject/monster/vehicle/attackinfo/cannonball.atk': '2dfec2eec5602afc3c44f0cd85095ed8630f04c7ff83c049bba6ca166faf3b2b',
+        },
+        'source': {
+            'engine_sha256': '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84',
+            'frame_latch': '0xDBA080',
+            'object_id_binding': '0xDBA557',
+            'slot_dispatch': '0x26A0252',
+            'relative_spawn': '0x86DDB0',
+            'motion_attachment': '0xE5ACA9..0xE5ACBA',
+            'release_sound': '0xDBA10C',
+        },
+        'selection_source': {
+            'initial_ms': 3000,
+            'down_gate_percent': 0,
+            'hostile_team': '0x895031',
+            'normal_ai_call': '0x8782ED',
+            'attempt_deadline': '0x8837DE..0x88384F',
+            'attack_rows': '0x12A528E..0x12A547B',
+            'target_area': '0x877CE0',
+            'target_affiliation': '0x878427..0x87849D',
+            'slot_probabilities': '0x8784D0..0x878593',
+            'down_gate_default': '0x87EE69..0x87EE93',
+            'no_target_probability': '0x878710..0x87875A',
+            'uniform_candidate': '0x8838FB..0x88394E',
+        },
+    },
+}
 
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
 #   int|float|str = first value; list = all values; enum = canonical enum tag(s); flag = presence.
@@ -495,7 +544,94 @@ def referenced_breakable_objects() -> list[str]:
     return sorted(found)
 
 
-def compile_scope(lib: Library) -> dict:
+def compile_native_attack_emissions(mob: dict, mob_id: int, spec: dict, passive_index: dict, add) -> list[dict]:
+    """Resolve pinned OBJ/ANI/ATK/PTL dependencies for a native MOB state handler."""
+    path = mob['id']
+
+    def checked(record: dict | None, dependency: str) -> dict:
+        sha = spec['sha256'].get(dependency)
+        if not sha or not record or record['source']['sha256'] != sha:
+            raise ValueError(f'Native attack emission for {path} needs exact source {dependency}')
+        return record
+
+    checked(mob, path)
+    if mob_id != spec['mob_id']:
+        raise ValueError(f'Native attack emission for {path} has mismatched MOB ID')
+    integers = mob['decoded'].get('int_data', [])
+    attack_motions = mob['decoded'].get('attack_motions', [])
+    attack_infos = mob['decoded'].get('attack_infos', [])
+    rows = {}
+    for binding in spec['slots']:
+        slot, frame = binding['slot'], binding['frame']
+        if not 0 <= slot < len(attack_motions) or slot in rows:
+            raise ValueError(f'Native attack emission for {path} has invalid or duplicate attack slot {slot}')
+        index, object_id = binding['object_int_index'], binding['object_id']
+        if not 0 <= index < len(integers) or integers[index] != object_id:
+            raise ValueError(f'Native attack emission for {path} has mismatched MOB int data in slot {slot}')
+        relative_obj = passive_index.get(object_id)
+        if not relative_obj:
+            raise ValueError(f'Native attack emission for {path} cannot resolve OBJ{object_id} in the original LST')
+        obj_path = ('passiveobject/' + relative_obj).lower()
+        obj = checked(add(obj_path, 'obj', path), obj_path)['decoded']
+        motions, attacks = obj.get('basic_motion', []), obj.get('attack_infos', [])
+        if len(motions) != 1 or len(attacks) != 1:
+            raise ValueError(f'Native attack emission for {path} needs a single OBJ basic ANI and ATK')
+        projectile_ani = checked(add(motions[0], 'ani', obj_path), motions[0])
+        if not any(row['attack_boxes'] for row in projectile_ani['decoded']['timeline']):
+            raise ValueError(f'Native attack emission for {path} has no projectile attack boxes')
+        checked(add(attacks[0], 'atk', obj_path), attacks[0])
+        ani_path = attack_motions[slot]
+        ani = checked(add(ani_path, 'ani', path), ani_path)
+        if not any(row['frame'] == frame for row in ani['decoded']['timeline']):
+            raise ValueError(f'Native attack emission for {path} has no frame {frame} in slot {slot}')
+        if 'selection_source' in spec:
+            if slot >= len(attack_infos) or not attack_infos[slot]:
+                raise ValueError(f'Native attack selection for {path} needs the slot {slot} ATK')
+            slot_atk = attack_infos[slot]
+            atk = checked(add(slot_atk, 'atk', path), slot_atk)['decoded']
+            teams = tuple(atk.get(key, 0) for key in ('attack_enemy', 'attack_friend', 'attack_myself'))
+            if teams != (1, 0, 0):
+                raise ValueError(f'Native attack selection for {path} needs hostile-only targeting in slot {slot}')
+        ptl_path = binding['ptl_path']
+        ptl = checked(add(ptl_path, 'ptl', path), ptl_path)
+        if not ptl['decoded'] or ptl['unsupported'] or ptl['diagnostics']:
+            raise ValueError(f'Native attack emission for {path} has uncompiled PTL {ptl_path}')
+        rows[slot] = {'slot': slot, 'frame': frame, 'object_id': object_id, 'object_path': obj_path,
+                      'ptl_path': ptl_path, 'offset': binding['offset'], 'sound': binding['sound']}
+    return [rows[slot] for slot in sorted(rows)]
+
+
+def compile_native_attack_selection(mob: dict, emissions: list[dict], source: dict) -> dict:
+    """Compile the classic hostile slot poll for ordinary PvE targets."""
+    path = mob['id']
+    decoded = mob['decoded']
+    attack_kind = decoded.get('attack_kind', [])
+    delay = decoded.get('attack_delay', 0)
+    # The native selector uses float32(delay * 0.2) and truncates. At the
+    # supported MOB delay range below the result is exactly delay // 5.
+    if len(attack_kind) % 12 or type(delay) is not int or not 5 <= delay <= 1000000:
+        raise ValueError(f'Native attack selection for {path} has invalid row size or delay')
+    if any(field['tag'] == '[keep distance]' for field in mob['raw']):
+        raise ValueError(f'Native attack selection for {path} needs the original keep-distance offset')
+    slots = []
+    for offset in range(0, len(attack_kind), 12):
+        standing, no_target, other, enabled, *area = attack_kind[offset:offset + 12]
+        if enabled not in (0, 1) or any(type(value) is not int or value < 0 for value in area):
+            raise ValueError(f'Native attack selection for {path} has invalid area or eligibility flag')
+        if not enabled:
+            continue
+        if other != 0 or not all(0 <= chance <= 100 and int(chance) == chance for chance in (standing, no_target)):
+            raise ValueError(f'Native attack selection for {path} uses unverified probability modes')
+        slots.append({'slot': offset // 12, 'standing_percent': int(standing),
+                      'no_target_percent': int(no_target), 'area': area})
+    if {row['slot'] for row in slots} != {row['slot'] for row in emissions}:
+        raise ValueError(f'Native attack selection for {path} disagrees with the emitted attack slots')
+    return {'initial_ms': source['initial_ms'], 'down_gate_percent': source['down_gate_percent'],
+            'delay_ms': delay, 'delay_spread_ms': delay // 5,
+            'slots': slots, 'source': source}
+
+
+def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
 
@@ -566,7 +702,9 @@ def compile_scope(lib: Library) -> dict:
     object_index: dict[str, str] = {}
     # 编译范围：哥布林家族 + 早期手写四只 + **副本实际引用到的全部 mob**。
     # 只认硬编码范围会让天空之城/桑德兰那批怪在内容包里查不到，运行时整只怪被跳过。
-    needed = referenced_mob_paths()
+    extra = {path.lower() for path in extra_mob_paths}
+    needed = referenced_mob_paths() | extra
+    passive_objects = lib.listing('passiveobject/passiveobject.lst')
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
         if not (p.startswith('monster/goblin/') or p in {
@@ -613,12 +751,24 @@ def compile_scope(lib: Library) -> dict:
             relative = resolve(p, name)
             add(relative if lib.exists(relative) else name.replace('\\', '/').lower(), 'ptl', p)
         if throw.get('passive_object_index') is not None:
-            obj_rel = lib.listing('passiveobject/passiveobject.lst').get(int(throw['passive_object_index']))
+            obj_rel = passive_objects.get(int(throw['passive_object_index']))
             if obj_rel:
                 object_paths.append(('passiveobject/' + obj_rel).lower())
                 object_index[str(throw['passive_object_index'])] = object_paths[-1]
             else:
                 missing.append({'id': str(throw['passive_object_index']), 'kind': 'obj_index', 'referenced_by': p})
+        if p in NATIVE_ATTACK_EMISSIONS:
+            spec = NATIVE_ATTACK_EMISSIONS[p]
+            emissions = compile_native_attack_emissions(mob, index, spec, passive_objects, add)
+            mob['native_attack_emissions'] = emissions
+            mob['native_attack_emission_source'] = spec['source']
+            if 'selection_source' in spec:
+                mob['native_attack_selection'] = compile_native_attack_selection(mob, emissions, spec['selection_source'])
+            for emission in emissions:
+                object_index[str(emission['object_id'])] = emission['object_path']
+    unresolved_mobs = extra - set(monster_index.values())
+    if unresolved_mobs:
+        raise ValueError('Extra MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))
     for p in object_paths:
         obj = add(p, 'obj', 'scope')
         if not obj:
@@ -685,10 +835,10 @@ def coverage(lib: Library, handled: dict) -> dict:
     return report
 
 
-def run(library: Path | None, output: Path) -> dict:
+def run(library: Path | None, output: Path, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     lib = open_library(library)
     try:
-        scope = compile_scope(lib)
+        scope = compile_scope(lib, extra_mob_paths=extra_mob_paths)
         handled = json.loads(HANDLED_FILE.read_text(encoding='utf-8')) if HANDLED_FILE.is_file() else {}
         cov = coverage(lib, handled)
         compiler_sources = [Path(__file__), ROOT / 'tools/dnf_pvf.py', ROOT / 'tools/dnf_particle_fields.py']
@@ -720,8 +870,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--library', type=Path, help='Full extraction library; defaults to the shared cache')
     parser.add_argument('--output', type=Path, default=OUT)
+    parser.add_argument('--extra-mob', action='append', default=[], help='Include an original MOB path in a scratch output')
     args = parser.parse_args()
-    summary = run(args.library, args.output.resolve())
+    output = args.output.resolve()
+    if args.extra_mob and output == OUT.resolve():
+        parser.error('--extra-mob requires a separate --output directory')
+    summary = run(args.library, output, extra_mob_paths=tuple(args.extra_mob))
     print(json.dumps(summary, ensure_ascii=True, indent=1))
 
 

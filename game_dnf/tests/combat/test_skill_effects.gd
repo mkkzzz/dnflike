@@ -55,6 +55,7 @@ func run() -> void:
 	check_khazan(game,session)
 	check_saya(game,session)
 	check_bremen_freeze(game,session)
+	check_rasa(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
@@ -364,3 +365,116 @@ func check_bremen_freeze(game, session) -> void:
 		game.rng.reseed(seed_value)
 		game.step_objects(750.0)
 		check(game.hit_count==3 and not target.effects.active.has("freeze"),label+" the same roll fails again after leaving Bremen")
+
+func check_rasa(game, session) -> void:
+	game.restart()
+	game.monsters.clear()
+	game.numeric_player = Actor.new()
+	game.numeric_player.configure(session.stats())
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.skill_levels = {"epidemicrasa":1}
+	game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+	game.player["mp"] = game.numeric_player.values["mp_max"]
+	var origin := Vector2(400,250)
+	var center := origin+Vector2(122,0)
+	game.player["pos"] = origin
+	game.player["facing"] = 1
+	var target: Dictionary = game.spawn_enemy(center+Vector2(233,0))
+	var lower: Dictionary = game.spawn_enemy(center-Vector2(70,0))
+	var outside: Dictionary = game.spawn_enemy(center-Vector2(234,0))
+	target["pos"] = center+Vector2(233,0)
+	outside["pos"] = center-Vector2(234,0)
+	var actor = target["numeric"]
+	actor.configure({"numbers":actor.base.merged({"hp_max":5000,"physical_defense":5000,"hit_recovery":600},true)})
+	actor.set_runtime_modifiers([{"source":"fixture","stat":"hit_recovery","op":"add","value":5}])
+	check(actor.add_effect("bremen_debuff",1),"Rasa fixture has an independent Bremen effect")
+	target["hp"] = 5000.0
+	outside["hp"] = 6000.0
+	var roll = DetRng.new()
+	var seed_value := -1
+	for seed_candidate: int in range(20000):
+		roll.reseed(seed_candidate)
+		var close := 0
+		for i in range(4):
+			roll.range_int(0,1)
+			roll.range_int(0,1)
+			var x: int = roll.range_int(0,63)
+			var y: int = roll.range_int(0,31)
+			if x <= 12 and y <= 12:close += 1
+		if close >= 3:
+			seed_value = seed_candidate
+			break
+	check(seed_value>=0,"Rasa seed gives three child contact fixtures")
+	game.bus.clear_history()
+	check(game.start_action("epidemicrasa"),"Rasa starts through the learned source move")
+	game.step_action(249,Vector2.ZERO)
+	check(game.player_ani()[0]=="throw1" and game.objects.is_empty(),"Rasa shares the state 13 charge and creates no pre-release object")
+	game.step_action(1,Vector2.ZERO)
+	check(game.objects.size()==1 and game.player_ani()[0]=="throw2","Rasa release creates only one creator and enters Throw2")
+	if game.objects.size()!=1:return
+	var creator: Dictionary = game.objects[0]
+	var creator_id := int(creator["id"])
+	check(creator["hit"]["object"].ends_with("/epidemicrasacreater.obj") and creator["pos"]==center and creator["life_ms"]==26000.0 and creator["exit_at_ms"]==25680.0,"Rasa uses original creator, offset, level lifespan and exit boundary")
+	var voices: Array = game.bus.events_of("combat.cue").filter(func(event: Dictionary):return event.get("key","")=="SM_RASA")
+	check(voices.size()==1,"Rasa release emits its own original voice once")
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:entry:0"%creator_id) and game.view.object_views.has("%s:entry:1"%creator_id) and game.view.object_views.has("%s:ghost"%creator_id),"Rasa creator draws both entrance rings and the ghost overlay")
+	game.step_objects(999)
+	check(game.objects.size()==1 and game.hit_count==0,"Rasa waits until the 1000ms selection threshold without fake direct damage")
+	game.rng.reseed(seed_value)
+	game.step_objects(1)
+	var children: Array = game.objects.slice(1)
+	check(children.size()==4,"Rasa pulse creates the four original child objects")
+	if children.size()!=4:return
+	var first_child_id := int(children[0]["id"])
+	for child: Dictionary in children:
+		var offset := Vector2(child["pos"])-Vector2(target["pos"])
+		check(child["hit"]["object"].ends_with("/epidemicrasa.obj") and child["life_ms"]==13000.0 and absf(offset.x)<=63.0 and absf(offset.y)<=31.0,"each child uses its own original object and spawn rectangle around highest eligible HP")
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:startup"%first_child_id) and game.view.object_views.has("%s:startup:overlay"%first_child_id),"Rasa child uses both original startup layers")
+	game.step_objects(40)
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:stay"%creator_id),"Rasa creator changes to stay at 1040ms")
+	game.step_objects(1159)
+	check(game.rasa_attachment_count(int(target["id"]))==0,"Rasa children do not attach during startup")
+	game.step_objects(1)
+	check(game.rasa_attachment_count(int(target["id"]))==3 and game.rasa_attachment_count(int(lower["id"]))==0,"real stay attack boxes attach up to three to the selected target")
+	check(actor.values["physical_defense"]==1973.0 and actor.values["hit_recovery"]==545.0 and actor.effects.active.has("bremen_debuff"),"Rasa deducts source equipment defense and hit recovery alongside other modifiers")
+	check(is_equal_approx(float(actor.values["attack_speed"]),0.979),"three rank-one Rasa attachments add three source 7-per-mille attack slow modifiers")
+	target["state"] = "attack"
+	target["clock"] = 0.0
+	game.update_enemy(target,100.0)
+	check(is_equal_approx(float(target["clock"]),97.9),"the slowed original attack animation advances on the monster attack clock")
+	target["state"] = "idle"
+	var attached: Array = children.filter(func(child: Dictionary):return child.has("rasa_target_id"))
+	if attached.is_empty():return
+	var attached_id := int(attached[0]["id"])
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:grab"%attached_id) and game.view.object_views.has("%s:grab:overlay"%attached_id),"Rasa actual contact enters the two-layer grab motion")
+	target["pos"] = center+Vector2(300,0)
+	lower["hp"] = 0.0
+	game.step_objects(900)
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:grab_stay"%attached_id) and Vector2(attached[0]["pos"]).x==Vector2(target["pos"]).x,"Rasa attachment follows the enemy outside the field and enters grab-stay")
+	game.step_objects(12099)
+	check(game.rasa_attachment_count(int(target["id"]))==3,"Rasa attachment survives until its sampled final millisecond")
+	game.step_objects(1)
+	check(game.rasa_attachment_count(int(target["id"]))==0 and actor.values["physical_defense"]==5000 and actor.values["hit_recovery"]==605 and actor.effects.active.has("bremen_debuff"),"Rasa expiration removes only its own modifiers")
+	check(is_equal_approx(float(actor.values["attack_speed"]),1.0),"Rasa expiration restores the unmodified attack clock rate")
+	game.step_objects(float(creator["exit_at_ms"])-float(creator["clock"]))
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%s:exit"%creator_id),"Rasa creator uses the original exit ring at 25680ms")
+	game.step_objects(320)
+	check(game.objects.is_empty(),"Rasa removes the creator at 26000ms")
+	game.step_action(450,Vector2.ZERO)
+	game.player["cooldowns"].erase("epidemicrasa")
+	target["pos"] = center+Vector2(233,0)
+	check(game.start_action("epidemicrasa"),"Rasa death fixture starts a new cast")
+	game.step_action(250,Vector2.ZERO)
+	game.rng.reseed(seed_value)
+	game.step_objects(1000)
+	game.step_objects(1200)
+	check(game.rasa_attachment_count(int(target["id"]))==3,"Rasa death fixture has real attachments")
+	target["hp"] = 0.0
+	game.step_objects(0.0)
+	check(game.rasa_attachment_count(int(target["id"]))==0 and actor.values["physical_defense"]==5000 and actor.values["hit_recovery"]==605 and actor.effects.active.has("bremen_debuff"),"Rasa removes only its own attachments immediately when their target dies")

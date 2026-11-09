@@ -112,6 +112,9 @@ GENERIC_HIT_EFFECT = CHR_FX + "upperslash1.ani"
 # Cast skills without a dedicated hostile body motion.
 CAST_ANIM = "summon2"
 GHOST_FIELD_SKILLS = ("khazan", "bremen", "saya")
+RASA_CREATOR = OBJ_ROOT + "epidemicrasacreater.obj"
+RASA_CHILD = OBJ_ROOT + "epidemicrasa.obj"
+RASA_ANIMATION = OBJ_ROOT + "animation/epidemicrasa/"
 CAST_OBJECTS = {
     "ashenfork": (OBJ_ROOT + "ashenforksub.obj", 260, 0.0, 700),
     # Native object 20001 (0x9EBAF0) dies at ANI end. Its OBJ supplies no
@@ -128,7 +131,6 @@ CAST_OBJECTS = {
     "tombstonerain": (None, 480, 0.0, 2600),
     "grandwave": (OBJ_ROOT + "grandwave.obj", 420, 520.0, 1800),
     "dotarea": (None, 220, 0.0, 16000),
-    "epidemicrasa": (OBJ_ROOT + "epidemicrasa.obj", 360, 0.0, 12000),
     "reflectguard": (OBJ_ROOT + "reflectguardbead.obj", 300, 540.0, 1600),
 }
 
@@ -180,6 +182,11 @@ NATIVE_ANIMATION_BINDINGS = {
     OBJ_ROOT + "animation/khazanareaappear1.ani",
     OBJ_ROOT + "animation/bremenareaappear1.ani",
     OBJ_ROOT + "animation/sayaareaappear1.ani",
+    *(RASA_ANIMATION + name + ".ani" for name in (
+        "epidemicrasaareaappear1", "epidemicrasaareaappear2", "epidemicrasaareastay", "epidemicrasaareadisappear",
+        "rasa", "rasa_ldodge", "startup", "startup_ldodge", "stay", "stay_ldodge",
+        "grab", "grab_ldodge", "grab_stay", "grab_stay_ldodge",
+    )),
 }
 
 SAFE_EFFECTS: set[str] = set()
@@ -929,6 +936,55 @@ def build_skill_definition(skill: dict, record: dict) -> dict:
     return definition
 
 
+def build_rasa_move(skill: dict, records: dict, fx: dict, effects: dict, objects: dict) -> dict:
+    if not add_object(objects, RASA_CREATOR) or not add_object(objects, RASA_CHILD):
+        raise ValueError("Missing original Rasa creator or child object")
+    creator = records[RASA_CREATOR]["decoded"]
+    child = records[RASA_CHILD]["decoded"]
+    entry, = creator["basic_motion"]
+    entry_overlay, stay, exit_ani, ghost, ghost_overlay = creator["etc_motions"]
+    startup, = child["basic_motion"]
+    startup_overlay, child_stay, stay_overlay, grab, grab_overlay, grab_stay, grab_stay_overlay = child["etc_motions"]
+    bindings = {path: add_fx(fx, effects, path) for path in (
+        entry, entry_overlay, stay, exit_ani, ghost, ghost_overlay,
+        startup_overlay, child_stay, stay_overlay, grab, grab_overlay, grab_stay, grab_stay_overlay,
+    )}
+    if not all(bindings.values()) or not timeline_has_attack(records[child_stay]):
+        raise ValueError("Incomplete original Rasa visuals or stay collision")
+    statics = records[skill["path"]]["decoded"]["dungeon"]["static_data"]
+    if len(statics) != 9 or min(statics) <= 0:
+        raise ValueError("Missing original Rasa static data")
+    # Creator A63950 samples lifetime, timers and scale. A63790 uses a separate
+    # literal 233 for target selection; the visual radius is SKL static[6].
+    child_controller = {
+        "kind": "rasa_child", "duration_col": 1, "attachment_duration_col": 19,
+        "attack_speed_col": 2, "defense_col": 3, "recovery_col": 4, "attachment_limit": statics[8],
+        "startup_ms": duration_ms(records[startup]), "grab_ms": duration_ms(records[grab]),
+        "stay_ani": child_stay,
+        "startup_overlay": bindings[startup_overlay],
+        "stay_fx": bindings[child_stay], "stay_overlay": bindings[stay_overlay],
+        "grab_fx": bindings[grab], "grab_overlay": bindings[grab_overlay],
+        "grab_stay_fx": bindings[grab_stay], "grab_stay_overlay": bindings[grab_stay_overlay],
+    }
+    controller = {
+        "kind": "rasa_field", "duration_col": 0, "radius": 233, "depth_scale": 0.29,
+        "pulse_ms": statics[1], "area_scale": statics[6] / 233.0, "child_count": statics[7],
+        "ghost_base_fx": bindings[ghost], "ghost_fx": bindings[ghost_overlay],
+        "appear_fx": [bindings[entry], bindings[entry_overlay]], "stay_fx": bindings[stay],
+        "disappear_fx": bindings[exit_ani], "appear_ms": duration_ms(records[entry_overlay]),
+        "disappear_ms": duration_ms(records[exit_ani]),
+        "child": {"object": RASA_CHILD, "percent": 0, "native_controller": child_controller},
+    }
+    return {
+        "skill": skill["path"], "name": skill["name"], "native_state": "ghost_cast", "native_charge_ani": "throw1",
+        "fidelity_pending": ["attachment_abnormal_ticks", "monster_rank_factors", "attack_speed_quantization",
+                             "attachment_offsets", "area_draw_order", "object_random_stream"],
+        "stages": [{"ani": "throw2", "atk": "", "fx": [], "sounds": [{"at": 0, "key": "SM_RASA"}],
+                    "hits": [{"object": RASA_CREATOR, "offset": [122, 0, 0], "percent": 0,
+                              "native_controller": controller}]}],
+    }
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -941,6 +997,8 @@ def build_move(
     if skill.get("type") != "[active]":
         return None
     source_key = str(skill["key"])
+    if source_key == "epidemicrasa":
+        return build_rasa_move(skill, records, fx, effects, objects)
     key = "saya" if source_key == "sayaex" else source_key
     move_id = local_id(key)
     stages: list[dict] = []
@@ -1610,6 +1668,7 @@ def main() -> int:
         }
         object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
         object_candidates.update(OBJ_ROOT + key + ".obj" for key in GHOST_FIELD_SKILLS)
+        object_candidates.update((RASA_CREATOR, RASA_CHILD))
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(

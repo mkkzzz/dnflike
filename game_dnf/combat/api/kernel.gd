@@ -3,6 +3,7 @@ extends RefCounted
 ## combat internals only through combat/api/ (enforced by tools/check_dnf_deps.py).
 const Timeline = preload("res://combat/action/timeline.gd")
 const NativeWave = preload("res://combat/action/native_wave.gd")
+const NativeMotion = preload("res://combat/particles/native_motion.gd")
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Reaction = preload("res://combat/resolve/reaction.gd")
 const MonsterAI = preload("res://combat/ai/monster_ai.gd")

@@ -82,6 +82,7 @@ OBJECTS = {
     'throwstone': 'passiveobject/monster/goblin/animation/throwstone.ani',
     'goblin_ice': 'passiveobject/common/animation/icemissile1.ani',
     'goblin_fire': 'passiveobject/common/animation/firemissile.ani',
+    'native_cannonball': 'passiveobject/monster/vehicle/cannonball.obj',
 }
 # Player motions used by the trial skills that the runtime manifest does not carry yet.
 # Frames index the same 210-pose body/weapon atlases (all <= 209).
@@ -162,11 +163,14 @@ GHOST_FIELD_AUDIO = {
     'GHOST_BREMEN': 'sounds/effect/magic/ghost_bremen.ogg',
     'SM_GHOST_SAYA': 'sounds/char/swordman/sm_sghost.ogg',
     'GHOST_SAYA': 'sounds/effect/magic/ghost_saya.ogg',
+    'SM_RASA': 'sounds/char/swordman/sm_rasa.ogg',
 }
 
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
+    'DRGCANNON_SHOOT': ['sounds/mon/act3/drgcan_shoot.ogg'],
+    'R_BOMB_HIT': ['sounds/effect/bomb_hit_01.ogg', 'sounds/effect/bomb_hit_02.ogg'],
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
     'swing3': ['sounds/char/swordman/sm_atk_03.ogg'], 'jump': ['sounds/char/swordman/sm_jump.ogg'],
     'jump_attack': ['sounds/char/swordman/sm_jumpatk_01.ogg', 'sounds/char/swordman/sm_jumpatk_02.ogg'],
@@ -854,6 +858,22 @@ def extend_ghost_field(library: Path | None, skill: str, output: Path = OUT) -> 
     return extend_skill_banks(library, output, specs)
 
 
+def extend_rasa(library: Path | None, output: Path = OUT) -> dict:
+    runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
+    stage = runtime['moves']['epidemicrasa']['stages'][0]
+    field = stage['hits'][0]
+    controller = field['native_controller']
+    child = controller['child']['native_controller']
+    keys = [controller['ghost_base_fx'], controller['ghost_fx'], *controller['appear_fx'],
+            controller['stay_fx'], controller['disappear_fx']]
+    keys += [child[name] for name in ('startup_overlay', 'stay_fx', 'stay_overlay', 'grab_fx',
+                                      'grab_overlay', 'grab_stay_fx', 'grab_stay_overlay')]
+    voice = stage['sounds'][0]['key']
+    specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+    specs += [('objects', field['object'], field['object']), ('audio', voice, GHOST_FIELD_AUDIO[voice])]
+    return extend_skill_banks(library, output, specs)
+
+
 def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
     """Add explicitly bound banks while retaining every existing asset byte."""
     global ACTIVE_OUT
@@ -878,17 +898,18 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
                 continue
             if section == 'audio':
                 audio = {}
-                copy_audio(src, [path], audio, key, unresolved)
+                copy_audio(src, path if isinstance(path, list) else [path], audio, key, unresolved)
                 if key not in audio:
                     continue
                 bank = audio[key]
-                target = stage / 'audio' / PurePosixPath(path).name
-                if sha(target.read_bytes()) != bank[0]['sha256']:
-                    raise ValueError('Audio source identity differs: '+path)
+                for clip in bank:
+                    target = stage / 'audio' / PurePosixPath(clip['source']).name
+                    if sha(target.read_bytes()) != clip['sha256']:
+                        raise ValueError('Audio source identity differs: '+clip['source'])
                 if key in manifest[section] and manifest[section][key] != bank:
                     raise ValueError('Existing bank differs; needs a new version: '+key)
                 manifest[section][key] = bank
-                additions.append(bank[0]['file'])
+                additions.extend(clip['file'] for clip in bank)
                 continue
             ani = src.object_animation(path) if section == 'objects' else path
             bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
@@ -912,7 +933,8 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
         summary_path = stage/'build_summary.json'
         if summary_path.is_file():
             summary = json.loads(summary_path.read_text(encoding='utf8'))
-            summary.update(effects=len(manifest['effects']), objects=list(manifest['objects']))
+            summary.update(effects=len(manifest['effects']), objects=list(manifest['objects']),
+                           audio_keys=len(manifest['audio']))
             summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=1),encoding='utf8')
         publish_tree(stage, output)
         return {'banks': additions}
@@ -938,9 +960,21 @@ def main() -> int:
                         help='Add the Bremen ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-saya', action='store_true',
                         help='Add the Saya ghost and area banks, preserving existing assets')
+    parser.add_argument('--extend-rasa', action='store_true',
+                        help='Add the original Rasa creator, child animations and cast voice')
+    parser.add_argument('--extend-cannon', action='store_true',
+                        help='Add original cannonball art and source firing/hit sounds')
     parser.add_argument('--extend-ghost-cast-clips', action='store_true',
                         help='Add original ghost cast clip metadata to the existing player atlases')
     args = parser.parse_args()
+    if args.extend_cannon:
+        specs = [('objects', 'native_cannonball', OBJECTS['native_cannonball'])]
+        specs.extend(('audio', key, CUE_SOUNDS[key]) for key in ('DRGCANNON_SHOOT', 'R_BOMB_HIT'))
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_rasa:
+        print(json.dumps(extend_rasa(args.library)))
+        return 0
     if args.extend_ghost_cast_clips:
         motions = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))['assets']['player_anims']
         specs = [('player_clips', key, motions[key]) for key in ('throw1', 'throw2')]

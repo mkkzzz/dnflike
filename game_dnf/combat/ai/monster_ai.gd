@@ -24,6 +24,52 @@ static func attack_band(span: Array) -> Vector2:
 	var hi := float(span[1]) - 6.0
 	return Vector2(minf(lo, hi), maxf(lo, hi))
 
+
+## 0x877CE0. Use the target's MOB/CHR dimensions and integer map axes.
+static func native_target_in_attack_area(origin: Vector2i, facing: int, target: Dictionary, area: Array) -> bool:
+	if (int(area[0]) == 0 and int(area[2]) == 0) or (int(area[4]) == 0 and int(area[6]) == 0):
+		return false
+	var delta := Vector2i(target["position"])-origin
+	var quarter_size := Vector2i(target["size"])/4
+	var front := delta.x*facing
+	return front+quarter_size.x >= -int(area[2]) and front-quarter_size.x <= int(area[0]) \
+		and (delta.x <= -int(area[1]) or delta.x >= int(area[3])) \
+		and delta.y+quarter_size.y >= -int(area[4]) and delta.y-quarter_size.y <= int(area[6]) \
+		and (delta.y <= -int(area[5]) or delta.y >= int(area[7]))
+
+
+## 0x883750 / 0x8783A0. The battle supplies eligible hostile actor targets in
+## room order and polls while the source actor is free to start an attack.
+static func native_attack_poll(actor: Dictionary, policy: Dictionary, targets: Array, random_u31: Callable) -> Dictionary:
+	var elapsed := int(actor["elapsed_ms"])
+	var deadline := int(actor["next_attack_ms"])
+	if elapsed < maxi(int(policy["initial_ms"]), deadline):
+		return {"slot":-1, "next_attack_ms":deadline}
+	var spread := int(policy["delay_spread_ms"])
+	@warning_ignore("integer_division")
+	deadline = elapsed+int(policy["delay_ms"])+int(random_u31.call())%spread-spread/2
+	var origin := Vector2i(actor["position"])
+	var facing := int(actor["facing"])
+	var candidates: Array[int] = []
+	for row: Dictionary in policy["slots"]:
+		var eligible := false
+		for target: Dictionary in targets:
+			if not native_target_in_attack_area(origin, facing, target, row["area"]):
+				continue
+			if target["down"] and int(random_u31.call())%10000 >= int(policy["down_gate_percent"])*100:
+				continue
+			if int(random_u31.call())%10000 < int(row["standing_percent"])*100:
+				eligible = true
+				break
+		# 0x878710 consumes the fallback draw even at a zero chance.
+		if eligible or int(random_u31.call())%10000 < int(row["no_target_percent"])*100:
+			candidates.append(int(row["slot"]))
+	var slot := -1
+	if not candidates.is_empty():
+		slot = candidates[int(random_u31.call())%candidates.size()]
+	return {"slot":slot, "next_attack_ms":deadline}
+
+
 ## Returns {"move": Vector2 direction, "face": int, "attack": bool}.
 static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float) -> Dictionary:
 	var offset: Vector2 = target-Vector2(enemy["pos"])

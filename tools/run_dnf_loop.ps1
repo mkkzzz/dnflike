@@ -87,6 +87,9 @@ if ($importExit -ne 0 -or ($importOutput -match '(?m)^(SCRIPT ERROR|ERROR:)')) {
     throw "Loop project import failed."
 }
 if ($Test) {
+    $attackSelection=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_native_attack_selection.gd 2>&1
+    $attackSelection | Write-Output
+    if ($LASTEXITCODE -ne 0 -or ($attackSelection -match 'SCRIPT ERROR|ERROR:') -or -not ($attackSelection -match '\[NATIVE_ATTACK_SELECTION\] COMPLETE checks=\d+ failures=0')) {throw "Native attack selection regression failed."}
     $companionProgram=& $GodotPath --headless --path $gamePath --script res://tests/combat/test_companion_program.gd 2>&1
     $companionProgram | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($companionProgram -match 'SCRIPT ERROR|ERROR:') -or -not ($companionProgram -match '\[COMPANION_PROGRAM\] COMPLETE checks=\d+ failures=0')) {throw "Companion source-program regression failed."}

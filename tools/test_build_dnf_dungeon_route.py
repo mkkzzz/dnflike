@@ -3,8 +3,10 @@ import json
 import unittest
 
 try:
+    from .bake_dnf_bgm import source_dungeon_tracks
     from .build_dnf_dungeon_route import GAME, build, merge_route, pick_map
 except ImportError:
+    from bake_dnf_bgm import source_dungeon_tracks
     from build_dnf_dungeon_route import GAME, build, merge_route, pick_map
 
 
@@ -85,6 +87,30 @@ class DungeonStartMapTest(unittest.TestCase):
         }
         self.assertEqual(pick_map(cell, 'start', maps), '(2,0)s1601')
         self.assertEqual(pick_map(cell, 'normal', maps), '(2,0)d1601')
+
+
+class DungeonMusicTest(unittest.TestCase):
+    def test_resolves_map_keys_through_audio_xml_and_rejects_unresolved_room(self):
+        source_rooms = {
+            'start.map': {'sound': ['M_OUTER_TEMPLE', 'R_AMB_WIND']},
+            'boss.map': {'sound': ['M_BEHEMOTH_BOSS_01_1', 'R_AMB_WIND']},
+        }
+        export = {'dungeon': {
+            'path': 'dungeon/act3/outerwall.dgn',
+            'rooms': source_rooms,
+            'placements': [{'id': 'start', 'map': 'start.map'}, {'id': 'end', 'map': 'boss.map'}],
+        }}
+        route = [{'placement': 'start'}, {'placement': 'end', 'boss': True}]
+        music = {
+            'M_OUTER_TEMPLE': 'music/outer_temple.ogg',
+            'M_BEHEMOTH_BOSS_01_1': 'music/behemoth_b01_1.ogg',
+        }
+        self.assertEqual(source_dungeon_tracks(export, route, music), {
+            'normal': 'music/outer_temple.ogg', 'boss': 'music/behemoth_b01_1.ogg',
+        })
+        source_rooms['boss.map']['sound'] = ['R_AMB_WIND']
+        with self.assertRaisesRegex(ValueError, 'boss.map.*audio.xml'):
+            source_dungeon_tracks(export, route, music)
 
 
 class DungeonSpecifiedMapTest(unittest.TestCase):

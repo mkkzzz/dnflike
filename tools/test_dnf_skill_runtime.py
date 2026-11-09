@@ -126,11 +126,12 @@ class SkillRuntimeTest(unittest.TestCase):
         records = self.pack["records"]
         families = native_cast_families(self.runtime, combat, records)
         by_id = {row["source_id"]: row for family in families.values() for row in family["members"]}
-        for skill_id in (20, 21, 22, 25, 36, 41):
+        for skill_id in (20, 21, 22, 25, 36, 41, 75):
             self.assertEqual(by_id[skill_id]["binding_differences"], [], skill_id)
         self.assertTrue(by_id[21]["fidelity_pending"])
         self.assertEqual(by_id[75]["expected"]["emissions"][0]["path"],
                          "passiveobject/character/swordman/epidemicrasacreater.obj")
+        self.assertIn("attachment_abnormal_ticks", by_id[75]["fidelity_pending"])
         self.assertTrue(by_id[75]["tree_visible"])
         for skill_id in (96, 99, 100):
             self.assertFalse(by_id[skill_id]["tree_visible"])

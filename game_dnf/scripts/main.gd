@@ -12,7 +12,7 @@ const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
-const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field"]
+const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
 const RUN_TAP_MS := 240
@@ -1320,6 +1320,10 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 	return Kernel.HitJudge.world_boxes(frame.get("damage_boxes",[]),Kernel.HitJudge.anchor(target["pos"],float(target["z"])),int(target["facing"]))
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
+	var m: Dictionary = enemy["def"]
+	var native_selection: Dictionary = m.get("native_attack_selection",{})
+	if not native_selection.is_empty():
+		enemy["native_attack_elapsed_ms"] = float(enemy.get("native_attack_elapsed_ms",0))+ms
 	if enemy.has("numeric") and float(enemy["hp"])>0:
 		step_numeric_actor(enemy,enemy["numeric"],ms)
 		if enemy["numeric"].effects.controlled():
@@ -1330,7 +1334,6 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
 		return
 	var dt := ms/1000
-	var m: Dictionary = enemy["def"]
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)
 	# 每招独立冷却（原版 [is the skill in cooltime() N] 是按招算的）。
 	# 注意：GDScript 里遍历 Dictionary 时不能直接改它（迭代器会失效），先取 keys。
@@ -1351,6 +1354,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		var target := player if companions.is_empty() else nearest_living(enemy["pos"],friendly_targets())
 		if target.is_empty():return
 		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]))
+		if not native_selection.is_empty():
+			var slot := poll_native_enemy_attack(enemy,native_selection)
+			intent["attack"] = slot >= 0
+			intent["move_index"] = slot
+			if slot >= 0:intent["face"] = enemy["facing"]
 		enemy["facing"] = int(intent["face"])
 		if intent["attack"]:
 			enemy["state"] = "attack"
@@ -1367,6 +1375,20 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["state"] = "idle"
 	Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
 
+func poll_native_enemy_attack(enemy: Dictionary, policy: Dictionary) -> int:
+	var width: Array = table.player["width"]
+	var targets: Array = []
+	for target: Dictionary in friendly_targets():
+		if float(target.get("invuln_ms",0)) > 0.0:continue
+		targets.append({"position":Vector2i(target["pos"]),"size":Vector2i(width[0],width[1]),
+			"down":target["state"] == "down"})
+	var result := Kernel.MonsterAI.native_attack_poll(
+		{"position":Vector2i(enemy["pos"]),"facing":enemy["facing"],
+			"elapsed_ms":int(enemy["native_attack_elapsed_ms"]),"next_attack_ms":enemy.get("native_attack_next_ms",0)},
+		policy,targets,func() -> int:return rng.range_int(0,0x7fffffff))
+	enemy["native_attack_next_ms"] = result["next_attack_ms"]
+	return int(result["slot"])
+
 func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
 	var old_t := float(enemy["clock"])-ms
@@ -1380,7 +1402,14 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	var move_segments: Array = move.get("segments", m.get("attack_segments", []))
 	var move_atk: Dictionary = move.get("atk", m.get("atk", {}))
 	var move_atk_path := String(move.get("atk_path", ""))
-	if m.has("throw"):
+	var emission: Dictionary = move.get("emission",{})
+	if not emission.is_empty():
+		if not enemy["thrown"] and t >= float(emission["at"]):
+			enemy["thrown"] = true
+			spawn_object(emission["hit"],"monster",enemy["pos"],float(enemy["z"]),int(enemy["facing"]),
+				float(enemy["attack"]),enemy)
+			play_sound(String(emission["sound"]))
+	elif m.has("throw"):
 		var throw: Dictionary = m["throw"]
 		var tl: Array = m["attack_timeline"]
 		var f := int(throw["frame"])
@@ -1502,11 +1531,14 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
 		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
 		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"size_rate":float(hit.get("size_rate",1)),"hits":{}}
+	if hit.has("ptl_motion"):
+		var origin := Vector3i(int(entity["pos"].x),int(entity["pos"].y),int(entity["z"]))
+		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
 	if kind in GHOST_FIELD_KINDS:
 		var exit_ms := float(controller["disappear_ms"])
-		if kind != "saya_field":
+		if kind in ["khazan_field","bremen_field"]:
 			for previous: Dictionary in objects:
 				if previous["owner"] == owner and not previous.get("superseded",false) and previous["hit"].get("native_controller",{}).get("kind") == kind:
 					# C9E490 -> A665D0 replaces Khazan/Bremen only, keeping the exit clip.
@@ -1514,7 +1546,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 					previous["exit_at_ms"] = minf(float(previous["exit_at_ms"]),float(previous["clock"]))
 					previous["life_ms"] = float(previous["exit_at_ms"])+exit_ms
 		entity["exit_at_ms"] = float(entity["life_ms"])-exit_ms
-		entity["next_pulse_ms"] = 0.0
+		entity["next_pulse_ms"] = float(controller["pulse_ms"]) if kind == "rasa_field" else 0.0
 		entity["field_rank"] = int(skill_levels.get(String(hit["skill_id"]),1))
 		if controller.has("first_update_sound"):entity["first_update_sound"] = controller["first_update_sound"]
 		if kind == "khazan_field" and numeric_player != null:numeric_player.remove_effect("khazan_aura")
@@ -1559,10 +1591,21 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			# CB25FB..CB2819 creates a fresh object at release. Evaluate frame zero
 			# now without charging the new object for the caster's creation update.
 			object_ms = 0.0
+		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o.has("ptl_motion"):
+			object_ms = 0.0
 		var old_t := float(o["clock"])
 		var t := old_t+object_ms
 		o["clock"] = t
-		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
+		if o.has("ptl_motion"):
+			var sample: Dictionary = o["ptl_motion"].advance_to(int(t))
+			if not sample.get("ok",false) or not sample["alive"]:
+				objects.remove_at(i)
+				continue
+			var position: Vector3i = sample["position"]
+			o["pos"] = Vector2(position.x,position.y)
+			o["z"] = float(position.z)
+		else:
+			o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
 		if kind in GHOST_FIELD_KINDS:
 			if o.has("first_update_sound"):
 				# A67B64 checks a per-object latch, independent of the pulse clock.
@@ -1575,9 +1618,16 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			if t >= float(o["life_ms"]):
 				objects.remove_at(i)
 				if kind == "bremen_field":bremen_removed = true
+			elif kind == "rasa_field" and t >= float(o["next_pulse_ms"]):
+				# A63B90 calls the repeating selection timer after its deletion gate.
+				o["next_pulse_ms"] = float(o["next_pulse_ms"])+float(controller["pulse_ms"])
+				pulse_rasa_field(o)
 			elif o["owner"] == "player" and not o.get("superseded",false):
 				if kind == "khazan_field":khazan_field = o
 				elif kind == "bremen_field":bremen_field = o
+			continue
+		if kind == "rasa_child":
+			if not step_rasa_child(o,controller):objects.remove_at(i)
 			continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
@@ -1696,6 +1746,86 @@ func pulse_saya_field(field: Dictionary) -> void:
 		var impact := Vector3(position.x,position.y,int((height+height_limit)/2.0))
 		land_hit(attacker,enemy,hit,impact,int(field["facing"]),float(field["power"]))
 
+func rasa_attachment_count(target_id: int) -> int:
+	var count := 0
+	for object: Dictionary in objects:
+		if int(object.get("rasa_target_id",-1)) == target_id:count += 1
+	return count
+
+func pulse_rasa_field(field: Dictionary) -> void:
+	var controller: Dictionary = field["hit"]["native_controller"]
+	var child: Dictionary = controller["child"]
+	var limit := int(child["native_controller"]["attachment_limit"])
+	var target: Dictionary = {}
+	var highest_hp := 0
+	# A63790 selects the first highest-HP hostile within the projected radius,
+	# excluding targets already carrying the attachment limit.
+	for enemy: Dictionary in monsters:
+		var hp := int(enemy["hp"])
+		if hp <= highest_hp or not ghost_field_contains(field,enemy["pos"]):continue
+		if rasa_attachment_count(int(enemy["id"])) >= limit:continue
+		target = enemy
+		highest_hp = hp
+	if target.is_empty():return
+	for ordinal in int(controller["child_count"]):
+		# A63B90 makes independent sign draws and uses %64 / %32 magnitudes.
+		var side := 1 if rng.range_int(0,1) != 0 else -1
+		var depth_side := -1 if rng.range_int(0,1) != 0 else 1
+		var point := Vector2(Vector2i(target["pos"]))+Vector2(side*rng.range_int(0,63),depth_side*rng.range_int(0,31))
+		var hit := child.duplicate()
+		hit["rasa_creator_id"] = field["id"]
+		spawn_object(hit,String(field["owner"]),point,float(target["z"]),side,float(field["power"]),field["source"])
+
+func step_rasa_child(object: Dictionary, controller: Dictionary) -> bool:
+	var age := float(object["clock"])
+	if object.has("rasa_target_id"):
+		var target: Dictionary = object["rasa_target"]
+		if float(target["hp"]) <= 0 or not monsters.has(target) or age-float(object["rasa_attached_at"]) >= float(controller["attachment_ms"]):
+			set_rasa_modifiers(object,target,false)
+			return false
+		object["pos"] = Vector2(target["pos"])+Vector2(0,int(object["rasa_slot"])+1)
+		object["z"] = target["z"]
+		return true
+	if age >= float(object["life_ms"]):return false
+	var creator_id := int(object["hit"]["rasa_creator_id"])
+	if not objects.any(func(other: Dictionary):return int(other["id"]) == creator_id and float(other["clock"]) < float(other["life_ms"])):return false
+	var startup_ms := float(controller["startup_ms"])
+	if age < startup_ms:return true
+	var frame: Dictionary = Kernel.Timeline.frame_at(controller["stay_timeline"],age-startup_ms,true)
+	var world: Array = Kernel.HitJudge.world_boxes(frame.get("attack_boxes",[]),
+		Kernel.HitJudge.anchor(object["pos"],float(object["z"])),int(object["facing"]))
+	# A644F0 attaches only on the actual stay ANI attack contact.
+	for target: Dictionary in monsters:
+		if float(target["hp"]) <= 0 or Kernel.HitJudge.contact(world,enemy_damage_boxes(target)).is_empty():continue
+		var slot := rasa_attachment_count(int(target["id"]))
+		if slot >= int(controller["attachment_limit"]):continue
+		object["rasa_target_id"] = target["id"]
+		object["rasa_target"] = target
+		object["rasa_attached_at"] = age
+		object["rasa_slot"] = slot
+		object["pos"] = Vector2(target["pos"])+Vector2(0,slot+1)
+		object["z"] = target["z"]
+		set_rasa_modifiers(object,target,true)
+		break
+	return true
+
+func set_rasa_modifiers(object: Dictionary, target: Dictionary, attached: bool) -> void:
+	var actor = target.get("numeric")
+	if actor == null or bool(target["chief"]):return
+	var id := int(object["id"])
+	var mods: Array = actor.runtime_modifiers.filter(func(mod: Dictionary):return int(mod.get("rasa_object_id",-1)) != id)
+	if attached:
+		var controller: Dictionary = object["hit"]["native_controller"]
+		# A648DA / A64964 write negative equipment physical defense and hit
+		# recovery. The ordinary monster branch applies the full source value.
+		for field: Array in [["physical_defense","defense"],["hit_recovery","recovery"]]:
+			mods.append({"source":"瘟疫之罗刹","stat":field[0],"op":"add","value":-float(controller[field[1]]),"rasa_object_id":id})
+		# A64883 -> 97B904..97B956 adds the negative source value in thousandths to the attack-rate multiplier.
+		mods.append({"source":"瘟疫之罗刹","stat":"attack_speed","op":"percent",
+			"value":-float(controller["attack_speed"]),"rasa_object_id":id})
+	actor.set_runtime_modifiers(mods)
+	bus.emit("combat.status",{"target":target["id"],"id":"rasa_attachment","change":"added" if attached else "removed"})
+
 ## Round the original SSE scalar operation before its truncating integer conversion.
 func _native_float32(value: float) -> float:
 	return PackedFloat32Array([value])[0]
@@ -1721,6 +1851,7 @@ func _ghost_field_layers(base: Dictionary, controller: Dictionary, exit_at_ms: f
 	var opacity := minf(age/appear_ms,clampf(1.0-(age-exit_at_ms)/disappear_ms,0.0,1.0))
 	base["fade"] = int(opacity*180.0)/255.0
 	base["loop"] = true
+	if controller.has("ghost_base_fx"):base["effect"] = controller["ghost_base_fx"]
 	var second := base.duplicate()
 	second.merge({"id":"%s:ghost"%base["id"],"effect":controller["ghost_fx"]},true)
 	var layers: Array = [base,second]
@@ -1738,6 +1869,29 @@ func _ghost_field_layers(base: Dictionary, controller: Dictionary, exit_at_ms: f
 			entry.merge({"id":"%s:entry:%d"%[base["id"],i],"effect":controller["appear_fx"][i]},true)
 			layers.append(entry)
 	return layers
+
+func _rasa_child_layers(base: Dictionary, object: Dictionary, controller: Dictionary) -> Array:
+	var phase := "startup"
+	var age := float(base["clock"])
+	base["loop"] = false
+	if object.has("rasa_target_id"):
+		age -= float(object["rasa_attached_at"])
+		phase = "grab"
+		if age >= float(controller["grab_ms"]):
+			age -= float(controller["grab_ms"])
+			phase = "grab_stay"
+			base["loop"] = true
+	elif age >= float(controller["startup_ms"]):
+		age -= float(controller["startup_ms"])
+		phase = "stay"
+		base["loop"] = true
+	base["id"] = "%s:%s" % [object["id"],phase]
+	base["clock"] = age
+	if phase != "startup":base["effect"] = controller[phase+"_fx"]
+	var overlay := base.duplicate()
+	overlay["id"] = "%s:overlay" % base["id"]
+	overlay["effect"] = controller[phase+"_overlay"]
+	return [base,overlay]
 
 # ---------------------------------------------------------------- world
 # Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
@@ -2377,6 +2531,8 @@ func view_snapshot() -> Dictionary:
 		var controller: Dictionary = o["hit"].get("native_controller",{})
 		if controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
+		elif controller.get("kind","") == "rasa_child":
+			objs.append_array(_rasa_child_layers(item,o,controller))
 		else:
 			objs.append(item)
 	var route: Array = []
