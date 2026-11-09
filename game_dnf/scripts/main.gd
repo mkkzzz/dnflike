@@ -1062,9 +1062,14 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
-	if m.get("native_state","") == "bloody_rave" and int(player["stage"]) == 0:
-		step_bloody_rave_hold(m,old_clock,clock)
-		return
+	if m.get("native_state","") == "bloody_rave":
+		if int(player["stage"]) == 0:
+			step_bloody_rave_suction(m,stage,old_clock,clock,true)
+			step_bloody_rave_hold(m,old_clock,clock)
+			return
+		var slash_ms := float(stage["hits"][0]["at"])/float(native_phase["cast_stage_rate"])
+		if old_clock < slash_ms:
+			step_bloody_rave_suction(m,stage,old_clock,minf(clock,slash_ms),false)
 	if m.get("native_state","") == "grab_blast":
 		if int(player["stage"]) == 0:
 			if try_grab_blast(stage,event_clock):return
@@ -1407,6 +1412,69 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
 
+func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, to: float, inhale: bool) -> void:
+	var phase: Dictionary = player["native_phase"]
+	var targets: Dictionary = phase["suction_targets"]
+	var elapsed := int(to)-maxi(int(from),int(phase["hold_start_ms"]))
+	if elapsed > 0 and not targets.is_empty():
+		# CC2A53 installs the pull at the caster's mirrored X+55 and Y-1.
+		var center := Vector2(Vector2i(player["pos"]))+Vector2(55*int(player["facing"]),-1)
+		for enemy: Dictionary in monsters:
+			var id: int = enemy["id"]
+			if not targets.has(id) or float(enemy["hp"]) <= 0.0:continue
+			step_bloody_rave_pull(enemy,targets[id],center,move["suction_speed"],elapsed)
+	if not inhale or to < float(phase["hold_start_ms"]):return
+	# The last inhale ANI frame supplies four distinct boxes for the whole hold.
+	var world := Kernel.HitJudge.world_boxes(stage["timeline"][9]["attack_boxes"],
+		Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
+	for enemy: Dictionary in monsters:
+		var id: int = enemy["id"]
+		if targets.has(id) or float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
+		if not bool(enemy["def"].get("grab_allowed",true)):continue
+		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
+		targets[id] = {"fraction":Vector2.ZERO}
+
+func step_bloody_rave_pull(enemy: Dictionary, pull: Dictionary, center: Vector2, speed: Vector2, elapsed: int) -> void:
+	# 975560 steps X and Y separately, keeping the fraction and testing each pixel.
+	var point: Vector2 = enemy["pos"]
+	var fraction: Vector2 = pull["fraction"]
+	var needs := Vector2i(center)-Vector2i(point)
+	for axis in 2:
+		if needs[axis] == 0:continue
+		var axis_rate := speed[axis]
+		if needs[1-axis] != 0:axis_rate = ActorNumbers.native_scalar(axis_rate*0.800000011920929)
+		var distance := ActorNumbers.native_scalar(elapsed*axis_rate)
+		distance = ActorNumbers.native_scalar(distance*0.0010000000474974513)
+		var total := ActorNumbers.native_scalar(distance+fraction[axis])
+		fraction[axis] = total-int(total)
+		for pixel in mini(absi(needs[axis]),int(total)):
+			var next := point
+			next[axis] += signi(needs[axis])
+			if not walkable(next):break
+			point = next
+	enemy["pos"] = point
+	pull["fraction"] = fraction
+
+func bloody_rave_slash(template: Dictionary) -> Dictionary:
+	var targets: Dictionary = player["native_phase"]["suction_targets"]
+	var score := 0
+	for enemy: Dictionary in monsters:
+		if targets.has(int(enemy["id"])) and float(enemy["hp"]) > 0.0:score += 1
+	targets.clear()
+	var move := move_def("bloodyrave")
+	var first := int(template["percent"])-100
+	var last := int(move["suction_max_percent"])-100
+	var cap := int(move["suction_score_cap"])
+	# 11AEE50 interpolates the encoded attack, truncating before restoring 100.
+	var hit := template.duplicate()
+	if score >= cap:
+		hit["percent"] = float(last+100)
+	else:
+		var delta := ActorNumbers.native_scalar((last-first)*score)
+		delta = ActorNumbers.native_scalar(delta/cap)
+		hit["percent"] = float(int(ActorNumbers.native_scalar(first+delta))+100)
+	return hit
+
 func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 	var phase: Dictionary = player["native_phase"]
 	var hold_start := int(phase["hold_start_ms"])
@@ -1426,6 +1494,7 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 	end_action_fx()
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(1)
+	player["native_phase"]["suction_targets"] = phase["suction_targets"]
 
 func step_thirst_cast(ms: float) -> void:
 	var phase: Dictionary = player["native_phase"]
@@ -1585,7 +1654,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var stage := action_def()
 		var hold_start := int(float(stage["timeline"][9]["start_ms"])/rate) if index == 0 else 0
 		var end := hold_start+int(m["hold_max_ms"]) if index == 0 else int(float(stage["duration"])/rate)
-		player["native_phase"] = {"cast_stage_rate":rate,"hold_start_ms":hold_start,"hold_hp_fraction":0.0,"end_ms":end}
+		player["native_phase"] = {"cast_stage_rate":rate,"hold_start_ms":hold_start,"hold_hp_fraction":0.0,
+			"end_ms":end,"suction_targets":{}}
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -1969,6 +2039,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			if at > old_t and at <= new_t:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
+				elif hit.get("skill_id","") == "bloodyrave":
+					hit = bloody_rave_slash(hit)
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())

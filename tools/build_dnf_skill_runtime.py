@@ -1153,7 +1153,7 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
         raise ValueError("Unexpected Bloody Rave slash attachment")
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
-            "fidelity_pending": ["suction_targets_and_motion", "target_count_damage", "contact_status",
+            "fidelity_pending": ["special_target_permissions_and_weights", "contact_status",
                                  "effect_fade_and_end", "native_audio", "cancel_permission"],
             "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx},
                        {"ani": "bloodyraveslash", "fx": sword_fx,

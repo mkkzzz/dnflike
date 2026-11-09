@@ -1936,6 +1936,52 @@ func check_bloody_rave_phases() -> void:
 		var object_id: int = game.objects[0]["id"]
 		game.step_objects(16.0,object_id)
 		check(target["hp"]<50000.0 and game.objects[0]["clock"]==0.0,"the original slash attack box is active from its first frame")
+	for facing: int in [1,-1]:
+		start_room("original_27601","katana",facing,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+		var front := POINT+Vector2(160*facing,20)
+		var target: Dictionary = api.spawn_dummy(front)
+		var behind: Dictionary = game.spawn_enemy(POINT+Vector2(-80*facing,0))
+		var above: Dictionary = game.spawn_enemy(front)
+		above["z"] = 300.0
+		var dead: Dictionary = game.spawn_enemy(front)
+		press(KEY_A)
+		step(0)
+		step(789)
+		check(game.player["native_phase"]["suction_targets"].is_empty(),"the inhale boxes stay closed before frame nine")
+		step(1)
+		var targets: Dictionary = game.player["native_phase"]["suction_targets"]
+		check(targets.has(target["id"]) and targets.has(dead["id"]) and targets.size()==2,
+			"the inhale boxes mirror and reject targets behind or above them")
+		dead["hp"] = 0.0
+		step(100)
+		check(target["pos"]==front-Vector2(14*facing,4) and behind["pos"]==POINT+Vector2(-80*facing,0),
+			"pull keeps integer steps and the native 80-percent two-axis speed")
+		step(400)
+		var release_point: Vector2 = target["pos"]
+		check(game.player["stage"]==1 and game.player["native_phase"]["suction_targets"]==targets,
+			"the native pull survives the transition into the slash animation")
+		step(460)
+		check(target["pos"].distance_to(POINT+Vector2(55*facing,-1)) < release_point.distance_to(POINT+Vector2(55*facing,-1)),
+			"the target keeps moving toward the mirrored pull point until the slash")
+		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==1529.0 and targets.is_empty(),
+			"one live ordinary target raises level-one attack to 1529 percent and releases the pull")
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.0
+	session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+	api.spawn_dummy(POINT+Vector2(72,0))
+	for i in 8:game.spawn_enemy(POINT+Vector2(80+i*8,0))
+	press(KEY_A)
+	step(0)
+	step(790)
+	check(game.player["native_phase"]["suction_targets"].size()==9,"the score cap does not cap the number of pulled enemies")
+	step(500)
+	step(460)
+	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==3621.0,"eight or more normal targets use the original upper damage column")
 
 func check_grab_blast_startup() -> void:
 	var profile := ProfileSession.new()

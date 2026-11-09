@@ -417,6 +417,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["hold_min_ms"] = int(skill["static"][0])
 		move["hold_max_ms"] = int(skill["static"][1])
 		move["hold_hp_per_second"] = NativeMotion.f32(float(skill["level_row"][6])*0.10000000149011612)
+		move["suction_speed"] = Vector2(float(skill["static"][2]),float(skill["static"][3]))
+		move["suction_score_cap"] = int(skill["static"][4])
+		move["suction_max_percent"] = int(skill["level_row"][1])
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),

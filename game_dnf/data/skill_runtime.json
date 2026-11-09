@@ -1196,8 +1196,7 @@
   },
   "bloodyrave": {
    "fidelity_pending": [
-    "suction_targets_and_motion",
-    "target_count_damage",
+    "special_target_permissions_and_weights",
     "contact_status",
     "effect_fade_and_end",
     "native_audio",
