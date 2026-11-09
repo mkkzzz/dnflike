@@ -372,6 +372,7 @@ func new_player() -> Dictionary:
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
 		"guard_hold_ms":0.0,"guard_recoil_ms":0.0,
 		"guard_recoil_speed":0.0,"guard_recoil_accel":0.0,
+		"guard_dust_emitted":false,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"upper_armor_fx_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
@@ -820,9 +821,15 @@ func step_player(ms: float, move: Vector2) -> void:
 			move_guard_recoil(-int(player["facing"])*(speed+next_speed)*0.5*seconds)
 			player["guard_recoil_speed"] = next_speed
 			player["guard_recoil_ms"] = recoil_ms-active_ms
+			if next_speed < 40.0 and not bool(player["guard_dust_emitted"]):
+				var facing := int(player["facing"])
+				var point := Vector2(player["pos"]).round()-Vector2(45*facing,0)
+				spawn_effect("guard_dust",point,facing,roundf(float(player["z"])))
+				player["guard_dust_emitted"] = true
 		# CB8AF2 only checks the held command after the current phase's gate.
 		if maxf(float(player["guard_hold_ms"]),float(player["guard_recoil_ms"])) <= 0.0 and not guard_input_held():
 			player["state"] = "idle"
+			play_sound("SWD_GUARD_END")
 	if bool(player["queued_backstep"]):
 		player["queued_backstep"] = false
 		if backstep_allowed():start_action("backstep",true)
@@ -1121,6 +1128,7 @@ func start_action(name: String, cancel := false) -> bool:
 		player["clock"] = 0.0
 		player["guard_hold_ms"] = float(m["guard_min_hold_ms"])
 		player["guard_recoil_ms"] = 0.0
+		play_guard_entry()
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
 		return true
@@ -1348,7 +1356,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var reaction := "none"
 	if target_is_player:
 		var before_hp := float(player["hp"])
-		reaction = hurt_player(amount,attacker,atk,facing)
+		reaction = hurt_player(amount,attacker,atk,facing,point.z)
 		if reaction == "blocked":return
 		amount = roundi(before_hp-float(player["hp"]))
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
@@ -1962,7 +1970,11 @@ func upper_body_armor() -> bool:
 	var frame := Kernel.Timeline.frame_at(action_def()["timeline"],action_ani_clock(float(player["clock"])))
 	return not frame.is_empty() and (int(frame["frame"]) <= 1 or int(frame["items"].get("13",0)) == 1)
 
-func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
+func play_guard_entry() -> void:
+	play_sound("SWD_GUARD")
+	play_sound("SM_GUARD")
+
+func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, impact_height := 46.0) -> String:
 	if god_mode or target_invulnerable(player) or finished:return "blocked"
 	var state := String(player["state"])
 	var was_action := state == "action"
@@ -1984,6 +1996,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		end_action()
 		player["state"] = "guard"
 		if not front_hit:player["facing"] = -int(player["facing"])
+		if state != "guard":play_guard_entry()
 		player["queued_combo"] = false
 		player["queued_skill"] = ""
 		player["queued_jump"] = false
@@ -2004,6 +2017,14 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 			player["guard_recoil_ms"] = recovery_ms
 			player["guard_recoil_speed"] = recoil_speed
 			player["guard_recoil_accel"] = int(-recoil_speed*1000.0/recovery_ms) if recovery_ms > 0.0 else 0
+			player["guard_dust_emitted"] = false
+			# CC5F7E clamps the contact height and interpolates the front offset.
+			var spark_height := clampi(int(impact_height),22,71)
+			var front_offset := int(23.0-17.0*float(spark_height-22)/49.0)
+			var guard_facing := int(player["facing"])
+			var spark_point := Vector2(player["pos"]).round()+Vector2(front_offset*guard_facing,0)
+			spawn_effect("guard_spark",spark_point,guard_facing,roundf(float(player["z"]))+spark_height)
+			play_sound("SWD_GUARDED")
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:

@@ -267,6 +267,8 @@ EFFECTS = {
     'upper2': 'character/swordman/effect/animation/upperslash2.ani',
     'upper_short_followup': 'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani',
     'upper_armor_light': 'common/commoneffect/animation/superarmordamage.ani',
+    'guard_spark': 'character/swordman/effect/animation/guard/spark.ani',
+    'guard_dust': 'character/swordman/effect/animation/guard/dust.ani',
     'triple1': 'character/swordman/effect/animation/tripleslash/slash1.ani',
     'triple2': 'character/swordman/effect/animation/tripleslash/slash2.ani',
     'triple3': 'character/swordman/effect/animation/tripleslash/slash3.ani',
@@ -346,9 +348,16 @@ OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg'],
                    **{key: list(paths) for key, paths in NATIVE_SPIRIT_SOUNDS.items()}}
 # Breakable OBJ string slot 4, resolved by the original audio.xml.
 OUTERWALL_BREAKABLE_SOUNDS = {'WOOD_HIT': ['sounds/effect/wood_hit.ogg']}
+GUARD_AUDIO = {
+    'SWD_GUARD': 'sounds/char/swordman/weapon/swd_eff_05.ogg',
+    'SWD_GUARDED': 'sounds/char/swordman/weapon/swd_eff_01.ogg',
+    'SWD_GUARD_END': 'sounds/char/swordman/weapon/swd_eff_06.ogg',
+    'SM_GUARD': 'sounds/char/swordman/sm_guard.ogg',
+}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
+    **{key: [path] for key, path in GUARD_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1255,6 +1264,8 @@ def main() -> int:
                         help='Add original wave cast sounds, preserving existing assets')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
                         help='Add the original super-armor impact light animation')
+    parser.add_argument('--extend-guard', action='store_true',
+                        help='Add original guard spark, dust, and audio cues')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1322,6 +1333,11 @@ def main() -> int:
     if args.extend_upper_armor_light:
         key = 'upper_armor_light'
         print(json.dumps(extend_skill_banks(args.library, OUT, [('effects', key, EFFECTS[key])])))
+        return 0
+    if args.extend_guard:
+        specs = [('effects', key, EFFECTS[key]) for key in ('guard_spark', 'guard_dust')]
+        specs.extend(('audio', key, path) for key, path in GUARD_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:
         key = 'upper_short_followup'

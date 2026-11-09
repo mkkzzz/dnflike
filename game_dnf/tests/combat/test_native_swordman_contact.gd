@@ -356,6 +356,46 @@ func check_guard_recoil_motion() -> void:
 	check(zero_recoil=="guard" and game.player["state"]=="idle" and game.player["pos"]==POINT,
 		"zero recovery from a boosted rank cannot divide by zero or slide")
 
+func check_guard_feedback() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"guard","level":4})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","","guard"]
+	for sample: Array in [[1,10.0,22,23],[-1,46.0,46,14],[1,90.0,71,6]]:
+		var facing: int = sample[0]
+		start_room("original_27601","katana",facing,spec)
+		session.submit_key(KEY_D,true)
+		step(0)
+		var sounds: Array = game.bus.events_of("combat.cue").filter(func(event):return event["kind"]=="sound")
+		check(sounds.size()==2 and sounds[0]["key"]=="SWD_GUARD" and sounds[1]["key"]=="SM_GUARD",
+			"entering guard emits the weapon cue and then the original voice")
+		var source := {"pos":POINT+Vector2(40*facing,0),"id":999,"stuck_ms":0.0}
+		game.land_hit(source,game.player,{"atk":{},"percent":100.0},
+			Vector3(POINT.x,POINT.y,float(sample[1])),-facing,100.0)
+		var sparks := cues("guard_spark")
+		var anchor := POINT+Vector2(int(sample[3])*facing,0)
+		check(sparks.size()==1 and sparks[0]["point"]==anchor and sparks[0]["height"]==float(sample[2])
+			and sparks[0]["facing"]==facing,"guard spark mirrors and clamps the actual contact height")
+		check(cues("SWD_GUARDED").size()==1,"a blocked contact emits the original impact cue")
+		var spark = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/guard/spark.ani"))[0]
+		check(spark.atlas!=null and spark.frame["img_frame"]==0 and spark.data["duration_ms"]==250
+			and spark.material.blend_mode==CanvasItemMaterial.BLEND_MODE_ADD,"the real spark node uses the native additive atlas")
+		step(124)
+		check(cues("guard_dust").is_empty(),"no guard dust while recoil speed is exactly 40")
+		step(1)
+		var dust := cues("guard_dust")
+		var dust_anchor := Vector2(game.player["pos"]).round()-Vector2(45*facing,0)
+		check(dust.size()==1 and dust[0]["point"]==dust_anchor and dust[0]["height"]==0.0,
+			"guard dust appears once behind the fighter below the source speed threshold")
+		var dust_view = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/guard/dust.ani"))[0]
+		check(dust_view.atlas!=null and dust_view.frame["img_frame"]==0 and dust_view.data["duration_ms"]==210,
+			"the real dust node uses the native seven-frame atlas")
+		session.submit_key(KEY_D,false)
+		step(15)
+		check(cues("guard_dust").size()==1 and cues("SWD_GUARD_END").size()==1,
+			"finishing the same recoil adds no second dust and releases guard once")
+
 func check_triple_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -508,6 +548,7 @@ func run() -> void:
 	check_followup()
 	check_guard_release()
 	check_guard_recoil_motion()
+	check_guard_feedback()
 	check_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
