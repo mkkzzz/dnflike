@@ -14,9 +14,19 @@ func run(game, host, driver) -> void:
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(game.session.serialize()))) and restored.profile["skill_slots"][11] == "upper", "save/load preserves a later active skill binding")
 	for index in game.SkillSlots.COUNT:
-		for at: Vector2 in [Vector2(1, 1), Vector2(26, 26)]:
-			await driver.drag_skill(game.modal.find_child("skill_node_46", true, false), game.hud.find_child("hud_skill_slot_%d" % index, true, false), at)
-			host.check(game.session.profile["skill_slots"][index] == "upper", "skill drop reaches %s near %s" % [game.SkillSlots.LABELS[index], at])
+		# Change the occupant on each drop so neither corner can pass as a no-op.
+		for entry in [[5, "hardattack", Vector2(1, 1)], [46, "upper", Vector2(26, 26)]]:
+			var source: Control = game.modal.find_child("skill_node_%d" % entry[0], true, false)
+			var target: Control = game.hud.find_child("hud_skill_slot_%d" % index, true, false)
+			var dropped: bool = await driver.drag_skill(source, target, entry[2])
+			var slots: Array = game.session.profile["skill_slots"]
+			host.check(dropped and slots[index] == entry[1] and slots.count(entry[1]) == 1,
+				"skill drop replaces the binding in %s near %s" % [game.SkillSlots.LABELS[index], entry[2]])
+	var before_gap: Array = game.session.profile["skill_slots"].duplicate()
+	var gap_drop: bool = await driver.drag_skill(game.modal.find_child("skill_node_46", true, false),
+		game.hud.find_child("hud_skill_slot_2", true, false), Vector2(29, 14))
+	host.check(not gap_drop and game.session.profile["skill_slots"] == before_gap,
+		"releasing in the gap between D and F preserves all twelve bindings")
 	# D must accept replacement, swapping from either row, and a drop on itself.
 	await driver.drag_skill(game.modal.find_child("skill_node_5", true, false), game.hud.find_child("hud_skill_slot_2", true, false))
 	await driver.drag_skill(game.hud.find_child("hud_skill_slot_11", true, false), game.hud.find_child("hud_skill_slot_2", true, false))

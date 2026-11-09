@@ -48,7 +48,7 @@ func run() -> void:
 	game.show_overlay("numbers")
 	await host.ticks(3)
 	var body:RichTextLabel=game.modal.find_child("skill_detail_body",true,false)
-	host.check(body != null and body.position==Vector2(9,176) and body.size==Vector2(179,210) and body.scroll_active,"popup explanation fits 15 full source rows within the adapted height")
+	host.check(body != null and body.position==Vector2(9,176) and body.size.y==210 and body.scroll_active,"popup explanation fits 15 full source rows within the adapted height")
 	var source_pitch := body.get_line_count() > 1
 	for line in range(1, body.get_line_count()):
 		source_pitch = source_pitch and is_equal_approx(body.get_line_offset(line) - body.get_line_offset(line - 1), 14.0)
@@ -62,6 +62,21 @@ func run() -> void:
 	await host.ticks(3)
 	host.check(body.get_v_scroll_bar().value>0 and skill_panel.tree_scroll==initial_tree_scroll,
 		"mouse wheel scrolls a long explanation without moving the skill tree")
+	var description := body.text
+	var fits_source_width := "汉".repeat(15) + "A"
+	body.text = fits_source_width
+	await host.ticks(3)
+	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 1,
+		"a 173px description line fits the source width with no scrollbar")
+	body.text = (fits_source_width + "\n").repeat(19) + fits_source_width
+	await host.ticks(3)
+	host.check(body.get_v_scroll_bar().visible and body.get_line_count() == 20,
+		"showing the scrollbar preserves the source description wrap width")
+	body.text = "汉".repeat(16)
+	await host.ticks(3)
+	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 2,
+		"a 176px description line wraps at the source 174px boundary")
+	body.text = description
 	host.check(game.modal.find_child("skill_panel_slot_5",true,false)==null and game.hud.find_child("hud_skill_slot_11",true,false)!=null,"popup has no duplicate shortcut controls and live HUD exposes twelve drop targets")
 	viewport=game.modal.find_child("skill_tree_viewport",true,false)
 	content=game.modal.find_child("skill_tree_content",true,false)
@@ -134,8 +149,20 @@ func run() -> void:
 	if not game.combat.is_running():return
 	var api = RuntimeAPI.new(game.battle)
 	api.set_god(true)
-	for index in range(6,12):
-		host.check(game.act("slots.move",{"source":{"place":"skill_catalog","id":"hardattack"},"target":{"place":"skill","index":index}}),"live battle accepts an upper-row binding")
+	game.number_windows.tab = 1
+	skill_panel.tree_scroll = 0
+	for index in game.SkillSlots.COUNT:
+		var skill := "upper" if index == 2 else "hardattack"
+		var label: String = game.SkillSlots.LABELS[index]
+		game.show_overlay("numbers")
+		await host.ticks(3)
+		var source: Control = game.modal.find_child("skill_node_46" if index == 2 else "skill_node_5", true, false)
+		var target: Control = game.hud.find_child("hud_skill_slot_%d" % index, true, false)
+		var dropped := await drag_skill(source, target, Vector2(26, 26) if index == 2 else Vector2(-1, -1))
+		host.check(dropped and game.session.profile["skill_slots"][index] == skill,
+			"live %s accepts a viewport skill drop in battle" % label)
+		game.show_overlay("")
+		api.heal()
 		api.set_p("state","idle")
 		api.set_p("action","")
 		api.set_p("cooldowns",{})
@@ -143,22 +170,8 @@ func run() -> void:
 		host.key(game.SKILL_KEYS[index],true)
 		await host.ticks(2)
 		host.key(game.SKILL_KEYS[index],false)
-		host.check(api.p("action")=="hardattack" and game.overlay=="","live %s casts its bound skill without opening another window" % game.SkillSlots.LABELS[index])
-	game.number_windows.tab = 1
-	game.number_windows.skill_panel.tree_scroll = 0
-	game.show_overlay("numbers")
-	await host.ticks(3)
-	await drag_skill(game.modal.find_child("skill_node_46", true, false), game.hud.find_child("hud_skill_slot_2", true, false))
-	host.check(game.session.profile["skill_slots"][2] == "upper", "D accepts a real upper drag with the skill panel open during battle")
-	game.show_overlay("")
-	api.set_p("state","idle")
-	api.set_p("action","")
-	api.set_p("cooldowns",{})
-	api.set_p("stuck_ms",0.0)
-	host.key(KEY_D,true)
-	await host.ticks(2)
-	host.key(KEY_D,false)
-	host.check(api.p("action")=="upper" and game.overlay=="","D actually casts upper after binding without opening the town map")
+		host.check(api.p("action") == skill and game.overlay == "",
+			"live %s casts its dropped skill without opening another window" % label)
 	game.set_debug_open(true)
 	var old: Dictionary = game.combat.read_view()
 	host.check(not old["numbers"].is_empty() and float(old["numbers"]["physical_defense"])==float(game.session.stats()["numbers"]["physical_defense"]),"combat consumes full profile including equipment defense")
@@ -242,7 +255,7 @@ func run() -> void:
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(snapshot))) and restored.profile["skills"]["draw"]==2,"new progression and equipment survive real flow save")
 
-func drag_skill(source: Control, target: Control, target_at := Vector2(-1, -1)) -> void:
+func drag_skill(source: Control, target: Control, target_at := Vector2(-1, -1)) -> bool:
 	var viewport:Viewport=game.get_viewport()
 	var start:=source.get_global_transform_with_canvas()*(source.size/2)
 	var finish:=target.get_global_transform_with_canvas()*(target_at if target_at.x >= 0 else target.size/2)
@@ -276,3 +289,4 @@ func drag_skill(source: Control, target: Control, target_at := Vector2(-1, -1)) 
 	viewport.push_input(button,true)
 	await host.ticks(4)
 	host.check(not viewport.gui_is_dragging(),"viewport mouse release completes the skill drag")
+	return viewport.gui_is_drag_successful()

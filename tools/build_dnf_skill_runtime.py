@@ -186,6 +186,8 @@ SAFE_OBJECTS: set[str] = set()
 IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
 
+WAVE_CAST_VOICES = {"normalwave": "HADOUKEN", "icewave": "SM_ICEWAVE", "firewave": "SM_FIREWAVE"}
+
 EX_BASE = {
     "tombstonerainex": "tombstonerain",
     "sayaex": "saya",
@@ -1123,7 +1125,7 @@ def build_move(
             raise ValueError(f"Missing verified wave binding: {key}")
         result["native_state"] = "wave_cast"
         result["native_recovery_col"] = 1 if key == "icewave" else 0
-        result["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
+        result["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules"]
         stages[:] = [{"ani": "wave", "atk": "", "hits": [{
             "object": path, "at": sum(delays[:4]), "speed": speed,
             "life_ms": life, "percent_col": 0, "effects": statuses,
@@ -1167,6 +1169,9 @@ def build_move(
             result["fidelity_pending"].remove("object_controller")
             result["fidelity_pending"].remove("damage_and_status")
             result["fidelity_pending"].extend(["fixed_stat_formula", "object_ground_authority_rules", "object_create_sound", "ani_box_scale", "draw_layer_and_blend_quantization"])
+    # Native state entry 0xCC906A calls the sound virtual with the selected key.
+    if key in WAVE_CAST_VOICES:
+        stages[0]["voice"] = WAVE_CAST_VOICES[key]
     if key in ["bloodyrave", "outragebreak"]:
         result["requires_effect"] = "frenzy"
     if key == "outragebreak":
@@ -1620,8 +1625,10 @@ def main() -> int:
             move["name"] = str(skill["name"])
             if key == "icewaveex":
                 # EX uses different IDs/sizing/branches. Do not inherit a base-only controller.
+                move["fidelity_pending"].insert(move["fidelity_pending"].index("cancel_rules") + 1, "voice")
                 move["fidelity_pending"].insert(move["fidelity_pending"].index("object_ground_authority_rules"), "ice_shatter_particles")
                 for stage in move["stages"]:
+                    stage.pop("voice", None)
                     for hit in stage.get("hits", []):
                         hit.pop("native_controller", None)
                         hit.update(speed=240.0, life_ms=1800)
@@ -1630,6 +1637,7 @@ def main() -> int:
                 # EX 20101 has additional timer/ANI/controller branches. Keep
                 # its previous adapter until those paths have source evidence.
                 for stage in move["stages"]:
+                    stage.pop("voice", None)
                     for hit in stage.get("hits", []):
                         for field in ("native_controller", "rear_fx", "fixed_col", "percent"):
                             hit.pop(field, None)

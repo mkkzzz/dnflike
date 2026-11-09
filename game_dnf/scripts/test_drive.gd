@@ -469,6 +469,7 @@ func run_skill_fidelity() -> void:
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
 	check_wave_family_phases()
+	check_wave_cast_sounds()
 	check_wave_object_birth()
 	check_normalwave_movement_and_cancel()
 	await check_normalwave_cancel_input()
@@ -793,6 +794,30 @@ func check_wave_family_phases() -> void:
 			game.step_action(1.0,Vector2.ZERO)
 			game.view.present(game.view_snapshot(),0.0,0.0)
 			check(api.p("state")=="idle" and attached[0].is_queued_for_deletion(),skill+" ends at source cast-speed duration plus its own recovery column")
+
+func check_wave_cast_sounds() -> void:
+	var expected := {"normalwave":"HADOUKEN","icewave":"SM_ICEWAVE","firewave":"SM_FIREWAVE"}
+	var audio = game.view.audio
+	var was_muted: bool = audio.muted
+	audio.muted = false
+	for skill: String in expected:
+		api.restart()
+		game.bus.clear_history()
+		var key: String = expected[skill]
+		var sounds := func():
+			return game.bus.events_of("combat.cue").filter(func(cue):return cue.get("kind","")=="sound")
+		var stream = audio.variants.get(key,[null])[0]
+		check(stream is AudioStreamOggVorbis and stream.get_length()>0.0,skill+" original cast sound loads")
+		api.set_p("mp",0.0)
+		check(not api.start_action(skill) and sounds.call().is_empty(),skill+" rejected cast remains silent")
+		api.set_p("mp",500.0)
+		check(api.start_action(skill),skill+" actual cast starts for the original sound fixture")
+		var cues: Array = sounds.call()
+		check(cues.size()==1 and cues[0].key==key and game.objects.is_empty(),skill+" plays its original key at state entry before object release")
+		check(stream != null and audio.voice_pool.any(func(voice):return voice.stream==stream and voice.playing),skill+" original stream reaches the audio player")
+		game.step_action(1000.0,Vector2.ZERO)
+		check(sounds.call().size()==1,skill+" release and recovery do not replay the cast sound")
+	audio.muted = was_muted
 
 func check_wave_object_birth() -> void:
 	for sample: Array in [["normalwave",150.0,65.0],["icewave",300.0,80.0],["firewave",400.0,70.0]]:

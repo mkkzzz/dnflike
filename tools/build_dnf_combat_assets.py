@@ -147,7 +147,15 @@ DIGITS = {'combo': (0, 10), 'combo_label': (10, 11), 'damage': (44, 54), 'damage
 # Aliases are inferred from file naming in the archive (E-INFER); unknown keys stay unresolved.
 SOUND_ALIASES = {'MINERAL_SWD': 'MINSWD', 'MINERALSWD': 'MINSWD', 'SQUARESWD': 'SQRSWD', 'KATANA': 'KAT',
                  'SLESSSWDA': 'SLESSSWD', 'STICK_HIT': 'STICKA_HIT', 'ASTROM': 'ASTORM'}
+# State 24 entry keys at 0xCC8C2F, 0xCC901A, and 0xCC8EE4, resolved by original audio.xml.
+WAVE_CAST_AUDIO = {
+    'HADOUKEN': 'sounds/char/swordman/effect/hadouken.ogg',
+    'SM_ICEWAVE': 'sounds/char/swordman/sm_icewave.ogg',
+    'SM_FIREWAVE': 'sounds/char/swordman/sm_firewave.ogg',
+}
+
 CUE_SOUNDS = {
+    **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
     'swing3': ['sounds/char/swordman/sm_atk_03.ogg'], 'jump': ['sounds/char/swordman/sm_jump.ogg'],
     'jump_attack': ['sounds/char/swordman/sm_jumpatk_01.ogg', 'sounds/char/swordman/sm_jumpatk_02.ogg'],
@@ -845,6 +853,20 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
         additions, unresolved = [], []
         for section, key, path in specs:
+            if section == 'audio':
+                audio = {}
+                copy_audio(src, [path], audio, key, unresolved)
+                if key not in audio:
+                    continue
+                bank = audio[key]
+                target = stage / 'audio' / PurePosixPath(path).name
+                if sha(target.read_bytes()) != bank[0]['sha256']:
+                    raise ValueError('Audio source identity differs: '+path)
+                if key in manifest[section] and manifest[section][key] != bank:
+                    raise ValueError('Existing bank differs; needs a new version: '+key)
+                manifest[section][key] = bank
+                additions.append(bank[0]['file'])
+                continue
             ani = src.object_animation(path) if section == 'objects' else path
             bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
             if section == 'objects':
@@ -885,6 +907,8 @@ def main() -> int:
                         help='Add native particle banks atomically, preserving every existing asset')
     parser.add_argument('--extend-firewave', action='store_true',
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
+    parser.add_argument('--extend-wave-sounds', action='store_true',
+                        help='Add original wave cast sounds, preserving existing assets')
     parser.add_argument('--extend-khazan', action='store_true',
                         help='Add the Khazan ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-bremen', action='store_true',
@@ -895,6 +919,10 @@ def main() -> int:
         return 0
     if args.extend_firewave:
         print(json.dumps(extend_firewave(args.library)))
+        return 0
+    if args.extend_wave_sounds:
+        specs = [('audio', key, path) for key, path in WAVE_CAST_AUDIO.items()]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_native_particles:
         print(json.dumps(extend_native_particles(args.library)))

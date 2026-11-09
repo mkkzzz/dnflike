@@ -327,15 +327,17 @@ def build_ui_revision(src: B.Source, parts: dict) -> dict:
     body = body_node['values']
     body_options = dict(child['values'] for child in body_node['children'] if child['tag'] == '[int option]')
     line_height = body_options['line height']
+    display_marginwidth = body_options['display marginwidth']
     return {
         'evidence': 'UI references parsed from this archived PVF; runtime placement adapters are explicit',
         'detail_body': {'position': body[2:4], 'size': body[6:8], 'line_height': line_height,
+                        'display_marginwidth': display_marginwidth,
                         'ui_path': SKILL_EXPLAIN_UI, 'control': '4013'},
         'tree_inset': [24, 8],
         'popup': {'position': [14, 12], 'size': [772, 490],
                   'tree_position': [10, 88], 'tree_size': [540, 342],
                   'detail_position': [562, 35], 'detail_size': [199, 402],
-                  'body_size': [body[6], 214 // line_height * line_height]},
+                  'body_content_size': [body[6] + display_marginwidth, 214 // line_height * line_height]},
         'adapters': ['tree inset prevents clipping the x=0 slot border',
                      'Chinese system font and scrollable full skill description',
                      'existing common scrollbar; Skillshop frames 123/124 are not the SP stick-vscroll',

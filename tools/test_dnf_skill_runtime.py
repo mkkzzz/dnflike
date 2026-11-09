@@ -150,6 +150,24 @@ class SkillRuntimeTest(unittest.TestCase):
             self.assertNotIn("sprite", frames[0])
             self.assertIn("sprite", frames[1])
 
+    def test_native_wave_cast_sounds_are_original_and_base_only(self):
+        manifest = json.loads(COMBAT.read_text(encoding="utf8"))
+        rows = [
+            ("normalwave", "HADOUKEN", "0a4228f8523534d6c9858cba5bc7229175f2a629e3f304313b656975fdacabe3"),
+            ("icewave", "SM_ICEWAVE", "1c0ddbb4f646234d7b2b50495b141165b30ef6dfd55cb3c96b1c7885a6f652e4"),
+            ("firewave", "SM_FIREWAVE", "2543e2fa411c7d8c92de0a8221176c39ef875aa403a5fbe5ef416b24fbf0fbba"),
+        ]
+        for skill, key, digest in rows:
+            with self.subTest(skill=skill):
+                self.assertEqual(self.moves[skill]["stages"][0]["voice"], key)
+                bank, = manifest["audio"][key]
+                self.assertEqual(bank["sha256"], digest)
+                sample = ROOT / "game_dnf" / bank["file"].removeprefix("res://")
+                self.assertEqual(hashlib.sha256(sample.read_bytes()).hexdigest(), digest)
+        for skill in ("icewaveex", "firewaveex"):
+            self.assertTrue(all("voice" not in stage for stage in self.moves[skill]["stages"]))
+            self.assertIn("voice", self.moves[skill]["fidelity_pending"])
+
     def test_ice_chain_bakes_each_original_variant_and_blank_tail(self):
         manifest = json.loads(COMBAT.read_text(encoding="utf8"))
         hit = self.moves["icewave"]["stages"][0]["hits"][0]

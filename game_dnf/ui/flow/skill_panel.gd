@@ -39,6 +39,7 @@ var _sp_digits_view: Control
 var _tip_label: Label
 var _effective_levels: Dictionary = {}
 var _detail_line_height := 14
+var _detail_wrap_width := 174
 
 func _init(target) -> void:
 	game = target
@@ -54,7 +55,10 @@ func _load() -> void:
 	trees = catalog.get("trees", {})
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
 	parts = manifest.get("parts", {})
-	_detail_line_height = maxi(1, int(manifest.get("ui_layout", {}).get("detail_body", {}).get("line_height", 14)))
+	var detail_layout: Dictionary = manifest.get("ui_layout", {}).get("detail_body", {})
+	_detail_line_height = maxi(1, int(detail_layout.get("line_height", 14)))
+	var detail_size: Array = detail_layout.get("size", [179, 260])
+	_detail_wrap_width = int(detail_size[0]) + int(detail_layout.get("display_marginwidth", -5))
 	for skill: Dictionary in skills:
 		by_id[int(skill["id"])] = skill
 		by_key[String(skill["key"])] = skill
@@ -530,7 +534,7 @@ func _detail(root: Control) -> void:
 	body.position = Vector2(9, 176)
 	var body_height_budget := 214
 	# The native viewport counts only complete lines.
-	body.size = Vector2(179, body_height_budget - body_height_budget % _detail_line_height)
+	body.size.y = body_height_budget - body_height_budget % _detail_line_height
 	var body_font_size := 11
 	body.add_theme_font_override("normal_font", skin.font)
 	body.add_theme_font_size_override("normal_font_size", body_font_size)
@@ -541,7 +545,19 @@ func _detail(root: Control) -> void:
 	body.scroll_active = true
 	body.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.add_child(body)
-	_style_scroll(body.get_v_scroll_bar())
+	var scroll := body.get_v_scroll_bar()
+	_style_scroll(scroll)
+	# Measure the themed bar after attaching the control. Explain #4013 wraps at
+	# 179 + display marginwidth whether the scrollbar is shown or hidden.
+	var scroll_width := scroll.get_minimum_size().x
+	body.size.x = _detail_wrap_width + scroll_width
+	var gutter := StyleBoxEmpty.new()
+	body.add_theme_stylebox_override("normal", gutter)
+	var update_gutter := func() -> void:
+		if is_instance_valid(scroll):
+			gutter.content_margin_right = 0.0 if scroll.visible else scroll_width
+	scroll.visibility_changed.connect(update_gutter, CONNECT_DEFERRED)
+	update_gutter.call()
 	var state := _state(skill)
 	var tip := "可以学习" if bool(state["ok"]) else String(state["reason"])
 	_tip_label.text = tip

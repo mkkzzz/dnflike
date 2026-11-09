@@ -563,6 +563,7 @@
     260
    ],
    "line_height": 14,
+   "display_marginwidth": -5,
    "ui_path": "ui/skill/skillshopexplain.ui",
    "control": "4013"
   },
@@ -595,8 +596,8 @@
     199,
     402
    ],
-   "body_size": [
-    179,
+   "body_content_size": [
+    174,
     210
    ]
   },

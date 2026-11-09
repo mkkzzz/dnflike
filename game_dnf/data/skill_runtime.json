@@ -1358,7 +1358,6 @@
    "fidelity_pending": [
     "effect_weapon_scale",
     "cancel_rules",
-    "voice",
     "fixed_stat_formula",
     "object_ground_authority_rules",
     "object_create_sound",
@@ -1415,7 +1414,8 @@
        "rear_fx": "skillfx_fire_back_d7808a4c",
        "speed": 0
       }
-     ]
+     ],
+     "voice": "SM_FIREWAVE"
     }
    ]
   },
@@ -2337,7 +2337,6 @@
    "fidelity_pending": [
     "effect_weapon_scale",
     "cancel_rules",
-    "voice",
     "object_ground_authority_rules",
     "object_create_sound",
     "status_level_resistance_formula"
@@ -2399,7 +2398,8 @@
        "percent": 0,
        "speed": 0.0
       }
-     ]
+     ],
+     "voice": "SM_ICEWAVE"
     }
    ]
   },
@@ -3083,7 +3083,8 @@
        "size_col": 1,
        "speed": 0.0
       }
-     ]
+     ],
+     "voice": "HADOUKEN"
     }
    ]
   },

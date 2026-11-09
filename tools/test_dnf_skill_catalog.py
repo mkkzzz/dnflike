@@ -114,6 +114,9 @@ class SkillPanelSourceTest(unittest.TestCase):
         self.assertEqual(body['size'], source['values'][6:8])
         options = dict(child['values'] for child in source['children'] if child['tag'] == '[int option]')
         self.assertEqual(body['line_height'], options['line height'])
+        self.assertEqual(body['display_marginwidth'], options['display marginwidth'])
+        self.assertEqual(self.manifest['ui_layout']['popup']['body_content_size'][0],
+                         body['size'][0] + options['display marginwidth'])
 
     def test_sp_digits_preserve_source_frames(self):
         from PIL import Image
