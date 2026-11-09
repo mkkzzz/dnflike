@@ -738,6 +738,7 @@ func leave_action() -> void:
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
+	player.erase("draw_contact_count")
 	end_action_fx()
 
 func end_action() -> void:
@@ -1683,7 +1684,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			if at > old_t and at <= new_t:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
-				spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
+				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
+					# CB2171 passes absolute Z 50 and the caster's integer ground point.
+					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
+				else:
+					spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
@@ -1722,6 +1727,21 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
+
+func prepare_draw_short_wave(template: Dictionary) -> Dictionary:
+	var controller: Dictionary = template["native_controller"]
+	var count := int(player.get("draw_contact_count",0))
+	var amount := int(controller["base_amount"])
+	if count > 0:
+		# C9F980 applies the count-indexed per-mille term before writing the packet.
+		var rates: Array = controller["hit_count_bonus"]
+		amount = int(float(amount*(1000+int(rates[mini(count,rates.size())-1])))/1000.0)
+	var hit := template.duplicate()
+	var atk: Dictionary = template["atk"].duplicate()
+	atk["absolute_damage"] = amount
+	hit["atk"] = atk
+	hit["fixed_amount"] = amount
+	return hit
 
 func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
 	# 75EB80 takes dungeon column 1 by owner level. Use the current model's
@@ -1849,6 +1869,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			return
 	elif by_companion:
 		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
+	if by_player and player["action"] == "draw" and hit_skill_id == "draw" and hit.get("kind","") == "boxes":
+		# CADA24..CADADD records each direct hit target once for the later wave.
+		player["draw_contact_count"] = int(player.get("draw_contact_count",0))+1
 	var target_is_player := victim == "player"
 	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
 	if starfish_grab:
@@ -2631,6 +2654,17 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
+	if kind == "draw_short_wave":
+		# A60D6B..A60E68 holds frame zero until the object has travelled
+		# the mastery distance. The original animation then runs normally.
+		var timeline: Array = obj["timeline"].duplicate(true)
+		var travel_ms := float(controller["distance"])*1000.0/float(entity["speed"])
+		var shift := travel_ms-float(timeline[0]["end_ms"])
+		timeline[0]["end_ms"] = travel_ms
+		for index in range(1,timeline.size()):
+			timeline[index]["start_ms"] = float(timeline[index]["start_ms"])+shift
+			timeline[index]["end_ms"] = float(timeline[index]["end_ms"])+shift
+		entity["timeline"] = timeline
 	if kind == "bloodblast" and controller.has("reset_ms"):
 		var first := float(obj["segments"][0]["start"])
 		entity["next_hit_reset"] = first+float(controller["reset_ms"])

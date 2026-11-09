@@ -91,6 +91,7 @@
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
    "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
    "skillfx_start_c9ff53c9": "passiveobject/character/swordman/animation/sayaex/start.ani",
+   "skillfx_startb_82b8530b": "passiveobject/character/swordman/animation/momentaryslash/startb.ani",
    "skillfx_startup_ldodge_0030e5f5": "passiveobject/character/swordman/animation/epidemicrasa/startup_ldodge.ani",
    "skillfx_stay_633ceea4": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
    "skillfx_stay_fe49f3a2": "passiveobject/character/swordman/animation/sayaex/stay.ani",
@@ -127,6 +128,7 @@
    "passiveobject/character/swordman/icewave6.obj": "passiveobject/character/swordman/icewave6.obj",
    "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
    "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
+   "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
    "passiveobject/character/swordman/normalwave.obj": "passiveobject/character/swordman/normalwave.obj",
    "passiveobject/character/swordman/outragebreakfloor.obj": "passiveobject/character/swordman/outragebreakfloor.obj",
    "passiveobject/character/swordman/reflectguardbead.obj": "passiveobject/character/swordman/reflectguardbead.obj",
@@ -1541,8 +1543,8 @@
   },
   "draw": {
    "fidelity_pending": [
-    "mastery_followups",
-    "combo_modifiers",
+    "katana_and_beamsword_followups",
+    "wave_wall_and_final_damage",
     "additional_effect_dispatch",
     "original_command",
     "weapon_durability"
@@ -1553,6 +1555,23 @@
    },
    "name": "拔刀斩",
    "native_state": "draw",
+   "short_wave": {
+    "native_controller": {
+     "kind": "draw_short_wave",
+     "layer_source": {
+      "sha256": "498ee5045fd4f970659510b7804a4291b35ccdf20588367b6b7bbd1137e436e9",
+      "source": "passiveobject/character/swordman/animation/momentaryslash/start.ani.als"
+     }
+    },
+    "object": "passiveobject/character/swordman/momentaryslashwave.obj",
+    "offset": [
+     0,
+     0,
+     50
+    ],
+    "percent": 0,
+    "rear_fx": "skillfx_startb_82b8530b"
+   },
    "skill": "skill/swordman/momentaryslash.skl",
    "stages": [
     {

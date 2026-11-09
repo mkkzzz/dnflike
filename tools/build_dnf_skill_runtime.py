@@ -191,6 +191,7 @@ DIRECT_OBJECTS = {
 # Source bindings in CNSwordman state 24 and the ghost object's motion vector.
 # Keep other blank-frame clips out of the legacy filename heuristic.
 NATIVE_ANIMATION_BINDINGS = {
+    OBJ_ROOT + "animation/momentaryslash/start.ani",
     CHR_FX + "giveblood/givebloodstay.ani",
     CHR_FX + "giveblood/givebloodshoot.ani",
     OBJ_ROOT + "animation/givebloodsub_back.ani",
@@ -1087,6 +1088,21 @@ def draw_weapon_tracks(library) -> dict:
     return tracks
 
 
+DRAW_WAVE_ALS = OBJ_ROOT + "animation/momentaryslash/start.ani.als"
+
+
+def draw_wave_layer(library) -> dict:
+    script = library.script(DRAW_WAVE_ALS)
+    if not script or script["sha256"] != "498ee5045fd4f970659510b7804a4291b35ccdf20588367b6b7bbd1137e436e9":
+        raise ValueError("unverified Draw Sword wave layer script")
+    binding, placement = script["fields"]
+    file, alias = binding["values"]
+    if binding["tag"] != "[use animation]" or placement["tag"] != "[add]" or placement["values"] != [0, -10, alias]:
+        raise ValueError("unexpected Draw Sword wave layer placement")
+    return {"path": str(PurePosixPath(DRAW_WAVE_ALS).parent / file.lower()),
+            "source": DRAW_WAVE_ALS, "sha256": script["sha256"]}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1119,7 +1135,7 @@ def build_move(
         atk = "character/swordman/attackinfo/momentaryslash.atk"
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "draw",
                 "material_cost": fixed_cube_cost(skill, records),
-                "fidelity_pending": ["mastery_followups", "combo_modifiers", "additional_effect_dispatch",
+                "fidelity_pending": ["katana_and_beamsword_followups", "wave_wall_and_final_damage", "additional_effect_dispatch",
                                      "original_command", "weapon_durability"],
                 "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
                             "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
@@ -1854,10 +1870,13 @@ def main() -> int:
         bloodblast_script = bloodblast_layer_script(library, records)
         fixed_attack_base = dungeon_fixed_attack_base(library)
         draw_tracks = draw_weapon_tracks(library)
+        draw_layer = draw_wave_layer(library)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
+        if safe_animation(library, draw_layer["path"]):
+            SAFE_EFFECTS.add(draw_layer["path"])
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1874,6 +1893,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         object_candidates.add(OBJ_ROOT + "blastbloodpresuborigin.obj")
         object_candidates.add(OBJ_ROOT + "givebloodsub.obj")
+        object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -1942,6 +1962,15 @@ def main() -> int:
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
+                wave = add_object(objects, OBJ_ROOT + "momentaryslashwave.obj")
+                rear = add_fx(fx, effects, draw_layer["path"])
+                if not wave or not rear:
+                    raise ValueError("missing original Draw Sword wave or rear layer")
+                if records[wave]["decoded"].get("int_data") != [0]:
+                    raise ValueError("unexpected normal Draw Sword wave growth coefficient")
+                move["short_wave"] = {"object": wave, "percent": 0, "offset": [0, 0, 50],
+                                      "rear_fx": rear, "native_controller": {"kind": "draw_short_wave",
+                                          "layer_source": {k: draw_layer[k] for k in ("source", "sha256")}}}
             moves[runtime_id] = move
             charge_ani = move.get("native_charge_ani")
             if charge_ani:

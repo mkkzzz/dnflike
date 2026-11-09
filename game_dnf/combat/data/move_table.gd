@@ -442,6 +442,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				var wav := weapon_wav(weapon)
 				if not wav.is_empty():built["sounds"].insert(1,{"key":String(wav[0]),"at":shot})
 				built["cancel_at"] = built["duration"]
+				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
@@ -463,6 +464,27 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			hit["skill_id"] = name
 			if spec.get("form_normal",false):hit["skill"] = false
 	return move
+
+func _append_draw_short_wave(stage: Dictionary, spec: Dictionary, draw_skill: Dictionary) -> void:
+	# CB2018..CB21AA requires the Weapon Master growth type and the
+	# equipped short sword's effective mastery to meet static column 3.
+	if job != "weaponmaster" or weapon != "shortsword" or int(skill_levels.get("shortswordmastery",0)) <= 0:return
+	var mastery := _skill_row(SHORT_MASTERY_SKL)
+	var values: Array = mastery["static"]
+	if int(mastery["rank"]) < int(values[3]):return
+	var wave := _build_stage({"hits":[spec]},draw_skill)
+	if wave["hits"].is_empty():return
+	var hit: Dictionary = wave["hits"][0]
+	var controller: Dictionary = hit["native_controller"]
+	var row: Array = mastery["level_row"]
+	var rate := PackedFloat32Array([float(row[9])*0.0010000000474974513])[0]
+	controller["base_amount"] = int(float(draw_skill["level_row"][0])*rate-100.0)+100
+	controller["hit_count_bonus"] = draw_skill["static"].slice(1,6)
+	controller["distance"] = int(values[5])
+	hit["speed"] = float(values[4])
+	hit["at"] = float(stage["timeline"][6]["start_ms"])
+	hit["starts_at_zero"] = true
+	stage["hits"].append(hit)
 
 func _append_upper_followup(move: Dictionary) -> void:
 	# CBF008: effective ranks of weapon mastery up (27), upper (46) and short sword (12).

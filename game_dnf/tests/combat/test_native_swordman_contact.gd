@@ -1777,6 +1777,76 @@ func check_draw_sword() -> void:
 	check(cues("SM_BAL_SHOT").size()==1 and game.hit_count>0,
 		"weapon hit and shot share the accelerated body clock at 420 ms")
 
+func check_draw_short_wave() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"draw","level":2})
+	for rank in [6,7]:
+		profile.command("numbers.skill_grant",{"id":"shortswordmastery","level":rank})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["draw"]
+		start_room("original_27000","shortsword",1,spec)
+		session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
+		game.numeric_player.values["attack_speed"] = 1.0
+		var front: Dictionary = game.monsters[0]
+		var rear: Dictionary = game.monsters[1]
+		for target: Dictionary in game.monsters:move_target(target,POINT+Vector2(1200,0))
+		move_target(front,POINT+Vector2(125,0))
+		move_target(rear,POINT+Vector2(-125,0))
+		for target: Dictionary in [front,rear]:target["hp"] = 10000.0
+		press(KEY_A)
+		step(525)
+		step(149)
+		check(game.hit_count==2 and game.objects.is_empty(),"short sword only uses the direct blade before frame 6")
+		step(1)
+		if rank == 6:
+			check(game.objects.is_empty(),"effective mastery rank six is below the original wave gate")
+			continue
+		check(game.objects.size()==1,"effective mastery rank seven creates one wave on frame 6")
+		if game.objects.size()!=1:return
+		var wave: Dictionary = game.objects[0]
+		var hit: Dictionary = wave["hit"]
+		check(wave["pos"]==POINT and wave["z"]==50.0 and wave["speed"]==500.0
+			and hit["native_controller"]["distance"]==400,
+			"wave starts at the caster's ground point, native absolute Z, speed and range")
+		check(hit["native_controller"]["base_amount"]==1263 and hit["fixed_amount"]==1547
+			and hit["atk"]["absolute_damage"]==1547 and hit["percent"]==0.0,
+			"rank two draw with rank seven mastery packs 1263 then 1547 for two distinct blade targets")
+		game.numeric_player.values["independent_attack"] = 500.0
+		game.step_objects(10,int(wave["id"]))
+		check(wave["clock"]==0.0 and wave["hits"].has(front["id"]) and not wave["hits"].has(rear["id"])
+			and game.last_damage["trace"]["fixed_part"]==1547.0,
+			"the wave hits at age zero with its own ledger and already packed fixed amount")
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(game.view.object_views[wave["id"]].has_node("RearAnimation"),
+			"the native StartB clip is attached behind the main wave")
+		step(380)
+		check(game.player["action"]=="" and game.objects.has(wave),"the wave persists after the caster recovers")
+		game.step_objects(799)
+		check(wave["pos"]==POINT+Vector2(399.5,0) and game.object_view_clock(wave)<10000.0
+			and wave["hits"].size()==1,"the wave remains on flight frame zero through age 799 ms")
+		move_target(rear,POINT+Vector2(401,0))
+		game.step_objects(1)
+		check(game.object_view_clock(wave)==10000.0 and not wave["hits"].has(rear["id"]),
+			"at X distance 400 the wave starts its visual tail and loses collision")
+		game.step_objects(279)
+		check(game.objects.has(wave),"the main ANI retains the final authored frame")
+		game.step_objects(1)
+		check(game.objects.is_empty(),"both clips retire after the 280 ms main tail")
+	var spec := profile.stats()
+	spec["skill_slots"] = ["draw"]
+	start_room("original_27000","shortsword",-1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.25
+	for target: Dictionary in game.monsters:move_target(target,POINT+Vector2(1200,0))
+	press(KEY_A)
+	step(539)
+	check(game.objects.is_empty(),"1.25 attack speed keeps the independent wave dormant through 539 ms")
+	step(1)
+	check(game.objects.size()==1 and game.objects[0]["hit"]["fixed_amount"]==1263 and game.objects[0]["facing"]==-1,
+		"frame six at 540 ms launches the facing-left base wave after a whiff")
+
 func check_thirst() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2256,6 +2326,7 @@ func run() -> void:
 	check_frenzy_toggle()
 	check_bloodblast()
 	check_draw_sword()
+	check_draw_short_wave()
 	check_thirst()
 	check_hardattack()
 	check_hardattack_charge()
