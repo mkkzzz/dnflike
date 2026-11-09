@@ -1033,11 +1033,34 @@ func check_frenzy_cast() -> void:
 	step(0)
 	check(game.player["hp"]==2.0 and game.player["action"]=="buff" and game.primary_normal_attack()=="attack1"
 		and cues("frenzy_cast").size()==1,"the next integer HP admits the cast and starts its attached effect")
-	step(399)
+	check(game.view.player_actor.pose=="throw1" and cues("SM_FLENSE").size()==1 and cues("FLENSE_GET").size()==1,
+		"Frenzy opens with the original charge motion and both cast audio cues")
+	var cast_fx = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/frenzy/cast.ani"))[0]
+	step(66)
+	check(int(cast_fx.frame["img_frame"])==0 and cast_fx.uniform_frame_ms==83.0,
+		"the cast attachment keeps its first original frame until the rewritten delay")
+	step(1)
+	check(int(cast_fx.frame["img_frame"])==1,"the cast attachment advances with the actor clock")
+	step(332)
 	check(game.active_effect("frenzy").is_empty(),"1.25 cast speed keeps Frenzy inactive through 399 ms")
 	step(1)
-	check(game.primary_normal_attack()=="frenzy1" and game.view_snapshot()["player"]["buff"],
-		"the original cast gate enables Frenzy at 400 ms")
+	check(game.primary_normal_attack()=="frenzy1" and game.view_snapshot()["player"]["buff"]
+		and game.view.player_actor.pose=="throw2" and game.player["clock"]==0.0,
+		"at 400 ms Frenzy enables the form and enters the original shoot motion at frame zero")
+	var release_fx = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/frenzy/blast.ani"))[0]
+	check(int(release_fx.frame["img_frame"])==6 and cues("frenzy_blast").size()==1 and cues("FLENSE_CHARGE").size()==1,
+		"phase two replaces the cast attachment with the original burst and release cue")
+	step(39)
+	check(int(release_fx.frame["img_frame"])==6,"the first blast frame lasts until the native 50-ms animation boundary")
+	step(1)
+	check(int(release_fx.frame["img_frame"])==7,"blast timing follows the phase-two animation clock")
+	step(239)
+	check(int(release_fx.frame["img_frame"])==12 and game.player["action"]=="buff",
+		"the final blast frame is visible through the last millisecond of recovery")
+	step(1)
+	check(game.view.player_actor.pose=="stay" and game.primary_normal_attack()=="frenzy1"
+		and game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/frenzy/blast.ani")).is_empty(),
+		"recovery ends at 280 ms and clears the burst while leaving Frenzy active")
 
 	start_room("original_27601","katana",1,spec,"berserker")
 	game.numeric_player.values["cast_speed"] = 1.0

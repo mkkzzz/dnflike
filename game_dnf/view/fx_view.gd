@@ -19,6 +19,8 @@ var base_scale := 1.0
 ## Effects tied to a skill can be cut early (e.g. gore-cross marks end when the cross flies).
 var tag := ""
 var max_ms := -1.0
+## Some native state entries overwrite every ANI frame delay on their attachment.
+var uniform_frame_ms := -1.0
 ## Optional original actor-clock attachment; seek from snapshots, never wall time.
 var action_clock_at := -1.0
 var action_instance := -1
@@ -45,21 +47,21 @@ func seek(t: float) -> void:
 	if max_ms >= 0 and clock_ms >= max_ms:
 		queue_free()
 		return
-	var duration := float(data["duration_ms"])
+	var frames: Array = data["frames"]
+	var duration := uniform_frame_ms*frames.size() if uniform_frame_ms>=0.0 else float(data["duration_ms"])
 	if clock_ms >= duration:
 		if (not loop or duration <= 0) and not hold_last_frame:
 			queue_free()
 			return
 	var local := fposmod(clock_ms,duration) if loop and duration > 0 else clock_ms
 	var elapsed := 0.0
-	var frames: Array = data["frames"]
 	_next_items = {}
 	_frame_mix = 0.0
 	frame = {}
 	for index: int in range(frames.size()):
 		var f: Dictionary = frames[index]
 		var delay = f.get("delay_ms",100)
-		var span := float(delay if delay != null else 0)
+		var span := uniform_frame_ms if uniform_frame_ms>=0.0 else float(delay if delay != null else 0)
 		if local < elapsed+span:
 			frame = f
 			if span > 0:

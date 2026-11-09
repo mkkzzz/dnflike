@@ -137,9 +137,9 @@
   "passiveobject/character/swordman/sayaex.obj",
   "passiveobject/character/swordman/sayaexice.obj"
  ],
- "effects": 261,
+ "effects": 262,
  "digits": 61,
- "audio_keys": 242,
+ "audio_keys": 244,
  "unresolved": 32,
  "unresolved_items": [
   {

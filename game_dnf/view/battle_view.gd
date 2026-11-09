@@ -562,6 +562,7 @@ func _spawn_fx(event: Dictionary) -> void:
 	fx.tag = String(event.get("tag",""))
 	fx.follow = int(event.get("follow",-1))
 	fx.max_ms = float(event.get("max_ms",-1.0))
+	fx.uniform_frame_ms = float(event.get("uniform_frame_ms",-1.0))
 	fx.action_clock_at = float(event.get("action_clock_at",-1.0))
 	fx.action_instance = int(event.get("action_instance",-1))
 	fx.loop = bool(event.get("loop",false)) and bool(_effects[key].get("loop",false))

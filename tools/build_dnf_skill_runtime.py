@@ -1020,6 +1020,12 @@ def build_move(
         # a summon animation plus a one-millisecond effect cannot implement it.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
                 "movement": "backstep", "stages": [{"ani": "jump", "atk": "", "hits": []}]}
+    if key == "frenzy":
+        # CC10F0 uses throw slot 0. State 13 loads its charge and shoot motions.
+        return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "stages": [{"ani": "throw1"}, {"ani": "throw2"}], "effect_id": "frenzy",
+                "cast_fx": "frenzy_cast", "release_fx": "frenzy_blast", "aura_fx": "frenzy_buff",
+                "hp_cost_row": 0, "material_cost": fixed_cube_cost(skill, records)}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -1030,7 +1036,6 @@ def build_move(
             "name": str(skill["name"]),
             "stages": stages,
             "effect_id": BUFF_SKILLS[key],
-            **({"hp_cost_row": 0, "material_cost": fixed_cube_cost(skill, records)} if key == "frenzy" else {}),
         }
     names = STAGE_NAMES.get(key, [])
     names = STAGE_ANI_OVERRIDES.get(key, names)

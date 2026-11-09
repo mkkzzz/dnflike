@@ -297,6 +297,7 @@ EFFECTS = {
     'gore_slash2': 'character/swordman/effect/animation/gorecross/slash2.ani',
     'gore_cross_add': 'passiveobject/character/swordman/animation/gorecross2.ani',
     'frenzy_cast': 'character/swordman/effect/animation/frenzy/cast.ani',
+    'frenzy_blast': 'character/swordman/effect/animation/frenzy/blast.ani',
     'frenzy_buff': 'character/swordman/effect/animation/frenzy/buff.ani',
     'hit_cut_s1': 'common/hiteffect/animation/age12/slashsmall1.ani',
     'hit_cut_s2': 'common/hiteffect/animation/age12/slashsmall2.ani',
@@ -323,6 +324,12 @@ WAVE_CAST_AUDIO = {
     'HADOUKEN': 'sounds/char/swordman/effect/hadouken.ogg',
     'SM_ICEWAVE': 'sounds/char/swordman/sm_icewave.ogg',
     'SM_FIREWAVE': 'sounds/char/swordman/sm_firewave.ogg',
+}
+# CD7594 and CD75B5 resolve through audio.xml. The release requests FLENSE_CHARGE,
+# which has no entry in the supplied client's table. Do not alias FLENSE_CHANGE.
+FRENZY_CAST_AUDIO = {
+    'SM_FLENSE': 'sounds/char/swordman/sm_flense.ogg',
+    'FLENSE_GET': 'sounds/char/swordman/effect/flense_get.ogg',
 }
 
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
@@ -390,6 +397,7 @@ HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/e
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
+    **{key: [path] for key, path in FRENZY_CAST_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
@@ -1317,6 +1325,8 @@ def main() -> int:
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
     parser.add_argument('--extend-wave-sounds', action='store_true',
                         help='Add original wave cast sounds, preserving existing assets')
+    parser.add_argument('--extend-frenzy', action='store_true',
+                        help='Add the original Frenzy release animation and cast sounds')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
                         help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-guard', action='store_true',
@@ -1400,6 +1410,11 @@ def main() -> int:
         return 0
     if args.extend_wave_sounds:
         specs = [('audio', key, path) for key, path in WAVE_CAST_AUDIO.items()]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_frenzy:
+        specs = [('effects', 'frenzy_blast', EFFECTS['frenzy_blast'])]
+        specs.extend(('audio', key, path) for key, path in FRENZY_CAST_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_armor_light:

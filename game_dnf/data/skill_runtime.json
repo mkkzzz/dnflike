@@ -986,6 +986,8 @@
    ]
   },
   "buff": {
+   "aura_fx": "frenzy_buff",
+   "cast_fx": "frenzy_cast",
    "effect_id": "frenzy",
    "hp_cost_row": 0,
    "material_cost": {
@@ -993,18 +995,14 @@
     "source_id": 3037
    },
    "name": "血之狂暴",
+   "release_fx": "frenzy_blast",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [
     {
-     "ani": "summon2",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": ""
-      }
-     ],
-     "hits": []
+     "ani": "throw1"
+    },
+    {
+     "ani": "throw2"
     }
    ]
   },

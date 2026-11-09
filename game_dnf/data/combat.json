@@ -417,14 +417,6 @@
     "accel_static": 1
    },
    "source": "Two original CHR motions/ATKs. SKL static_data supplies slide speed/deceleration; the weapon-mastery-only third finisher remains outside this playable subset."
-  },
-  "buff": {
-   "ani": "summon2",
-   "skill": "skill/swordman/frenzy.skl",
-   "name": "血之狂暴",
-   "effect_id": "frenzy",
-   "cast_fx": "frenzy_cast",
-   "aura_fx": "frenzy_buff"
   }
  },
  "backstep": {

@@ -337,6 +337,7 @@ func run_combat() -> void:
 	check(not game.view_snapshot()["player"]["buff"] and String(api.p("action"))=="buff","F starts the original Frenzy cast before the form activates")
 	await ticks(40)
 	check(game.view_snapshot()["player"]["buff"],"Frenzy activates after the cast finishes")
+	await ticks(18)
 	await tap(KEY_D)
 	await ticks(2)
 	check(String(api.p("action"))=="rage_slash","D selects the gore-cross source animation")

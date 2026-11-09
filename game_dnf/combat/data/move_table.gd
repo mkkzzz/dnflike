@@ -337,6 +337,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if name == "buff":
 		if spec.has("hp_cost_row"):move["hp_cost_row"] = spec["hp_cost_row"]
 		var frenzy_static: Array = skill.get("static",[])
+		move["frenzy_recovery_ms"] = int(frenzy_static[0])
+		move["release_fx"] = String(spec["release_fx"])
 		if frenzy_static.size()>1:move["frenzy_disable_after_ms"] = int(frenzy_static[1])
 	if name == "guard":
 		# CC615E stores the initial phase's release threshold from static column 0.

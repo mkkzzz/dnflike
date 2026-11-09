@@ -948,6 +948,9 @@ func step_action(ms: float, move: Vector2) -> void:
 	if player.has("hardattack_charge"):
 		step_hardattack_charge(ms)
 		return
+	if player.has("frenzy_cast"):
+		step_frenzy_cast(ms)
+		return
 	var name: String = player["action"]
 	var queued := String(player["queued_skill"])
 	if queued != "" and queued != name and normal_attack_cancel_allowed(move_def(queued)):
@@ -973,14 +976,6 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
-	if player.has("frenzy_cast"):
-		var cast: Dictionary = player["frenzy_cast"]
-		cast["elapsed_ms"] = float(cast["elapsed_ms"])+ms
-		if int(cast["elapsed_ms"]) < int(cast["duration_ms"]):return
-		# 85EB57 advances state 13 to its release phase. CD75E9 attaches Frenzy there.
-		player.erase("frenzy_cast")
-		end_action_fx()
-		apply_skill_effect(name,String(m["effect_id"]))
 	if not native_phase.is_empty() and not native_phase.has("charge_rate"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -1229,11 +1224,14 @@ func start_action(name: String, cancel := false) -> bool:
 			# 858FA6 scales the cast duration with integer thousandths.
 			var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 			var speed := maxi(1,int(cast_rate*1000.0))
-			player["frenzy_cast"] = {"elapsed_ms":0.0,"duration_ms":int(float(m["cast_ms"])*1000.0/speed)}
-			player["fx_tag"] = "act:%d" % action_seq
-			if cast_fx != "":
-				bus.emit("combat.cue",{"kind":"fx","key":cast_fx,"point":player["pos"],"height":player["z"],
-					"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID})
+			var duration := int(float(m["cast_ms"])*1000.0/speed)
+			player["frenzy_cast"] = {"elapsed_ms":0.0,"duration_ms":duration,"speed":speed}
+			var frames: Array = combat_assets.get("effects",{}).get(cast_fx,{}).get("frames",[])
+			# CD750C overwrites each delay with floor(floor(duration * speed / 1000) / frames).
+			var delay := int(float(int(duration*speed/1000.0))/maxi(1,frames.size()))
+			attach_frenzy_fx(cast_fx,delay)
+			play_sound("SM_FLENSE")
+			play_sound("FLENSE_GET")
 		else:
 			if cast_fx != "":spawn_effect(cast_fx,player["pos"],int(player["facing"]),float(player["z"]))
 			apply_skill_effect(name,String(m["effect_id"]))
@@ -1250,6 +1248,35 @@ func start_action(name: String, cancel := false) -> bool:
 	match name:
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
+
+func attach_frenzy_fx(key: String, delay := -1) -> void:
+	player["fx_tag"] = "act:%d" % action_seq
+	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":player["z"],
+		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,
+		"action_clock_at":0.0,"action_instance":action_seq,"uniform_frame_ms":delay})
+
+func step_frenzy_cast(ms: float) -> void:
+	var cast: Dictionary = player["frenzy_cast"]
+	var elapsed := float(cast["elapsed_ms"])+ms
+	cast["elapsed_ms"] = elapsed
+	player["clock"] = elapsed*float(cast["speed"])/1000.0
+	if int(elapsed)<int(cast["duration_ms"]):return
+	if int(player["stage"])==0:
+		# State 13 switches to the shoot motion and attaches Frenzy at CD75E9.
+		var move := move_def("buff")
+		end_action_fx()
+		player["stage"] = 1
+		player["clock"] = 0.0
+		cast["elapsed_ms"] = 0.0
+		cast["duration_ms"] = int(float(move["frenzy_recovery_ms"])*1000.0/float(cast["speed"]))
+		attach_frenzy_fx(String(move["release_fx"]))
+		apply_skill_effect("buff",String(move["effect_id"]))
+		play_sound("FLENSE_CHARGE")
+		return
+	var pending := String(player["queued_skill"])
+	player["queued_skill"] = ""
+	if pending!="" and pending!="buff" and start_action(pending,true):return
+	end_action()
 
 func start_stage(index: int, opening_clock := 0.0) -> void:
 	var name: String = player["action"]
@@ -3433,7 +3460,6 @@ func player_ani() -> Array:
 	if state=="action":
 		var m := move_def(String(player["action"]))
 		var elapsed := float(player["clock"])
-		if String(m.get("effect_id","")) != "":return [String(m["ani"]),elapsed]
 		var phase: Dictionary = player.get("native_phase",{})
 		if phase.has("charge_rate") and elapsed < float(phase["wait_ms"]):
 			return [String(m["native_charge_ani"]),action_ani_clock(elapsed)]
