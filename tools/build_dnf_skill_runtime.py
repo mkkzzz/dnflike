@@ -1070,6 +1070,23 @@ def dungeon_fixed_attack_base(library) -> dict:
     return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"], "by_level": rows[1::7]}
 
 
+def draw_weapon_tracks(library) -> dict:
+    # Default C layers for family-only combat actors. Item-specific ANI wins at runtime.
+    folders = {"shortsword": "ssword/sswdc", "katana": "katana/katanac",
+               "greatsword": "hsword/lswdc", "club": "club/clubc", "beamsword": "beamsword/beamswdc"}
+    tracks = {}
+    for family, folder in folders.items():
+        path = f"equipment/character/swordman/weapon/{folder}/momentaryslash.ani"
+        source = library.animation(path)
+        frames = [{"frame": frame["frame"], "delay_ms": frame["delay_ms"],
+                   "boxes": [box for box in frame.get("boxes", []) if box["kind"] == "attack"]}
+                  for frame in source["metadata"]["frames"]]
+        if [frame["frame"] for frame in frames if frame["boxes"]] != [2, 3, 4, 5]:
+            raise ValueError(f"unexpected native Draw Sword attack frames: {path}")
+        tracks[family] = {"source": path, "sha256": source["sha256"], "frames": frames}
+    return tracks
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1081,6 +1098,7 @@ def build_move(
     *,
     native_bloodblast: bool = True,
     bloodblast_script: dict | None = None,
+    native_draw: bool = True,
 ) -> dict | None:
     if skill.get("type") != "[active]":
         return None
@@ -1096,6 +1114,15 @@ def build_move(
         # a summon animation plus a one-millisecond effect cannot implement it.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
                 "movement": "backstep", "stages": [{"ani": "jump", "atk": "", "hits": []}]}
+    if key == "momentaryslash" and native_draw:
+        # CC7F44 selects body/ATK slot 8. The body has no attack boxes.
+        atk = "character/swordman/attackinfo/momentaryslash.atk"
+        return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "draw",
+                "material_cost": fixed_cube_cost(skill, records),
+                "fidelity_pending": ["mastery_followups", "combo_modifiers", "additional_effect_dispatch",
+                                     "original_command", "weapon_durability"],
+                "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
+                            "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
     if key == "frenzy":
         # CC10F0 uses throw slot 0. State 13 loads its charge and shoot motions.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
@@ -1468,25 +1495,6 @@ def mastery_variants() -> dict:
                 "final_lift": 350,
             }
         ],
-        "draw": [
-            {
-                "priority": 20,
-                "job": "weaponmaster",
-                "weapon": ["beamsword", "katana"],
-                "skill": {"lightswordmastery": 7, "blademastery": 7},
-                "skill_mode": "any",
-                "append_stage": "momentaryslash",
-                "append_effect": "momentaryslashwave.obj",
-            },
-            {
-                "priority": 15,
-                "job": "weaponmaster",
-                "weapon": ["shortsword"],
-                "skill": {"shortswordmastery": 7},
-                "append_stage": "momentaryslash",
-                "append_object": OBJ_ROOT + "momentaryslashwave.obj",
-            }
-        ],
         "charge_crash": [
             {
                 "priority": 20,
@@ -1845,6 +1853,7 @@ def main() -> int:
     try:
         bloodblast_script = bloodblast_layer_script(library, records)
         fixed_attack_base = dungeon_fixed_attack_base(library)
+        draw_tracks = draw_weapon_tracks(library)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
@@ -1898,6 +1907,9 @@ def main() -> int:
             # The EX adapter previously copied the generic base move.
             move = build_move(by_id[24], records, atk_by_stem, effect_paths, fx, effects, objects,
                               native_bloodblast=False)
+        if key == "momentaryslashex":
+            move = build_move(by_id[9], records, atk_by_stem, effect_paths, fx, effects, objects,
+                              native_draw=False)
         if move:
             move = json.loads(json.dumps(move))
             move["skill"] = str(skill["path"])
@@ -1928,6 +1940,8 @@ def main() -> int:
         if move:
             if key == "bloodblast":
                 move["fixed_attack_base"] = fixed_attack_base
+            if key == "momentaryslash":
+                move["weapon_tracks"] = draw_tracks
             moves[runtime_id] = move
             charge_ani = move.get("native_charge_ani")
             if charge_ani:

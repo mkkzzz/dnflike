@@ -1713,6 +1713,70 @@ func check_frenzy_toggle() -> void:
 	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
 		"deactivation takes no HP, MP, or additional cube")
 
+func check_draw_sword() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"draw","level":2})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["draw"]
+	start_room("original_27601","katana",1,spec)
+	var spent: Array = []
+	session.set_skill_material_spender(func(id: int, amount: int):
+		spent.append([id,amount])
+		return spent.size()==2)
+	var before_mp := float(game.player["mp"])
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["mp"]==before_mp and cues("SM_BAL_READY").is_empty(),
+		"Draw Sword rejects a missing cube before MP, cooldown or ready voice")
+	game.numeric_player.values["attack_speed"] = 1.0
+	for target: Dictionary in game.monsters:move_target(target,POINT+Vector2(600,0))
+	var rear: Dictionary = game.monsters[0]
+	var front: Dictionary = game.monsters[1]
+	move_target(rear,POINT+Vector2(-140,0))
+	move_target(front,POINT+Vector2(140,0))
+	for target: Dictionary in [rear,front]:target["hp"] = 10000.0
+	press(KEY_A)
+	step(524)
+	var hit: Dictionary = game.move_def("draw")["hits"][0]
+	check(game.view.player_actor.pose=="momentaryslash" and hit["source"]=="attached_weapon"
+		and hit["percent"]==1192.0 and hit["atk_path"].ends_with("/momentaryslash.atk"),
+		"Draw Sword uses CHR slot 8, rank two percent and the attached weapon")
+	check(spent==[[3037,1],[3037,1]] and game.player["mp"]<before_mp
+		and cues("SM_BAL_READY").size()==1 and cues("SM_BAL_SHOT").is_empty() and game.hit_count==0,
+		"the paid cast winds up without damage through frame 1")
+	step(1)
+	check(game.hit_count==2 and rear["hp"]<10000.0 and front["hp"]<10000.0 and game.objects.is_empty(),
+		"body frame 2 hits in front and behind without substituting the mastery wave")
+	check(cues("SM_BAL_SHOT").size()==1 and cues("R_KATANAA").size()==1
+		and cues("R_DRAWING_SWORD_HIT").size()==2 and cues("SWD_BAL_END").is_empty(),
+		"outgoing frame triggers the original shot, weapon swing and hit sounds")
+	step(249)
+	check(game.hit_count==2 and cues("SWD_BAL_END").is_empty(),"one hit per target and no sheath sound before body frame 8")
+	step(1)
+	check(cues("SWD_BAL_END").size()==1,"body frame 8 plays the authored sheath cue")
+	step(279)
+	check(game.player["action"]=="draw","the action remains in recovery through 1054 ms")
+	step(1)
+	check(game.player["action"]=="","the ordinary action recovers at the body ANI end")
+	for family: String in ["shortsword","katana","greatsword"]:
+		start_room("",family,1,spec)
+		var segments: Array = game.move_def("draw")["hits"][0]["segments"]
+		var width: float = {"shortsword":475.0,"katana":475.0,"greatsword":525.0}[family]
+		check(segments.size()==1 and segments[0]["start"]==525.0 and segments[0]["end"]==675.0
+			and segments[0]["frames"][0]["boxes"][0][3]==width,
+			"family-only Draw Sword reads its authored four C-layer frames for "+family)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.25
+	move_target(game.monsters[0],POINT+Vector2(140,0))
+	press(KEY_A)
+	step(419)
+	check(cues("SM_BAL_SHOT").is_empty() and game.hit_count==0,"faster Draw Sword is still before frame 2 at 419 ms")
+	step(1)
+	check(cues("SM_BAL_SHOT").size()==1 and game.hit_count>0,
+		"weapon hit and shot share the accelerated body clock at 420 ms")
+
 func check_thirst() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2191,6 +2255,7 @@ func run() -> void:
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()
+	check_draw_sword()
 	check_thirst()
 	check_hardattack()
 	check_hardattack_charge()

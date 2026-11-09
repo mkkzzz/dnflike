@@ -306,9 +306,22 @@ class SkillRuntimeTest(unittest.TestCase):
         triple = self.runtime["variants"]["triple"][0]
         self.assertEqual(triple["job"], "weaponmaster")
         self.assertEqual(len(triple["replace_stages"]), 5)
-        self.assertEqual(self.runtime["variants"]["draw"][0]["job"], "weaponmaster")
         self.assertEqual(self.runtime["variants"]["rage_slash"][0]["job"], "berserker")
         self.assertEqual(self.runtime["variants"]["moonlight"][0]["job"], "soulbringer")
+
+    def test_draw_sword_preserves_native_weapon_families(self):
+        draw = self.runtime["moves"]["draw"]
+        self.assertEqual(draw["native_state"], "draw")
+        self.assertEqual(draw["stages"][0]["hits"], [{
+            "atk": "character/swordman/attackinfo/momentaryslash.atk",
+            "attached_weapon": True, "percent_col": 0,
+        }])
+        widths = {"shortsword": 475, "katana": 475, "greatsword": 525, "club": 500, "beamsword": 500}
+        self.assertEqual(set(draw["weapon_tracks"]), set(widths))
+        for family, width in widths.items():
+            active = [frame for frame in draw["weapon_tracks"][family]["frames"] if frame["boxes"]]
+            self.assertEqual([frame["frame"] for frame in active], [2, 3, 4, 5])
+            self.assertTrue(all(frame["boxes"][0]["box"][3] == width for frame in active))
 
     def test_generated_assets_exist_in_the_source_pack(self):
         records = self.pack["records"]

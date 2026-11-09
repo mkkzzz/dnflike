@@ -353,6 +353,11 @@ THIRST_AUDIO = {
     'SACRI': 'sounds/char/swordman/effect/sacri.ogg',
     'SACRI_LOOP': 'sounds/char/swordman/effect/sacri_loop.ogg',
 }
+DRAW_AUDIO = {
+    'SM_BAL_READY': 'sounds/char/swordman/sm_bal1.ogg',
+    'SM_BAL_SHOT': 'sounds/char/swordman/sm_bal2.ogg',
+    'SWD_BAL_END': 'sounds/char/swordman/weapon/swd_bal_03.ogg',
+}
 FRENZY_RECOVERY_EFFECTS = {
     'frenzy_create_ball': 'character/swordman/effect/animation/frenzy/createball.ani',
     'frenzy_ball': 'character/swordman/effect/animation/frenzy/ball.ani',
@@ -465,6 +470,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
     **{key: [path] for key, path in THIRST_AUDIO.items()},
+    **{key: [path] for key, path in DRAW_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
@@ -1400,6 +1406,8 @@ def main() -> int:
                         help='Add the ordinary Blood Blast layers and sounds')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
+    parser.add_argument('--extend-draw', action='store_true',
+                        help='Add the original Draw Sword ready, shot and sheath sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
@@ -1528,6 +1536,10 @@ def main() -> int:
                      for key in (move['cast_fx'], move['release_fx'], *burst['native_controller']['layers']))
         specs.append(('objects', burst['object'], burst['object']))
         specs.extend(('audio', key, path) for key, path in THIRST_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_draw:
+        specs = [('audio', key, path) for key, path in DRAW_AUDIO.items()]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_weapon_combo:

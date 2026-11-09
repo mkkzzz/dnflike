@@ -10,7 +10,7 @@ const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
 const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
 	"upper":"hitback","upper_followup":"upperslashafter",
-	"hardattack":"hardattack",
+	"hardattack":"hardattack","draw":"momentaryslash",
 	"frenzy1":"frenzy1","frenzy2":"frenzy2","frenzy3":"frenzy3","frenzy4":"frenzy4",
 	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3",
 	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5",
@@ -280,6 +280,7 @@ func companion_moves(levels: Dictionary, active_weapon: String) -> Dictionary:
 func _selected_move_spec(name: String) -> Dictionary:
 	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
 	var generated: Dictionary = skill_runtime.get("moves", {}).get(name, {})
+	if name == "draw" and generated.get("native_state","") == "draw":return generated.duplicate(true)
 	for field: String in ["hp_cost_row", "material_cost", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx"]:
 		if generated.has(field):
 			base[field] = generated[field]
@@ -405,6 +406,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			move["full_charge_hit"]["skill_id"] = name
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
+	var native_draw: bool = spec.get("native_state","") == "draw"
+	if native_draw and (weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name)):
+		var track: Dictionary = spec["weapon_tracks"].get(weapon,{})
+		var body := player_timeline("momentaryslash")
+		weapon_hits = Timeline.attached_attack_segments(body,[Timeline.from_ani(track)])
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:
@@ -428,6 +434,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				# CC7E5D / CC7E8F attach stage and parity clips at state entry.
 				built["fx"] = [{"key":"triple_move%d" % (index%2+1),"at":0.0,"action_clock":true},
 					{"key":"triple%d" % (index+1),"at":0.0,"action_clock":true}]
+			if native_draw:
+				# CB21D8 and CB22B3 are one-shot gates on body frames 2 and 8.
+				var shot := float(frames[2]["start_ms"])
+				built["sounds"] = [{"key":"SM_BAL_SHOT","at":shot},
+					{"key":"SWD_BAL_END","at":float(frames[8]["start_ms"])}]
+				var wav := weapon_wav(weapon)
+				if not wav.is_empty():built["sounds"].insert(1,{"key":String(wav[0]),"at":shot})
+				built["cancel_at"] = built["duration"]
 			move["stages"].append(built)
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
