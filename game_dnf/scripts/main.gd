@@ -2231,9 +2231,9 @@ func damage_player(amount: float, source: Vector2) -> void:
 
 # ---------------------------------------------------------------- passive objects
 
-func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing: int, power: float, source := {}, definition := {}) -> void:
+func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing: int, power: float, source := {}, definition := {}) -> Dictionary:
 	var obj: Dictionary = table.object(String(hit["object"])) if definition.is_empty() else definition
-	if obj.is_empty():return
+	if obj.is_empty():return {}
 	var off: Vector3 = hit.get("offset",Vector3.ZERO)
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
 		"pos":Vector2(pos.x+off.x*facing,pos.y+off.y),"z":z+off.z,"facing":facing,"clock":0.0,
@@ -2283,6 +2283,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 			"path":"passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl",
 			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
+	return entity
 
 func step_objects(ms: float, first_new_object_id := -1) -> void:
 	var khazan_field: Dictionary = {}
@@ -2321,6 +2322,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var first_sound := String(o["first_update_sound"])
 				o.erase("first_update_sound")
 				play_sound(first_sound)
+			if controller.has("crystals"):step_saya_crystal_field(o,controller)
 			if kind == "saya_field" and ghost_field_pulse(o):
 				# A68045..A68152 runs the area attack before the deletion check.
 				pulse_saya_field(o)
@@ -2337,6 +2339,9 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			continue
 		if kind == "rasa_child":
 			if not step_rasa_child(o,controller):objects.remove_at(i)
+			continue
+		if kind == "sayaex_ice":
+			if not step_saya_crystal(o,controller):objects.remove_at(i)
 			continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
@@ -2417,10 +2422,13 @@ func ghost_field_pulse(field: Dictionary) -> bool:
 
 func ghost_field_contains(field: Dictionary, position: Vector2) -> bool:
 	var controller: Dictionary = field["hit"]["native_controller"]
+	return ghost_distance(field["pos"],position,float(controller["depth_scale"])) <= int(controller["radius"])
+
+func ghost_distance(origin: Vector2, position: Vector2, depth_scale: float) -> int:
 	# 9269E0 -> 406580 -> 7F10A0 projects integer depth and truncates distance.
-	var delta := Vector2i(position)-Vector2i(field["pos"])
-	var depth := int(_native_float32(float(delta.y)/_native_float32(float(controller["depth_scale"]))))
-	return int(sqrt(delta.x*delta.x+depth*depth)) <= int(controller["radius"])
+	var delta := Vector2i(position)-Vector2i(origin)
+	var depth := int(_native_float32(float(delta.y)/_native_float32(depth_scale)))
+	return int(sqrt(delta.x*delta.x+depth*depth))
 
 func update_khazan_aura(field: Dictionary = {}) -> void:
 	if numeric_player == null:return
@@ -2456,6 +2464,129 @@ func pulse_saya_field(field: Dictionary) -> void:
 		var position: Vector2 = enemy["pos"]
 		var impact := Vector3(position.x,position.y,int((height+height_limit)/2.0))
 		land_hit(attacker,enemy,hit,impact,int(field["facing"]),float(field["power"]))
+
+func step_saya_crystal_field(field: Dictionary, controller: Dictionary) -> void:
+	var age := float(field["clock"])
+	if age >= float(field["exit_at_ms"]):return
+	var ice: Dictionary = controller["crystals"]
+	if not field.has("crystal_queue"):
+		# A67C81..A67D88 creates the initial batch in ordinal order.
+		field["crystal_queue"] = {}
+		field["crystal_rng"] = rng.seed_value ^ int(field["id"])
+		for ordinal in int(ice["count"]):spawn_saya_crystal(field,controller,ordinal)
+		return
+	var queue: Dictionary = field["crystal_queue"]
+	for ordinal: int in queue.keys():
+		if age < float(queue[ordinal]):continue
+		spawn_saya_crystal(field,controller,ordinal)
+		queue.erase(ordinal)
+
+func _saya_random(seed_value: int) -> Vector2i:
+	# E47F50 combines three consecutive unsigned 32-bit LCG states.
+	var first := (seed_value*1103515245+12345) & 0xffffffff
+	var second := (first*1103515245+12345) & 0xffffffff
+	var third := (second*1103515245+12345) & 0xffffffff
+	var sample := (((first>>16)&0x7ff)<<20) | (((second>>16)&0x3ff)<<10) | ((third>>16)&0x3ff)
+	return Vector2i(third,sample)
+
+func spawn_saya_crystal(field: Dictionary, controller: Dictionary, ordinal: int) -> void:
+	var ice: Dictionary = controller["crystals"]
+	var radius := int(controller["radius"])
+	@warning_ignore("integer_division")
+	var band := 2*radius/int(ice["count"])
+	var rx := _saya_random(int(field["crystal_rng"]))
+	var ry := _saya_random(rx.x)
+	field["crystal_rng"] = ry.x
+	var center := Vector2i(field["pos"])
+	var depth_scale := _native_float32(29.0*_native_float32(0.01))
+	@warning_ignore("integer_division")
+	var depth_offset := _native_float32((ry.y%radius-radius/2)*depth_scale)
+	var point := Vector2(center.x-radius+band*ordinal+rx.y%maxi(1,band),int(_native_float32(center.y+depth_offset)))
+	var hit: Dictionary = ice["child"].duplicate()
+	hit["skill_id"] = field["hit"]["skill_id"]
+	var object := spawn_object(hit,String(field["owner"]),point,float(ice["height"]),int(field["facing"]),float(field["power"]),field["source"])
+	object["crystal_parent"] = field
+	object["crystal_ordinal"] = ordinal
+	object["crystal_born_at"] = field["clock"]
+	object["crystal_phase"] = "ready"
+	object["crystal_phase_at"] = 0.0
+	object["crystal_ready_offset"] = _saya_random(int(object["id"])).y%int(hit["native_controller"]["ready_first_ms"])
+
+func step_saya_crystal(object: Dictionary, controller: Dictionary) -> bool:
+	var field: Dictionary = object["crystal_parent"]
+	var field_controller: Dictionary = field["hit"]["native_controller"]
+	var ice: Dictionary = field_controller["crystals"]
+	var age := float(object["clock"])
+	var born := float(object["crystal_born_at"])
+	var exit_age := float(field["exit_at_ms"])-born
+	if age >= exit_age and object["crystal_phase"] != "end":
+		# A67F02..A67F3B forces End at the start of the parent's exit.
+		end_saya_crystal(object,exit_age)
+	var elapsed := age-float(object["crystal_phase_at"])
+	match String(object["crystal_phase"]):
+		"ready":
+			var radius := int(ice["range"])
+			for enemy: Dictionary in monsters:
+				if float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
+				if absi(int(enemy["z"])-int(object["z"])) > radius:continue
+				var distance := ghost_distance(object["pos"],enemy["pos"],float(field_controller["depth_scale"]))
+				if distance > radius:continue
+				object["crystal_target"] = enemy
+				object["crystal_origin"] = Vector3i(int(object["pos"].x),int(object["pos"].y),int(object["z"]))
+				object["crystal_flight_ms"] = int(_native_float32(_native_float32(distance/float(ice["speed"]))*1000.0))
+				object["crystal_phase"] = "start"
+				object["crystal_phase_at"] = age
+				break
+		"start":
+			if elapsed >= float(controller["start_sound_at_ms"]) and not object.has("crystal_start_sound"):
+				object["crystal_start_sound"] = true
+				play_sound(String(controller["start_sound"]))
+			if elapsed >= float(controller["start_ms"]):
+				object["crystal_phase"] = "stay"
+				object["crystal_phase_at"] = age
+		"stay":
+			var target: Dictionary = object["crystal_target"]
+			if not monsters.has(target):
+				end_saya_crystal(object,age)
+				return true
+			var point := saya_crystal_impact(target)
+			var origin: Vector3i = object["crystal_origin"]
+			var flight := int(object["crystal_flight_ms"])
+			object["pos"] = Vector2(_saya_interpolate(origin.x,int(point.x),int(elapsed),flight),_saya_interpolate(origin.y,int(point.y),int(elapsed),flight))
+			object["z"] = _saya_interpolate(origin.z,int(point.z),int(elapsed),flight)
+			if elapsed >= float(flight):
+				var attacker: Dictionary = player if object["owner"] == "player" else object["source"]
+				if not attacker.is_empty() and float(target["hp"]) > 0.0 and not target_invulnerable(target):
+					# A67924 uses a direct attack, independent of ANI attack boxes.
+					land_hit(attacker,target,object["hit"],point,int(object["facing"]),float(object["power"]))
+				end_saya_crystal(object,age)
+		"end":
+			if elapsed >= float(controller["end_ms"]):
+				var due := born+age+float(ice["respawn_ms"])
+				# A68259 queues the removed ordinal only when due strictly before exit.
+				if due < float(field["exit_at_ms"]):field["crystal_queue"][object["crystal_ordinal"]] = due
+				return false
+	return true
+
+func end_saya_crystal(object: Dictionary, age: float) -> void:
+	object["crystal_phase"] = "end"
+	object["crystal_phase_at"] = age
+	object.erase("crystal_target")
+
+func saya_crystal_impact(target: Dictionary) -> Vector3:
+	var height := float(target["z"])
+	var top := height
+	for box: AABB in enemy_damage_boxes(target):top = maxf(top,box.end.z)
+	# A67848 adds half the target's native height. Use the current hurt extent
+	# until the native +0x11C height getter is mapped for the enemy classes.
+	return Vector3(int(target["pos"].x),int(target["pos"].y),int(height)+int((top-height)*0.5))
+
+func _saya_interpolate(origin: int, target: int, age: int, duration: int) -> int:
+	# 11AEE50 multiplies before dividing, with integer endpoints and SSE rounding.
+	if age >= duration:return target
+	if age <= 0:return origin
+	var scaled := _native_float32(_native_float32(float(target-origin)*age)/float(duration))
+	return int(_native_float32(float(origin)+scaled))
 
 func rasa_attachment_count(target_id: int) -> int:
 	var count := 0
@@ -3362,6 +3493,15 @@ func view_snapshot() -> Dictionary:
 		var controller: Dictionary = o["hit"].get("native_controller",{})
 		if controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
+		elif controller.get("kind","") == "sayaex_ice":
+			var phase := String(o["crystal_phase"])
+			item["clock"] = float(o["clock"])-float(o["crystal_phase_at"])
+			item["loop"] = phase == "ready"
+			if phase == "ready":item["clock"] += float(o["crystal_ready_offset"])
+			else:
+				item["id"] = "%s:%s"%[o["id"],phase]
+				item["effect"] = controller["layers"][phase]
+			objs.append(item)
 		elif controller.get("kind","") == "rasa_child":
 			objs.append_array(_rasa_child_layers(item,o,controller))
 		else:

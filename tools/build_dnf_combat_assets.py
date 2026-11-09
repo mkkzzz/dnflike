@@ -339,6 +339,8 @@ GHOST_FIELD_AUDIO = {
     'GHOST_BREMEN': 'sounds/effect/magic/ghost_bremen.ogg',
     'SM_GHOST_SAYA': 'sounds/char/swordman/sm_sghost.ogg',
     'GHOST_SAYA': 'sounds/effect/magic/ghost_saya.ogg',
+    'P_SAYA_ICE': 'sounds/char/swordman/effect/p_saya_ice.ogg',
+    'P_SAYA_ICE_HIT': 'sounds/char/swordman/effect/p_saya_ice_hit.ogg',
     'SM_RASA': 'sounds/char/swordman/sm_rasa.ogg',
 }
 
@@ -1195,6 +1197,13 @@ def extend_ghost_field(library: Path | None, skill: str, output: Path = OUT) -> 
     if skill == 'sayaex':
         path = stage['hits'][0]['object']
         specs.append(('objects', path, path))
+        ice = controller['crystals']['child']
+        path = ice['object']
+        specs.append(('objects', path, path))
+        specs.extend(('effects', key, runtime['assets']['effect_anims'][key])
+                     for key in ice['native_controller']['layers'].values())
+        specs.extend(('audio', key, GHOST_FIELD_AUDIO[key])
+                     for key in (ice['native_controller']['start_sound'], 'P_SAYA_ICE_HIT'))
     for key in (stage['sounds'][0]['key'], controller['first_update_sound']):
         specs.append(('audio', key, GHOST_FIELD_AUDIO[key]))
     return extend_skill_banks(library, output, specs)

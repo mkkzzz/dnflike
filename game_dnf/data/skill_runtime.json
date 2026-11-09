@@ -27,6 +27,7 @@
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
    "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
+   "skillfx_end_7120532f": "passiveobject/character/swordman/animation/sayaex/end.ani",
    "skillfx_epidemicrasaareaappear1_a9cc3101": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear1.ani",
    "skillfx_epidemicrasaareaappear2_c53c1d39": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear2.ani",
    "skillfx_epidemicrasaareadisappear_d8f553de": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareadisappear.ani",
@@ -71,8 +72,10 @@
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
    "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
+   "skillfx_start_c9ff53c9": "passiveobject/character/swordman/animation/sayaex/start.ani",
    "skillfx_startup_ldodge_0030e5f5": "passiveobject/character/swordman/animation/epidemicrasa/startup_ldodge.ani",
    "skillfx_stay_633ceea4": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
+   "skillfx_stay_fe49f3a2": "passiveobject/character/swordman/animation/sayaex/stay.ani",
    "skillfx_stay_ldodge_e8328c3d": "passiveobject/character/swordman/animation/epidemicrasa/stay_ldodge.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
@@ -110,6 +113,7 @@
    "passiveobject/character/swordman/reflectguardbead.obj": "passiveobject/character/swordman/reflectguardbead.obj",
    "passiveobject/character/swordman/saya.obj": "passiveobject/character/swordman/saya.obj",
    "passiveobject/character/swordman/sayaex.obj": "passiveobject/character/swordman/sayaex.obj",
+   "passiveobject/character/swordman/sayaexice.obj": "passiveobject/character/swordman/sayaexice.obj",
    "passiveobject/character/swordman/wavespinarea.obj": "passiveobject/character/swordman/wavespinarea.obj"
   },
   "player_anims": {
@@ -3732,8 +3736,10 @@
     "area_membership_filters",
     "area_draw_order",
     "status_level_resistance_formula",
-    "crystal_lifecycle",
-    "charged_ghost_slash_interaction"
+    "crystal_target_predicates",
+    "crystal_native_height",
+    "crystal_world_rng_seed",
+    "normal_learning_and_cube_cost"
    ],
    "name": "冰晶之萨亚",
    "native_charge_ani": "throw1",
@@ -3763,6 +3769,30 @@
         ],
         "appear_ms": 1040.0,
         "area_scale": 1.0729613733905579,
+        "crystals": {
+         "child": {
+          "native_controller": {
+           "end_ms": 560.0,
+           "kind": "sayaex_ice",
+           "layers": {
+            "end": "skillfx_end_7120532f",
+            "start": "skillfx_start_c9ff53c9",
+            "stay": "skillfx_stay_fe49f3a2"
+           },
+           "ready_first_ms": 1000,
+           "start_ms": 840.0,
+           "start_sound": "P_SAYA_ICE",
+           "start_sound_at_ms": 70
+          },
+          "object": "passiveobject/character/swordman/sayaexice.obj",
+          "percent_col": 6
+         },
+         "count_col": 5,
+         "height": 60,
+         "range_col": 8,
+         "respawn_col": 7,
+         "speed": 1000
+        },
         "depth_scale": 0.29,
         "disappear_fx": "skillfx_sayaareadisappear_f0a73c78",
         "disappear_ms": 320.0,

@@ -1193,7 +1193,28 @@ def build_move(
             # CD7C73 distinguishes 20062 from ordinary 20012, and the last
             # summoned spirit remains skill 96 after the field disappears.
             hit["native_controller"]["ghost_variant"] = "sayaex"
-            result["fidelity_pending"].extend(["crystal_lifecycle", "charged_ghost_slash_interaction"])
+            ice_path = add_object(objects, OBJ_ROOT + "sayaexice.obj")
+            ice = records[ice_path]["decoded"]
+            ready = records[ice["basic_motion"][0]]["decoded"]
+            start, stay, end = ice["etc_motions"]
+            layers = {phase: add_fx(fx, effects, motion) for phase, motion in
+                      zip(("start", "stay", "end"), (start, stay, end))}
+            if not all(layers.values()):
+                raise ValueError("Incomplete original Saya EX ice animations")
+            launch, = records[start]["decoded"]["sound_events"]
+            hit["native_controller"]["crystals"] = {
+                "count_col": 5, "respawn_col": 7, "range_col": 8,
+                "height": statics[4], "speed": statics[5],
+                "child": {"object": ice_path, "percent_col": 6, "native_controller": {
+                    "kind": "sayaex_ice", "layers": layers,
+                    "ready_first_ms": ready["timeline"][0]["end_ms"],
+                    "start_ms": duration_ms(records[start]), "end_ms": duration_ms(records[end]),
+                    "start_sound": launch["sound"],
+                    "start_sound_at_ms": records[start]["decoded"]["timeline"][launch["frame"]]["start_ms"],
+                }},
+            }
+            result["fidelity_pending"].extend(["crystal_target_predicates", "crystal_native_height",
+                                               "crystal_world_rng_seed", "normal_learning_and_cube_cost"])
         # The actor sound is in the phase 1 branch, before object creation.
         stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": [],
                       "sounds": [{"at": 0, "key": cast_sound}]}]
@@ -1676,6 +1697,7 @@ def main() -> int:
         }
         object_candidates.update(OBJ_ROOT + f"icewave{i}.obj" for i in range(1, 7))
         object_candidates.update(OBJ_ROOT + key + ".obj" for key in GHOST_FIELD_SKILLS)
+        object_candidates.add(OBJ_ROOT + "sayaexice.obj")
         object_candidates.update((RASA_CREATOR, RASA_CHILD))
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         SAFE_OBJECTS.clear()

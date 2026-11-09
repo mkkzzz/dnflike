@@ -134,11 +134,12 @@
   "hardattack_wave_khazan_up",
   "hardattack_wave_saya_up",
   "hardattack_wave_bremen_up",
-  "passiveobject/character/swordman/sayaex.obj"
+  "passiveobject/character/swordman/sayaex.obj",
+  "passiveobject/character/swordman/sayaexice.obj"
  ],
- "effects": 258,
+ "effects": 261,
  "digits": 61,
- "audio_keys": 240,
+ "audio_keys": 242,
  "unresolved": 32,
  "unresolved_items": [
   {

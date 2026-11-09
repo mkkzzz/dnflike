@@ -493,6 +493,15 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 						var children: Array = _build_stage({"hits":[controller["child"]]},skill)["hits"]
 						if children.is_empty():continue
 						controller["child"] = children[0]
+					elif controller.has("crystals"):
+						var ice: Dictionary = controller["crystals"]
+						if row.size() <= int(ice["range_col"]):continue
+						var children: Array = _build_stage({"hits":[ice["child"]]},skill)["hits"]
+						if children.is_empty():continue
+						ice["child"] = children[0]
+						ice["count"] = int(row[int(ice["count_col"])])
+						ice["respawn_ms"] = int(row[int(ice["respawn_col"])])
+						ice["range"] = int(row[int(ice["range_col"])])
 					elif controller["kind"] == "rasa_child":
 						if row.size() <= int(controller["attachment_duration_col"]):continue
 						controller["attachment_ms"] = float(row[int(controller["attachment_duration_col"])])

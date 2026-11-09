@@ -60,6 +60,7 @@ func run() -> void:
 	check_ghost_cast_sounds(game,session)
 	check_khazan(game,session)
 	check_saya(game,session)
+	check_saya_crystals(game,session)
 	check_bremen_freeze(game,session)
 	check_rasa(game,session)
 	check_rasa_blind(game,session)
@@ -330,6 +331,7 @@ func check_saya(game, session) -> void:
 		check(game.objects.all(func(object):return int(object["id"])!=field_id) and game.player["hardattack_ghost"]==skill,
 			label+" deletes the original field and retains the last summoned spirit")
 		if skill=="sayaex":
+			game.step_objects(240) # The children's End clip can outlive the field.
 			game.step_action(600,Vector2.ZERO)
 			game.skill_levels["hardattack"] = 1
 			game.skill_levels["hardattackcharge"] = 1
@@ -349,6 +351,109 @@ func check_saya(game, session) -> void:
 			check(game.objects.size()==1 and game.objects[0]["def"]["bank"]=="hardattack_wave_saya_up"
 				and game.objects[0]["hit"]["percent"]==595.0,
 				"the last EX Saya summon selects the Saya wave even after the EX field expires")
+
+func check_saya_crystals(game, session) -> void:
+	game.restart()
+	game.monsters.clear()
+	game.rng.reseed(16)
+	game.numeric_player = Actor.new()
+	game.numeric_player.configure(session.stats())
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	game.skill_levels = {"sayaex":1}
+	game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+	game.player["mp"] = game.move_def("sayaex")["mp"]
+	game.player["pos"] = Vector2(400,250)
+	game.player["facing"] = 1
+	game.configure_skill_slots(["sayaex"])
+	var key := InputEventKey.new()
+	key.physical_keycode = KEY_A
+	key.pressed = true
+	game._input(key)
+	game.step_player(0,Vector2.ZERO)
+	key.pressed = false
+	game._input(key)
+	game.step_action(500,Vector2.ZERO)
+	check(game.objects.size()==1,"EX Saya slot input creates the original field before the child update")
+	if game.objects.size()!=1:return
+	var field: Dictionary = game.objects[0]
+	game.step_objects(0)
+	check(game.objects.size()==11,"EX Saya initial batch contains ten original 20063 crystals")
+	if game.objects.size()!=11:return
+	var center := Vector2i(field["pos"])
+	for ordinal in range(10):
+		var crystal: Dictionary = game.objects[ordinal+1]
+		var position := Vector2i(crystal["pos"])
+		check(crystal["crystal_ordinal"]==ordinal and is_same(crystal["crystal_parent"],field)
+			and crystal["def"]["path"].ends_with("/sayaexice.obj") and crystal["z"]==60.0
+			and position.x>=center.x-250+ordinal*50 and position.x<center.x-200+ordinal*50
+			and position.y>=center.y-37 and position.y<=center.y+36,"EX Saya uses the native position band and height for crystal %d"%ordinal)
+	var crystal: Dictionary = game.objects[1]
+	var initial_id := int(crystal["id"])
+	var origin := Vector2(crystal["pos"])
+	var hit: Dictionary = crystal["hit"]
+	var controller: Dictionary = hit["native_controller"]
+	check(hit["percent"]==120 and hit["damage_type"]=="magical" and hit["element"]=="water" and hit["effects"].is_empty()
+		and hit["atk"]["hit_wav"]=="P_SAYA_ICE_HIT" and crystal["def"]["segments"].is_empty(),"EX crystal has its own rank-1 water ATK and no attack boxes or field freeze")
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has(initial_id) and crystal["crystal_ready_offset"]>=0 and crystal["crystal_ready_offset"]<1000,"EX crystal Ready uses its object-ID animation phase")
+	var far: Dictionary = game.spawn_enemy(origin-Vector2(151,0))
+	var high: Dictionary = game.spawn_enemy(origin-Vector2(150,0))
+	var invulnerable: Dictionary = game.spawn_enemy(origin-Vector2(150,0))
+	high["z"] = 211.0
+	invulnerable["invuln_ms"] = 1.0
+	game.step_objects(0)
+	check(crystal["crystal_phase"]=="ready","EX crystal rejects distance 151, height difference 151, and protected targets")
+	var target: Dictionary = game.spawn_enemy(origin-Vector2(150,0))
+	target["hp"] = 100000.0
+	target["z"] = 210.0
+	var closer: Dictionary = game.spawn_enemy(origin-Vector2(149,0))
+	game.bus.clear_history()
+	game.step_objects(0)
+	check(crystal["crystal_phase"]=="start" and is_same(crystal["crystal_target"],target) and crystal["crystal_flight_ms"]==150,
+		"EX crystal accepts both inclusive thresholds and chooses the first eligible target")
+	game.view.present(game.view_snapshot(),0,0)
+	check(game.view.object_views.has("%d:start"%initial_id) and not game.view.object_views.has(initial_id),"EX crystal displays the original Start ANI instead of Ready")
+	var launch_cues := func() -> Array:
+		return game.bus.events_of("combat.cue").filter(func(event):return event.get("key")==controller["start_sound"])
+	game.step_objects(69)
+	check(launch_cues.call().is_empty(),"EX crystal has no launch sound before Start frame 1")
+	game.step_objects(1)
+	check(not launch_cues.call().is_empty(),"EX crystal uses the frame-1 launch sound")
+	game.step_objects(769)
+	check(crystal["crystal_phase"]=="start" and crystal["pos"]==origin,"EX crystal does not travel during the 840ms Start clip")
+	game.step_objects(1)
+	game.view.present(game.view_snapshot(),0,0)
+	check(crystal["crystal_phase"]=="stay" and game.view.object_views.has("%d:stay"%initial_id),"EX crystal enters the original Stay ANI at 840ms")
+	target["pos"] = origin-Vector2(250,-10)
+	game.step_objects(75)
+	check(crystal["pos"]==origin+Vector2(-125,5) and target["hp"]==100000.0,"EX crystal interpolates toward the target's current position without early damage")
+	target["pos"] += Vector2(-20,-20)
+	game.rng.reseed(saya_freeze_seed(0,999))
+	game.step_objects(75)
+	var impacts: Array = game.bus.events_of("combat.hit").filter(func(event):return event["atk"].ends_with("/sayaexice.atk"))
+	check(impacts.size()==1 and impacts[0]["target"]==target["id"] and Vector2(impacts[0]["point"].x,impacts[0]["point"].y)==target["pos"]
+		and target["hp"]<100000.0 and closer["hp"]>0 and far["hp"]>0,"EX crystal lands one direct hit at the moved target with no contact-box sweep")
+	game.view.present(game.view_snapshot(),0,0)
+	check(crystal["crystal_phase"]=="end" and game.view.object_views.has("%d:end"%initial_id)
+		and game.bus.events_of("combat.cue").any(func(event):return event.get("key")=="P_SAYA_ICE_HIT"),"EX crystal contact enters the original End ANI and ATK sound")
+	game.monsters.clear()
+	game.step_objects(559)
+	check(game.objects.has(crystal) and field["crystal_queue"].is_empty(),"EX crystal remains through the final End frame")
+	game.step_objects(1)
+	check(not game.objects.has(crystal) and field["crystal_queue"].get(0)==2050.0,"EX crystal queues its ordinal only after End finishes")
+	game.step_objects(499)
+	check(game.objects.size()==10,"EX crystal does not respawn before the level-row delay")
+	game.step_objects(1)
+	var replacement: Dictionary = game.objects.back()
+	check(game.objects.size()==11 and replacement["crystal_ordinal"]==0 and replacement["id"]!=initial_id
+		and replacement["pos"].x>=center.x-250 and replacement["pos"].x<center.x-200,"EX crystal respawns after 500ms in the same ordinal band")
+	game.step_objects(7630)
+	check(game.objects.slice(1).all(func(object):return object["crystal_phase"]=="end"),"EX field fade forces all living crystals into End")
+	game.step_objects(320)
+	check(game.objects.size()==10 and not game.objects.has(field),"EX crystals finish their fade independently of the expired parent")
+	game.step_objects(240)
+	check(game.objects.is_empty() and field["crystal_queue"].is_empty(),"EX crystal forced exit cannot hit or start a respawn after the field expires")
 
 func check_bremen_freeze(game, session) -> void:
 	# Equal rank and resistance gives a strict 2500/10000 threshold.
