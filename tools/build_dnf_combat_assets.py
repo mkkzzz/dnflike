@@ -345,6 +345,18 @@ FRENZY_SWING_EFFECTS = {
 EFFECTS.update(FRENZY_SWING_EFFECTS)
 EFFECTS.update(FRENZY_RECOVERY_EFFECTS)
 
+# State 17 installs these two common animations and plays MOON_CURTAIN_LIGHT.
+SELF_BUFF_EFFECTS = {
+    'self_buff_start': 'common/commoneffect/animation/selfbuff_start.ani',
+    'self_buff_loop': 'common/commoneffect/animation/selfbuff_loop.ani',
+}
+OVERDRIVE_AUDIO = {
+    'MOON_CURTAIN_LIGHT': 'sounds/effect/magic/mcurtain_light.ogg',
+    'SM_OVERDRIVE': 'sounds/char/swordman/sm_overdrive.ogg',
+    'BUFF_OVERDRIVE': 'sounds/effect/magic/buff_odrive.ogg',
+}
+EFFECTS.update(SELF_BUFF_EFFECTS)
+
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
 UPPER_FOLLOWUP_AUDIO = {
     'UPPER_SLASH_02': 'sounds/char/swordman/effect/upper_slash_02.ogg',
@@ -411,6 +423,7 @@ SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
+    **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
@@ -1340,6 +1353,8 @@ def main() -> int:
                         help='Add original wave cast sounds, preserving existing assets')
     parser.add_argument('--extend-frenzy', action='store_true',
                         help='Add the original Frenzy release animation and cast sounds')
+    parser.add_argument('--extend-overdrive', action='store_true',
+                        help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
                         help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-guard', action='store_true',
@@ -1430,6 +1445,11 @@ def main() -> int:
         specs.extend(('effects', key, path) for key, path in FRENZY_SWING_EFFECTS.items())
         specs.extend(('effects', key, path) for key, path in FRENZY_RECOVERY_EFFECTS.items())
         specs.extend(('audio', key, path) for key, path in FRENZY_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_overdrive:
+        specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]
+        specs.extend(('audio', key, path) for key, path in OVERDRIVE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_armor_light:

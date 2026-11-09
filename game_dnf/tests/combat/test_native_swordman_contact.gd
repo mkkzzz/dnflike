@@ -892,12 +892,14 @@ func check_overdrive_attributes() -> void:
 		spec["skill_slots"] = ["overdrive"]
 		start_room("original_27601","katana",1,spec)
 		game.player["mp"] = 5000.0
+		game.numeric_player.values["cast_speed"] = 1.0
 		var base_crit: float = game.numeric_player.values["physical_crit"]
 		var base_physical: float = game.numeric_player.values["physical_attack"]
 		var base_magical: float = game.numeric_player.values["magical_attack"]
 		var base_panel: float = game.numeric_player.values["physical_panel"]
 		press(KEY_A)
 		step(0)
+		step(500)
 		var effect: Dictionary = game.numeric_player.effects.active.get("overdrive",{})
 		check(effect.get("rank")==sample[0] and effect.get("remaining_ms")==120000.0,
 			"Overdrive shortcut applies the original duration at rank "+str(sample[0]))
@@ -909,7 +911,6 @@ func check_overdrive_attributes() -> void:
 		check(game.numeric_player.values["physical_panel"]>base_panel,
 			"Overdrive updates the derived physical panel with the weapon attack bonus")
 		if sample[0]==2:
-			step(game.action_duration("overdrive"))
 			var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
 			game.numeric_player.values["attack_speed"] = 1.0
 			game.numeric_player.values["hit"] = 1.0
@@ -927,6 +928,49 @@ func check_overdrive_attributes() -> void:
 			and is_equal_approx(game.numeric_player.values["physical_attack"],base_physical)
 			and is_equal_approx(game.numeric_player.values["physical_panel"],base_panel),
 			"Overdrive expiry restores baseline physical attack, panel and critical chance")
+
+func check_overdrive_cast() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"overdrive","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["overdrive"]
+	for sample: Array in [[1.0,334,500],[1.25,267,401]]:
+		start_room("original_27601","katana",1,spec)
+		game.player["mp"] = 5000.0
+		game.numeric_player.values["cast_speed"] = sample[0]
+		press(KEY_A)
+		step(0)
+		check(game.player_ani()[0]=="summon2" and cues("self_buff_start").size()==1
+			and cues("MOON_CURTAIN_LIGHT").size()==1 and cues("SM_OVERDRIVE").size()==1,
+			"Overdrive opens with the original CHR buff pose, common effect and two cast sounds")
+		var start_cues := cues("self_buff_start")
+		check(not start_cues.is_empty() and start_cues[0]["follow"]==0 and start_cues[0]["offset_y"]==-130,
+			"Overdrive attaches the cast effect above the caster")
+		step(sample[1]-1)
+		check(cues("self_buff_loop").is_empty() and game.active_effect("overdrive").is_empty(),
+			"Overdrive's start effect and cast persist before the original loop handoff")
+		step(1)
+		check(cues("self_buff_loop").size()==1 and game.active_effect("overdrive").is_empty(),
+			"Overdrive hands off to the looping effect at the speed-scaled start ANI boundary")
+		step(sample[2]-sample[1]-1)
+		check(game.active_effect("overdrive").is_empty() and cues("BUFF_OVERDRIVE").is_empty(),
+			"Overdrive applies no stats or finish sound before the scaled buff ANI ends")
+		step(1)
+		check(not game.active_effect("overdrive").is_empty() and game.player["action"]==""
+			and cues("BUFF_OVERDRIVE").size()==1 and game.view_snapshot()["player"]["aura"]=="",
+			"Overdrive applies the buff on normal exit and plays its own finish sound")
+	start_room("original_27601","katana",1,spec)
+	game.player["mp"] = 5000.0
+	game.numeric_player.values["cast_speed"] = 1.0
+	press(KEY_A)
+	step(0)
+	step(400)
+	game.damage_player(7,POINT+Vector2(60,0))
+	step(100)
+	check(not game.player.has("overdrive_cast") and game.active_effect("overdrive").is_empty()
+		and cues("BUFF_OVERDRIVE").is_empty(),"Incoming damage interrupts Overdrive without attaching the buff")
 
 func check_frenzy_drain() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
@@ -1435,6 +1479,7 @@ func run() -> void:
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
 	check_overdrive_attributes()
+	check_overdrive_cast()
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()
