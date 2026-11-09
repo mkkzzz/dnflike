@@ -23,5 +23,8 @@ func emit_at(emitter: RefCounted, elapsed_ms: int) -> Dictionary:
 	_draw_time_ms = int(clock.call())
 	return emitter.emit_at(elapsed_ms)
 
+func draw_global() -> int:
+	return random.next_u31(int(clock.call()),true)
+
 func _draw() -> int:
 	return random.next_u31(_draw_time_ms,true)

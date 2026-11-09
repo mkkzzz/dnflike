@@ -2264,6 +2264,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("skill_id","") == "outragebreak":
 					hit = prepare_outrage_damage(hit)
 					player["native_phase"]["outrage_stone_pending"] = true
+					# CB460B starts the room shake on the landing update.
+					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -3495,6 +3497,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var tl: Array = o.get("timeline",obj["timeline"])
 		if kind == "outrage_floor":
 			if old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
+				# A72AC8 uses the same strength and a longer independent window.
+				bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":500})
 				play_sound("OUTRAGE_CRASH")
 				spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
 				emit_outrage_floor_particle(o,controller["light_particle"])

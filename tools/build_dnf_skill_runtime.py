@@ -1251,7 +1251,7 @@ def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, obj
             "requires_effect": "frenzy", "hp_cost_row": 3, "material_cost": fixed_cube_cost(skill, records),
             "fixed_attack_base": fixed_attack_base, "impact_frame": 5,
             "stone_particle": OUTRAGE_PARTICLES["stone"],
-            "fidelity_pending": ["hp_write_timing", "screen_shake", "special_target_dispatch"],
+            "fidelity_pending": ["hp_write_timing", "special_target_dispatch"],
             "stages": [{"ani": "outragebreakready", "fx": ready_fx, "voice": "OUTRAGE_READY"},
                        {"ani": "outragebreakslash", "fx": slash_fx,
                         "sounds": [{"at": impact, "key": key} for key in ("OUTRAGE_SWING", "CCRASH_CRASH")],

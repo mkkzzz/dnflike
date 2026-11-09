@@ -5482,7 +5482,6 @@
   "outragebreak": {
    "fidelity_pending": [
     "hp_write_timing",
-    "screen_shake",
     "special_target_dispatch"
    ],
    "fixed_attack_base": {

@@ -48,6 +48,10 @@ var object_views: Dictionary = {}
 var ghosts: Array = []
 var aura
 var camera_x := 0.0
+var _shake_degree := 0
+var _shake_remaining_ms := 0.0
+var _shake_fresh := false
+var _shake_offset := Vector2.ZERO
 var _assets: Dictionary
 var _combat: Dictionary
 var _effects: Dictionary = {}
@@ -251,7 +255,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		node.tint = c
 		node.queue_redraw()
 	camera_x = stage.camera_for(_player_pos.x)
-	world.position = Vector2(-roundf(camera_x),0)
+	_advance_camera_shake(sim_ms)
+	world.position = Vector2(-roundf(camera_x),0)+_shake_offset
 	stage.apply_camera(roundf(camera_x))
 	var revive_anchor := _canvas(_player_pos,_player_z) + world.position
 	var revive_ms := minf(sim_ms,50.0)
@@ -269,10 +274,25 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	var hud_state: Dictionary = s["hud"].duplicate()
 	hud_state["enemies"] = s["enemies"]
 	hud_state["numbers"] = numbers
-	hud_state["camera"] = Vector2(roundf(camera_x),0)
+	hud_state["camera"] = -world.position
 	hud_state["width"] = float(Frame.WIDTH)
 	hud_state["height"] = float(Frame.HEIGHT)
 	hud.present(hud_state)
+
+func _advance_camera_shake(sim_ms: float) -> void:
+	if _shake_remaining_ms <= 0.0 or (not _shake_fresh and sim_ms <= 0.0):return
+	if not _shake_fresh:_shake_remaining_ms -= sim_ms
+	_shake_fresh = false
+	# 8E0B4A..8E0BAE at the ordinary 1.0 camera scale. The source
+	# consumes both draws before clearing the offset on the deadline.
+	var span := 2*_shake_degree+1
+	var x := particle_bursts.draw_global()%span-_shake_degree
+	var y := particle_bursts.draw_global()%span-_shake_degree
+	if _shake_remaining_ms <= 0.0 or is_zero_approx(_shake_remaining_ms):
+		_shake_remaining_ms = 0.0
+		_shake_offset = Vector2.ZERO
+	else:
+		_shake_offset = Vector2(x,y)
 
 func _set_weapon(weapon: String) -> void:
 	_weapon = weapon
@@ -414,6 +434,9 @@ func _present_objects(list: Array) -> void:
 
 func _on_room_loaded(event: Dictionary) -> void:
 	stage.invalidate_room()
+	_shake_remaining_ms = 0.0
+	_shake_fresh = false
+	_shake_offset = Vector2.ZERO
 	for view in prop_views:
 		if is_instance_valid(view):view.queue_free()
 	prop_views.clear()
@@ -472,6 +495,10 @@ func _on_cue(event: Dictionary) -> void:
 		"sound":audio.on_cue(event)
 		"fx":_spawn_fx(event)
 		"native_particle":_spawn_native_particle(event)
+		"screen_shake":
+			_shake_degree = int(event["degree"])
+			_shake_remaining_ms = float(event["duration_ms"])
+			_shake_fresh = true
 		"fx_clear":
 			for fx in effects:
 				if is_instance_valid(fx) and fx.tag == String(event["tag"]) \

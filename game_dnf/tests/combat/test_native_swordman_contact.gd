@@ -2354,6 +2354,56 @@ func check_outrage_break_eruption() -> void:
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 
+func check_outrage_break_camera() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.player["hp"] = 1000.0
+	var previous_clock: Callable = game.view.particle_bursts.clock
+	game.view.particle_bursts.clock = func():return 0
+	game.view.particle_bursts.random.state = 0
+	game.view.particle_bursts.random.draws = 0
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(900,0))
+	press(KEY_A)
+	step(0)
+	step(560)
+	step(599)
+	var impact_pos: Vector2 = game.player["pos"]
+	check(game.view._shake_offset==Vector2.ZERO and game.view.particle_bursts.random.draws==0,
+		"the jump leaves camera and cosmetic random untouched until impact")
+	step(1)
+	var base := Vector2(-roundf(game.view.camera_x),0)
+	var snapshot: Dictionary = game.view_snapshot()
+	check(game.view.world.position==base+Vector2(-5,5) and game.view.hud.state["camera"]==-game.view.world.position
+		and game.player["pos"]==impact_pos,"impact shifts only presentation using the original first two draws")
+	game.view.present(snapshot,1000.0,0.0)
+	check(game.view.world.position==base+Vector2(-5,5) and game.view.particle_bursts.random.draws==2,
+		"camera freeze keeps its current sample during an inactive battle tick")
+	for sample: Array in [[16.0,Vector2(-2,-1),4],[283.0,Vector2(1,-1),6],[1.0,Vector2.ZERO,8],[1.0,Vector2.ZERO,8]]:
+		game.view.present(snapshot,sample[0],sample[0])
+		check(game.view.world.position==base+sample[1] and game.view.particle_bursts.random.draws==sample[2],
+			"landing shake follows the original replay through its deadline")
+	game.step_objects(1039)
+	check(game.view._shake_remaining_ms<=0.0,"camera stays settled before the eruption")
+	game.step_objects(1)
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(game.view._shake_remaining_ms==500.0 and game.view._shake_degree==5,
+		"the eruption starts a fresh 500 ms shake on its spawn update")
+	game.view.present(game.view_snapshot(),499.0,499.0)
+	check(game.view._shake_remaining_ms==1.0,"the eruption is still shaking at 499 ms")
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(game.view.world.position==base and game.view.hud.state["camera"]==-base,
+		"world and world-space numbers return to their base camera at 500 ms")
+	game.view.particle_bursts.clock = previous_clock
+
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3640,6 +3690,7 @@ func run() -> void:
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
 	check_outrage_break_eruption()
+	check_outrage_break_camera()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()
