@@ -1064,8 +1064,7 @@ func step_action(ms: float, move: Vector2) -> void:
 	if m.get("native_state","") == "grab_blast":
 		if int(player["stage"]) == 0:
 			if try_grab_blast(stage,event_clock):return
-		else:
-			step_grab_blast(m,stage,old_event_clock,event_clock)
+		elif step_grab_blast(m,stage,event_clock):return
 	else:
 		apply_player_hits(stage,old_event_clock,event_clock)
 	# CB1BB3 checks the full-charge release's body frame before the next phase.
@@ -1549,7 +1548,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
 	elif m.get("native_state","") == "grab_blast" and index == 1:
-		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"]}
+		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"],
+			"grab_substate":0,"grab_strikes_left":int(m.get("grab_strike_count",1)),"grab_next_strike_ms":100.0}
 		var strike: Dictionary = m["grab_strike"]
 		var base := native_fixed_attack_base(m["fixed_attack_base"])
 		var amount := float(int(native_fixed_attack_product(float(strike["fixed"]),base)))
@@ -1849,27 +1849,39 @@ func grab_blast_release_position(at: Vector3i, saved: Vector3i) -> Vector3i:
 					if walkable(Vector2(point.x,point.y)):return point
 	return saved
 
-func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
-	var strike_window := from < 100.0
-	var strike_due := strike_window and to >= 100.0 and active_effect("thirst").is_empty()
-	var sprays: Array = stage["hits"]
-	var at := float(sprays[0]["at"])
-	var spray_due := from < at and to >= at
-	if not strike_window and not spray_due:return
+## Returns true while the hold or spray-ready substate still owns the action.
+func step_grab_blast(move: Dictionary, stage: Dictionary, clock: float) -> bool:
+	var phase: Dictionary = player["native_phase"]
+	var substate := int(phase["grab_substate"])
+	if substate == 2:return false
 	var target := grab_blast_victim()
+	var target_alive := not target.is_empty() and float(target["hp"]) > 0.0
 	var facing := int(player["facing"])
 	var position := Vector2i(player["pos"])
 	var height := int(player["z"])
 	var point := Vector3(position.x+43*facing,position.y,height+90)
-	if strike_due and not target.is_empty() and float(target["hp"]) > 0.0:
-		land_hit(player,target,player["native_phase"]["grab_strike"],point,facing,attack_power())
-		if float(target["hp"]) > 0.0:anchor_grab_blast_victim(target)
-	var bleeding: bool = not target.is_empty() and float(target["hp"]) > 0.0 and target.has("numeric") \
-		and target["numeric"].effects.active.has("bleed")
-	# CB6AFC samples until the ordinary strike advances the state. The spray
-	# has a separate live bleed check when it selects its object and damage.
-	if strike_window and bleeding:player["native_phase"]["grab_bleed_seen"] = true
-	if not spray_due:return
+	if substate == 0:
+		if clock >= 100.0:
+			var exhausted := target.is_empty() or int(phase["grab_strikes_left"]) == 0
+			var thirst := move.has("grab_strike_interval_ms") and not active_effect("thirst").is_empty()
+			var strike_due := not exhausted and (not thirst or clock >= float(phase["grab_next_strike_ms"]))
+			if strike_due and target_alive:
+				land_hit(player,target,phase["grab_strike"],point,facing,attack_power())
+				if float(target["hp"]) > 0.0:anchor_grab_blast_victim(target)
+			if exhausted or not thirst:
+				phase["grab_substate"] = 1
+			elif strike_due:
+				# 1124860 schedules the next tick from this update's clock, without catch-up.
+				phase["grab_strikes_left"] -= 1
+				phase["grab_next_strike_ms"] = clock+float(move["grab_strike_interval_ms"])
+		# CB6AFC samples through the update that advances to spray-ready.
+		if target.has("numeric") and target["numeric"].effects.active.has("bleed"):
+			phase["grab_bleed_seen"] = true
+		return true
+	var sprays: Array = stage["hits"]
+	if clock < float(sprays[0]["at"]):return true
+	# CB6D5A selects the spray using the target's current status.
+	var bleeding: bool = target.has("numeric") and target["numeric"].effects.active.has("bleed")
 	var spray: Dictionary = sprays[1 if bleeding else 0]
 	var base := native_fixed_attack_base(move["fixed_attack_base"])
 	var amount := int(native_fixed_attack_product(float(spray["fixed"]),base))
@@ -1879,16 +1891,18 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	var spray_hit := grab_fixed_hit(spray,float(amount))
 	spray_hit["starts_at_zero"] = true
 	var object := spawn_object(spray_hit,"player",Vector2(position),float(height),facing,attack_power())
-	if not object.is_empty() and not target.is_empty() and float(target["hp"]) > 0.0:
+	if not object.is_empty() and target_alive:
 		# CNGrabBlastBlood dispatches the held hit before CB7102 sends DOWN.
 		object["hits"][target["id"]] = true
 		land_hit(player,target,spray_hit,point,facing,float(object["power"]))
 	if player["action"] == "grabblastblood" and numeric_player != null:
 		var rank := int(skill_levels.get("grabblastblood",1))
-		var saw_bleed := bool(player["native_phase"].get("grab_bleed_seen",false))
+		var saw_bleed := bool(phase.get("grab_bleed_seen",false))
 		if numeric_player.apply_bloodlust_strength(rank,saw_bleed):
 			bus.emit("combat.status",{"target":PLAYER_ID,"id":"bloodlust_strength","change":"added"})
+	phase["grab_substate"] = 2
 	release_grab_blast_victim(target)
+	return false
 
 func grab_frenzy_percent() -> int:
 	if active_effect("frenzy").is_empty():return 100

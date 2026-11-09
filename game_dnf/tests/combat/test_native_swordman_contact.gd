@@ -2010,7 +2010,8 @@ func check_grab_blast_startup() -> void:
 			move_target(target,POINT+Vector2(50,0))
 			press(KEY_A)
 			step(160)
-			step(750)
+			step(100)
+			step(650)
 			check(game.active_effect("bloodlust_strength").get("stacks",0)==2
 				and game.numeric_player.values["strength"]==strength+92.0,"overlapping Bloodlust casts add two strength grants")
 			game.step_numeric_actor(game.player,game.numeric_player,4000.0)
@@ -2029,6 +2030,68 @@ func check_grab_blast_startup() -> void:
 		"the blocked release point searches along its original depth in three-pixel increments")
 	check(game.grab_blast_release_position(Vector3i(-250,int(POINT.y),110),saved)==saved,
 		"the release returns to the saved XYZ when the native search cannot find a walkable point")
+
+func check_grab_blast_thirst() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"grabblastblood","level":1})
+	profile.command("numbers.skill_grant",{"id":"sacrifice","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["grabblastblood"]
+	for scenario: String in ["four_strikes","expires","interrupted"]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_effect({"kind":"effect","id":"thirst","rank":1})
+		check(not game.active_effect("thirst").is_empty(),"Thirst is active before the shortcut starts Bloodlust")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(50,0))
+		target["hp"] = 50000.0
+		game.numeric_player.values["hit"] = 1.0
+		press(KEY_A)
+		step(160)
+		step(99)
+		check(grab_direct_hits().is_empty(),"Thirst waits through 99 ms before its first directed strike")
+		step(1)
+		check(grab_direct_hits().size()==1 and target["state"]=="hold", "Thirst automatically strikes at 100 ms after key release")
+		step(599)
+		check(grab_direct_hits().size()==1 and game.objects.is_empty(),"Thirst waits the configured 600 ms before repeating")
+		if scenario == "expires":
+			game.active_effect("thirst")["remaining_ms"] = 1.0
+			game.step_numeric_actor(game.player,game.numeric_player,1.0)
+			step(0)
+			check(grab_direct_hits().size()==2 and game.objects.is_empty(),"Thirst expiry takes the ordinary strike path before the next repeat is due")
+			step(50)
+			check(game.objects.is_empty(),"expiry still respects the 750 ms spray floor")
+			step(1)
+			check(game.objects.size()==1 and not game.player.has("grab_blast_target"),"ordinary spray follows when Thirst expires during the hold")
+			continue
+		step(1)
+		check(grab_direct_hits().size()==2,"Thirst dispatches its second strike at 700 ms")
+		if scenario == "interrupted":
+			game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)
+			step(1400)
+			check(grab_direct_hits().size()==2 and game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty()
+				and not game.player.has("grab_blast_target"),"interruption cancels the rest of the repeat timer and releases without a spray")
+			continue
+		target["numeric"].effects.add_source_bleed(0,3000,38)
+		step(50)
+		target["numeric"].effects.remove("bleed")
+		check(game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty(),"750 ms does not cut off active Thirst strikes")
+		step(650)
+		check(grab_direct_hits().size()==3 and game.player["action"]=="grabblastblood","a delayed third update still keeps the victim held past 1200 ms")
+		step(599)
+		check(grab_direct_hits().size()==3,"a late update schedules the next interval from the actual strike time")
+		step(1)
+		check(grab_direct_hits().size()==4 and game.objects.is_empty(),"the fourth direct strike does not spray in the same update")
+		step(1)
+		check(grab_direct_hits().size()==4 and game.objects.is_empty(),"timer exhaustion advances the original spray-ready substate")
+		step(1)
+		check(game.objects.size()==1 and game.objects[0]["hit"]["object"].ends_with("/grabblastblood.obj")
+			and game.active_effect("bloodlust_strength").get("remaining_ms",0)==20000.0
+			and not game.player.has("grab_blast_target") and game.player["action"]=="",
+			"Thirst remembers bleed during the extended hold but sprays by live bleed and releases after four strikes")
+
+func grab_direct_hits() -> Array:
+	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
@@ -2793,6 +2856,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_draw_second_slash()
 	check_grab_blast_startup()
+	check_grab_blast_thirst()
 	check_source_shock_limits()
 	check_draw_greatsword_charge()
 	check_draw_short_wave()

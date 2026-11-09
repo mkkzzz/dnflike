@@ -400,6 +400,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.get("native_state","") == "grab_blast":
 		move["native_state"] = "grab_blast"
 		move["grab_duration_ms"] = float(skill["static"][0])
+		if name == "grabblastblood":
+			# CC97FF/CC980F configure the Thirst strike timer from static columns 2 and 3.
+			move["grab_strike_interval_ms"] = int(skill["static"][2])
+			move["grab_strike_count"] = int(skill["static"][3])
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
 		var strike_path := String(spec["strike_atk"])
 		var row: Array = skill["level_row"]
