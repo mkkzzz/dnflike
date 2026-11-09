@@ -144,6 +144,7 @@ func _build_player() -> void:
 	var base: Dictionary = chr.get("stat_groups",{}).get("initial_value",{})
 	player = {"hp_max":float(base.get("hp_max",0)),"mp_max":float(base.get("mp_max",0)),
 		"jump_power":float(base.get("jump_power",0)),"hit_recovery":float(base.get("hit_recovery",500)),
+		"weight":float(base.get("weight",68000)),
 		"move_speed":float(base.get("move_speed",850)),"weapon_wav":chr.get("weapon_wav",[]),
 		"weapon_hit_info":chr.get("weapon_hit_info",[]),"width":chr.get("width",[0,0]),
 		"motions":{"damage1":"damage1","damage2":"damage2","down":"down","overturn":"overturn"}}
@@ -588,6 +589,8 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	if not moves.is_empty():m["moves"] = moves
 	if record.has("native_starfish_jump"):
 		_bind_native_starfish_jump(m,record["native_starfish_jump"],moves)
+	if record.has("native_starfish_bite"):
+		_bind_native_starfish_bite(m,record["native_starfish_bite"],moves)
 	for binding: Dictionary in record.get("native_attack_contacts",[]):
 		var slot := int(binding["slot"])
 		var object_path := String(binding["object_path"])
@@ -704,6 +707,36 @@ func _bind_native_starfish_jump(monster: Dictionary, source: Dictionary, moves: 
 	monster["native_starfish_jump"] = jump
 	monster["native_attack_selection"] = source["selection"]
 	monster["native_move_indices"] = indices
+
+func _bind_native_starfish_bite(monster: Dictionary, source: Dictionary, moves: Array) -> void:
+	var bite := source.duplicate(true)
+	var index := int(monster.get("native_move_indices",{}).get(int(bite["slot"]),-1))
+	if index < 0 or String(moves[index]["ani"]) != String(bite["attempt_ani"]):
+		problems.append("missing original StarFish TryBite slot")
+		return
+	var attempt: Dictionary = moves[index]
+	bite["move_index"] = index
+	bite["launch_at"] = float(attempt["timeline"][int(bite["launch_frame"])]["start_ms"])
+	# TryBite has no damage-bearing input (8715C4 → 293C11E).
+	bite["attempt_hit"] = {"atk":attempt["atk"],"atk_path":attempt["atk_path"],
+		"skill_id":"","damage_type":"magical","percent":0.0,"fixed":0.0,"starfish_grab":true}
+	var clips: Dictionary = assets.get("monsters",{}).get(monster["bank"],{}).get("clips",{})
+	for phase: String in ["bite","release"]:
+		var path := String(bite[phase+"_ani"])
+		var pose := path.get_file().get_basename()
+		var frames := timeline(path)
+		if not clips.has(pose) or frames.size() < 2:
+			problems.append("missing original StarFish "+phase+" clip")
+			return
+		bite[phase+"_pose"] = pose
+		bite[phase+"_duration"] = Timeline.duration(frames)
+		monster["ani_paths"][pose] = path
+		if phase == "release":bite["release_landed_at"] = float(frames[1]["start_ms"])
+	var attack := atk(String(bite["bite_atk"]))
+	bite["hit"] = {"atk":attack,"atk_path":bite["bite_atk"],"skill_id":"",
+		"ignore_defense":enum_value(attack,"attack_type") == "[ignore defense]",
+		"percent":100.0+float(attack["damage_bonus"]),"lift":-1.0}
+	monster["native_starfish_bite"] = bite
 
 func reach_of(tl: Array) -> Array:
 	var low := INF

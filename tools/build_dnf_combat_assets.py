@@ -169,9 +169,11 @@ GHOST_FIELD_AUDIO = {
 }
 
 ZEALOT_SOUNDS = {
+    'HOLD': ['sounds/effect/hold_01.ogg'],
     'KNIFE_STICK': ['sounds/effect/knife_stick.ogg'],
     'ZGM_SPRING': ['sounds/mon/act3/zgm_spring.ogg'],
     'ZGM_ATK': ['sounds/mon/act3/zgm_atk.ogg'],
+    'ZGM_ATTACH': ['sounds/mon/act3/zgm_attach.ogg'],
 }
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},

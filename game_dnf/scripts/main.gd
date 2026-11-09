@@ -680,7 +680,10 @@ func step_game(ms: float) -> void:
 		if float(player["guard_recoil_ms"]) <= 0.0 and not guard_input_held():player["state"] = "idle"
 	var first_new_object_id := _next_entity_id
 	# Local hitstop: only the attacker and its targets freeze; inputs are buffered meanwhile.
-	if float(player["stuck_ms"]) > 0:
+	if player["state"] == "hold":
+		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
+		requests.clear()
+	elif float(player["stuck_ms"]) > 0:
 		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
 		for code: int in requests:buffering(code)
 		requests.clear()
@@ -778,7 +781,9 @@ func step_player(ms: float, move: Vector2) -> void:
 	if state == "action":
 		step_action(ms,move)
 	elif state in ["hurt","air","down"]:
-		if Kernel.Reaction.step_body(player,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world) == "landed":
+		var gravity := float(player.get("starfish_fall_gravity",rules["player"]["gravity"]))
+		if Kernel.Reaction.step_body(player,ms,gravity,rules["reaction"],move_in_world) == "landed":
+			player.erase("starfish_fall_gravity")
 			player["landing_ms"] = 0.0
 		return
 	elif state == "backstep":
@@ -964,6 +969,7 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 func start_action(name: String, cancel := false) -> bool:
 	var m := move_def(name)
 	if m.is_empty():return reject_action(name,"unknown")
+	if player["state"] == "hold":return reject_action(name,"state")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var required_effect := String(m.get("requires_effect",""))
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
@@ -1144,6 +1150,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
 	var atk: Dictionary = hit["atk"]
+	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
 	var victim := victim_kind(target)
@@ -1163,13 +1170,16 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.shared_config()["formula"])
 		last_damage = resolved.duplicate(true)
 		amount = int(resolved["amount"])
-		if amount<=0:
+		if amount <= 0 and (not starfish_grab or bool(resolved["missed"]) or bool(target_stats.get("immune",false))):
 			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":victim,"reaction":"none","point":point})
 			return
 	elif by_companion:
 		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
 	var target_is_player := victim == "player"
 	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
+	if starfish_grab:
+		start_starfish_capture(attacker)
+		return
 	var reaction := "none"
 	if target_is_player:
 		var before_hp := float(player["hp"])
@@ -1327,12 +1337,19 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
+	if enemy.has("starfish_capture") and (enemy["state"] != "attack" or float(enemy["hp"]) <= 0.0):
+		release_starfish_victim(enemy)
 	var native_selection: Dictionary = m.get("native_attack_selection",{})
 	if not native_selection.is_empty():
 		enemy["native_attack_elapsed_ms"] = float(enemy.get("native_attack_elapsed_ms",0))+ms
 	if enemy.has("numeric") and float(enemy["hp"])>0:
 		step_numeric_actor(enemy,enemy["numeric"],ms)
 		if enemy["numeric"].effects.controlled():
+			if enemy.has("starfish_capture"):
+				release_starfish_victim(enemy)
+				enemy.erase("starfish_bite_phase")
+				if enemy["state"] == "attack":
+					finish_enemy_attack(enemy,m["moves"][int(enemy["move_index"])])
 			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
 			return
 	enemy["flash_ms"] = maxf(0,float(enemy["flash_ms"])-ms)
@@ -1349,7 +1366,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
 	var advance := ms
-	if state == "attack" and enemy.has("numeric"):
+	if state == "attack" and enemy.has("numeric") and enemy.get("starfish_bite_phase","") != "release":
 		advance *= float(enemy.get("rasa_previous_attack_rate",enemy["numeric"].values["attack_speed"]))
 	if not bool(enemy["chief"]) and enemy.has("numeric") and float(enemy["hp"]) > 0.0:
 		# 82A2DB lazily starts a per-actor timer. A due poll changes the rate
@@ -1369,6 +1386,10 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		step_native_summon_jump(enemy,dt)
 		return
 	elif state == "attack":
+		var bite: Dictionary = m.get("native_starfish_bite",{})
+		if not bite.is_empty() and int(enemy.get("move_index",-1)) == int(bite["move_index"]):
+			step_starfish_bite(enemy,bite,advance,dt)
+			return
 		var jump: Dictionary = m.get("native_starfish_jump",{})
 		if not jump.is_empty() and int(enemy.get("move_index",-1)) == int(jump["move_index"]):
 			step_starfish_jump(enemy,jump,advance,dt)
@@ -1401,6 +1422,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["move_index"] = int(intent.get("move_index", -1))
 			if m.has("native_starfish_jump"):
 				enemy.erase("starfish_phase")
+				enemy.erase("starfish_bite_phase")
 				enemy.erase("native_jump_velocity")
 				enemy.erase("native_jump_gravity")
 		elif state == "idle" and m.has("native_suicide") and start_native_suicide(enemy,m["native_suicide"]):
@@ -1507,6 +1529,143 @@ func step_starfish_jump(enemy: Dictionary, jump: Dictionary, animation_ms: float
 	elif phase == "end" and age >= Kernel.Timeline.duration(jump["end_timeline"]):
 		enemy.erase("starfish_phase")
 		finish_enemy_attack(enemy,enemy["def"]["moves"][int(jump["move_index"])])
+
+func step_starfish_bite(enemy: Dictionary, bite: Dictionary, animation_ms: float, dt: float) -> void:
+	var phase := String(enemy.get("starfish_bite_phase","attempt"))
+	var age := float(enemy["clock"])
+	var move: Dictionary = enemy["def"]["moves"][int(bite["move_index"])]
+	if phase == "attempt":
+		if enemy.has("native_jump_velocity"):
+			if advance_native_flight(enemy,dt):
+				# DB3DB1 seeks beyond the hold frame after the mover lands.
+				finish_enemy_attack(enemy,move)
+				return
+		elif age >= float(bite["launch_at"]):
+			launch_starfish_bite(enemy,bite,float(bite["forward_speed"]),float(bite["jump_height"]))
+		try_starfish_contact(enemy,move,bite["attempt_hit"],age-animation_ms,age)
+	elif phase == "bite":
+		if not enemy.has("starfish_capture") or float(player["hp"]) <= 0.0:
+			start_starfish_release(enemy,bite)
+			return
+		if player["state"] != "hold":
+			# DB700C queues HOLD after the grab entry.
+			hold_starfish_victim()
+			return
+		anchor_starfish_to_player(enemy,bite)
+		if age >= float(bite["bite_duration"]):
+			var at: Vector2 = player["pos"]
+			land_hit(enemy,player,bite["hit"],Vector3(at.x,at.y,float(player["z"])),int(enemy["facing"]),float(enemy["attack"]))
+			play_sound("ZGM_ATTACK")
+			play_sound(bite["attach_sound"])
+			enemy["starfish_bites_left"] = int(enemy["starfish_bites_left"])-1
+			if int(enemy["starfish_bites_left"]) <= 0 or float(player["hp"]) <= 0.0:
+				start_starfish_release(enemy,bite)
+			else:
+				enemy["clock"] = 0.0
+	elif enemy.has("native_jump_velocity"):
+		if advance_native_flight(enemy,dt):enemy["clock"] = float(bite["release_landed_at"])
+	elif age >= float(bite["release_duration"]):
+		enemy.erase("starfish_bite_phase")
+		finish_enemy_attack(enemy,move)
+
+func launch_starfish_bite(enemy: Dictionary, bite: Dictionary, speed: float, height: float) -> void:
+	var gravity := float(bite["gravity"])
+	enemy["native_jump_gravity"] = gravity
+	enemy["native_jump_velocity"] = Vector2(speed*int(enemy["facing"]),0)
+	enemy["vz"] = sqrt(absf(2.0*gravity*height))
+
+func try_starfish_contact(enemy: Dictionary, move: Dictionary, hit: Dictionary, from: float, to: float) -> void:
+	if enemy["hits"].has(PLAYER_ID) or player.has("starfish_holder") or float(player["hp"]) <= 0.0:
+		return
+	if god_mode or float(player["invuln_ms"]) > 0.0:
+		return
+	if numeric_player != null and (numeric_player.effects.active.has("freeze") or numeric_player.effects.active.has("stone")):
+		return
+	for segment: Dictionary in move["segments"]:
+		var boxes := Kernel.Timeline.segment_boxes(segment,from,to)
+		if boxes.is_empty():continue
+		var world := Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
+		var contact := Kernel.HitJudge.contact(world,player_damage_boxes())
+		if contact.is_empty():continue
+		enemy["hits"][PLAYER_ID] = true
+		land_hit(enemy,player,hit,contact["point"],int(enemy["facing"]),float(enemy["attack"]))
+		return
+
+func start_starfish_capture(enemy: Dictionary) -> void:
+	var bite: Dictionary = enemy["def"]["native_starfish_bite"]
+	enemy["starfish_bite_phase"] = "bite"
+	enemy["clock"] = 0.0
+	enemy["vz"] = 0.0
+	enemy.erase("native_jump_velocity")
+	enemy.erase("native_jump_gravity")
+	player["facing"] = -int(enemy["facing"])
+	# DB661F keeps a grounded target. An airborne contact goes through release.
+	if roundi(float(player["z"])) > 0:return
+	var limits: Array = bite["level_range"]
+	var counts: Array = bite["count_range"]
+	var level := int(enemy["numeric"].values["level"]) if enemy.has("numeric") else numeric_monster_level
+	var fraction := clampf(inverse_lerp(float(limits[0]),float(limits[1]),float(level)),0.0,1.0)
+	enemy["starfish_bites_left"] = int(lerpf(float(counts[0]),float(counts[1]),fraction))
+	enemy["starfish_capture"] = Vector3(Vector2(player["pos"]).x,Vector2(player["pos"]).y,float(player["z"]))
+	player["starfish_holder"] = enemy["id"]
+	anchor_starfish_to_player(enemy,bite)
+	play_sound("ZGM_ATTACK")
+	play_sound("HOLD")
+
+func hold_starfish_victim() -> void:
+	end_action()
+	player["state"] = "hold"
+	run_direction = 0
+	player["queued_combo"] = false
+	player["queued_skill"] = ""
+	player["queued_jump"] = false
+	player["queued_backstep"] = false
+	player["recovery_code"] = -1
+	player["recovery_buffer_ms"] = 0.0
+	player["push_ms"] = 0.0
+	player["vz"] = 0.0
+
+func anchor_starfish_to_player(enemy: Dictionary, bite: Dictionary) -> void:
+	# DB4D42 uses the victim's rounded position and the original Swordman offsets.
+	var at: Vector2 = player["pos"]
+	var offset: Array = bite["swordman_anchor"]
+	enemy["pos"] = at.round()+Vector2(-int(enemy["facing"])*float(offset[0]),float(offset[1]))
+	enemy["z"] = roundf(float(player["z"]))+float(offset[2])
+	if player["state"] == "hold":player["pos"] = Vector2(at.x,Vector2(enemy["pos"]).y-1.0)
+	player["facing"] = -int(enemy["facing"])
+
+func start_starfish_release(enemy: Dictionary, bite: Dictionary) -> void:
+	if enemy.has("starfish_capture"):release_starfish_victim(enemy)
+	enemy["starfish_bite_phase"] = "release"
+	enemy["clock"] = 0.0
+	launch_starfish_bite(enemy,bite,-float(bite["release_speed"]),float(bite["release_height"]))
+
+func release_starfish_victim(enemy: Dictionary) -> void:
+	var saved: Vector3 = enemy["starfish_capture"]
+	enemy.erase("starfish_capture")
+	if player.get("starfish_holder",-1) != enemy["id"]:return
+	player.erase("starfish_holder")
+	if float(player["hp"]) <= 0.0:return
+	player["pos"] = constrain_pos(Vector2(saved.x,saved.y))
+	player["z"] = saved.z
+	# DB62E8 sends DOWN with push/lift 200/200. 82C95D samples X before Z.
+	var weight := float(table.player["weight"])
+	var gravity := -float(enemy["def"]["native_starfish_bite"]["gravity"])
+	var impulse := float(int(200.0*4000.0/(2100.0+0.0121*(weight-10000.0))))
+	var speed := sample_starfish_down(float(int(impulse*0.5)),0.8,1.2)
+	var height := sample_starfish_down(float(int(impulse*impulse/(2.0*gravity))),0.9,1.1)
+	player["push_v"] = -int(player["facing"])*speed
+	player["push_ms"] = float(rules["reaction"]["push_decay_ms"])
+	player["vz"] = sqrt(2.0*gravity*height)
+	player["starfish_fall_gravity"] = gravity
+	player["state"] = "air"
+	player["bounced"] = false
+
+func sample_starfish_down(base: float, lower: float, upper: float) -> int:
+	var low := int(base*lower)
+	var high := int(base*upper)
+	var roll := rng.range_int(0,0x7fffffff)%1000
+	return int(float(high-low)*float(roll)/999.0+float(low))
 
 func poll_native_enemy_attack(enemy: Dictionary, policy: Dictionary) -> int:
 	var width: Array = table.player["width"]
@@ -1615,7 +1774,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	var auto_guard := false
 	var grounded := float(player["z"]) == 0.0 and float(player["vz"]) <= 0.0
 	if not manual_guard and amount > 0 and guard_rank > 0 and auto_rank > 0 and grounded \
-			and state not in ["air","down","dead"] and not active_effect("autoguard").is_empty() \
+			and state not in ["air","down","dead","hold"] and not active_effect("autoguard").is_empty() \
 			and not numeric_player.effects.controlled():
 		# CA9346..CA9484 resolves both current ranks and compares the original percentage on a 10000-point roll.
 		var row: Array = Numbers.Skills.sample(Numbers.record("autoguard"),auto_rank)["level_row"]
@@ -1649,7 +1808,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	player["flash_ms"] = 65.0
 	player["invuln_ms"] = float(rules["player"]["hit_invuln_ms"])
 	var reaction := "guard" if guarded else "none"
-	if not guarded and not (numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0):
+	if not guarded and state != "hold" and not (numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0):
 		end_action_fx()
 		player["action"] = ""
 		player["native_phase"] = {}
@@ -2335,6 +2494,7 @@ func load_room(index: int, from_side: String) -> void:
 	player["pos"] = constrain_pos(spawn)
 	player["z"] = 0.0
 	player["vz"] = 0.0
+	player.erase("starfish_fall_gravity")
 	player["state"] = "idle"
 	player["action"] = ""
 	player["stuck_ms"] = 0.0
@@ -2377,6 +2537,7 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin") -> Dictionary
 
 func clear_monsters() -> void:
 	for enemy: Dictionary in monsters:
+		if enemy.has("starfish_capture"):release_starfish_victim(enemy)
 		bus.emit("combat.entity_removed",{"entity_id":enemy["id"]})
 	monsters.clear()
 
@@ -2622,6 +2783,7 @@ func player_ani() -> Array:
 			return [String(m["native_charge_ani"]),action_ani_clock(elapsed)]
 		return [String(action_def()["ani"]),action_ani_clock(elapsed)]
 	if state=="dead":return ["down",float(table.player_timeline("down")[2]["start_ms"]) if table.player_timeline("down").size()>2 else 0.0]
+	if state=="hold":return ["damage1",0.0]
 	if state=="hurt":return [String(player["hit_motion"]),0.0]
 	if state=="air":return ["overturn",0.0]
 	if state=="down":return ["down",Kernel.Reaction.down_clock(player,rp,table.player_timeline("down"))]
@@ -2643,6 +2805,9 @@ func enemy_ani(enemy: Dictionary) -> Array:
 		"move":return ["move",float(enemy["clock"])]
 		"native_suicide":return [m["native_suicide"]["pose"],float(enemy["clock"])]
 		"attack":
+			var bite_phase := String(enemy.get("starfish_bite_phase",""))
+			if bite_phase in ["bite","release"]:
+				return [m["native_starfish_bite"][bite_phase+"_pose"],float(enemy["clock"])]
 			var phase := String(enemy.get("starfish_phase",""))
 			if phase != "":
 				var jump: Dictionary = m["native_starfish_jump"]

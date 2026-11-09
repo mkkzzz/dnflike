@@ -57,6 +57,7 @@ func run(game, host) -> void:
 	host.check(selected_frame.modulate == Color.WHITE and selected_frame.texture == panel._part("node_selected"), "selection and hover use current state after an in-place update")
 	host.check(peak_us < 250000, "warm selection avoids the previous multi-second main-thread stall")
 	print("[SKILL_PERF] viewport_selection_peak_ms=%.3f" % (peak_us / 1000.0))
+	await check_previews(game, host, panel, upper, guard)
 	var wheel := InputEventMouseButton.new()
 	wheel.position = upper.get_global_transform_with_canvas() * (upper.size / 2)
 	wheel.button_index = MOUSE_BUTTON_WHEEL_DOWN
@@ -105,6 +106,55 @@ func run(game, host) -> void:
 			var style := button.get_theme_stylebox(state) as StyleBoxTexture
 			buttons_fit = buttons_fit and style != null and style.texture != null and style.texture.get_size() == Vector2(18, 18)
 	host.check(buttons_fit, "native rank button states fit above the scrollable description")
+	var preview := game.modal.find_child("skill_detail_preview", true, false) as TextureRect
+	host.click_control(action_button(game, "关闭"))
+	await host.ticks(2)
+	host.check(not is_instance_valid(preview), "closing the skill window releases the active demo")
+	game.show_overlay("numbers")
+	await host.ticks(3)
+
+func check_previews(game, host, panel, upper: Button, guard: Button) -> void:
+	var preview: TextureRect = await playing_preview(game, host)
+	host.check(preview != null and preview.position == Vector2(22, 37) and preview.size == Vector2(160, 90),
+		"Explain draws UpperSlash on the original video rectangle")
+	if preview == null:return
+	var atlas := preview.texture as AtlasTexture
+	var fallback: TextureRect = game.modal.find_child("skill_detail_icon", true, false)
+	host.check(atlas.atlas.resource_path.ends_with("/swordman_upperslash.png") and not fallback.is_visible_in_tree(),
+		"original video replaces the static illustration and leaves the title readable")
+	preview.set_process(false)
+	preview._elapsed = 0.0
+	preview._show_frame(0)
+	preview._process(8.5 * 1001.0 / 30000.0)
+	host.check(atlas.region == Rect2(0, 90, 160, 90), "original rational frame clock advances across atlas rows")
+	await host.frame("62a_skill_preview_upper")
+	preview._process(41.0 * 1001.0 / 30000.0)
+	host.check(atlas.region.position == Vector2.ZERO, "UpperSlash loops after its original 49 frames")
+	panel._replace_detail(true)
+	host.check(preview == game.modal.find_child("skill_detail_preview", true, false),
+		"refreshing the selected skill details retains the current playback")
+
+	host.click_control(guard)
+	var guard_preview: TextureRect = await playing_preview(game, host)
+	host.check(guard_preview != null and guard_preview != preview and not is_instance_valid(preview)
+		and guard_preview.texture.atlas.resource_path.ends_with("/swordman_guard.png"),
+		"selecting Guard releases UpperSlash and starts the matching original clip")
+	var unsupported: Button = game.modal.find_child("skill_node_5", true, false)
+	host.click_control(unsupported)
+	await host.ticks(2)
+	fallback = game.modal.find_child("skill_detail_icon", true, false)
+	host.check(panel.selected == unsupported.get_meta("skill_key")
+		and not is_instance_valid(guard_preview) and fallback.is_visible_in_tree(),
+		"selecting a skill without bundled media stops playback and retains its static fallback")
+	host.click_control(upper)
+	await host.ticks(2)
+
+func playing_preview(game, host) -> TextureRect:
+	for tick in range(60):
+		var preview := game.modal.find_child("skill_detail_preview", true, false) as TextureRect
+		if preview != null and preview.texture is AtlasTexture:return preview
+		await host.ticks(1)
+	return null
 
 func action_button(game, title: String) -> Button:
 	for button: Button in game.modal.find_children("*", "Button", true, false):

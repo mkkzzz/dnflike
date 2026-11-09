@@ -137,6 +137,13 @@ NATIVE_STARFISH_ATTACKS = {
     'monster/starfish/attackinfo/jumpattack.atk': '4a38742299a6e80ce01892c824c67560de893952f26f73e6590718b07da6d373',
     'monster/starfish/attackinfo/rolling.atk': 'd486fda9ae49937caaeba5d39da9676a4ab30e345377b6cf0d624d5ea4845735',
 }
+NATIVE_STARFISH_BITE = {
+    'monster/starfish/tentacleanimation/trybite.ani': '5586aa301c97dcb237c52942de4190036bdf31443ec33cb23513bdc77443a032',
+    'monster/starfish/tentacleanimation/bite.ani': '7ef2d8fb6e6981ce8b2000909125f4f7fc3cdffb7467d5ace50e78674e427efd',
+    'monster/starfish/tentacleanimation/releasebite.ani': '2c5c961fd1138175b08a3f8c4249206499c3043bd7d59d07c1b5298414dd607a',
+    'monster/starfish/attackinfo/trybite.atk': 'a6d0af61f777ccec6812e0a4f7a154e342b8396a311bf227d3b44e64bfe08f34',
+    'monster/starfish/attackinfo/bite.atk': '45e25ac0f488b6594ccdb3573c48c311e731d906a97b2d8d60311e3a7964a7d4',
+}
 
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
 #   int|float|str = first value; list = all values; enum = canonical enum tag(s); flag = presence.
@@ -812,6 +819,33 @@ def compile_native_starfish_jump(mob: dict, mob_id: int, spec: dict, add) -> dic
     }
 
 
+def compile_native_starfish_bite(mob: dict, add) -> dict:
+    path = mob['id']
+    decoded = checked_zealot_source(mob, path, NATIVE_STARFISH_JUMPS[path]['sha256'])
+    attempt_ani = decoded['attack_motions'][0]
+    bite_ani, release_ani = decoded['etc_motions'][:2]
+    attempt_atk = decoded['attack_infos'][0]
+    bite_atk = decode_value(find(mob['raw'], '[etc attack info]')[0], 'paths', path)[0]
+    for dependency in (attempt_ani, bite_ani, release_ani):
+        checked_zealot_source(add(dependency, 'ani', path), dependency, NATIVE_STARFISH_BITE)
+    for dependency in (attempt_atk, bite_atk):
+        checked_zealot_source(add(dependency, 'atk', path), dependency, NATIVE_STARFISH_BITE)
+    return {
+        'slot': 0, 'attempt_ani': attempt_ani, 'attempt_atk': attempt_atk,
+        'bite_ani': bite_ani, 'bite_atk': bite_atk, 'release_ani': release_ani,
+        'launch_frame': 1, 'forward_speed': 200, 'jump_height': 120, 'gravity': -1500,
+        'release_speed': 200, 'release_height': 10,
+        'level_range': decoded['level'], 'count_range': decoded['int_data'], 'attach_sound': 'ZGM_ATTACH',
+        # DB4D42 applies the class-0 Swordman anchor, with X mirrored by facing.
+        'swordman_anchor': [5, 1, 75],
+        'source': {
+            'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'attempt': '0xDB3CC0',
+            'contact': '0xDB5E60', 'bite': '0xDB69A0', 'count': '0xDB5CE0 → 0x11AEE50',
+            'release': '0xDB60F0 / 0xDB3EA0 → 0xDB4530',
+        },
+    }
+
+
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -956,6 +990,8 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
             mob['native_suicide'] = compile_native_raxy_suicide(mob, index, monsters, add)
         if p in NATIVE_STARFISH_JUMPS:
             mob['native_starfish_jump'] = compile_native_starfish_jump(mob, index, NATIVE_STARFISH_JUMPS[p], add)
+        if p == NATIVE_ZEALOT_MONSTERS['native_starfish']:
+            mob['native_starfish_bite'] = compile_native_starfish_bite(mob, add)
     unresolved_mobs = required - set(monster_index.values())
     if unresolved_mobs:
         raise ValueError('Required MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))

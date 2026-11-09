@@ -187,6 +187,7 @@ if ($Test) {
     $pipelineTests=@(
         "test_build_dnf_combat_assets.py",
         "test_build_dnf_dungeon_route.py",
+        "test_export_dnf_skill_previews.py",
         "test_apply_dnf_town_rooms.py"
     )
     foreach ($testName in $pipelineTests) {

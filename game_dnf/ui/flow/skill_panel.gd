@@ -5,6 +5,7 @@ const Numbers = preload("res://stats/api/numbers.gd")
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const CATALOG := "res://data/skill_catalog.json"
 const MANIFEST := "res://assets_local/skill_panel/manifest.json"
+const PREVIEW_DIR := "res://assets_local/skill_previews_v1/"
 const WINDOW_ORIGIN := Vector2(14, 12)
 const WINDOW_SIZE := Vector2(772, 490)
 const TREE_ORIGIN := Vector2(10, 88)
@@ -42,6 +43,58 @@ var _detail_title_position := Vector2(0, 13)
 var _detail_line_height := 14
 var _detail_wrap_width := 174
 var _detail_scroll_theme: Theme
+var _previews: Dictionary = {}
+
+class DetailPreview extends TextureRect:
+	var _frame_size: Vector2
+	var _columns: int
+	var _frame_count: int
+	var _frame_seconds: float
+	var _elapsed := 0.0
+	var _frame := -1
+	var _atlas: AtlasTexture
+	var _fallback: Control
+
+	func _init(clip: Dictionary) -> void:
+		var dimensions: Array = clip["size"]
+		var time_base: Array = clip["time_base"]
+		_frame_size = Vector2(dimensions[0], dimensions[1])
+		_columns = int(clip["columns"])
+		_frame_count = int(clip["frame_count"])
+		_frame_seconds = float(time_base[0]) / float(time_base[1])
+		name = "skill_detail_preview"
+		# Native draw adds (3, 4) to Explain #23 at (19, 33).
+		position = Vector2(22, 37)
+		size = _frame_size
+		expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		set_process(false)
+
+	func mount(panel: Control, fallback: Control) -> void:
+		_fallback = fallback
+		_fallback.visible = _atlas == null
+		panel.add_child(self)
+		set_process(_atlas != null)
+
+	func play(source: Texture2D) -> void:
+		_atlas = AtlasTexture.new()
+		_atlas.atlas = source
+		_atlas.filter_clip = true
+		texture = _atlas
+		_show_frame(0)
+		_fallback.hide()
+		set_process(true)
+
+	func _process(delta: float) -> void:
+		_elapsed = fmod(_elapsed + delta, _frame_seconds * _frame_count)
+		_show_frame(mini(floori(_elapsed / _frame_seconds), _frame_count - 1))
+
+	func _show_frame(frame: int) -> void:
+		if frame == _frame:return
+		_frame = frame
+		var cell := Vector2(frame % _columns, floori(float(frame) / _columns))
+		_atlas.region = Rect2(cell * _frame_size, _frame_size)
 
 class DetailScrollTrack extends Control:
 	const NATIVE_ROW_TRAVEL := 20.0
@@ -134,6 +187,11 @@ func _load() -> void:
 	_detail_line_height = maxi(1, int(detail_layout.get("line_height", 14)))
 	var detail_size: Array = detail_layout.get("size", [179, 260])
 	_detail_wrap_width = int(detail_size[0]) + int(detail_layout.get("display_marginwidth", -5))
+	var preview_manifest_path := PREVIEW_DIR + "manifest.json"
+	if FileAccess.file_exists(preview_manifest_path):
+		var preview_manifest = JSON.parse_string(FileAccess.get_file_as_string(preview_manifest_path))
+		if preview_manifest is Dictionary and preview_manifest.get("schema") == "dnf_skill_previews/1":
+			_previews = preview_manifest.get("clips", {})
 	for skill: Dictionary in skills:
 		by_id[int(skill["id"])] = skill
 		by_key[String(skill["key"])] = skill
@@ -531,13 +589,16 @@ func select_skill(key: String) -> void:
 func _replace_detail(keep_scroll := false) -> void:
 	var old := _root.get_node_or_null("skill_detail")
 	var offset := 0.0
+	var preview: DetailPreview
 	if old != null:
 		if keep_scroll:
 			var body := old.get_node_or_null("skill_detail_body") as RichTextLabel
 			if body != null:offset = body.get_v_scroll_bar().value
+			preview = old.get_node_or_null("skill_detail_preview") as DetailPreview
+			if preview != null:old.remove_child(preview)
 		_root.remove_child(old)
 		old.queue_free()
-	_detail(_root)
+	_detail(_root, preview)
 	if keep_scroll:
 		var body := _root.get_node_or_null("skill_detail/skill_detail_body") as RichTextLabel
 		if body != null:body.get_v_scroll_bar().set_deferred("value", offset)
@@ -599,7 +660,18 @@ func _detail_title(panel: Control, skill: Dictionary, learned_rank: int, effecti
 	var level: Label = skin.label(panel, level_text, _detail_title_position + Vector2(title.size.x, 0), font_size, level_color)
 	level.name = "skill_detail_title_rank"
 
-func _detail(root: Control) -> void:
+func _load_preview(path: String, preview: DetailPreview) -> void:
+	if not preview.is_inside_tree():return
+	var tree := preview.get_tree()
+	if ResourceLoader.load_threaded_request(path, "Texture2D") != OK:return
+	while ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await tree.process_frame
+	if ResourceLoader.load_threaded_get_status(path) != ResourceLoader.THREAD_LOAD_LOADED:return
+	var atlas := ResourceLoader.load_threaded_get(path) as Texture2D
+	if is_instance_valid(preview) and not preview.is_queued_for_deletion() and atlas != null:
+		preview.play(atlas)
+
+func _detail(root: Control, preview: DetailPreview = null) -> void:
 	var skin = game.skin
 	var skill: Dictionary = by_key.get(selected, {})
 	if skill.is_empty():
@@ -630,19 +702,32 @@ func _detail(root: Control) -> void:
 	var art := _part("detail_art")
 	if art != null:
 		skin.image(panel, art, Vector2(19, 33))
+	# For skills with no bundled video, preserve the static Explain adaptation.
+	var fallback := Control.new()
+	fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(fallback)
 	var icon := _skill_icon(skill)
 	if icon != null:
-		var icon_view: TextureRect = skin.image(panel, icon, Vector2(88, 57))
+		var icon_view: TextureRect = skin.image(fallback, icon, Vector2(88, 57))
 		icon_view.name = "skill_detail_icon"
 	var separator := _part("detail_separator")
 	if separator != null:
 		skin.image(panel, separator, Vector2(8, 134))
 	var limit := runtime_max_level(skill)
 	var level_text := "等级  %d / %d" % [effective_rank, limit] if local != "" else "状态  未实装"
-	var level_label: Label = skin.label(panel, level_text, Vector2(30, 104), 11, Color("e8ddb9"))
+	var level_label: Label = skin.label(fallback, level_text, Vector2(30, 104), 11, Color("e8ddb9"))
 	level_label.name = "skill_effective_rank"
 	level_label.size = Vector2(140, 17)
 	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if preview != null:
+		preview.mount(panel, fallback)
+	else:
+		var clip: Dictionary = _previews.get(String(skill.get("path", "")).to_lower(), {})
+		var video_path := PREVIEW_DIR + String(clip.get("image", ""))
+		if not clip.is_empty() and ResourceLoader.exists(video_path, "Texture2D"):
+			preview = DetailPreview.new(clip)
+			preview.mount(panel, fallback)
+			_load_preview(video_path, preview)
 
 	var description := String(skill.get("explain", ""))
 	if description == "":

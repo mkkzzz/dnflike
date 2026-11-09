@@ -1,0 +1,56 @@
+{
+  "clips": {
+    "skill/swordman/guard.skl": {
+      "avi_sha256": "61c2e43d8f2868ba4916251d3a1ef300107a82d4b78bcc009aee7cf413adb222",
+      "columns": 8,
+      "frame_count": 52,
+      "image": "swordman_guard.png",
+      "image_sha256": "237eb46fc5130a93916d006b460679fcb058f6e9b9e588d49000ccc7e9b83c1a",
+      "size": [
+        160,
+        90
+      ],
+      "source": "Video/Swordman/Guard.avi",
+      "source_sha256": "ae6967bd93c4445b994115b939a80069e4981984b69a9d04fdf8d1905441d152",
+      "time_base": [
+        1001,
+        30000
+      ]
+    },
+    "skill/swordman/illusionslash.skl": {
+      "avi_sha256": "f56f6531fbe07f496cd86d90ec6dfe55ca06d4cb18314f311f6ff330fff062fb",
+      "columns": 8,
+      "frame_count": 113,
+      "image": "swordman_illusionslash.png",
+      "image_sha256": "289dbceb409aa227e2228e1bc954e73d3233ca8b930dde5e40ccddff9354a731",
+      "size": [
+        160,
+        90
+      ],
+      "source": "Video/Swordman/IllusionSlash.avi",
+      "source_sha256": "ee48562ad99cf05faecde34cc5808477c7385ac8c89f2b85f645d589155eee80",
+      "time_base": [
+        1001,
+        30000
+      ]
+    },
+    "skill/swordman/upperslash.skl": {
+      "avi_sha256": "99eb89096ce605c488f8b751704a06d3326d0bd0d27debd1cf06e1ffee5ddb24",
+      "columns": 8,
+      "frame_count": 49,
+      "image": "swordman_upperslash.png",
+      "image_sha256": "52434c61bb609284af02dfee22c942356e6d7b14f71b29720455427e8fdf6e13",
+      "size": [
+        160,
+        90
+      ],
+      "source": "Video/Swordman/UpperSlash.avi",
+      "source_sha256": "7fc5b6ae7a5c0f13d4246b069be2d50c97d204353501c0fe46ab995e18bc7baf",
+      "time_base": [
+        1001,
+        30000
+      ]
+    }
+  },
+  "schema": "dnf_skill_previews/1"
+}

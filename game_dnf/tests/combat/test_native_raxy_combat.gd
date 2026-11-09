@@ -55,6 +55,9 @@ func run() -> void:
 			check_ordinary_death()
 			check_jump("native_starfish",[0,9999,9999,0,0],1)
 			check_jump("native_starfish_rukuku",[0,0,0],0)
+			check_bite()
+			check_bite_miss()
+			check_bite_airborne()
 	print("[NATIVE_RAXY] COMPLETE checks=%d failures=%d"%[checks,failures])
 	quit(0 if failures == 0 else 1)
 
@@ -69,6 +72,114 @@ func start_room() -> Dictionary:
 
 func sound_count(key: String) -> int:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("kind") == "sound" and event.get("key") == key).size()
+
+func begin_bite(level: int) -> Dictionary:
+	start_room()
+	game.clear_monsters()
+	game.player["pos"] = Vector2(408,300)
+	game.player["invuln_ms"] = 0.0
+	game.configure_monster_numbers(level,"normal")
+	var enemy: Dictionary = game.spawn_enemy(Vector2(350,300),false,"native_starfish")
+	enemy["numeric"].values["attack_speed"] = 1.0
+	enemy["facing"] = 1
+	enemy["native_attack_elapsed_ms"] = 2999.0
+	game.rng = SourceRolls.new([0,0,9999,9999,0])
+	game.update_enemy(enemy,1.0)
+	check(enemy["state"] == "attack" and enemy.get("move_index",-1) == 0,
+		"original attack polling selects TryBite slot zero")
+	return enemy
+
+func check_bite() -> void:
+	var rng_before = game.rng
+	var enemy := begin_bite(34)
+	var before: float = game.player["hp"]
+	game.update_enemy(enemy,49.0)
+	check(game.enemy_ani(enemy)[0] == "trybite" and enemy["vz"] == 0.0,"TryBite waits for native frame one")
+	game.update_enemy(enemy,1.0)
+	check(enemy.get("native_jump_velocity") == Vector2(200,0) and is_equal_approx(enemy["vz"],600.0),
+		"TryBite launches using the native 200 speed and 120 apex")
+	for _tick in 40:
+		game.update_enemy(enemy,10.0)
+		if enemy.has("starfish_capture"):break
+	var captured := enemy.has("starfish_capture")
+	check(captured and is_equal_approx(before,game.player["hp"]) and game.player["state"] != "hold",
+		"the original contact takes no HP and queues the separate HOLD step")
+	if not captured:
+		game.rng = rng_before
+		return
+	check(enemy["starfish_bites_left"] == 6 and enemy["pos"] == Vector2(403,301) and enemy["z"] == 75.0,
+		"MOB level 34 takes six bites and uses the original Swordman attachment anchor")
+	check(sound_count("HOLD") == 1 and sound_count("ZGM_ATTACH") == 0,
+		"entry plays HOLD once while attach sound waits for a bite")
+	game.update_enemy(enemy,1.0)
+	check(game.player["state"] == "hold" and game.player_ani() == ["damage1",0.0],
+		"the next tick holds the player in the first damage pose")
+	game.held[KEY_RIGHT] = true
+	game.requests.assign([KEY_X,KEY_Z,KEY_C])
+	game.step_game(498.0)
+	check(game.player["state"] == "hold" and game.player["pos"] == Vector2(408,300)
+		and game.player["action"] == "" and sound_count("ZGM_ATTACH") == 0,
+		"movement and actions cannot interrupt the hold before the first original bite frame")
+	game.held.clear()
+	var bites := 0
+	for _tick in 240:
+		game.step_game(1.0 if _tick == 0 else 16.0)
+		bites = sound_count("ZGM_ATTACH")
+		if not enemy.has("starfish_capture"):break
+	var bite_hits: Array = game.bus.events_of("combat.hit").filter(func(event):return String(event.get("atk","")).ends_with("/bite.atk"))
+	check(bites == 6 and bite_hits.size() == 6 and game.player["hp"] < before
+		and game.last_damage["trace"]["defense_factor"] == 1.0,
+		"six original ETC bites hit directly, ignore defense and play attach sound")
+	check(game.player["state"] == "air" and not game.player.has("starfish_holder")
+		and game.player["pos"] == Vector2(408,300) and game.enemy_ani(enemy)[0] == "releasebite",
+		"the original release restores the player position and launches the down reaction")
+	check(game.player["push_v"] == 113 and is_equal_approx(game.player["vz"],sqrt(72000.0)),
+		"minimum release draws sample original Swordman weight-adjusted push and height")
+	check(enemy.get("native_jump_velocity") == Vector2(-200,0) and is_equal_approx(enemy["vz"],sqrt(30000.0)),
+		"release moves the monster backward with native speed and height")
+	for _tick in 60:
+		game.step_game(16.0)
+		if enemy["state"] == "idle":break
+	check(enemy["state"] == "idle" and enemy["z"] == 0.0 and game.player["state"] in ["air","down"],
+		"release leaves the landing sentinel and the player follows knockdown")
+	game.rng = rng_before
+
+func check_bite_miss() -> void:
+	var rng_before = game.rng
+	var enemy := begin_bite(35)
+	game.player["pos"] = Vector2(760,300)
+	for _tick in 100:
+		game.update_enemy(enemy,10.0)
+		if enemy["state"] == "idle":break
+	check(enemy["state"] == "idle" and enemy["z"] == 0.0 and not game.player.has("starfish_holder")
+		and game.bus.events_of("combat.hit").is_empty(),"missing the player skips the 10000 ms TryBite sentinel on landing")
+	game.rng = rng_before
+	enemy = begin_bite(35)
+	for _tick in 40:
+		game.update_enemy(enemy,10.0)
+		if enemy.has("starfish_capture"):break
+	check(enemy.get("starfish_bites_left",0) == 12,"MOB level 35 takes the second original bite-count endpoint")
+	if enemy.has("starfish_capture"):
+		game.update_enemy(enemy,1.0)
+		enemy["hp"] = 0.0
+		game.update_enemy(enemy,1.0)
+		check(game.player["state"] == "air" and not game.player.has("starfish_holder")
+			and enemy["state"] == "dead","death interrupts the grab and releases the held player")
+	game.rng = rng_before
+
+func check_bite_airborne() -> void:
+	var rng_before = game.rng
+	var enemy := begin_bite(34)
+	game.player["z"] = 40.0
+	for _tick in 40:
+		game.update_enemy(enemy,10.0)
+		if enemy.get("starfish_bite_phase","") == "bite":break
+	check(enemy.get("starfish_bite_phase","") == "bite" and not enemy.has("starfish_capture")
+		and not game.player.has("starfish_holder"),"airborne contact reaches the native height denial")
+	game.update_enemy(enemy,1.0)
+	check(game.enemy_ani(enemy)[0] == "releasebite" and game.player["state"] != "hold"
+		and sound_count("ZGM_ATTACH") == 0,"airborne denial leaves without a bite or HOLD")
+	game.rng = rng_before
 
 func check_suicide() -> void:
 	var enemy := start_room()
