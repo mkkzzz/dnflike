@@ -141,7 +141,6 @@ CAST_OBJECTS = {
     "icewave": (OBJ_ROOT + "icewave1.obj", 360, 0.0, -1),
     "firewave": (OBJ_ROOT + "firewavebig.obj", 420, 360.0, 1800),
     "bloodblast": (OBJ_ROOT + "grabblastbloodbig.obj", 280, 0.0, 1700),
-    "grabblastblood": (OBJ_ROOT + "grabblastblood.obj", 320, 0.0, 1200),
     "releasewave": (OBJ_ROOT + "releasewave.obj", 260, 480.0, 1200),
     # Legacy Saya EX adapter only. Ordinary Saya uses native object 20012.
     "saya": (OBJ_ROOT + "saya.obj", 420, 0.0, 25000),
@@ -1156,6 +1155,15 @@ def build_move(
                                      "original_command", "weapon_durability"],
                 "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
                             "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
+    if key == "grabblastblood":
+        spray = add_object(objects, OBJ_ROOT + "grabblastblood.obj")
+        if not spray:
+            raise ValueError("Missing original Bloodlust spray object")
+        return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "grab_blast",
+                "stages": [{"ani": "grab", "atk": "character/swordman/attackinfo/grab.atk",
+                            "hits": [{"body": True}]},
+                           {"ani": "grab", "hits": [{"object": spray, "at": 750,
+                            "percent_col": 0, "speed": 0.0, "life_ms": 480, "offset": [43, 1, 90]}]}]}
     if key == "frenzy":
         # CC10F0 uses throw slot 0. State 13 loads its charge and shoot motions.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
@@ -1919,6 +1927,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
         object_candidates.add(OBJ_ROOT + "blastbloodpresuborigin.obj")
         object_candidates.add(OBJ_ROOT + "givebloodsub.obj")
+        object_candidates.add(OBJ_ROOT + "grabblastblood.obj")
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(

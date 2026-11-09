@@ -397,6 +397,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["cast_ms"] = float(skill["level_row"][1])
 		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
+	if spec.get("native_state","") == "grab_blast":
+		move["native_state"] = "grab_blast"
+		move["grab_duration_ms"] = float(skill["static"][0])
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
@@ -422,6 +425,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if move.get("native_state","") == "grab_blast" and move["stages"].is_empty():
+				built["entry_clock"] = float(frames[3]["start_ms"])
+				built["cancel_at"] = built["duration"]
 			if stage.has("continue_frame"):
 				built["continue_at"] = float(frames[int(stage["continue_frame"])]["start_ms"])
 			if name == "weaponcombo" and weapon == "shortsword" and _uses_short_mastery_boxes(String(stage["ani"])):

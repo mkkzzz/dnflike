@@ -312,7 +312,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
-				if player.has("draw_cast"):leave_action()
+				if player.has("draw_cast") or player.has("grab_blast_target"):leave_action()
 				body["state"] = "dead"
 				finished = true
 				victory = false
@@ -647,6 +647,7 @@ func action_duration(action: String) -> float:
 
 func action_ani_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("grab_pose_ms"):return float(phase["grab_pose_ms"])
 	if phase.has("thirst_loop_ms"):
 		return float(phase["body_clock"])
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
@@ -657,6 +658,7 @@ func action_ani_clock(elapsed: float) -> float:
 
 func action_event_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("grab_pose_ms"):return elapsed
 	return elapsed-float(phase["wait_ms"]) if phase.has("charge_rate") else action_ani_clock(elapsed)
 
 func buffering(code: int) -> void:
@@ -749,6 +751,7 @@ func leave_action() -> void:
 	player.erase("draw_cast")
 	player.erase("draw_charge")
 	player.erase("draw_targets")
+	player.erase("grab_blast_target")
 	end_action_fx()
 
 func end_action() -> void:
@@ -1057,7 +1060,10 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
-	apply_player_hits(stage,old_event_clock,event_clock)
+	if m.get("native_state","") == "grab_blast" and int(player["stage"]) == 0:
+		if try_grab_blast(stage,event_clock):return
+	else:
+		apply_player_hits(stage,old_event_clock,event_clock)
 	# CB1BB3 checks the full-charge release's body frame before the next phase.
 	if stage.has("hardattack_followup") and clock >= float(stage["timeline"][9]["start_ms"]):
 		start_hardattack_followup(stage["hardattack_followup"])
@@ -1135,7 +1141,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["queued_jump"] = false
 		play_sound("jump")
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
-		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1 \
+		and not m.has("upper_followup_at") and m.get("native_state","") != "grab_blast" and int(player["stage"]) < m["stages"].size()-1 \
 		and (name != "weaponcombo" or (input_ready and clock < duration)):
 		player["queued_skill"] = ""
 		if name == "weaponcombo":
@@ -1385,7 +1391,8 @@ func start_action(name: String, cancel := false) -> bool:
 		charge["warmup_ms"] = int(float(charge["release_clock"])/maxf(speed,0.001))
 		charge["elapsed_ms"] = 0.0
 		player["hardattack_charge"] = charge
-	start_stage(opening_stage)
+	var opening_clock := float(m["stages"][0]["entry_clock"]) if m.get("native_state","") == "grab_blast" else 0.0
+	start_stage(opening_stage,opening_clock)
 	match name:
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
@@ -1537,6 +1544,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var speed := maxi(1,roundi(rate*1000.0))
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
+	elif m.get("native_state","") == "grab_blast" and index == 1:
+		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"]}
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -1557,7 +1566,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
-	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw"] and index == 1) \
+	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood"] and index == 1) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -1750,6 +1759,22 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 		for e: Dictionary in events:
 			if int(e["frame"]) == int(f["frame"]):play_sound(String(e["sound"]))
 
+func try_grab_blast(stage: Dictionary, clock: float) -> bool:
+	# State 26 starts on frame 3. The active box belongs to the current Grab.ani frame.
+	var frame: Dictionary = Kernel.Timeline.frame_at(stage["timeline"],clock)
+	var boxes: Array = frame["attack_boxes"]
+	if boxes.is_empty():return false
+	var world := Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
+	for enemy: Dictionary in monsters:
+		if float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
+		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
+		player["grab_blast_target"] = int(enemy["id"])
+		end_action_fx()
+		player["fx_tag"] = "act:%d" % (action_seq+1)
+		start_stage(1)
+		return true
+	return false
+
 func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 	var anchor := Kernel.HitJudge.anchor(player["pos"],float(player["z"]))
 	var facing := int(player["facing"])
@@ -1760,7 +1785,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			if at > old_t and at <= new_t:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
-				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
+				if hit.get("skill_id","") == "grabblastblood":
+					# CB6F95 uses the integer position and the hand-relative offset.
+					player.erase("grab_blast_target")
+					spawn_object(hit,"player",Vector2(Vector2i(player["pos"])),float(int(player["z"])),facing,attack_power())
+				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
 				else:
@@ -2217,6 +2246,7 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
+	var held_by_grab := int(player.get("grab_blast_target",-1)) == int(enemy["id"])
 	var summon_poll: bool = m.has("native_spirit_summon") and NativeZealotSummons.poll_due(enemy,ms)
 	if enemy.has("starfish_capture") and (enemy["state"] != "attack" or float(enemy["hp"]) <= 0.0):
 		release_starfish_victim(enemy)
@@ -2225,7 +2255,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["native_attack_elapsed_ms"] = float(enemy.get("native_attack_elapsed_ms",0))+ms
 	if enemy.has("numeric") and float(enemy["hp"])>0:
 		step_numeric_actor(enemy,enemy["numeric"],ms)
-		if enemy["numeric"].effects.controlled():
+		if not held_by_grab and enemy["numeric"].effects.controlled():
 			if enemy.has("starfish_capture"):
 				release_starfish_victim(enemy)
 				enemy.erase("starfish_bite_phase")
@@ -2238,6 +2268,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 				enemy["down_ms"] = 0.0
 			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world,sleeping)
 			return
+	if held_by_grab and float(enemy["hp"]) > 0.0:return
 	enemy["flash_ms"] = maxf(0,float(enemy["flash_ms"])-ms)
 	if float(enemy["stuck_ms"]) > 0:
 		enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
@@ -2779,7 +2810,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
 		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") \
-				or player.has("weapon_combo_cast") or player.has("draw_cast"):leave_action()
+				or player.has("weapon_combo_cast") or player.has("draw_cast") or player.has("grab_blast_target"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false

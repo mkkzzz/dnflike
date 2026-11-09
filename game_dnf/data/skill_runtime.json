@@ -166,6 +166,7 @@
    "ghoststepslashmove": "character/swordman/animation/ghoststepslashmove.ani",
    "ghoststepslashready": "character/swordman/animation/ghoststepslashready.ani",
    "gorecross": "character/swordman/animation/gorecross.ani",
+   "grab": "character/swordman/animation/grab.ani",
    "guard": "character/swordman/animation/guard.ani",
    "hardattack": "character/swordman/animation/hardattack.ani",
    "hitback": "character/swordman/animation/hitback.ani",
@@ -3589,17 +3590,30 @@
   },
   "grabblastblood": {
    "name": "嗜魂之手",
+   "native_state": "grab_blast",
    "skill": "skill/swordman/grabblastblood.skl",
    "stages": [
     {
-     "ani": "summon2",
-     "atk": "",
+     "ani": "grab",
+     "atk": "character/swordman/attackinfo/grab.atk",
      "hits": [
       {
-       "at": 320,
-       "effects": [],
-       "life_ms": 1200,
+       "body": true
+      }
+     ]
+    },
+    {
+     "ani": "grab",
+     "hits": [
+      {
+       "at": 750,
+       "life_ms": 480,
        "object": "passiveobject/character/swordman/grabblastblood.obj",
+       "offset": [
+        43,
+        1,
+        90
+       ],
        "percent_col": 0,
        "speed": 0.0
       }
@@ -3609,17 +3623,30 @@
   },
   "grabblastbloodex": {
    "name": "灭魂之手",
+   "native_state": "grab_blast",
    "skill": "skill/swordman/grabblastbloodex.skl",
    "stages": [
     {
-     "ani": "summon2",
-     "atk": "",
+     "ani": "grab",
+     "atk": "character/swordman/attackinfo/grab.atk",
      "hits": [
       {
-       "at": 320,
-       "effects": [],
-       "life_ms": 1200,
+       "body": true
+      }
+     ]
+    },
+    {
+     "ani": "grab",
+     "hits": [
+      {
+       "at": 750,
+       "life_ms": 480,
        "object": "passiveobject/character/swordman/grabblastblood.obj",
+       "offset": [
+        43,
+        1,
+        90
+       ],
        "percent_col": 0,
        "speed": 0.0
       }

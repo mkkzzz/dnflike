@@ -1874,6 +1874,52 @@ func check_draw_target_deadlines() -> void:
 	game.step_game(1)
 	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty(),"the public battle update settles on the first tick beyond the deadline")
 
+func check_grab_blast_startup() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"grabblastblood","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["grabblastblood"]
+	for outcome: String in ["whiff","invulnerable","hit","interrupted"]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.numeric_player.values["attack_speed"] = 1.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(200 if outcome == "whiff" else 50,0))
+		if outcome == "invulnerable":target["invuln_ms"] = 2000.0
+		press(KEY_A)
+		step(0)
+		check(game.player["clock"]==120.0 and game.view.player_actor.pose=="grab" and game.view.player_actor.sample()["frame"]==3,
+			"Bloodlust enters the authored Grab pose at frame three for "+outcome)
+		step(159)
+		check(game.player["stage"]==0 and game.objects.is_empty(),"Bloodlust cannot capture before frame seven")
+		step(1)
+		if outcome in ["whiff","invulnerable"]:
+			check(game.player["stage"]==0,"Bloodlust never enters the spray phase for "+outcome)
+			step(360)
+			check(game.player["action"]=="" and game.objects.is_empty(),"Bloodlust recovers without a spray for "+outcome)
+			continue
+		check(game.player.get("grab_blast_target",-1)==target["id"] and game.view.player_actor.sample()["frame"]==16,
+			"Bloodlust captures one target and holds the terminal pose at frame seven contact")
+		var clock: float = target["clock"]
+		game.update_enemy(target,20.0)
+		check(target["clock"]==clock,"captured monster does not advance its action")
+		if outcome == "interrupted":
+			game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)
+			step(750)
+			check(not game.player.has("grab_blast_target") and game.objects.is_empty(),"interruption releases the target without spawning a spray")
+			continue
+		step(749)
+		check(game.objects.is_empty(),"Bloodlust waits through 749 ms after capture")
+		step(1)
+		check(not game.player.has("grab_blast_target") and game.objects.size()==1
+			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
+			"Bloodlust creates one spray at the original hand offset after 750 ms")
+		var hp: float = target["hp"]
+		game.step_objects(1.0)
+		check(target["hp"]<hp,"the spray attacks from its first authored frame")
+		step(450)
+		check(game.player["action"]=="","Bloodlust completes the 1200 ms capture branch")
+
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
 		var blade := family == "katana"
@@ -2636,6 +2682,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_draw_second_slash()
+	check_grab_blast_startup()
 	check_source_shock_limits()
 	check_draw_greatsword_charge()
 	check_draw_short_wave()

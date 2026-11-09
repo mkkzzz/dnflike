@@ -56,6 +56,7 @@ func sample() -> Dictionary:
 	if frames.is_empty():return {}
 	var duration := float(ani.get("duration_ms", 1))
 	var loop: bool = pose in ["stay", "move", "dash"]
+	if not loop and clock_ms >= duration and not frames[-1].has("delay_ms"):return frames[-1]
 	var t := fposmod(clock_ms, maxf(1.0,duration)) if loop else minf(clock_ms,maxf(0,duration-0.001))
 	var elapsed := 0.0
 	for frame: Dictionary in frames:
