@@ -3080,6 +3080,9 @@ func check_rapid_move_slash() -> void:
 		game.clear_monsters()
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["mp_cost_rate"] = 0.8
+		game.numeric_player.values["cooldown_rate"] = 0.75
+		game.player["mp"] = 200.0
 		var payments: Array = []
 		session.set_skill_material_spender(func(id: int,amount: int):
 			payments.append([id,amount])
@@ -3093,12 +3096,15 @@ func check_rapid_move_slash() -> void:
 		step(159)
 		check(game.player["stage"]==0 and game.player["pos"]==POINT and game.hit_count==0 and payments==[[3037,1]],
 			"Rapid Move Slash preparation stays still and deals no damage after the original cube payment")
+		check(game.player["mp"]==180.0 and not game.player["cooldowns"].has("rapidmoveslash"),
+			"starting state 39 pays the modified rank-one MP and waits to start cooldown")
 		check(cues("SM_MENGRYONG_START").size()==1,"Rapid Move Slash preparation plays the start voice")
 		step(1)
 		var opener: Dictionary = game.action_def()["hits"][0]
 		check(game.player["stage"]==1 and game.hit_count==1 and opener["percent"]==265.0
 			and opener["atk_path"].ends_with("/rapidmoveslash1.atk"),
 			"the ready ANI advances to a first-frame weapon hit without a second press")
+		check(game.player["mp"]==180.0,"an automatic transition does not charge MP")
 		check(game.player["stuck_ms"]==15.0 and target["stuck_ms"]==15.0 and cues("JAKYEOL_HIT").size()==1
 			and cues("MENGRYOUNG_ATK").size()==1 and cues("rapid_move_slash_dust").size()==1,
 			"the opening contact and dash use the original pause and audio/dust cues")
@@ -3117,7 +3123,7 @@ func check_rapid_move_slash() -> void:
 		game.clear_monsters()
 		press(KEY_A)
 		step(99)
-		check(game.player["stage"]==1,"an early repeat does not skip the body frame two gate")
+		check(game.player["stage"]==1 and game.player["mp"]==180.0,"an early repeat neither skips frame two nor pays MP")
 		for slash in range(1,count):
 			step(1 if slash==1 else 200)
 			press(KEY_A)
@@ -3128,6 +3134,9 @@ func check_rapid_move_slash() -> void:
 				victim["hp"] = 50000.0
 			step(160)
 			check(game.player["stage"]==2*slash+1,"the next ready phase automatically slashes")
+			check(game.player["mp"]==180.0-20.0*slash and payments==[[3037,1]]
+				and not game.player["cooldowns"].has("rapidmoveslash"),
+				"a successful repeat pays only MP and keeps cooldown off through the automatic slash")
 		var finisher: Dictionary = game.action_def()["hits"][0]
 		check(finisher["percent"]==529.0 and finisher["atk_path"].ends_with("/rapidmoveslash2.atk")
 			and finisher["atk"]["lift_up"]==400 and cues("SM_MENGRYONG_FIN").size()==1,
@@ -3139,9 +3148,62 @@ func check_rapid_move_slash() -> void:
 		game.clear_monsters()
 		press(KEY_A)
 		step(200)
-		check(game.player["stage"]==2*count-1,"Rapid Move Slash does not continue beyond the native count")
+		check(game.player["stage"]==2*count-1 and game.player["mp"]==200.0-20.0*count,
+			"the final ordinal ignores additional input without spending MP")
 		step(300)
-		check(game.player["action"]=="","Rapid Move Slash recovers after the final motion")
+		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==15.0,
+			"final recovery starts the full source cooldown with the actor modifier")
+
+func check_rapid_move_slash_fee_failure() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for interrupted: bool in [false,true]:
+		start_room("original_27601","katana",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["mp_cost_rate"] = 1.0
+		game.numeric_player.values["cooldown_rate"] = 1.0
+		game.player["mp"] = 24.0
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int,amount: int):
+			payments.append([id,amount])
+			return false)
+		press(KEY_A)
+		step(0)
+		check(game.player["action"]=="" and payments.is_empty() and game.player["mp"]==24.0,
+			"an opening MP failure does not attempt material payment")
+		game.player["mp"] = 25.0
+		press(KEY_A)
+		step(0)
+		check(game.player["action"]=="" and payments==[[3037,1]] and game.player["mp"]==25.0
+			and not game.player["cooldowns"].has("rapidmoveslash"),
+			"an opening material failure leaves MP and cooldown unchanged")
+		session.set_skill_material_spender(func(id: int,amount: int):
+			payments.append([id,amount])
+			return true)
+		press(KEY_A)
+		step(0)
+		check(game.player["action"]=="rapidmoveslash" and game.player["mp"]==0.0,
+			"MP exactly equal to the opening cost is accepted")
+		if interrupted:
+			game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+		else:
+			step(160)
+			step(200)
+			press(KEY_A)
+			step(0)
+			var rejected: Array = game.bus.events_of("combat.action_rejected")
+			check(game.player["stage"]==1 and game.player["mp"]==0.0 and rejected[-1]["reason"]=="mp"
+				and not game.player["cooldowns"].has("rapidmoveslash"),
+				"an unaffordable repeat leaves the current slash and does not start cooldown early")
+			step(300)
+		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==20.0
+			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
+			"interruption or natural exit starts the cooldown without another payment")
 
 func check_rapid_move_slash_depth() -> void:
 	var profile := ProfileSession.new()
@@ -4281,6 +4343,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_rapid_move_slash_fee_failure()
 	check_rapid_move_slash_depth()
 	check_charge_crash_body_armor()
 	check_charge_crash_mastery()

@@ -318,7 +318,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
-				if player.has("draw_cast") or player.has("grab_blast_target"):leave_action()
+				if player.has("draw_cast") or player.has("grab_blast_target") or player.has("rapid_move_slash_cast"):leave_action()
 				body["state"] = "dead"
 				finished = true
 				victory = false
@@ -750,6 +750,10 @@ func leave_action() -> void:
 	if player.has("triple_cast"):
 		begin_skill_cooldown("triple",player["triple_cast"])
 		player.erase("triple_cast")
+	# CC5186 starts cooldown on exit from state 39. Its subphases keep the state.
+	if player.has("rapid_move_slash_cast"):
+		begin_skill_cooldown("rapidmoveslash",player["rapid_move_slash_cast"])
+		player.erase("rapid_move_slash_cast")
 	end_hardattack_charge()
 	stop_bloody_rave_loop()
 	player.erase("hardattack_release")
@@ -759,7 +763,6 @@ func leave_action() -> void:
 	player.erase("weapon_combo_chain")
 	player.erase("charge_crash_hold")
 	player.erase("charge_crash_release")
-	player.erase("rapid_move_slash_cast")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
@@ -1119,11 +1122,18 @@ func step_action(ms: float, move: Vector2) -> void:
 		if request:player["queued_skill"] = ""
 		# CBD3F4 advances a completed ready ANI. CBD5A4 checks the slash
 		# ordinal and body frame 2 before accepting the next command.
-		if (index % 2 == 0 and clock >= duration) or (index % 2 == 1 \
-				and index+1 < m["stages"].size() and clock < duration \
-				and event_clock >= float(stage["timeline"][2]["start_ms"]) and request):
+		if index % 2 == 0 and clock >= duration:
 			start_stage(index+1)
 			return
+		if request and index % 2 == 1 and index+1 < m["stages"].size() and clock < duration \
+				and event_clock >= float(stage["timeline"][2]["start_ms"]):
+			# CBD622 uses skill 72 with the MP flag set and the material flag clear.
+			var cost := skill_mp_cost(m)
+			if float(player["mp"]) >= cost:
+				player["mp"] = float(player["mp"])-cost
+				start_stage(index+1)
+				return
+			reject_action(name,"mp")
 	if name == "charge_crash" and int(player["stage"]) == 0 and clock >= duration:
 		# CBE7D6..CBE885 advances state 37 to the uppercut when the dash ANI ends.
 		if player["queued_skill"] == name:player["queued_skill"] = ""
@@ -1327,6 +1337,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.is_empty():return reject_action(name,"unknown")
 	if player["state"] == "hold":return reject_action(name,"state")
 	if name == "triple" and player.has("triple_cast"):return reject_action(name,"state")
+	if name == "rapidmoveslash" and player.has("rapid_move_slash_cast"):return reject_action(name,"state")
 	if name == "weaponcombo" and player["state"] not in ["idle","move","action"]:return reject_action(name,"state")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var required_effect := String(m.get("requires_effect",""))
@@ -1397,7 +1408,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.get("native_state","") in ["thirst","outrage_break"]:
 		player["hp"] = int(player["hp"])-int(hp_cost)
 	elif hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
-	if name != "triple":begin_skill_cooldown(name,m)
+	if name not in ["triple","rapidmoveslash"]:begin_skill_cooldown(name,m)
 	if backward_hop:
 		start_backstep()
 		return true
