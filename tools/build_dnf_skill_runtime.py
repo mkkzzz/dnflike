@@ -1091,6 +1091,17 @@ def swordman_weapon_tracks(library, pose: str, folders: dict[str, str], active_f
     return tracks
 
 
+def rapid_move_slash_tracks(library) -> dict:
+    folders = {
+        "shortsword": "ssword/sswdb", "katana": "katana/katanab", "greatsword": "hsword/lswdb",
+        "club": "club/clubb", "beamsword": "beamsword/beamswdb",
+    }
+    return {
+        "rapidmoveslashmove1": swordman_weapon_tracks(library, "rapidmoveslashmove1", folders, [0, 1, 2, 3]),
+        "rapidmoveslashmove2": swordman_weapon_tracks(library, "rapidmoveslashmove2", folders, [0, 1, 2]),
+    }
+
+
 DRAW_WAVE_ALS = OBJ_ROOT + "animation/momentaryslash/start.ani.als"
 DRAW_EFFECT_SCRIPT = "sqr/common.nut"
 
@@ -1714,15 +1725,6 @@ def mastery_variants() -> dict:
                 "append_stage": "upperslashafter",
             }
         ],
-        "rapidmoveslash": [
-            {
-                "priority": 20,
-                "job": "weaponmaster",
-                "weapon": ["shortsword"],
-                "skill": {"shortswordmastery": 7},
-                "append_hits": 2,
-            }
-        ],
         "ashenfork": [
             {
                 "priority": 20,
@@ -2062,6 +2064,10 @@ def main() -> int:
         charge_finish_tracks = swordman_weapon_tracks(library, "chargecrashfinish", {
             "greatsword": "hsword/lswdc", "club": "club/clubb",
         }, [3, 4])
+        rapid_tracks = rapid_move_slash_tracks(library)
+        rapid_effects = swordman_skill_effect_slots(library, b"SKILL_RAPID_MOVE_SLASH")["paths"]
+        if len(rapid_effects) != 4 or not all(path.startswith(CHR_FX + "rapidmoveslash/") for path in rapid_effects):
+            raise ValueError("unexpected Rapid Move Slash effect slots")
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
         grab_hold = grab_hold_effect_slot(library)
@@ -2170,6 +2176,21 @@ def main() -> int:
         elif key == "outragebreak":
             move = build_outrage_break(skill, records, fx, effects, objects, outrage_slots, fixed_attack_base,
                                        outrage_timing)
+        elif key == "rapidmoveslash":
+            layers = [add_fx(fx, effects, path) for path in rapid_effects]
+            if not all(layers):
+                raise ValueError("missing Rapid Move Slash effect layers")
+            move = {"skill": skill["path"], "name": skill["name"], "material_cost": fixed_cube_cost(skill, records),
+                    "weapon_tracks": rapid_tracks, "stages": []}
+            for index in (1, 2):
+                move["stages"].extend([
+                    {"ani": f"rapidmoveslashready{index}"},
+                    {"ani": f"rapidmoveslashmove{index}",
+                     "atk": f"character/swordman/attackinfo/rapidmoveslash{index}.atk",
+                     "fx": [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
+                            for slot, depth in ((0, 4), (1 + index, 5), (1, 6))],
+                     "hits": [{"attached_weapon": True, "percent_col": index - 1}]},
+                ])
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)

@@ -81,9 +81,6 @@
    "skillfx_khazanareaappear2_fbc292d4": "passiveobject/character/swordman/animation/khazanareaappear2.ani",
    "skillfx_khazanareadisappear_6c00971a": "passiveobject/character/swordman/animation/khazanareadisappear.ani",
    "skillfx_khazanareastay_1bc3c7a4": "passiveobject/character/swordman/animation/khazanareastay.ani",
-   "skillfx_lightmove1_1_847fea3b": "character/swordman/effect/animation/rapidmoveslash/lightmove1-1.ani",
-   "skillfx_lightmove1_2_b2a9b7bc": "character/swordman/effect/animation/rapidmoveslash/lightmove1-2.ani",
-   "skillfx_lightmove2_1_7a67e3a5": "character/swordman/effect/animation/rapidmoveslash/lightmove2-1.ani",
    "skillfx_line1_e722e7d8": "character/swordman/effect/animation/bloodyrave/line1.ani",
    "skillfx_line2_3c639b26": "character/swordman/effect/animation/bloodyrave/line2.ani",
    "skillfx_loop1_531a5c7f": "character/swordman/effect/animation/bloodyrave/loop1.ani",
@@ -99,6 +96,8 @@
    "skillfx_moonlightslash1_d0608d59": "character/swordman/effect/animation/moonlightslash1.ani",
    "skillfx_moonlightslash2_574395d9": "character/swordman/effect/animation/moonlightslash2.ani",
    "skillfx_moonlightslashfull_3d8e1047": "character/swordman/effect/animation/moonlightslashfull.ani",
+   "skillfx_move1_61f84ec5": "character/swordman/effect/animation/rapidmoveslash/move1.ani",
+   "skillfx_move2_20fa2b58": "character/swordman/effect/animation/rapidmoveslash/move2.ani",
    "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
    "skillfx_rasa_be541dd4": "passiveobject/character/swordman/animation/epidemicrasa/rasa.ani",
    "skillfx_rasa_ldodge_91e196e9": "passiveobject/character/swordman/animation/epidemicrasa/rasa_ldodge.ani",
@@ -111,7 +110,9 @@
    "skillfx_sayaareastay_5d009c3f": "passiveobject/character/swordman/animation/sayaex/sayaareastay.ani",
    "skillfx_sayaareastay_b8c12288": "passiveobject/character/swordman/animation/sayaareastay.ani",
    "skillfx_slash1_06aaa5c5": "character/swordman/effect/animation/ghoststepslash/slash1.ani",
+   "skillfx_slash1_5b47d710": "character/swordman/effect/animation/rapidmoveslash/slash1.ani",
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
+   "skillfx_slash2_d7f96bd5": "character/swordman/effect/animation/rapidmoveslash/slash2.ani",
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
    "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
    "skillfx_start1_7658c82b": "character/swordman/effect/animation/bloodyrave/start1.ani",
@@ -1871,6 +1872,254 @@
    ]
   },
   "chargecrashex": {
+   "finish_weapon_tracks": {
+    "club": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 7
+      }
+     ],
+     "sha256": "9d74b0515a135a1bb436e936583b8c08120c201b65892c53fe5aaafbc3058752",
+     "source": "equipment/character/swordman/weapon/club/clubb/chargecrashfinish.ani"
+    },
+    "greatsword": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          136,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          144,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 7
+      }
+     ],
+     "sha256": "e91182100f43d7d5c72200961063af0cfb522b81b3e74192d664ff5d55ce5735",
+     "source": "equipment/character/swordman/weapon/hsword/lswdc/chargecrashfinish.ani"
+    }
+   },
+   "fixed_attack_base": {
+    "by_level": [
+     63,
+     72,
+     80,
+     89,
+     97,
+     105,
+     114,
+     122,
+     131,
+     139,
+     147,
+     156,
+     164,
+     173,
+     181,
+     189,
+     198,
+     206,
+     215,
+     223,
+     231,
+     240,
+     248,
+     257,
+     265,
+     273,
+     282,
+     290,
+     299,
+     307,
+     315,
+     324,
+     332,
+     341,
+     349,
+     357,
+     366,
+     374,
+     383,
+     391,
+     399,
+     408,
+     416,
+     425,
+     433,
+     441,
+     450,
+     458,
+     467,
+     475,
+     486,
+     496,
+     507,
+     517,
+     528,
+     538,
+     549,
+     559,
+     570,
+     580,
+     591,
+     601,
+     612,
+     622,
+     633,
+     643,
+     654,
+     664,
+     675,
+     685,
+     696,
+     706,
+     717,
+     727,
+     738,
+     748,
+     759,
+     769,
+     780,
+     790,
+     801,
+     811,
+     822,
+     832,
+     843,
+     853,
+     864,
+     874,
+     885,
+     895,
+     906,
+     916,
+     927,
+     937,
+     948,
+     958,
+     969,
+     979,
+     990,
+     1000
+    ],
+    "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+    "source": "etc/etcparameter.etc"
+   },
    "name": "破军斩龙击",
    "skill": "skill/swordman/chargecrashex.skl",
    "stages": [
@@ -1913,6 +2162,254 @@
    ]
   },
   "chargecrashexp": {
+   "finish_weapon_tracks": {
+    "club": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 7
+      }
+     ],
+     "sha256": "9d74b0515a135a1bb436e936583b8c08120c201b65892c53fe5aaafbc3058752",
+     "source": "equipment/character/swordman/weapon/club/clubb/chargecrashfinish.ani"
+    },
+    "greatsword": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          136,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          144,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 7
+      }
+     ],
+     "sha256": "e91182100f43d7d5c72200961063af0cfb522b81b3e74192d664ff5d55ce5735",
+     "source": "equipment/character/swordman/weapon/hsword/lswdc/chargecrashfinish.ani"
+    }
+   },
+   "fixed_attack_base": {
+    "by_level": [
+     63,
+     72,
+     80,
+     89,
+     97,
+     105,
+     114,
+     122,
+     131,
+     139,
+     147,
+     156,
+     164,
+     173,
+     181,
+     189,
+     198,
+     206,
+     215,
+     223,
+     231,
+     240,
+     248,
+     257,
+     265,
+     273,
+     282,
+     290,
+     299,
+     307,
+     315,
+     324,
+     332,
+     341,
+     349,
+     357,
+     366,
+     374,
+     383,
+     391,
+     399,
+     408,
+     416,
+     425,
+     433,
+     441,
+     450,
+     458,
+     467,
+     475,
+     486,
+     496,
+     507,
+     517,
+     528,
+     538,
+     549,
+     559,
+     570,
+     580,
+     591,
+     601,
+     612,
+     622,
+     633,
+     643,
+     654,
+     664,
+     675,
+     685,
+     696,
+     706,
+     717,
+     727,
+     738,
+     748,
+     759,
+     769,
+     780,
+     790,
+     801,
+     811,
+     822,
+     832,
+     843,
+     853,
+     864,
+     874,
+     885,
+     895,
+     906,
+     916,
+     927,
+     937,
+     948,
+     958,
+     969,
+     979,
+     990,
+     1000
+    ],
+    "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+    "source": "etc/etcparameter.etc"
+   },
    "name": "强化 - 破军升龙击",
    "skill": "skill/swordman/chargecrashexp.skl",
    "stages": [
@@ -6071,158 +6568,816 @@
    ]
   },
   "rapidmoveslash": {
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "猛龙断空斩",
    "skill": "skill/swordman/rapidmoveslash.skl",
    "stages": [
     {
-     "ani": "rapidmoveslashready1",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_lightmove1_1_847fea3b"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_lightmove1_1_847fea3b",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        500.0
-       ]
-      }
-     ]
+     "ani": "rapidmoveslashready1"
     },
     {
      "ani": "rapidmoveslashmove1",
-     "atk": "",
+     "atk": "character/swordman/attackinfo/rapidmoveslash1.atk",
      "fx": [
       {
+       "action_clock": true,
        "at": 0,
-       "key": "skillfx_lightmove2_1_7a67e3a5"
+       "depth_offset": 4,
+       "key": "skillfx_move1_61f84ec5"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 5,
+       "key": "skillfx_slash1_5b47d710"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 6,
+       "key": "skillfx_move2_20fa2b58"
       }
      ],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_lightmove2_1_7a67e3a5",
-       "effects": [],
-       "percent_col": 1,
-       "window": [
-        0.0,
-        500.0
-       ]
+       "attached_weapon": true,
+       "percent_col": 0
       }
      ]
     },
     {
-     "ani": "rapidmoveslashready2",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_lightmove1_2_b2a9b7bc"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_lightmove1_2_b2a9b7bc",
-       "effects": [],
-       "percent_col": 2,
-       "window": [
-        0.0,
-        500.0
-       ]
-      }
-     ]
+     "ani": "rapidmoveslashready2"
     },
     {
      "ani": "rapidmoveslashmove2",
-     "atk": "",
-     "hits": []
+     "atk": "character/swordman/attackinfo/rapidmoveslash2.atk",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 4,
+       "key": "skillfx_move1_61f84ec5"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 5,
+       "key": "skillfx_slash2_d7f96bd5"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 6,
+       "key": "skillfx_move2_20fa2b58"
+      }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true,
+       "percent_col": 1
+      }
+     ]
     }
-   ]
-  },
-  "rapidmoveslash__variant_1": {
-   "name": "猛龙断空斩",
-   "skill": "skill/swordman/rapidmoveslash.skl",
-   "stages": [
-    {
-     "ani": "rapidmoveslashready1",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_lightmove1_1_847fea3b"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_lightmove1_1_847fea3b",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        500.0
-       ]
-      }
-     ]
+   ],
+   "weapon_tracks": {
+    "rapidmoveslashmove1": {
+     "beamsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -15,
+           7,
+           191,
+           38,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           189,
+           38,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "4a8ae5e0295762e9484ee445777ab7ea65bf4241c450e9fdc2674d8923b6ebeb",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdb/rapidmoveslashmove1.ani"
+     },
+     "club": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -15,
+           7,
+           182,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           189,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           176,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           176,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "66ec64a6ad663f6894279f9ddc55b3b0b61d9f09d4bde459b5436dff0b1b561d",
+      "source": "equipment/character/swordman/weapon/club/clubb/rapidmoveslashmove1.ani"
+     },
+     "greatsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -15,
+           7,
+           191,
+           41,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           189,
+           41,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           41,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           41,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "4d62d537e22dfa035efb720ef9d346834b93a83dc1c444c8d29c10d9471da2f3",
+      "source": "equipment/character/swordman/weapon/hsword/lswdb/rapidmoveslashmove1.ani"
+     },
+     "katana": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -15,
+           7,
+           191,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           189,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "623b951f73c3de2a0eac350d63065211a6f369fb64210e3de7beec8d7c5242e2",
+      "source": "equipment/character/swordman/weapon/katana/katanab/rapidmoveslashmove1.ani"
+     },
+     "shortsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -15,
+           7,
+           191,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           189,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -57,
+           -20,
+           7,
+           177,
+           35,
+           107
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "ced12fb56d1602c09be21c7d35c10e7de7ad1fe102e77f6940aa2451f4094470",
+      "source": "equipment/character/swordman/weapon/ssword/sswdb/rapidmoveslashmove1.ani"
+     }
     },
-    {
-     "ani": "rapidmoveslashmove1",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_lightmove2_1_7a67e3a5"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_lightmove2_1_7a67e3a5",
-       "effects": [],
-       "percent_col": 1,
-       "window": [
-        0.0,
-        500.0
-       ]
-      }
-     ]
-    },
-    {
-     "ani": "rapidmoveslashready2",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_lightmove1_2_b2a9b7bc"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_lightmove1_2_b2a9b7bc",
-       "effects": [],
-       "percent_col": 2,
-       "window": [
-        0.0,
-        500.0
-       ]
-      }
-     ]
-    },
-    {
-     "ani": "rapidmoveslashmove2",
-     "atk": "",
-     "hits": []
+    "rapidmoveslashmove2": {
+     "beamsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -17,
+           -15,
+           28,
+           103,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -37,
+           -15,
+           50,
+           88,
+           30,
+           130
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -52,
+           -15,
+           50,
+           70,
+           30,
+           134
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "252e49a7d2044f06f4c8e3ed420e0c5d8d79cfb0557964e01c2f3b4e5daa4527",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdb/rapidmoveslashmove2.ani"
+     },
+     "club": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -17,
+           -15,
+           28,
+           99,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -37,
+           -15,
+           50,
+           88,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -52,
+           -15,
+           50,
+           70,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "51b273865d5a1a39eae94cc83e44d13077b5dcc07dcd71cec826e14acf59683e",
+      "source": "equipment/character/swordman/weapon/club/clubb/rapidmoveslashmove2.ani"
+     },
+     "greatsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -17,
+           -15,
+           28,
+           103,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -37,
+           -15,
+           50,
+           88,
+           30,
+           130
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -52,
+           -15,
+           50,
+           70,
+           30,
+           134
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "c68294a9e68071c44c5dcce74466e4ee9f8fc3c8d8323ce9a8e369baae0dff09",
+      "source": "equipment/character/swordman/weapon/hsword/lswdb/rapidmoveslashmove2.ani"
+     },
+     "katana": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -17,
+           -15,
+           28,
+           99,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -37,
+           -15,
+           50,
+           88,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -52,
+           -15,
+           50,
+           70,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "49fe9fc19a9a167a3fb313d17a2cdad850451b9ed9274032ffa0535deb755247",
+      "source": "equipment/character/swordman/weapon/katana/katanab/rapidmoveslashmove2.ani"
+     },
+     "shortsword": {
+      "frames": [
+       {
+        "boxes": [
+         {
+          "box": [
+           -17,
+           -15,
+           28,
+           99,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 0
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -37,
+           -15,
+           50,
+           88,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -52,
+           -15,
+           50,
+           70,
+           30,
+           120
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 100,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 100,
+        "frame": 4
+       }
+      ],
+      "sha256": "36cd5ff80e19076540f557409c853f33bfb3974c26322628ac6f54756f4dc997",
+      "source": "equipment/character/swordman/weapon/ssword/sswdb/rapidmoveslashmove2.ani"
+     }
     }
-   ]
+   }
   },
   "reckless": {
    "effect_id": "reckless",
@@ -12538,20 +13693,6 @@
     "job": "berserker",
     "move": "rage_slash__variant_1",
     "priority": 20
-   }
-  ],
-  "rapidmoveslash": [
-   {
-    "append_hits": 2,
-    "job": "weaponmaster",
-    "move": "rapidmoveslash__variant_1",
-    "priority": 20,
-    "skill": {
-     "shortswordmastery": 7
-    },
-    "weapon": [
-     "shortsword"
-    ]
    }
   ],
   "triple": [

@@ -3066,6 +3066,83 @@ func check_grab_blast_thirst() -> void:
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
+func check_rapid_move_slash() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for rank: int in [6,7]:
+		spec["skills"]["weaponmasteryup"] = 1
+		spec["skills"]["shortswordmastery"] = rank
+		start_room("original_27000","shortsword",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int,amount: int):
+			payments.append([id,amount])
+			return true)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+		target["hp"] = 50000.0
+		var move: Dictionary = game.move_def("rapidmoveslash")
+		var count := 5 if int(game.skill_levels["shortswordmastery"]) >= 7 else 4
+		check(move["stages"].size()==2*count,"Rapid Move Slash counts the native short sword mastery bonus")
+		press(KEY_A)
+		step(159)
+		check(game.player["stage"]==0 and game.player["pos"]==POINT and game.hit_count==0 and payments==[[3037,1]],
+			"Rapid Move Slash preparation stays still and deals no damage after the original cube payment")
+		check(cues("SM_MENGRYONG_START").size()==1,"Rapid Move Slash preparation plays the start voice")
+		step(1)
+		var opener: Dictionary = game.action_def()["hits"][0]
+		check(game.player["stage"]==1 and game.hit_count==1 and opener["percent"]==265.0
+			and opener["atk_path"].ends_with("/rapidmoveslash1.atk"),
+			"the ready ANI advances to a first-frame weapon hit without a second press")
+		check(game.player["stuck_ms"]==15.0 and target["stuck_ms"]==15.0 and cues("JAKYEOL_HIT").size()==1
+			and cues("MENGRYOUNG_ATK").size()==1 and cues("rapid_move_slash_dust").size()==1,
+			"the opening contact and dash use the original pause and audio/dust cues")
+		var layers: Array = game.action_def()["fx"]
+		check(layers.size()==3 and layers.map(func(layer):return int(layer["depth_offset"]))==[4,5,6]
+			and is_equal_approx(layers[1]["scale"],0.85)
+			and layers.all(func(layer):return cues(layer["key"]).size()==1),
+			"the regular slash mounts the three registered layers with the short sword scale")
+		game.player["stuck_ms"] = 0.0
+		move_target(target,POINT+Vector2(220,0))
+		target["invuln_ms"] = 0.0
+		step(100)
+		check(is_equal_approx(game.player["pos"].x,POINT.x+175.0),
+			"Rapid Move Slash integrates the original 2000 velocity and -5000 deceleration")
+		check(game.hit_count==1,"the same target cannot be hit again on the next overlapping weapon frame")
+		game.clear_monsters()
+		press(KEY_A)
+		step(99)
+		check(game.player["stage"]==1,"an early repeat does not skip the body frame two gate")
+		for slash in range(1,count):
+			step(1 if slash==1 else 200)
+			press(KEY_A)
+			step(0)
+			check(game.player["stage"]==2*slash,"a valid repeat starts the next ready phase")
+			if slash == count-1:
+				var victim: Dictionary = api.spawn_dummy(Vector2(game.player["pos"])+Vector2(20,0))
+				victim["hp"] = 50000.0
+			step(160)
+			check(game.player["stage"]==2*slash+1,"the next ready phase automatically slashes")
+		var finisher: Dictionary = game.action_def()["hits"][0]
+		check(finisher["percent"]==529.0 and finisher["atk_path"].ends_with("/rapidmoveslash2.atk")
+			and finisher["atk"]["lift_up"]==400 and cues("SM_MENGRYONG_FIN").size()==1,
+			"the final ordinal installs the original launch ATK, rank column and final voice")
+		check(game.hit_count==2 and game.bus.events_of("combat.damage")[-1]["reaction"]=="launch"
+			and is_equal_approx(game.action_def()["fx"][1]["scale"],0.77),
+			"the final weapon contact launches and applies the short sword finisher scale")
+		game.player["stuck_ms"] = 0.0
+		game.clear_monsters()
+		press(KEY_A)
+		step(200)
+		check(game.player["stage"]==2*count-1,"Rapid Move Slash does not continue beyond the native count")
+		step(300)
+		check(game.player["action"]=="","Rapid Move Slash recovers after the final motion")
+
 func check_charge_crash_uppercut() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -4135,6 +4212,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
+	check_rapid_move_slash()
 	check_charge_crash_body_armor()
 	check_charge_crash_mastery()
 	check_draw_second_slash()

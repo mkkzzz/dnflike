@@ -518,6 +518,8 @@ func move_def(name: String) -> Dictionary:
 		return player["weapon_combo_cast"]
 	if name == "draw" and player.get("action","") == name and player.has("draw_cast"):
 		return player["draw_cast"]
+	if name == "rapidmoveslash" and player.get("action","") == name and player.has("rapid_move_slash_cast"):
+		return player["rapid_move_slash_cast"]
 	return table.moves.get(name,{})
 
 func active_effect(id: String) -> Dictionary:
@@ -757,6 +759,7 @@ func leave_action() -> void:
 	player.erase("weapon_combo_chain")
 	player.erase("charge_crash_hold")
 	player.erase("charge_crash_release")
+	player.erase("rapid_move_slash_cast")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
@@ -1112,6 +1115,17 @@ func step_action(ms: float, move: Vector2) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
+	if name == "rapidmoveslash":
+		var index := int(player["stage"])
+		var request: bool = player["queued_skill"] == name
+		if request:player["queued_skill"] = ""
+		# CBD3F4 advances a completed ready ANI. CBD5A4 checks the slash
+		# ordinal and body frame 2 before accepting the next command.
+		if (index % 2 == 0 and clock >= duration) or (index % 2 == 1 \
+				and index+1 < m["stages"].size() and clock < duration \
+				and event_clock >= float(stage["timeline"][2]["start_ms"]) and request):
+			start_stage(index+1)
+			return
 	if name == "charge_crash" and int(player["stage"]) == 0 and clock >= duration:
 		# CBE7D6..CBE885 advances state 37 to the uppercut when the dash ANI ends.
 		if player["queued_skill"] == name:player["queued_skill"] = ""
@@ -1189,7 +1203,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["queued_jump"] = false
 		play_sound("jump")
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
-		and name != "charge_crash" \
+		and name not in ["charge_crash","rapidmoveslash"] \
 		and not m.has("upper_followup_at") and m.get("native_state","") != "grab_blast" and int(player["stage"]) < m["stages"].size()-1 \
 		and (name != "weaponcombo" or (input_ready and clock < duration)):
 		player["queued_skill"] = ""
@@ -1399,6 +1413,7 @@ func start_action(name: String, cancel := false) -> bool:
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	if name == "weaponcombo":player["weapon_combo_cast"] = m
+	if name == "rapidmoveslash":player["rapid_move_slash_cast"] = m
 	if m.has("draw_hit_count_bonus"):
 		player["draw_cast"] = m.duplicate(true)
 		player["draw_targets"] = {}
@@ -1920,9 +1935,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 and CD0366 use the same attack-speed movement mode.
 		begin_action_slide(m["dash"],attack_rate)
 		if m.has("dash_rehit_ms"):player["action_slide"]["rehit_at_ms"] = m["dash_rehit_ms"]
+	if name == "rapidmoveslash" and index % 2 == 1:
+		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		begin_action_slide(m["rapid_slide"],attack_rate)
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
+			and not (name == "rapidmoveslash" and index % 2 == 1) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -1934,6 +1953,14 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		bus.emit("combat.cue",{"kind":"sound","key":"SM_GUE_CHARGE","voice_tag":"hardattack_charge"})
 		return
 	var stage := action_def()
+	if name == "rapidmoveslash":
+		if index % 2 == 1:
+			# CCCDCB positions the independent dust at the start of the slash.
+			spawn_effect("rapid_move_slash_dust",Vector2(player["pos"]).round(),int(player["facing"]),float(player["z"]))
+			play_sound("MENGRYOUNG_ATK")
+		elif index == 0:play_sound("SM_MENGRYONG_START")
+		elif index == m["stages"].size()-2:play_sound("SM_MENGRYONG_FIN")
+		else:play_sound("R_SM_MENGRYONG")
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
 	if name == "charge_crash" and index == 2:
 		begin_charge_crash_hold(m["charge_crash_hold"])
@@ -3360,7 +3387,8 @@ func attack_body_armor() -> bool:
 	# constructor's default mode, so only the authored slash frames qualify.
 	# Charge Crash uses the authored dash, uppercut and frozen preparation pose.
 	if not upper and player["action"] != "charge_crash" \
-			and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash"]:return false
+			and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash", \
+				"rapidmoveslashmove1","rapidmoveslashmove2"]:return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))
@@ -3463,7 +3491,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if float(player["hp"])<=0:
 		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") \
 				or player.has("weapon_combo_cast") or player.has("draw_cast") or player.has("grab_blast_target") \
-				or player.has("charge_crash_hold"):leave_action()
+				or player.has("charge_crash_hold") or player.has("rapid_move_slash_cast"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false

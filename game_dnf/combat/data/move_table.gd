@@ -281,9 +281,10 @@ func companion_moves(levels: Dictionary, active_weapon: String) -> Dictionary:
 	return result
 
 func _selected_move_spec(name: String) -> Dictionary:
-	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
 	var generated: Dictionary = skill_runtime.get("moves", {}).get(name, {})
 	if name == "draw" and generated.get("native_state","") == "draw":return generated.duplicate(true)
+	if name == "rapidmoveslash":return generated
+	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
 	for field: String in ["hp_cost_row", "material_cost", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx"]:
 		if generated.has(field):
 			base[field] = generated[field]
@@ -481,8 +482,21 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			if name == "charge_crash" and stage["ani"] == "chargecrashfinish":
 				var track: Dictionary = skill_runtime["moves"][name]["finish_weapon_tracks"][weapon]
 				stage_hits = Timeline.attached_attack_segments(player_timeline("chargecrashfinish"),[Timeline.from_ani(track)])
+			if name == "rapidmoveslash" and spec["weapon_tracks"].has(stage["ani"]):
+				var track: Dictionary = spec["weapon_tracks"][stage["ani"]].get(weapon,{})
+				stage_hits = Timeline.attached_attack_segments(player_timeline(stage["ani"]),[Timeline.from_ani(track)])
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if name == "rapidmoveslash" and not built["hits"].is_empty():
+				var hit: Dictionary = built["hits"][0]
+				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
+				built["cancel_at"] = built["duration"]
+				# CCCBF3..CCCC8E scales the slash attachment by weapon and ordinal.
+				var final_slash: bool = stage["ani"] == "rapidmoveslashmove2"
+				built["fx"] = built["fx"].duplicate(true)
+				if weapon != "greatsword":
+					var scales := [0.77,0.83] if final_slash else [0.85,0.9]
+					built["fx"][1]["scale"] = scales[0 if weapon == "shortsword" else 1]
 			if name == "charge_crash":
 				# CD0279/CD0561/CD07E8 use the ordinary weapon ATK installer.
 				for hit: Dictionary in built["hits"]:
@@ -573,6 +587,20 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 						"percent":0.0,"fixed":spec["charge_crash_wave_percent"],"damage_type":"physical",
 						"element":"none","offset":Vector3(135,0,0),"starts_at_zero":true,"object_fx":"charge_crash_wave",
 						"hitstop_ms":_atk_hitstop(wave["atk"],0.0)}
+		if name == "rapidmoveslash":
+			var stat: Array = skill["static"]
+			var count := int(stat[0])
+			var mastery := _skill_row(SHORT_MASTERY_SKL)
+			# CCC44F..CCC4C2 grants one extra slash after the Short Sword gate.
+			if job == "weaponmaster" and weapon == "shortsword" and int(skill_levels.get("weaponmasteryup",0)) > 0 \
+					and int(mastery["rank"]) >= int(mastery["static"][0]):
+				count += 1
+			var sequence: Array = []
+			for index in count-1:
+				sequence.append_array(move["stages"].slice(0,2))
+			sequence.append_array(move["stages"].slice(2,4))
+			move["stages"] = sequence
+			move["rapid_slide"] = {"speed":float(stat[2]),"accel":float(stat[3])}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)

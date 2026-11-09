@@ -528,12 +528,22 @@ HARDATTACK_CHARGE_AUDIO = {
 # Original audio.xml RANDOM groups, in the same order as their source items.
 HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/effect/ghost_drive_{kind}.ogg'
                          for kind in (*HARDATTACK_WAVE_VARIANTS, 'hit')}
-SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
+RAPID_SLASH_DUST = 'character/swordman/effect/animation/rapidmoveslash/dust.ani'
+EFFECTS['rapid_move_slash_dust'] = RAPID_SLASH_DUST
+RAPID_SLASH_AUDIO = {
+    'SM_MENGRYONG_START': 'sounds/char/swordman/sm_mengryong_start.ogg',
+    'SM_MENGRYONG_FIN': 'sounds/char/swordman/sm_mengryong_fin.ogg',
+    'R_SM_MENGRYONG': [f'sounds/char/swordman/sm_mengryong_{index:02}.ogg' for index in (1, 2, 3)],
+    'MENGRYOUNG_ATK': 'sounds/char/swordman/effect/mengryong_atk.ogg',
+    'JAKYEOL_HIT': 'sounds/char/swordman/effect/jakyeol_hit.ogg',
+}
+SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50), 'R_SM_MENGRYONG': (34, 33, 33)}
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
+    **{key: paths if isinstance(paths, list) else [paths] for key, paths in RAPID_SLASH_AUDIO.items()},
     'SM_CHARGE_CRASH': ['sounds/char/swordman/sm_chargecrash.ogg'],
     'CCRASH_MOVING': ['sounds/char/swordman/effect/ccrash_moving.ogg'],
     'SM_CHARGE_CRASH_UP': ['sounds/char/swordman/sm_chargecrash_up.ogg'],
@@ -1505,6 +1515,8 @@ def main() -> int:
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
+    parser.add_argument('--extend-rapid-move-slash', action='store_true',
+                        help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
                         help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-guard', action='store_true',
@@ -1678,6 +1690,16 @@ def main() -> int:
                   f'character/swordman/animation/weaponcomboshort{i}.ani') for i in range(1, 4)]
         specs.extend(('effects', key, path) for key, path in
                      (WEAPON_COMBO_FINISH_EFFECTS | WEAPON_COMBO_MASTERY_EFFECTS).items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_rapid_move_slash:
+        specs = [('effects', 'rapid_move_slash_dust', RAPID_SLASH_DUST)]
+        specs.extend(('audio', key, path) for key, path in RAPID_SLASH_AUDIO.items())
+        runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf-8'))
+        effect_paths = runtime['assets']['effect_anims']
+        layers = dict.fromkeys(layer['key'] for stage in runtime['moves']['rapidmoveslash']['stages']
+                              for layer in stage.get('fx', []))
+        specs.extend(('effects', key, effect_paths[key]) for key in layers)
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_armor_light:
