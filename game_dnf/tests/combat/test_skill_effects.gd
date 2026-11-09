@@ -437,15 +437,31 @@ func check_rasa(game, session) -> void:
 	check(game.view.object_views.has("%s:stay"%creator_id),"Rasa creator changes to stay at 1040ms")
 	game.step_objects(1159)
 	check(game.rasa_attachment_count(int(target["id"]))==0,"Rasa children do not attach during startup")
+	target["ai"] = false
+	game.update_enemy(target,17.0)
+	target["ai"] = true
+	target["cooldown_ms"] = 0.0
+	game.player["pos"] = Vector2(target["pos"])-Vector2(35,0)
+	game.update_enemy(target,83.0)
+	game.player["pos"] = origin
+	check(target["state"]=="attack" and target["clock"]==0.0,"Rasa timing fixture starts an ordinary monster attack through its AI")
 	game.step_objects(1)
 	check(game.rasa_attachment_count(int(target["id"]))==3 and game.rasa_attachment_count(int(lower["id"]))==0,"real stay attack boxes attach up to three to the selected target")
 	check(actor.values["physical_defense"]==1973.0 and actor.values["hit_recovery"]==545.0 and actor.effects.active.has("bremen_debuff"),"Rasa deducts source equipment defense and hit recovery alongside other modifiers")
 	check(is_equal_approx(float(actor.values["attack_speed"]),0.979),"three rank-one Rasa attachments add three source 7-per-mille attack slow modifiers")
-	target["state"] = "attack"
-	target["clock"] = 0.0
+	game.update_enemy(target,180.0)
+	check(target["clock"]==180.0,"Rasa attachment waits for the monster's next rate sample")
+	game.paused = true
+	game._physics_process(0.5)
+	target["stuck_ms"] = 100.0
 	game.update_enemy(target,100.0)
-	check(is_equal_approx(float(target["clock"]),97.9),"the slowed original attack animation advances on the monster attack clock")
-	target["state"] = "idle"
+	check(target["clock"]==180.0 and target["attack_rate_refresh_ms"]==37.0,"game pause and local hitstop preserve the attack-rate deadline")
+	game.update_enemy(target,36.0)
+	check(target["clock"]==216.0,"the ongoing attack retains its old rate one millisecond before the deadline")
+	game.update_enemy(target,6.0)
+	check(target["clock"]==222.0 and target["attack_rate_refresh_ms"]==300.0,"a late poll starts a full new interval from its actual update time")
+	game.update_enemy(target,1.0)
+	check(is_equal_approx(float(target["clock"]),222.979),"the attack slows from the first update at or after its rate deadline")
 	var attached: Array = children.filter(func(child: Dictionary):return child.has("rasa_target_id"))
 	if attached.is_empty():return
 	var attached_id := int(attached[0]["id"])
@@ -461,6 +477,16 @@ func check_rasa(game, session) -> void:
 	game.step_objects(1)
 	check(game.rasa_attachment_count(int(target["id"]))==0 and actor.values["physical_defense"]==5000 and actor.values["hit_recovery"]==605 and actor.effects.active.has("bremen_debuff"),"Rasa expiration removes only its own modifiers")
 	check(is_equal_approx(float(actor.values["attack_speed"]),1.0),"Rasa expiration restores the unmodified attack clock rate")
+	var after_detach := float(target["clock"])
+	game.update_enemy(target,298.0)
+	check(is_equal_approx(float(target["clock"])-after_detach,298.0*0.979),"the ongoing attack stays slowed before the next sample after detachment")
+	var before_refresh := float(target["clock"])
+	game.update_enemy(target,1.0)
+	var at_refresh := float(target["clock"])
+	check(is_equal_approx(at_refresh-before_refresh,0.979),"elapsed animation time before the rescheduled sample keeps the sampled slow")
+	game.update_enemy(target,1.0)
+	check(is_equal_approx(float(target["clock"])-at_refresh,1.0),"the attack resumes its original rate at the next sample after detachment")
+	game.update_enemy(target,20.0)
 	game.step_objects(float(creator["exit_at_ms"])-float(creator["clock"]))
 	game.view.present(game.view_snapshot(),0,0)
 	check(game.view.object_views.has("%s:exit"%creator_id),"Rasa creator uses the original exit ring at 25680ms")
@@ -475,6 +501,13 @@ func check_rasa(game, session) -> void:
 	game.step_objects(1000)
 	game.step_objects(1200)
 	check(game.rasa_attachment_count(int(target["id"]))==3,"Rasa death fixture has real attachments")
+	target["cooldown_ms"] = 0.0
+	game.player["pos"] = Vector2(target["pos"])-Vector2(35,0)
+	game.update_enemy(target,1.0)
+	game.player["pos"] = origin
+	var before_advance := float(target["attack_rate_refresh_ms"])
+	game.update_enemy(target,100.0)
+	check(target["state"]=="attack" and before_advance>100.0 and is_equal_approx(float(target["clock"]),97.9),"a newly chosen attack reads the attached rate immediately before the next periodic sample")
 	target["hp"] = 0.0
 	game.step_objects(0.0)
 	check(game.rasa_attachment_count(int(target["id"]))==0 and actor.values["physical_defense"]==5000 and actor.values["hit_recovery"]==605 and actor.effects.active.has("bremen_debuff"),"Rasa removes only its own attachments immediately when their target dies")

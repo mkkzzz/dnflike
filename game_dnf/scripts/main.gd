@@ -13,6 +13,7 @@ const MapLoader = preload("res://scripts/native_map_loader.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
+const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
 const RUN_TAP_MS := 240
@@ -1343,7 +1344,16 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
 	var advance := ms
-	if state=="attack" and enemy.has("numeric"):advance *= float(enemy["numeric"].values["attack_speed"])
+	if state == "attack" and enemy.has("numeric"):
+		advance *= float(enemy.get("rasa_previous_attack_rate",enemy["numeric"].values["attack_speed"]))
+	if not bool(enemy["chief"]) and enemy.has("numeric") and float(enemy["hp"]) > 0.0:
+		# 82A2DB lazily starts a per-actor timer. A due poll changes the rate
+		# for subsequent animation time and starts the next interval from now.
+		var remaining := float(enemy.get("attack_rate_refresh_ms",ENEMY_ATTACK_RATE_REFRESH_MS+ms))-ms
+		if remaining <= 0.0:
+			enemy.erase("rasa_previous_attack_rate")
+			remaining = ENEMY_ATTACK_RATE_REFRESH_MS
+		enemy["attack_rate_refresh_ms"] = remaining
 	enemy["clock"] = float(enemy["clock"])+advance
 	if float(enemy["hp"])<=0:
 		enemy["state"] = "dead"
@@ -1361,6 +1371,8 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			if slot >= 0:intent["face"] = enemy["facing"]
 		enemy["facing"] = int(intent["face"])
 		if intent["attack"]:
+			# D19850 configures ANI mode 2 and reads its current rate on entry.
+			enemy.erase("rasa_previous_attack_rate")
 			enemy["state"] = "attack"
 			enemy["clock"] = 0.0
 			enemy["hits"] = {}
@@ -1823,7 +1835,11 @@ func set_rasa_modifiers(object: Dictionary, target: Dictionary, attached: bool) 
 		# A64883 -> 97B904..97B956 adds the negative source value in thousandths to the attack-rate multiplier.
 		mods.append({"source":"瘟疫之罗刹","stat":"attack_speed","op":"percent",
 			"value":-float(controller["attack_speed"]),"rasa_object_id":id})
+	var previous_rate := float(actor.values["attack_speed"])
 	actor.set_runtime_modifiers(mods)
+	if target["state"] == "attack" and previous_rate != float(actor.values["attack_speed"]) \
+			and not target.has("rasa_previous_attack_rate"):
+		target["rasa_previous_attack_rate"] = previous_rate
 	bus.emit("combat.status",{"target":target["id"],"id":"rasa_attachment","change":"added" if attached else "removed"})
 
 ## Round the original SSE scalar operation before its truncating integer conversion.
