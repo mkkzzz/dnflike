@@ -6418,11 +6418,12 @@
      ],
      "hits": [
       {
-       "at": 900,
+       "at": 300,
        "life_ms": 1600,
        "object": "passiveobject/character/swordman/illusionslashwave.obj",
        "percent_col": 0,
-       "speed": 520.0
+       "speed": 520.0,
+       "starts_at_zero": true
       }
      ],
      "sounds": [

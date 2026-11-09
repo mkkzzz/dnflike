@@ -2220,13 +2220,19 @@ def main() -> int:
                 move["stages"][0]["voice"] = "SM_HOANYOUNG_START"
                 final = move["stages"][-1]
                 final["hits"] = [hit for hit in final["hits"] if "object" in hit]
+                finish_frames = records[CHR_ANI + final["ani"] + ".ani"]["decoded"]["timeline"]
+                upper_at = finish_frames[2]["start_ms"]
+                smash_at = finish_frames[6]["start_ms"]
+                # CB5145 gates both the smash record and the sword-wave dispatch on frame 6.
+                final["hits"][0]["at"] = smash_at
+                final["hits"][0]["starts_at_zero"] = True
                 upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
                 smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")
                 if not upper or not smash:
                     raise ValueError("missing original Illusion Slash finisher effect")
-                final["fx"] = [{"key": upper, "at": 100, "action_clock": True, "depth_offset": 1},
-                               {"key": smash, "at": 300, "action_clock": True, "depth_offset": 2}]
-                final["sounds"] = [{"key": "SM_HOANYOUNG_FIN", "at": 300}]
+                final["fx"] = [{"key": upper, "at": upper_at, "action_clock": True, "depth_offset": 1},
+                               {"key": smash, "at": smash_at, "action_clock": True, "depth_offset": 2}]
+                final["sounds"] = [{"key": "SM_HOANYOUNG_FIN", "at": smash_at}]
             if key in ("bloodblast", "grabblastblood", "chargecrash"):
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "chargecrash":

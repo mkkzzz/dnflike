@@ -538,14 +538,17 @@ RAPID_SLASH_AUDIO = {
     'JAKYEOL_HIT': 'sounds/char/swordman/effect/jakyeol_hit.ogg',
 }
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50), 'R_SM_MENGRYONG': (34, 33, 33)}
-ILLUSION_SLASH_VOICES = {key: f'sounds/char/swordman/{key.lower()}.ogg'
-                         for key in ('SM_HOANYOUNG_START', 'SM_HOANYOUNG_FIN')}
+ILLUSION_SLASH_AUDIO = {
+    'SM_HOANYOUNG_START': 'sounds/char/swordman/sm_hoanyoung_start.ogg',
+    'SM_HOANYOUNG_FIN': 'sounds/char/swordman/sm_hoanyoung_fin.ogg',
+    'HOANYOUNG_HIT': 'sounds/char/swordman/effect/hoanyoung_hit.ogg',
+}
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
-    **{key: [path] for key, path in ILLUSION_SLASH_VOICES.items()},
+    **{key: [path] for key, path in ILLUSION_SLASH_AUDIO.items()},
     **{key: paths if isinstance(paths, list) else [paths] for key, paths in RAPID_SLASH_AUDIO.items()},
     'SM_CHARGE_CRASH': ['sounds/char/swordman/sm_chargecrash.ogg'],
     'CCRASH_MOVING': ['sounds/char/swordman/effect/ccrash_moving.ogg'],
@@ -1519,7 +1522,7 @@ def main() -> int:
     parser.add_argument('--extend-weapon-combo', action='store_true',
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
-                        help='Append the original Illusion Slash start and finish voices')
+                        help='Append the original Illusion Slash voices and sword-wave hit cue')
     parser.add_argument('--extend-rapid-move-slash', action='store_true',
                         help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
@@ -1698,7 +1701,7 @@ def main() -> int:
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_illusion_slash_audio:
-        specs = [('audio', key, path) for key, path in ILLUSION_SLASH_VOICES.items()]
+        specs = [('audio', key, path) for key, path in ILLUSION_SLASH_AUDIO.items()]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:

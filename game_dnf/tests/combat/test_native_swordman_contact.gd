@@ -3119,12 +3119,24 @@ func check_illusion_finish() -> void:
 		step(150)
 		check(game.hit_count==(2 if family == "club" else 1) and cues("SM_HOANYOUNG_FIN").is_empty(),
 			"only the club C layer reaches the target on frame five, before the finishing voice")
+		check(game.objects.is_empty(),"the sword wave has not spawned before the smash frame")
+		var wave_id: int = game._next_entity_id
 		step(50)
 		check(game.hit_count==(2 if family == "club" else 3)
 			and cues("skillfx_upper_4c1c9ad1").filter(func(cue):return cue["action_clock_at"]==100.0).size()==1
 			and cues("skillfx_smash_c789bbe3").filter(func(cue):return cue["action_clock_at"]==300.0).size()==1
 			and cues("SM_HOANYOUNG_FIN").size()==1 and spent==[[3037,2]],
 			"frame six switches attack records and attaches the second original effect")
+		check(game.objects.size()==1 and game.objects[0]["def"]["path"].ends_with("/illusionslashwave.obj"),
+			"frame six dispatches exactly one sword wave")
+		game.clear_monsters()
+		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(70,0))
+		game.step_objects(50.0,wave_id)
+		check(game.objects.size()==1 and game.objects[0]["clock"]==0.0,
+			"the wave begins at animation time zero on its creation update")
+		check(game.objects.size()==1 and game.objects[0]["hits"].has(wave_target["id"])
+			and cues("HOANYOUNG_HIT").size()==1 and game.table.assets["audio"].has("HOANYOUNG_HIT"),
+			"a sword-wave contact plays the hit cue from its original attack record")
 
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()
