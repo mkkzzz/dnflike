@@ -62,5 +62,16 @@ func run() -> void:
 	# simulation cancel/skill/AI behavior to pass before equipment can be delivered.
 	api.emit_weapon_ghost_fixture()
 	check(api.latest_ghost_weapon_item()=="original_27647","afterimage event copies exact item appearance instead of the generic family weapon")
+	await ticks(90)
+	key(KEY_Z,true);await ticks(1);key(KEY_Z,false)
+	var actor = game.battle.view.player_actor
+	var sampled := false
+	for frame_index in 12:
+		if actor.pose=="hitback" and actor.clock_ms>=50.0 and actor.clock_ms<100.0:
+			sampled = int(actor.sample().img_frame)==51 and actor.equipment_layers.all(
+				func(layer):return int(layer.frame.get("img_frame",-1))==51)
+			break
+		await ticks(1)
+	check(sampled,"actual Upper Slash input retains the opening pose on both equipped weapon layers")
 	check(not game.act("items.equip",{"uid":uids.original_27800}),"existing town-only equipment rule remains enforced")
 	print("[WEAPON_QUICK] COMPLETE checks=%d failures=%d captures=%d" % [checks,failures,captured.size()]);get_tree().quit(1 if failures else 0)

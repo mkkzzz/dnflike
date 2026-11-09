@@ -29,6 +29,24 @@ func run() -> void:
 		check(Appearance.apply(actor,id,clips) and actor.get_meta("weapon_item")==id,"item identity reaches actor without family-only substitution: "+id)
 		check(actor.equipment_layers.size()==2 and actor.equipment_layers[0].show_behind_parent and not actor.equipment_layers[1].show_behind_parent,"original back/body/front order: "+id)
 		check(actor.bank.texture.ends_with("body_base.png") and actor.pose_banks.move.texture.ends_with("body_locomotion.png"),"shared body never contains a baked category weapon: "+id)
+		var layers := Appearance.layers(id, clips)
+		for index: int in layers.size():
+			var source_path: String = Appearance.skin(id).layers[index].clips.hitback
+			var original: Dictionary = Appearance.data().animations[source_path]
+			var attached: Dictionary = layers[index].clips.hitback
+			check(int(original.duration_ms)==550 and int(attached.duration_ms)==850,
+				"attachment copies HitBack timing without changing the original weapon ANI: "+id)
+			check(attached.frames[2].boxes==original.frames[2].boxes and attached.frames[2].pos==original.frames[2].pos,
+				"shared collision layer retains the original weapon boxes and anchor: "+id)
+			for pose: String in Appearance.PARENT_TIMED_POSES:
+				var body_delays: Array = clips[pose].frames.map(func(frame):return frame.delay_ms)
+				var weapon_delays: Array = layers[index].clips[pose].frames.map(func(frame):return frame.delay_ms)
+				check(body_delays==weapon_delays,"shared layer uses source body frame delays: "+id+"/"+pose)
+		for sample: Array in [[50.0,51],[100.0,52],[400.0,58],[450.0,59]]:
+			actor.present("hitback",sample[0],-1,0,0)
+			var body_image := int(actor.sample().get("img_frame",-1))
+			check(body_image==sample[1] and actor.equipment_layers.all(func(layer):return int(layer.frame.get("img_frame",-1))==body_image),
+				"body and both rendered weapon layers share original HitBack boundary: "+id+"/"+str(sample[0]))
 		for pose: String in clips:
 			actor.present(pose,50,1,30,0.5,Color(0.5,0.8,1,0.6))
 			for layer in actor.equipment_layers:

@@ -2,6 +2,7 @@ extends RefCounted
 ## Item identity is separate from weapon family (simulation/sound/skill rules).
 const PATH := "res://assets_local/weapon_appearance_v2/manifest.json"
 const POSE_OVERLAY := "res://assets_local/weapon_appearance_v3/manifest.json"
+const PARENT_TIMED_POSES := ["attack1", "attack2", "attack3", "hitback"]
 static var _data: Dictionary = {}
 static var _layers: Dictionary = {}
 
@@ -38,19 +39,55 @@ static func valid_spec(spec: Dictionary) -> bool:
 	if not spec["weapon_item"] is String or not can_display(spec["weapon_item"]):return false
 	return spec["weapon_item"]=="" or skin(spec["weapon_item"]).get("family")==spec.get("weapon")
 
-static func apply(actor, item: String, clips: Dictionary) -> bool:
-	if not can_display(item):return false
-	var info:=data()
-	var key: String=info["items"].get(identity(item),"")
+## Original equipment attachment 0x8441C0 copies each overlapping body frame's delay.
+## Keep the archive clips intact. Both drawing and collision use the attached clips.
+static func layers(item: String, body_clips: Dictionary) -> Array:
+	var info := data()
+	var key: String = info.get("items", {}).get(identity(item), "")
+	if key.is_empty():return []
 	if not _layers.has(key):
-		var layers: Array=[]
+		var source_layers: Array = []
 		for layer: Dictionary in info["appearances"].get(key,{}).get("layers",[]):
 			var animations: Dictionary={}
 			for pose: String in layer["clips"]:animations[pose]=info["animations"][layer["clips"][pose]]
-			layers.append({"order":int(layer["order"]),"bank":info["banks"][layer["bank"]],"clips":animations})
-		_layers[key]=layers
+			source_layers.append({"order":int(layer["order"]),"bank":info["banks"][layer["bank"]],"clips":animations})
+		_layers[key] = source_layers
+	var result: Array = []
+	for source_layer: Dictionary in _layers[key]:
+		var layer := source_layer.duplicate()
+		var clips: Dictionary = source_layer["clips"].duplicate()
+		for pose: String in PARENT_TIMED_POSES:
+			if body_clips.has(pose) and clips.has(pose):
+				clips[pose] = _with_parent_delays(clips[pose], body_clips[pose])
+		layer["clips"] = clips
+		result.append(layer)
+	return result
+
+static func _with_parent_delays(source: Dictionary, parent: Dictionary) -> Dictionary:
+	var frames: Array = source["frames"]
+	var parent_frames: Array = parent["frames"]
+	var retimed: Array = []
+	var duration := int(source["duration_ms"])
+	for index: int in mini(frames.size(), parent_frames.size()):
+		var delay = parent_frames[index].get("delay_ms")
+		var previous = frames[index].get("delay_ms")
+		if delay == null or previous == null or delay == previous:continue
+		if retimed.is_empty():retimed = frames.duplicate()
+		var frame: Dictionary = frames[index].duplicate()
+		frame["delay_ms"] = delay
+		retimed[index] = frame
+		duration += int(delay) - int(previous)
+	if retimed.is_empty():return source
+	var clip := source.duplicate()
+	clip["frames"] = retimed
+	clip["duration_ms"] = duration
+	return clip
+
+static func apply(actor, item: String, clips: Dictionary) -> bool:
+	if not can_display(item):return false
+	var info := data()
 	actor.setup(info["body"]["base"],clips,{"move":info["body"]["locomotion"],"dash":info["body"]["locomotion"]})
-	actor.set_equipment_layers(_layers[key])
+	actor.set_equipment_layers(layers(item, clips))
 	actor.set_meta("weapon_item",item)
-	actor.set_meta("weapon_appearance",key)
+	actor.set_meta("weapon_appearance",info["items"].get(identity(item),""))
 	return true
