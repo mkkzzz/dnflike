@@ -178,9 +178,15 @@ if ($Test) {
     $questRules=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_native_quest_rules.gd 2>&1
     $questRules | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($questRules -match 'SCRIPT ERROR|ERROR:') -or -not ($questRules -match '\[QUEST_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Native quest rules regression failed."}
-    $campaign=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_campaign_1_16.gd 2>&1
+    # Quest-maze fixtures mount live combat, which reads original OGG metadata.
+    $campaignPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $campaign=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_campaign_1_16.gd 2>&1
+        $campaignExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$campaignPreference}
     $campaign | Write-Output
-    if ($LASTEXITCODE -ne 0 -or ($campaign -match 'SCRIPT ERROR|ERROR:') -or -not ($campaign -match '\[CAMPAIGN\] COMPLETE checks=\d+ failures=0')) {throw "Curated 1-16 campaign regression failed."}
+    if ($campaignExit -ne 0 -or ($campaign -match 'SCRIPT ERROR|ERROR:') -or -not ($campaign -match '\[CAMPAIGN\] COMPLETE checks=\d+ failures=0')) {throw "Curated 1-16 campaign regression failed."}
     $weaponOutput=& $GodotPath --headless --path $gamePath --script res://tests/items/test_weapon_appearance_rules.gd 2>&1
     $weaponOutput | Write-Output
     if ($LASTEXITCODE -ne 0 -or ($weaponOutput -match 'SCRIPT ERROR|ERROR:') -or -not ($weaponOutput -match '\[WEAPON_RULES\] COMPLETE checks=\d+ failures=0')) {throw "Item-specific weapon appearance regression failed."}

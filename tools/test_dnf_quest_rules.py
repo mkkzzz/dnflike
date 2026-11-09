@@ -43,6 +43,16 @@ class QuestRules(unittest.TestCase):
                                             {'original_3081': {}}, {}, dungeon_index={})
         self.assertNotIn('clear_items', blocked)
         self.assertIn('clear_reward_item_unsupported', reasons)
+    def test_escort_map_is_blocked_until_survival_is_enforced(self):
+        fields = {'[grade]': ['[epic]'], '[npc index]': [7], '[type]': ['[clear map]'],
+                  '[sub type]': [0], '[int data]': [1619, 201]}
+        words = {'[name]': 'G.S.D亲自出马', '[condition message]': '陪同G.S.D通关'}
+        _, _, reasons = compile_quest(4307, 'n_quest/example/a.qst', 'x', fields, words, {}, {}, {},
+                                     dungeon_index={11: 'draconiantower'},
+                                     map_index={'1619': {'dungeon': 'draconiantower', 'cell': [0, 2],
+                                                        'quest_id': 4307, 'companion_id': 201}})
+        self.assertIn('clear_map_companion_survival_unavailable', reasons)
+        self.assertNotIn('clear_map_unavailable:1619', reasons)
     def test_full_reproducible_audit_and_runtime(self):
         runtime,audit=build();catalog,missing=sync_catalog(runtime)
         self.assertFalse(missing);self.assertEqual(stale_outputs(runtime,audit,catalog),[]);self.assertEqual(audit,load(AUDIT))

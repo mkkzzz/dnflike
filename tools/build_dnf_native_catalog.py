@@ -340,6 +340,13 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
             if not o['npc']:reasons.append('target_npc_not_in_town')
         elif p['type']=='clear_map':
             target=(map_index or {}).get(str(p['map']))
+            if target and target.get('quest_id',number)!=number:
+                reasons.append('clear_map_quest_maze_unavailable')
+            if p.get('source_extra'):
+                if target and p['source_extra']==[target.get('companion_id')]:
+                    reasons.append('clear_map_companion_survival_unavailable')
+                else:
+                    reasons.append('clear_map_extra_condition_unavailable')
             if not target:
                 reasons.append('clear_map_unavailable:'+str(p['map']))
             else:

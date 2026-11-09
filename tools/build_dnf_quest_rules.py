@@ -74,7 +74,7 @@ def build():
     towns=load(DATA/'towns.json');placed={npc for scene in towns['locations'].values() for npc in scene.get('npcs',{})}
     npcs={i:key for i,key in NPCS.items()
           if key in old['npcs'] and (key in placed or key=='the_last_mehmet')}
-    source=load(BASE/'manifest.json')['source']
+    source=load(BASE/'manifest.json')['source'];map_targets=dict(campaign.get('map_targets',{}))
     for path in [DATA/'quests.json',DATA/'native_runtime.json',DATA/'runtime_items.json',DATA/'monster_catalog.json',DATA/'combat.json',DATA/'dungeons.json',DATA/'towns.json',CAMPAIGN,BASE/'manifest.json']:
         inputs[path.relative_to(ROOT).as_posix()]=digest(path)
     for key,row in routes.items():
@@ -84,6 +84,12 @@ def build():
         if type(doc.get('index')) is not int:raise ValueError('Missing source DGN index: '+key)
         if doc['index'] in dungeons:raise ValueError('Ambiguous runtime DGN mapping: '+key)
         dungeons[doc['index']]=key;names[key]=row['name'];inputs[path.relative_to(ROOT).as_posix()]=digest(path)
+        for quest,route in row.get('quest_routes',{}).items():
+            maze=doc['quest_mazes'][quest]
+            map_id=str(route['source_map_id'])
+            if map_id in map_targets:raise ValueError('Ambiguous quest MAP '+map_id)
+            map_targets[map_id]={'dungeon':key,'cell':maze['boss_cell'],
+                                 'quest_id':maze['source_id'],'companion_id':route['companion_id']}
     records={}
     for shard in sorted({index['locations'][p] for p in index['indexes']['quests'].values()}):records.update(compressed(BASE/shard)['records'])
     source_jobs={}
@@ -105,7 +111,7 @@ def build():
                 required for required in fields['[pre required quest]']
                 if any(job in ['[all]','[swordman]'] for job in source_jobs.get(required,['[all]']))
             ]
-        q,plan,reasons=compile_quest(int(number),path,record['sha256'],fields,record['text'],existing,items,monsters,custom_events={211},dungeon_index=dungeons,npc_index=npcs,map_index=campaign.get('map_targets',{}))
+        q,plan,reasons=compile_quest(int(number),path,record['sha256'],fields,record['text'],existing,items,monsters,custom_events={211},dungeon_index=dungeons,npc_index=npcs,map_index=map_targets)
         if int(number) not in campaign.get('auto_source_ids',[]):
             q.pop('auto_accept',None)
             q.pop('auto_complete',None)

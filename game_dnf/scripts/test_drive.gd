@@ -462,6 +462,7 @@ func run_skill_fidelity() -> void:
 	await check_bound_guard()
 	check_guard_attack_types()
 	await check_auto_guard()
+	check_bremen_field()
 	check_normalwave_level_data()
 	check_icewave_level_data()
 	check_icewave_chain()
@@ -650,6 +651,62 @@ func check_auto_guard() -> void:
 			check(api.p("state")=="guard" and api.p("facing")==side and int(game.view.player_actor.sample().get("img_frame",-1))==124,"automatic block faces the hit and uses source recoil without a held key")
 			await ticks(14)
 			check(api.p("state")=="idle","automatic guard ends when recoil finishes without a held key")
+
+func check_bremen_field() -> void:
+	for sample: Array in [[1,1,15600.0,2.0,702.0],[4,-1,16770.0,6.0,2129.0]]:
+		var rank := int(sample[0])
+		var side := int(sample[1])
+		var life_ms := float(sample[2])
+		api.restart()
+		api.set_god(true)
+		var origin := Vector2(410,260)
+		var anchor := origin+Vector2(122*side,0)
+		api.set_p("pos",origin)
+		api.set_p("facing",side)
+		api.set_p("mp",500.0)
+		game.numeric_player = preload("res://stats/api/actor_numbers.gd").new()
+		var base: Dictionary = Numbers.shared_config()["base"].duplicate()
+		game.numeric_player.configure({"numbers":base})
+		game.skill_levels = {"bremen":rank}
+		game.table.configure_skills(game.skill_levels,"soulbringer",api.weapon())
+		var enemy: Dictionary = api.spawn_dummy(anchor+Vector2(250*side,0))
+		enemy["pos"] = anchor+Vector2(250*side,0)
+		base.merge({"magical_defense":3000.0,"physical_defense":500.0,"abnormal_resistance":10.0},true)
+		var actor = enemy["numeric"]
+		actor.configure({"numbers":base})
+		var defense := float(actor.values["magical_defense"])
+		var physical := float(actor.values["physical_defense"])
+		var move_speed := float(actor.values["move_speed"])
+		check(api.start_action("bremen") and game.objects.is_empty() and actor.effects.active.is_empty(),"Bremen cast starts without a caster aura or direct attack")
+		game.step_action(420.0,Vector2.ZERO)
+		check(game.objects.size()==1,"Bremen creates a single original field object")
+		if game.objects.size()!=1:continue
+		var field: Dictionary = game.objects[0]
+		check(Vector2(field["pos"])==anchor and float(field["life_ms"])==life_ms,"Bremen mirrors the original offset and samples the cast rank's lifetime")
+		game.step_objects(0.0)
+		check(float(actor.values["magical_defense"])==defense-float(sample[4]) and float(actor.values["abnormal_resistance"])==10.0-float(sample[3]),"Bremen applies the signed source columns to a hostile 250 pixels from the field")
+		check(float(actor.values["physical_defense"])==physical and float(actor.values["move_speed"])==move_speed and api.hit_count()==0 and float(enemy["hp"])==5000.0,"Bremen leaves physical defense, speed and HP unchanged")
+		check(game.numeric_player.effects.active.is_empty(),"the caster is not a Bremen target")
+		api.set_p("pos",origin-Vector2(200*side,0))
+		enemy["pos"] = anchor+Vector2(0,73)
+		game.step_objects(249.0)
+		check(actor.effects.active.has("bremen_debuff"),"Bremen membership waits for the native 250ms pulse")
+		game.step_objects(1.0)
+		check(not actor.effects.active.has("bremen_debuff"),"Bremen rejects a target 73 depth units from its fixed anchor")
+		enemy["pos"] = anchor+Vector2(0,72)
+		game.step_objects(250.0)
+		check(actor.effects.active.has("bremen_debuff"),"Bremen accepts 72 depth units after the caster moves away")
+		enemy["hp"] = 0.0
+		game.step_objects(250.0)
+		check(not actor.effects.active.has("bremen_debuff"),"Bremen removes the modifier from a dead target")
+		enemy["hp"] = 5000.0
+		game.step_objects(life_ms-320.0-750.0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		var exit_sprite = game.view.object_views.get("%s:exit"%field["id"])
+		check(exit_sprite!=null and exit_sprite.atlas!=null and String(exit_sprite.data["source"]).ends_with("/bremenareadisappear.ani"),"Bremen starts its own source exit animation before deletion")
+		check(actor.effects.active.has("bremen_debuff"),"Bremen aura can still apply during the visual exit")
+		game.step_objects(320.0)
+		check(game.objects.is_empty() and float(actor.values["magical_defense"])==defense and float(actor.values["abnormal_resistance"])==10.0,"Bremen deletion removes both exact reductions")
 
 func check_normalwave_phases() -> void:
 	for rates in [[1.0,1.0,50.0,150.0,450.0],[2.0,0.5,100.0,150.0,350.0],[0.5,2.0,25.0,225.0,650.0]]:

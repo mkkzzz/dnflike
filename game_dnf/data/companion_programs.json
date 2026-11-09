@@ -1,0 +1,1748 @@
+{
+ "schema": "dnf_companion_programs/1",
+ "index": {
+  "path": "aicharacter/aicharacter.lst",
+  "sha256": "62748db4693fe8f1032fc9e59a801f13a0234468525e93ab830fb5fba5d88dda"
+ },
+ "companions": {
+  "201": {
+   "source": {
+    "path": "aicharacter/swordman/gsd/gsd.aic",
+    "sha256": "44054eba87c18ba52c3ea41248792b375e5f8751b84bb30f095704d3db354197"
+   },
+   "ai": {
+    "event": "aicharacter/swordman/gsd/ai/event.ai",
+    "destination": "aicharacter/swordman/gsd/ai/destinationselect.ai",
+    "action": "aicharacter/swordman/gsd/ai/action.ai",
+    "movement": "aicharacter/swordman/gsd/ai/movemethod.ai"
+   },
+   "programs": {
+    "aicharacter/swordman/gsd/ai/ice_wave_combo.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/ice_wave_combo.ai",
+      "sha256": "1b78c36ecb47175a3f1a801047e7534353976ae23cd8c47973f60ec96ed90344"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       30.0,
+       0.0,
+       10.0,
+       10.0
+      ],
+      "then": {
+       "if": [
+        "[check use skill]",
+        58
+       ],
+       "then": {
+        "return": "wheel"
+       },
+       "else": {
+        "return": -1
+       }
+      },
+      "else": {
+       "if": [
+        "[check use skill]",
+        22
+       ],
+       "then": {
+        "return": "flame_wave"
+       },
+       "else": {
+        "return": -1
+       }
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/event.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/event.ai",
+      "sha256": "5e04d031ba14d2957c73e415a86a8667b2b75afdb22f684463e18f5ab0cfa645"
+     },
+     "decision": {
+      "if": [
+       "[attack success]",
+       1
+      ],
+      "then": {
+       "if": [
+        "[my attack]",
+        58
+       ],
+       "then": {
+        "return": "ice_wave"
+       },
+       "else": {
+        "if": [
+         "[my attack]",
+         46
+        ],
+        "then": {
+         "return": "cancel_wave_combo"
+        },
+        "else": {
+         "if": [
+          "[my attack]",
+          21
+         ],
+         "then": {
+          "import": "ice_wave_combo.ai"
+         },
+         "else": {
+          "if": [
+           "[my attack]",
+           32
+          ],
+          "then": {
+           "return": "ice_wave"
+          },
+          "else": {
+           "if": [
+            "[my attack]",
+            20
+           ],
+           "then": {
+            "if": [
+             "[check use skill]",
+             22
+            ],
+            "then": {
+             "return": "flame_wave"
+            },
+            "else": {
+             "return": -1
+            }
+           },
+           "else": {
+            "if": [
+             "[my attack]",
+             22
+            ],
+            "then": {
+             "return": "ice_wave"
+            },
+            "else": {
+             "return": -1
+            }
+           }
+          }
+         }
+        }
+       }
+      },
+      "else": {
+       "return": -1
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/destinationselect.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/destinationselect.ai",
+      "sha256": "d2fde6486abd986094fdce1066d7bf3803e73fdf640bc1fcbcec80190baa2262"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       100.0,
+       100.0,
+       100.0,
+       100.0
+      ],
+      "then": {
+       "if": [
+        "[target state]",
+        4.0
+       ],
+       "then": {
+        "return": 2
+       },
+       "else": {
+        "return": 0
+       }
+      },
+      "else": {
+       "return": 0
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/wave_pattern.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/wave_pattern.ai",
+      "sha256": "426265b7dc4e09e35709768bac19ecdade0bce5b38dd495bb525788191438faa"
+     },
+     "decision": {
+      "if": [
+       "[check use skill]",
+       20
+      ],
+      "then": {
+       "return": "normal_wave"
+      },
+      "else": {
+       "return": -1
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/gsd_combatpattern.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/gsd_combatpattern.ai",
+      "sha256": "df42669b035fa9451a45b036a4d2394da22d56c5b85f924d7f337fe5877d67fb"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       30.0,
+       30.0,
+       15.0,
+       15.0
+      ],
+      "then": {
+       "if": [
+        "[check use skill]",
+        58
+       ],
+       "then": {
+        "return": "wheel"
+       },
+       "else": {
+        "return": "upper_slash"
+       }
+      },
+      "else": {
+       "if": [
+        "[void]",
+        "is target in attack area()",
+        50.0,
+        50.0,
+        50.0,
+        50.0
+       ],
+       "then": {
+        "if": [
+         "[check use skill]",
+         32
+        ],
+        "then": {
+         "return": "psychic_release"
+        },
+        "else": {
+         "return": -1
+        }
+       },
+       "else": {
+        "if": [
+         "[void]",
+         "is target in attack area()",
+         100.0,
+         100.0,
+         15.0,
+         15.0
+        ],
+        "then": {
+         "return": "upper_slash"
+        },
+        "else": {
+         "if": [
+          "[void]",
+          "is target in attack area()",
+          250.0,
+          250.0,
+          50.0,
+          50.0
+         ],
+         "then": {
+          "import": "wave_pattern.ai"
+         },
+         "else": {
+          "return": -1
+         }
+        }
+       }
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/action.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/action.ai",
+      "sha256": "ef47deecece96d93f2c8123f688eaf707fc54d751bf99eb815f79cfff955965d"
+     },
+     "decision": {
+      "if": [
+       "[check skill on]",
+       3
+      ],
+      "then": {
+       "return": "auto_guard"
+      },
+      "else": {
+       "import": "gsd_combatpattern.ai"
+      }
+     }
+    },
+    "aicharacter/swordman/gsd/ai/movemethod.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/ai/movemethod.ai",
+      "sha256": "78980bd746017ee728c12fedc1a744a5893b024ec04d2d5311f6565b3dc6b724"
+     },
+     "decision": {
+      "if": [
+       "[target distance]",
+       ">=",
+       600.0
+      ],
+      "then": {
+       "return": 0
+      },
+      "else": {
+       "return": 1
+      }
+     }
+    }
+   },
+   "streams": {
+    "wheel": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/a.key",
+      "sha256": "8c6963e827af4a2050163be74f14404124fadbca9d3f3a3a15d1208b67628f6f"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "a",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "psychic_release": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/s.key",
+      "sha256": "551d0e585b919833b4f356a2eb063e22e13dbb7d3f8168aa67bb03dff674c58a"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction x",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "s",
+       30,
+       "time",
+       20
+      ]
+     ]
+    },
+    "normal_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/d.key",
+      "sha256": "bdec84aae861dcc7ebf2c0249f1d728fd1f7ae49138add72f79556bce92ee298"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "d",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "ice_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/f.key",
+      "sha256": "8df86bfccc663a718141b6676bee5d33850af6eedd1e9a1f94079b8d93f27b7b"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "f",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "flame_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/g.key",
+      "sha256": "53ba1db8bb3af61bc76e7fc39002cef1a5fca700f91faecd6a645831228a2df5"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "g",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "psychic_rage": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/h.key",
+      "sha256": "eddc87d3ce6ce33fbaa99898affaec450b0b0778283cebc873a7eb78ca7dda99"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "h",
+       1000,
+       "time",
+       1000
+      ]
+     ]
+    },
+    "upper_slash": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/z.key",
+      "sha256": "1621e0cb4879166302b940681699f1dc966921eea1de705808f7a8c11b3bbc96"
+     },
+     "commands": [
+      [
+       "[input]",
+       "target current direction x",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "z",
+       30,
+       "time",
+       300
+      ]
+     ]
+    },
+    "cancel_wave_combo": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/combo.key",
+      "sha256": "8420d34e9d18b387b1663fb7f4a269a9d590f5d34321b2ce660cc800f9146ba5"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       500,
+       "time",
+       500
+      ],
+      [
+       "[input]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "combo attack",
+       3,
+       "time",
+       700
+      ],
+      [
+       "[input]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "f",
+       30,
+       "time",
+       500
+      ]
+     ]
+    },
+    "auto_guard": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/auto_guard.key",
+      "sha256": "7703195b4a5bb3d2cc8bbb4a68082d49c987cca23dbca0420a88c04c46368d48"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "skill:3",
+       80,
+       "time",
+       20
+      ]
+     ]
+    },
+    "psychic_eye": {
+     "source": {
+      "path": "aicharacter/swordman/gsd/key/psychic_eye.key",
+      "sha256": "538a16956655acba4ace2db9eddbfb094bed61297d67ef783ed21087f017efd7"
+     },
+     "commands": [
+      [
+       "[input]",
+       "skill:88",
+       80,
+       "time",
+       20
+      ]
+     ]
+    }
+   },
+   "minimum_info": [
+    {
+     "link_type": 9,
+     "raw": 17
+    },
+    {
+     "link_type": 10,
+     "raw": 3919
+    },
+    0,
+    4,
+    0,
+    0,
+    84,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    "no creature",
+    0,
+    0,
+    0
+   ],
+   "party_member": [
+    1,
+    0,
+    2,
+    600
+   ],
+   "character_status_rate": [
+    100,
+    100,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    10,
+    1.2999999523162842,
+    1.2999999523162842,
+    1.2999999523162842,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0.30000001192092896,
+    1,
+    1,
+    1
+   ],
+   "additional_character_status": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    50,
+    30,
+    50,
+    100,
+    30,
+    60,
+    100,
+    30,
+    30,
+    30,
+    30,
+    0,
+    0,
+    30,
+    30,
+    30
+   ],
+   "attack_damage_rate": [
+    0.6000000238418579
+   ],
+   "quick_skill": [
+    58,
+    20,
+    32,
+    10,
+    20,
+    20,
+    21,
+    10,
+    22,
+    15,
+    52,
+    1
+   ],
+   "skill": [
+    1,
+    10,
+    3,
+    10,
+    55,
+    1,
+    10,
+    1,
+    53,
+    9,
+    46,
+    8,
+    5,
+    1,
+    181,
+    2,
+    182,
+    2,
+    184,
+    1,
+    173,
+    1,
+    179,
+    5,
+    61,
+    1,
+    190,
+    1,
+    169,
+    1,
+    170,
+    1,
+    7,
+    10,
+    12,
+    10,
+    59,
+    1,
+    48,
+    1,
+    88,
+    5,
+    174,
+    0
+   ],
+   "equipment": [
+    27102,
+    1,
+    0,
+    11648,
+    1,
+    0,
+    15648,
+    1,
+    0,
+    13678,
+    1,
+    0,
+    19648,
+    1,
+    0,
+    17648,
+    1,
+    0,
+    20114,
+    1,
+    0,
+    22109,
+    1,
+    0,
+    24115,
+    1,
+    0,
+    39172,
+    2,
+    0,
+    39559,
+    2,
+    0,
+    39898,
+    2,
+    0,
+    40299,
+    2,
+    0,
+    40776,
+    2,
+    0,
+    41174,
+    2,
+    0,
+    41503,
+    2,
+    0,
+    41950,
+    2,
+    0,
+    42211,
+    2,
+    0
+   ],
+   "think_term": [
+    300
+   ],
+   "destination_change_term": [
+    500
+   ],
+   "keep_distance_with_target": [
+    100
+   ],
+   "vision": [
+    1000
+   ],
+   "skill_correction": [
+    21,
+    0.25,
+    22,
+    0.25
+   ],
+   "far_attack_reaction_rate": [
+    80
+   ],
+   "targeting_bonus": [
+    50,
+    100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    "[down]",
+    0,
+    0,
+    "[stun]",
+    0
+   ],
+   "warlike": [
+    0
+   ],
+   "appearance_point": [
+    0
+   ]
+  },
+  "202": {
+   "source": {
+    "path": "aicharacter/swordman/gsd_awaken/gsd_awaken.aic",
+    "sha256": "581d92bd2c073d62198362286f8c8761bd2aac75e9ba08d3f10f7822e5ee1640"
+   },
+   "ai": {
+    "event": "aicharacter/swordman/gsd_awaken/ai/event.ai",
+    "destination": "aicharacter/swordman/gsd_awaken/ai/destinationselect.ai",
+    "action": "aicharacter/swordman/gsd_awaken/ai/action.ai",
+    "movement": "aicharacter/swordman/gsd_awaken/ai/movemethod.ai"
+   },
+   "programs": {
+    "aicharacter/swordman/gsd_awaken/ai/ice_wave_combo.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/ice_wave_combo.ai",
+      "sha256": "1b78c36ecb47175a3f1a801047e7534353976ae23cd8c47973f60ec96ed90344"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       30.0,
+       0.0,
+       10.0,
+       10.0
+      ],
+      "then": {
+       "if": [
+        "[check use skill]",
+        58
+       ],
+       "then": {
+        "return": "wheel"
+       },
+       "else": {
+        "return": -1
+       }
+      },
+      "else": {
+       "if": [
+        "[check use skill]",
+        22
+       ],
+       "then": {
+        "return": "flame_wave"
+       },
+       "else": {
+        "return": -1
+       }
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/event.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/event.ai",
+      "sha256": "5e04d031ba14d2957c73e415a86a8667b2b75afdb22f684463e18f5ab0cfa645"
+     },
+     "decision": {
+      "if": [
+       "[attack success]",
+       1
+      ],
+      "then": {
+       "if": [
+        "[my attack]",
+        58
+       ],
+       "then": {
+        "return": "ice_wave"
+       },
+       "else": {
+        "if": [
+         "[my attack]",
+         46
+        ],
+        "then": {
+         "return": "cancel_wave_combo"
+        },
+        "else": {
+         "if": [
+          "[my attack]",
+          21
+         ],
+         "then": {
+          "import": "ice_wave_combo.ai"
+         },
+         "else": {
+          "if": [
+           "[my attack]",
+           32
+          ],
+          "then": {
+           "return": "ice_wave"
+          },
+          "else": {
+           "if": [
+            "[my attack]",
+            20
+           ],
+           "then": {
+            "if": [
+             "[check use skill]",
+             22
+            ],
+            "then": {
+             "return": "flame_wave"
+            },
+            "else": {
+             "return": -1
+            }
+           },
+           "else": {
+            "if": [
+             "[my attack]",
+             22
+            ],
+            "then": {
+             "return": "ice_wave"
+            },
+            "else": {
+             "return": -1
+            }
+           }
+          }
+         }
+        }
+       }
+      },
+      "else": {
+       "return": -1
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/destinationselect.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/destinationselect.ai",
+      "sha256": "d2fde6486abd986094fdce1066d7bf3803e73fdf640bc1fcbcec80190baa2262"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       100.0,
+       100.0,
+       100.0,
+       100.0
+      ],
+      "then": {
+       "if": [
+        "[target state]",
+        4.0
+       ],
+       "then": {
+        "return": 2
+       },
+       "else": {
+        "return": 0
+       }
+      },
+      "else": {
+       "return": 0
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/wave_pattern.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/wave_pattern.ai",
+      "sha256": "426265b7dc4e09e35709768bac19ecdade0bce5b38dd495bb525788191438faa"
+     },
+     "decision": {
+      "if": [
+       "[check use skill]",
+       20
+      ],
+      "then": {
+       "return": "normal_wave"
+      },
+      "else": {
+       "return": -1
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/gsd_combatpattern.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/gsd_combatpattern.ai",
+      "sha256": "df42669b035fa9451a45b036a4d2394da22d56c5b85f924d7f337fe5877d67fb"
+     },
+     "decision": {
+      "if": [
+       "[void]",
+       "is target in attack area()",
+       30.0,
+       30.0,
+       15.0,
+       15.0
+      ],
+      "then": {
+       "if": [
+        "[check use skill]",
+        58
+       ],
+       "then": {
+        "return": "wheel"
+       },
+       "else": {
+        "return": "upper_slash"
+       }
+      },
+      "else": {
+       "if": [
+        "[void]",
+        "is target in attack area()",
+        50.0,
+        50.0,
+        50.0,
+        50.0
+       ],
+       "then": {
+        "if": [
+         "[check use skill]",
+         32
+        ],
+        "then": {
+         "return": "psychic_release"
+        },
+        "else": {
+         "return": -1
+        }
+       },
+       "else": {
+        "if": [
+         "[void]",
+         "is target in attack area()",
+         100.0,
+         100.0,
+         15.0,
+         15.0
+        ],
+        "then": {
+         "return": "upper_slash"
+        },
+        "else": {
+         "if": [
+          "[void]",
+          "is target in attack area()",
+          250.0,
+          250.0,
+          50.0,
+          50.0
+         ],
+         "then": {
+          "import": "wave_pattern.ai"
+         },
+         "else": {
+          "return": -1
+         }
+        }
+       }
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/action.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/action.ai",
+      "sha256": "d7f260427fc788c2cfaccd5118e71405e0d0bdb0ffeb4156e79f0f8a3b5dfe7d"
+     },
+     "decision": {
+      "if": [
+       "[check skill on]",
+       52
+      ],
+      "then": {
+       "if": [
+        "[check use skill]",
+        88
+       ],
+       "then": {
+        "return": "psychic_eye"
+       },
+       "else": {
+        "import": "gsd_combatpattern.ai"
+       }
+      },
+      "else": {
+       "return": "psychic_rage"
+      }
+     }
+    },
+    "aicharacter/swordman/gsd_awaken/ai/movemethod.ai": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/ai/movemethod.ai",
+      "sha256": "78980bd746017ee728c12fedc1a744a5893b024ec04d2d5311f6565b3dc6b724"
+     },
+     "decision": {
+      "if": [
+       "[target distance]",
+       ">=",
+       600.0
+      ],
+      "then": {
+       "return": 0
+      },
+      "else": {
+       "return": 1
+      }
+     }
+    }
+   },
+   "streams": {
+    "wheel": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/a.key",
+      "sha256": "8c6963e827af4a2050163be74f14404124fadbca9d3f3a3a15d1208b67628f6f"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "a",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "psychic_release": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/s.key",
+      "sha256": "551d0e585b919833b4f356a2eb063e22e13dbb7d3f8168aa67bb03dff674c58a"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction x",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "s",
+       30,
+       "time",
+       20
+      ]
+     ]
+    },
+    "normal_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/d.key",
+      "sha256": "bdec84aae861dcc7ebf2c0249f1d728fd1f7ae49138add72f79556bce92ee298"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "d",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "ice_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/f.key",
+      "sha256": "8df86bfccc663a718141b6676bee5d33850af6eedd1e9a1f94079b8d93f27b7b"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "f",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "flame_wave": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/g.key",
+      "sha256": "53ba1db8bb3af61bc76e7fc39002cef1a5fca700f91faecd6a645831228a2df5"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "g",
+       30,
+       "time",
+       100
+      ]
+     ]
+    },
+    "psychic_rage": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/h.key",
+      "sha256": "eddc87d3ce6ce33fbaa99898affaec450b0b0778283cebc873a7eb78ca7dda99"
+     },
+     "commands": [
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "h",
+       1000,
+       "time",
+       1000
+      ]
+     ]
+    },
+    "upper_slash": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/z.key",
+      "sha256": "1621e0cb4879166302b940681699f1dc966921eea1de705808f7a8c11b3bbc96"
+     },
+     "commands": [
+      [
+       "[input]",
+       "target current direction x",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "z",
+       30,
+       "time",
+       300
+      ]
+     ]
+    },
+    "cancel_wave_combo": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/combo.key",
+      "sha256": "8420d34e9d18b387b1663fb7f4a269a9d590f5d34321b2ce660cc800f9146ba5"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       500,
+       "time",
+       500
+      ],
+      [
+       "[input]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]"
+      ],
+      [
+       "[state check]",
+       "combo attack",
+       3,
+       "time",
+       700
+      ],
+      [
+       "[input]",
+       "target current direction",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "f",
+       30,
+       "time",
+       500
+      ]
+     ]
+    },
+    "auto_guard": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/auto_guard.key",
+      "sha256": "d55ca01fafd097e3178e0475f5597f6f97ba00e840c1dca860497c8e9c6b7378"
+     },
+     "commands": [
+      [
+       "[input]",
+       "",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "down",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "up",
+       80,
+       "time",
+       20
+      ],
+      [
+       "[input]",
+       "space",
+       80,
+       "time",
+       20
+      ]
+     ]
+    },
+    "psychic_eye": {
+     "source": {
+      "path": "aicharacter/swordman/gsd_awaken/key/psychic_eye.key",
+      "sha256": "538a16956655acba4ace2db9eddbfb094bed61297d67ef783ed21087f017efd7"
+     },
+     "commands": [
+      [
+       "[input]",
+       "skill:88",
+       80,
+       "time",
+       20
+      ]
+     ]
+    }
+   },
+   "minimum_info": [
+    {
+     "link_type": 9,
+     "raw": 17
+    },
+    {
+     "link_type": 10,
+     "raw": 3919
+    },
+    0,
+    4,
+    0,
+    0,
+    84,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    "no creature",
+    0,
+    0,
+    0
+   ],
+   "party_member": [
+    1,
+    0,
+    2,
+    600
+   ],
+   "character_status_rate": [
+    100,
+    100,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    10,
+    1.2999999523162842,
+    1.2999999523162842,
+    1.2999999523162842,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0.30000001192092896,
+    1,
+    1,
+    1
+   ],
+   "additional_character_status": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    50,
+    30,
+    50,
+    100,
+    30,
+    60,
+    100,
+    30,
+    30,
+    30,
+    30,
+    0,
+    0,
+    100,
+    30,
+    30
+   ],
+   "attack_damage_rate": [
+    0.20000000298023224
+   ],
+   "quick_skill": [
+    58,
+    20,
+    32,
+    10,
+    20,
+    20,
+    21,
+    10,
+    22,
+    15,
+    52,
+    1
+   ],
+   "skill": [
+    1,
+    10,
+    3,
+    10,
+    55,
+    1,
+    10,
+    1,
+    53,
+    9,
+    46,
+    8,
+    5,
+    1,
+    181,
+    2,
+    182,
+    2,
+    184,
+    1,
+    173,
+    1,
+    179,
+    5,
+    61,
+    1,
+    190,
+    1,
+    169,
+    1,
+    170,
+    1,
+    7,
+    10,
+    12,
+    10,
+    59,
+    1,
+    48,
+    1,
+    88,
+    5,
+    174,
+    0
+   ],
+   "equipment": [
+    27102,
+    1,
+    0,
+    11648,
+    1,
+    0,
+    15648,
+    1,
+    0,
+    13678,
+    1,
+    0,
+    19648,
+    1,
+    0,
+    17648,
+    1,
+    0,
+    20114,
+    1,
+    0,
+    22109,
+    1,
+    0,
+    24115,
+    1,
+    0,
+    39172,
+    2,
+    0,
+    39559,
+    2,
+    0,
+    39898,
+    2,
+    0,
+    40299,
+    2,
+    0,
+    40776,
+    2,
+    0,
+    41174,
+    2,
+    0,
+    41503,
+    2,
+    0,
+    41950,
+    2,
+    0,
+    42211,
+    2,
+    0
+   ],
+   "think_term": [
+    300
+   ],
+   "destination_change_term": [
+    500
+   ],
+   "keep_distance_with_target": [
+    100
+   ],
+   "vision": [
+    1000
+   ],
+   "skill_correction": [
+    21,
+    0.25,
+    22,
+    0.25
+   ],
+   "far_attack_reaction_rate": [
+    80
+   ],
+   "targeting_bonus": [
+    50,
+    100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    "[down]",
+    0,
+    0,
+    "[stun]",
+    0
+   ],
+   "warlike": [
+    0
+   ],
+   "appearance_point": [
+    0
+   ]
+  }
+ }
+}

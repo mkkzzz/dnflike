@@ -80,7 +80,7 @@ func run() -> void:
 					var expected_meta := "MP：%d    冷却：%.1f秒" % [int(move.get("mp",0)),float(move.get("cool_ms",0))/1000.0]
 					check(body.text.contains(expected_meta),mode+" "+id+" detail resources match combat")
 					var hits: Array = move.get("hits",[])
-					if id in ["khazan", "epidemicrasa"]:
+					if id in ["khazan", "bremen", "epidemicrasa"]:
 						check(not body.text.contains("攻击力："),mode+" "+id+" non-attacking object has no direct damage line")
 					elif not hits.is_empty():
 						check(body.text.contains("攻击力：%d%%" % int(hits[0].get("percent",100))),mode+" "+id+" detail attack matches combat")

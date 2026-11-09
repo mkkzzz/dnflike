@@ -3,6 +3,7 @@ const Session=preload("res://flow/session.gd")
 const Inventory=preload("res://items/inventory.gd")
 const Drops=preload("res://quests/drops.gd")
 const Native=preload("res://content/api/native_catalog.gd")
+const CombatSession=preload("res://combat/api/combat_session.gd")
 var checks:=0
 var failures:=0
 
@@ -139,6 +140,56 @@ func light_lord_chain() -> void:
 	check(session.quest_command("quest.claim", {"id":delivery}, sharan).ok
 		and Inventory.stock(session.profile, "original_3107") == 0, "Sharan receives the memory crystal")
 
+func escort_maze(dungeon: String, quest: String, companion: int, maps: Array, boss: String) -> void:
+	var session := Session.new()
+	session.profile.level = 18
+	for required: String in session.dungeons[dungeon].get("requires", []):
+		completed(session, required)
+	check(not session.quests.catalog.definitions.has(quest), "escort quest stays unavailable until companion survival is implemented")
+	var selection := {"dungeon":dungeon, "quest_maze":quest}
+	session.command("flow.difficulty", {"id":"expert"})
+	check(session.command("flow.depart", selection).ok and not session.run.has("quest_maze"), "departure cannot request a quest maze without an active quest")
+	session.finish_run(false, {})
+	session.command("flow.return")
+	# Only the in-memory test catalog has the escort quest. Production rewards stay gated.
+	var fixture: Dictionary=session.quests.catalog.definitions["original.quest.4601"].duplicate(true)
+	fixture.id=quest
+	session.quests.catalog.definitions[quest]=fixture
+	session.profile.quest_state.entries[quest]=session.quests.new_entry(fixture)
+	session.command("flow.difficulty", {"id":"adventure"})
+	check(session.command("flow.depart", selection).ok and not session.run.has("quest_maze"), "the active escort quest still uses the ordinary Adventure route")
+	session.finish_run(false, {})
+	session.command("flow.return")
+	session.command("flow.difficulty", {"id":"expert"})
+	check(session.command("flow.depart", {"dungeon":dungeon}).ok and session.run.get("quest_maze")==quest, "Hard departure binds the active original quest maze")
+	var route := session.active_dungeon_route()
+	var combat := CombatSession.new()
+	var battle = combat.mount(root)
+	battle.set_physics_process(false)
+	combat.room_combat_finished.connect(func(event: Dictionary):session.combat_event(event))
+	var started := combat.start_room({"run_id":session.run.id, "dungeon":dungeon, "route":route,
+		"room_id":dungeon+":0", "room_index":0, "player":session.run.stats, "audio":{"muted":true}})
+	check(started, "combat API validates the complete quest route and original MOB roster")
+	if not started:
+		combat.stop()
+		return
+	check(battle.room_map.companions.size()==1 and int(battle.room_map.companions[0].source_id)==companion,
+		"the first room exposes the original friendly APC placement")
+	for index in maps.size():
+		check(battle.room_index==index and int(battle.room_map.map_id)==maps[index], "quest gate reaches source MAP%d" % maps[index])
+		if index==maps.size()-1:
+			check(battle.monsters.any(func(enemy):return enemy.chief and enemy.mob==boss), "the dedicated final MAP loads the original boss")
+		else:
+			battle.player.pos=battle.door_point(route.rooms[index].next)
+			battle.door_lock_ms=0.0
+		for enemy: Dictionary in battle.monsters:
+			enemy.hp=0.0
+			enemy.death_ms=1000.0
+		battle._physics_process(1.0/60.0)
+	check(battle.map_loader.errors.is_empty() and session.state=="result" and session.result.victory, "quest maps render and the final room settles the battle")
+	check(session.quests.status(session.profile,quest)=="active", "quest route victory without APC survival does not complete a quest objective")
+	combat.stop()
+
 func run() -> void:
 	var rules: Dictionary=Native.quest_rules()
 	var campaign: Dictionary=rules.campaign
@@ -234,6 +285,10 @@ func run() -> void:
 	check(remaining.is_empty(),"all campaign nodes form one playable dependency graph")
 	draconian_eyes()
 	light_lord_chain()
+	escort_maze("draconiantower", "original.quest.4307", 201,
+		[1618,1602,1620,1603,1609,1610,1604,1619], "monster/draconian/lakius.mob")
+	escort_maze("hallofdoll", "original.quest.4308", 202,
+		[1819,1821,1805,1811,1812,1813,1808,1803,1802,1820], "monster/dollmaster/masterdogri.mob")
 
 	print("[CAMPAIGN] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

@@ -15317,7 +15317,27 @@
      "[type]"
     ],
     "map_id": 1819,
-    "role_hint": "normal"
+    "role_hint": "normal",
+    "companions": [
+     {
+      "source_id": 202,
+      "anchor": [
+       186,
+       238,
+       0
+      ],
+      "raw": [
+       202,
+       186,
+       238,
+       0,
+       "[character]",
+       "[normal]",
+       0,
+       0
+      ]
+     }
+    ]
    },
    "map/hallofdoll/(0,1)d1616.map": {
     "path": "map/hallofdoll/(0,1)d1616.map",
@@ -227860,9 +227880,776 @@
       ]
      }
     ]
+   },
+   {
+    "id": "0_0:quest4308_(0,0)gsdstart",
+    "cell": [
+     0,
+     0
+    ],
+    "map": "map/hallofdoll/(0,0)gsdstart.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "413",
+      "anchor": [
+       15,
+       550,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "414",
+      "anchor": [
+       1309,
+       260,
+       0
+      ],
+      "target_cell": [
+       1,
+       0
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "1_0:quest4308_(1,0)gsdcommon",
+    "cell": [
+     1,
+     0
+    ],
+    "map": "map/hallofdoll/(1,0)gsdcommon.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "411",
+      "anchor": [
+       26,
+       244,
+       0
+      ],
+      "target_cell": [
+       0,
+       0
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "414",
+      "anchor": [
+       1076,
+       248,
+       0
+      ],
+      "target_cell": [
+       2,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       246,
+       337,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "1_1:quest4308_(1,1)n1818",
+    "cell": [
+     1,
+     1
+    ],
+    "map": "map/hallofdoll/(1,1)n1818.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "413",
+      "anchor": [
+       2,
+       789,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "414",
+      "anchor": [
+       846,
+       250,
+       0
+      ],
+      "target_cell": [
+       2,
+       1
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "417",
+      "anchor": [
+       380,
+       195,
+       0
+      ],
+      "target_cell": [
+       1,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       359,
+       579,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "2_1:quest4308_(2,1)h1828",
+    "cell": [
+     2,
+     1
+    ],
+    "map": "map/hallofdoll/(2,1)h1828.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "411",
+      "anchor": [
+       11,
+       262,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "416",
+      "anchor": [
+       1295,
+       709,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       1186,
+       457,
+       0
+      ],
+      "target_cell": [
+       2,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "2_2:quest4308_(2,2)h1820",
+    "cell": [
+     2,
+     2
+    ],
+    "map": "map/hallofdoll/(2,2)h1820.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "411",
+      "anchor": [
+       16,
+       313,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "416",
+      "anchor": [
+       1291,
+       751,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "417",
+      "anchor": [
+       1094,
+       207,
+       0
+      ],
+      "target_cell": [
+       2,
+       1
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       776,
+       462,
+       0
+      ],
+      "target_cell": [
+       2,
+       3
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "2_3:quest4308_(2,3)n1617",
+    "cell": [
+     2,
+     3
+    ],
+    "map": "map/hallofdoll/(2,3)n1617.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "411",
+      "anchor": [
+       14,
+       263,
+       0
+      ],
+      "target_cell": [
+       1,
+       3
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "416",
+      "anchor": [
+       981,
+       719,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "417",
+      "anchor": [
+       1035,
+       213,
+       0
+      ],
+      "target_cell": [
+       2,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "1_3:quest4308_(1,3)e1803",
+    "cell": [
+     1,
+     3
+    ],
+    "map": "map/hallofdoll/(1,3)e1803.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "411",
+      "anchor": [
+       6,
+       373,
+       0
+      ],
+      "target_cell": [
+       0,
+       3
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "414",
+      "anchor": [
+       1067,
+       259,
+       0
+      ],
+      "target_cell": [
+       2,
+       3
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "0_3:quest4308_(0,3)h1831",
+    "cell": [
+     0,
+     3
+    ],
+    "map": "map/hallofdoll/(0,3)h1831.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "413",
+      "anchor": [
+       22,
+       720,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "414",
+      "anchor": [
+       849,
+       250,
+       0
+      ],
+      "target_cell": [
+       1,
+       3
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "417",
+      "anchor": [
+       150,
+       200,
+       0
+      ],
+      "target_cell": [
+       0,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "0_2:quest4308_(0,2)n1817",
+    "cell": [
+     0,
+     2
+    ],
+    "map": "map/hallofdoll/(0,2)n1817.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "413",
+      "anchor": [
+       22,
+       1071,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "416",
+      "anchor": [
+       606,
+       1143,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "boss",
+      "object": "418",
+      "anchor": [
+       470,
+       205,
+       0
+      ],
+      "target_cell": [
+       0,
+       1
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       470,
+       703,
+       0
+      ],
+      "target_cell": [
+       0,
+       3
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4308"
+   },
+   {
+    "id": "0_1:quest4308_(0,1)gsdboss",
+    "cell": [
+     0,
+     1
+    ],
+    "map": "map/hallofdoll/(0,1)gsdboss.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "413",
+      "anchor": [
+       301,
+       857,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "416",
+      "anchor": [
+       229,
+       859,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "419",
+      "anchor": [
+       1304.0,
+       306.0,
+       0
+      ],
+      "target_cell": [
+       0,
+       2
+      ],
+      "source_anchor": [
+       1303,
+       412,
+       0
+      ],
+      "anchor_adaptation": "E-ADAPT: 原门下沿超出固定画布，吸附到同侧原通行格可见边缘"
+     }
+    ],
+    "quest_maze": "original.quest.4308"
    }
   ],
-  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter"
+  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter",
+  "quest_mazes": {
+   "original.quest.4308": {
+    "source_id": 4308,
+    "quest_connection_raw": [
+     0,
+     4308,
+     2
+    ],
+    "size": [
+     4,
+     4
+    ],
+    "greed_raw": "BBNNFFMM\r\n IILLMMKK\r\n KKDDOOCC\r\n DDFFGGAA",
+    "start_cell": [
+     0,
+     0
+    ],
+    "boss_cell": [
+     0,
+     1
+    ],
+    "map_specification_raw": [
+     1,
+     0,
+     1821
+    ],
+    "boss_map_specification_raw": [
+     0,
+     1,
+     1820
+    ],
+    "cells": [
+     {
+      "x": 0,
+      "y": 0,
+      "code": "BB",
+      "mask": 1,
+      "doors": [
+       "right"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,0)gsdstart.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 0,
+      "code": "NN",
+      "mask": 13,
+      "doors": [
+       "left",
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(1,0)gsdcommon.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 0,
+      "code": "FF",
+      "mask": 5,
+      "doors": [
+       "left",
+       "right"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(1,3)e1803.map",
+       "map/hallofdoll/(2,0)h1829.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 0,
+      "code": "MM",
+      "mask": 12,
+      "doors": [
+       "left",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(2,1)h1828.map",
+       "map/hallofdoll/(3,0)h1817.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 1,
+      "code": "II",
+      "mask": 8,
+      "doors": [
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,1)gsdboss.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 1,
+      "code": "LL",
+      "mask": 11,
+      "doors": [
+       "right",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(1,1)n1818.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 1,
+      "code": "MM",
+      "mask": 12,
+      "doors": [
+       "left",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(2,1)h1828.map",
+       "map/hallofdoll/(3,0)h1817.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 1,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,2)n1817.map",
+       "map/hallofdoll/(3,1)h1828.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 2,
+      "code": "KK",
+      "mask": 10,
+      "doors": [
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,2)n1817.map",
+       "map/hallofdoll/(3,1)h1828.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 2,
+      "code": "DD",
+      "mask": 3,
+      "doors": [
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,3)h1831.map",
+       "map/hallofdoll/(1,2)h1831.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 2,
+      "code": "OO",
+      "mask": 14,
+      "doors": [
+       "left",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(2,2)h1820.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 2,
+      "code": "CC",
+      "mask": 2,
+      "doors": [
+       "up"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(3,2)d1601.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 3,
+      "code": "DD",
+      "mask": 3,
+      "doors": [
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(0,3)h1831.map",
+       "map/hallofdoll/(1,2)h1831.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 3,
+      "code": "FF",
+      "mask": 5,
+      "doors": [
+       "left",
+       "right"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(1,3)e1803.map",
+       "map/hallofdoll/(2,0)h1829.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 3,
+      "code": "GG",
+      "mask": 6,
+      "doors": [
+       "left",
+       "up"
+      ],
+      "map_candidates": [
+       "map/hallofdoll/(2,3)n1617.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 3,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     }
+    ],
+    "evidence": "E-PARSE 专用迷宫与指定地图；E-ADAPT 最短通路，同坐标优先后取稳定候选"
+   }
+  }
  },
  "images": {
   "dab7426ca472_0": {

@@ -178,6 +178,7 @@ NATIVE_ANIMATION_BINDINGS = {
     OBJ_ROOT + "animation/firewavebig/blast-front.ani",
     *(OBJ_ROOT + f"animation/icewave{i}.ani" for i in range(1, 7)),
     OBJ_ROOT + "animation/khazanareaappear1.ani",
+    OBJ_ROOT + "animation/bremenareaappear1.ani",
 }
 
 SAFE_EFFECTS: set[str] = set()
@@ -323,13 +324,6 @@ ROOT_EFFECTS = {
         "max_stacks": 1,
         "aura": {"radius": 300, "damage_percent": 80, "effect": "freeze", "chance": 0.12},
     },
-    "bremen_aura": {
-        "name": "侵蚀之普戾蒙",
-        "duration_ms": 25000,
-        "stacking": "refresh",
-        "max_stacks": 1,
-        "aura": {"radius": 300, "enemy_effect": "bremen_debuff"},
-    },
     "epidemic_aura": {
         "name": "瘟疫之罗刹",
         "duration_ms": 12000,
@@ -339,14 +333,13 @@ ROOT_EFFECTS = {
     },
     "bremen_debuff": {
         "name": "侵蚀之普戾蒙",
-        "duration_ms": 1000,
+        "source_skill": "bremen",
+        "duration_level_row": 1,
         "stacking": "refresh",
         "max_stacks": 1,
-        "harmful": True,
         "modifiers": [
-            {"stat": "physical_defense", "op": "mul", "value": 0.85},
-            {"stat": "magical_defense", "op": "mul", "value": 0.85},
-            {"stat": "move_speed", "op": "mul", "value": 0.9},
+            {"stat": "abnormal_resistance", "op": "add", "level_row": 0, "scale": -1.0},
+            {"stat": "magical_defense", "op": "add", "level_row": 2, "scale": -1.0},
         ],
     },
 }
@@ -1078,30 +1071,36 @@ def build_move(
             "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
             "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
         }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
-    if key == "khazan":
-        path = add_object(objects, OBJ_ROOT + "khazan.obj")
+    if key in ("khazan", "bremen"):
+        path = add_object(objects, OBJ_ROOT + key + ".obj")
         if not path:
-            raise ValueError("Missing original Khazan object 20011")
+            raise ValueError(f"Missing original {key} field object")
         motions = records[path]["decoded"]["etc_motions"]
         if len(motions) != 6:
-            raise ValueError("Khazan object 20011 needs all six original motions")
+            raise ValueError(f"{key} field object needs all six original motions")
         # CNGhost::draw colors ETC slots 0/1. procAppend detaches 2/3,
         # attaches 4, then replaces 4 with 5 when the active interval ends.
         ghost_fx, appear_1, appear_2, stay, disappear = (
             add_fx(fx, effects, motion) for motion in motions[1:]
         )
         if not all((ghost_fx, appear_1, appear_2, stay, disappear)):
-            raise ValueError("Incomplete original Khazan animation banks")
+            raise ValueError(f"Incomplete original {key} animation banks")
         area_values = records[str(skill["path"]).lower()]["decoded"]["dungeon"]["static_data"]
-        if len(area_values) != 2 or area_values[0] != area_values[1] or area_values[0] <= 0:
-            raise ValueError("Expected equal original Khazan area inputs")
-        # CD6026 -> 86DE68/86DE70: the original spawn mirrors a 122 px X offset.
-        result["fidelity_pending"] = ["cast_frame", "area_membership_filters", "area_phase_timers", "area_draw_order", "voice"]
+        if len(area_values) != 2 or area_values[1] <= 0:
+            raise ValueError(f"Missing original {key} area radius")
+        radius = area_values[1]
+        # CD6026/CD6137 -> 86DE68/86DE70: mirror the original 122 px X offset.
+        # A689F0 -> 5FF9D0: static[1] supplies the aura radius and area ANI scale.
+        result["fidelity_pending"] = ["cast_frame", "area_membership_filters", "area_draw_order", "voice"]
+        if key == "bremen":
+            result["fidelity_pending"].append("status_level_resistance_formula")
         stages[:] = [{"ani": CAST_ANIM, "atk": "", "hits": [{
-            "object": path, "at": 320, "offset": [122, 0, 0],
+            "object": path, "at": CAST_OBJECTS[key][1], "offset": [122, 0, 0],
             "percent": 0, "speed": 0,
             "native_controller": {
-                "kind": "khazan_field", "duration_col": 1, "radius": area_values[0],
+                "kind": key + "_field", "duration_col": 1, "radius": radius,
+                "pulse_ms": 100 if key == "khazan" else 250,
+                "area_scale": radius / 233.0,
                 # 7F10B3 multiplies the depth ratio 29 by float32 0.01.
                 "depth_scale": 0.29,
                 "ghost_fx": ghost_fx, "appear_fx": [appear_1, appear_2],

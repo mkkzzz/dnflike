@@ -485,6 +485,24 @@ def export_gate_object(lib: Library, obj_id: int, objects: dict) -> dict:
     return result
 
 
+def dungeon_placement(room: dict, cell: dict, slots: dict, boss_cells: set, variant: str = '') -> dict:
+    x, y = cell['x'], cell['y']
+    gates = []
+    for door in GATE_ORDER:
+        neighbour = (x + STEP[door][0], y + STEP[door][1])
+        if door in cell['doors']:
+            kind = 'boss' if neighbour in boss_cells else 'normal'
+        elif door in ('left', 'right'):
+            kind = 'wall'
+        else:
+            continue
+        anchor = room['pathgate_pos'][door] if room['pathgate_pos'] else None
+        gates.append({'direction': door, 'kind': kind, 'object': str(slots.get(f'{door}_{kind}')),
+                      'anchor': anchor + [0] if anchor else None, 'target_cell': list(neighbour) if kind != 'wall' else None})
+    stem = PurePosixPath(room['path']).stem
+    return {'id': f'{x}_{y}:{variant}{stem}', 'cell': [x, y], 'map': room['path'], 'gates': gates}
+
+
 def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> dict:
     ids = {'maps': lib.listing('map/map.lst'), 'objects': lib.listing('passiveobject/passiveobject.lst'),
            'monsters': lib.listing('monster/monster.lst'), 'dungeons': lib.listing('dungeon/dungeon.lst')}
@@ -532,20 +550,7 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         if not cell['map_candidates']:
             lib.diags.append(diag('warning', 'cell_without_map', dungeon_path, f'cell {x},{y} code {cell["code"]}'))
         for map_path in cell['map_candidates']:
-            gates = []
-            room = rooms[map_path]
-            for door in GATE_ORDER:
-                neighbour = (x + STEP[door][0], y + STEP[door][1])
-                if door in cell['doors']:
-                    kind = 'boss' if neighbour in boss_cells else 'normal'
-                elif door in ('left', 'right'):
-                    kind = 'wall'
-                else:
-                    continue
-                anchor = room['pathgate_pos'][door] if room['pathgate_pos'] else None
-                gates.append({'direction': door, 'kind': kind, 'object': str(slots.get(f'{door}_{kind}')),
-                              'anchor': anchor + [0] if anchor else None, 'target_cell': list(neighbour) if kind != 'wall' else None})
-            placements.append({'id': f'{x}_{y}:{PurePosixPath(map_path).stem}', 'cell': [x, y], 'map': map_path, 'gates': gates})
+            placements.append(dungeon_placement(rooms[map_path], cell, slots, boss_cells))
 
     return {'path': dungeon_path, 'sha256': script['sha256'], 'crc_ok': script['crc_ok'], 'index': dungeon_index,
             'raw': raw_spans(script), 'size': size,

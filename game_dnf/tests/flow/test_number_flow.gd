@@ -48,16 +48,24 @@ func run() -> void:
 	game.show_overlay("numbers")
 	await host.ticks(3)
 	var body:RichTextLabel=game.modal.find_child("skill_detail_body",true,false)
-	host.check(body != null and body.position==Vector2(9,176) and body.size==Vector2(179,214) and body.scroll_active,"popup explanation retains source origin and scrolls within the adapted height")
-	body.get_v_scroll_bar().value=1000
-	host.check(body.get_v_scroll_bar().value>0,"a long original skill explanation can scroll beyond its first page")
+	host.check(body != null and body.position==Vector2(9,176) and body.size==Vector2(179,210) and body.scroll_active,"popup explanation fits 15 full source rows within the adapted height")
+	var source_pitch := body.get_line_count() > 1
+	for line in range(1, body.get_line_count()):
+		source_pitch = source_pitch and is_equal_approx(body.get_line_offset(line) - body.get_line_offset(line - 1), 14.0)
+	host.check(source_pitch, "wrapped and explicit explanation lines use the source 14px pitch")
+	var wheel:=InputEventMouseButton.new()
+	wheel.position=body.get_global_transform_with_canvas()*Vector2(80,120)
+	wheel.button_index=MOUSE_BUTTON_WHEEL_DOWN
+	wheel.pressed=true
+	var initial_tree_scroll: float = skill_panel.tree_scroll
+	game.get_viewport().push_input(wheel,true)
+	await host.ticks(3)
+	host.check(body.get_v_scroll_bar().value>0 and skill_panel.tree_scroll==initial_tree_scroll,
+		"mouse wheel scrolls a long explanation without moving the skill tree")
 	host.check(game.modal.find_child("skill_panel_slot_5",true,false)==null and game.hud.find_child("hud_skill_slot_11",true,false)!=null,"popup has no duplicate shortcut controls and live HUD exposes twelve drop targets")
 	viewport=game.modal.find_child("skill_tree_viewport",true,false)
 	content=game.modal.find_child("skill_tree_content",true,false)
-	var wheel:=InputEventMouseButton.new()
 	wheel.position=viewport.get_global_transform_with_canvas()*Vector2(280,200)
-	wheel.button_index=MOUSE_BUTTON_WHEEL_DOWN
-	wheel.pressed=true
 	game.get_viewport().push_input(wheel,true)
 	await host.ticks(3)
 	var scroll:VScrollBar=game.modal.find_child("skill_tree_scroll",true,false)

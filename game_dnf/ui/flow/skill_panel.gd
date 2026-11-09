@@ -38,6 +38,7 @@ var _sp_label: Label
 var _sp_digits_view: Control
 var _tip_label: Label
 var _effective_levels: Dictionary = {}
+var _detail_line_height := 14
 
 func _init(target) -> void:
 	game = target
@@ -53,6 +54,7 @@ func _load() -> void:
 	trees = catalog.get("trees", {})
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
 	parts = manifest.get("parts", {})
+	_detail_line_height = maxi(1, int(manifest.get("ui_layout", {}).get("detail_body", {}).get("line_height", 14)))
 	for skill: Dictionary in skills:
 		by_id[int(skill["id"])] = skill
 		by_key[String(skill["key"])] = skill
@@ -526,11 +528,15 @@ func _detail(root: Control) -> void:
 	var body := RichTextLabel.new()
 	body.name = "skill_detail_body"
 	body.position = Vector2(9, 176)
-	body.size = Vector2(179, 214)
+	var body_height_budget := 214
+	# The native viewport counts only complete lines.
+	body.size = Vector2(179, body_height_budget - body_height_budget % _detail_line_height)
+	var body_font_size := 11
 	body.add_theme_font_override("normal_font", skin.font)
-	body.add_theme_font_size_override("normal_font_size", 11)
+	body.add_theme_font_size_override("normal_font_size", body_font_size)
 	body.add_theme_color_override("default_color", Color("ddc58d"))
-	body.add_theme_constant_override("line_separation", 3)
+	# Explain #4013 line height is the row advance. Godot adds separation to the font height.
+	body.add_theme_constant_override("line_separation", _detail_line_height - roundi(skin.font.get_height(body_font_size)))
 	body.text = description + "\n\n" + "\n".join(meta)
 	body.scroll_active = true
 	body.mouse_filter = Control.MOUSE_FILTER_STOP

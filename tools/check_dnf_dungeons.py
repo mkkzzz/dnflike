@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from build_dnf_dungeon_route import cell_graph, has_source_boss, source_start_maps
+from build_dnf_dungeon_route import cell_graph, has_source_boss, quest_maze_exports, source_start_maps
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -37,6 +37,14 @@ def main() -> int:
     playable = 0
     rooms_total = 0
     covered: dict[str, list[str]] = {}
+
+    if not quest_maze_exports(dungeons, check=True):
+        fails.append('原任务专用迷宫与源地图不一致')
+    companions = json.loads((GAME / 'data/companion_programs.json').read_text(encoding='utf-8'))['companions']
+    for spec in dungeons.values():
+        for quest, route in spec.get('quest_routes', {}).items():
+            if str(route['companion_id']) not in companions:
+                fails.append(f'{quest}: APC{route["companion_id"]} 缺少原 AIC 程序')
 
     for name, spec in dungeons.items():
         region = spec.get('region', DEFAULT_REGION)

@@ -656,7 +656,7 @@ func depart() -> void:
 	combat.monster_defeated.connect(func(event: Dictionary): call_deferred("on_combat_event", event))
 	var stat: Dictionary = session.run["stats"]
 	var headless_test := test_mode and DisplayServer.get_name() == "headless"
-	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "dungeon":selected_dungeon, "route":session.dungeons[selected_dungeon], "room_id": selected_dungeon+":0", "room_index": 0,
+	var started: bool = combat.start_room({"run_id": String(session.run["id"]), "dungeon":selected_dungeon, "route":session.active_dungeon_route(), "room_id": selected_dungeon+":0", "room_index": 0,
 		"player": stat,
 		"audio": {"muted": headless_test, "bgm_volume_db": -32}})
 	if not started:

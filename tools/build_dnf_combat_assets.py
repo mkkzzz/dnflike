@@ -824,9 +824,9 @@ def extend_firewave(library: Path | None, output: Path = OUT) -> dict:
     return extend_skill_banks(library, output, specs)
 
 
-def extend_khazan(library: Path | None, output: Path = OUT) -> dict:
+def extend_ghost_field(library: Path | None, skill: str, output: Path = OUT) -> dict:
     runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
-    hit = runtime['moves']['khazan']['stages'][0]['hits'][0]['native_controller']
+    hit = runtime['moves'][skill]['stages'][0]['hits'][0]['native_controller']
     keys = [hit['ghost_fx'], *hit['appear_fx'], hit['stay_fx'], hit['disappear_fx']]
     specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
     return extend_skill_banks(library, output, specs)
@@ -887,9 +887,11 @@ def main() -> int:
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
     parser.add_argument('--extend-khazan', action='store_true',
                         help='Add the Khazan ghost and area banks, preserving existing assets')
+    parser.add_argument('--extend-bremen', action='store_true',
+                        help='Add the Bremen ghost and area banks, preserving existing assets')
     args = parser.parse_args()
-    if args.extend_khazan:
-        print(json.dumps(extend_khazan(args.library)))
+    if args.extend_khazan or args.extend_bremen:
+        print(json.dumps(extend_ghost_field(args.library, 'bremen' if args.extend_bremen else 'khazan')))
         return 0
     if args.extend_firewave:
         print(json.dumps(extend_firewave(args.library)))

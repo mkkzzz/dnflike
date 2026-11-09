@@ -15058,7 +15058,27 @@
      "[type]"
     ],
     "map_id": 1618,
-    "role_hint": "normal"
+    "role_hint": "normal",
+    "companions": [
+     {
+      "source_id": 201,
+      "anchor": [
+       250,
+       245,
+       0
+      ],
+      "raw": [
+       201,
+       250,
+       245,
+       0,
+       "[character]",
+       "[normal]",
+       0,
+       0
+      ]
+     }
+    ]
    },
    "map/draconiantower/(0,2)b1823.map": {
     "path": "map/draconiantower/(0,2)b1823.map",
@@ -221376,9 +221396,693 @@
       "target_cell": null
      }
     ]
+   },
+   {
+    "id": "0_1:quest4307_(0,0)gsdstart",
+    "cell": [
+     0,
+     1
+    ],
+    "map": "map/draconiantower/(0,0)gsdstart.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "403",
+      "anchor": [
+       15,
+       256,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "406",
+      "anchor": [
+       1250,
+       675,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "407",
+      "anchor": [
+       1167,
+       197,
+       0
+      ],
+      "target_cell": [
+       0,
+       0
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "0_0:quest4307_(1,0)n1826",
+    "cell": [
+     0,
+     0
+    ],
+    "map": "map/draconiantower/(1,0)n1826.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "403",
+      "anchor": [
+       12,
+       829,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       874,
+       313,
+       0
+      ],
+      "target_cell": [
+       1,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "409",
+      "anchor": [
+       329,
+       459,
+       0
+      ],
+      "target_cell": [
+       0,
+       1
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "1_0:quest4307_(1,0)gsdcommon",
+    "cell": [
+     1,
+     0
+    ],
+    "map": "map/draconiantower/(1,0)gsdcommon.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "401",
+      "anchor": [
+       41,
+       294,
+       0
+      ],
+      "target_cell": [
+       0,
+       0
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       863,
+       270,
+       0
+      ],
+      "target_cell": [
+       2,
+       0
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "409",
+      "anchor": [
+       685,
+       577,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "1_1:quest4307_(1,1)e1803",
+    "cell": [
+     1,
+     1
+    ],
+    "map": "map/draconiantower/(1,1)e1803.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "403",
+      "anchor": [
+       18,
+       643,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       1555,
+       267,
+       0
+      ],
+      "target_cell": [
+       2,
+       1
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "407",
+      "anchor": [
+       372,
+       201,
+       0
+      ],
+      "target_cell": [
+       1,
+       0
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "2_1:quest4307_(2,1)n1808",
+    "cell": [
+     2,
+     1
+    ],
+    "map": "map/draconiantower/(2,1)n1808.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "401",
+      "anchor": [
+       9,
+       291,
+       0
+      ],
+      "target_cell": [
+       1,
+       1
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "wall",
+      "object": "406",
+      "anchor": [
+       1272,
+       691,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "409",
+      "anchor": [
+       970,
+       333,
+       0
+      ],
+      "target_cell": [
+       2,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "2_2:quest4307_(2,2)h1827",
+    "cell": [
+     2,
+     2
+    ],
+    "map": "map/draconiantower/(2,2)h1827.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "normal",
+      "object": "401",
+      "anchor": [
+       11,
+       262,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       1760,
+       272,
+       0
+      ],
+      "target_cell": [
+       3,
+       2
+      ]
+     },
+     {
+      "direction": "up",
+      "kind": "normal",
+      "object": "407",
+      "anchor": [
+       1237,
+       208,
+       0
+      ],
+      "target_cell": [
+       2,
+       1
+      ]
+     },
+     {
+      "direction": "down",
+      "kind": "normal",
+      "object": "409",
+      "anchor": [
+       1244,
+       342,
+       0
+      ],
+      "target_cell": [
+       2,
+       3
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "1_2:quest4307_(1,2)h1824",
+    "cell": [
+     1,
+     2
+    ],
+    "map": "map/draconiantower/(1,2)h1824.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "boss",
+      "object": "402",
+      "anchor": [
+       11,
+       262,
+       0
+      ],
+      "target_cell": [
+       0,
+       2
+      ]
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       1779,
+       266,
+       0
+      ],
+      "target_cell": [
+       2,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
+   },
+   {
+    "id": "0_2:quest4307_(0,2)gsdboss",
+    "cell": [
+     0,
+     2
+    ],
+    "map": "map/draconiantower/(0,2)gsdboss.map",
+    "gates": [
+     {
+      "direction": "left",
+      "kind": "wall",
+      "object": "403",
+      "anchor": [
+       14,
+       665,
+       0
+      ],
+      "target_cell": null
+     },
+     {
+      "direction": "right",
+      "kind": "normal",
+      "object": "404",
+      "anchor": [
+       1748,
+       279,
+       0
+      ],
+      "target_cell": [
+       1,
+       2
+      ]
+     }
+    ],
+    "quest_maze": "original.quest.4307"
    }
   ],
-  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter"
+  "cell_map_rule": "E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter",
+  "quest_mazes": {
+   "original.quest.4307": {
+    "source_id": 4307,
+    "quest_connection_raw": [
+     0,
+     4307,
+     2
+    ],
+    "size": [
+     4,
+     5
+    ],
+    "greed_raw": "JJNNEEAA\r\n CCDDMMAA\r\n BBFFPPEE\r\n AAJJGGAA\r\n AADDEEAA",
+    "start_cell": [
+     0,
+     1
+    ],
+    "boss_cell": [
+     0,
+     2
+    ],
+    "map_specification_raw": [
+     1,
+     0,
+     1620,
+     1,
+     1,
+     1603,
+     2,
+     1,
+     1609,
+     1,
+     2,
+     1604,
+     2,
+     2,
+     1610,
+     1,
+     3,
+     1605,
+     2,
+     3,
+     1611,
+     1,
+     4,
+     1606
+    ],
+    "boss_map_specification_raw": [
+     0,
+     2,
+     1619
+    ],
+    "cells": [
+     {
+      "x": 0,
+      "y": 0,
+      "code": "JJ",
+      "mask": 9,
+      "doors": [
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,0)n1826.map",
+       "map/draconiantower/(1,3)n1817.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 0,
+      "code": "NN",
+      "mask": 13,
+      "doors": [
+       "left",
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,0)gsdcommon.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 0,
+      "code": "EE",
+      "mask": 4,
+      "doors": [
+       "left"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,0)d1601.map",
+       "map/draconiantower/(2,4)d1616.map",
+       "map/draconiantower/(3,2)e1823.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 0,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     },
+     {
+      "x": 0,
+      "y": 1,
+      "code": "CC",
+      "mask": 2,
+      "doors": [
+       "up"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(0,0)gsdstart.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 1,
+      "code": "DD",
+      "mask": 3,
+      "doors": [
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,1)e1803.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 1,
+      "code": "MM",
+      "mask": 12,
+      "doors": [
+       "left",
+       "down"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,1)n1808.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 1,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     },
+     {
+      "x": 0,
+      "y": 2,
+      "code": "BB",
+      "mask": 1,
+      "doors": [
+       "right"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(0,2)gsdboss.map"
+      ]
+     },
+     {
+      "x": 1,
+      "y": 2,
+      "code": "FF",
+      "mask": 5,
+      "doors": [
+       "left",
+       "right"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,2)h1824.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 2,
+      "code": "PP",
+      "mask": 15,
+      "doors": [
+       "left",
+       "right",
+       "up",
+       "down"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,2)h1827.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 2,
+      "code": "EE",
+      "mask": 4,
+      "doors": [
+       "left"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,0)d1601.map",
+       "map/draconiantower/(2,4)d1616.map",
+       "map/draconiantower/(3,2)e1823.map"
+      ]
+     },
+     {
+      "x": 0,
+      "y": 3,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     },
+     {
+      "x": 1,
+      "y": 3,
+      "code": "JJ",
+      "mask": 9,
+      "doors": [
+       "right",
+       "down"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,3)n1817.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 3,
+      "code": "GG",
+      "mask": 6,
+      "doors": [
+       "left",
+       "up"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,3)e1815.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 3,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     },
+     {
+      "x": 0,
+      "y": 4,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     },
+     {
+      "x": 1,
+      "y": 4,
+      "code": "DD",
+      "mask": 3,
+      "doors": [
+       "right",
+       "up"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(1,4)n1808.map"
+      ]
+     },
+     {
+      "x": 2,
+      "y": 4,
+      "code": "EE",
+      "mask": 4,
+      "doors": [
+       "left"
+      ],
+      "map_candidates": [
+       "map/draconiantower/(2,0)d1601.map",
+       "map/draconiantower/(2,4)d1616.map",
+       "map/draconiantower/(3,2)e1823.map"
+      ]
+     },
+     {
+      "x": 3,
+      "y": 4,
+      "code": "AA",
+      "mask": 0,
+      "doors": [],
+      "map_candidates": []
+     }
+    ],
+    "evidence": "E-PARSE 专用迷宫与指定地图；E-ADAPT 最短通路，同坐标优先后取稳定候选"
+   }
+  }
  },
  "images": {
   "cc062c77e7b6_1": {

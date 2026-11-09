@@ -6,7 +6,7 @@
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
-  "game_dnf/data/dungeons.json": "a6ec38f8da83fddf7747f6eb4ac67105742728f72f3f9bd69057c1be42bab65c",
+  "game_dnf/data/dungeons.json": "cc2ac42c14e7db8483e830803264d29e0f061bf2c3ef170b8fb63ecccb5f915a",
   "game_dnf/data/towns.json": "a9e8b5eba1dd97cdd3e12f7fe1eee2ba2010971f905f7ae2d8e7af4f37508f64",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
@@ -18,12 +18,12 @@
   "game_dnf/assets_local/flow_v1/gran_v1/grakkarak_burning/map_export.json": "b853332854190870647845bb956ce7f11a496a427d0913494f97bc7d6d492019",
   "game_dnf/assets_local/flow_v1/gran_v1/sunderland/map_export.json": "fbb859d55781f3db85ec52482a7fc07f03600018a6f52bd97f96f93ff1d38f81",
   "game_dnf/assets_local/flow_v1/gran_v1/sunderland_dark/map_export.json": "86bb6ff212f954958ea42a17e9bfdb463758db7aaa96b7d83b7856c3476233fe",
-  "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower/map_export.json": "50eccb95070034c189186d6a0d43e05c22b271f6636fca20facc66c31e4a29af",
+  "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower/map_export.json": "424109ff35274cd7388cee83c5edc9b8e6d082eae21f93ef741dfcdeaabdabac",
   "game_dnf/assets_local/flow_v1/skytower_v1/golemtower/map_export.json": "ca4b6b709cd2f3f00802e7fb7c9c461457681de521b23272f524cc2d0acff2ca",
   "game_dnf/assets_local/flow_v1/skytower_v1/floatingcastle/map_export.json": "f72f96a1653f8d9a7cf829b692e5789196a51f46d2867327fdf443f3c97eac94",
   "game_dnf/assets_local/flow_v1/skytower_v1/palaceofload/map_export.json": "b547872ae96f6ce817a481c374fda56d8575b31081d5547397e9118e003dbe62",
   "game_dnf/assets_local/flow_v1/skytower_v1/darkentrance/map_export.json": "7703813f87aadf862ca9657798d0697fb402f309ecaf892d6a2c5ffa55904193",
-  "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "e3548f5165b5f39141a697db5dfd08d351c18acf55a73aec3f061f693112118e",
+  "game_dnf/assets_local/flow_v1/skytower_v1/hallofdoll/map_export.json": "90252284ca917a064046b17fd9f2466a4a540a1cd01d67e3744e1314962f31af",
   "game_dnf/assets_local/flow_v1/skytower_v1/draconiantower_amonlow/map_export.json": "1507e7592703a47fff6a28d3d8a7e7bc583db3d313881bbc7cda5523d90fcc12",
   "game_dnf/assets_local/flow_v1/gran_v1/sunderland_poison/map_export.json": "762e9709d5aef20567a169278356ea4b64161745cc971d41260aa5e5104fa31d",
   "game_dnf/assets_local/flow_v1/gran_v1/arden/map_export.json": "e9253979ca000118d7485d41ab04668665aa64122b9daa1e6649248f124ba1f4",
@@ -5140,5 +5140,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "177327dc86becab472fe6ec8435ad4cf8bb2b022c0e7b69cc0e55f04f46cb57e"
+ "status_sha256": "b8673a800b80ea2032d56b56334dd653b677147f1d4498f5efc56b21a1b9c742"
 }

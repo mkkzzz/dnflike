@@ -12,6 +12,11 @@
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
    "skillfx_blast_back_c66f1708": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
+   "skillfx_bremen2_267aab10": "passiveobject/character/swordman/animation/bremen2.ani",
+   "skillfx_bremenareaappear1_558ce479": "passiveobject/character/swordman/animation/bremenareaappear1.ani",
+   "skillfx_bremenareaappear2_3c6655df": "passiveobject/character/swordman/animation/bremenareaappear2.ani",
+   "skillfx_bremenareadisappear_69a734b7": "passiveobject/character/swordman/animation/bremenareadisappear.ani",
+   "skillfx_bremenareastay_65cedcf5": "passiveobject/character/swordman/animation/bremenareastay.ani",
    "skillfx_charge1_522d5c86": "character/swordman/effect/animation/standalonewave/charge1.ani",
    "skillfx_charge_623ff08a": "character/swordman/effect/animation/chargecrash/charge.ani",
    "skillfx_charge_b82745b0": "character/swordman/effect/animation/reflectguard/charge.ani",
@@ -178,38 +183,25 @@
    "stacking": "refresh",
    "super_armor": true
   },
-  "bremen_aura": {
-   "aura": {
-    "enemy_effect": "bremen_debuff",
-    "radius": 300
-   },
-   "duration_ms": 25000,
-   "max_stacks": 1,
-   "name": "侵蚀之普戾蒙",
-   "stacking": "refresh"
-  },
   "bremen_debuff": {
-   "duration_ms": 1000,
-   "harmful": true,
+   "duration_level_row": 1,
    "max_stacks": 1,
    "modifiers": [
     {
-     "op": "mul",
-     "stat": "physical_defense",
-     "value": 0.85
+     "level_row": 0,
+     "op": "add",
+     "scale": -1.0,
+     "stat": "abnormal_resistance"
     },
     {
-     "op": "mul",
-     "stat": "magical_defense",
-     "value": 0.85
-    },
-    {
-     "op": "mul",
-     "stat": "move_speed",
-     "value": 0.9
+     "level_row": 2,
+     "op": "add",
+     "scale": -1.0,
+     "stat": "magical_defense"
     }
    ],
    "name": "侵蚀之普戾蒙",
+   "source_skill": "bremen",
    "stacking": "refresh"
   },
   "burn": {
@@ -929,36 +921,48 @@
    ]
   },
   "bremen": {
+   "fidelity_pending": [
+    "cast_frame",
+    "area_membership_filters",
+    "area_draw_order",
+    "voice",
+    "status_level_resistance_formula"
+   ],
    "name": "侵蚀之普戾蒙",
    "skill": "skill/swordman/bremen.skl",
    "stages": [
     {
      "ani": "summon2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_bremen1_73d2043e"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_bremen1_73d2043e",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0.0,
-        880.0
-       ]
-      },
-      {
        "at": 420,
-       "effects": [],
-       "life_ms": 25000,
+       "native_controller": {
+        "appear_fx": [
+         "skillfx_bremenareaappear1_558ce479",
+         "skillfx_bremenareaappear2_3c6655df"
+        ],
+        "appear_ms": 1040.0,
+        "area_scale": 1.0729613733905579,
+        "depth_scale": 0.29,
+        "disappear_fx": "skillfx_bremenareadisappear_69a734b7",
+        "disappear_ms": 320.0,
+        "duration_col": 1,
+        "ghost_fx": "skillfx_bremen2_267aab10",
+        "kind": "bremen_field",
+        "pulse_ms": 250,
+        "radius": 250,
+        "stay_fx": "skillfx_bremenareastay_65cedcf5"
+       },
        "object": "passiveobject/character/swordman/bremen.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "offset": [
+        122,
+        0,
+        0
+       ],
+       "percent": 0,
+       "speed": 0
       }
      ]
     }
@@ -2869,7 +2873,6 @@
    "fidelity_pending": [
     "cast_frame",
     "area_membership_filters",
-    "area_phase_timers",
     "area_draw_order",
     "voice"
    ],
@@ -2889,12 +2892,14 @@
          "skillfx_khazanareaappear2_fbc292d4"
         ],
         "appear_ms": 1040.0,
+        "area_scale": 1.0729613733905579,
         "depth_scale": 0.29,
         "disappear_fx": "skillfx_khazanareadisappear_6c00971a",
         "disappear_ms": 320.0,
         "duration_col": 1,
         "ghost_fx": "skillfx_khazan2_47804aa3",
         "kind": "khazan_field",
+        "pulse_ms": 100,
         "radius": 250,
         "stay_fx": "skillfx_khazanareastay_1bc3c7a4"
        },

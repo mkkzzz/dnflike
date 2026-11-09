@@ -107,7 +107,13 @@ class SkillPanelSourceTest(unittest.TestCase):
         top_left, _ = self.source.frame(self.build.WINDOW_BANK, 213)
         self.assertEqual(top_left.size, (12, 13))
         self.assertEqual(board.crop((0, 0, 12, 13)).tobytes(), top_left.convert('RGBA').tobytes())
-        self.assertEqual(self.manifest['ui_layout']['detail_body']['size'], [179, 260])
+        body = self.manifest['ui_layout']['detail_body']
+        source = self.build.ui_control_node(self.source, body['ui_path'], body['control'])
+        self.assertEqual(source['values'][0], '[hyperlinklabel]')
+        self.assertEqual(body['position'], source['values'][2:4])
+        self.assertEqual(body['size'], source['values'][6:8])
+        options = dict(child['values'] for child in source['children'] if child['tag'] == '[int option]')
+        self.assertEqual(body['line_height'], options['line height'])
 
     def test_sp_digits_preserve_source_frames(self):
         from PIL import Image

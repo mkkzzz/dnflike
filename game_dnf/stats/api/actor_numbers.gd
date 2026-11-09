@@ -76,7 +76,7 @@ func sample_source_effect(definition: Dictionary, rank: int) -> bool:
 	for mod: Dictionary in definition.get("modifiers",[]):
 		var column := int(mod.get("level_row",-1))
 		if not valid_source_column(row,column):return false
-		mod["value"] = float(row[column])
+		mod["value"] = float(row[column])*float(mod.get("scale",1.0))
 		mod.erase("level_row")
 		mod.erase("per_level")
 	return true

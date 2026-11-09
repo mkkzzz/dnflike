@@ -17,11 +17,14 @@ import os
 import sys
 from collections import deque
 from pathlib import Path
+from check_dnf_walk import visible_down_gate
+from export_dnf_map import CELL_H, CELL_W, dungeon_placement, parse_greed
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
 DUNGEONS = GAME / 'data/dungeons.json'
 MOVE = {'left': (-1, 0), 'right': (1, 0), 'up': (0, -1), 'down': (0, 1)}
+QUEST_MAZES = {'draconiantower': 4307, 'hallofdoll': 4308}
 
 # 待入表的副本清单：id, 导出目录（相对 game_dnf），中文名, region, monster_level
 PENDING = [
@@ -149,6 +152,118 @@ def merge_route(existing: dict | None, generated: dict, *, refresh: bool) -> dic
     return merged
 
 
+def source_quest_maze(dungeon: dict, quest_id: int) -> dict:
+    section = {}
+    matches = []
+    for span in dungeon['raw'] + [{'tag': '[maze info]', 'values': []}]:
+        tag = span['tag']
+        if tag == '[maze info]':
+            if section.get('[quest connection]') == [0, quest_id, 2]:
+                matches.append(section)
+            section = {}
+        elif not tag.startswith('[/'):
+            section.setdefault(tag, []).extend(token[2] for token in span['values'])
+    if len(matches) != 1:
+        raise ValueError(f'Expected exactly one Hard quest maze for QST{quest_id}')
+    return matches[0]
+
+
+def compile_quest_maze(dungeon: dict, quest_id: int, name: str) -> tuple[dict, dict, list[dict], dict]:
+    source = source_quest_maze(dungeon, quest_id)
+    start, boss = tuple(source['[start map]']), tuple(source['[boss map]'])
+    issues = []
+    cells = parse_greed(source['[greed]'][0], *source['[size]'], dungeon['path'], issues)
+    if issues or start not in cells or boss not in cells:
+        raise ValueError(f'Invalid QST{quest_id} maze graph: {issues}')
+    maps = dungeon['rooms']
+    map_ids = {room['map_id']: path for path, room in maps.items()}
+    fixed = {}
+    for tag in ('[map specification]', '[boss map specification]'):
+        values = source[tag]
+        if len(values) % 3:
+            raise ValueError(f'Invalid {tag} for QST{quest_id}')
+        for x, y, map_id in zip(values[::3], values[1::3], values[2::3]):
+            if (x, y) not in cells or (x, y) in fixed or map_id not in map_ids:
+                raise ValueError(f'Invalid QST{quest_id} fixed MAP{map_id} at {x},{y}')
+            fixed[(x, y)] = map_ids[map_id]
+    for pos, cell in cells.items():
+        matches = sorted(path for path, room in maps.items() if cell['code'][0] in room['greed_codes'])
+        if pos in fixed:
+            if fixed[pos] not in matches:
+                raise ValueError(f'QST{quest_id} fixed MAP has mismatched door code: {fixed[pos]}')
+            matches = [fixed[pos]]
+        elif pos != start:
+            matches = [path for path in matches if not maps[path]['start_area'] and not has_source_boss(maps[path])]
+        cell['map_candidates'] = matches
+    starts = source_start_maps(cells[start], maps)
+    if len(starts) != 1 or boss not in fixed or not has_source_boss(maps[fixed[boss]]):
+        raise ValueError(f'QST{quest_id} needs a unique source start and fixed boss MAP')
+    entry = maps[starts[0]]
+    ai_character = [token[2] for span in entry['raw'] if span['tag'] == '[ai character]' for token in span['values']]
+    if len(ai_character) != 8 or any(type(value) is not int for value in ai_character[:4]) or ai_character[4:6] != ['[character]', '[normal]']:
+        raise ValueError(f'Unsupported QST{quest_id} [ai character] entry: {ai_character}')
+    cells[start]['map_candidates'] = starts
+    path = shortest(cells, start, boss)
+    if not path:
+        raise ValueError(f'No connected QST{quest_id} route')
+    rooms = []
+    placements = []
+    for (x, y), side in path + [(boss, '')]:
+        cell = cells[x, y]
+        candidates = cell['map_candidates']
+        preferred = [path for path in candidates if Path(path).stem.startswith(f'({x},{y})')]
+        room = maps[(preferred or candidates)[0]]
+        placement = dungeon_placement(room, cell, dungeon['pathgate_slots'], {boss}, f'quest{quest_id}_')
+        visible = visible_down_gate(room, placement, CELL_W, CELL_H)
+        if visible:
+            gate = next(g for g in placement['gates'] if g['direction'] == 'down')
+            gate['source_anchor'] = gate['anchor']
+            gate['anchor'] = [*visible, gate['source_anchor'][2]]
+            gate['anchor_adaptation'] = 'E-ADAPT: 原门下沿超出固定画布，吸附到同侧原通行格可见边缘'
+        placements.append(placement)
+        rooms.append({'name': name, 'placement': placement['id'], 'next': side})
+    rooms[-1]['boss'] = True
+    companion = {'source_id': ai_character[0], 'anchor': ai_character[1:4], 'raw': ai_character}
+    maze = {'source_id': quest_id, 'quest_connection_raw': source['[quest connection]'],
+            'size': source['[size]'], 'greed_raw': source['[greed]'][0],
+            'start_cell': list(start), 'boss_cell': list(boss),
+            'map_specification_raw': source['[map specification]'],
+            'boss_map_specification_raw': source['[boss map specification]'],
+            'cells': list(cells.values()), 'evidence': 'E-PARSE 专用迷宫与指定地图；E-ADAPT 最短通路，同坐标优先后取稳定候选'}
+    route = {'difficulty': 'expert', 'companion_id': companion['source_id'],
+             'source_map_id': maps[fixed[boss]]['map_id'], 'rooms': rooms}
+    return maze, route, placements, companion
+
+
+def quest_maze_exports(dungeons: dict, check: bool) -> bool:
+    outputs = {}
+    for name, quest_id in QUEST_MAZES.items():
+        spec = dungeons[name]
+        path = GAME / spec['map_export'].removeprefix('res://')
+        export = json.loads(path.read_bytes())
+        dungeon = export['dungeon']
+        maze, route, placements, companion = compile_quest_maze(dungeon, quest_id, spec['name'])
+        quest = f'original.quest.{quest_id}'
+        start = dungeon['rooms'][placements[0]['map']]
+        if check:
+            if (dungeon.get('quest_mazes', {}).get(quest) != maze or spec.get('quest_routes', {}).get(quest) != route
+                    or [p for p in dungeon['placements'] if p.get('quest_maze') == quest] != [dict(p, quest_maze=quest) for p in placements]
+                    or start.get('companions') != [companion]):
+                print(f'[QUEST MAZE] {quest} stale or incomplete')
+                return False
+        else:
+            dungeon.setdefault('quest_mazes', {})[quest] = maze
+            dungeon['placements'] = [p for p in dungeon['placements'] if p.get('quest_maze') != quest]
+            dungeon['placements'].extend(dict(p, quest_maze=quest) for p in placements)
+            start['companions'] = [companion]
+            spec.setdefault('quest_routes', {})[quest] = route
+            outputs[path] = export
+        print(f'[QUEST MAZE] {quest} rooms={len(route["rooms"])} MAP{route["source_map_id"]} APC{route["companion_id"]}')
+    for path, export in outputs.items():
+        path.write_text(json.dumps(export, ensure_ascii=False, indent=1, allow_nan=False) + '\n', encoding='utf-8')
+    return True
+
+
 def write_dungeons(doc: dict) -> None:
     temporary = DUNGEONS.with_suffix('.json.tmp')
     temporary.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
@@ -168,9 +283,14 @@ def main() -> int:
     parser.add_argument('--status', action='store_true', help='列出待入表副本的导出进度')
     parser.add_argument('--apply-all', action='store_true', help='把已导出的待入表副本批量写入 dungeons.json')
     parser.add_argument('--refresh-existing', action='store_true', help='显式刷新已有路线，并保留运行时手工字段')
+    parser.add_argument('--quest-mazes', action='store_true', help='核对原任务专用迷宫；加 --write 重建地图元数据和路线')
     args = parser.parse_args()
     doc = json.loads(DUNGEONS.read_text(encoding='utf-8'))
     dungeons = doc['dungeons']
+    if args.quest_mazes:
+        if not quest_maze_exports(dungeons, check=not args.write):return 1
+        if args.write:write_dungeons(doc)
+        return 0
     if args.status:
         ready = 0
         for dungeon_id, folder, name, _region, _level in PENDING:

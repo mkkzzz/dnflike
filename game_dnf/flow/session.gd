@@ -123,6 +123,14 @@ func dungeon_choices(region) -> Array[String]:
 		if String(dungeons[id].get("region","lorien")) in regions:choices.append(id)
 	return choices
 
+func active_dungeon_route() -> Dictionary:
+	var base: Dictionary = dungeons.get(run.get("dungeon", ""), {})
+	var quest_route: Dictionary = base.get("quest_routes", {}).get(run.get("quest_maze", ""), {})
+	if quest_route.is_empty():return base
+	var route := base.duplicate()
+	route.merge(quest_route, true)
+	return route
+
 func snapshot() -> Dictionary:
 	return {"profile": profile.duplicate(true), "state": state, "run": run.duplicate(true),
 		"result": result.duplicate(true), "stats": stats()}
@@ -228,6 +236,11 @@ func command(kind: String, payload: Dictionary = {}) -> Dictionary:
 			var dungeon: String = String(payload.get("dungeon", "forest_trial"))
 			if not dungeon_available(dungeon):return reject("地下城尚未开放，请先完成前置任务")
 			run = {"id": "run_%d" % int(profile["next_run"]), "dungeon": dungeon, "difficulty":profile.get("difficulty", "normal"), "stats": stats()}
+			var quest_routes: Dictionary = dungeons[dungeon].get("quest_routes", {})
+			for quest: String in quest_routes:
+				if quest_routes[quest]["difficulty"]==run["difficulty"] and quests.status(profile, quest)=="active":
+					run["quest_maze"]=quest
+					break
 			Consumables.initialize(run);Recovery.initialize(run)
 			QuestConditions.initialize(run)
 			profile["next_run"] += 1
@@ -300,7 +313,8 @@ func combat_event(event: Dictionary) -> Dictionary:
 			var map_changed:=false
 			var room_index=int(event.get("room_index",-1))
 			var rooms:Array=dungeons.get(run.get("dungeon",""),{}).get("rooms",[])
-			if room_index>=0 and room_index<rooms.size():
+			# Quest mazes need exact MAP identity and companion survival, not the ordinary cell adapter.
+			if not run.has("quest_maze") and room_index>=0 and room_index<rooms.size():
 				var placement=String(rooms[room_index].get("placement",""))
 				var cell_text=placement.split(":")[0]
 				var cell_parts=cell_text.split("_")

@@ -305,7 +305,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 				if controller.get("kind","") == "icewave_chain":
 					controller["count"] = int(row[int(controller["count_col"])])
 					controller["frame2_at_ms"] = float(row[int(controller["frame2_at_col"])])
-				elif controller.get("kind","") == "khazan_field":
+				elif controller.get("kind","") in ["khazan_field","bremen_field"]:
 					var column := int(controller["duration_col"])
 					if row.size() <= column or float(row[column]) <= 0.0:continue
 					hit["life_ms"] = float(row[column])
