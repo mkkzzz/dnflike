@@ -1764,26 +1764,70 @@ func check_bloodblast() -> void:
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(game.view.object_views.has(ground["id"]) and game.view.object_views.has("%s:layer:0" % ground["id"]),
 		"the original ground burst exposes both its back and front layers")
-	game.monsters.clear()
+	move_target(target,POINT+Vector2(400,0))
 	game.step_objects(300)
 	check(not game.objects.has(ground),"ground contact ends with its 400 ms main animation")
 	game.step_objects(559)
 	check(cues("FIRE_PILLAR_UP").is_empty(),"the pillar cue stays silent before ETC frame eight")
 	game.step_objects(1)
 	check(cues("FIRE_PILLAR_UP").size()==1,"the pillar cue plays at object age 960 ms")
+	move_target(target,POINT)
+	target["hp"] = 10000.0
+	target["vz"] = 0.0
+	game.step_objects(39)
+	check(pillar["hits"].is_empty(),"the main pillar has no contact before 1000 ms")
+	game.step_objects(1)
+	var lift: float = game.rules["reaction"]["lift_speed_per_unit"]
+	check(pillar["hits"].has(target["id"]) and target["state"]=="air"
+		and is_equal_approx(float(target["vz"]),450.0*lift) and sub["hit"]["lift"]==450.0,
+		"the pillar launches at 1000 ms with the authored static lift, also configured on the spray")
+	game.monsters.clear()
 	pillar["hits"][99] = true
 	sub["hits"][99] = true
-	game.step_objects(114)
+	game.step_objects(74)
 	check(pillar["hits"].has(99) and sub["hits"].has(99),"both hit ledgers survive before their first timer boundary")
 	game.step_objects(1)
 	check(pillar["hits"].is_empty() and sub["hits"].has(99),"the pillar resets at 1075 ms, independently of the spray")
-	game.step_objects(105)
+	game.step_objects(24)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var ids: Array = [11,12,13,14,15,16,17,18,20,30].map(func(order):return "%s:ani:%s" % [pillar["id"],order])
+	var views: Dictionary = game.view.object_views
+	check(ids.all(func(id):return views.has(id) and not views[id].frame.has("sprite")),
+		"all ten ALS tracks are attached at their original layer positions and remain blank at 1099 ms")
+	move_target(target,POINT+Vector2(100,-12))
+	target["vz"] = 0.0
+	game.monsters.append(target)
+	game.step_objects(1)
+	check(pillar["hits"].is_empty(),"the light layer does not widen the pillar's main ANI hitbox")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var ordered := true
+	var previous := -1
+	for id: String in ids:
+		var layer = views.get(id)
+		if layer == null or not layer.frame.has("sprite") or layer.z_index!=int(pillar["pos"].y) or layer.get_index()<=previous:
+			ordered = false
+			break
+		previous = layer.get_index()
+	check(ordered,"all ten layers reference their 1100 ms sprites in ascending ALS draw order at the pillar depth")
+	game.step_objects(19)
+	check(not sub["hits"].has(target["id"]),"the centered spray has no contact before 1120 ms")
+	game.step_objects(1)
+	check(sub["hits"].has(target["id"]) and target["state"]=="air"
+		and is_equal_approx(float(target["vz"]),450.0*lift),
+		"the centered spray launches at 1120 ms with its own static lift")
+	game.monsters.clear()
+	game.step_objects(60)
 	check(sub["hits"].is_empty() and sub["hit_resets_left"]==2 and cues("FIRE_PILLAR_UP").size()==1,
 		"the spray first resets at 1180 ms and the pillar cue stays one-shot")
 	step(559)
 	check(game.player["action"]=="bloodblast","recovery holds at 559 ms")
 	step(1)
 	check(game.player["action"]=="" and game.objects.size()==2,"560 ms recovery leaves live spray objects independent of the caster")
+	game.step_objects(120)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(not views.has("%s:ani:20" % pillar["id"]) and not views.has("%s:layer:1" % pillar["id"])
+		and views.has("%s:ani:30" % pillar["id"]),
+		"finished floor layers leave the view while the eruption remains active")
 
 func run() -> void:
 	game = session.mount(root)

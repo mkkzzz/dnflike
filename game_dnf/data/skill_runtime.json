@@ -11,9 +11,18 @@
    "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
    "skillfx_blast_back_c66f1708": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
+   "skillfx_blast_blood_light_f3e56a7e": "passiveobject/character/swordman/animation/blastblood/blast_blood_light.ani",
    "skillfx_blastbloodfloor1_e45c71e7": "passiveobject/character/swordman/animation/blastbloodfloor1.ani",
    "skillfx_blastbloodfloor2_449b3720": "passiveobject/character/swordman/animation/blastbloodfloor2.ani",
    "skillfx_blastbloodpresub_front_bd8155d0": "passiveobject/character/swordman/animation/blastbloodpresub_front.ani",
+   "skillfx_blood1_8a08949c": "passiveobject/character/swordman/animation/blastblood/blood1.ani",
+   "skillfx_blood2_610abe1d": "passiveobject/character/swordman/animation/blastblood/blood2.ani",
+   "skillfx_blood3_9aa1bad7": "passiveobject/character/swordman/animation/blastblood/blood3.ani",
+   "skillfx_blood4_a2719a1c": "passiveobject/character/swordman/animation/blastblood/blood4.ani",
+   "skillfx_blood5_97ec9610": "passiveobject/character/swordman/animation/blastblood/blood5.ani",
+   "skillfx_blood6_8c574314": "passiveobject/character/swordman/animation/blastblood/blood6.ani",
+   "skillfx_blood7_0253e775": "passiveobject/character/swordman/animation/blastblood/blood7.ani",
+   "skillfx_blood8_78f7a94f": "passiveobject/character/swordman/animation/blastblood/blood8.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
    "skillfx_bremen2_267aab10": "passiveobject/character/swordman/animation/bremen2.ani",
    "skillfx_bremenareaappear1_558ce479": "passiveobject/character/swordman/animation/bremenareaappear1.ani",
@@ -39,6 +48,7 @@
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
+   "skillfx_floor_over_73b0876a": "passiveobject/character/swordman/animation/blastblood/floor_over.ani",
    "skillfx_grab_3189b870": "passiveobject/character/swordman/animation/epidemicrasa/grab.ani",
    "skillfx_grab_ldodge_5188bbe5": "passiveobject/character/swordman/animation/epidemicrasa/grab_ldodge.ani",
    "skillfx_grab_stay_741ff61f": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay.ani",
@@ -833,10 +843,10 @@
   },
   "bloodblast": {
    "fidelity_pending": [
-    "hit_lift_and_reactions",
+    "target_reaction_rules",
     "fixed_attack_scaling",
-    "eruption_visual_binding",
-    "effect_layer_order",
+    "etc_layer_order",
+    "hit_effects",
     "non_weapon_attack_speed"
    ],
    "material_cost": {
@@ -856,6 +866,7 @@
      "hits": [
       {
        "fixed_col": 0,
+       "lift": 450,
        "native_controller": {
         "kind": "bloodblast",
         "layers": [],
@@ -872,7 +883,64 @@
       },
       {
        "fixed_col": 0,
+       "lift": 450,
        "native_controller": {
+        "ani_layer_source": {
+         "sha256": "2453ae7a06fb7c9846c9bcc530bf62123d6ae4aaf206f2444ec1d127fc07ab19",
+         "source": "passiveobject/character/swordman/animation/blastblood1.ani.als"
+        },
+        "ani_layers": [
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood8_78f7a94f",
+          "order": 11
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood7_0253e775",
+          "order": 12
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood6_8c574314",
+          "order": 13
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood5_97ec9610",
+          "order": 14
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood4_a2719a1c",
+          "order": 15
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood3_9aa1bad7",
+          "order": 16
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood2_610abe1d",
+          "order": 17
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blood1_8a08949c",
+          "order": 18
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_floor_over_73b0876a",
+          "order": 20
+         },
+         {
+          "at_ms": 0,
+          "effect": "skillfx_blast_blood_light_f3e56a7e",
+          "order": 30
+         }
+        ],
         "kind": "bloodblast",
         "layers": [
          "skillfx_blastbloodfloor1_e45c71e7",

@@ -3,6 +3,7 @@
 The source of truth is:
   - game_dnf/data/skill_catalog.json (175 SKLs and five SP trees)
   - game_dnf/assets_local/content/combat_content.json (SKL/ANI/ATK/OBJ/PTL)
+  - pinned passive-object animation layer script for ordinary Blood Blast
   - explicit skill engine adapters in this file
 
 The generated file contains every unique SP-tree node. Resource references and
@@ -17,7 +18,7 @@ import json
 import re
 import sqlite3
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dnf_pvf import open_library
@@ -34,6 +35,7 @@ CHR_ANI = "character/swordman/animation/"
 CHR_ATK = "character/swordman/attackinfo/"
 CHR_FX = "character/swordman/effect/animation/"
 OBJ_ROOT = "passiveobject/character/swordman/"
+BLOODBLAST_LAYER_SCRIPT = OBJ_ROOT + "animation/blastblood1.ani.als"
 
 # Keep the existing save IDs stable while giving every other tree node a
 # deterministic canonical ID. The catalog builder uses this same map.
@@ -1015,6 +1017,29 @@ def fixed_cube_cost(skill: dict, records: dict) -> dict:
     return {"source_id": item_id, "amount": first_cost}
 
 
+def bloodblast_layer_script(library, records: dict) -> dict:
+    script = library.script(BLOODBLAST_LAYER_SCRIPT)
+    if not script or script["sha256"] != "2453ae7a06fb7c9846c9bcc530bf62123d6ae4aaf206f2444ec1d127fc07ab19":
+        raise ValueError("Unverified Blood Blast layer script")
+    timeline = records[BLOODBLAST_LAYER_SCRIPT.removesuffix(".als")]["decoded"]["timeline"]
+    directory = PurePosixPath(BLOODBLAST_LAYER_SCRIPT).parent
+    paths: dict[str, str] = {}
+    layers = []
+    for field in script["fields"]:
+        if field["tag"] == "[use animation]":
+            relative, alias = field["values"]
+            paths[alias] = str(directory / relative).lower()
+        elif field["tag"] == "[add]":
+            frame, order, alias = field["values"]
+            layers.append({"path": paths[alias], "at_ms": timeline[frame]["start_ms"], "order": order})
+        else:
+            raise ValueError("Unsupported Blood Blast layer instruction: " + field["tag"])
+    if len(layers) != 10 or len({layer["order"] for layer in layers}) != len(layers):
+        raise ValueError("Incomplete Blood Blast layer sequence")
+    return {"source": BLOODBLAST_LAYER_SCRIPT, "sha256": script["sha256"],
+            "layers": sorted(layers, key=lambda layer: layer["order"])}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1025,6 +1050,7 @@ def build_move(
     objects: dict[str, str],
     *,
     native_bloodblast: bool = True,
+    bloodblast_script: dict | None = None,
 ) -> dict | None:
     if skill.get("type") != "[active]":
         return None
@@ -1051,10 +1077,10 @@ def build_move(
         static = records[skill_path]["decoded"]["dungeon"]["static_data"]
         hits = []
         # CD8131..CD834A creates the centered spray, rear-offset pillar and ground burst.
-        for name, depth, fixed_col, reset_frames in (
-            ("blastbloodsuborigin", 0, 0, (1, 4)),
-            ("blastbloodorigin", 50, 0, (10, 13)),
-            ("blastbloodpresuborigin", 0, 2, ()),
+        for name, depth, fixed_col, lift_col, reset_frames in (
+            ("blastbloodsuborigin", 0, 0, 2, (1, 4)),
+            ("blastbloodorigin", 50, 0, 1, (10, 13)),
+            ("blastbloodpresuborigin", 0, 2, None, ()),
         ):
             path = OBJ_ROOT + name + ".obj"
             obj = records[path]["decoded"]
@@ -1075,14 +1101,27 @@ def build_move(
             if name == "blastbloodorigin":
                 plume = records[obj["etc_motions"][0]]["decoded"]["timeline"]
                 controller["sound_at_ms"] = plume[8]["start_ms"]
+                if bloodblast_script is None:
+                    raise ValueError("Missing original Blood Blast layer script")
+                controller["ani_layers"] = [
+                    {"effect": add_fx(fx, effects, layer["path"]),
+                     "at_ms": layer["at_ms"], "order": layer["order"]}
+                    for layer in bloodblast_script["layers"]
+                ]
+                if not all(layer["effect"] for layer in controller["ani_layers"]):
+                    raise ValueError("Missing original Blood Blast eruption layer bank")
+                controller["ani_layer_source"] = {key: bloodblast_script[key] for key in ("source", "sha256")}
             hit = {"object": path, "offset": [0, depth, 0], "fixed_col": fixed_col,
                    "percent": 0, "native_controller": controller}
+            if lift_col is not None:
+                # A60751/A611C8 update the attack template's lift slot (+990+5C).
+                hit["lift"] = static[lift_col]
             hits.append(hit)
         return {"skill": skill_path, "name": str(skill["name"]),
                 "native_state": "bloodblast", "native_recovery_col": 3,
                 "material_cost": fixed_cube_cost(skill, records),
-                "fidelity_pending": ["hit_lift_and_reactions", "fixed_attack_scaling",
-                                     "eruption_visual_binding", "effect_layer_order", "non_weapon_attack_speed"],
+                "fidelity_pending": ["target_reaction_rules", "fixed_attack_scaling",
+                                     "etc_layer_order", "hit_effects", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
@@ -1748,8 +1787,11 @@ def main() -> int:
     effect_paths = sorted(set(effect_paths))
     library = open_library()
     try:
+        bloodblast_script = bloodblast_layer_script(library, records)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
+        SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
+                            if safe_animation(library, layer["path"]))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1823,7 +1865,8 @@ def main() -> int:
                         hit.update(speed=360.0, life_ms=1800, percent_col=0, effects=HIT_STATUS["firewave"])
                 move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
         else:
-            move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects)
+            move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
+                              bloodblast_script=bloodblast_script)
         if move:
             moves[runtime_id] = move
             charge_ani = move.get("native_charge_ani")

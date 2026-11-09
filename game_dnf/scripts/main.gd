@@ -3786,10 +3786,24 @@ func view_snapshot() -> Dictionary:
 			if bank != "":objs.append(item)
 			var layers: Array = controller["layers"]
 			for index in layers.size():
+				var effect_key := String(layers[index])
+				if float(item["clock"]) >= float(combat_assets["effects"][effect_key]["duration_ms"]):continue
 				var layer := item.duplicate()
 				layer["id"] = "%s:layer:%s" % [o["id"],index]
-				layer["effect"] = layers[index]
+				layer["effect"] = effect_key
 				layer["depth_offset"] = 1 if bank != "" else -1
+				objs.append(layer)
+			# ALS order is internal to the main ANI. Every layer uses the same
+			# world depth; source order breaks ties between the attached sprites.
+			for attachment: Dictionary in controller.get("ani_layers",[]):
+				var age := float(item["clock"])-float(attachment["at_ms"])
+				var effect_key := String(attachment["effect"])
+				if age < 0.0 or age >= float(combat_assets["effects"][effect_key]["duration_ms"]):continue
+				var layer := item.duplicate()
+				layer["id"] = "%s:ani:%d" % [o["id"],int(attachment["order"])]
+				layer["effect"] = effect_key
+				layer["clock"] = age
+				layer["depth_offset"] = 0
 				objs.append(layer)
 		else:
 			objs.append(item)
