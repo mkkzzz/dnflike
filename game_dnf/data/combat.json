@@ -202,12 +202,6 @@
        "percent_col": 0
       }
      ],
-     "fx": [
-      {
-       "key": "triple1",
-       "at": 0
-      }
-     ],
      "voice": "triple1"
     },
     {
@@ -223,12 +217,6 @@
        "percent_col": 0
       }
      ],
-     "fx": [
-      {
-       "key": "triple2",
-       "at": 0
-      }
-     ],
      "voice": "triple2"
     },
     {
@@ -242,12 +230,6 @@
         210
        ],
        "percent_col": 1
-      }
-     ],
-     "fx": [
-      {
-       "key": "triple3",
-       "at": 0
       }
      ],
      "voice": "triple3"

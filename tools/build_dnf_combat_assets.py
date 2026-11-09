@@ -272,6 +272,8 @@ EFFECTS = {
     'triple1': 'character/swordman/effect/animation/tripleslash/slash1.ani',
     'triple2': 'character/swordman/effect/animation/tripleslash/slash2.ani',
     'triple3': 'character/swordman/effect/animation/tripleslash/slash3.ani',
+    'triple4': 'character/swordman/effect/animation/tripleslash/slash4.ani',
+    'triple5': 'character/swordman/effect/animation/tripleslash/slash5.ani',
     'triple_move1': 'character/swordman/effect/animation/tripleslash/move1.ani',
     'triple_move2': 'character/swordman/effect/animation/tripleslash/move2.ani',
     'gore_slash1': 'character/swordman/effect/animation/gorecross/slash1.ani',
@@ -354,10 +356,15 @@ GUARD_AUDIO = {
     'SWD_GUARD_END': 'sounds/char/swordman/weapon/swd_eff_06.ogg',
     'SM_GUARD': 'sounds/char/swordman/sm_guard.ogg',
 }
+TRIPLE_SWING = 'R_TSLASH'
+TRIPLE_SWING_FILES = [f'sounds/char/swordman/effect/tslash_{index:02}.ogg' for index in (1, 2, 3)]
+# Original audio.xml RANDOM group R_TSLASH, in the same order as TSLASH_01..03.
+SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
+    TRIPLE_SWING: TRIPLE_SWING_FILES,
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -634,7 +641,10 @@ def sound_files(src: Source, key: str) -> list[str]:
 
 def copy_audio(src: Source, files: list[str], audio: dict, key: str, unresolved: list) -> None:
     out = []
-    for path in files:
+    weights = SOURCE_AUDIO_WEIGHTS.get(key, ())
+    if weights and len(weights) != len(files):
+        raise ValueError('Audio variant weights differ from source file count: '+key)
+    for index, path in enumerate(files):
         found = src.audio(path)
         if not found:
             unresolved.append({'kind': 'audio', 'key': key, 'path': path})
@@ -644,7 +654,10 @@ def copy_audio(src: Source, files: list[str], audio: dict, key: str, unresolved:
         target.parent.mkdir(parents=True, exist_ok=True)
         if not target.exists():
             shutil.copyfile(local, target)
-        out.append({'file': 'res://assets_local/combat/audio/' + target.name, 'source': path, 'sha256': digest})
+        entry = {'file': 'res://assets_local/combat/audio/' + target.name, 'source': path, 'sha256': digest}
+        if weights:
+            entry['weight'] = weights[index]
+        out.append(entry)
     if out:
         audio[key] = out
     elif key not in [u.get('key') for u in unresolved]:
@@ -1266,6 +1279,8 @@ def main() -> int:
                         help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-guard', action='store_true',
                         help='Add original guard spark, dust, and audio cues')
+    parser.add_argument('--extend-triple-cues', action='store_true',
+                        help='Add the final two Triple Slash animations and original weapon sound group')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1337,6 +1352,11 @@ def main() -> int:
     if args.extend_guard:
         specs = [('effects', key, EFFECTS[key]) for key in ('guard_spark', 'guard_dust')]
         specs.extend(('audio', key, path) for key, path in GUARD_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_triple_cues:
+        specs = [('effects', key, EFFECTS[key]) for key in ('triple4', 'triple5')]
+        specs.append(('audio', TRIPLE_SWING, TRIPLE_SWING_FILES))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:

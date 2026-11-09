@@ -354,8 +354,13 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
-			if name == "triple" and frames.size() > TRIPLE_CONTINUE_FRAME:
-				built["continue_at"] = float(frames[TRIPLE_CONTINUE_FRAME]["start_ms"])
+			if name == "triple":
+				if frames.size() > TRIPLE_CONTINUE_FRAME:
+					built["continue_at"] = float(frames[TRIPLE_CONTINUE_FRAME]["start_ms"])
+				var index: int = move["stages"].size()
+				# CC7E5D / CC7E8F attach stage and parity clips at state entry.
+				built["fx"] = [{"key":"triple_move%d" % (index%2+1),"at":0.0,"action_clock":true},
+					{"key":"triple%d" % (index+1),"at":0.0,"action_clock":true}]
 			move["stages"].append(built)
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.

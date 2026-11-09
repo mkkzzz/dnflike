@@ -10,6 +10,7 @@ var muted := false:
 			voice.stream_paused = muted
 var sound_streams: Dictionary = {}
 var variants: Dictionary = {}
+var _variant_weight_ends: Dictionary = {}
 var voice_pool: Array = []
 var music: AudioStreamPlayer
 var music_bank: Dictionary = {}
@@ -30,8 +31,16 @@ func setup(audio_assets: Dictionary, combat_audio := {}) -> void:
 		sound_streams[key] = load("res://assets_local/"+String(audio_assets[key]["file"]))
 	for key: String in combat_audio:
 		var list: Array = []
-		for entry: Dictionary in combat_audio[key]:list.append(load(String(entry["file"])))
+		var ends := PackedInt32Array()
+		var total := 0
+		var weighted := false
+		for entry: Dictionary in combat_audio[key]:
+			list.append(load(String(entry["file"])))
+			weighted = weighted or entry.has("weight")
+			total += maxi(1,int(entry.get("weight",1)))
+			ends.append(total)
 		variants[key] = list
+		if weighted:_variant_weight_ends[key] = ends
 	music = AudioStreamPlayer.new()
 	music.volume_db = -28
 	add_child(music)
@@ -93,6 +102,7 @@ func _exit_tree() -> void:
 	_loop_voices.clear()
 	sound_streams.clear()
 	variants.clear()
+	_variant_weight_ends.clear()
 	music_bank.clear()
 	music_paths.clear()
 
@@ -109,10 +119,18 @@ func on_cue(event: Dictionary) -> void:
 		return
 	play(String(event["key"]),loop_id)
 
+func variant_index(key: String, roll: int) -> int:
+	if not _variant_weight_ends.has(key):return roll%variants[key].size()
+	var ends: PackedInt32Array = _variant_weight_ends[key]
+	var point := roll%ends[-1]
+	for index in ends.size():
+		if point < ends[index]:return index
+	return ends.size()-1
+
 func play(key: String, loop_id := -1) -> void:
 	if (muted and loop_id < 0) or _loop_voices.has(loop_id):return
 	var stream: AudioStream = null
-	if variants.has(key) and not variants[key].is_empty():stream = variants[key][randi()%variants[key].size()]
+	if variants.has(key) and not variants[key].is_empty():stream = variants[key][variant_index(key,randi())]
 	elif sound_streams.has(key):stream = sound_streams[key]
 	if stream == null:return
 	var now := Time.get_ticks_msec()

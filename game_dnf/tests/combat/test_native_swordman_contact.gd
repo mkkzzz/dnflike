@@ -419,9 +419,19 @@ func check_triple_motion() -> void:
 	game.numeric_player.values["attack_speed"] = 1.25
 	press(KEY_S)
 	step(0)
+	var audio = game.view.audio
+	var selected := [0,0,0]
+	for roll: int in range(100):selected[audio.variant_index("R_TSLASH",roll)] += 1
+	check(selected==[34,33,33] and audio.variants["R_TSLASH"].all(func(stream):return stream is AudioStreamOggVorbis),
+		"the original weighted weapon group resolves to its three playable streams")
+	var first_layers: Array = game.view.effects.filter(func(fx):return fx.data["source"].contains("/tripleslash/"))
+	check(first_layers.size()==2 and first_layers.all(func(fx):return fx.frame["img"]==null),
+		"the first stage creates both source layers with their blank opening frames")
 	step(100)
 	check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(68.75,0)),
 		"Triple Slash scales acceleration once on its real movement clock")
+	check(first_layers.all(func(fx):return fx.clock_ms==125.0 and fx.frame["img_frame"]==0),
+		"the attached effects use the accelerated body clock")
 	session.submit_key(KEY_LEFT,true)
 	press(KEY_S)
 	step(68)
@@ -553,6 +563,16 @@ func check_enhanced_triple_slash() -> void:
 		move_target(target,game.player["pos"]+Vector2(45*facing,0))
 		step(70)
 		check(game.hit_count==index+1 and game.player["stage"]==index,"each source stage hits the real target once")
+		var weapon_cues := cues("R_TSLASH")
+		check(weapon_cues.size()==index+1,"each Triple Slash stage emits one original weapon cue")
+		var layers: Array = game.view.effects.filter(func(fx):return fx.data["source"].contains("/tripleslash/"))
+		var move_source := "/move%d.ani" % (index%2+1)
+		var slash_source := "/slash%d.ani" % (index+1)
+		check(layers.size()==2 and layers[0].data["source"].ends_with(move_source)
+			and layers[1].data["source"].ends_with(slash_source)
+			and layers[0].frame["img_frame"]==index%2*4 and layers[1].frame["img_frame"]==0
+			and layers.all(func(fx):return fx.follow==0 and fx.z_index>game.view.player_actor.z_index),
+			"the current parity and slash layers draw in order in front of the fighter")
 		if index >= 3:
 			var img := 12 if index==3 else 201
 			check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("img_frame",-1))==img),

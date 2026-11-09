@@ -1202,6 +1202,7 @@ func start_stage(index: int) -> void:
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
+	if name == "triple":play_sound("R_TSLASH")
 	var swing := int(m.get("swing",-1))
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
