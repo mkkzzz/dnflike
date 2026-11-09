@@ -8,12 +8,13 @@
 
 | 顺序 | 任务 | 开工材料与交付 |
 |---|---|---|
-| P0 | 鬼剑士真实按键与手感回归 | 先按下表采集共享版本的实际表现。ws2 发布该招的原帧与接触边界后，再加入逐帧断言并回归 |
-| P0 | 建立无原客户端的可重跑基线 | 用只有仓库运行包的干净目录验证正式入口和武器专项。若完整包仍因时间戳误触发重建，ws1 可单独修改[战斗依赖检查](../../../tools/ensure_dnf_combat.ps1)并验证完整包与缺件两种情况。若问题落在共同启动器，由 ws2 集成 |
+| P0 | 鬼剑士真实按键与手感回归 | 用下表的独立专项验证已发布的普攻与上挑，包括短剑强化上挑；格挡与三段斩的原版断言随 ws2 取证补入 |
+| P0 | 技能面板交互与性能返修 | 接收下表的面板实现文件后，用共享原画和已发布对照修复面板局部刷新、滚动、悬停与文字显示方面的可复现问题，同时保留独立回归 |
+| P1 | 保持无原客户端的可重跑基线 | 用只有仓库运行包的干净目录验证正式入口和武器专项。若完整包误触发重建，ws1 可单独修改[战斗依赖检查](../../../tools/ensure_dnf_combat.ps1)并验证完整包与缺件两种情况。若问题落在共同启动器，由 ws2 集成 |
 | P1 | 已闭合战斗能力的正式验收与返修 | 先做章鱼和信徒的同房打断、死亡、回访与召唤清场。神殿战斗接线包发布后，将 [炮车专项](../../../game_dnf/tests/combat/test_native_cannon_combat.gd) 和 [主教专项](../../../game_dnf/tests/combat/test_native_pope_combat.gd) 改为默认读取正式怪物注册。验证炮车双槽、双朝向、每次只发一枚，主教雷击触发边界及实际命中 |
 | P1 | 已取证技能的跨帧回归 | 在 [技能效果专项](../../../game_dnf/tests/combat/test_skill_effects.gd) 用共享波动三招与普通鬼阵的数据测试跨释放帧、暂停、取消与重复更新。核对单次扣蓝、单次生成、音效去重和原动画帧与命中框同步 |
 | P1 | 其它战斗 HUD 与性能 | 从正常战斗入口测暂停恢复、目标血条、重复结算通知和帧耗。鬼剑士首批范围内的问题走下表，范围外的修复按文件认领 |
-| P2 | 承接后续已闭合的技能、怪物和通用系统 | 每次领一组带明确来源、状态顺序、资源和验收脚本的任务。对照共享 ANI、ATK、SKL、PVF 或已验证规则接实现。缺少原证据的分支独立登记，继续该组已闭合的部分 |
+| P2 | 承接后续已闭合的技能、怪物和通用系统 | 优先把普通鬼阵、波动系已发布规则拆成可独立编辑的单元。ws1 可用共享 ANI、ATK、SKL 与图集核资产引用和帧序，交付来源、缺件和复跑断言。具体生产文件等 ws2 发布规则、状态顺序、资源锁与断言后逐项认领；若仍需修改同一战斗入口，由该入口的现持有方接线 |
 
 ws1 可从 [普通章鱼抓咬](../../reports/ws2/2026-11/2026-11-09_章鱼原抓咬技能演示与迷宫状态.md)、[炮车双发射](../../reports/ws2/2026-11/2026-11-09_罗刹鬼阵与炮车双发射验证.md)、[主教雷击](../../reports/ws2/2026-11/2026-11-09_主教普通攻击原雷击.md)和[战斗任务包](ws1_combat_iteration_v1.md)起步。共享材料入口在 [source_materials.json](../../../game_dnf/source_materials.json) 与 [asset_store.json](../../../game_dnf/asset_store.json)。有缺件时按版本锁同步，日常运行优先使用随仓库分发的资源。
 
@@ -21,16 +22,17 @@ ws1 可从 [普通章鱼抓咬](../../reports/ws2/2026-11/2026-11-09_章鱼原�
 
 | 负责人 | 任务与开工条件 | 本批可写文件与交付 |
 |---|---|---|
-| ws1 | **输入回归，可以立即开始。** 走正式流程，以短剑 original_27000、太刀 original_27601 测 X 连段、Z 上挑、命中停顿与暂停恢复中的输入缓冲。记录按下/抬起顺序、动作帧、命中事件与扣蓝次数。格挡、三段斩的原版取消窗口在 ws2 发布后加断言 | 在 `game_dnf/tests/combat/` 新增独立专项 test_ws1_swordman_inputs.gd 及其 UID |
-| ws1 | **快捷栏和性能，可以立即开始。** 先测上排 QWERTY、下排 ASDFGH、D 与相邻槽、跨排移动、解绑和重载。记录技能面板首开与热开、悬停、拖放耗时。原像素与有效拖放边界在 ws2 发布后加断言 | 在 `game_dnf/tests/flow/` 新增独立专项 test_ws1_skill_interaction.gd 及其 UID。可运行现有[性能测试](../../../game_dnf/tests/flow/test_ui_performance.gd)，报告归档到 ws1 自己的月度目录 |
-| ws2 | **招式还原。** 先普攻三段和上挑，再格挡与三段斩。核对原状态机、输入与取消、武器类别、动作与特效层、音效触发、命中盒、伤害与硬直 | [战斗入口](../../../game_dnf/scripts/main.gd)、[会话](../../../game_dnf/combat/api/combat_session.gd)、[招式表](../../../game_dnf/combat/data/move_table.gd)、[帧时序](../../../game_dnf/combat/action/timeline.gd)、[战斗配置](../../../game_dnf/data/combat.json)、[武器层接口](../../../game_dnf/content/api/weapon_appearance.gd)、相关战斗视图、武器层回归及技能运行包 |
-| ws2 | **技能栏与原画校对。** 取原格底、键字、原坐标与边界，校对技能面板清晰度、拖放和旧存档兼容 | [正式流程 HUD](../../../game_dnf/flow/loop_root.gd)、[槽位契约](../../../game_dnf/stats/api/skill_slots.gd)、[资源构建器](../../../tools/build_dnf_flow_assets.py)、快捷栏运行包、现有[循环专项](../../../game_dnf/tests/flow/test_loop.gd)及[技能交互专项](../../../game_dnf/tests/flow/test_skill_shortcuts.gd) |
+| ws1 | **真实按键与手感回归，已接收，可立即做。** 从正式流程用短剑 original_27000、太刀 original_27601 测 X 三连、Z 上挑、停顿与暂停恢复，记录按下/抬起、动作帧、命中和扣蓝。按[原命中及短剑强化证据](../../reports/ws2/2026-11/2026-11-09_鬼剑士普攻上挑原命中判定.md)加空挥、攻击范围边缘、双朝向、强化前置与第二段时序。格挡、三段斩的原版取消窗口随 ws2 取证补入 | 在 `game_dnf/tests/combat/` 新增独立专项 test_ws1_swordman_inputs.gd 及其 UID |
+| ws1 | **快捷栏和面板回归，已接收，可立即做。** 按[原槽位与字图](../../reports/ws2/2026-11/2026-11-09_原技能快捷栏坐标与键位字图.md)验 QWERTY 与 ASDFGH 两排全 12 格，重点覆盖 D 格命中边缘、换位、跨排、解绑、读档和绑定后按键施放。量测面板首开、热开、悬停和拖放，检查文字清晰、顶部无装备等页签 | 在 `game_dnf/tests/flow/` 新增独立专项 test_ws1_skill_interaction.gd 及其 UID。复用现有[性能测试](../../../game_dnf/tests/flow/test_ui_performance.gd)，报告归档到 ws1 月度目录 |
+| ws1 | **技能面板实现，新增可接事项。** 以 `444278a2` 和[原窗与文字对照](../../reports/ws2/2026-11/2026-11-06_技能窗原版校对与文字清晰度.md)为交接基线。ws1 登记接收后，独立修面板内的缓存、局部刷新、树滚动、选中态、悬停及说明文字。面板继续消费已发布的预览、布局与素材契约 | 仅 [skill_panel.gd](../../../game_dnf/ui/flow/skill_panel.gd) 与 ws1 上述独立回归。ws2 从计划发布起为本交接留出该文件；接收后由 ws1 独占编辑，直到返修验收且双方登记归还或确认继续持有 |
+| ws2 | **原招式与共享战斗生产代码。** 先闭合普攻与上挑剩余分支，再做格挡与三段斩。核对原状态机、伤害与硬直、输入和取消、动作与武器层、特效和音效触发，发布每招原证据和实装 | [战斗入口](../../../game_dnf/scripts/main.gd)、[会话](../../../game_dnf/combat/api/combat_session.gd)、[招式表](../../../game_dnf/combat/data/move_table.gd)、[帧时序](../../../game_dnf/combat/action/timeline.gd)、[战斗配置](../../../game_dnf/data/combat.json)、[武器层接口](../../../game_dnf/content/api/weapon_appearance.gd)、战斗视图和 HUD、原版接触与武器层专项、技能数值/动作/生成资源 |
+| ws2 | **原版 UI 取证与共享界面接线。** 负责原画、字体基线、原拖放范围、共用快捷栏和存档契约；从 ws1 用例接收跨模块缺陷。预览新增优先通过已发布数据契约交付 | [正式流程 HUD](../../../game_dnf/flow/loop_root.gd)、[槽位契约](../../../game_dnf/stats/api/skill_slots.gd)、[共用字体](../../../game_dnf/ui/flow/ui_font.gd)、[资源构建器](../../../tools/build_dnf_flow_assets.py)、生成资源、现有[循环专项](../../../game_dnf/tests/flow/test_loop.gd)及[技能交互专项](../../../game_dnf/tests/flow/test_skill_shortcuts.gd) |
 
 ws1 用仓库的[基础资源清单](../../../game_dnf/assets_local/manifest.json)、[战斗资源](../../../game_dnf/assets_local/combat/manifest.json)、[运行数据](../../../game_dnf/assets_local/content/combat_content.json)和[武器层清单](../../../game_dnf/assets_local/weapon_appearance_v3/manifest.json)。准备 Godot 4.7.2 和仓库 Python 依赖后，从仓库根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test -WeaponAppearanceOnly` 验证换装、存档和实际进图。全新检出如在首次导入阶段退出，可单独运行 Godot 的 `--headless --path game_dnf --editor --import --quit` 并检查日志，再复跑同一入口。
 
 独立专项通过 Godot 的 `--headless --path game_dnf --script` 运行，回归入口集成由 ws2 处理。上述任务不需要安装原客户端，也无需下载完整提取库。正式入口默认使用随仓库分发的运行包，复活资源按哈希核验；从源库重烘焙使用独立检查。报告分别标记“当前版本复现”和“已按原规则核对”。
 
-首批重叠文件由 ws2 编辑。ws1 将可复跑用例、基准提交和观察结果交给 ws2 集成修复；适合 ws1 独立实现的返修，可按单项交接对应文件和断言。以后交接到现有生产文件或生成物时，先写交接记录，由接收方登记接手后切换唯一编辑方。
+分工按文件执行，同一文件及其生成物同一时间只有一方写。ws1 遇到跨面板问题时，附基准提交、复现输入、实际结果、预期结果和涉及文件，由现持有方修改。需要交接既有文件时，在交接日志写清文件、基准提交、原版证据或共享契约、验收用例与归还条件，接收方登记后再切换编辑方。测试共用入口和资源生成由现持有方统一接入，双方均可运行。后续职业分支按同样的文件级交接推进。
 
 ## ws2 继续
 
