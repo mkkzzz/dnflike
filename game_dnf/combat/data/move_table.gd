@@ -503,6 +503,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
 		"blind_resistance":int(mob.get("blind_resistance",0)),
+		"poison_resistance":int(mob.get("poison_resistance",0)),
 		"attack_delay":float(mob.get("attack_delay",mob.get("think_term",1200))),
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),

@@ -35,8 +35,9 @@ from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from compile_dnf_content import (NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
+from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
+                                 NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
                                  NATIVE_ZEALOT_MONSTERS, OUTERWALL_BREAKABLE_ROOT)
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
@@ -87,11 +88,29 @@ def native_particle_definitions(src, extra_pins=None):
     return particles, effects
 
 
+def native_status_visuals(src):
+    poison = src.pack_records.get(NATIVE_POISON_PARTICLE, {}).get('native_status_visual', {})
+    if (poison.get('particle') != NATIVE_POISON_PARTICLE
+            or poison.get('source', {}).get('source_hashes') != NATIVE_POISON_VISUAL_SHA):
+        raise ValueError('Compile the original poison status visual before baking')
+    return {'poison': dict(poison, apply_sound='CONDITION_POSION', loop_sound='G_POISON_LOOP',
+                           loop_items=[
+                               {'sound': 'CONDITION_POSION_DROP', 'start_delay_ms': 0, 'loop_delay_ms': 3000},
+                               {'sound': 'CONDITION_POISON_POP', 'start_delay_ms': 0, 'loop_delay_ms': 1000},
+                           ])}
+
+
 OUTERWALL_TRAP_SOUNDS = {
     'FIRE_EXPLOSION_CREATE': ('sounds/effect/magic/fire_explosion.ogg',
                               'b36e216267d64695ddc0256e953a52c1b469c4ce7109612872b79bb163e6613b'),
     'CLOUD_KILL_LOOP': ('sounds/effect/magic/cloudkill.ogg',
                         '3db734272e26a4b368a030e3bd3377da0d8e8502763ef3ed8991238c75a8cebf'),
+    'CONDITION_POSION': ('sounds/effect/c_poison.ogg',
+                         '28d7278038a35b4176deac86c513e5f8e41494fd2d9855008f7a943a46b0183d'),
+    'CONDITION_POSION_DROP': ('sounds/effect/c_poison_drop.ogg',
+                              '48a1f75121003eadfa32ebf700283efdaaf6a6835c09721a4c431fd860b4ecf5'),
+    'CONDITION_POISON_POP': ('sounds/effect/c_poison_pop.ogg',
+                             '710c1b559ef16e3939d09869f4f6e2b3bd9cdcfae0b984be3b65e39cd68e46c7'),
     'TINGKERBELL_FLOAT_LOOP': ('sounds/effect/tingk_float.ogg',
                               'e2b4d6721e73baf137ab930a43eb94d3216225d2b494c100d472512b602be23f'),
     'TINGKERBELL_ALL_ABSORB': ('sounds/effect/tingk_aab.ogg',
@@ -128,11 +147,13 @@ def native_jar_trap_assets(src):
         row['source_path'] = path
         row['motion_bank'] = bank_for(spec['motion_ani']) if spec['extra_animations'] else ''
         row['attack_timeline'] = src.pack_records[spec['motion_ani']]['decoded']['timeline']
+        if kind == 'poison':
+            row['poison'] = spec['poison']
         row['extras'] = [bank_for(animation) for animation in spec['extra_animations']]
         row['destroy'] = [bank_for(animation) for animation in spec['destroy_animations']]
         for source_id in source_ids:
             objects[str(source_id)] = row
-    if hashes != NATIVE_JAR_TRAP_SHA:
+    if hashes != NATIVE_JAR_TRAP_SHA | NATIVE_JAR_GAS_SHA:
         raise ValueError('Compiled jar trap dependencies do not match the pinned original set')
     for path, digest in hashes.items():
         raw = src.lib.raw(path)
@@ -832,7 +853,9 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
     manifest['native_jar_traps'], trap_effects, trap_pins = native_jar_trap_assets(src)
-    manifest['particles'], particle_effects = native_particle_definitions(src, trap_pins)
+    manifest['native_status_visuals'] = native_status_visuals(src)
+    particle_pins = {**trap_pins, NATIVE_POISON_PARTICLE: NATIVE_POISON_VISUAL_SHA}
+    manifest['particles'], particle_effects = native_particle_definitions(src, particle_pins)
     effects.update(particle_effects)
     effects.update(trap_effects)
     for key, spec in monster_specifications().items():
@@ -962,10 +985,19 @@ def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_pa
         ACTIVE_OUT = stage
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
         traps, trap_effects, trap_pins = native_jar_trap_assets(src)
-        if 'native_jar_traps' in manifest and manifest['native_jar_traps'] != traps:
-            raise ValueError('Existing original jar trap contract differs')
+        if 'native_jar_traps' in manifest:
+            previous_traps = manifest['native_jar_traps']
+            gas = traps['objects']['48003']['poison']
+            previous_traps['objects']['48003'].setdefault('poison', gas)
+            if previous_traps != traps:
+                raise ValueError('Existing original jar trap contract differs')
         manifest['native_jar_traps'] = traps
-        definitions, effects = native_particle_definitions(src, trap_pins)
+        status_visuals = native_status_visuals(src)
+        if 'native_status_visuals' in manifest and manifest['native_status_visuals'] != status_visuals:
+            raise ValueError('Existing original status visual contract differs')
+        manifest['native_status_visuals'] = status_visuals
+        particle_pins = {**trap_pins, NATIVE_POISON_PARTICLE: NATIVE_POISON_VISUAL_SHA}
+        definitions, effects = native_particle_definitions(src, particle_pins)
         effects.update(trap_effects)
         unresolved = []
         for key, path in effects.items():

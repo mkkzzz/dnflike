@@ -55,6 +55,7 @@ func run() -> void:
 		check_breakable_run()
 		check_pot_run()
 		check_jar_trap_run()
+		check_orange_fairy_run()
 		check(session.start_room({"run_id":"lorien-reset","dungeon":"lorien","audio":{"muted":true}})
 			and game.native_maze == null and game.room_placement(0)["map"].begins_with("map/lorien/")
 			and not game.view.audio.music.playing,
@@ -205,7 +206,8 @@ func check_lower_run() -> void:
 	check_final_clear()
 
 func check_live_pot() -> void:
-	var pots: Array = game.props.filter(func(prop):return prop["native_breakable"]["object_index"] == 771)
+	var pots: Array = game.props.filter(func(prop):
+		return prop["native_breakable"]["object_index"] == 771 and game.room_map["objects"][prop["node"]]["source_tag"] == "[passive object]")
 	check(pots.size() == 2,"the live boss MAP instantiates both ordinary long pots")
 	if pots.size() != 2:return
 	var pot: Dictionary = pots[0]
@@ -382,7 +384,7 @@ func check_jar_trap_run() -> void:
 		and NativeJarTraps.select(rows,fairy_rolls) == {"id":2200,"custom":1} and fairy_rolls.queue.is_empty()
 		and NativeJarTraps.select(rows,PotRolls.new([1,1,3])).is_empty(),
 		"original jar rows compare strictly and stop rolling at the first match")
-	for child in [40002,2200]:
+	for child in [40002,2200,48003]:
 		var number := 0
 		for candidate in range(1,500):
 			var run_id := "run_%d"%candidate
@@ -414,8 +416,10 @@ func check_jar_trap_run() -> void:
 		var atk: Dictionary = game.move_def("normalwave")["hits"][0]["atk"]
 		game.bus.clear_history()
 		prop_melee(pot["damage_boxes"][1].get_center(),atk,1000)
-		if child == 40002:check_fire_jar(pot)
-		else:check_green_fairy(pot)
+		match child:
+			40002:check_fire_jar(pot)
+			2200:check_green_fairy(pot)
+			48003:check_poison_jar(pot)
 
 func check_fire_jar(pot: Dictionary) -> void:
 	var warning: Dictionary = pot.get("jar_warning",{})
@@ -515,6 +519,150 @@ func check_green_fairy(pot: Dictionary) -> void:
 	game.step_game(500.0)
 	check(is_equal_approx(game.player["hp"],hp+hp_recovery+hp_regen) and game.player["mp"] == game.max_mp
 		and game.item_restorations.is_empty(),"fairy restores half max HP and ends at the one-second source deadline")
+
+func check_poison_jar(pot: Dictionary) -> void:
+	game.player["pos"] = pot["pos"]+Vector2(-220,0)
+	game.step_game(1991.0)
+	var actors: Array = game.native_jar_traps.actors
+	check(actors.size() == 1 and pot["broken"] and actors[0].get("emission_ms") == 290
+		and game.view.audio._loop_voices.has(actors[0]["id"]),
+		"poison jars release the source gas loop and use the PTL deadline")
+	if actors.size() != 1:return
+	var gas: Dictionary = actors[0]
+	var enemy: Dictionary = game.spawn_enemy(pot["pos"],false,"native_starfish_rukuku")
+	enemy["ai"] = false
+	enemy["numeric"].base["poison_resistance"] = 25
+	enemy["numeric"].recalculate()
+	var rng := PotRolls.new([3999,3000])
+	game.rng = rng
+	game.player["pos"] = pot["pos"]
+	game.player["invuln_ms"] = 0.0
+	var hp: float = game.player["hp"]
+	var damage_before: int = game.damage_taken
+	game.bus.clear_history()
+	game.step_game(0.0)
+	var poison: Dictionary = game.numeric_player.effects.active.get("poison",{})
+	var contacts: Array = game.bus.events_of("combat.damage")
+	check(game.player["hp"] == hp and game.player["state"] == "hurt" and contacts.size() == 2
+		and contacts.all(func(event):return event["amount"] == 0 and not event["show_number"]),
+		"gas contact reacts on both teams and deals zero direct HP damage")
+	check(poison.get("remaining_ms") == 7000.0 and not enemy["numeric"].effects.active.has("poison") and rng.queue.is_empty(),
+		"normal gas uses strict 4000/3000 thresholds and respects specific poison resistance")
+	if poison.is_empty():return
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var emission: Dictionary = game.view._poison_emitters.get(0,{})
+	var silhouette: Sprite2D = game.view.player_actor._status_overlay
+	check(not emission.is_empty() and emission["emitter"].origin.z == int(game.player["z"])+70
+		and silhouette != null and silhouette.visible and silhouette.region_enabled,
+		"the poisoned player draws the original +70 PTL and a separate native silhouette pass")
+	game.player["pos"] = pot["pos"]+Vector2(10,0)
+	game.player["facing"] = -1
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(not emission.is_empty() and emission["emitter"].origin.x == int(game.player["pos"].x)
+		and emission["emitter"].mirrored and silhouette.scale.x == -1.0,
+		"the original poison emitter and mask follow movement and facing")
+	var sounds: Array = game.bus.events_of("combat.cue").map(func(event):return event.get("key",""))
+	check(sounds.has("CONDITION_POSION") and sounds.has("CONDITION_POSION_DROP") and sounds.has("CONDITION_POISON_POP"),
+		"first poison application starts the original cue and both group components")
+	game.step_game(18.0)
+	check(game.damage_taken == damage_before and game.bus.events_of("combat.damage_number").is_empty(),
+		"the first 18 milliseconds have zero cumulative poison damage")
+	game.step_game(1.0)
+	check(game.damage_taken == damage_before+1 and game.bus.events_of("combat.damage_number").is_empty(),
+		"the first HP decrement occurs at 19 ms and does not emit a damage number")
+	game.step_game(271.0)
+	check(actors.size() == 1 and gas.get("emission_finished",false),"the gas records PTL completion at 290 ms")
+	game.step_game(1.0)
+	check(actors.is_empty() and not game.view.audio._loop_voices.has(gas["id"])
+		and game.bus.events_of("combat.hit").size() == 2,"the following update removes the gas and never retries the resisted target")
+	game.step_game(209.0)
+	var numbers: Array = game.bus.events_of("combat.damage_number")
+	check(game.damage_taken == damage_before+27 and numbers.size() == 1 and numbers[0]["amount"] == 27,
+		"the first source poison damage number aggregates 27 at 500 ms")
+	check(game.view.numbers.any(func(number):return number["style"] == "damage_crit" and number["value"] == 27),
+		"local poison damage uses the original 54–63 digit set")
+	game.step_game(6500.0)
+	check(game.damage_taken == damage_before+386 and not game.numeric_player.effects.active.has("poison"),
+		"ordinary dungeon poison applies the full source cumulative damage and ends at 7000 ms")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view._poison_emitters.is_empty() and not silhouette.visible,"poison expiry removes the emitter and actor overlay")
+	var effects = game.numeric_player.effects
+	effects.add_source_poison(386,7000)
+	effects.step(1000.0)
+	effects.add_source_poison(386,7000)
+	var overlap: Array = effects.step(500.0)
+	check(overlap.size() == 2 and overlap[0]["damage"] == 54 and overlap[1]["damage"] == 54
+		and effects.active["poison"]["stacks"] == 2 and effects.active["poison"]["remaining_ms"] == 6500.0,
+		"two independent applications preserve older HP age and restart only the shared damage-number window")
+	effects.remove("poison")
+
+func check_orange_fairy_run() -> void:
+	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))
+	var node := 7
+	var item: Dictionary = export["dungeon"]["rooms"]["map/outerwall/b3003.map"]["objects"][node]
+	var number := 0
+	for candidate in range(1,30000):
+		var run_id := "run_%d"%candidate
+		if NativeJarTraps.prepare(item,hash("%s:outerwall:5:trap:%d"%[run_id,node])).get("id") != 2410:continue
+		var rolls := DetRng.new(hash(run_id))
+		var entry := rolls.range_int(0,1)
+		var boss := rolls.range_int(0,1)
+		if entry == 0 and boss == 1:
+			number = candidate
+			break
+	check(number > 0,"an ordinary adventure selects the rare original orange fairy")
+	if number == 0:return
+	events.clear()
+	var started := session.start_room(start_spec(0,1,0,number))
+	check(started,"the orange fairy fixture starts a real selected boss route")
+	if not started:return
+	for side in ["right","down","right","right","right","up","right"]:
+		clear_all()
+		if not hop(side):return
+	present_room()
+	var pots: Array = game.props.filter(func(prop):return prop["node"] == node)
+	check(game.route_boss_room() and game.native_room["source_map_id"] == 3024 and pots.size() == 1
+		and pots[0].get("jar_trap",{}).get("id") == 2410,"the actual boss MAP contains the rare orange jar")
+	if pots.size() != 1:return
+	for enemy: Dictionary in game.monsters:enemy["ai"] = false
+	var pot: Dictionary = pots[0]
+	var atk: Dictionary = game.move_def("normalwave")["hits"][0]["atk"]
+	prop_melee(pot["damage_boxes"][1].get_center(),atk,1000)
+	var visuals: Array = game.native_jar_traps.view_objects(game)
+	var actors: Array = game.native_jar_traps.actors
+	check(pot["broken"] and visuals.map(func(layer):return layer["effect"]) == ["native_jar_invinsiblefairy","native_jar_invinsiblefairyef"],
+		"orange fairy uses the original body and single attached light")
+	if actors.size() != 1:return
+	var fairy: Dictionary = actors[0]
+	game.player["pos"] = pot["pos"]
+	game.player["invuln_ms"] = 0.0
+	game.bus.clear_history()
+	game.step_game(0.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var cues: Array = game.bus.events_of("combat.cue")
+	check(game.native_jar_traps.player_protected and game.native_jar_traps.actors.is_empty()
+		and is_equal_approx(game.view.player_actor.tint.a,100.0/255.0)
+		and cues.any(func(event):return event.get("key") == "TINGKERBELL_HP_ABSORB")
+		and cues.any(func(event):return event.get("key") == "native_jar_invinsiblefairydestroy"),
+		"contact activates the separate source flag, opacity, absorb sound and original disappearance")
+	var before: int = game.damage_taken
+	var source: Vector2 = pot["pos"]+Vector2(-10,0)
+	game.damage_player(30,source)
+	check(game.damage_taken == before and game.player["state"] != "hurt","fairy protection rejects an ordinary direct hit")
+	game.numeric_player.effects.add_source_poison(7,1000)
+	game.step_game(1000.0)
+	game.native_jar_traps.consume_fairy(game,fairy)
+	game.step_game(13999.0)
+	check(game.damage_taken == before+7 and game.native_jar_traps.player_protected,
+		"an existing HP-over-time entry continues and protection still holds at 14999 ms")
+	game.step_game(1.0)
+	game.damage_player(30,source)
+	check(game.damage_taken == before+37 and not game.native_jar_traps.player_protected,
+		"the 15000 ms expiry restores incoming hits")
+	game.native_jar_traps.consume_fairy(game,fairy)
+	game.step_game(1000.0)
+	check(not game.native_jar_traps.player_protected and game.native_jar_traps.protection_deadlines.size() == 1,
+		"an earlier overlapping expiry still clears a subsequently applied fairy flag")
 
 func prepare_pot_fixture() -> void:
 	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))

@@ -136,6 +136,12 @@ NATIVE_JAR_TRAP_WARNING = 'common/commoneffect/animation/trapexclamation.ani'
 NATIVE_JAR_TRAP_RATE = 'etc/difficultpenalty.etc'
 NATIVE_JAR_TRAP_COMMON = 'passiveobject/common/'
 NATIVE_JAR_TRAP_FAIRY = OUTERWALL_BREAKABLE_ROOT + 'fairy/'
+NATIVE_JAR_GAS_DUNGEON = 'dungeon/act3/outerwall.dgn'
+NATIVE_JAR_GAS_STATUS_TABLE = 'etc/activestatustable_ex.etc'
+NATIVE_JAR_GAS_SHA = {
+    NATIVE_JAR_GAS_DUNGEON: '4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8',
+    NATIVE_JAR_GAS_STATUS_TABLE: '8c94c682a3e2e39835816a1af27b8ffa66d50d161e15aee50d07d0604776a599',
+}
 NATIVE_JAR_TRAP_OBJECTS = {
     NATIVE_JAR_TRAP_COMMON + 'fireexplosion.obj': ((40002,), 'fire'),
     NATIVE_JAR_TRAP_COMMON + 'cloudkill.obj': ((48003,), 'poison'),
@@ -179,6 +185,12 @@ NATIVE_JAR_TRAP_SHA = {
     }.items()},
 }
 NATIVE_ZEALOT_SOURCE_SHA = '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'
+NATIVE_POISON_PARTICLE = 'common/activestatus/particle/poisonparticle.ptl'
+NATIVE_POISON_VISUAL_SHA = {
+    NATIVE_POISON_PARTICLE: '27bf1336ab1d9d99fc03edbc9550d660ef7717c552c68afd711f750b9382cd0e',
+    'common/activestatus/animation/poisonparticle1.ani': '672214f7a7f39d9d489c27b4928f5f394b8c52987a3e49ec5eb8c078e00fffe5',
+    'common/activestatus/animation/poisonparticle2.ani': '6f7a6de95ad42aa0540bc0c9a61b3db7bcedb88345ebe0bea814b4f5817661ec',
+}
 NATIVE_RAXY_SOURCE = {
     'monster/zealot/raxy-a.mob': '5a6e4599e577eff2668d7cbe14faefe7a577dff0f89b45fb9d1f3f5beb39e7b7',
     'monster/zealot/raxy-aani/suicide.ani': 'a8e439f2004b1228e927179931e6d2d332d87c8c73b7a0ec49259bf0731e16b0',
@@ -952,6 +964,26 @@ def compile_native_outerwall_breakables(passive_index: dict, add) -> None:
         }
 
 
+def native_jar_gas_poison(lib: Library, attack: dict) -> dict:
+    fields = {}
+    for path, digest in NATIVE_JAR_GAS_SHA.items():
+        script = lib.script(path)
+        if not script or script['sha256'] != digest:
+            raise ValueError('Original jar poison source changed: ' + path)
+        fields[path] = {row['tag']: row['values'] for row in script['fields']}
+    custom = 6  # The DGN21 trap MAP rows pass this value to OBJ48003.
+    basis_level, = fields[NATIVE_JAR_GAS_DUNGEON]['[basis level]']
+    status = fields[NATIVE_JAR_GAS_STATUS_TABLE]
+    max_level, = status['[active status max level]']
+    low, high = status['[active status etc parameters]'][16:18]
+    poison, = (row for row in attack['active_status'] if row['value'] == '[poison]')
+    return {
+        'custom': custom, 'chance_percent': poison['args'][0], 'basis_level': basis_level,
+        'duration_ms': status['[active status duration]'][2] * 1000,
+        'total_damage': int(low + (high - low) * (custom - 1) / (max_level - 1)),
+    }
+
+
 def compile_native_jar_traps(lib: Library, passive_index: dict, add) -> None:
     def require(path: str, origin: str) -> dict:
         row = add(path, path.rsplit('.', 1)[1], origin)
@@ -1017,6 +1049,33 @@ def compile_native_jar_traps(lib: Library, passive_index: dict, add) -> None:
                               'invincibility_fairy': 'TINGKERBELL_HP_ABSORB'}.get(kind, ''),
             'extra_animations': extras, 'destroy_animations': destroy, 'source_hashes': hashes,
         }
+        if kind == 'poison':
+            hashes.update(NATIVE_JAR_GAS_SHA)
+            obj['native_trap']['poison'] = native_jar_gas_poison(lib, attack_record['decoded'])
+
+
+def compile_native_poison_visual(add) -> None:
+    for path, digest in NATIVE_POISON_VISUAL_SHA.items():
+        row = add(path, path.rsplit('.', 1)[1], 'native poison status visual')
+        if not row or row['source']['sha256'] != digest:
+            raise ValueError('Original poison status visual source changed: ' + path)
+        if path == NATIVE_POISON_PARTICLE:
+            particle = row
+        elif not row['decoded']['timeline'] or any(frame['attack_boxes'] for frame in row['decoded']['timeline']):
+            raise ValueError('Invalid original poison status visual animation: ' + path)
+    expected = [{'path': path, 'parameter': -1} for path in NATIVE_POISON_VISUAL_SHA
+                if path != NATIVE_POISON_PARTICLE]
+    if (particle['unsupported'] or particle['decoded']['object_type'] != '[animation]'
+            or particle['decoded']['object_entries'] != expected):
+        raise ValueError('Unresolved original poison status particle dependencies')
+    particle['native_status_visual'] = {
+        'particle': NATIVE_POISON_PARTICLE, 'z_offset': 70,
+        'tint': {'argb': 0xFFFF00FF, 'period_ms': 700, 'alpha_amplitude': 25,
+                 'alpha_base_default': 50, 'alpha_base_age_type_2': 30},
+        'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA,
+                   'particle_dispatch': '0x8AE925..0x8AE965', 'tint_dispatch': '0x8B1C47..0x8B1CE7',
+                   'source_hashes': NATIVE_POISON_VISUAL_SHA},
+    }
 
 
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
@@ -1096,6 +1155,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     compile_native_outerwall_breakables(passive_objects, add)
     compile_native_jar_traps(lib, passive_objects, add)
+    compile_native_poison_visual(add)
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
         if not (p.startswith('monster/goblin/') or p in {

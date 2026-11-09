@@ -16,6 +16,7 @@ var flash := 0.0
 var tint := Color.WHITE
 var shadow_width := 18.0
 var _flash_material: ShaderMaterial
+var _status_overlay: Sprite2D
 var equipment_layers: Array=[]
 
 func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dictionary = {}) -> void:
@@ -75,6 +76,38 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 		var body_frame := int(sample().get("frame",-1))
 		for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color,body_frame)
 	queue_redraw()
+
+## The original status pass selects a constant RGB and retains the ANI texture alpha.
+func present_status_overlay(color: Color) -> void:
+	if color.a <= 0.0:
+		if is_instance_valid(_status_overlay):_status_overlay.hide()
+		return
+	var frame := sample()
+	var frame_bank: Dictionary = pose_banks.get(pose,bank)
+	var item: Dictionary = frame_bank["items"].get(str(int(frame.get("img_frame",0))),{})
+	if frame.is_empty() or item.is_empty():
+		if is_instance_valid(_status_overlay):_status_overlay.hide()
+		return
+	if not is_instance_valid(_status_overlay):
+		_status_overlay = Sprite2D.new()
+		_status_overlay.centered = false
+		_status_overlay.region_enabled = true
+		_status_overlay.material = ShaderMaterial.new()
+		_status_overlay.material.shader = _flash_shader
+		_status_overlay.material.set_shader_parameter("source_monochrome",true)
+		add_child(_status_overlay)
+	var rect: Array = item["rect"]
+	var offset: Array = item["offset"]
+	var pos: Array = frame.get("pos",[0,0])
+	_status_overlay.texture = pose_atlases.get(pose,atlas)
+	_status_overlay.region_rect = Rect2(rect[0],rect[1],rect[2],rect[3])
+	_status_overlay.offset = Vector2(offset[0]+pos[0],offset[1]+pos[1])
+	_status_overlay.position = Vector2(0,-roundf(height))
+	_status_overlay.rotation = float(frame.get("items",{}).get("8",0))*facing
+	_status_overlay.scale = Vector2(facing,1)
+	_status_overlay.self_modulate = Color(1,1,1,color.a)
+	_status_overlay.material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
+	_status_overlay.show()
 
 func _draw() -> void:
 	if atlas == null:return

@@ -81,6 +81,7 @@
   "dark_resist": 0,
   "status_resist": 0,
   "abnormal_resistance": 0,
+  "poison_resistance": 0,
   "physical_independent_attack": 0,
   "magical_independent_attack": 0,
   "carry_capacity": 50

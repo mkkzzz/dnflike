@@ -36,6 +36,7 @@ var effects: Array = []
 var particle_bursts = ParticleBursts.new()
 var _particle_banks: Dictionary = {}
 var _particle_emitters: Array[Dictionary] = []
+var _poison_emitters: Dictionary = {}
 var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
@@ -104,6 +105,7 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_load_revive_assets()
 	bus.subscribe("combat.cue", _on_cue)
 	bus.subscribe("combat.damage", _on_damage)
+	bus.subscribe("combat.damage_number", _on_damage)
 	bus.subscribe("combat.room_loaded", _on_room_loaded)
 	bus.subscribe("combat.entity_spawned", _on_entity_spawned)
 	bus.subscribe("combat.entity_removed", _on_entity_removed)
@@ -180,6 +182,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_player_pos = Vector2(p["pos"])
 	_player_z = float(p["z"])
 	_advance_native_emitters(sim_ms)
+	_advance_poison_emitters([p]+s["enemies"]+companions,sim_ms)
+	var poison_overlay := _poison_overlay(float(s.get("status_clock_ms",0.0)))
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
 			var source: Dictionary = p if fx.follow == 0 else companion_by_id.get(fx.follow,{})
@@ -212,7 +216,9 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		pickup_pose_frames -= 1
 	elif pickup_pose_frames > 0:
 		pickup_pose_frames = 0
-	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0)
+	var player_tint := Color(1,1,1,100.0/255.0) if p.get("jar_invincible",false) else Color.WHITE
+	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0,player_tint)
+	player_actor.present_status_overlay(poison_overlay if int(p.get("poison",0)) > 0 else Color.TRANSPARENT)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]+companions:
 		var actor = enemy_actors.get(e["id"])
@@ -221,6 +227,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		actor.z_index = int(Vector2(e["pos"]).y)
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
+		actor.present_status_overlay(poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
 	_present_objects(s.get("objects",[]))
 	for i in range(ghosts.size()-1,-1,-1):
@@ -365,6 +372,7 @@ func _on_room_loaded(event: Dictionary) -> void:
 		if is_instance_valid(fx):fx.queue_free()
 	effects.clear()
 	_particle_emitters.clear()
+	_poison_emitters.clear()
 	for v in object_views.values():
 		if is_instance_valid(v):v.queue_free()
 	object_views.clear()
@@ -449,6 +457,38 @@ func _advance_native_emitters(sim_ms: float) -> void:
 		remaining.append(entry)
 	_particle_emitters = remaining
 
+func _advance_poison_emitters(actors: Array, sim_ms: float) -> void:
+	var poison: Dictionary = _combat.get("native_status_visuals",{}).get("poison",{})
+	if poison.is_empty():return
+	var path: String = poison["particle"]
+	var live := {}
+	for actor: Dictionary in actors:
+		var revision := int(actor.get("poison",0))
+		if revision == 0:continue
+		var id: int = actor["id"]
+		var point: Vector2 = actor["pos"]
+		var origin := Vector3i(int(point.x),int(point.y),int(actor["z"])+int(poison["z_offset"]))
+		var mirrored := int(actor["facing"]) < 0
+		var entry: Dictionary = _poison_emitters.get(id,{})
+		if int(entry.get("revision",0)) != revision:
+			var definition: Dictionary = _combat["particles"][path]["decoded"]
+			entry = {"emitter":particle_bursts.create_emitter(definition,origin,mirrored),"revision":revision,"elapsed_ms":0.0}
+		else:
+			entry["elapsed_ms"] = float(entry["elapsed_ms"])+sim_ms
+			entry["emitter"].origin = origin
+			entry["emitter"].mirrored = mirrored
+		var result: Dictionary = particle_bursts.emit_at(entry["emitter"],int(entry["elapsed_ms"]))
+		if _append_native_particles(path,1.0,result) and not result.finished:live[id] = entry
+	_poison_emitters = live
+
+func _poison_overlay(clock_ms: float) -> Color:
+	if _poison_emitters.is_empty():return Color.TRANSPARENT
+	var tint: Dictionary = _combat["native_status_visuals"]["poison"]["tint"]
+	var rgb := int(tint["argb"])
+	var phase := fposmod(clock_ms,float(tint["period_ms"]))/float(tint["period_ms"])*TAU
+	var alpha := int(float(tint["alpha_base_default"])+float(tint["alpha_amplitude"])*sin(phase))
+	return Color8((rgb>>16)&255,(rgb>>8)&255,rgb&255,alpha)
+
 func _append_native_particles(path: String, scale_value: float, result: Dictionary) -> bool:
 	if not result.ok:
 		push_error(str(result.problems))
@@ -500,8 +540,11 @@ func _spawn_ghost(event: Dictionary) -> void:
 ## Bitmap damage digits (sprite/common/etc/combo.img): monster damage white, damage taken red.
 ## Positions are canvas coordinates; the HUD subtracts the camera.
 func _on_damage(event: Dictionary) -> void:
+	if not event.get("show_number",true):return
 	var point: Vector3 = event["point"]
-	var style := "damage_taken" if String(event.get("victim","monster")) == "player" else "damage_crit" if event.get("critical",false) else "damage"
+	var style := "damage_crit" if event.get("critical",false) else "damage"
+	if String(event.get("victim","monster")) == "player":
+		style = "damage_crit" if event.get("id","") == "poison" else "damage_taken"
 	numbers.append({"pos":Vector2(point.x,point.y+Frame.MAP_DY)-Vector2(0,65+point.z),"value":int(event["amount"]),"ms":0.0,"style":style})
 
 ## map 坐标（角色/敌人/物件/特效）→ 画布坐标。

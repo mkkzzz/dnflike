@@ -253,6 +253,7 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	if actor == null:actor = ActorNumbers.new()
 	var stats := Numbers.monster(monster_base,int(enemy.get("source_level",numeric_monster_level)),bool(enemy["chief"]),numeric_difficulty)
 	stats["blind_resistance"] = int(m["blind_resistance"])
+	stats["poison_resistance"] = int(m["poison_resistance"])
 	actor.configure({"numbers":stats})
 	enemy["numeric"] = actor
 	enemy["max_hp"] = float(actor.values["hp_max"])
@@ -271,11 +272,21 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
 		if int(body["id"])==PLAYER_ID and god_mode:continue
-		var amount := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
-		body["hp"] = maxf(0,float(body["hp"])-int(amount["amount"]))
-		bus.emit("combat.damage",{"target":body["id"],"amount":amount["amount"],"critical":false,"category":event["damage_type"],"victim":victim_kind(body),"reaction":"none","point":Vector3(body["pos"].x,body["pos"].y,float(body["z"]))})
+		var point := Vector3(body["pos"].x,body["pos"].y,float(body["z"]))
+		if event["type"] == "damage_number":
+			bus.emit("combat.damage_number",{"target":body["id"],"amount":event["damage"],"id":event["id"],
+				"victim":victim_kind(body),"point":point})
+			continue
+		var direct: bool = event["type"] == "direct_damage"
+		var amount := int(event["damage"])
+		if not direct:
+			var resolved := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
+			amount = int(resolved["amount"])
+		body["hp"] = maxf(0,float(body["hp"])-amount)
+		bus.emit("combat.damage",{"target":body["id"],"amount":amount,"critical":false,"category":event["damage_type"],
+			"victim":victim_kind(body),"reaction":"none","point":point,"show_number":not direct})
 		if body["id"]==PLAYER_ID:
-			damage_taken += int(amount["amount"])
+			damage_taken += amount
 			if float(body["hp"])<=0:
 				body["state"] = "dead"
 				finished = true
@@ -336,7 +347,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	last_defeat_id = 0
 	paused = false
 	elapsed_ms = 0
-	native_jar_traps.clock_ms = 0.0
+	native_jar_traps.reset_clock()
 	damage_taken = 0
 	hit_count = 0
 	combo_count = 0
@@ -670,7 +681,7 @@ func end_action() -> void:
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
-	if native_maze != null:native_jar_traps.clock_ms += ms
+	if native_maze != null:native_jar_traps.advance_clock(self,ms)
 	preload("res://combat/item_restoration.gd").step(self,ms)
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
@@ -1257,11 +1268,13 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var by_companion := attacker.has("companion_id")
 	var victim := victim_kind(target)
 	if victim != "monster" and (by_player or by_companion):return
+	if victim == "player" and native_jar_traps.player_protected:return
 	var hit_skill_id := String(hit.get("skill_id",player["action"]))
 	var percent := float(hit["percent"])*(1.0 if by_companion else skill_damage_multiplier(hit_skill_id))
-	var amount := Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
-	var resolved := {"critical":false,"category":"physical","missed":false}
-	if numeric_player != null:
+	var contact_only := bool(hit.get("contact_only",false))
+	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
+	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
+	if numeric_player != null and not contact_only:
 		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
 		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
 		var context := hit.duplicate(true)
@@ -1288,13 +1301,13 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		reaction = hurt_player(amount,attacker,atk,facing)
 		if reaction == "blocked":return
 		amount = roundi(before_hp-float(player["hp"]))
-		if numeric_player != null:last_damage["trace"]["actual_amount"] = amount
+		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
 		target["hp"] = maxf(0,float(target["hp"])-amount)
 		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"]),float(hit.get("lift",-1)))
 		target["clock"] = 0.0
 		target["flash_ms"] = 65.0
-		if victim == "monster" and not by_companion:
+		if victim == "monster" and by_player:
 			combo_count += 1
 			combo_ms = float(rules["combo_window_ms"])
 			hit_count += 1
@@ -1310,7 +1323,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
-		"victim":victim,"reaction":reaction,
+		"victim":victim,"reaction":reaction,"show_number":not contact_only,
 		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))})
 	hit_cues(atk,point,facing,by_player)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0:
@@ -1681,7 +1694,7 @@ func launch_starfish_bite(enemy: Dictionary, bite: Dictionary, speed: float, hei
 func try_starfish_contact(enemy: Dictionary, move: Dictionary, hit: Dictionary, from: float, to: float) -> void:
 	if enemy["hits"].has(PLAYER_ID) or player.has("starfish_holder") or float(player["hp"]) <= 0.0:
 		return
-	if god_mode or float(player["invuln_ms"]) > 0.0:
+	if god_mode or target_invulnerable(player):
 		return
 	if numeric_player != null and (numeric_player.effects.active.has("freeze") or numeric_player.effects.active.has("stone")):
 		return
@@ -1867,8 +1880,11 @@ func spawn_attack_contact(attacker: Dictionary, target: Dictionary, contact: Dic
 	spawn_object(contact["hit"],"monster",Vector2(Vector2i(target["pos"])),0.0,facing,power,attacker)
 
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
+func target_invulnerable(target: Dictionary) -> bool:
+	return float(target.get("invuln_ms",0.0)) > 0.0 or (int(target["id"]) == PLAYER_ID and native_jar_traps.player_protected)
+
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
-	if god_mode or float(player["invuln_ms"])>0 or finished:return "blocked"
+	if god_mode or target_invulnerable(player) or finished:return "blocked"
 	var state := String(player["state"])
 	var was_action := state == "action"
 	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
@@ -2375,7 +2391,6 @@ func build_props(room: Dictionary) -> Array:
 			# Source routes only enable the exact payloads supported by the adapter.
 			if NativeBreakable.supports(item):
 				var trap := NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
-				if not trap.is_empty() and int(trap["id"]) not in NativeJarTraps.ENABLED:continue
 				var source: Dictionary = content.record(path)["native_breakable"]
 				var timeline: Array = table.timeline(source["motion_ani"])
 				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
@@ -3028,14 +3043,16 @@ func view_snapshot() -> Dictionary:
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"z":float(enemy["z"]),"facing":int(enemy["facing"]),
 			"ani":String(enemy["def"]["motions"].get(e_ani[0],e_ani[0])),"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
 			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"],
-			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind")})
+			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind"),
+			"poison":enemy["numeric"].effects.poison_visual() if is_alive and enemy.has("numeric") else 0})
 	var friendly: Array = []
 	for companion: Dictionary in companions:
 		var current := companion_ani(companion)
 		friendly.append({"id":companion["id"],"pos":Vector2(companion["pos"]),"z":float(companion["z"]),
 			"facing":int(companion["facing"]),"ani":String(current[0]),"clock":float(current[1]),"state":companion["state"],
 			"action_instance":int(companion.get("action_instance",-1)),"flash":float(companion["flash_ms"])>0,
-			"alive":float(companion["hp"])>0,"death_ms":float(companion["death_ms"])})
+			"alive":float(companion["hp"])>0,"death_ms":float(companion["death_ms"]),
+			"poison":companion["numeric"].effects.poison_visual() if float(companion["hp"])>0 else 0})
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
@@ -3060,10 +3077,12 @@ func view_snapshot() -> Dictionary:
 	if native_maze != null:
 		stage_info["resolved_placement"] = native_room["placement"]
 		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
-	return {"frame":_frame,"paused":paused,
-		"player":{"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
+	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
+		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
+			"jar_invincible":native_jar_traps.player_protected,
+			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":stage_info,

@@ -5,7 +5,8 @@ from pathlib import Path
 import unittest
 
 from build_dnf_particles import parse
-from compile_dnf_content import NATIVE_JAR_TRAP_SHA, decode_fields
+from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_SHA, NATIVE_POISON_VISUAL_SHA,
+                                 decode_fields)
 from dnf_particle_fields import decode_particle_fields
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -87,6 +88,45 @@ class ParticleFields(unittest.TestCase):
         gas = manifest['particles'][objects['48003']['particles'][0]]['decoded']
         self.assertEqual((gas['maximum_create_time'], gas['life_time']), (2000, 4000))
         self.assertEqual({p: manifest['sources'][p] for p in NATIVE_JAR_TRAP_SHA}, NATIVE_JAR_TRAP_SHA)
+        self.assertEqual(objects['48003']['poison'], {
+            'custom': 6, 'chance_percent': 40, 'duration_ms': 7000, 'total_damage': 386, 'basis_level': 30,
+        })
+        self.assertEqual({p: manifest['sources'][p] for p in NATIVE_JAR_GAS_SHA}, NATIVE_JAR_GAS_SHA)
+
+    def test_poison_status_emitter_keeps_its_own_assets_and_tint(self):
+        manifest = json.loads((ROOT/'game_dnf/assets_local/combat/manifest.json').read_text(encoding='utf8'))
+        visual = manifest['native_status_visuals']['poison']
+        particle = manifest['particles'][visual['particle']]
+        self.assertEqual(visual['z_offset'], 70)
+        self.assertEqual(visual['tint'], {
+            'argb': 0xFFFF00FF, 'period_ms': 700, 'alpha_amplitude': 25,
+            'alpha_base_default': 50, 'alpha_base_age_type_2': 30,
+        })
+        self.assertEqual({p: manifest['sources'][p] for p in NATIVE_POISON_VISUAL_SHA}, NATIVE_POISON_VISUAL_SHA)
+        self.assertEqual(particle['decoded'], self.pack['records'][visual['particle']]['decoded'])
+        self.assertEqual((particle['decoded']['creation_frequency'], particle['decoded']['life_time']), (8.0, 1600))
+        self.assertEqual(visual['apply_sound'], 'CONDITION_POSION')
+        self.assertEqual(visual['loop_sound'], 'G_POISON_LOOP')
+        self.assertEqual(visual['loop_items'], [
+            {'sound': 'CONDITION_POSION_DROP', 'start_delay_ms': 0, 'loop_delay_ms': 3000},
+            {'sound': 'CONDITION_POISON_POP', 'start_delay_ms': 0, 'loop_delay_ms': 1000},
+        ])
+        sounds = {
+            'CONDITION_POSION': ('c_poison.ogg', '28d7278038a35b4176deac86c513e5f8e41494fd2d9855008f7a943a46b0183d'),
+            'CONDITION_POSION_DROP': ('c_poison_drop.ogg', '48a1f75121003eadfa32ebf700283efdaaf6a6835c09721a4c431fd860b4ecf5'),
+            'CONDITION_POISON_POP': ('c_poison_pop.ogg', '710c1b559ef16e3939d09869f4f6e2b3bd9cdcfae0b984be3b65e39cd68e46c7'),
+        }
+        for key, (filename, digest) in sounds.items():
+            sound, = manifest['audio'][key]
+            self.assertEqual(sound['source'], 'sounds/effect/' + filename)
+            audio = ROOT/'game_dnf'/sound['file'].removeprefix('res://')
+            self.assertEqual(hashlib.sha256(audio.read_bytes()).hexdigest(), digest)
+        for item in particle['decoded']['object_entries']:
+            path = item['path']
+            bank = manifest['effects']['native_' + Path(path).stem]
+            self.assertEqual(bank['source'], path)
+            self.assertFalse(any(frame['attack_boxes'] for frame in self.pack['records'][path]['decoded']['timeline']))
+            self.assertTrue((ROOT/'game_dnf'/bank['atlas']['texture'].removeprefix('res://')).is_file())
 
     def test_original_ice_axes_are_independent_and_match_compiled_content(self):
         fixtures = [

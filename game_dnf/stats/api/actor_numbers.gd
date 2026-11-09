@@ -73,6 +73,14 @@ func apply_source_blind(source: Dictionary, roll: int) -> bool:
 	return effects.add("blind",{"name":"失明","duration_ms":duration,"status_level":level,
 		"vision_percent":vision,"stuck_percent":stuck})
 
+## 80DB70 skips the role level correction for an environmental source.
+func apply_environment_poison(source: Dictionary, roll: int) -> bool:
+	var resistance := int(float(values.get("poison_resistance",0))+float(values.get("abnormal_resistance",0)))
+	var percent := native_scalar(native_scalar(float((100-resistance)*int(source["chance_percent"])))/100.0)
+	if roll >= native_scalar(percent*100.0):return false
+	effects.add_source_poison(int(source["total_damage"]),int(source["duration_ms"]))
+	return true
+
 static func source_status_lands(chance: float, level_delta: int, resistance: int, roll: int) -> bool:
 	var base_percent := native_scalar(chance*100.0)
 	var probability_rate := native_level_rate(level_delta,STATUS_LEVEL_PROBABILITY_RATE)
