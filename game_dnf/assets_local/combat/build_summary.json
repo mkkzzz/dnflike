@@ -139,7 +139,7 @@
   "passiveobject/character/swordman/blastbloodpresuborigin.obj",
   "passiveobject/character/swordman/givebloodsub.obj"
  ],
- "effects": 360,
+ "effects": 369,
  "digits": 61,
  "audio_keys": 270,
  "unresolved": 32,
@@ -308,5 +308,5 @@
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
   }
  ],
- "particle_templates": 14
+ "particle_templates": 17
 }

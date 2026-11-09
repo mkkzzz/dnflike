@@ -1198,6 +1198,11 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
 
 
 OUTRAGE_OBJECT_ANIM = OBJ_ROOT + "animation/outragebreak/"
+OUTRAGE_PARTICLES = {
+    "stone": "character/swordman/effect/particle/outragebreak_stone_part.ptl",
+    "light": OBJ_ROOT + "particle/outragebreak_light_part.ptl",
+    "drops": OBJ_ROOT + "particle/outragebreak_drops.ptl",
+}
 OUTRAGE_FLOOR_FX = ("floor_over", "floor_blood", "floor_impact_ldodge")
 OUTRAGE_MAGMA_FX = ("bloodexp1_none", "bloodexp1_ldodge", "bloodexp2_none",
                    "bloodexp2_ldodge", "bloodexp_glow")
@@ -1218,7 +1223,7 @@ def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, obj
                         slots: list[str], fixed_attack_base: dict, timing: dict) -> dict:
     slash = records[CHR_ANI + "outragebreakslash.ani"]["decoded"]["timeline"]
     impact = slash[5]["start_ms"]
-    layers = [add_fx(fx, effects, path) for path in slots[:6]]
+    layers = [add_fx(fx, effects, path) for path in slots[:7]]
     floor = add_object(objects, OBJ_ROOT + "outragebreakfloor.obj")
     # This object is collision-only. Its visible effects are separately spawned
     # by A723A0 and do not follow its damage ANI.
@@ -1232,17 +1237,21 @@ def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, obj
     floor_motions = records[floor]["decoded"]["etc_motions"]
     eruption_at = records[floor_motions[1]]["decoded"]["timeline"][4]["start_ms"]
     controller = {"kind": "outrage_floor", "layers": floor_fx, "eruption_at_ms": eruption_at,
+                  "light_particle": OUTRAGE_PARTICLES["light"], "drops_particle": OUTRAGE_PARTICLES["drops"],
                   "child": {"object": magma, "percent": 0, "fixed_col": 2,
                             "native_controller": {"kind": "outrage_magma", "layers": magma_fx, **timing}}}
     ready_fx = [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
                 for slot, depth in ((0, 2), (1, 1))]
     slash_fx = [{"key": layers[slot], "at": at, "action_clock": True, "depth_offset": depth}
                 for slot, depth, at in ((2, 2, 0), (3, 1, 0), (4, 4, impact), (5, 3, impact))]
+    # CB4654 installs the stone composite in the caster's draw slot 6.
+    slash_fx.append({"key": layers[6], "at": impact, "action_clock": True, "depth_offset": 6,
+                     "offset_x": 121, "offset_y": 10})
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "outrage_break",
             "requires_effect": "frenzy", "hp_cost_row": 3, "material_cost": fixed_cube_cost(skill, records),
             "fixed_attack_base": fixed_attack_base, "impact_frame": 5,
-            "fidelity_pending": ["hp_write_timing", "impact_stone_particles", "eruption_particles",
-                                 "special_target_dispatch"],
+            "stone_particle": OUTRAGE_PARTICLES["stone"],
+            "fidelity_pending": ["hp_write_timing", "screen_shake", "special_target_dispatch"],
             "stages": [{"ani": "outragebreakready", "fx": ready_fx, "voice": "OUTRAGE_READY"},
                        {"ani": "outragebreakslash", "fx": slash_fx,
                         "sounds": [{"at": impact, "key": key} for key in ("OUTRAGE_SWING", "CCRASH_CRASH")],

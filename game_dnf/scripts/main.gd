@@ -1445,6 +1445,13 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> v
 	# CB44A7..CB4557 samples absolute X and Z only before frame five.
 	if elapsed >= impact:
 		player["z"] = 0.0
+		if phase.erase("outrage_stone_pending"):
+			# CB4920..CB49BC first samples the emitter on the update after
+			# the impact latch. Its origin follows actor X +/- 150 and YZ.
+			var facing := int(player["facing"])
+			bus.emit("combat.cue",{"kind":"native_particle","path":move["stone_particle"],
+				"point":Vector2(player["pos"])+Vector2(150*facing,0),"height":0.0,"mirrored":facing<0,
+				"action_instance":action_seq,"follow_x":150,"action_clock":clock})
 		return
 	var travel: Vector2 = move["outrage_motion"]
 	var x := int(phase["outrage_origin_x"])+int(player["facing"])*int(travel.x*elapsed/impact)
@@ -2256,6 +2263,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					hit = bloody_rave_slash(hit)
 				elif hit.get("skill_id","") == "outragebreak":
 					hit = prepare_outrage_damage(hit)
+					player["native_phase"]["outrage_stone_pending"] = true
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -3485,9 +3493,16 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
-		if kind == "outrage_floor" and old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
-			play_sound("OUTRAGE_CRASH")
-			spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
+		if kind == "outrage_floor":
+			if old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
+				play_sound("OUTRAGE_CRASH")
+				spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
+				emit_outrage_floor_particle(o,controller["light_particle"])
+			if t >= Kernel.Timeline.duration(tl):
+				# A72E35 waits for the main ANI end before sampling the drops.
+				emit_outrage_floor_particle(o,controller["drops_particle"])
+				objects.remove_at(i)
+				continue
 		if kind == "outrage_magma":
 			if t*float(controller["rate"]) >= Kernel.Timeline.duration(tl):
 				objects.remove_at(i)
@@ -3587,6 +3602,10 @@ func step_outrage_magma(magma: Dictionary, controller: Dictionary) -> void:
 		magma["hits"].clear()
 		magma["hit_resets_left"] -= 1
 		magma["next_hit_reset"] += float(controller["reset_ms"])
+
+func emit_outrage_floor_particle(floor: Dictionary, path: String) -> void:
+	bus.emit("combat.cue",{"kind":"native_particle","path":path,"point":floor["pos"],"height":floor["z"],
+		"mirrored":int(floor["facing"])<0})
 
 func ghost_field_pulse(field: Dictionary) -> bool:
 	var age := float(field["clock"])
@@ -4769,6 +4788,7 @@ func view_snapshot() -> Dictionary:
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
+			"action_elapsed_ms":float(player["clock"]),
 			"fx_clock":player.get("draw_charge",{}).get("fx_clock",ani[1]),
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,

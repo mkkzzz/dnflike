@@ -35,7 +35,7 @@ from dnf_asset_store import ROOT
 from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from build_dnf_skill_runtime import WEAPON_COMBO_LIGHT_DEPTHS
+from build_dnf_skill_runtime import OUTRAGE_PARTICLES, WEAPON_COMBO_LIGHT_DEPTHS
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
@@ -52,6 +52,32 @@ NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
     for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar')
 ]
+OUTRAGE_PARTICLE_SOURCES = {
+    OUTRAGE_PARTICLES['stone']: {
+        OUTRAGE_PARTICLES['stone']: '917e7ec061ee2a42b90fdf938c5f71823612bfcce306d52d79d8f4b147bf44b3',
+        **{f'character/swordman/effect/animation/outragebreak/particle/outragebreak_stone_part_{index}.ani': digest
+           for index, digest in enumerate((
+               '66e16f3b56f6b46a21f46b004af55f17862f0392b24b9a830182808251c51058',
+               '8db95ac72405833b2af710f2d2507ef9d7f28dfd0d8cc6e72350ade6f22fa462',
+               '21590ecdbdbbd9f8015f5a6e12634b68ed4d9be262cd566e66fc1a714a403d82',
+               'a8be9edb399e99dea71174f9e3275d8fc2791715bfdd5b2af40d040239b69094',
+           ), 1)},
+    },
+    OUTRAGE_PARTICLES['light']: {
+        OUTRAGE_PARTICLES['light']: 'dcbadf6472fd660aafc5bce25cc878448f4ee717954364b6e1208cbeaef0ca79',
+        'passiveobject/character/swordman/animation/outragebreak/particle/outragebreak_light_part_1.ani':
+            'c6b749ecafd6c02e13b13ff7e0fcd14b34f90c761289bdcc8c2241dabf4a56c9',
+        'passiveobject/character/swordman/animation/outragebreak/particle/outragebreak_light_part_2.ani':
+            '1e579bb8b0eb7c5530bad75c52351ad1e7bef5850a0e81f5b46ea35e16a17fcc',
+    },
+    OUTRAGE_PARTICLES['drops']: {
+        OUTRAGE_PARTICLES['drops']: '5f5c75338a5d066e277c213f7d3720ead083056a9d4a026b160775a12c6e69a6',
+        'passiveobject/character/swordman/animation/outragebreak/particle/outragebreak_drops_1.ani':
+            '85e7c406d64363338bcafacca66b0ac60a99179bc8248c2b53e6264008befe36',
+        'passiveobject/character/swordman/animation/outragebreak/particle/outragebreak_drops_2.ani':
+            '482fd68f3c68ee7047feec81345ccdb20abe25c4aaffa8d3223ff02a0a2cfdeb',
+    },
+}
 ARMOR_DAMAGE_PARTICLE = 'common/commoneffect/particle/superarmor_damage_particle.ptl'
 ARMOR_DAMAGE_SOURCES = {
     ARMOR_DAMAGE_PARTICLE: 'e33073aedab87783f38e3551f08a22a218be1efbcc82f1b8c849e260ce0aa309',
@@ -122,6 +148,7 @@ def native_particle_definitions(src, extra_pins=None):
             src.sources[source] = digest
         pinned[path] = hashes
     pinned.update(extra_pins or {})
+    pinned.update(OUTRAGE_PARTICLE_SOURCES)
     pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
     pinned[PATTACK_PARTICLE] = PATTACK_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:

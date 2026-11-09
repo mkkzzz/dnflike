@@ -2245,10 +2245,32 @@ func check_outrage_break_eruption() -> void:
 	if game.objects.size()!=1:return
 	var floor: Dictionary = game.objects[0]
 	var point: Vector2 = floor["pos"]
-	var layers: Array = floor["hit"]["native_controller"]["layers"]
+	var controller: Dictionary = floor["hit"]["native_controller"]
+	var layers: Array = controller["layers"]
+	var light := String(controller["light_particle"])
+	var drops := String(controller["drops_particle"])
+	var stone := String(game.move_def("outragebreak")["stone_particle"])
 	check(game.view.object_views.has("%s:floor:0"%floor["id"])
 		and game.view.object_views.has("%s:floor:1"%floor["id"]) and cues(layers[2]).size()==1,
 		"the floor renders both synchronized ETC motions and a separate impact clip")
+	var stone_layer: Array = game.view.effects.filter(func(fx):return String(fx.cue_key).contains("sword_slash_stone"))
+	check(stone_layer.size()==1 and stone_layer[0].follow_offset==Vector2(-121,10) and native_particle_cues(stone).is_empty(),
+		"the mirrored slot-six composite renders at impact before the stone emitter is sampled")
+	step(1)
+	var stone_cues := native_particle_cues(stone)
+	check(stone_cues.size()==1 and stone_cues[0]["point"]==point and stone_cues[0]["mirrored"]
+		and game.view._particle_emitters.size()==1,
+		"first post-impact update starts the actor stone emitter at the original anchor")
+	if game.view._particle_emitters.is_empty():return
+	game.player["pos"] += Vector2(4,0)
+	game.step_player(30,Vector2.ZERO)
+	game.view.present(game.view_snapshot(),30.0,30.0)
+	var emitter: Dictionary = game.view._particle_emitters[0]
+	check(emitter.emitter.origin==Vector3i(int(point.x)+4,int(point.y),0) and emitter.elapsed_ms==30.0,
+		"stone sampling follows the caster and advances on the unscaled actor clock")
+	step(1349)
+	check(game.view._particle_emitters.is_empty() and game.view.effects.any(func(fx):return fx.get_meta("source_ptl","")==stone),
+		"recovery stops stone emission while already released particles survive")
 	var target: Dictionary = game.spawn_enemy(point+Vector2(0,45))
 	game.numeric_player.remove_effect("thirst")
 	game.apply_effect({"kind":"effect","id":"bleed","target":target["id"]})
@@ -2258,13 +2280,16 @@ func check_outrage_break_eruption() -> void:
 		"the shockwave uses packed Thirst column 5 when the target is bleeding at contact")
 	move_target(target,point+Vector2(0,45),110.0)
 	game.step_objects(1039)
-	check(game.objects.size()==1 and cues("OUTRAGE_CRASH").is_empty(),
+	check(game.objects.size()==1 and cues("OUTRAGE_CRASH").is_empty() and native_particle_cues(light).is_empty(),
 		"the ground-blood clip still holds frame three at 1039 ms")
 	game.step_objects(1)
 	check(game.objects.size()==2 and cues("OUTRAGE_CRASH").size()==1,
 		"ground-blood frame four creates one magma and plays the original eruption sound")
 	if game.objects.size()!=2:return
 	var magma: Dictionary = game.objects[1]
+	var light_cues := native_particle_cues(light)
+	check(light_cues.size()==1 and light_cues[0]["point"]==point and light_cues[0]["mirrored"]
+		and native_particle_cues(drops).is_empty(),"eruption starts only the original rising sparks")
 	var hit: Dictionary = magma["hit"]
 	var glow: String = hit["native_controller"]["layers"][4]
 	check(magma["pos"]==point and magma["clock"]==0.0 and hit["fixed_amount"]==4094.0
@@ -2296,6 +2321,38 @@ func check_outrage_break_eruption() -> void:
 	game.step_objects(1)
 	check(not game.objects.has(magma) and game.objects.has(floor) and cues("OUTRAGE_CRASH").size()==1,
 		"the 760 ms damage object retires separately from its parent")
+	game.step_objects(1499)
+	check(game.objects.has(floor) and native_particle_cues(drops).is_empty(),
+		"the end-of-floor emitter stays dormant at 3299 ms")
+	game.step_objects(1)
+	var drop_cues := native_particle_cues(drops)
+	check(not game.objects.has(floor) and drop_cues.size()==1 and drop_cues[0]["point"]==point,
+		"at 3300 ms the visible ground retires and starts the original ember emitter")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	game.view.present(game.view_snapshot(),499.0,499.0)
+	check(game.view._particle_emitters.is_empty() and game.view.effects.any(func(fx):return fx.get_meta("source_ptl","")==drops),
+		"embers use their own 499 ms emission window and live beyond it")
+
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.3
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(0)
+	step(430)
+	step(461)
+	check(game.objects.is_empty() and native_particle_cues(stone).is_empty(),
+		"fractional attack speed cannot start the emitter at the rounded travel end")
+	step(1)
+	check(game.objects.size()==1 and native_particle_cues(stone).is_empty(),
+		"the actual impact update arms the stone emitter without sampling it")
+	step(1)
+	check(native_particle_cues(stone).size()==1,
+		"fractional attack speed still samples stones on the update after impact")
+
+func native_particle_cues(path: String) -> Array:
+	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()

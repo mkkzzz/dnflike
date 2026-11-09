@@ -182,7 +182,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	for companion: Dictionary in companions:companion_by_id[companion["id"]] = companion
 	_player_pos = Vector2(p["pos"])
 	_player_z = float(p["z"])
-	_advance_native_emitters(sim_ms)
+	_advance_native_emitters(sim_ms,p)
 	_advance_poison_emitters([p]+s["enemies"]+companions,sim_ms)
 	_advance_overdrive_emitter(p)
 	var poison_overlay := _poison_overlay(float(s.get("status_clock_ms",0.0)))
@@ -505,16 +505,33 @@ func _spawn_native_particle(event: Dictionary) -> void:
 	var emitter: RefCounted = particle_bursts.create_emitter(definition,origin,mirrored)
 	var result: Dictionary = particle_bursts.emit_at(emitter,0)
 	if _append_native_particles(path,scale_value,result) and not result.finished:
-		_particle_emitters.append({"emitter":emitter,"path":path,"scale":scale_value,"elapsed_ms":0.0,"birth_pending":true})
+		var entry := {"emitter":emitter,"path":path,"scale":scale_value,"elapsed_ms":0.0,"birth_pending":true}
+		if event.has("action_instance"):
+			entry["action_instance"] = int(event["action_instance"])
+			entry["start_clock"] = float(event["action_clock"])
+			entry["follow_x"] = int(event["follow_x"])
+		_particle_emitters.append(entry)
 
-func _advance_native_emitters(sim_ms: float) -> void:
+func _advance_native_emitters(sim_ms: float, actor: Dictionary) -> void:
 	if _particle_emitters.is_empty():return
 	var remaining: Array[Dictionary] = []
 	for entry in _particle_emitters:
+		var follows_action := entry.has("action_instance")
+		if follows_action and (actor["state"] != "action" or int(actor["action_instance"]) != int(entry["action_instance"])):
+			continue
 		if entry.birth_pending:
 			entry.birth_pending = false
 		elif sim_ms > 0.0:
-			entry.elapsed_ms += sim_ms
+			var age := float(entry.elapsed_ms)+sim_ms
+			if follows_action:
+				age = float(actor["action_elapsed_ms"])-float(entry["start_clock"])
+				if age <= float(entry.elapsed_ms):
+					remaining.append(entry)
+					continue
+				var point: Vector2 = actor["pos"]
+				var facing := int(actor["facing"])
+				entry.emitter.origin = Vector3i(int(point.x)+int(entry.follow_x)*facing,int(point.y),int(actor["z"]))
+			entry.elapsed_ms = age
 			var result: Dictionary = particle_bursts.emit_at(entry.emitter,int(entry.elapsed_ms))
 			if not _append_native_particles(entry.path,entry.scale,result) or result.finished:
 				continue

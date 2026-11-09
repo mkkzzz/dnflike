@@ -436,6 +436,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["normal_cancel_job"] = "berserker"
 		move["impact_frame"] = int(spec["impact_frame"])
 		move["outrage_motion"] = Vector2(float(skill["static"][0]),float(skill["static"][1]))
+		move["stone_particle"] = String(spec["stone_particle"])
 		move["hp_cost_row"] = int(spec["hp_cost_row"])
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
 	if spec.get("native_state","") == "thirst":

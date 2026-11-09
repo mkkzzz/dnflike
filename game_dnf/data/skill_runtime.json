@@ -131,6 +131,7 @@
    "skillfx_sword_slash_impact_none_8a132f9c": "character/swordman/effect/animation/outragebreak/sword_slash_impact_none.ani",
    "skillfx_sword_slash_ldodge_f39e3051": "character/swordman/effect/animation/outragebreak/sword_slash_ldodge.ani",
    "skillfx_sword_slash_none_b381d2e0": "character/swordman/effect/animation/outragebreak/sword_slash_none.ani",
+   "skillfx_sword_slash_stone_4ecdaf58": "character/swordman/effect/animation/outragebreak/sword_slash_stone.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
@@ -5481,8 +5482,7 @@
   "outragebreak": {
    "fidelity_pending": [
     "hp_write_timing",
-    "impact_stone_particles",
-    "eruption_particles",
+    "screen_shake",
     "special_target_dispatch"
    ],
    "fixed_attack_base": {
@@ -5646,6 +5646,14 @@
        "at": 600,
        "depth_offset": 3,
        "key": "skillfx_sword_slash_impact_none_8a132f9c"
+      },
+      {
+       "action_clock": true,
+       "at": 600,
+       "depth_offset": 6,
+       "key": "skillfx_sword_slash_stone_4ecdaf58",
+       "offset_x": 121,
+       "offset_y": 10
       }
      ],
      "hits": [
@@ -5676,13 +5684,15 @@
          "object": "passiveobject/character/swordman/outragebreakbloodexp.obj",
          "percent": 0
         },
+        "drops_particle": "passiveobject/character/swordman/particle/outragebreak_drops.ptl",
         "eruption_at_ms": 1040,
         "kind": "outrage_floor",
         "layers": [
          "skillfx_floor_over_177f990f",
          "skillfx_floor_blood_e2d7d673",
          "skillfx_floor_impact_ldodge_9c706fc4"
-        ]
+        ],
+        "light_particle": "passiveobject/character/swordman/particle/outragebreak_light_part.ptl"
        },
        "object": "passiveobject/character/swordman/outragebreakfloor.obj",
        "offset": [
@@ -5705,7 +5715,8 @@
       }
      ]
     }
-   ]
+   ],
+   "stone_particle": "character/swordman/effect/particle/outragebreak_stone_part.ptl"
   },
   "overdrive": {
    "effect_id": "overdrive",
