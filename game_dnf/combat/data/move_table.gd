@@ -11,6 +11,7 @@ const SKILL_RUNTIME := "res://data/skill_runtime.json"
 const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
 	"upper":"hitback","upper_followup":"upperslashafter",
 	"hardattack":"hardattack",
+	"frenzy1":"frenzy1","frenzy2":"frenzy2","frenzy3":"frenzy3","frenzy4":"frenzy4",
 	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3",
 	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
@@ -334,6 +335,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		"effect_id":String(spec.get("effect_id","")),"requires_effect":String(spec.get("requires_effect","")),
 		"movement":String(spec.get("movement","")),
 		"super_armor":bool(spec.get("super_armor",false)),"invuln_ms":float(spec.get("invuln_ms",0))}
+	if spec.get("form_normal",false):
+		# State 8 reads the active skill's level row without using the skill again.
+		move.merge({"mp":0.0,"cool_ms":0.0,"cast_ms":0.0},true)
 	if name == "buff":
 		if spec.has("hp_cost_row"):move["hp_cost_row"] = spec["hp_cost_row"]
 		var frenzy_static: Array = skill.get("static",[])
@@ -400,7 +404,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
 	if name == "upper":_append_upper_followup(move)
 	for stage: Dictionary in move.get("stages",[move]):
-		for hit: Dictionary in stage.get("hits",[]):hit["skill_id"] = name
+		for hit: Dictionary in stage.get("hits",[]):
+			hit["skill_id"] = name
+			if spec.get("form_normal",false):hit["skill"] = false
 	return move
 
 func _append_upper_followup(move: Dictionary) -> void:
@@ -434,6 +440,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 	var prior_cancel := 0.0
 	for h: Dictionary in spec.get("hits",[]):
 		var atk_path := String(h.get("atk",default_atk))
+		if h.get("attached_weapon",false) and weapon_hits.is_empty():continue
 		var obj: Dictionary = {}
 		if h.has("object"):
 			obj = object(String(h["object"]))
@@ -442,6 +449,9 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 		var decoded := atk(atk_path)
 		var percent := 100.0+float(decoded.get("damage_bonus",0))
 		if h.has("percent_col") and row.size() > int(h["percent_col"]):percent = float(row[int(h["percent_col"])])
+		if h.has("percent_scale_col") and row.size() > int(h["percent_scale_col"]):
+			# CD51C3 scales (100 + the ATK bonus) and truncates before storing the bonus again.
+			percent = float(int(percent*float(row[int(h["percent_scale_col"])])/100.0))
 		var lift := float(h.get("lift",-1.0))
 		if h.has("lift_col") and row.size() > int(h["lift_col"]):lift = float(row[int(h["lift_col"])])
 		if ani == "hitback" and not weapon_hits.is_empty() and row.size() > 2:

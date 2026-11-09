@@ -187,7 +187,9 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
 			var source: Dictionary = p if fx.follow == 0 else companion_by_id.get(fx.follow,{})
-			if not source.is_empty():fx.position = _canvas(Vector2(source["pos"]),float(source["z"]))+fx.follow_offset
+			if not source.is_empty():
+				fx.position = _canvas(Vector2(source["pos"]),float(source["z"]))+fx.follow_offset
+				if fx.has_meta("depth_offset"):fx.z_index = int(Vector2(source["pos"]).y)+int(fx.get_meta("depth_offset"))
 			if fx.action_clock_at >= 0:
 				if int(source.get("action_instance",-1)) != fx.action_instance or source.get("state","") != "action":fx.queue_free()
 				else:fx.seek(maxf(0,float(source["clock"])-fx.action_clock_at))
@@ -557,7 +559,9 @@ func _spawn_fx(event: Dictionary) -> void:
 	world.add_child(fx)
 	fx.follow_offset = Vector2(float(event.get("offset_x",0))*int(event["facing"]),float(event.get("offset_y",0)))
 	fx.position = _canvas(point, float(event["height"]))+fx.follow_offset
-	fx.z_index = int(point.y)+4
+	var depth_offset := int(event.get("depth_offset",4))
+	fx.z_index = int(point.y)+depth_offset
+	if depth_offset != 4:fx.set_meta("depth_offset",depth_offset)
 	fx.base_scale = float(event.get("scale",1.0))
 	fx.tag = String(event.get("tag",""))
 	fx.follow = int(event.get("follow",-1))

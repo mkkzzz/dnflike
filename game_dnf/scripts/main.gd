@@ -1038,7 +1038,8 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["queued_skill"] = ""
 		start_action(requested,true)
 	elif clock >= cancel_at and bool(player["queued_combo"]) and String(m.get("next","")) != "":
-		start_action(String(m["next"]),true)
+		player["queued_combo"] = false
+		if not start_action(String(m["next"]),true) and clock >= duration:end_action()
 	elif clock >= duration:
 		end_action()
 
@@ -1413,7 +1414,8 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
 				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
-				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0))})
+				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0)),
+				"depth_offset":int(fx.get("depth_offset",4))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))

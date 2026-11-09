@@ -1714,116 +1714,188 @@
    ]
   },
   "frenzy1": {
+   "form_normal": true,
    "name": "血之狂暴 · 双刀普攻",
    "next": "frenzy2",
+   "requires_effect": "frenzy",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [
     {
      "ani": "frenzy1",
      "atk": "character/swordman/attackinfo/frenzy1.atk",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -2,
+       "key": "frenzy_sword1_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "frenzy_sword1_3"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 2,
+       "key": "frenzy_sword1_4"
+      }
+     ],
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/frenzy1.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "attached_weapon": true,
        "effects": [
         {
          "chance": 1.0,
          "id": "bleed"
         }
        ],
-       "percent_col": 0,
-       "window": [
-        0,
-        700.0
-       ]
+       "percent_scale_col": 2
       }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "frenzy2": {
+   "form_normal": true,
    "name": "血之狂暴 · 双刀普攻",
    "next": "frenzy3",
+   "requires_effect": "frenzy",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [
     {
      "ani": "frenzy2",
      "atk": "character/swordman/attackinfo/frenzy2.atk",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -2,
+       "key": "frenzy_sword2_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "frenzy_sword2_3"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 2,
+       "key": "frenzy_sword2_4"
+      }
+     ],
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/frenzy2.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "attached_weapon": true,
        "effects": [
         {
          "chance": 1.0,
          "id": "bleed"
         }
        ],
-       "percent_col": 1,
-       "window": [
-        0,
-        640.0
-       ]
+       "percent_scale_col": 2
       }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "frenzy3": {
+   "form_normal": true,
    "name": "血之狂暴 · 双刀普攻",
    "next": "frenzy4",
+   "requires_effect": "frenzy",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [
     {
      "ani": "frenzy3",
      "atk": "character/swordman/attackinfo/frenzy3.atk",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -2,
+       "key": "frenzy_sword3_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -1,
+       "key": "frenzy_sword3_2"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "frenzy_sword3_3"
+      }
+     ],
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/frenzy3.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "attached_weapon": true,
        "effects": [
         {
          "chance": 1.0,
          "id": "bleed"
         }
        ],
-       "percent_col": 2,
-       "window": [
-        0,
-        640.0
-       ]
+       "percent_scale_col": 2
       }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "frenzy4": {
+   "form_normal": true,
    "name": "血之狂暴 · 双刀普攻",
    "next": "frenzy1",
+   "requires_effect": "frenzy",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [
     {
      "ani": "frenzy4",
      "atk": "character/swordman/attackinfo/frenzy4.atk",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -2,
+       "key": "frenzy_sword4_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -1,
+       "key": "frenzy_sword4_2"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "frenzy_sword4_3"
+      }
+     ],
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/frenzy4.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
+       "attached_weapon": true,
        "effects": [
         {
          "chance": 1.0,
          "id": "bleed"
         }
        ],
-       "percent_col": 3,
-       "window": [
-        0,
-        600.0
-       ]
+       "percent_scale_col": 2
       }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "ghostsidewind": {
    "name": "鬼影鞭",

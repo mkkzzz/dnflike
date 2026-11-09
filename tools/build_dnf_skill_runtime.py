@@ -1565,41 +1565,30 @@ def build_variant_moves(
 
 def build_frenzy_normals(
     moves: dict,
-    records: dict,
-    atk_by_stem: dict[str, list[str]],
-    effect_paths: list[str],
-    fx: dict[str, str],
-    effects: dict[str, dict],
     player_anims: dict[str, str],
 ) -> None:
     """Frenzy replaces the normal X chain with the source four-swing chain."""
     names = ["frenzy1", "frenzy2", "frenzy3", "frenzy4"]
     for index, ani in enumerate(names):
-        stage = build_stage(
-            "frenzy",
-            index,
-            ani,
-            records,
-            atk_by_stem,
-            effect_paths,
-            fx,
-            effects,
-            percent_col=index,
-            statuses=[{"id": "bleed", "chance": 1.0}],
-        )
-        if not stage.get("hits"):
-            stage["hits"] = [
-                {
-                    "derived": add_fx(fx, effects, GENERIC_HIT_EFFECT),
-                    "window": [0, max(180.0, duration_ms(records.get(CHR_ANI + ani + ".ani", {})))],
-                    "percent_col": index,
-                    "atk": pick_attack(ani, atk_by_stem),
-                    "effects": [{"id": "bleed", "chance": 1.0}],
-                }
-            ]
+        stage_number = index + 1
+        attack = f"character/swordman/attackinfo/{ani}.atk"
+        # CD510A mounts four ANI slots, including one empty clip per stage.
+        visible_layers = (1, 3, 4) if stage_number <= 2 else (1, 2, 3)
+        depth = {1: -2, 2: -1, 3: 1, 4: 2}
+        stage = {
+            "ani": ani,
+            "atk": attack,
+            "hits": [{"attached_weapon": True, "percent_scale_col": 2,
+                      "effects": [{"id": "bleed", "chance": 1.0}]}],
+            "fx": [{"key": f"frenzy_sword{stage_number}_{layer}", "at": 0,
+                    "action_clock": True, "depth_offset": depth[layer]} for layer in visible_layers],
+        }
         moves[ani] = {
             "skill": "skill/swordman/frenzy.skl",
             "name": "血之狂暴 · 双刀普攻",
+            "form_normal": True,
+            "requires_effect": "frenzy",
+            "swing": 0,  # CD55ED plays the current weapon's first swing cue.
             "stages": [stage],
             "next": names[(index + 1) % len(names)],
         }
@@ -1797,11 +1786,6 @@ def main() -> int:
     )
     build_frenzy_normals(
         moves,
-        records,
-        atk_by_stem,
-        effect_paths,
-        fx,
-        effects,
         player_anims,
     )
     build_form_normals(

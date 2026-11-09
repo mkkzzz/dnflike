@@ -331,6 +331,11 @@ FRENZY_CAST_AUDIO = {
     'SM_FLENSE': 'sounds/char/swordman/sm_flense.ogg',
     'FLENSE_GET': 'sounds/char/swordman/effect/flense_get.ogg',
 }
+FRENZY_SWING_EFFECTS = {
+    f'frenzy_sword{stage}_{layer}': f'character/swordman/effect/animation/frenzy/sword{stage}-{layer}.ani'
+    for stage in range(1, 5) for layer in (1, 3, 4 if stage <= 2 else 2)
+}
+EFFECTS.update(FRENZY_SWING_EFFECTS)
 
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
 UPPER_FOLLOWUP_AUDIO = {
@@ -1414,6 +1419,7 @@ def main() -> int:
         return 0
     if args.extend_frenzy:
         specs = [('effects', 'frenzy_blast', EFFECTS['frenzy_blast'])]
+        specs.extend(('effects', key, path) for key, path in FRENZY_SWING_EFFECTS.items())
         specs.extend(('audio', key, path) for key, path in FRENZY_CAST_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0

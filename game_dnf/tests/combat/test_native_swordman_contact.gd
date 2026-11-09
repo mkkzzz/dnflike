@@ -1082,6 +1082,65 @@ func check_frenzy_cast() -> void:
 		and game.bus.events_of("combat.cue").any(func(event):return event.get("kind")=="fx_clear"),
 		"an interrupted cast clears its effect and never enables the form")
 
+func check_frenzy_normals() -> void:
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["buff"]
+	for item: Array in [["original_27000","shortsword",1],["original_27601","katana",-1]]:
+		var facing := int(item[2])
+		start_room(item[0],item[1],facing,spec,"berserker")
+		game.player["hp"] = 1000.0
+		check(not game.start_action("frenzy1"),"dual wield requires the active Frenzy appendage")
+		press(KEY_A)
+		step(0)
+		step(float(game.player["frenzy_cast"]["duration_ms"]))
+		step(float(game.player["frenzy_cast"]["duration_ms"]))
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 0.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(60*facing,0))
+		press(KEY_X)
+		step(0)
+		for stage in range(1,5):
+			var name := "frenzy%d" % stage
+			var hit: Dictionary = game.action_def()["hits"][0]
+			var segment: Dictionary = hit["segments"][0]
+			var last := 300.0 if stage == 1 else 240.0
+			check(game.player["action"]==name and game.view.player_actor.pose==name and game.player["mp"]==0.0,
+				"X enters "+name+" without charging the Frenzy skill again")
+			check(hit["source"]=="attached_weapon" and segment["start"]==120.0 and segment["end"]==last
+				and not hit["skill"] and hit["percent"]==[56.0,65.0,75.0,97.0][stage-1],
+				"the equipped layer and truncated original ATK scale drive "+name)
+			move_target(target,POINT+Vector2(60*facing,0))
+			step(119)
+			check(game.hit_count==stage-1,"no startup hit in "+name)
+			step(1)
+			check(game.hit_count==stage,"frame 2 hits in "+name)
+			check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("frame",-1))==2),
+				"the equipped weapon is drawn at frame 2 in "+name)
+			var layers: Array = game.view.effects.filter(func(fx):return fx.data["source"].get_file().begins_with("sword%d-" % stage))
+			check(layers.size()==3 and layers.all(func(fx):return fx.facing==facing and fx.clock_ms==120.0)
+				and layers.any(func(fx):return fx.z_index<game.view.player_actor.z_index)
+				and layers.any(func(fx):return fx.z_index>game.view.player_actor.z_index),
+				"native blood sword layers follow both sides of the body in "+name)
+			game.player["stuck_ms"] = 0.0
+			step(last-120.0)
+			check(game.hit_count==stage,"the contact ledger blocks repeat hits in "+name)
+			if stage < 4:
+				press(KEY_X)
+				step(0)
+				check(layers.all(func(fx):return fx.is_queued_for_deletion()),"transition removes the previous sword layers")
+		press(KEY_X)
+		game.player["hp"] = 3.0
+		game.step_numeric_actor(game.player,game.numeric_player,400)
+		step(360)
+		check(game.player["state"]=="idle" and game.primary_normal_attack()=="attack1",
+			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
+
 func check_frenzy_toggle() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -1228,6 +1287,7 @@ func run() -> void:
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()
+	check_frenzy_normals()
 	check_frenzy_toggle()
 	check_hardattack()
 	check_hardattack_charge()
