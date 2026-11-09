@@ -24,6 +24,8 @@ const RecoveryBridge=preload("res://flow/recovery_bridge.gd")
 const RecoveryWindows=preload("res://ui/flow/recovery_windows.gd")
 const DurabilityBridge=preload("res://items/durability_bridge.gd")
 const UIAudio=preload("res://ui/flow/ui_audio.gd")
+const ShortcutArt = preload("res://scripts/native_map_loader.gd")
+const SHORTCUT_EXPORT := "res://assets_local/flow_v1/skill_shortcut_v1/manifest.json"
 var service_windows
 var upgrade_windows
 var recovery_bridge
@@ -181,10 +183,7 @@ func build_hud() -> void:
 	skin.sprite_button(hud, "hud", [68, 69, 70], Vector2(451, 560), func(): hud_action("menu"), "菜单 Esc")
 	for i in 6:
 		skin.label(hud, str(i + 1), Vector2(87 + i * 30, 574), 9).z_index = 2
-	for i in SkillSlots.COUNT:
-		var hotkey: Label = skin.label(hud, SkillSlots.LABELS[i], SkillSlots.position(i) + Vector2(2, 16), 9)
-		hotkey.set_meta("skill_hotkey", true)
-		hotkey.z_index = 2
+	build_skill_shortcut_art()
 	build_hotbars()
 	info_text = skin.label(hud, "", Vector2(13, 583), 8, Color("f0d18a"))
 	info_text.size.x = 50
@@ -200,6 +199,31 @@ func build_hud() -> void:
 	experience.mouse_exited.connect(windows.hide_tooltip)
 	hud.add_child(experience)
 	experience.name = "experience"
+
+func build_skill_shortcut_art() -> void:
+	var pack := ShortcutArt.new()
+	if not pack.load_export(SHORTCUT_EXPORT) or pack.data.get("shortcut_schema") != "dnf_skill_shortcut/1":
+		push_error("技能快捷栏原图资源未就绪")
+		return
+	var extra_slot := pack.texture(pack.data["extra_slot"])
+	if extra_slot == null:
+		push_error("技能快捷栏缺少原扩展槽图")
+		return
+	for index in SkillSlots.COUNT:
+		var at := SkillSlots.position(index)
+		if index >= SkillSlots.ROW_SIZE:
+			skin.image(hud, extra_slot, at).name = "skill_extra_slot_%d" % index
+		var key: String = SkillSlots.LABELS[index]
+		var glyph: String = pack.data["glyphs"][key]
+		var texture := pack.texture(glyph)
+		if texture == null:
+			push_error("技能快捷栏缺少原键位图 " + key)
+			continue
+		var offset: Array = pack.data["images"][glyph]["canvas_offset"]
+		var hotkey: TextureRect = skin.image(hud, texture, at + Vector2(offset[0], offset[1]))
+		hotkey.name = "skill_hotkey_" + key
+		hotkey.set_meta("skill_hotkey", key)
+		hotkey.z_index = 2
 
 func orb(parent: Node, tex: Texture2D, at: Vector2) -> TextureProgressBar:
 	var bar := TextureProgressBar.new()
@@ -902,11 +926,6 @@ func build_hotbars() -> void:
 		var item_counter: Label=skin.label(cell,"",Vector2(2,3),10,Color.WHITE);item_counter.name="item_cooldown";item_counter.z_index=3
 		cell.name = "hud_potion" if i == 0 else "hud_item_" + str(i)
 		quick_views.append(cell)
-	# Repeat the actual native HUD's six-cell row above ASDFGH, without scaling it.
-	var upper_row := hud.get_node_or_null("skill_upper_row")
-	if upper_row == null:
-		upper_row = skin.image_region(hud, skin.texture("hud"), Rect2(534, 46, 184, 32), Vector2(534, 522))
-		upper_row.name = "skill_upper_row"
 	for i in SkillSlots.COUNT:
 		var id: String = session.profile["skill_slots"][i]
 		var skill = make_slot(hud, {"place":"skill", "index":i, "id":id}, SkillSlots.position(i))

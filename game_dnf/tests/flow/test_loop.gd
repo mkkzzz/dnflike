@@ -301,11 +301,9 @@ func run() -> void:
 		check(under_player, "gate light always renders under the player")
 		check(loops, "gate light animation loops")
 	var hotkeys: Array[String] = []
-	for label in game.hud.find_children("*", "Label", true, false):
-		if label.get_meta("skill_hotkey", false):
-			hotkeys.append(label.text)
-			check(label.z_index > 0, "skill key stays above its icon: " + label.text)
-	check(hotkeys == game.SkillSlots.LABELS, "HUD shows ASDFGH and QWERTY without basic ZXC actions")
+	for glyph in game.hud.find_children("skill_hotkey_*", "TextureRect", true, false):
+		hotkeys.append(glyph.get_meta("skill_hotkey"))
+	check(hotkeys == game.SkillSlots.LABELS, "HUD shows original ASDFGH and QWERTY without basic ZXC actions")
 	check(not game.skill_views.has("upper"), "basic upper attack is absent from skill slots")
 	check(game.get_window().content_scale_mode == Window.CONTENT_SCALE_MODE_VIEWPORT and game.get_window().content_scale_size == game.display_settings.OUTPUT, "fixed output keeps the original layout transform")
 	check(game.display_settings.OUTPUT == game.display_settings.NATIVE * 2 and is_equal_approx(game.display_settings.CONTENT_SCALE, 2.0) and game.display_settings.CONTENT_OFFSET == Vector2.ZERO, "native 800x600 canvas uses an exact 2x integer output")

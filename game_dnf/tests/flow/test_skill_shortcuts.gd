@@ -1,6 +1,7 @@
 extends RefCounted
 ## Exercise every real drop target with both legacy and later active skills.
 func run(game, host, driver) -> void:
+	check_art(game.hud, host)
 	var original: Array = game.session.profile["skill_slots"].duplicate()
 	for entry in [[5, "hardattack"], [46, "upper"]]:
 		for index in game.SkillSlots.COUNT:
@@ -39,6 +40,36 @@ func run(game, host, driver) -> void:
 		host.check(not game.can_drop_slot(source, {"place":"skill", "index":2}), "D drop preview rejects passive, unknown or unlearned skills")
 	for index in [-1, 12]:
 		host.check(not game.can_drop_slot({"place":"skill_catalog", "id":"upper"}, {"place":"skill", "index":index}), "drop preview rejects a nonexistent shortcut slot")
+	# Fixed native canvas coordinates catch a displaced target even when the
+	# current control-relative center and corner tests still pass.
+	for entry in [[46, "upper", 6, Vector2(539, 521), true], [5, "hardattack", 6, Vector2(549, 550), false],
+			[5, "hardattack", 6, Vector2(564, 546), true], [46, "upper", 2, Vector2(599, 559), true]]:
+		var source: Control = game.modal.find_child("skill_node_%d" % entry[0], true, false)
+		var target: Control = game.hud.find_child("hud_skill_slot_%d" % entry[2], true, false)
+		var before: Array = game.session.profile["skill_slots"].duplicate()
+		var native_point: Vector2 = entry[3]
+		var dropped: bool = await driver.drag_skill(source, target, native_point - target.position)
+		var after: Array = game.session.profile["skill_slots"]
+		var binding_ok: bool = after != before and after[entry[2]] == entry[1] if entry[4] else after == before
+		host.check(dropped == entry[4] and binding_ok, "original canvas drop boundary at %s" % native_point)
 	game.session.profile["skill_slots"] = original
 	game.build_hotbars()
 	await host.ticks(2)
+
+func check_art(hud: Control, host) -> void:
+	var keys := ["A", "S", "D", "F", "G", "H", "Q", "W", "E", "R", "T", "Y"]
+	var offsets := [22, 22, 22, 22, 22, 22, 22, 21, 22, 22, 21, 21]
+	for index in keys.size():
+		var key: String = keys[index]
+		var origin := Vector2(538 + (index % 6) * 30, 558 if index < 6 else 520)
+		var cell := hud.get_node_or_null("hud_skill_slot_%d" % index) as Control
+		host.check(cell != null and cell.get_rect() == Rect2(origin, Vector2(28, 28)),
+			"shortcut drop target uses the native cell bounds: " + key)
+		var glyph := hud.get_node_or_null("skill_hotkey_" + key) as TextureRect
+		host.check(glyph != null and glyph.position == origin + Vector2(offsets[index], 21) and glyph.size.y == 7
+			and glyph.z_index > 0 and glyph.mouse_filter == Control.MOUSE_FILTER_IGNORE,
+			"original key glyph fits above its icon without blocking drops: " + key)
+		if index >= 6:
+			var slot := hud.get_node_or_null("skill_extra_slot_%d" % index) as TextureRect
+			host.check(slot != null and slot.get_rect() == Rect2(origin, Vector2(28, 28))
+				and slot.mouse_filter == Control.MOUSE_FILTER_IGNORE, "extended backplate fits the original cell: " + key)

@@ -16,6 +16,10 @@ from export_dnf_map import (Library, export_map, plain, span_values, resolve, CO
                             TILE_W, TILE_H, CELL_W, CELL_H, GRID_COLS, GRID_ROWS, LAYERS)
 
 OUTPUT = ROOT / 'game_dnf/assets_local/flow_v1'
+SHORTCUT_OUTPUT = OUTPUT / 'skill_shortcut_v1'
+SHORTCUT_KEYS = 'ASDFGHQWERTY'
+# Original VK dispatch 11C0920 through the hotkey load at 4D66E8/4D6761.
+SHORTCUT_KEY_FRAMES = (55, 73, 58, 60, 61, 62, 71, 77, 59, 72, 74, 79)
 SELECTOR_PACKS = {
     'lorien': ('worldmap/lorien.wdm', OUTPUT / 'dungeon_selector_v1'),
     'granfloris': ('worldmap/granfloris.wdm', OUTPUT / 'dungeon_selector_gran_v1'),
@@ -24,6 +28,39 @@ SELECTOR_PACKS = {
 SKY_CARD_BANK = 'worldmap/selectdungeonslot/skycastle.img'
 SKY_CARD_BANK_SHA = '8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409'
 ERROR_IMAGE_SHA = '987c3569cc48c257842e011c4747ce4f51f0f3337b75bc283deea84208ba0685'
+
+
+def build_skill_shortcut(library: Path, output: Path) -> dict:
+    """Export the original extended cell and default key glyphs at native size."""
+    lib = Library(library, output)
+    try:
+        path = 'clientonly/hotkeysystem.co'
+        hotkeys = lib.script(path)
+        if not hotkeys or not hotkeys['crc_ok']:
+            raise ValueError('Missing verified original hotkey definitions')
+        records = [plain(span['values']) for span in hotkeys['spans'] if span['tag'] == '[key]']
+        default_keys = {row[1]: row[4] for row in records if row[2] == 'dungeon'}
+        if [default_keys.get(index) for index in range(20, 32)] != list(map(ord, SHORTCUT_KEYS)):
+            raise ValueError('Original shortcut definitions disagree with the verified key dispatch')
+        extra_slot = lib.image('Interface/ExSkillQuickSlot.img', 0, 'extended skill shortcut')
+        glyphs = {key: lib.image('Interface/keyshortcut.img', frame, 'shortcut key ' + key)
+                  for key, frame in zip(SHORTCUT_KEYS, SHORTCUT_KEY_FRAMES, strict=True)}
+        if (extra_slot is None or lib.images[extra_slot]['size'] != [28, 28]
+                or lib.images[extra_slot]['canvas_offset'] != [0, 0] or None in glyphs.values()):
+            raise ValueError('Missing original shortcut frame or glyph')
+        result = {
+            'schema': 'dnf_native_map/1', 'shortcut_schema': 'dnf_skill_shortcut/1',
+            'source': {'hotkeys': path, 'sha256': hotkeys['sha256'],
+                       'engine_sha256': '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84',
+                       'slot_geometry': 'EXERESX 0x4CDC98/0x4CDD3D/0x11B4030',
+                       'draw': 'EXERESX 0x4C0B30/0x4B3370/0x4B33CC',
+                       'key_dispatch': 'EXERESX 0x4D66E8/0x11C0920/0x4D6761/0x4D3F50'},
+            'extra_slot': extra_slot, 'glyphs': glyphs, 'images': lib.images,
+        }
+        (output / 'manifest.json').write_text(json.dumps(result, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        return result
+    finally:
+        lib.close()
 
 
 def build_dungeon_selector(library: Path, output: Path, region: str = 'lorien') -> dict:
@@ -277,13 +314,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--library', type=Path)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--dungeon-selector-only', action='store_true', help='Export the verified world-map UI pack only')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--dungeon-selector-only', action='store_true', help='Export the verified world-map UI pack only')
+    mode.add_argument('--skill-shortcut-only', action='store_true', help='Export the verified skill shortcut HUD pack only')
     parser.add_argument('--dungeon-selector-region', choices=SELECTOR_PACKS, default='lorien')
     args = parser.parse_args()
     lock = json.loads(LOCK.read_text(encoding='utf-8'))
     library = args.library or cache_home() / lock['version'] / 'library_v1'
     selector_output = SELECTOR_PACKS[args.dungeon_selector_region][1]
-    output = (args.output or (selector_output if args.dungeon_selector_only else OUTPUT)).resolve()
+    default_output = OUTPUT
+    if args.dungeon_selector_only:
+        default_output = selector_output
+    if args.skill_shortcut_only:
+        default_output = SHORTCUT_OUTPUT
+    output = (args.output or default_output).resolve()
     if not any(output.is_relative_to(p.resolve()) for p in [ROOT/'temp', ROOT/'game_dnf/assets_local']):
         parser.error('Output must be inside ignored temp/ or assets_local/')
     if args.dungeon_selector_only:
@@ -291,6 +335,12 @@ def main():
             parser.error('Selector output must be under temp/ or in its dedicated resource pack')
         result = build_dungeon_selector(library, output, args.dungeon_selector_region)
         print(json.dumps({'output': str(output), 'regions': len(result['regions']), 'images': len(result['images'])}))
+        return
+    if args.skill_shortcut_only:
+        if output != SHORTCUT_OUTPUT.resolve() and not output.is_relative_to((ROOT / 'temp').resolve()):
+            parser.error('Skill shortcut output must be under temp/ or in its dedicated resource pack')
+        result = build_skill_shortcut(library, output)
+        print(json.dumps({'output': str(output), 'images': len(result['images'])}))
         return
     result = build(library, output)
     print(json.dumps({'output': str(output), 'images': len(result['images']), 'npcs': len(result['npcs'])}))

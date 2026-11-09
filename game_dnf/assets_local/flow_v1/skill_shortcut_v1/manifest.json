@@ -1,0 +1,237 @@
+{
+ "schema": "dnf_native_map/1",
+ "shortcut_schema": "dnf_skill_shortcut/1",
+ "source": {
+  "hotkeys": "clientonly/hotkeysystem.co",
+  "sha256": "60e8036f3112e8dd6d3d47f03f261dc5934656f85c2c30f38df80a2cda15dd6c",
+  "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84",
+  "slot_geometry": "EXERESX 0x4CDC98/0x4CDD3D/0x11B4030",
+  "draw": "EXERESX 0x4C0B30/0x4B3370/0x4B33CC",
+  "key_dispatch": "EXERESX 0x4D66E8/0x11C0920/0x4D6761/0x4D3F50"
+ },
+ "extra_slot": "5106decc2ef1_0",
+ "glyphs": {
+  "A": "8aa0df5e3dc5_55",
+  "S": "8aa0df5e3dc5_73",
+  "D": "8aa0df5e3dc5_58",
+  "F": "8aa0df5e3dc5_60",
+  "G": "8aa0df5e3dc5_61",
+  "H": "8aa0df5e3dc5_62",
+  "Q": "8aa0df5e3dc5_71",
+  "W": "8aa0df5e3dc5_77",
+  "E": "8aa0df5e3dc5_59",
+  "R": "8aa0df5e3dc5_72",
+  "T": "8aa0df5e3dc5_74",
+  "Y": "8aa0df5e3dc5_79"
+ },
+ "images": {
+  "5106decc2ef1_0": {
+   "file": "img/5106decc2ef1_0.png",
+   "source_path": "sprite/interface/exskillquickslot.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "5106decc2ef1f75d91b431549f7b261117797c2f7059535ec1fc4a58218356fa",
+   "frame": 0,
+   "size": [
+    28,
+    28
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_55": {
+   "file": "img/8aa0df5e3dc5_55.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 55,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_73": {
+   "file": "img/8aa0df5e3dc5_73.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 73,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_58": {
+   "file": "img/8aa0df5e3dc5_58.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 58,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_60": {
+   "file": "img/8aa0df5e3dc5_60.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 60,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_61": {
+   "file": "img/8aa0df5e3dc5_61.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 61,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_62": {
+   "file": "img/8aa0df5e3dc5_62.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 62,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_71": {
+   "file": "img/8aa0df5e3dc5_71.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 71,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_77": {
+   "file": "img/8aa0df5e3dc5_77.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 77,
+   "size": [
+    7,
+    7
+   ],
+   "canvas_offset": [
+    21,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_59": {
+   "file": "img/8aa0df5e3dc5_59.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 59,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_72": {
+   "file": "img/8aa0df5e3dc5_72.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 72,
+   "size": [
+    6,
+    7
+   ],
+   "canvas_offset": [
+    22,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_74": {
+   "file": "img/8aa0df5e3dc5_74.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 74,
+   "size": [
+    7,
+    7
+   ],
+   "canvas_offset": [
+    21,
+    21
+   ],
+   "variants": 1
+  },
+  "8aa0df5e3dc5_79": {
+   "file": "img/8aa0df5e3dc5_79.png",
+   "source_path": "sprite/interface/keyshortcut.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "8aa0df5e3dc5d200bacee9de698ff9d0e449d96d6c789014abc235fd3db1820d",
+   "frame": 79,
+   "size": [
+    7,
+    7
+   ],
+   "canvas_offset": [
+    21,
+    21
+   ],
+   "variants": 1
+  }
+ }
+}

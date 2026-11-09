@@ -13,4 +13,5 @@ static func can_bind(profile: Dictionary, id: String) -> bool:
 	return is_active(id) and int(profile.get("skills", {}).get(id, 0)) > 0
 
 static func position(index: int) -> Vector2:
-	return Vector2(538 + (index % ROW_SIZE) * 30, 558 if index < ROW_SIZE else 526)
+	# Original HUD constructs both rows in absolute 800×600 coordinates.
+	return Vector2(538 + (index % ROW_SIZE) * 30, 558 if index < ROW_SIZE else 520)

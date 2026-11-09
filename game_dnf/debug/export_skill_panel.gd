@@ -6,7 +6,6 @@ const Town = preload("res://town/native_town.gd")
 const Windows = preload("res://ui/flow/number_windows.gd")
 const NativeWindows = preload("res://ui/flow/native_windows.gd")
 const Skills = preload("res://combat/api/skill_catalog.gd")
-const Slots = preload("res://stats/api/skill_slots.gd")
 var output := ""
 var commands: Array = []
 var textures: Dictionary = {}
@@ -51,10 +50,8 @@ func export_panel() -> void:
 	game.ui=canvas
 	game.hud=canvas
 	game.skin.image(canvas, game.skin.texture("hud"), Vector2(0,508))
+	game.build_skill_shortcut_art()
 	game.build_hotbars()
-	for index in Slots.COUNT:
-		var label:Label=game.skin.label(canvas,Slots.LABELS[index],Slots.position(index)+Vector2(2,16),9)
-		label.z_index=2
 	panel.show_window(canvas)
 	for index in 5:
 		await process_frame
