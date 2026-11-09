@@ -532,6 +532,9 @@ OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
+    'SM_CHARGE_CRASH': ['sounds/char/swordman/sm_chargecrash.ogg'],
+    'CCRASH_MOVING': ['sounds/char/swordman/effect/ccrash_moving.ogg'],
+    'SM_CHARGE_CRASH_UP': ['sounds/char/swordman/sm_chargecrash_up.ogg'],
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},

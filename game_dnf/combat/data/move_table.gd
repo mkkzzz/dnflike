@@ -466,6 +466,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if name == "charge_crash":
+				# CD0201/CD0235 play the dash voice and motion sound. CD0502 plays the upper voice.
+				match stage["ani"]:
+					"chargecrashdash":
+						built["voice"] = "SM_CHARGE_CRASH"
+						built["sounds"] = [{"key":"CCRASH_MOVING","at":0.0}]
+					"chargecrashupper":
+						built["voice"] = "SM_CHARGE_CRASH_UP"
 			if move.get("native_state","") == "grab_blast" and move["stages"].is_empty():
 				built["entry_clock"] = float(frames[3]["start_ms"])
 				built["cancel_at"] = built["duration"]

@@ -3066,6 +3066,42 @@ func check_grab_blast_thirst() -> void:
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
+func check_charge_crash_uppercut() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"charge_crash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["charge_crash"]
+	for rate: float in [1.0,1.25]:
+		start_room("original_27000","shortsword",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = rate
+		press(KEY_A)
+		step(0)
+		check(game.player["action"]=="charge_crash" and game.player["stage"]==0,
+			"one shortcut press starts Charge Crash with the dash")
+		var dash_end: float = game.action_duration("charge_crash")/rate
+		var voice := cues("SM_CHARGE_CRASH")
+		var motion := cues("CCRASH_MOVING")
+		check(voice.size()==1 and motion.size()==1 and voice[0]["event_id"]<motion[0]["event_id"],
+			"the dash plays its original voice followed by the motion cue once")
+		step(dash_end-1.0)
+		check(game.player["stage"]==0 and cues("SM_CHARGE_CRASH_UP").is_empty(),
+			"the uppercut stays silent before the dash ANI finishes")
+		var mp: float = game.player["mp"]
+		step(1)
+		check(game.player["stage"]==1 and game.view.player_actor.pose=="chargecrashupper"
+			and cues("SM_CHARGE_CRASH_UP").size()==1 and game.player["mp"]==mp,
+			"the uppercut plays automatically with its own voice and no second payment")
+		var upper_x: float = game.player["pos"].x
+		step(20)
+		check(game.player["pos"].x==upper_x and cues("SM_CHARGE_CRASH_UP").size()==1,
+			"uppercut does not repeat the dash movement or its entry voice")
+		for key in ["SM_CHARGE_CRASH","CCRASH_MOVING","SM_CHARGE_CRASH_UP"]:
+			var streams: Array = game.view.audio.variants.get(key,[])
+			check(streams.size()==1 and streams[0] is AudioStreamOggVorbis,"original Charge Crash stream mounted for "+key)
+
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
 		var blade := family == "katana"
@@ -3838,6 +3874,7 @@ func run() -> void:
 	check_bloodblast()
 	check_draw_sword()
 	check_draw_target_deadlines()
+	check_charge_crash_uppercut()
 	check_draw_second_slash()
 	check_bloody_rave_phases()
 	check_bloody_rave_fade()

@@ -1052,7 +1052,8 @@ func step_action(ms: float, move: Vector2) -> void:
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	var native_slide := player.has("action_slide")
-	if native_slide or m.has("dash"):
+	# CD0504..CD0532 clears both forced movement axes on the uppercut entry.
+	if native_slide or (m.has("dash") and (name != "charge_crash" or int(player["stage"]) == 0)):
 		var motion: Dictionary = player["action_slide"] if native_slide else m["dash"]
 		var old_motion_clock := old_clock
 		var new_motion_clock := clock
@@ -1102,6 +1103,11 @@ func step_action(ms: float, move: Vector2) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
+	if name == "charge_crash" and int(player["stage"]) == 0 and clock >= duration:
+		# CBE7D6..CBE885 advances state 37 to the uppercut when the dash ANI ends.
+		if player["queued_skill"] == name:player["queued_skill"] = ""
+		start_stage(1)
+		return
 	if name == "bloodblast" and int(player["stage"]) == 0 and clock >= duration:
 		start_stage(1)
 		return
