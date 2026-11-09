@@ -343,6 +343,11 @@ FRENZY_AUDIO = {
     'FLENSE_SUCK': 'sounds/char/swordman/effect/flense_suck.ogg',
     'FLENSE_FLASH': 'sounds/char/swordman/effect/flense_flash.ogg',
 }
+BLOODBLAST_AUDIO = {
+    'SM_BLOOD_CAST': 'sounds/char/swordman/sm_blood.ogg',
+    'FIRE_PILLAR_UP': 'sounds/effect/magic/fire_pillar.ogg',
+    'FIRE_PILLAR_HIT': 'sounds/effect/magic/fire_pillarhit.ogg',
+}
 FRENZY_RECOVERY_EFFECTS = {
     'frenzy_create_ball': 'character/swordman/effect/animation/frenzy/createball.ani',
     'frenzy_ball': 'character/swordman/effect/animation/frenzy/ball.ani',
@@ -453,6 +458,7 @@ SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
+    **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
@@ -1384,6 +1390,8 @@ def main() -> int:
                         help='Add original wave cast sounds, preserving existing assets')
     parser.add_argument('--extend-frenzy', action='store_true',
                         help='Add the original Frenzy release animation and cast sounds')
+    parser.add_argument('--extend-bloodblast', action='store_true',
+                        help='Add the ordinary Blood Blast layers and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
@@ -1478,6 +1486,18 @@ def main() -> int:
         specs.extend(('effects', key, path) for key, path in FRENZY_SWING_EFFECTS.items())
         specs.extend(('effects', key, path) for key, path in FRENZY_RECOVERY_EFFECTS.items())
         specs.extend(('audio', key, path) for key, path in FRENZY_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_bloodblast:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        assets = runtime['assets']
+        hits = runtime['moves']['bloodblast']['stages'][1]['hits']
+        specs = [('player_clips', 'summon1', assets['player_anims']['summon1'])]
+        specs.extend(('effects', key, assets['effect_anims'][key])
+                     for hit in hits for key in hit['native_controller']['layers'])
+        specs.extend(('objects', hit['object'], hit['object'])
+                     for hit in hits if hit['object'] in assets['objects'])
+        specs.extend(('audio', key, path) for key, path in BLOODBLAST_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_overdrive:

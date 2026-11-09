@@ -11,6 +11,9 @@
    "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
    "skillfx_blast_back_c66f1708": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
+   "skillfx_blastbloodfloor1_e45c71e7": "passiveobject/character/swordman/animation/blastbloodfloor1.ani",
+   "skillfx_blastbloodfloor2_449b3720": "passiveobject/character/swordman/animation/blastbloodfloor2.ani",
+   "skillfx_blastbloodpresub_front_bd8155d0": "passiveobject/character/swordman/animation/blastbloodpresub_front.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
    "skillfx_bremen2_267aab10": "passiveobject/character/swordman/animation/bremen2.ani",
    "skillfx_bremenareaappear1_558ce479": "passiveobject/character/swordman/animation/bremenareaappear1.ani",
@@ -85,6 +88,7 @@
   },
   "objects": {
    "passiveobject/character/swordman/ashenforksub.obj": "passiveobject/character/swordman/ashenforksub.obj",
+   "passiveobject/character/swordman/blastbloodpresuborigin.obj": "passiveobject/character/swordman/blastbloodpresuborigin.obj",
    "passiveobject/character/swordman/bloodyrave.obj": "passiveobject/character/swordman/bloodyrave.obj",
    "passiveobject/character/swordman/bremen.obj": "passiveobject/character/swordman/bremen.obj",
    "passiveobject/character/swordman/epidemicrasa.obj": "passiveobject/character/swordman/epidemicrasa.obj",
@@ -174,6 +178,7 @@
    "standalonewavebasic": "character/swordman/animation/standalonewavebasic.ani",
    "standalonewaveready": "character/swordman/animation/standalonewaveready.ani",
    "standalonewavestrong": "character/swordman/animation/standalonewavestrong.ani",
+   "summon1": "character/swordman/animation/summon1.ani",
    "summon2": "character/swordman/animation/summon2.ani",
    "throw1": "character/swordman/animation/throw1.ani",
    "throw2": "character/swordman/animation/throw2.ani",
@@ -395,7 +400,6 @@
     "rage_slash": 14
    },
    "skill_damage": {
-    "bloodblast": 0.1,
     "grabblastblood": 0.1,
     "rage_slash": 0.1
    },
@@ -828,22 +832,82 @@
    ]
   },
   "bloodblast": {
+   "fidelity_pending": [
+    "hit_lift_and_reactions",
+    "fixed_attack_scaling",
+    "eruption_visual_binding",
+    "effect_layer_order",
+    "non_weapon_attack_speed"
+   ],
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "怒气爆发",
+   "native_recovery_col": 3,
+   "native_state": "bloodblast",
    "skill": "skill/swordman/bloodblast.skl",
    "stages": [
     {
+     "ani": "summon1"
+    },
+    {
      "ani": "summon2",
-     "atk": "",
      "hits": [
       {
-       "at": 280,
-       "effects": [],
-       "life_ms": 1700,
-       "object": "passiveobject/character/swordman/grabblastbloodbig.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "fixed_col": 0,
+       "native_controller": {
+        "kind": "bloodblast",
+        "layers": [],
+        "reset_count": 3,
+        "reset_ms": 60
+       },
+       "object": "passiveobject/character/swordman/blastbloodsuborigin.obj",
+       "offset": [
+        0,
+        0,
+        0
+       ],
+       "percent": 0
+      },
+      {
+       "fixed_col": 0,
+       "native_controller": {
+        "kind": "bloodblast",
+        "layers": [
+         "skillfx_blastbloodfloor1_e45c71e7",
+         "skillfx_blastbloodfloor2_449b3720"
+        ],
+        "reset_count": 3,
+        "reset_ms": 75,
+        "sound_at_ms": 960
+       },
+       "object": "passiveobject/character/swordman/blastbloodorigin.obj",
+       "offset": [
+        0,
+        50,
+        0
+       ],
+       "percent": 0
+      },
+      {
+       "fixed_col": 2,
+       "native_controller": {
+        "kind": "bloodblast",
+        "layers": [
+         "skillfx_blastbloodpresub_front_bd8155d0"
+        ]
+       },
+       "object": "passiveobject/character/swordman/blastbloodpresuborigin.obj",
+       "offset": [
+        0,
+        0,
+        0
+       ],
+       "percent": 0
       }
-     ]
+     ],
+     "voice": "SM_BLOOD_CAST"
     }
    ]
   },

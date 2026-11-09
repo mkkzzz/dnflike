@@ -389,6 +389,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["native_state"] = "ghost_cast"
 		move["native_charge_ani"] = String(spec["native_charge_ani"])
 		move["native_recovery_ms"] = float(skill["static"][0])
+	if spec.get("native_state","") == "bloodblast":
+		move["native_state"] = "bloodblast"
+		move["cast_ms"] = float(skill["level_row"][1])
+		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	if spec.has("stages"):
@@ -568,6 +572,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 					var child_stage := _build_stage({"hits":[controller["child"]]},skill)
 					controller["child"] = child_stage["hits"][0]
 				hit["native_controller"] = controller
+				if controller.get("kind","") == "bloodblast":hit["starts_at_zero"] = true
 			hit["rear_fx"] = String(h.get("rear_fx",""))
 			# Explicit skill-specific size column; other objects retain native size.
 			hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0

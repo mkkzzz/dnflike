@@ -1713,6 +1713,78 @@ func check_frenzy_toggle() -> void:
 	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
 		"deactivation takes no HP, MP, or additional cube")
 
+func check_bloodblast() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodblast","level":2})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodblast"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	var spent: Array = []
+	session.set_skill_material_spender(func(id: int, amount: int):
+		spent.append([id,amount])
+		return spent.size()==2)
+	var mp: float = game.player["mp"]
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["mp"]==mp and game.objects.is_empty(),
+		"Blood Blast rejects a missing cube before charging MP or starting the cast")
+	game.numeric_player.values["attack_speed"] = 1.25
+	game.numeric_player.values["cast_speed"] = 1.0
+	press(KEY_A)
+	step(395)
+	check(game.view.player_actor.pose=="summon1" and game.objects.is_empty() and cues("SM_BLOOD_CAST").is_empty(),
+		"rank two Blood Blast charges for 396 ms at 1.25 attack speed, independently of cast speed")
+	step(1)
+	check(game.view.player_actor.pose=="summon2" and game.player["clock"]==0.0
+		and spent==[[3037,1],[3037,1]] and game.player["mp"]<mp and cues("SM_BLOOD_CAST").size()==1,
+		"Blood Blast releases from frame zero after one successful payment and plays the original voice")
+	check(game.objects.size()==3,"ordinary Blood Blast creates all three passive objects at release")
+	if game.objects.size()!=3:return
+	var sub: Dictionary = game.objects[0]
+	var pillar: Dictionary = game.objects[1]
+	var ground: Dictionary = game.objects[2]
+	check(sub["def"]["path"].ends_with("/blastbloodsuborigin.obj") and sub["pos"]==POINT
+		and pillar["def"]["path"].ends_with("/blastbloodorigin.obj") and pillar["pos"]==POINT+Vector2(0,50)
+		and ground["def"]["path"].ends_with("/blastbloodpresuborigin.obj") and ground["pos"]==POINT,
+		"source object creation order and depth offsets")
+	check(sub["hit"]["fixed"]==179.0 and pillar["hit"]["fixed"]==179.0 and ground["hit"]["fixed"]==239.0
+		and [sub,pillar,ground].all(func(o):return o["hit"]["percent"]==0.0 and o["clock"]==0.0),
+		"rank two emits fixed columns 0/0/2 and starts each object at age zero")
+	var target: Dictionary = game.monsters[0]
+	for enemy: Dictionary in game.monsters:
+		move_target(enemy,POINT+Vector2(400,0))
+	move_target(target,POINT)
+	game.step_objects(99)
+	check(ground["hits"].is_empty(),"the opening blank frame cannot hit")
+	game.step_objects(1)
+	check(ground["hits"].has(target["id"]) and sub["hits"].is_empty() and pillar["hits"].is_empty(),
+		"at 100 ms only the ground burst registers contact with the centered target")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view.object_views.has(ground["id"]) and game.view.object_views.has("%s:layer:0" % ground["id"]),
+		"the original ground burst exposes both its back and front layers")
+	game.monsters.clear()
+	game.step_objects(300)
+	check(not game.objects.has(ground),"ground contact ends with its 400 ms main animation")
+	game.step_objects(559)
+	check(cues("FIRE_PILLAR_UP").is_empty(),"the pillar cue stays silent before ETC frame eight")
+	game.step_objects(1)
+	check(cues("FIRE_PILLAR_UP").size()==1,"the pillar cue plays at object age 960 ms")
+	pillar["hits"][99] = true
+	sub["hits"][99] = true
+	game.step_objects(114)
+	check(pillar["hits"].has(99) and sub["hits"].has(99),"both hit ledgers survive before their first timer boundary")
+	game.step_objects(1)
+	check(pillar["hits"].is_empty() and sub["hits"].has(99),"the pillar resets at 1075 ms, independently of the spray")
+	game.step_objects(105)
+	check(sub["hits"].is_empty() and sub["hit_resets_left"]==2 and cues("FIRE_PILLAR_UP").size()==1,
+		"the spray first resets at 1180 ms and the pillar cue stays one-shot")
+	step(559)
+	check(game.player["action"]=="bloodblast","recovery holds at 559 ms")
+	step(1)
+	check(game.player["action"]=="" and game.objects.size()==2,"560 ms recovery leaves live spray objects independent of the caster")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -1834,6 +1906,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
+	check_bloodblast()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()

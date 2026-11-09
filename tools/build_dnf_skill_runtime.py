@@ -187,6 +187,9 @@ DIRECT_OBJECTS = {
 # Source bindings in CNSwordman state 24 and the ghost object's motion vector.
 # Keep other blank-frame clips out of the legacy filename heuristic.
 NATIVE_ANIMATION_BINDINGS = {
+    OBJ_ROOT + "animation/blastbloodpresub_back.ani",
+    OBJ_ROOT + "animation/blastbloodpresub_front.ani",
+    OBJ_ROOT + "animation/blastbloodfloor2.ani",
     CHR_FX + "icewave.ani",
     CHR_FX + "firewavebig-sword-effect.ani",
     OBJ_ROOT + "animation/firewavebig/blast-front.ani",
@@ -438,7 +441,7 @@ BUFF_EFFECTS = {
             {"stat": "hit", "op": "add", "level_row": 3, "scale": 0.001},
             {"stat": "hit_recovery", "op": "add", "level_row": 4},
         ],
-        "skill_damage": {"grabblastblood": 0.1, "bloodblast": 0.1, "rage_slash": 0.1},
+        "skill_damage": {"grabblastblood": 0.1, "rage_slash": 0.1},
         "skill_cooldown_reduction_rows": {"grabblastblood": 10, "bloodblast": 12, "bloodblastex": 12, "rage_slash": 14},
     },
     "keiga": {
@@ -1020,6 +1023,8 @@ def build_move(
     fx: dict[str, str],
     effects: dict[str, dict],
     objects: dict[str, str],
+    *,
+    native_bloodblast: bool = True,
 ) -> dict | None:
     if skill.get("type") != "[active]":
         return None
@@ -1041,6 +1046,44 @@ def build_move(
                 "stages": [{"ani": "throw1"}, {"ani": "throw2"}], "effect_id": "frenzy",
                 "cast_fx": "frenzy_cast", "release_fx": "frenzy_blast", "aura_fx": "frenzy_buff",
                 "hp_cost_row": 0, "material_cost": fixed_cube_cost(skill, records)}
+    if source_key == "bloodblast" and native_bloodblast:
+        skill_path = str(skill["path"])
+        static = records[skill_path]["decoded"]["dungeon"]["static_data"]
+        hits = []
+        # CD8131..CD834A creates the centered spray, rear-offset pillar and ground burst.
+        for name, depth, fixed_col, reset_frames in (
+            ("blastbloodsuborigin", 0, 0, (1, 4)),
+            ("blastbloodorigin", 50, 0, (10, 13)),
+            ("blastbloodpresuborigin", 0, 2, ()),
+        ):
+            path = OBJ_ROOT + name + ".obj"
+            obj = records[path]["decoded"]
+            timeline = records[obj["basic_motion"][0]]["decoded"]["timeline"]
+            motions = obj.get("etc_motions", [])
+            # Root ETC slot 0 is an image-free timing clip in this archive.
+            visible = motions[1:] if name == "blastbloodorigin" else motions
+            controller = {"kind": "bloodblast", "layers": [
+                add_fx(fx, effects, motion) for motion in visible
+            ]}
+            if not all(controller["layers"]):
+                raise ValueError(f"Missing original {name} effect bank")
+            if not reset_frames and not add_object(objects, path):
+                raise ValueError(f"Missing original {name} object bank")
+            if reset_frames:
+                first, last = (timeline[frame]["start_ms"] for frame in reset_frames)
+                controller.update(reset_ms=(last-first)//static[0], reset_count=static[0]-1)
+            if name == "blastbloodorigin":
+                plume = records[obj["etc_motions"][0]]["decoded"]["timeline"]
+                controller["sound_at_ms"] = plume[8]["start_ms"]
+            hit = {"object": path, "offset": [0, depth, 0], "fixed_col": fixed_col,
+                   "percent": 0, "native_controller": controller}
+            hits.append(hit)
+        return {"skill": skill_path, "name": str(skill["name"]),
+                "native_state": "bloodblast", "native_recovery_col": 3,
+                "material_cost": fixed_cube_cost(skill, records),
+                "fidelity_pending": ["hit_lift_and_reactions", "fixed_attack_scaling",
+                                     "eruption_visual_binding", "effect_layer_order", "non_weapon_attack_speed"],
+                "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -1721,6 +1764,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "sayaexice.obj")
         object_candidates.update((RASA_CREATOR, RASA_CHILD))
         object_candidates.add(OBJ_ROOT + "firewavebigsub.obj")
+        object_candidates.add(OBJ_ROOT + "blastbloodpresuborigin.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -1750,6 +1794,10 @@ def main() -> int:
         skills[runtime_id] = definition
         base_move_id = EX_BASE.get(key, "")
         move = moves.get(base_move_id) if base_move_id else None
+        if key == "bloodblastex":
+            # The EX adapter previously copied the generic base move.
+            move = build_move(by_id[24], records, atk_by_stem, effect_paths, fx, effects, objects,
+                              native_bloodblast=False)
         if move:
             move = json.loads(json.dumps(move))
             move["skill"] = str(skill["path"])

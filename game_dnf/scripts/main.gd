@@ -639,6 +639,7 @@ func action_duration(action: String) -> float:
 
 func action_ani_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
 		return elapsed*float(phase["charge_rate"]) if elapsed < release_at else elapsed-release_at
@@ -995,7 +996,7 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
-	if not native_phase.is_empty() and not native_phase.has("charge_rate"):
+	if native_phase.has("velocity"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	var native_slide := player.has("action_slide")
@@ -1033,6 +1034,9 @@ func step_action(ms: float, move: Vector2) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
+	if name == "bloodblast" and int(player["stage"]) == 0 and clock >= duration:
+		start_stage(1)
+		return
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
 	var pending := String(player["queued_skill"])
@@ -1416,6 +1420,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# Phase 1 sets mode 0 at 8591E3. The 1000 rate then preserves static[0].
 		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
 			"end_ms":release_at+float(m["native_recovery_ms"])}
+	elif m.get("native_state","") == "bloodblast":
+		# State 13 selects throw slot 1. Mode 3 uses the non-weapon attack speed.
+		# The local numeric model has one attack-speed channel.
+		var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		var speed := maxi(1,roundi(rate*1000.0))
+		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
+		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
 	if name == "triple":
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		if numeric_player == null and float(player["buff_ms"]) > 0.0:
@@ -1423,7 +1434,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
-	if m.has("stages") and not (name == "upper" and index == 1) and not player.has("weapon_combo_release"):
+	if m.has("stages") and not (name in ["upper","bloodblast"] and index == 1) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
@@ -1587,7 +1598,14 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var hit: Dictionary = stage["hits"][i]
 		if hit["kind"] == "object":
 			var at := float(hit["at"])
-			if at > old_t and at <= new_t:spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
+			if at > old_t and at <= new_t:
+				if hit.get("skill_id","") == "bloodblast" and not active_effect("frenzy").is_empty():
+					# C9D200 reads Frenzy level column 11 before CD80F7/CD8303 write the amounts.
+					var rank := int(skill_levels.get("buff",1))
+					var row: Array = Numbers.Skills.sample(Numbers.record("buff"),rank)["level_row"]
+					hit = hit.duplicate()
+					hit["fixed"] = int(float(hit["fixed"])*(100+int(row[11]))/100.0)
+				spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
@@ -2489,6 +2507,10 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
+	if kind == "bloodblast" and controller.has("reset_ms"):
+		var first := float(obj["segments"][0]["start"])
+		entity["next_hit_reset"] = first+float(controller["reset_ms"])
+		entity["hit_resets_left"] = int(controller["reset_count"])
 	if kind in GHOST_FIELD_KINDS:
 		if owner == "player" and kind != "rasa_field":
 			player["hardattack_ghost"] = controller.get("ghost_variant",kind.trim_suffix("_field"))
@@ -2593,6 +2615,13 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
+		if kind == "bloodblast":
+			if int(o.get("hit_resets_left",0)) > 0 and t >= float(o["next_hit_reset"]):
+				o["hits"].clear()
+				o["hit_resets_left"] -= 1
+				o["next_hit_reset"] += float(controller["reset_ms"])
+			var sound_at := float(controller.get("sound_at_ms",INF))
+			if old_t < sound_at and t >= sound_at:play_sound("FIRE_PILLAR_UP")
 		if controller.get("kind","") == "firewave_chain" and t >= Kernel.Timeline.duration(tl):
 			# Native ANI+1EC bit 8: create 20025 at +/-360, then delete 20024.
 			# The successor starts at age zero, independently of the actor clock.
@@ -3735,9 +3764,10 @@ func view_snapshot() -> Dictionary:
 			"poison":companion["numeric"].effects.poison_visual() if float(companion["hp"])>0 else 0})
 	var objs: Array = []
 	for o: Dictionary in objects:
-		if String(o["def"]["bank"]) == "":continue
-		var item := {"id":o["id"],"bank":String(o["def"]["bank"]),"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0}
 		var controller: Dictionary = o["hit"].get("native_controller",{})
+		var bank := String(o["def"]["bank"])
+		if bank == "" and controller.get("kind","") != "bloodblast":continue
+		var item := {"id":o["id"],"bank":bank,"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0}
 		if controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
 		elif controller.get("kind","") == "sayaex_ice":
@@ -3751,6 +3781,16 @@ func view_snapshot() -> Dictionary:
 			objs.append(item)
 		elif controller.get("kind","") == "rasa_child":
 			objs.append_array(_rasa_child_layers(item,o,controller))
+		elif controller.get("kind","") == "bloodblast":
+			item["depth_offset"] = -1
+			if bank != "":objs.append(item)
+			var layers: Array = controller["layers"]
+			for index in layers.size():
+				var layer := item.duplicate()
+				layer["id"] = "%s:layer:%s" % [o["id"],index]
+				layer["effect"] = layers[index]
+				layer["depth_offset"] = 1 if bank != "" else -1
+				objs.append(layer)
 		else:
 			objs.append(item)
 	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
