@@ -959,6 +959,10 @@ def build_rasa_move(skill: dict, records: dict, fx: dict, effects: dict, objects
     child_controller = {
         "kind": "rasa_child", "duration_col": 1, "attachment_duration_col": 19,
         "attack_speed_col": 2, "defense_col": 3, "recovery_col": 4, "attachment_limit": statics[8],
+        # A633DF sets the independent child timer. A64BC0 sends enum 5 with
+        # these level columns when the three-way native draw selects blind.
+        "status_interval_col": 5,
+        "blind_columns": {"chance": 10, "level": 11, "duration_ms": 12, "vision_percent": 13, "stuck_percent": 14},
         "startup_ms": duration_ms(records[startup]), "grab_ms": duration_ms(records[grab]),
         "stay_ani": child_stay,
         "startup_overlay": bindings[startup_overlay],
@@ -977,7 +981,7 @@ def build_rasa_move(skill: dict, records: dict, fx: dict, effects: dict, objects
     }
     return {
         "skill": skill["path"], "name": skill["name"], "native_state": "ghost_cast", "native_charge_ani": "throw1",
-        "fidelity_pending": ["attachment_abnormal_ticks", "monster_rank_factors", "attack_speed_quantization",
+        "fidelity_pending": ["attachment_poison_bleed", "blind_hit_rate_and_visual", "monster_rank_factors", "attack_speed_quantization",
                              "attachment_offsets", "area_draw_order", "object_random_stream"],
         "stages": [{"ani": "throw2", "atk": "", "fx": [], "sounds": [{"at": 0, "key": "SM_RASA"}],
                     "hits": [{"object": RASA_CREATOR, "offset": [122, 0, 0], "percent": 0,

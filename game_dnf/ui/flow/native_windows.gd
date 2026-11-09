@@ -1,7 +1,10 @@
 extends RefCounted
 ## Layout reconstruction from the supplied client's IMG families and UI tokens.
 ## Guide screenshots prove HUD/inventory/map style; unspecified anchors are adapted.
-const SELECTOR_EXPORT := "res://assets_local/flow_v1/dungeon_selector_v1/manifest.json"
+const SELECTOR_EXPORTS := {
+	"lorien": "res://assets_local/flow_v1/dungeon_selector_v1/manifest.json",
+	"skytower": "res://assets_local/flow_v1/dungeon_selector_sky_v1/manifest.json",
+}
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 var game
 var skin
@@ -19,7 +22,7 @@ var item_icons: Dictionary = {}
 var original_icons: Dictionary = {}
 var native_item_manifest: Dictionary = {}
 var native_item_textures: Dictionary = {}
-var _selector_art: MapLoader
+var _selector_packs: Dictionary = {}
 
 func _init(root) -> void:
 	game = root
@@ -409,21 +412,25 @@ func dungeon_lock_reason(id: String) -> String:
 		if game.session.quests.status(game.session.profile, required) != "completed":return "需要先完成前置任务"
 	return "尚未开放"
 
-func _selector_region(regions: Array, choices: Array) -> Dictionary:
+func _selector_pack(regions: Array, choices: Array) -> MapLoader:
 	if regions.size() != 1 or choices.is_empty() or game.selected_dungeon == "forest_trial":
-		return {}
-	if _selector_art == null:
-		_selector_art = MapLoader.new()
-		_selector_art.load_export(SELECTOR_EXPORT)
-	var region: Dictionary = _selector_art.data.get("regions", {}).get(String(regions[0]), {})
+		return null
+	var region_id := String(regions[0])
+	if not SELECTOR_EXPORTS.has(region_id):return null
+	if not _selector_packs.has(region_id):
+		var loaded := MapLoader.new()
+		if not loaded.load_export(SELECTOR_EXPORTS[region_id]):return null
+		_selector_packs[region_id] = loaded
+	var pack: MapLoader = _selector_packs[region_id]
+	var region: Dictionary = pack.data.get("regions", {}).get(region_id, {})
 	for id: String in choices:
 		if not region.get("cards", {}).has(id):
-			return {}
-	return region
+			return null
+	return pack
 
-func _selector_image(parent: Control, key: String, at: Vector2, scale_factor := 1.0) -> TextureRect:
-	var offset: Array = _selector_art.data["images"][key]["canvas_offset"]
-	return skin.image(parent, _selector_art.texture(key), at + Vector2(offset[0], offset[1]) * scale_factor, scale_factor)
+func _selector_image(parent: Control, pack: MapLoader, key: String, at: Vector2, scale_factor := 1.0) -> TextureRect:
+	var offset: Array = pack.data["images"][key]["canvas_offset"]
+	return skin.image(parent, pack.texture(key), at + Vector2(offset[0], offset[1]) * scale_factor, scale_factor)
 
 func dungeon() -> void:
 	var node = container(game.modal, Vector2.ZERO, Vector2(800, 600))
@@ -433,10 +440,11 @@ func dungeon() -> void:
 	var choices: Array = game.session.dungeon_choices(regions)
 	if game.selected_dungeon=="forest_trial":choices=["forest_trial"]
 	if not choices.is_empty() and game.selected_dungeon not in choices:game.selected_dungeon=choices[0]
-	var native_region := _selector_region(regions, choices)
-	var has_native_layout := not native_region.is_empty()
+	var selector_pack := _selector_pack(regions, choices)
+	var has_native_layout := selector_pack != null
+	var native_region: Dictionary = selector_pack.data["regions"][String(regions[0])] if has_native_layout else {}
 	if has_native_layout:
-		_selector_image(node, native_region["background"], Vector2.ZERO).name = "dungeon_region_background"
+		_selector_image(node, selector_pack, native_region["background"], Vector2.ZERO).name = "dungeon_region_background"
 	else:
 		skin.image(node, skin.texture("worldmap"), Vector2.ZERO).name = "dungeon_region_background"
 	skin.image(node, skin.texture("select", 79), Vector2.ZERO)
@@ -462,15 +470,18 @@ func dungeon() -> void:
 		var at: Vector2
 		var hit_size: Vector2
 		var pic: TextureRect
+		var card: Dictionary
+		var missing_card := false
 		if has_native_layout:
-			var card: Dictionary = native_region["cards"][id]
+			card = native_region["cards"][id]
+			missing_card = card.get("missing_card_frame", false)
 			var anchor: Array = card["expanded" if chosen else "compact"]
 			var connector: Array = card["connector"]
 			at = Vector2(anchor[0], anchor[1])
 			# Source CWorldMap balloon hit bounds and compact image scaling.
 			hit_size = Vector2(168, 63) if chosen else Vector2(118, 53)
-			_selector_image(node, card["connector_image"], Vector2(connector[0], connector[1]))
-			pic = _selector_image(node, card["card"], at, 1.0 if chosen else 0.7)
+			_selector_image(node, selector_pack, card["connector_image"], Vector2(connector[0], connector[1]))
+			pic = _selector_image(node, selector_pack, card["card"], at, 1.0 if chosen else 0.7)
 		else:
 			at = locations[i]
 			hit_size = Vector2(168, 78)
@@ -481,7 +492,7 @@ func dungeon() -> void:
 		pic.name = "dungeon_card_" + id
 		if chosen:
 			pic.name = "selected_dungeon_card"
-			difficulty_position = pic.position + Vector2(25, pic.size.y + 4)
+			difficulty_position = at + Vector2(25, 78) if missing_card else pic.position + Vector2(25, pic.size.y + 4)
 		if not unlocked:pic.modulate = Color("666666")
 		var hit := Button.new()
 		hit.set_meta("dungeon_id",id)
@@ -491,6 +502,16 @@ func dungeon() -> void:
 		hit.position = at
 		hit.size = hit_size
 		if has_native_layout:hit.tooltip_text = String(spec.get("name", id))
+		if missing_card:
+			# Keep the route discoverable when the source engine displays its transparent error frame.
+			var compact: Array = card["compact"]
+			var caption: Label = skin.label(hit, hit.tooltip_text, Vector2(compact[0], compact[1]) - at, 12,
+				Color("f0d18a") if unlocked else Color("8a8578"))
+			caption.name = "missing_dungeon_card_caption"
+			caption.clip_text = true
+			caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			caption.set_deferred("size", Vector2(118, 53))
 		hit.pressed.connect(func():
 			if not game.session.dungeon_available(id):
 				game.notice(dungeon_lock_reason(id))

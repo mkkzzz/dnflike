@@ -15,6 +15,8 @@ class QuestAssets(unittest.TestCase):
         cls.art = json.loads((cls.base/'manifest.json').read_text(encoding='utf-8'))
         cls.selector_base = cls.base.parent/'dungeon_selector_v1'
         cls.selector = json.loads((cls.selector_base/'manifest.json').read_text(encoding='utf-8'))
+        cls.sky_selector_base = cls.base.parent/'dungeon_selector_sky_v1'
+        cls.sky_selector = json.loads((cls.sky_selector_base/'manifest.json').read_text(encoding='utf-8'))
         cls.routes = json.loads((ROOT/'game_dnf/data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
         cls.pack = json.loads((ROOT/'game_dnf/assets_local/content/combat_content.json').read_text(encoding='utf-8'))
         cls.combat = json.loads((ROOT/'game_dnf/assets_local/combat/manifest.json').read_text(encoding='utf-8'))
@@ -45,6 +47,42 @@ class QuestAssets(unittest.TestCase):
                                  ('sprite/worldmap/selectdungeonslot/elvengard.img', index - 1, [0, -6]))
                 self.assertEqual(self.selector['images'][card['connector_image']]['frame'], connector)
 
+    def test_sky_selector_uses_normal_ui_background_and_registered_source_cards(self):
+        region = self.sky_selector['regions']['skytower']
+        images = self.sky_selector['images']
+        background = images[region['background']]
+        self.assertEqual((background['source_path'].lower(), background['frame'], background['size']),
+                         ('sprite/worldmap/lorien.img', 0, [800, 600]))
+        self.assertEqual(region['background_control'][1], 'IDC_WORLDMAP_BACKGROUND')
+        self.assertEqual(region['wdm_background'], ['WorldMap/SkyCastle.img', 0])
+        expected = {
+            'draconiantower': (11, 0, [297, 217], [270, 197], [297, 217], 43),
+            'hallofdoll': (12, 1, [419, 289], [416, 269], [363, 289], 42),
+            'golemtower': (13, 3, [134, 479], [84, 464], [134, 479], 37),
+            'darkentrance': (14, 2, [151, 308], [101, 288], [151, 308], 36),
+            'palaceofload': (15, 4, [121, 391], [71, 378], [121, 391], 46),
+            'floatingcastle': (17, 5, [131, 228], [81, 208], [131, 228], 36),
+            'draconiantower_amonlow': (19, 7, [399, 377], [396, 357], [343, 377], 42),
+        }
+        self.assertEqual(set(region['cards']), set(expected))
+        for key, (index, frame, compact, expanded, connector, connector_frame) in expected.items():
+            with self.subTest(key=key):
+                card = region['cards'][key]
+                self.assertEqual((card['dgn_index'], card['dgn_pattern'][3]), (index, frame))
+                self.assertEqual((card['compact'], card['expanded'], card['connector']), (compact, expanded, connector))
+                self.assertEqual(images[card['connector_image']]['frame'], connector_frame)
+                info = images[card['card']]
+                if index == 19:
+                    self.assertTrue(card['missing_card_frame'])
+                    self.assertEqual((info['source_path'].lower(), info['frame'], info['size']),
+                                     ('sprite/interface/base.img', 91, [1, 1]))
+                    with Image.open(self.sky_selector_base/info['file']) as fallback:
+                        self.assertIsNone(fallback.getchannel('A').getbbox())
+                else:
+                    self.assertFalse(card.get('missing_card_frame', False))
+                    self.assertEqual((info['source_path'].lower(), info['frame'], info['canvas_offset']),
+                                     ('sprite/worldmap/selectdungeonslot/skycastle.img', frame, [0, -6]))
+
     def test_source_rooms_keep_dungeon_identity(self):
         for key in ['lorien','lorien_inside']:
             export = json.loads((ROOT/'game_dnf'/self.routes[key]['map_export'].removeprefix('res://')).read_text(encoding='utf-8'))
@@ -74,7 +112,8 @@ class QuestAssets(unittest.TestCase):
         if not (library/'catalog.sqlite').is_file():self.skipTest('full library required for source pixel audit')
         lib=Library(library,ROOT/'temp/quest_pixel_audit')
         try:
-            for base, pack in [(self.base, self.art), (self.selector_base, self.selector)]:
+            for base, pack in [(self.base, self.art), (self.selector_base, self.selector),
+                               (self.sky_selector_base, self.sky_selector)]:
                 for info in pack['images'].values():
                     row=lib.catalog.execute('select local_path from assets where sha256=?',(info['img_sha256'],)).fetchone()
                     raw=(lib.root/row[0]).read_bytes()

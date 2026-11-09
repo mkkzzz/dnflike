@@ -134,6 +134,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$firePreference}
     $firewave | Write-Output
     if ($fireExit -ne 0 -or ($firewave -match 'SCRIPT ERROR|ERROR:') -or -not ($firewave -match '\[FIREWAVE\] COMPLETE checks=\d+ failures=0')) {throw "Firewave integration regression failed."}
+    $popePreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $popeCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_pope_combat.gd 2>&1
+        $popeExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$popePreference}
+    $popeCombat | Write-Output
+    if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
     $skillEffectPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

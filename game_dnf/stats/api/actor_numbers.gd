@@ -53,14 +53,32 @@ func set_runtime_modifiers(value: Array) -> void:
 func source_freeze_duration(chance: float, status_level: int, duration_ms: int, roll: int) -> int:
 	if status_level <= 0:return 0
 	var level_delta := status_level-int(values.get("level",1))
+	if not source_status_lands(chance,level_delta,int(values.get("abnormal_resistance",0)),roll):return 0
+	return maxi(0,int(native_scalar(duration_ms*native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE))))
+
+## Blind uses its own resistance index and scales both payloads before storage.
+## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.
+func apply_source_blind(source: Dictionary, roll: int) -> bool:
+	var level := int(source["level"])
+	var level_delta := level-int(values.get("level",1))
+	var resistance := int(values.get("blind_resistance",0))+int(values.get("abnormal_resistance",0))
+	if level <= 0 or not source_status_lands(float(source["chance"]),level_delta,resistance,roll):return false
+	var rate := native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE)
+	var duration := int(native_scalar(int(source["duration_ms"])*rate))
+	if duration <= 0:return false
+	var vision := int(native_scalar(int(source["vision_percent"])*rate))
+	var stuck := int(native_scalar(int(source["stuck_percent"])*rate))
+	var active: Dictionary = effects.active.get("blind",{}).get("definition",{})
+	if not active.is_empty() and (vision+stuck)*duration <= (int(active["vision_percent"])+int(active["stuck_percent"]))*int(active["duration_ms"]):return false
+	return effects.add("blind",{"name":"失明","duration_ms":duration,"status_level":level,
+		"vision_percent":vision,"stuck_percent":stuck})
+
+static func source_status_lands(chance: float, level_delta: int, resistance: int, roll: int) -> bool:
 	var base_percent := native_scalar(chance*100.0)
 	var probability_rate := native_level_rate(level_delta,STATUS_LEVEL_PROBABILITY_RATE)
 	var adjusted_percent := maxf(0.0,native_scalar(base_percent*probability_rate))
-	var resistance := int(values.get("abnormal_resistance",0))
 	var resisted_percent := native_scalar(native_scalar(adjusted_percent*(100.0-resistance))/100.0)
-	if roll >= native_scalar(resisted_percent*100.0):return 0
-	var duration_rate := native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE)
-	return maxi(0,int(native_scalar(duration_ms*duration_rate)))
+	return roll < native_scalar(resisted_percent*100.0)
 
 static func native_level_rate(level_delta: int, rate: float) -> float:
 	return native_scalar(1.0+native_scalar(native_scalar(level_delta*rate)*NATIVE_PERCENT))

@@ -96,6 +96,82 @@ func check_lorien_selector() -> void:
 	game.session.profile["quest_state"] = quest_state
 	game.selected_dungeon = previous
 
+func check_sky_selector() -> void:
+	var previous_session = game.session
+	var previous_dungeon: String = game.selected_dungeon
+	var previous_page: int = game.dungeon_page
+	var previous_location: String = game.town.location
+	var previous_ground: Vector2 = game.town.ground
+	game.session = game.Session.new()
+	game.session.profile["town_location"] = "westcoast"
+	game.session.profile["town_position"] = [1370, 320]
+	game.show_overlay("")
+	host.check(game.town.set_location("westcoast", Vector2(1370, 320)), "Sky Tower fixture loads the live West Coast town")
+	await ticks()
+	host.key(KEY_RIGHT, true)
+	for attempt in 90:
+		await ticks(1)
+		if game.overlay == "dungeon":break
+	host.key(KEY_RIGHT, false)
+	await ticks()
+	host.check(game.overlay == "dungeon" and game.selected_dungeon == "golemtower",
+		"walking into West Coast dungeon selection defaults to the first available Sky Tower route")
+	if game.overlay == "dungeon":
+		await check_sky_selector_open()
+	game.show_overlay("")
+	game.session = previous_session
+	game.selected_dungeon = previous_dungeon
+	game.dungeon_page = previous_page
+	game.town.set_location(previous_location, previous_ground)
+
+func check_sky_selector_open() -> void:
+	var backdrop: TextureRect = game.modal.find_child("dungeon_region_background", true, false)
+	var locked := dungeon_button("draconiantower")
+	var locked_card: TextureRect = game.modal.find_child("dungeon_card_draconiantower", true, false)
+	host.check(backdrop != null and backdrop.texture.get_size() == Vector2(800, 600) and
+		locked_card != null and locked_card.position.is_equal_approx(Vector2(297, 212.8)) and
+		locked_card.modulate != Color.WHITE and locked != null and locked.size == Vector2(118, 53) and
+		game.modal.find_child("dungeon_page_next", true, false) == null,
+		"Sky Tower uses the native background, trim, lock tint and single-map layout")
+	if locked != null:
+		host.click_control(locked)
+		await ticks()
+		host.check(game.selected_dungeon == "golemtower" and not game.session.dungeon_available("draconiantower"),
+			"real pointer clicks respect the Dragon Tower prerequisite")
+	var quest_id := "original.quest.8"
+	var entry: Dictionary = game.session.quests.new_entry(game.session.quests.catalog.definitions[quest_id])
+	entry["state"] = "completed"
+	game.session.profile["quest_state"]["entries"][quest_id] = entry
+	game.show_overlay("dungeon")
+	await ticks()
+	for id: String in ["draconiantower", "floatingcastle", "darkentrance", "palaceofload", "golemtower", "hallofdoll", "draconiantower_amonlow"]:
+		var target := dungeon_button(id)
+		var selectable := target != null
+		if selectable:
+			host.click_control(target)
+			await ticks()
+		host.check(selectable and game.selected_dungeon == id, "real Sky Tower pointer selects " + id)
+		if id == "draconiantower":
+			var selected: TextureRect = game.modal.find_child("selected_dungeon_card", true, false)
+			host.check(selected != null and selected.position == Vector2(270, 191) and selected.scale == Vector2.ONE,
+				"Dragon Tower expands at the original source position and scale")
+			await host.frame("18b_skycastle_source_selector")
+	var fallback: TextureRect = game.modal.find_child("selected_dungeon_card", true, false)
+	var caption: Label = game.modal.find_child("missing_dungeon_card_caption", true, false)
+	host.check(fallback != null and fallback.texture.get_size() == Vector2.ONE and fallback.position == Vector2(396, 357)
+		and caption != null and caption.text == game.session.dungeons["draconiantower_amonlow"]["name"]
+		and caption.position == Vector2(3, 20) and caption.size == Vector2(118, 53),
+		"DGN19 keeps the native error image and a visible localized route caption")
+	await host.frame("18c_skycastle_missing_source_card")
+	host.click_text("进入地下城")
+	await ticks()
+	host.check(game.session.run.get("dungeon") == "draconiantower_amonlow" and is_instance_valid(game.battle),
+		"the displayed DGN19 route reaches the real combat scene through the enter button")
+	if is_instance_valid(game.battle):
+		game.act("flow.retreat")
+		game.return_town()
+		await ticks()
+
 func run() -> void:
 	var original = game.session
 	var path: String = game.store.path
@@ -209,6 +285,7 @@ func run() -> void:
 	host.check(scroll.value > 0 and grid.position.y == -scroll.value, "actual shop wheel moves content and scrollbar together")
 	scroll.value = 0
 	await check_lorien_selector()
+	await check_sky_selector()
 	game.show_overlay("dungeon")
 	await ticks()
 	for expected in ["adventure", "expert", "king", "normal"]:

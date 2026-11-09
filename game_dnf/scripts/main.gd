@@ -241,7 +241,9 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	var ratio := float(enemy["hp"])/maxf(1,float(enemy["max_hp"]))
 	var actor = enemy.get("numeric")
 	if actor == null:actor = ActorNumbers.new()
-	actor.configure({"numbers":Numbers.monster(monster_base,numeric_monster_level,bool(enemy["chief"]),numeric_difficulty)})
+	var stats := Numbers.monster(monster_base,numeric_monster_level,bool(enemy["chief"]),numeric_difficulty)
+	stats["blind_resistance"] = int(m["blind_resistance"])
+	actor.configure({"numbers":stats})
 	enemy["numeric"] = actor
 	enemy["max_hp"] = float(actor.values["hp_max"])
 	enemy["hp"] = float(enemy["max_hp"])*ratio
@@ -1192,6 +1194,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if String(hit.get("kind","")) != "object" and not hit.has("object"):
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
+	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,
 		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))})
@@ -1363,8 +1366,9 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	elif state in ["idle","move"] and enemy.get("ai",true):
 		var target := player if companions.is_empty() else nearest_living(enemy["pos"],friendly_targets())
 		if target.is_empty():return
-		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]))
-		if not native_selection.is_empty():
+		var blind: bool = enemy.has("numeric") and enemy["numeric"].effects.active.has("blind")
+		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]),blind)
+		if not native_selection.is_empty() and (not blind or bool(intent["visible"])):
 			var slot := poll_native_enemy_attack(enemy,native_selection)
 			intent["attack"] = slot >= 0
 			intent["move_index"] = slot
@@ -1414,6 +1418,7 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	var move_segments: Array = move.get("segments", m.get("attack_segments", []))
 	var move_atk: Dictionary = move.get("atk", m.get("atk", {}))
 	var move_atk_path := String(move.get("atk_path", ""))
+	var contact: Dictionary = m.get("attack_contacts",{}).get(maxi(pick,0),{})
 	var emission: Dictionary = move.get("emission",{})
 	if not emission.is_empty():
 		if not enemy["thrown"] and t >= float(emission["at"]):
@@ -1446,9 +1451,13 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 				var c: Dictionary = Kernel.HitJudge.contact(world,friendly_damage_boxes(target))
 				if c.is_empty():continue
 				enemy["hits"][key] = true
-				land_hit(enemy,target,{"atk":move_atk,"atk_path":move_atk_path,
-					"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0},
-					c["point"],int(enemy["facing"]),float(enemy["attack"]))
+				var hit := {"atk":move_atk,"atk_path":move_atk_path,
+					"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0}
+				if not contact.is_empty():
+					hit["native_contact"] = contact
+					hit["atk_path"] = contact["atk_path"]
+					hit["skill_id"] = ""
+				land_hit(enemy,target,hit,c["point"],int(enemy["facing"]),float(enemy["attack"]))
 	if t >= Kernel.Timeline.duration(move_timeline):
 		enemy["state"] = "idle"
 		enemy["clock"] = 0.0
@@ -1459,6 +1468,17 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 			var cds: Dictionary = enemy.get("skill_cd", {})
 			cds[used] = float(move.get("cool_ms",m["attack_delay"]))
 			enemy["skill_cd"] = cds
+
+func spawn_attack_contact(attacker: Dictionary, target: Dictionary, contact: Dictionary, facing: int, power: float) -> void:
+	# 7EF650 tests a bit mask against the original player, APC and MOB class flags.
+	var actor_class := 0x211
+	if int(target["id"]) == PLAYER_ID:actor_class = 0x11
+	elif target.has("companion_id"):actor_class = 0x111
+	var target_class := int(contact["target_class"])
+	if (actor_class & target_class) != target_class:return
+	if rng.range_int(0,99) >= int(contact["chance_percent"]):return
+	# DBBB83 serializes the victim's integer world X and Y, with zero height.
+	spawn_object(contact["hit"],"monster",Vector2(Vector2i(target["pos"])),0.0,facing,power,attacker)
 
 ## Player takes a monster hit. Returns the reaction kind, or "blocked" if nothing applied.
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
@@ -1603,7 +1623,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			# CB25FB..CB2819 creates a fresh object at release. Evaluate frame zero
 			# now without charging the new object for the caster's creation update.
 			object_ms = 0.0
-		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o.has("ptl_motion"):
+		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and (o.has("ptl_motion") or hit.get("starts_at_zero",false)):
 			object_ms = 0.0
 		var old_t := float(o["clock"])
 		var t := old_t+object_ms
@@ -1797,6 +1817,21 @@ func step_rasa_child(object: Dictionary, controller: Dictionary) -> bool:
 			return false
 		object["pos"] = Vector2(target["pos"])+Vector2(0,int(object["rasa_slot"])+1)
 		object["z"] = target["z"]
+		if age-float(object["rasa_attached_at"]) < float(controller["grab_ms"]):return true
+		if not object.has("rasa_grab_finished"):
+			# A64307 enters the stable attachment and leaves this update.
+			object["rasa_grab_finished"] = true
+			return true
+		# A6430E polls the timer started at birth, after the grab clip ends.
+		# A due poll advances one interval, even if more elapsed between ticks.
+		var interval := float(controller["status_interval_ms"])
+		var next_status := float(object.get("rasa_next_status_ms",interval))
+		if interval > 0.0 and age >= next_status:
+			object["rasa_next_status_ms"] = next_status+interval
+			# Native order is poison, blind, bleed. Only blind is connected.
+			if rng.range_int(0,2) == 1 and not bool(target["chief"]) and target.has("numeric") \
+					and target["numeric"].apply_source_blind(controller["blind"],rng.range_int(0,9999)):
+				bus.emit("combat.status",{"target":target["id"],"id":"blind","change":"added"})
 		return true
 	if age >= float(object["life_ms"]):return false
 	var creator_id := int(object["hit"]["rasa_creator_id"])

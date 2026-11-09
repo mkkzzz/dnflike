@@ -56,6 +56,7 @@ func run() -> void:
 	check_saya(game,session)
 	check_bremen_freeze(game,session)
 	check_rasa(game,session)
+	check_rasa_blind(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
@@ -390,20 +391,7 @@ func check_rasa(game, session) -> void:
 	check(actor.add_effect("bremen_debuff",1),"Rasa fixture has an independent Bremen effect")
 	target["hp"] = 5000.0
 	outside["hp"] = 6000.0
-	var roll = DetRng.new()
-	var seed_value := -1
-	for seed_candidate: int in range(20000):
-		roll.reseed(seed_candidate)
-		var close := 0
-		for i in range(4):
-			roll.range_int(0,1)
-			roll.range_int(0,1)
-			var x: int = roll.range_int(0,63)
-			var y: int = roll.range_int(0,31)
-			if x <= 12 and y <= 12:close += 1
-		if close >= 3:
-			seed_value = seed_candidate
-			break
+	var seed_value := rasa_contact_seed()
 	check(seed_value>=0,"Rasa seed gives three child contact fixtures")
 	game.bus.clear_history()
 	check(game.start_action("epidemicrasa"),"Rasa starts through the learned source move")
@@ -511,3 +499,98 @@ func check_rasa(game, session) -> void:
 	target["hp"] = 0.0
 	game.step_objects(0.0)
 	check(game.rasa_attachment_count(int(target["id"]))==0 and actor.values["physical_defense"]==5000 and actor.values["hit_recovery"]==605 and actor.effects.active.has("bremen_debuff"),"Rasa removes only its own attachments immediately when their target dies")
+
+func rasa_contact_seed() -> int:
+	var roll = DetRng.new()
+	for seed_value: int in range(20000):
+		roll.reseed(seed_value)
+		var close := 0
+		for i in range(4):
+			roll.range_int(0,1)
+			roll.range_int(0,1)
+			var x: int = roll.range_int(0,63)
+			var y: int = roll.range_int(0,31)
+			if x <= 12 and y <= 12:close += 1
+		if close >= 3:return seed_value
+	return -1
+
+func check_rasa_blind(game, session) -> void:
+	game.restart()
+	game.monsters.clear()
+	game.numeric_player = Actor.new()
+	game.numeric_player.configure(session.stats())
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.skill_levels = {"epidemicrasa":1}
+	game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+	game.player["mp"] = game.numeric_player.values["mp_max"]
+	var origin := Vector2(400,250)
+	var point := origin+Vector2(122,0)
+	game.player["pos"] = origin
+	game.player["facing"] = 1
+	var enemy: Dictionary = game.spawn_enemy(point)
+	enemy["pos"] = point
+	var actor = enemy["numeric"]
+	actor.configure({"numbers":actor.base.merged({"level":47},true)})
+	check(game.start_action("epidemicrasa"),"Rasa blind fixture casts the actual learned skill")
+	game.step_action(250.0,Vector2.ZERO)
+	game.rng.reseed(rasa_contact_seed())
+	game.step_objects(1000.0)
+	game.step_objects(1200.0)
+	var attached: Array = game.objects.filter(func(object):return object.has("rasa_target_id"))
+	check(attached.size()==3,"Rasa blind fixture has three real child attachments")
+	if attached.size()!=3:return
+	var late_child: Dictionary = attached[0]
+	var controller: Dictionary = late_child["hit"]["native_controller"]
+	var row: Dictionary = controller["blind"]
+	check(row=={"chance":1.3,"level":47,"duration_ms":6500,"vision_percent":52,"stuck_percent":1}
+		and controller["status_interval_ms"]==2600.0,"Rasa rank one compiles original blind columns and the child interval")
+
+	var resister = Actor.new()
+	resister.configure({"numbers":actor.base.merged({"blind_resistance":50},true)})
+	check(not resister.apply_source_blind(row,6500) and resister.apply_source_blind(row,6499),"original 130 percent chance and 50 blind resistance give the strict 6500 boundary")
+	resister.step(100.0)
+	check(not resister.apply_source_blind(row,0) and resister.effects.active["blind"]["remaining_ms"]==6400.0,"equal blind strength and duration leave the previous expiry intact")
+	var stronger := {"chance":1.3,"level":55,"duration_ms":6500,"vision_percent":56,"stuck_percent":3}
+	check(resister.apply_source_blind(stronger,0) and resister.effects.active["blind"]["remaining_ms"]==7020.0
+		and resister.effects.active["blind"]["definition"]["vision_percent"]==60,"stronger blind replaces the previous entry after source level scaling")
+
+	game.player["pos"] = point-Vector2(211,0)
+	game.update_enemy(enemy,16.0)
+	check(enemy["state"]=="move","ordinary Goblin tracks a visible target 211 units away before blind")
+	enemy["pos"] = point
+	enemy["state"] = "idle"
+	# Align one already-attached child's grab completion with the deadline.
+	late_child["rasa_attached_at"] = 2600.0-float(controller["grab_ms"])
+	game.step_objects(1399.0)
+	check(not actor.effects.active.has("blind"),"attached children do not draw at age 2599")
+	var draw = DetRng.new()
+	var blind_seed := 0
+	while blind_seed < 100:
+		draw.reseed(blind_seed)
+		if draw.range_int(0,2)==1:break
+		blind_seed += 1
+	game.rng.reseed(blind_seed)
+	game.bus.clear_history()
+	game.step_objects(1.0)
+	var blind: Dictionary = actor.effects.active.get("blind",{})
+	check(blind.get("remaining_ms",0)==6500.0,"a native blind draw at child age 2600 applies the equal-level status")
+	var events: Array = game.bus.events_of("combat.status").filter(func(e):return e.get("id","")=="blind")
+	check(events.size()==1,"equal child blind draws cannot stack or refresh the status")
+	check(not late_child.has("rasa_next_status_ms"),"the grab completion tick does not draw even when the child timer is due")
+	game.step_objects(0.0)
+	check(late_child.get("rasa_next_status_ms",0)==5200.0,"the next stable update consumes the pending child deadline")
+	game.update_enemy(enemy,16.0)
+	check(enemy["state"]=="idle" and enemy["pos"]==point,"blind Goblin cannot track beyond the original projected 210-unit boundary")
+	game.player["pos"] = point-Vector2(210,0)
+	game.update_enemy(enemy,16.0)
+	check(enemy["state"]=="move","blind Goblin still tracks at the inclusive reduced sight boundary")
+	enemy["pos"] = point
+	enemy["state"] = "idle"
+	game.player["pos"] = point-Vector2(211,0)
+	actor.step(6467.0)
+	game.update_enemy(enemy,1.0)
+	check(not actor.effects.active.has("blind") and enemy["state"]=="move","status expiry restores the Goblin's ordinary target acquisition")
+	game.step_objects(5200.0)
+	check(late_child.get("rasa_next_status_ms",0)==7800.0,"after a long update each child advances the previous deadline only once")
+	game.step_objects(0.0)
+	check(late_child.get("rasa_next_status_ms",0)==10400.0,"a subsequent update consumes the next overdue interval")

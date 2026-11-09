@@ -342,6 +342,12 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 						controller["attack_speed"] = float(row[int(controller["attack_speed_col"])])*0.001
 						controller["defense"] = float(row[int(controller["defense_col"])])
 						controller["recovery"] = float(row[int(controller["recovery_col"])])
+						controller["status_interval_ms"] = float(row[int(controller["status_interval_col"])])
+						var blind: Dictionary = {}
+						for field: String in controller["blind_columns"]:
+							blind[field] = int(row[int(controller["blind_columns"][field])])
+						blind["chance"] = float(blind["chance"])*0.001
+						controller["blind"] = blind
 						controller["stay_timeline"] = timeline(String(controller["stay_ani"]))
 				elif controller.get("kind","") == "firewave_chain":
 					# Resolve the successor's own ATK and fixed column, not a copy
@@ -483,6 +489,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"hp":monster_base_hp(mob)*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
+		"blind_resistance":int(mob.get("blind_resistance",0)),
 		"attack_delay":float(mob.get("attack_delay",mob.get("think_term",1200))),
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
@@ -537,6 +544,22 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			if emissions.has(index):_attach_attack_emission(move,emissions[index],path)
 			moves.append(move)
 	if not moves.is_empty():m["moves"] = moves
+	for binding: Dictionary in record.get("native_attack_contacts",[]):
+		var slot := int(binding["slot"])
+		var object_path := String(binding["object_path"])
+		var resolved: Array = _build_stage({"hits":[{"object":object_path}]},{})["hits"]
+		var contact_object := object(object_path)
+		if slot < 0 or slot >= attack_infos.size() or resolved.is_empty() or contact_object.get("bank","") != String(binding["object_bank"]):
+			problems.append("attack contact slot, object, or render bank missing for "+path)
+			continue
+		var hit: Dictionary = resolved[0]
+		hit["skill_id"] = ""
+		hit["starts_at_zero"] = true
+		if not m.has("attack_contacts"):m["attack_contacts"] = {}
+		m["attack_contacts"][slot] = {
+			"hit":hit,"target_class":int(binding["target_class"]),
+			"chance_percent":int(binding["chance_percent"]),"atk_path":String(attack_infos[slot]).to_lower(),
+		}
 	var first_attack: Dictionary = moves[0] if not moves.is_empty() else {}
 	if not first_attack.is_empty():
 		motions["attack"] = String(first_attack["stem"])

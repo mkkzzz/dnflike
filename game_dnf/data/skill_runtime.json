@@ -1352,7 +1352,8 @@
   },
   "epidemicrasa": {
    "fidelity_pending": [
-    "attachment_abnormal_ticks",
+    "attachment_poison_bleed",
+    "blind_hit_rate_and_visual",
     "monster_rank_factors",
     "attack_speed_quantization",
     "attachment_offsets",
@@ -1382,6 +1383,13 @@
           "attachment_duration_col": 19,
           "attachment_limit": 3,
           "attack_speed_col": 2,
+          "blind_columns": {
+           "chance": 10,
+           "duration_ms": 12,
+           "level": 11,
+           "stuck_percent": 14,
+           "vision_percent": 13
+          },
           "defense_col": 3,
           "duration_col": 1,
           "grab_fx": "skillfx_grab_3189b870",
@@ -1393,6 +1401,7 @@
           "recovery_col": 4,
           "startup_ms": 1200.0,
           "startup_overlay": "skillfx_startup_ldodge_0030e5f5",
+          "status_interval_col": 5,
           "stay_ani": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
           "stay_fx": "skillfx_stay_633ceea4",
           "stay_overlay": "skillfx_stay_ldodge_e8328c3d"
@@ -9083,7 +9092,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "213d5929657e77d027f8a75b5a9679eeab2bc64ca1f8f5622e2461c77391d009"
+  "pack_sha256": "6fda441b256e4b4343be9be64f08bf3c9b4ca4664c1a53cb29bf00cb4dce145e"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

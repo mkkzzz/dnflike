@@ -16,11 +16,16 @@ from export_dnf_map import (Library, export_map, plain, span_values, resolve, CO
                             TILE_W, TILE_H, CELL_W, CELL_H, GRID_COLS, GRID_ROWS, LAYERS)
 
 OUTPUT = ROOT / 'game_dnf/assets_local/flow_v1'
-SELECTOR_OUTPUT = OUTPUT / 'dungeon_selector_v1'
-SELECTOR_REGIONS = {'lorien': 'worldmap/lorien.wdm'}
+SELECTOR_PACKS = {
+    'lorien': ('worldmap/lorien.wdm', OUTPUT / 'dungeon_selector_v1'),
+    'skytower': ('worldmap/skycastle.wdm', OUTPUT / 'dungeon_selector_sky_v1'),
+}
+SKY_CARD_BANK = 'worldmap/selectdungeonslot/skycastle.img'
+SKY_CARD_BANK_SHA = '8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409'
+ERROR_IMAGE_SHA = '987c3569cc48c257842e011c4747ce4f51f0f3337b75bc283deea84208ba0685'
 
 
-def build_dungeon_selector(library: Path, output: Path) -> dict:
+def build_dungeon_selector(library: Path, output: Path, region: str = 'lorien') -> dict:
     """Compile source cards for existing runtime dungeons without adding routes."""
     game = ROOT / 'game_dnf'
     dungeons = json.loads((game / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
@@ -48,48 +53,70 @@ def build_dungeon_selector(library: Path, output: Path) -> dict:
             raise ValueError('Invalid source dungeon listing CRC')
         sources[listing_path] = listing_sha
         listing = lib.listing(listing_path)
-        regions = {}
-        for region, wdm_path in SELECTOR_REGIONS.items():
-            wdm = spans(wdm_path)
-            ui_path, = span_values(wdm, '[ui path]')
-            controls = [plain(s['values']) for s in spans(ui_path.lower()) if s['tag'] == '[ui controls]']
-            background, frame = span_values(wdm, '[map image]')
-            background_control = next(v for v in controls if v[1] == 'IDC_WORLDMAP_BACKGROUND')
-            if background_control[2:4] != [0, 0] or (background_control[5].lower(), background_control[7]) != (background.lower(), frame):
-                raise ValueError(f'WDM and UI disagree on the {region} background')
-            balloons = {v[9]: v for v in controls if v[0] == '[balloon]' and len(v) == 10}
-            listed = span_values(wdm, '[dungeon]')[::2]
-            cards = {}
-            for key, spec in dungeons.items():
-                if spec.get('legacy') or spec.get('region', 'lorien') != region:
-                    continue
-                route = json.loads((game / spec['map_export'].removeprefix('res://')).read_text(encoding='utf-8'))['dungeon']
-                index = route['index']
-                if index not in listed or index not in balloons:
-                    raise ValueError(f'{key} is missing its original WDM or UI slot')
-                dgn_path = resolve('dungeon/dungeon.lst', listing[index])
-                dgn = spans(dgn_path)
-                if (route['path'], route['sha256']) != (dgn_path, sources[dgn_path]):
-                    raise ValueError(f'{key} disagrees with the original DGN identity')
-                pattern = span_values(dgn, '[worldmap pattern info]')
-                if len(pattern) != 4:
-                    raise ValueError(f'{key} has an unsupported original card record')
-                _, control, x, y, _, connector_bank, _, _, ui_pattern, _ = balloons[index]
-                offsets = table[ui_pattern]
-                compact, expanded, connector = ([x + dx, y + dy] for dx, dy in zip(offsets[::2], offsets[1::2], strict=True))
-                cards[key] = {'dgn_index': index, 'dgn': dgn_path, 'control': control,
-                              'anchor': [x, y], 'ui_pattern': ui_pattern, 'dgn_pattern': pattern,
-                              'compact': compact, 'expanded': expanded, 'connector': connector,
-                              'card': image(pattern[2], pattern[3]),
-                              'connector_image': image(connector_bank, 30 + ui_pattern)}
-            regions[region] = {'wdm': wdm_path, 'ui': ui_path.lower(),
-                               'background': image(background, frame), 'cards': cards}
+        wdm_path, _ = SELECTOR_PACKS[region]
+        wdm = spans(wdm_path)
+        ui_path, = span_values(wdm, '[ui path]')
+        controls = [plain(s['values']) for s in spans(ui_path.lower()) if s['tag'] == '[ui controls]']
+        wdm_background, wdm_frame = span_values(wdm, '[map image]')
+        background_control = next(v for v in controls if v[1] == 'IDC_WORLDMAP_BACKGROUND')
+        background, frame = background_control[5], background_control[7]
+        if background_control[0] != '[image]' or background_control[2:4] != [0, 0]:
+            raise ValueError(f'Unsupported {region} background control')
+        balloons = {v[9]: v for v in controls if v[0] == '[balloon]' and len(v) == 10}
+        listed = span_values(wdm, '[dungeon]')[::2]
+        cards = {}
+        for key, spec in dungeons.items():
+            if spec.get('legacy') or spec.get('region', 'lorien') != region:
+                continue
+            route = json.loads((game / spec['map_export'].removeprefix('res://')).read_text(encoding='utf-8'))['dungeon']
+            index = route['index']
+            ui_only = (region, key, index) == ('skytower', 'draconiantower_amonlow', 19)
+            if index not in balloons or (index not in listed and not ui_only):
+                raise ValueError(f'{key} is missing its original WDM or UI slot')
+            dgn_path = resolve(listing_path, listing[index])
+            dgn = spans(dgn_path)
+            if (route['path'], route['sha256']) != (dgn_path, sources[dgn_path]):
+                raise ValueError(f'{key} disagrees with the original DGN identity')
+            pattern = span_values(dgn, '[worldmap pattern info]')
+            if len(pattern) != 4:
+                raise ValueError(f'{key} has an unsupported original card record')
+            _, control, x, y, _, connector_bank, _, _, ui_pattern, _ = balloons[index]
+            offsets = table[ui_pattern]
+            compact, expanded, connector = ([x + dx, y + dy] for dx, dy in zip(offsets[::2], offsets[1::2], strict=True))
+            if ui_only and (control, pattern[0], pattern[1], pattern[2].lower(), pattern[3]) != (
+                    'IDC_WORLDMAP_BUTTON1', 2, 1, SKY_CARD_BANK, 7):
+                raise ValueError(f'{key} disagrees with the verified UI-only slot')
+            card = lib.image(pattern[2], pattern[3], key) if ui_only else image(pattern[2], pattern[3])
+            missing_card = card is None
+            if missing_card:
+                source = lib.images[image(SKY_CARD_BANK, 0)]
+                if source['img_sha256'] != SKY_CARD_BANK_SHA:
+                    raise ValueError(f'{key} is missing its verified original card bank')
+                # GetImage bounds failure returns the engine error image, Base.img#91.
+                card = image('Interface/Base.img', 91)
+                fallback = lib.images[card]
+                if fallback['img_sha256'] != ERROR_IMAGE_SHA or fallback['size'] != [1, 1]:
+                    raise ValueError(f'{key} has an unexpected original error image')
+            cards[key] = {'dgn_index': index, 'dgn': dgn_path, 'control': control,
+                          'anchor': [x, y], 'ui_pattern': ui_pattern, 'dgn_pattern': pattern,
+                          'compact': compact, 'expanded': expanded, 'connector': connector,
+                          'card': card, 'connector_image': image(connector_bank, 30 + ui_pattern)}
+            if missing_card:
+                cards[key]['missing_card_frame'] = True
+        layout = {'wdm': wdm_path, 'ui': ui_path.lower(), 'background': image(background, frame), 'cards': cards}
+        if (background.lower(), frame) != (wdm_background.lower(), wdm_frame):
+            # Normal selection loads the WDM [ui path] into the visible UI tree.
+            layout['background_control'] = background_control
+            layout['wdm_background'] = [wdm_background, wdm_frame]
+            layout['background_consumer'] = 'EXERESX 0x110F801/0x105D1B0/0x105A010'
+        if any(card.get('missing_card_frame') for card in cards.values()):
+            layout['missing_frame_consumer'] = 'EXERESX 0x11AA190/0x11B0330/0x6FD626'
 
         result = {'schema': 'dnf_native_map/1', 'selector_schema': 'dnf_dungeon_selector/1',
                   'source': {'files': sources, 'dungeon_listing': listing_path,
                              'layout_consumer': 'EXERESX 0x106DBBD/0x106D630/0x106CF40',
                              'engine_sha256': '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'},
-                  'regions': regions, 'images': lib.images}
+                  'regions': {region: layout}, 'images': lib.images}
         (output / 'manifest.json').write_text(json.dumps(result, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
         return result
     finally:
@@ -239,16 +266,18 @@ def main():
     parser.add_argument('--library', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--dungeon-selector-only', action='store_true', help='Export the verified world-map UI pack only')
+    parser.add_argument('--dungeon-selector-region', choices=SELECTOR_PACKS, default='lorien')
     args = parser.parse_args()
     lock = json.loads(LOCK.read_text(encoding='utf-8'))
     library = args.library or cache_home() / lock['version'] / 'library_v1'
-    output = (args.output or (SELECTOR_OUTPUT if args.dungeon_selector_only else OUTPUT)).resolve()
+    selector_output = SELECTOR_PACKS[args.dungeon_selector_region][1]
+    output = (args.output or (selector_output if args.dungeon_selector_only else OUTPUT)).resolve()
     if not any(output.is_relative_to(p.resolve()) for p in [ROOT/'temp', ROOT/'game_dnf/assets_local']):
         parser.error('Output must be inside ignored temp/ or assets_local/')
     if args.dungeon_selector_only:
-        if output != SELECTOR_OUTPUT.resolve() and not output.is_relative_to((ROOT / 'temp').resolve()):
-            parser.error('Selector output must be under temp/ or in the dedicated dungeon_selector_v1 pack')
-        result = build_dungeon_selector(library, output)
+        if output != selector_output.resolve() and not output.is_relative_to((ROOT / 'temp').resolve()):
+            parser.error('Selector output must be under temp/ or in its dedicated resource pack')
+        result = build_dungeon_selector(library, output, args.dungeon_selector_region)
         print(json.dumps({'output': str(output), 'regions': len(result['regions']), 'images': len(result['images'])}))
         return
     result = build(library, output)

@@ -83,6 +83,7 @@ OBJECTS = {
     'goblin_ice': 'passiveobject/common/animation/icemissile1.ani',
     'goblin_fire': 'passiveobject/common/animation/firemissile.ani',
     'native_cannonball': 'passiveobject/monster/vehicle/cannonball.obj',
+    'native_pope_thunderbolt': 'passiveobject/monster/zealot/popethunderbolt.obj',
 }
 # Player motions used by the trial skills that the runtime manifest does not carry yet.
 # Frames index the same 210-pose body/weapon atlases (all <= 209).
@@ -966,7 +967,13 @@ def main() -> int:
                         help='Add original cannonball art and source firing/hit sounds')
     parser.add_argument('--extend-ghost-cast-clips', action='store_true',
                         help='Add original ghost cast clip metadata to the existing player atlases')
+    parser.add_argument('--extend-pope-thunderbolt', action='store_true',
+                        help='Add the Pope contact attack object without changing existing banks')
     args = parser.parse_args()
+    if args.extend_pope_thunderbolt:
+        specs = [('objects', 'native_pope_thunderbolt', OBJECTS['native_pope_thunderbolt'])]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
     if args.extend_cannon:
         specs = [('objects', 'native_cannonball', OBJECTS['native_cannonball'])]
         specs.extend(('audio', key, CUE_SOUNDS[key]) for key in ('DRGCANNON_SHOOT', 'R_BOMB_HIT'))

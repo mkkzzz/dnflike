@@ -79,6 +79,30 @@ NATIVE_ATTACK_EMISSIONS = {
     },
 }
 
+NATIVE_ATTACK_CONTACTS = {
+    'monster/zealot/bosspope.mob': {
+        'mob_id': 266,
+        'slot': 0,
+        'object_id': 30073,
+        'object_bank': 'native_pope_thunderbolt',
+        'target_class': 0x11,
+        'chance_percent': 50,
+        'sha256': {
+            'monster/zealot/bosspope.mob': '826cf924373c6d0a3957b038e813b1e4c8f45c33617feffb1b4617eb414318a6',
+            'monster/zealot/popeani/attack.ani': '645c08d1f4e5eb7f020b8f648bb1843d069ce024a12ad02ad1233b1ccbc4f9e0',
+            'monster/zealot/attackinfo/poattack.atk': '3438c21857b666e5954a09f356dbfee55aec415418b9803e102d477b0a7d8d8a',
+            'passiveobject/monster/zealot/popethunderbolt.obj': '9758107fdf088324b2eb445eb1102576ad97381a4281901190b3563e7ab1c735',
+            'passiveobject/common/animation/thunderbolt.ani': 'c40004818e6b97ed2aceb7ff24d2ffc1b20632d83a225c803c5b7257d79b3570',
+            'passiveobject/monster/zealot/attackinfo/popethunderbolt.atk': '2a1efe652ed70b3abcbd2c091a43ff4e0c11d4c061a6803c44176fbcd3dd6e95',
+        },
+        'source': {
+            'engine_sha256': '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84',
+            'contact': '0xDBBB10..0xDBBBE0',
+            'spawn': '0xDBBB83..0xDBBBD2 → 0x86DF60',
+        },
+    },
+}
+
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
 #   int|float|str = first value; list = all values; enum = canonical enum tag(s); flag = presence.
 ATK_FIELDS = {
@@ -631,6 +655,44 @@ def compile_native_attack_selection(mob: dict, emissions: list[dict], source: di
             'slots': slots, 'source': source}
 
 
+def compile_native_attack_contact(mob: dict, mob_id: int, spec: dict, passive_index: dict, add) -> dict:
+    """Bind an engine contact callback to its pinned original slot and attack object."""
+    path = mob['id']
+
+    def checked(record: dict | None, dependency: str) -> dict:
+        if not record or record['source']['sha256'] != spec['sha256'].get(dependency):
+            raise ValueError(f'Native attack contact for {path} needs exact source {dependency}')
+        return record['decoded']
+
+    decoded = checked(mob, path)
+    if mob_id != spec['mob_id']:
+        raise ValueError(f'Native attack contact for {path} has mismatched MOB ID')
+    slot = spec['slot']
+    motions = decoded.get('attack_motions', [])
+    attacks = decoded.get('attack_infos', [])
+    if not 0 <= slot < min(len(motions), len(attacks)):
+        raise ValueError(f'Native attack contact for {path} has no complete attack slot {slot}')
+    attack_ani = checked(add(motions[slot], 'ani', path), motions[slot])
+    checked(add(attacks[slot], 'atk', path), attacks[slot])
+    object_id = spec['object_id']
+    relative_obj = passive_index.get(object_id)
+    if not relative_obj:
+        raise ValueError(f'Native attack contact for {path} cannot resolve OBJ{object_id} in the original LST')
+    obj_path = ('passiveobject/' + relative_obj).lower()
+    obj = checked(add(obj_path, 'obj', path), obj_path)
+    if len(obj.get('basic_motion', [])) != 1 or len(obj.get('attack_infos', [])) != 1:
+        raise ValueError(f'Native attack contact for {path} needs a single OBJ basic ANI and ATK')
+    obj_ani = obj['basic_motion'][0]
+    obj_atk = obj['attack_infos'][0]
+    bolt_ani = checked(add(obj_ani, 'ani', obj_path), obj_ani)
+    checked(add(obj_atk, 'atk', obj_path), obj_atk)
+    if not all(any(row['attack_boxes'] for row in ani['timeline']) for ani in (attack_ani, bolt_ani)):
+        raise ValueError(f'Native attack contact for {path} needs both original attack timelines')
+    return {'slot': slot, 'object_id': object_id, 'object_path': obj_path,
+            'object_bank': spec['object_bank'], 'target_class': spec['target_class'],
+            'chance_percent': spec['chance_percent'], 'source': spec['source']}
+
+
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -703,7 +765,8 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     # 编译范围：哥布林家族 + 早期手写四只 + **副本实际引用到的全部 mob**。
     # 只认硬编码范围会让天空之城/桑德兰那批怪在内容包里查不到，运行时整只怪被跳过。
     extra = {path.lower() for path in extra_mob_paths}
-    needed = referenced_mob_paths() | extra
+    required = extra | NATIVE_ATTACK_CONTACTS.keys()
+    needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
@@ -766,9 +829,13 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
                 mob['native_attack_selection'] = compile_native_attack_selection(mob, emissions, spec['selection_source'])
             for emission in emissions:
                 object_index[str(emission['object_id'])] = emission['object_path']
-    unresolved_mobs = extra - set(monster_index.values())
+        if p in NATIVE_ATTACK_CONTACTS:
+            contact = compile_native_attack_contact(mob, index, NATIVE_ATTACK_CONTACTS[p], passive_objects, add)
+            mob['native_attack_contacts'] = [contact]
+            object_index[str(contact['object_id'])] = contact['object_path']
+    unresolved_mobs = required - set(monster_index.values())
     if unresolved_mobs:
-        raise ValueError('Extra MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))
+        raise ValueError('Required MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))
     for p in object_paths:
         obj = add(p, 'obj', 'scope')
         if not obj:

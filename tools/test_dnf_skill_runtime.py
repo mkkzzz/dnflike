@@ -131,7 +131,14 @@ class SkillRuntimeTest(unittest.TestCase):
         self.assertTrue(by_id[21]["fidelity_pending"])
         self.assertEqual(by_id[75]["expected"]["emissions"][0]["path"],
                          "passiveobject/character/swordman/epidemicrasacreater.obj")
-        self.assertIn("attachment_abnormal_ticks", by_id[75]["fidelity_pending"])
+        self.assertNotIn("attachment_abnormal_ticks", by_id[75]["fidelity_pending"])
+        self.assertIn("attachment_poison_bleed", by_id[75]["fidelity_pending"])
+        self.assertIn("blind_hit_rate_and_visual", by_id[75]["fidelity_pending"])
+        controller = self.moves["epidemicrasa"]["stages"][0]["hits"][0]["native_controller"]["child"]["native_controller"]
+        self.assertEqual(controller["status_interval_col"], 5)
+        self.assertEqual(controller["blind_columns"], {
+            "chance": 10, "level": 11, "duration_ms": 12, "vision_percent": 13, "stuck_percent": 14,
+        })
         self.assertTrue(by_id[75]["tree_visible"])
         for skill_id in (96, 99, 100):
             self.assertFalse(by_id[skill_id]["tree_visible"])

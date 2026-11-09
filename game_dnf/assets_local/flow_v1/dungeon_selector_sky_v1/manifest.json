@@ -1,0 +1,468 @@
+{
+ "schema": "dnf_native_map/1",
+ "selector_schema": "dnf_dungeon_selector/1",
+ "source": {
+  "files": {
+   "worldmap/worldmappatterntable2nd.tbl": "223e151db80545f2d85a5d89effc71b8f76079ea934c149aff4d05e40fe83dae",
+   "dungeon/dungeon.lst": "f34fd5395389a2ce54832ba1c0dc721aa4572851764150c2be17c1c70a714c48",
+   "worldmap/skycastle.wdm": "b32ee07fce273d61c954039e5b20f7e44501ea8ff0c07be104c686cc45abb4b8",
+   "worldmap/ui/skycastle.ui": "e683dad95d3acacd809d850b47f94fc39aa529fee4e84eccfd2209522ac09bd5",
+   "dungeon/act2/draconiantower.dgn": "6820b4a4fec53cd26ef31546d1906b04dbf4704771f0b2fa86729e98f109b8af",
+   "dungeon/act2/golemtower.dgn": "74721f20550b3fc723af93dec30f108fc1d6d3c386e7fb3ea41196053f9bb3eb",
+   "dungeon/act2/floatingcastle.dgn": "a47fbc4f4b1ad758db3deb1f9ed3d7a88daa8b23067eb7741362acc52d18168c",
+   "dungeon/act2/palaceofload.dgn": "baf8aea1f8b0c30f953db28f3fe536ccd77d4f96499360adfefa29558def2bdb",
+   "dungeon/act2/darkentrance.dgn": "8360d6af074f0e06d168676d4ddf41f5051fc01343e10dcb35cc2f294c6b94af",
+   "dungeon/act2/hallofdoll.dgn": "ab66fa90875965c5cf7f6d1e301bc5a8bd4ea42588923955f2e8b13658c5cef8",
+   "dungeon/act2/draconiantower_amonlow.dgn": "2a52ad4b056671316f51c7983b26a21fd335187e3bf8482b5e0b0d2ac6c1eb31"
+  },
+  "dungeon_listing": "dungeon/dungeon.lst",
+  "layout_consumer": "EXERESX 0x106DBBD/0x106D630/0x106CF40",
+  "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84"
+ },
+ "regions": {
+  "skytower": {
+   "wdm": "worldmap/skycastle.wdm",
+   "ui": "worldmap/ui/skycastle.ui",
+   "background": "4b16732c351e_0",
+   "cards": {
+    "draconiantower": {
+     "dgn_index": 11,
+     "dgn": "dungeon/act2/draconiantower.dgn",
+     "control": "IDC_WORLDMAP_BUTTON2",
+     "anchor": [
+      333,
+      294
+     ],
+     "ui_pattern": 13,
+     "dgn_pattern": [
+      2,
+      1,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      0
+     ],
+     "compact": [
+      297,
+      217
+     ],
+     "expanded": [
+      270,
+      197
+     ],
+     "connector": [
+      297,
+      217
+     ],
+     "card": "8b91efb5a16d_0",
+     "connector_image": "9c96b6d8c417_43"
+    },
+    "golemtower": {
+     "dgn_index": 13,
+     "dgn": "dungeon/act2/golemtower.dgn",
+     "control": "IDC_WORLDMAP_BUTTON4",
+     "anchor": [
+      298,
+      471
+     ],
+     "ui_pattern": 7,
+     "dgn_pattern": [
+      2,
+      3,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      3
+     ],
+     "compact": [
+      134,
+      479
+     ],
+     "expanded": [
+      84,
+      464
+     ],
+     "connector": [
+      134,
+      479
+     ],
+     "card": "8b91efb5a16d_3",
+     "connector_image": "9c96b6d8c417_37"
+    },
+    "floatingcastle": {
+     "dgn_index": 17,
+     "dgn": "dungeon/act2/floatingcastle.dgn",
+     "control": "IDC_WORLDMAP_BUTTON6",
+     "anchor": [
+      278,
+      286
+     ],
+     "ui_pattern": 6,
+     "dgn_pattern": [
+      2,
+      5,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      5
+     ],
+     "compact": [
+      131,
+      228
+     ],
+     "expanded": [
+      81,
+      208
+     ],
+     "connector": [
+      131,
+      228
+     ],
+     "card": "8b91efb5a16d_5",
+     "connector_image": "9c96b6d8c417_36"
+    },
+    "palaceofload": {
+     "dgn_index": 15,
+     "dgn": "dungeon/act2/palaceofload.dgn",
+     "control": "IDC_WORLDMAP_BUTTON7",
+     "anchor": [
+      278,
+      391
+     ],
+     "ui_pattern": 16,
+     "dgn_pattern": [
+      2,
+      6,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      4
+     ],
+     "compact": [
+      121,
+      391
+     ],
+     "expanded": [
+      71,
+      378
+     ],
+     "connector": [
+      121,
+      391
+     ],
+     "card": "8b91efb5a16d_4",
+     "connector_image": "9c96b6d8c417_46"
+    },
+    "darkentrance": {
+     "dgn_index": 14,
+     "dgn": "dungeon/act2/darkentrance.dgn",
+     "control": "IDC_WORLDMAP_BUTTON5",
+     "anchor": [
+      298,
+      366
+     ],
+     "ui_pattern": 6,
+     "dgn_pattern": [
+      2,
+      4,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      2
+     ],
+     "compact": [
+      151,
+      308
+     ],
+     "expanded": [
+      101,
+      288
+     ],
+     "connector": [
+      151,
+      308
+     ],
+     "card": "8b91efb5a16d_2",
+     "connector_image": "9c96b6d8c417_36"
+    },
+    "hallofdoll": {
+     "dgn_index": 12,
+     "dgn": "dungeon/act2/hallofdoll.dgn",
+     "control": "IDC_WORLDMAP_BUTTON3",
+     "anchor": [
+      350,
+      353
+     ],
+     "ui_pattern": 12,
+     "dgn_pattern": [
+      2,
+      2,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      1
+     ],
+     "compact": [
+      419,
+      289
+     ],
+     "expanded": [
+      416,
+      269
+     ],
+     "connector": [
+      363,
+      289
+     ],
+     "card": "8b91efb5a16d_1",
+     "connector_image": "9c96b6d8c417_42"
+    },
+    "draconiantower_amonlow": {
+     "dgn_index": 19,
+     "dgn": "dungeon/act2/draconiantower_amonlow.dgn",
+     "control": "IDC_WORLDMAP_BUTTON1",
+     "anchor": [
+      330,
+      441
+     ],
+     "ui_pattern": 12,
+     "dgn_pattern": [
+      2,
+      1,
+      "WorldMap/SelectdungeonSlot/skycastle.img",
+      7
+     ],
+     "compact": [
+      399,
+      377
+     ],
+     "expanded": [
+      396,
+      357
+     ],
+     "connector": [
+      343,
+      377
+     ],
+     "card": "987c3569cc48_91",
+     "connector_image": "9c96b6d8c417_42",
+     "missing_card_frame": true
+    }
+   },
+   "background_control": [
+    "[image]",
+    "IDC_WORLDMAP_BACKGROUND",
+    0,
+    0,
+    1,
+    "worldmap/lorien.img",
+    1,
+    0
+   ],
+   "wdm_background": [
+    "WorldMap/SkyCastle.img",
+    0
+   ],
+   "background_consumer": "EXERESX 0x110F801/0x105D1B0/0x105A010",
+   "missing_frame_consumer": "EXERESX 0x11AA190/0x11B0330/0x6FD626"
+  }
+ },
+ "images": {
+  "8b91efb5a16d_0": {
+   "file": "img/8b91efb5a16d_0.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 0,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_43": {
+   "file": "img/9c96b6d8c417_43.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 43,
+   "size": [
+    118,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8b91efb5a16d_3": {
+   "file": "img/8b91efb5a16d_3.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 3,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_37": {
+   "file": "img/9c96b6d8c417_37.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 37,
+   "size": [
+    176,
+    51
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8b91efb5a16d_5": {
+   "file": "img/8b91efb5a16d_5.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 5,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_36": {
+   "file": "img/9c96b6d8c417_36.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 36,
+   "size": [
+    153,
+    65
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8b91efb5a16d_4": {
+   "file": "img/8b91efb5a16d_4.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 4,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_46": {
+   "file": "img/9c96b6d8c417_46.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 46,
+   "size": [
+    158,
+    51
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8b91efb5a16d_2": {
+   "file": "img/8b91efb5a16d_2.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 2,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "8b91efb5a16d_1": {
+   "file": "img/8b91efb5a16d_1.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/skycastle.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "8b91efb5a16dcaa38d2e83cb97ab2743c149fff46a9589c97188543079bd7409",
+   "frame": 1,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_42": {
+   "file": "img/9c96b6d8c417_42.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 42,
+   "size": [
+    167,
+    85
+   ],
+   "canvas_offset": [
+    7,
+    0
+   ],
+   "variants": 1
+  },
+  "987c3569cc48_91": {
+   "file": "img/987c3569cc48_91.png",
+   "source_path": "sprite/interface/base.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "987c3569cc48c257842e011c4747ce4f51f0f3337b75bc283deea84208ba0685",
+   "frame": 91,
+   "size": [
+    1,
+    1
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "4b16732c351e_0": {
+   "file": "img/4b16732c351e_0.png",
+   "source_path": "sprite/worldmap/lorien.img",
+   "source_npk": "ImagePacks2/sprite_worldmap.NPK",
+   "img_sha256": "4b16732c351ee69ca73c35b374db864930c91b5ccce46bfa0d3b925a16cdf203",
+   "frame": 0,
+   "size": [
+    800,
+    600
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 2
+  }
+ }
+}

@@ -121,7 +121,8 @@
   "passiveobject/character/swordman/wavespinarea.obj",
   "passiveobject/character/swordman/firewavebigsub.obj",
   "passiveobject/character/swordman/epidemicrasacreater.obj",
-  "native_cannonball"
+  "native_cannonball",
+  "native_pope_thunderbolt"
  ],
  "effects": 194,
  "digits": 61,

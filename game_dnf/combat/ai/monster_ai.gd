@@ -2,6 +2,7 @@ extends RefCounted
 ## Monster AI driven by MOB fields (doc 29, F5): [sight], [attack delay], [move speed],
 ## attack motion reach (its own attack boxes) and [throw attack]. No per-monster code.
 ## Decides intent only; the battle scene executes movement, attacks and throws.
+const CompanionProgram = preload("res://combat/action/companion_program.gd")
 
 ## Horizontal distance band in which the monster's own attack boxes can reach a target whose
 ## damage box starts near its anchor (E-INFER from box data: goblin attack1 box x 23..54).
@@ -71,11 +72,19 @@ static func native_attack_poll(actor: Dictionary, policy: Dictionary, targets: A
 
 
 ## Returns {"move": Vector2 direction, "face": int, "attack": bool}.
-static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float) -> Dictionary:
+static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float, blind := false) -> Dictionary:
 	var offset: Vector2 = target-Vector2(enemy["pos"])
 	var face := 1 if offset.x >= 0 else -1
-	var out := {"move":Vector2.ZERO,"face":face,"attack":false,"move_index":-1}
-	if offset.length() > float(m["sight"]):return out
+	var out := {"move":Vector2.ZERO,"face":face,"attack":false,"move_index":-1,"visible":false}
+	if blind:
+		# 8B5CC1 halves monster back vision. 880487..8804D0 tests the
+		# projected distance against trunc(back_vision * 1.4).
+		var reduced_sight := int(float(m["sight"])*0.5)
+		if reduced_sight != 0 and CompanionProgram.target_distance(enemy["pos"],target) > int(reduced_sight*1.4):
+			out["face"] = int(enemy["facing"])
+			return out
+	elif offset.length() > float(m["sight"]):return out
+	out["visible"] = true
 	var ready := float(enemy["cooldown_ms"]) <= 0 and target_z < 40
 	if m.has("throw"):
 		var keep := float(m["keep_distance"])

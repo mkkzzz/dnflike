@@ -2,7 +2,13 @@
 from copy import deepcopy
 import unittest
 
-from compile_dnf_content import NATIVE_ATTACK_EMISSIONS, compile_native_attack_emissions, compile_native_attack_selection
+from compile_dnf_content import (
+    NATIVE_ATTACK_CONTACTS,
+    NATIVE_ATTACK_EMISSIONS,
+    compile_native_attack_contact,
+    compile_native_attack_emissions,
+    compile_native_attack_selection,
+)
 
 
 class NativeAttackEmissionTest(unittest.TestCase):
@@ -84,6 +90,51 @@ class NativeAttackEmissionTest(unittest.TestCase):
     def test_attack_policy_rejects_unhandled_target_affiliation(self):
         self.records[self.fire_atk]['decoded']['attack_friend'] = 1
         with self.assertRaisesRegex(ValueError, 'needs hostile-only targeting'):
+            self.compile()
+
+
+class NativeAttackContactTest(unittest.TestCase):
+    def setUp(self):
+        self.path = 'monster/zealot/bosspope.mob'
+        self.obj = 'passiveobject/monster/zealot/popethunderbolt.obj'
+        self.bolt_atk = 'passiveobject/monster/zealot/attackinfo/popethunderbolt.atk'
+        self.bolt_ani = 'passiveobject/common/animation/thunderbolt.ani'
+        spec = NATIVE_ATTACK_CONTACTS[self.path]
+        self.spec = spec
+        self.records = {
+            path: {'id': path, 'source': {'sha256': sha}, 'decoded': {}}
+            for path, sha in spec['sha256'].items()
+        }
+        attack_ani = 'monster/zealot/popeani/attack.ani'
+        self.records[self.path]['decoded'] = {
+            'attack_motions': [attack_ani],
+            'attack_infos': ['monster/zealot/attackinfo/poattack.atk'],
+        }
+        self.records[self.obj]['decoded'] = {
+            'basic_motion': [self.bolt_ani], 'attack_infos': [self.bolt_atk],
+        }
+        for path in (attack_ani, self.bolt_ani):
+            self.records[path]['decoded'] = {'timeline': [{'attack_boxes': [[0, 0, 0, 1, 1, 1]]}]}
+
+    def compile(self, relative_obj='monster/zealot/popethunderbolt.obj'):
+        return compile_native_attack_contact(self.records[self.path], 266, self.spec, {30073: relative_obj},
+                                             lambda path, _kind, _origin: self.records.get(path))
+
+    def test_contact_binds_the_pinned_attack_slot_and_object(self):
+        row = self.compile()
+        self.assertEqual((row['slot'], row['target_class'], row['chance_percent']), (0, 0x11, 50))
+        self.assertEqual((row['object_id'], row['object_path'], row['object_bank']),
+                         (30073, self.obj, 'native_pope_thunderbolt'))
+
+    def test_contact_requires_exact_index_and_attack_dependencies(self):
+        with self.assertRaisesRegex(ValueError, 'needs exact source .*other.obj'):
+            self.compile('monster/zealot/other.obj')
+        self.records[self.bolt_atk]['source']['sha256'] = 'changed'
+        with self.assertRaisesRegex(ValueError, 'needs exact source .*popethunderbolt.atk'):
+            self.compile()
+        self.records[self.bolt_atk]['source']['sha256'] = self.spec['sha256'][self.bolt_atk]
+        self.records[self.bolt_ani]['decoded']['timeline'][0]['attack_boxes'].clear()
+        with self.assertRaisesRegex(ValueError, 'needs both original attack timelines'):
             self.compile()
 
 
