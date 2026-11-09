@@ -5,8 +5,8 @@
 | 字段 | 内容 |
 |---|---|
 | 使用者 | rainmk |
-| 状态 | 已发布 |
-| 正在做 | 音频生命周期与 UI 音效接入已发布，等待 rainmk 实机试听；NPC 环境语停留不重播，离远再近才重新触发 |
+| 状态 | 已接收 |
+| 正在做 | 已接收鬼剑士首批分工：按并行计划只新增 `test_ws1_swordman_inputs.gd` 与 `test_ws1_skill_interaction.gd`，验证正式入口的真实按键、命中停顿、暂停恢复、快捷栏拖放与性能；本批不修改 ws2 持有的 `main.gd`、`combat_session.gd`、`move_table.gd`、`timeline.gd`、`combat.json`、`weapon_appearance.gd`、战斗 HUD 与生成资源 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
@@ -26,7 +26,8 @@
 - 战斗进场同步 mount 仍约 4.27 秒，尚未改造成显式 loading/异步加载；逐武器普攻盒、技能判定义项和小地图/结算覆盖层仍待原版证据与后续 UI 资源闭环。
 - 战斗响应、跳攻、拾取、原版字体、BGM 加载和音效声池仅完成自动化与 profiler 验证；真实手感、混音和 UI 观感等待 rainmk 实机复核。
 - `7a00f659` 已提交族级 AI 目录索引、运行时回退查询和拾取下蹲帧计数；接续时“未提交”的记载已纠正，未将提交视作回归或试玩通过。
-- 原版技能树 K 大弹窗、职业过滤、18 级简化转职、16 个可执行节点、QWERTY/ASDFGH 拖槽与技能手感等待 rainmk 实机验收；剩余 159 条仍为只读。
+- 175 条剑士 SKL 与 78 个树节点均有运行定义（52 主动 / 26 被动），但原版一致性未完成；ws2 继续逐招校准，ws1 本批只做独立输入、快捷栏与性能回归，不把运行入口计为完成。
+- 鬼剑士首批：ws2 持有普攻、上挑、格挡、三段斩的生产文件与技能栏原画；ws1 新增独立回归专项，使用短剑 `original_27000`、太刀 `original_27601` 验证 X 连段、Z 上挑、命中停顿与暂停恢复输入缓冲。格挡、三段斩的取消窗口等 ws2 发布后补断言。
 - 标准 `run_dnf_loop.ps1 -Test` 预检停在既有 `build_dnf_quest_rules.py --check` stale；本轮未擅自重建 ws2 任务产物，直接运行同一 `loop.tscn --loop-test`，完整流程 393 项通过。
 - [ws2 多招式接收诊断](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)：ws1 已完成修复并从独立场景复跑通过；等待 ws2 在当前主线保留原断言接收复核。
 - content 模块迁移等待 ws2 接收；新代码一律使用 `res://content/api/…`，`Numbers.shared_config()` 返回值不可修改。
