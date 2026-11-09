@@ -4811,6 +4811,7 @@
       {
        "action_clock": true,
        "at": 0.0,
+       "depth_offset": 1,
        "key": "weapon_combo_short_finish"
       }
      ],
@@ -4875,6 +4876,7 @@
       {
        "action_clock": true,
        "at": 0.0,
+       "depth_offset": 1,
        "key": "weapon_combo_blade_finish"
       }
      ],
@@ -4935,6 +4937,14 @@
        ]
       }
      ],
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 1,
+       "key": "weapon_combo_blunt_finish"
+      }
+     ],
      "hits": [
       {
        "attached_weapon": true
@@ -4972,6 +4982,14 @@
        ]
       }
      ],
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -1,
+       "key": "weapon_combo_heavy_finish"
+      }
+     ],
      "hits": [
       {
        "attached_weapon": true
@@ -4989,6 +5007,38 @@
      "ani": "weaponcombolight1",
      "atk": "character/swordman/attackinfo/weaponcombolight1.atk",
      "continue_frame": 3,
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -3,
+       "key": "weapon_combo_light_1_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -2,
+       "key": "weapon_combo_light_1_2"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -1,
+       "key": "weapon_combo_light_1_3"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 1,
+       "key": "weapon_combo_light_1_4"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 2,
+       "key": "weapon_combo_light_1_5"
+      }
+     ],
      "hits": [
       {
        "attached_weapon": true
@@ -4999,6 +5049,38 @@
      "ani": "weaponcombolight2",
      "atk": "character/swordman/attackinfo/weaponcombolight2.atk",
      "continue_frame": 3,
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -3,
+       "key": "weapon_combo_light_2_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -2,
+       "key": "weapon_combo_light_2_2"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -1,
+       "key": "weapon_combo_light_2_3"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 1,
+       "key": "weapon_combo_light_2_4"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 2,
+       "key": "weapon_combo_light_2_5"
+      }
+     ],
      "hits": [
       {
        "attached_weapon": true
@@ -5017,6 +5099,38 @@
         0,
         240
        ]
+      }
+     ],
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -3,
+       "key": "weapon_combo_light_3_1"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -2,
+       "key": "weapon_combo_light_3_2"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": -1,
+       "key": "weapon_combo_light_3_3"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 1,
+       "key": "weapon_combo_light_3_4"
+      },
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "depth_offset": 4,
+       "key": "weapon_combo_light_finish"
       }
      ],
      "hits": [

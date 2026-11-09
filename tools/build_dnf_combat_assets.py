@@ -35,6 +35,7 @@ from dnf_asset_store import ROOT
 from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
+from build_dnf_skill_runtime import WEAPON_COMBO_LIGHT_DEPTHS
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
@@ -369,6 +370,13 @@ EFFECTS.update(SELF_BUFF_EFFECTS)
 WEAPON_COMBO_FINISH_EFFECTS = {
     'weapon_combo_short_finish': 'character/swordman/effect/animation/weaponcombo/short.ani',
     'weapon_combo_blade_finish': 'character/swordman/effect/animation/weaponcombo/blade.ani',
+    'weapon_combo_blunt_finish': 'character/swordman/effect/animation/weaponcombo/blunt.ani',
+    'weapon_combo_heavy_finish': 'character/swordman/effect/animation/weaponcombo/heavy.ani',
+    'weapon_combo_light_finish': 'character/swordman/effect/animation/weaponcombo/light.ani',
+    **{f'weapon_combo_light_{phase}_{layer}':
+       f'character/swordman/effect/animation/weaponcombo/light{phase}-{layer}.ani'
+       for phase, depths in enumerate(WEAPON_COMBO_LIGHT_DEPTHS, 1)
+       for layer in range(1, len(depths) + 1)},
 }
 WEAPON_COMBO_MASTERY_EFFECTS = {
     f'weapon_combo_short_mastery{i}':

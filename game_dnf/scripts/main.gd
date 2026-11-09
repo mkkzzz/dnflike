@@ -1045,6 +1045,14 @@ func step_action(ms: float, move: Vector2) -> void:
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
 		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1:
 		player["queued_skill"] = ""
+		if name == "weaponcombo":
+			# CBEDC4 accepts the next stage only after the regular skill payment.
+			var cost := skill_mp_cost(m)
+			if float(player["mp"]) < cost:
+				reject_action(name,"mp")
+				if clock >= duration:end_action()
+				return
+			player["mp"] = float(player["mp"])-cost
 		start_stage(int(player["stage"])+1)
 	elif clock >= cancel_at and String(player["queued_skill"]) != "" and String(player["queued_skill"]) != name:
 		var requested: String = player["queued_skill"]
@@ -1146,6 +1154,9 @@ func begin_skill_cooldown(name: String, move: Dictionary) -> void:
 	var rate := float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0
 	player["cooldowns"][name] = duration*rate
 
+func skill_mp_cost(move: Dictionary) -> float:
+	return float(move["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
+
 func start_action(name: String, cancel := false) -> bool:
 	var m: Dictionary = table.moves.get(name,{})
 	if m.is_empty():return reject_action(name,"unknown")
@@ -1189,7 +1200,7 @@ func start_action(name: String, cancel := false) -> bool:
 		# CC0F72 compares integer HP against the rank cost plus one.
 		if int(player["hp"]) <= int(hp_cost)+1:return reject_action(name,"hp")
 	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
-	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
+	var mp_cost := skill_mp_cost(m)
 	var pay_mp_with_hp := name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0
 	if pay_mp_with_hp:
 		if float(player["hp"]) <= mp_cost:return reject_action(name,"hp")

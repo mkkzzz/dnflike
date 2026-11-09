@@ -894,6 +894,8 @@ func check_weapon_combo() -> void:
 		start_room(data[0],data[1],1,spec)
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["mp_cost_rate"] = 1.0
+		game.player["mp"] = 100.0
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(48,0))
 		press(KEY_A)
 		step(0)
@@ -910,11 +912,12 @@ func check_weapon_combo() -> void:
 			check(game.player_ani()[0]==pose and stage["hits"].size()==1 and stage["hits"][0]["source"]=="attached_weapon"
 				and stage["hits"][0]["atk_path"]=="character/swordman/attackinfo/"+pose+".atk"
 				and stage["hits"][0]["percent"]==data[4][index],"Weapon Combo uses the equipped ANI and authored ATK for "+pose)
+			check(game.player["mp"]==100.0-6.0*(index+1),"Weapon Combo pays the skill cost once per accepted stage")
 			if index==data[3].size():break
 			var gate: int = data[3][index]
 			press(KEY_A)
 			step(gate-float(game.player["clock"])-1.0)
-			check(game.player["stage"]==index and stage["continue_at"]==float(gate),
+			check(game.player["stage"]==index and stage["continue_at"]==float(gate) and game.player["mp"]==100.0-6.0*(index+1),
 				"Weapon Combo holds the stage one millisecond before its original chain frame")
 			step(1)
 			check(game.player["stage"]==index+1,"Weapon Combo advances at its native chain frame")
@@ -925,7 +928,24 @@ func check_weapon_combo() -> void:
 		check(game.player["action"]=="weaponcombo" and game.player["stage"]==data[3].size(),
 			"Weapon Combo cannot repeat inside the final stage")
 		step(1)
-		check(game.player["action"]=="","Weapon Combo finishes the final recovery without chaining itself")
+		check(game.player["action"]=="" and game.player["mp"]==100.0-6.0*data[4].size(),
+			"Weapon Combo finishes the final recovery without another charge")
+	start_room("original_27601","katana",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["mp_cost_rate"] = 0.75
+	game.player["mp"] = 8.5
+	press(KEY_A)
+	step(0)
+	press(KEY_A)
+	step(180)
+	check(game.player["stage"]==0 and game.player["mp"]==4.0 and game.player["queued_skill"]=="",
+		"Insufficient MP rejects the buffered stage at the gate without charging or truncating the current swing")
+	game.player["mp"] = 4.5
+	step(1)
+	check(game.player["stage"]==0 and game.player["mp"]==4.5,"A rejected stage does not retry without another press")
+	press(KEY_A)
+	step(0)
+	check(game.player["stage"]==1 and game.player["mp"]==0.0,"A fresh continuation accepts exactly the adjusted MP cost")
 	for rank: int in [2,3]:
 		profile.command("numbers.skill_grant",{"id":"shortswordmastery","level":rank})
 		spec = profile.stats()
@@ -942,14 +962,44 @@ func check_weapon_combo() -> void:
 		check(target["hp"]==5000.0,"Weapon Combo's extended short-sword box cannot land early")
 		step(1)
 		check((target["hp"]<5000.0)==(rank==3),"Weapon Combo copies the mastery box at frame three")
+	for row: Array in [["club","blunt","shortsword",1],["greatsword","heavy","greatsword",-1]]:
+		start_room("",row[2],1,spec)
+		if row[0]=="club":
+			# No club family art is mounted by the public room yet.
+			game.table.configure_skills(game.skill_levels,"weaponmaster","club")
+		game.numeric_player.values["attack_speed"] = 1.0
+		press(KEY_A)
+		step(0)
+		var key: String = "weapon_combo_%s_finish"%row[1]
+		var stages: Array = game.move_def("weaponcombo")["stages"]
+		if row[0]=="club":
+			check(stages.size()==4 and stages[1]["ani"]==stages[2]["ani"],
+				"Club Weapon Combo retains both original occurrences of the second pose")
+		check(stages[-1]["hits"].size()==1 and String(stages[-1]["hits"][0]["source"]).begins_with("derived:"),
+			"Weapon Combo keeps the previous final hit reach if no exact weapon is mounted")
+		for index in range(stages.size()-1):
+			check(cues(key).is_empty(),"Weapon Combo's finishing effect stays off before the final stage")
+			press(KEY_A)
+			step(stages[index]["continue_at"])
+		var finish := cues(key)
+		check(finish.size()==1 and finish[0]["depth_offset"]==row[3],
+			"Weapon Combo emits its source finish effect at the original depth on the final stage")
 	start_room("","shortsword",1,spec)
-	# The room only accepts weapon families with bundled player art.
-	game.table.configure_skills(game.skill_levels,"weaponmaster","club")
-	var stages: Array = game.move_def("weaponcombo")["stages"]
-	check(stages.size()==4 and stages[1]["ani"]==stages[2]["ani"],
-		"Club Weapon Combo retains both original occurrences of the second pose")
-	check(stages[-1]["hits"].size()==1 and String(stages[-1]["hits"][0]["source"]).begins_with("derived:"),
-		"Weapon Combo keeps the previous final hit reach if no exact weapon is mounted")
+	game.table.configure_skills(game.skill_levels,"weaponmaster","beamsword")
+	game.numeric_player.values["attack_speed"] = 1.0
+	for phase in 3:
+		game.bus.clear_history()
+		press(KEY_A)
+		step(0.0 if phase==0 else 180.0)
+		var layers: Array = game.bus.events_of("combat.cue").filter(func(event):
+			return String(event.get("key","")).begins_with("weapon_combo_light_"))
+		var expected: Array = [-3,-2,-1,1,2] if phase<2 else [-3,-2,-1,1,4]
+		check(game.player["stage"]==phase and layers.map(func(event):return event["depth_offset"])==expected
+			and layers.all(func(event):return event["action_clock_at"]==0.0),
+			"Light Sword Weapon Combo attaches each visible layer in its native order on the stage clock")
+		var front: String = "weapon_combo_light_finish" if phase==2 else "weapon_combo_light_%d_5"%(phase+1)
+		check(cues(front).size()==1 and cues("weapon_combo_light_%d_1"%(phase+1)).size()==1,
+			"Light Sword Weapon Combo selects the phase-specific layers and final extra effect")
 
 func check_overdrive_attributes() -> void:
 	var profile := ProfileSession.new()

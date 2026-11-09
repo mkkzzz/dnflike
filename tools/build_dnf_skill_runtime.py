@@ -100,10 +100,13 @@ STAGE_ANI_OVERRIDES = {
 WEAPON_COMBO_VARIANTS = {
     "shortsword": ("short", (1, 2, 3), (4, 5), "weapon_combo_short_finish"),
     "katana": ("blade", (1, 2, 3, 4), (3, 4, 4), "weapon_combo_blade_finish"),
-    "club": ("blunt", (1, 2, 2, 3), (4, 5, 5), ""),
-    "greatsword": ("heavy", (1, 2), (5,), ""),
-    "beamsword": ("light", (1, 2, 3), (3, 3), ""),
+    "club": ("blunt", (1, 2, 2, 3), (4, 5, 5), "weapon_combo_blunt_finish"),
+    "greatsword": ("heavy", (1, 2), (5,), "weapon_combo_heavy_finish"),
+    "beamsword": ("light", (1, 2, 3), (3, 3), "weapon_combo_light_finish"),
 }
+# CD4D98 gives the six original slots orders -3,-2,-1,1,2,3. The trailing
+# slots omitted here have no IMG in the source phase's ANI.
+WEAPON_COMBO_LIGHT_DEPTHS = ((-3, -2, -1, 1, 2), (-3, -2, -1, 1, 2), (-3, -2, -1, 1))
 
 STAGE_ATK_OVERRIDES = {
     "upperslash": [CHR_ATK + "upperslash.atk"],
@@ -1473,13 +1476,20 @@ def build_variant_moves(
             if names:
                 for index, ani in enumerate(names):
                     if base_id == "weaponcombo":
-                        _, _, gates, finish_fx = WEAPON_COMBO_VARIANTS[option["weapon"][0]]
+                        family = option["weapon"][0]
+                        _, _, gates, finish_fx = WEAPON_COMBO_VARIANTS[family]
                         stage = {"ani": ani, "atk": CHR_ATK + ani + ".atk",
                                  "hits": [{"attached_weapon": True}]}
+                        if family == "beamsword":
+                            stage["fx"] = [{"key": f"weapon_combo_light_{index + 1}_{layer}",
+                                            "at": 0.0, "action_clock": True, "depth_offset": depth}
+                                           for layer, depth in enumerate(WEAPON_COMBO_LIGHT_DEPTHS[index], 1)]
                         if index < len(gates):
                             stage["continue_frame"] = gates[index]
                         elif finish_fx:
-                            stage["fx"] = [{"key": finish_fx, "at": 0.0, "action_clock": True}]
+                            depth = {"greatsword": -1, "beamsword": 4}.get(family, 1)
+                            stage.setdefault("fx", []).append({"key": finish_fx, "at": 0.0,
+                                                              "action_clock": True, "depth_offset": depth})
                     else:
                         stage = build_stage(
                             base_id, index, stage_names.get(ani, ani), records,
