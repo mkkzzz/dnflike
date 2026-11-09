@@ -478,6 +478,8 @@ func _physics_process(delta: float) -> void:
 # ---------------------------------------------------------------- player
 
 func move_def(name: String) -> Dictionary:
+	if name == "triple" and player.get("action","") == "triple" and player.has("triple_cast"):
+		return player["triple_cast"]
 	return table.moves.get(name,{})
 
 func active_effect(id: String) -> Dictionary:
@@ -694,6 +696,7 @@ func end_action() -> void:
 	player["native_phase"] = {}
 	player["state"] = "jump" if float(player["z"])>0 else "idle"
 	player["action"] = ""
+	player.erase("triple_cast")
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
@@ -1084,7 +1087,7 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	return move.has("normal_cancel_job") and String(player["state"]) == "action" and job == String(move["normal_cancel_job"]) and String(player["action"]) in ["attack1","attack2","attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func start_action(name: String, cancel := false) -> bool:
-	var m := move_def(name)
+	var m: Dictionary = table.moves.get(name,{})
 	if m.is_empty():return reject_action(name,"unknown")
 	if player["state"] == "hold":return reject_action(name,"state")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
@@ -1131,6 +1134,9 @@ func start_action(name: String, cancel := false) -> bool:
 	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "guard" if guard else "action"
 	player["action"] = "" if guard else name
+	player.erase("triple_cast")
+	# A live profile refresh can rebuild the table between two stages.
+	if name == "triple":player["triple_cast"] = m
 	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""

@@ -103,12 +103,14 @@ def check(output):
     return data
 
 
-def extend_poses(src, output, base, poses, overlay=False):
+def extend_poses(src, output, base, poses, overlay=False, family=None):
     """New immutable metadata revision; unchanged native PNGs remain in the base pack."""
     data=check(base)
     base_sha=sha((base/'manifest.json').read_bytes())
     bindings, animations = {}, {}
     for skin in data['appearances'].values():
+        if family is not None and skin['family'] != family:
+            continue
         for layer in skin['layers']:
             stay=layer['clips']['stay']
             folder=PurePosixPath(stay).parent
@@ -140,6 +142,8 @@ def extend_poses(src, output, base, poses, overlay=False):
                     animations[path]['sync_body_frame']=True
                 bindings.setdefault(stay,{})[pose]=path
     if overlay:
+        if not bindings:
+            raise ValueError('No existing weapon appearance for family: '+str(family))
         write(output/'manifest.json',{'schema':'dnf_weapon_pose_overlay/1',
               'base_manifest_sha256':base_sha,'bindings':bindings,'animations':animations})
         print('WEAPON POSE OVERLAY VERIFIED',len(bindings),'layers',len(animations),'source ANIs')
@@ -170,18 +174,20 @@ def main():
     parser.add_argument('--extend-from',type=Path,help='Verified existing appearance pack; reuse immutable PNGs')
     parser.add_argument('--pose',action='append',default=[],help='Explicit source ANI pose to append to an existing pack')
     parser.add_argument('--pose-overlay',action='store_true',help='Write only the new poses and the pinned base manifest SHA')
+    parser.add_argument('--overlay-family',help='Limit the overlay to one existing weapon family')
     args=parser.parse_args()
     if not re.fullmatch(r'weapon_appearance_v\d+',args.version):raise ValueError('Expected immutable weapon_appearance_vN')
     output=ROOT/'game_dnf/assets_local'/args.version
     if args.check:check(output);return
     if args.pose_overlay and not args.extend_from:parser.error('--pose-overlay requires --extend-from')
+    if args.overlay_family and not args.pose_overlay:parser.error('--overlay-family requires --pose-overlay')
     if output.exists() and any(output.iterdir()):raise ValueError('Immutable appearance version already exists')
     output.mkdir(parents=True,exist_ok=True)
     src=Source(args.library)
     if args.extend_from:
         try:
             if not args.pose or any(not re.fullmatch(r'[a-z0-9_]+',pose) for pose in args.pose):raise ValueError('Explicit source poses required')
-            extend_poses(src,output,args.extend_from,args.pose,args.pose_overlay)
+            extend_poses(src,output,args.extend_from,args.pose,args.pose_overlay,args.overlay_family)
         finally:src.lib.close();src.cat.close()
         return
     ram=sqlite3.connect(':memory:');src.cat.backup(ram);src.cat.close();ram.row_factory=sqlite3.Row

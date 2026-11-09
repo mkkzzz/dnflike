@@ -1,6 +1,7 @@
 extends SceneTree
 
 const CombatSession = preload("res://combat/api/combat_session.gd")
+const SkillCatalog = preload("res://combat/api/skill_catalog.gd")
 const TestAPI = preload("res://debug/test_api.gd")
 const ProfileSession = preload("res://flow/session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
@@ -494,6 +495,82 @@ func check_triple_slash() -> void:
 	step(296)
 	check(game.player["action"]!="triple","Triple Slash recovers at the end of the final body animation")
 
+func check_enhanced_triple_slash() -> void:
+	start_room("original_27601","katana")
+	for ranks: Dictionary in [
+		{"blademastery":5,"weapon_mastery_up":0},
+		{"blademastery":4,"weapon_mastery_up":1},
+		{"lightswordmastery":7,"weapon_mastery_up":1},
+	]:
+		game.table.configure_skills(ranks,"weaponmaster","katana")
+		check(game.move_def("triple")["stages"].size()==3,"katana checks its own effective mastery and Oath")
+	start_room("original_27000","shortsword")
+	game.table.configure_skills({"blademastery":7,"weapon_mastery_up":1},"weaponmaster","shortsword")
+	check(game.move_def("triple")["stages"].size()==3,"short sword cannot borrow katana's five-stage branch")
+
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"triple","level":1})
+	profile.command("numbers.skill_grant",{"id":"blademastery","level":1})
+	profile.command("numbers.skill_grant",{"id":"weapon_mastery_up","level":2})
+	var gear := profile.command("numbers.gear_give",{"id":"original_27601"})
+	check(gear["ok"] and profile.command("numbers.gear_equip",{"uid":gear.get("uid","")})["ok"],
+		"the profile equips a supported original katana")
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","triple"]
+	start_room("original_27601","katana",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	var stages: Array = game.move_def("triple")["stages"]
+	check(game.skill_levels["blademastery"]==5 and stages.size()==5,"Oath raises Blade Mastery to the native five-stage threshold")
+	if stages.size()!=5:return
+	var hits := stages.map(func(stage):return stage["hits"][0])
+	check(hits.map(func(hit):return hit["percent"])==[158.0,158.0,158.0,198.0,198.0],
+		"enhanced Triple Slash reads the five source percentage columns")
+	check(hits[2]["atk_path"].ends_with("/tripleslash3.atk") and hits[4]["lift"]==382.0,
+		"the enhanced third stage uses its ordinary ATK and the fifth reads mastery lift")
+	check(hits[3]["segments"][0]["frames"][0]["boxes"]==[[-31.0,-20.0,46.0,163.0,35.0,46.0]]
+		and hits[4]["segments"][0]["frames"][0]["boxes"]==[[-26.0,-15.0,17.0,106.0,30.0,137.0]],
+		"the fourth and fifth stages hit with their native C and B layer boxes")
+	var catalog := SkillCatalog.new()
+	catalog.get_profile_skill("triple",profile.profile)
+	check(catalog.table.moves["triple"]["stages"].size()==5,"profile preview selects the same equipped five-stage move")
+	profile.command("numbers.gear_unequip",{"slot":"weapon"})
+	catalog.get_profile_skill("triple",profile.profile)
+	check(catalog.table.moves["triple"]["stages"].size()==3,"unequipping invalidates the variant preview")
+
+	press(KEY_S)
+	step(0)
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+	for index: int in range(5):
+		if index == 3:
+			var refreshed := spec.duplicate(true)
+			refreshed["skills"]["weapon_mastery_up"] = 0
+			check(session.update_numbers(refreshed) and game.table.moves["triple"]["stages"].size()==3,
+				"live refresh reverts future casts without truncating the active stage array")
+		var facing: int = game.player["facing"]
+		move_target(target,game.player["pos"]+Vector2(45*facing,0))
+		step(70)
+		check(game.hit_count==index+1 and game.player["stage"]==index,"each source stage hits the real target once")
+		if index >= 3:
+			var img := 12 if index==3 else 201
+			check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("img_frame",-1))==img),
+				"both equipped weapon layers render the source frame in the added stage")
+		if index == 4:break
+		check(target["state"]=="hurt","an intermediate enhanced stage staggers without launching")
+		session.submit_key(KEY_LEFT if facing==1 else KEY_RIGHT,true)
+		press(KEY_S)
+		step(140)
+		session.submit_key(KEY_LEFT if facing==1 else KEY_RIGHT,false)
+	check(target["state"]=="air" and target["vz"]==382.0,"the fifth stage launches the target with effective mastery lift")
+	press(KEY_S)
+	step(140)
+	check(game.player["stage"]==4,"the fifth stage cannot continue into a sixth")
+	step(370)
+	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
+		"the next cast uses the refreshed normal three-stage move")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -598,6 +675,7 @@ func run() -> void:
 	check_guard_feedback()
 	check_triple_motion()
 	check_triple_slash()
+	check_enhanced_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)

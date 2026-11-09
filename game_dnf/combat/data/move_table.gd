@@ -10,8 +10,10 @@ const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
 const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
 	"upper":"hitback","upper_followup":"upperslashafter",
-	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3"}
+	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3",
+	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
+const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
 const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
 	"upper":"upperslash","upper_followup":"upperslashafter"}
@@ -203,14 +205,14 @@ func _skill_row(path: String) -> Dictionary:
 		"static":static_data}
 
 ## 81A6B0 tests the current body ANI first, then the attached weapon ANIs.
-func bind_swordman_weapon(item: String, body_clips: Dictionary) -> void:
-	if item == _swordman_weapon_item:return
+func bind_swordman_weapon(item: String, body_clips: Dictionary) -> bool:
+	if item == _swordman_weapon_item:return false
 	_swordman_weapon_item = item
 	_swordman_weapon_family = String(WeaponAppearance.skin(item).get("family",""))
 	_swordman_weapon_hits.clear()
 	_swordman_mastery_hits.clear()
 	var layers := WeaponAppearance.layers(item,body_clips)
-	if layers.is_empty():return
+	if layers.is_empty():return true
 	for move: String in SWORDMAN_WEAPON_POSES:
 		if move == "upper_followup" and _swordman_weapon_family != "shortsword":continue
 		var pose: String = SWORDMAN_WEAPON_POSES[move]
@@ -223,6 +225,7 @@ func bind_swordman_weapon(item: String, body_clips: Dictionary) -> void:
 			# 108CE20 appends the extra boxes to the body before checking equipment.
 			children.push_front(timeline(SHORT_MASTERY_ANI+String(SHORT_MASTERY_MOVES[move])+".ani"))
 			_swordman_mastery_hits[move] = Timeline.attached_attack_segments(body,children)
+	return true
 
 func _swordman_hits(name: String) -> Array:
 	if weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name):return []
@@ -266,6 +269,9 @@ func _selected_move_spec(name: String) -> Dictionary:
 	for field: String in ["hp_cost_row", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx"]:
 		if generated.has(field):
 			base[field] = generated[field]
+	if name == "triple":
+		_apply_triple_blade_mastery(base)
+		return base
 	var options: Array = skill_runtime.get("variants", {}).get(name, [])
 	options = options.duplicate(true)
 	options.sort_custom(func(a, b): return int(a.get("priority", 0)) > int(b.get("priority", 0)))
@@ -294,6 +300,24 @@ func _selected_move_spec(name: String) -> Dictionary:
 			result["name"] = base.get("name", result.get("name", name))
 			return result
 	return base
+
+func _apply_triple_blade_mastery(spec: Dictionary) -> void:
+	# CC780F checks Oath, weapon subtype 1, then Blade Mastery against static column 0.
+	var rank := int(skill_levels.get("blademastery",0))
+	if weapon != "katana" or rank <= 0 or int(skill_levels.get("weapon_mastery_up",0)) <= 0:return
+	if _swordman_hits("tripleslash4").is_empty() or _swordman_hits("tripleslash5").is_empty():return
+	var mastery := _skill_row(BLADE_MASTERY_SKL)
+	var thresholds: Array = mastery["static"]
+	var row: Array = mastery["level_row"]
+	if thresholds.is_empty() or rank < int(thresholds[0]) or row.size() <= 2:return
+	var third: Dictionary = spec["stages"][2]
+	third["atk"] = "character/swordman/attackinfo/tripleslash3.atk"
+	third["hits"][0]["percent_col"] = 0
+	third["voice"] = "triple1"
+	var extra: Array = spec["blade_mastery_stages"]
+	# CC7BBB writes the mastery level row's column 2 to the last attack's lift.
+	extra[-1]["hits"][0]["lift"] = float(row[2])
+	spec["stages"].append_array(extra)
 
 func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	var skill: Dictionary = _skill_row(String(spec["skill"])) if spec.has("skill") else {}
@@ -388,7 +412,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 		var decoded := atk(atk_path)
 		var percent := 100.0+float(decoded.get("damage_bonus",0))
 		if h.has("percent_col") and row.size() > int(h["percent_col"]):percent = float(row[int(h["percent_col"])])
-		var lift := -1.0
+		var lift := float(h.get("lift",-1.0))
 		if h.has("lift_col") and row.size() > int(h["lift_col"]):lift = float(row[int(h["lift_col"])])
 		if ani == "hitback" and not weapon_hits.is_empty() and row.size() > 2:
 			# CD428A / CD42C0 write the ATK lift and horizontal push slots respectively.

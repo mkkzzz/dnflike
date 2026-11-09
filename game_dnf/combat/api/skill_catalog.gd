@@ -12,6 +12,7 @@ func _init() -> void:
 
 func get_skill(id: String, rank := 1) -> Dictionary:
 	# Standalone legacy preview has a fixed context, independent of prior UI calls.
+	table.bind_swordman_weapon("",{})
 	table.configure_skills({id:rank},"weaponmaster","katana")
 	return _values(id)
 
@@ -25,9 +26,10 @@ func get_profile_skill(id: String, profile: Dictionary) -> Dictionary:
 	var definition := String(profile.get("gear",{}).get(uid,{}).get("definition",""))
 	var weapon := String(cfg["equipment"].get(definition,{}).get("weapon","katana"))
 	var job := String(profile.get("growtype","swordman"))
+	var equipment_changed: bool = table.bind_swordman_weapon(definition,table.assets.get("player_clips",{}))
 	# Selection and hover only change the requested skill. Rebuild moves when
 	# ranks or the context for choosing native variants actually change.
-	if table.skill_levels != levels or table.job != job or table.weapon != weapon:
+	if equipment_changed or table.skill_levels != levels or table.job != job or table.weapon != weapon:
 		table.configure_skills(levels,job,weapon)
 	var result := _values(id)
 	result["rank"] = int(levels.get(id,0))

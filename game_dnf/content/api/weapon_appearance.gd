@@ -1,9 +1,10 @@
 extends RefCounted
 ## Item identity is separate from weapon family (simulation/sound/skill rules).
 const PATH := "res://assets_local/weapon_appearance_v2/manifest.json"
-const POSE_OVERLAY := "res://assets_local/weapon_appearance_v3/manifest.json"
+const POSE_OVERLAYS := ["res://assets_local/weapon_appearance_v3/manifest.json",
+	"res://assets_local/weapon_appearance_v4/manifest.json"]
 const PARENT_TIMED_POSES := ["attack1", "attack2", "attack3", "hitback", "upperslashafter",
-	"tripleslash1", "tripleslash2", "tripleslash3"]
+	"tripleslash1", "tripleslash2", "tripleslash3", "tripleslash4", "tripleslash5"]
 static var _data: Dictionary = {}
 static var _layers: Dictionary = {}
 
@@ -14,11 +15,12 @@ static func data() -> Dictionary:
 		if value is Dictionary and value.get("schema")=="dnf_weapon_appearance/1":
 			_data=value
 			# Existing Windows clones may still have CRLF from before Git pinned this file.
-			_apply_pose_overlay(manifest_text.replace("\r\n", "\n").sha256_text())
+			var base_sha256 := manifest_text.replace("\r\n", "\n").sha256_text()
+			for path: String in POSE_OVERLAYS:_apply_pose_overlay(path,base_sha256)
 	return _data
 
-static func _apply_pose_overlay(base_sha256: String) -> void:
-	var overlay = JSON.parse_string(FileAccess.get_file_as_string(POSE_OVERLAY))
+static func _apply_pose_overlay(path: String, base_sha256: String) -> void:
+	var overlay = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if not overlay is Dictionary or overlay.get("schema")!="dnf_weapon_pose_overlay/1":return
 	if overlay.get("base_manifest_sha256")!=base_sha256:return
 	if not overlay.get("bindings") is Dictionary or not overlay.get("animations") is Dictionary:return

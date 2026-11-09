@@ -253,6 +253,20 @@
      "voice": "triple3"
     }
    ],
+   "blade_mastery_stages": [
+    {
+     "ani": "tripleslash4",
+     "atk": "character/swordman/attackinfo/tripleslash4.atk",
+     "hits": [{"percent_col": 1}],
+     "voice": "triple2"
+    },
+    {
+     "ani": "tripleslash5",
+     "atk": "character/swordman/attackinfo/tripleslash5.atk",
+     "hits": [{"percent_col": 2}],
+     "voice": "triple3"
+    }
+   ],
    "dash": {
     "speed_static": 0,
     "accel_static": 1

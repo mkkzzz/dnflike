@@ -39,6 +39,9 @@ func run() -> void:
 			check(attached.frames[2].boxes==original.frames[2].boxes and attached.frames[2].pos==original.frames[2].pos,
 				"shared collision layer retains the original weapon boxes and anchor: "+id)
 			for pose: String in Appearance.PARENT_TIMED_POSES:
+				if pose in ["tripleslash4","tripleslash5"] and definition.weapon != "katana":
+					check(not layers[index].clips.has(pose),"enhanced katana pose is isolated to its family: "+id+"/"+pose)
+					continue
 				var body_delays: Array = clips[pose].frames.map(func(frame):return frame.delay_ms)
 				var weapon_delays: Array = layers[index].clips[pose].frames.map(func(frame):return frame.delay_ms)
 				check(body_delays==weapon_delays,"shared layer uses source body frame delays: "+id+"/"+pose)
