@@ -38,6 +38,8 @@ from build_dnf_particles import parse as parse_particle
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
+                                 NATIVE_SPIRIT_CAST_LAYERS, NATIVE_SPIRIT_LIGHT_ATTACK2,
+                                 NATIVE_SPIRIT_PROXY, NATIVE_SPIRIT_PROXY_SHA,
                                  NATIVE_ZEALOT_MONSTERS, OUTERWALL_BREAKABLE_ROOT)
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
@@ -192,7 +194,10 @@ MONSTERS = {
 MONSTER_CLIPS = ['stay', 'move', 'attack1', 'throw', 'damage1', 'damage2', 'down', 'sit', 'overturn']
 # These ETC ANI slots use the same body IMG as the basic motions. Cast and
 # firing overlays remain separate source dependencies, with their own timing.
-OUTERWALL_BODY_ETC_SLOTS = {'native_bossfather': (2,), 'native_bosspope': (2, 7), 'native_catapult': ()}
+OUTERWALL_BODY_ETC_SLOTS = {
+    'native_bossfather': (2,), 'native_bosspope': (2, 7), 'native_catapult': (),
+    'native_lightspirit': (0, 1, 2),
+}
 OBJECTS = {
     'gorecross': 'passiveobject/character/swordman/animation/gorecross1.ani',
     'throwstone': 'passiveobject/monster/goblin/animation/throwstone.ani',
@@ -291,7 +296,21 @@ ZEALOT_SOUNDS = {
     'ZGM_ATTACH': ['sounds/mon/act3/zgm_attach.ogg'],
 }
 # Father and Pope ATK [hit wav], resolved by the original audio.xml.
-OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg']}
+NATIVE_SPIRIT_SOUNDS = {
+    'R_CLAWC_HIT': {
+        'sounds/char/fighter/weapon/clawc_hit_01.ogg': '365b55acacdfde3201b783151cd8d6d27fe02ba3301e8c68ca2e328e41988038',
+        'sounds/char/fighter/weapon/clawc_hit_02.ogg': '2d31ac7e9a65c57a36e3d2e88ae9fd785765985eb5204642b2ad21078a35ca87',
+    },
+    'FG_HIT_01': {
+        'sounds/char/priest/effect/fg_hit_01.ogg': '14ea2a60918006401bffa6bcd619bc9e73169b64d206f9cb4a0f5594baedbe0b',
+    },
+    'BELIEVER_PRAY': {
+        'sounds/mon/act3/believer_pray_01.ogg': 'd93a997920f77dd9a839ac69a4ba1950e79686db03050d88eac8e5429d8a1d2e',
+        'sounds/mon/act3/believer_pray_02.ogg': 'a3011fea27748e1e34e11fb6522cf5316ec1fe4cc414f23926e7037eab602f9f',
+    },
+}
+OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg'],
+                   **{key: list(paths) for key, paths in NATIVE_SPIRIT_SOUNDS.items()}}
 # Breakable OBJ string slot 4, resolved by the original audio.xml.
 OUTERWALL_BREAKABLE_SOUNDS = {'WOOD_HIT': ['sounds/effect/wood_hit.ogg']}
 CUE_SOUNDS = {
@@ -778,6 +797,31 @@ def native_monster_bank(src: Source, key: str, mob: str, unresolved: list) -> di
     return bank
 
 
+def native_spirit_summon_assets(src: Source) -> tuple[dict, dict]:
+    proxy = src.pack_records.get(NATIVE_SPIRIT_PROXY, {})
+    summons = proxy.get('native_spirit_summons', {})
+    if set(summons) != {NATIVE_OUTERWALL_BANKS['native_bossfather'], NATIVE_OUTERWALL_BANKS['native_bosspope']}:
+        raise ValueError('Compile original spirit summon contracts before baking')
+    if proxy['source']['sha256'] != NATIVE_SPIRIT_PROXY_SHA:
+        raise ValueError('Original spirit summon proxy identity differs')
+    effects = {'native_spirit_light_attack2': NATIVE_SPIRIT_LIGHT_ATTACK2}
+    effects.update({bank: f'monster/zealot/commonani/{stem}.ani'
+                    for _slot, stem, bank, _order, _sha in NATIVE_SPIRIT_CAST_LAYERS})
+    effects.update({row['proxy_bank']: row['proxy_ani'] for row in summons.values()})
+    for path in (NATIVE_SPIRIT_PROXY, *effects.values()):
+        raw = src.lib.raw(path)
+        if not raw or raw[1] != src.pack_records.get(path, {}).get('source', {}).get('sha256'):
+            raise ValueError('Original spirit summon asset differs: ' + path)
+        src.sources[path] = raw[1]
+    for paths in NATIVE_SPIRIT_SOUNDS.values():
+        for path, digest in paths.items():
+            audio = src.audio(path)
+            if not audio or audio[1] != digest or sha(audio[0].read_bytes()) != digest:
+                raise ValueError('Original spirit summon audio differs: ' + path)
+            src.sources[path] = digest
+    return summons, effects
+
+
 def monster_specifications() -> dict:
     """手写条目（旧 clip 目录约定）+ 总账自动补全条目。"""
     specs = {key: {'mob': mob, 'clip_dir': clip_dir, 'extra': extra} for key, (mob, clip_dir, extra) in MONSTERS.items()}
@@ -853,11 +897,13 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
     manifest['native_jar_traps'], trap_effects, trap_pins = native_jar_trap_assets(src)
+    manifest['native_spirit_summons'], summon_effects = native_spirit_summon_assets(src)
     manifest['native_status_visuals'] = native_status_visuals(src)
     particle_pins = {**trap_pins, NATIVE_POISON_PARTICLE: NATIVE_POISON_VISUAL_SHA}
     manifest['particles'], particle_effects = native_particle_definitions(src, particle_pins)
     effects.update(particle_effects)
     effects.update(trap_effects)
+    effects.update(summon_effects)
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
@@ -1081,7 +1127,8 @@ def extend_rasa(library: Path | None, output: Path = OUT) -> dict:
     return extend_skill_banks(library, output, specs)
 
 
-def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_path: Path | None = None) -> dict:
+def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_path: Path | None = None,
+                       include_spirit_summons: bool = False) -> dict:
     """Add explicitly bound banks while retaining every existing asset byte."""
     global ACTIVE_OUT
     src = Source(library, pack_path=pack_path)
@@ -1092,6 +1139,12 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_
         shutil.copytree(output, stage, dirs_exist_ok=True)
         ACTIVE_OUT = stage
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
+        if include_spirit_summons:
+            summons, effects = native_spirit_summon_assets(src)
+            if 'native_spirit_summons' in manifest and manifest['native_spirit_summons'] != summons:
+                raise ValueError('Existing original spirit summon contract differs')
+            manifest['native_spirit_summons'] = summons
+            specs = [*specs, *(('effects', key, path) for key, path in effects.items())]
         additions, unresolved = [], []
         for section, key, path in specs:
             if section == 'player_clips':
@@ -1192,7 +1245,8 @@ def main() -> int:
     if args.extend_outerwall:
         specs = [('monsters', key, path) for key, path in NATIVE_OUTERWALL_BANKS.items()]
         specs.extend(('audio', key, paths) for key, paths in OUTERWALL_SOUNDS.items())
-        print(json.dumps(extend_skill_banks(args.library, args.output or OUT, specs, pack_path=args.pack)))
+        print(json.dumps(extend_skill_banks(args.library, args.output or OUT, specs, pack_path=args.pack,
+                                          include_spirit_summons=True)))
         return 0
     if args.extend_raxy_starfish:
         specs = [('monsters', key, path) for key, path in NATIVE_ZEALOT_MONSTERS.items()]

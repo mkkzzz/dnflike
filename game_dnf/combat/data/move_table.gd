@@ -10,7 +10,7 @@ const SKILL_RUNTIME := "res://data/skill_runtime.json"
 ## D2FC90 factory cases: Goblin/Thrower use CNMonster's +788 and
 ## +58C. These Haze IDs all dispatch to the generic CNAIMonster constructor.
 const NATIVE_TARGET_IDS := {
-	"legacy":["1","2"],
+	"legacy":["1","2","265","266","602","603"],
 	"ai":["56032","59016","59017","61243","61244","61245","61247","61263","61267","61269","63007"],
 }
 var skill_levels: Dictionary = {}
@@ -519,6 +519,19 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 				"[back vision]":profile["back_vision"] = int(field["values"][0])
 		m["native_target_profile"] = profile
 	if record.has("native_attack_selection"):m["native_attack_selection"] = record["native_attack_selection"]
+	var summon: Dictionary = assets.get("native_spirit_summons",{}).get(path,{})
+	if not summon.is_empty():
+		summon = summon.duplicate()
+		ani_paths["cast"] = summon["cast_ani"]
+		summon["cast_duration_ms"] = Timeline.duration(timeline(summon["cast_ani"]))
+		# Ordinary idle sets +3194 to 1000 at 82BB7F before state 13 uses it.
+		summon["cast_rate"] = 1.0
+		m["native_spirit_summon"] = summon
+	var spirit := path in ["monster/spirit/darkspirit.mob","monster/spirit/lightspirit.mob"]
+	if spirit or not summon.is_empty():m["native_attack_rate"] = float(mob["attack_speed"][0])/1000.0
+	if spirit:
+		m["native_spirit"] = true
+		m["native_hover_height"] = float(mob.get("floating_height",[0])[0])
 	if record.has("native_suicide"):
 		var suicide: Dictionary = record["native_suicide"].duplicate(true)
 		var source_ani := String(suicide["suicide_ani"])

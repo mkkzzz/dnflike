@@ -21,6 +21,7 @@ const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
+const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
@@ -122,6 +123,7 @@ func _use_map_export(loader) -> void:
 	game.map_loader.errors.clear()
 
 func _validate_native_maze(loader, maze: NativeMaze) -> bool:
+	if maze.basis_level <= 0:return false
 	var pending: Array[String] = []
 	var checked := {}
 	var checked_props := {}
@@ -155,11 +157,27 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 		var bank: Dictionary = game.combat_assets.get("monsters",{}).get(definition["bank"],{})
 		var texture := String(bank.get("atlas",{}).get("texture",""))
 		if texture == "" or not ResourceLoader.exists(texture,"Texture2D"):return false
+		if mob in NativeZealotSummons.CASTERS:
+			var summon: Dictionary = definition.get("native_spirit_summon",{})
+			if not _validate_zealot_summon(summon,bank):return false
+			var spirit: String = summon["mob"]
+			if spirit not in pending:pending.append(spirit)
 		for child: String in definition.get("native_suicide",{}).get("spawn",{}).get("mobs",[]):
 			if child not in pending:pending.append(child)
 	for image: Dictionary in loader.data["images"].values():
 		if not FileAccess.file_exists(loader.base_dir.path_join(String(image["file"]))):return false
 	return true
+
+func _validate_zealot_summon(summon: Dictionary, actor_bank: Dictionary) -> bool:
+	if summon.is_empty() or not actor_bank.get("clips",{}).has("cast"):return false
+	if float(summon["cast_duration_ms"]) <= 0.0 or float(summon["cast_rate"]) <= 0.0:return false
+	if not NativeJarTraps.has_bank(game.combat_assets,summon["proxy_bank"]):return false
+	var proxy_bank: Dictionary = game.combat_assets["effects"][summon["proxy_bank"]]
+	if proxy_bank.get("source") != summon["proxy_ani"] or proxy_bank.get("duration_ms") != summon["proxy_duration_ms"]:return false
+	if summon["cast_layers"].size() != 3:return false
+	for layer: Dictionary in summon["cast_layers"]:
+		if not NativeJarTraps.has_bank(game.combat_assets,layer["bank"]):return false
+	return NativeJarTraps.has_sound(game.combat_assets,summon["cast_sound"])
 
 func _validate_native_breakable(source: Dictionary) -> bool:
 	var timeline: Array = game.table.timeline(source["motion_ani"])

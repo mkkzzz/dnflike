@@ -2,6 +2,7 @@
 import tempfile
 import unittest
 import copy
+import json
 from unittest.mock import patch
 from pathlib import Path
 
@@ -83,6 +84,45 @@ class CombatAssetPublishTest(unittest.TestCase):
                 "uid=old",
             )
             self.assertFalse(any(backups.iterdir()))
+
+
+class NativeSpiritSummonAssetsTest(unittest.TestCase):
+    def test_original_cast_proxy_and_normal_attack_banks_are_bound(self):
+        root = Path(__file__).resolve().parents[1] / 'game_dnf'
+        assets = root / 'assets_local'
+        manifest = json.loads((assets/'combat/manifest.json').read_text(encoding='utf-8'))
+        pack = json.loads((assets/'content/combat_content.json').read_text(encoding='utf-8'))
+        records = pack['records']
+        proxy = 'passiveobject/common/summonmonster.obj'
+        summons = manifest['native_spirit_summons']
+        self.assertEqual(summons, records[proxy]['native_spirit_summons'])
+        self.assertEqual(pack['indexes']['passive_objects']['48024'], proxy)
+        for caster, mob, extra, z, frames, duration in (
+            ('bossfather', 'darkspirit', 3, 0, 9, 800), ('bosspope', 'lightspirit', 4, 40, 10, 900),
+        ):
+            with self.subTest(caster=caster):
+                caster_path = f'monster/zealot/{caster}.mob'
+                spec = summons[caster_path]
+                self.assertEqual(spec['mob'], f'monster/spirit/{mob}.mob')
+                self.assertEqual((spec['extra'], spec['birth_z'], spec['proxy_id']), (extra, z, 48024))
+                self.assertEqual(spec['cast_ani'], records[caster_path]['decoded']['etc_motions'][2])
+                self.assertEqual([layer['order'] for layer in spec['cast_layers']], [-100, 100, 200])
+                self.assertTrue(all(layer['bank'] in manifest['effects'] for layer in spec['cast_layers']))
+                bank = manifest['effects'][spec['proxy_bank']]
+                self.assertEqual((bank['source'], bank['duration_ms']), (spec['proxy_ani'], duration))
+                self.assertEqual(len(bank['frames']), frames)
+                self.assertIsNone(bank['frames'][0].get('delay_ms'))
+                self.assertEqual([frame['delay_ms'] for frame in bank['frames'][1:]], [100] * (frames - 1))
+                self.assertFalse(bank['loop'])
+                self.assertTrue((root/bank['atlas']['texture'].removeprefix('res://')).is_file())
+                for path, percent in ((caster_path, 80), (spec['mob'], 60)):
+                    policy = records[path]['native_attack_selection']
+                    self.assertEqual((policy['initial_ms'], policy['delay_ms'], policy['delay_spread_ms']),
+                                     (3000, 1200, 240))
+                    slot, = policy['slots']
+                    self.assertEqual((slot['slot'], slot['standing_percent']), (0, percent))
+        self.assertEqual([len(manifest['audio'][key]) for key in ('BELIEVER_PRAY', 'R_CLAWC_HIT', 'FG_HIT_01')],
+                         [2, 2, 1])
 
 
 if __name__ == "__main__":

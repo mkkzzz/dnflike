@@ -14,6 +14,7 @@ const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
+const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
@@ -57,6 +58,7 @@ var _companion_programs: Dictionary = {}
 var objects: Array = []
 var props: Array = []
 var native_jar_traps := NativeJarTraps.new()
+var native_zealot_summons := NativeZealotSummons.new()
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
@@ -254,6 +256,8 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	var stats := Numbers.monster(monster_base,int(enemy.get("source_level",numeric_monster_level)),bool(enemy["chief"]),numeric_difficulty)
 	stats["blind_resistance"] = int(m["blind_resistance"])
 	stats["poison_resistance"] = int(m["poison_resistance"])
+	if m.has("native_attack_rate"):stats["attack_speed"] = m["native_attack_rate"]
+	if m.has("native_spirit_summon"):stats["cast_speed"] = m["native_spirit_summon"]["cast_rate"]
 	actor.configure({"numbers":stats})
 	enemy["numeric"] = actor
 	enemy["max_hp"] = float(actor.values["hp_max"])
@@ -731,6 +735,7 @@ func step_game(ms: float) -> void:
 	for index in monsters.size():update_enemy(monsters[index],ms)
 	for companion: Dictionary in companions:update_companion(companion,ms)
 	step_objects(ms,first_new_object_id)
+	native_zealot_summons.step(self,ms,first_new_object_id)
 	if _aura_pulse_ms <= 0:
 		_aura_pulse_ms = 1000.0
 		pulse_passive_auras()
@@ -744,7 +749,7 @@ func step_game(ms: float) -> void:
 		var alive := float(enemy["hp"])>0
 		if alive:living += 1
 		else:report_defeat(enemy)
-		if alive or float(enemy["death_ms"])<820:all_dead = false
+		if enemy_registered(enemy):all_dead = false
 	if all_dead and not room_cleared:finish_current_room()
 	if room_is_open(living) and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
@@ -766,6 +771,9 @@ func step_game(ms: float) -> void:
 				else:
 					load_room(int(door["to"]),side)
 				break
+
+func enemy_registered(enemy: Dictionary) -> bool:
+	return float(enemy["hp"]) > 0.0 or float(enemy["death_ms"]) < 820.0
 
 func finish_current_room() -> void:
 	var boss := route_boss_room()
@@ -1277,6 +1285,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if numeric_player != null and not contact_only:
 		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
 		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
+		if target["state"] == NativeZealotSummons.CAST_STATE:
+			target_stats = target_stats.duplicate()
+			target_stats["physical_defense"] = float(target_stats["physical_defense"])*NativeZealotSummons.CAST_DEFENSE_FACTOR
+			target_stats["magical_defense"] = float(target_stats["magical_defense"])*NativeZealotSummons.CAST_DEFENSE_FACTOR
 		var context := hit.duplicate(true)
 		context["percent"] = percent
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
@@ -1304,7 +1316,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
 		target["hp"] = maxf(0,float(target["hp"])-amount)
-		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"]),float(hit.get("lift",-1)))
+		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
+		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
+		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 		target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player:
@@ -1452,6 +1466,7 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
+	var summon_poll: bool = m.has("native_spirit_summon") and NativeZealotSummons.poll_due(enemy,ms)
 	if enemy.has("starfish_capture") and (enemy["state"] != "attack" or float(enemy["hp"]) <= 0.0):
 		release_starfish_victim(enemy)
 	var native_selection: Dictionary = m.get("native_attack_selection",{})
@@ -1481,8 +1496,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
 	var advance := ms
-	if state == "attack" and enemy.has("numeric") and enemy.get("starfish_bite_phase","") != "release":
-		advance *= float(enemy.get("rasa_previous_attack_rate",enemy["numeric"].values["attack_speed"]))
+	if state == NativeZealotSummons.CAST_STATE:
+		advance *= float(enemy["native_cast_rate"])
+	elif state == "attack" and enemy.get("starfish_bite_phase","") != "release":
+		var rate := float(enemy["numeric"].values["attack_speed"]) if enemy.has("numeric") else float(m.get("native_attack_rate",1.0))
+		advance *= float(enemy.get("rasa_previous_attack_rate",rate))
 	if not bool(enemy["chief"]) and enemy.has("numeric") and float(enemy["hp"]) > 0.0:
 		# 82A2DB lazily starts a per-actor timer. A due poll changes the rate
 		# for subsequent animation time and starts the next interval from now.
@@ -1497,6 +1515,8 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["death_ms"] = float(enemy["death_ms"])+ms
 	elif state == "native_suicide":
 		step_native_suicide(enemy,m["native_suicide"],ms)
+	elif state == NativeZealotSummons.CAST_STATE:
+		native_zealot_summons.finish_cast(self,enemy)
 	elif state == "native_summon_jump":
 		step_native_summon_jump(enemy,dt)
 		return
@@ -1521,6 +1541,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			target = nearest_living(enemy["pos"],candidates)
 		if target.is_empty():return
 		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]),blind)
+		var summon_candidate := summon_poll and NativeZealotSummons.choose(self,enemy,bool(intent["visible"]) and float(target["hp"]) > 0.0)
 		if not native_selection.is_empty() and (not blind or bool(intent["visible"])):
 			var slot := poll_native_enemy_attack(enemy,native_selection)
 			intent["attack"] = slot >= 0
@@ -1540,6 +1561,9 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 				enemy.erase("starfish_bite_phase")
 				enemy.erase("native_jump_velocity")
 				enemy.erase("native_jump_gravity")
+		elif summon_candidate:
+			NativeZealotSummons.start(self,enemy)
+			return
 		elif state == "idle" and m.has("native_suicide") and start_native_suicide(enemy,m["native_suicide"]):
 			return
 		elif Vector2(intent["move"]).length_squared() > 0:
@@ -1549,7 +1573,13 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["state"] = "move"
 		else:
 			enemy["state"] = "idle"
-	Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
+	var gravity := float(rules["reaction"]["monster_gravity"])
+	var hover := float(m.get("native_hover_height",0.0))
+	if hover > 0.0 and enemy["state"] in ["idle","move","attack"]:
+		enemy["z"] = hover
+		enemy["vz"] = 0.0
+		gravity = 0.0
+	Kernel.Reaction.step_body(enemy,ms,gravity,rules["reaction"],move_in_world)
 
 func start_native_suicide(enemy: Dictionary, suicide: Dictionary) -> bool:
 	for path: String in suicide["spawn"]["mobs"]:
@@ -1835,6 +1865,10 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 	else:
 		var hit := {"atk":move_atk,"atk_path":move_atk_path,
 			"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0}
+		if m.get("native_spirit",false):
+			hit["damage_type"] = "magical"
+			hit["element"] = "dark" if Kernel.MoveTable.enum_value(move_atk,"element","") == "[dark element]" else "light"
+			hit["skill_id"] = ""
 		if not contact.is_empty():
 			hit["native_contact"] = contact
 			hit["atk_path"] = contact["atk_path"]
@@ -2620,6 +2654,7 @@ func move_player(delta: Vector2) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	objects.clear()
+	native_zealot_summons.proxies.clear()
 	native_jar_traps.clear(self)
 	update_khazan_aura()
 	end_action_fx()
@@ -2675,10 +2710,17 @@ func load_room(index: int, from_side: String) -> void:
 	door_lock_ms = 700.0
 	if not room_cleared:
 		for m: Dictionary in room_map["monsters"]:
-			var kind: String = table.monster_by_mob(String(m["mob"]))
+			var mob := String(m["mob"])
+			var kind: String = table.monster_by_mob(mob)
 			if kind == "":continue
 			var anchor: Array = m["anchor"]
-			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind)
+			var source: Dictionary = {}
+			if native_maze != null and mob in NativeZealotSummons.CASTERS:
+				# The ordinary MAP row uses a level relative to the DGN basis.
+				var raw: Array = m["raw"]
+				var level := int(raw[2])+(native_maze.basis_level if int(raw[1]) != 0 else 0)
+				source["level"] = clampi(level,1,200)
+			spawn_enemy(Vector2(float(anchor[0]),float(anchor[1])),String(m["raw"][-1]) == "[boss]",kind,source)
 	place_room_companions()
 	notice(route_room_name()+(" · 领主出现" if route_boss_room() else ""))
 
@@ -2695,19 +2737,20 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {
 	var m: Dictionary = table.monsters[kind]
 	var base: Dictionary = rules["monster_base"]
 	var hp := float(m["hp"])*(float(base["boss_hp_scale"]) if chief else 1.0)
-	var enemy := {"id":int(reserved.get("id",_next_entity_id)),"kind":kind,"def":m,"mob":m["mob"],"pos":constrain_pos(point),"z":0.0,"vz":0.0,
+	var spawn := point if reserved.has("summon_owner") else constrain_pos(point)
+	var enemy := {"id":int(reserved.get("id",_next_entity_id)),"kind":kind,"def":m,"mob":m["mob"],"pos":spawn,"z":float(reserved.get("z",0.0)),"vz":0.0,
 		"facing":int(reserved.get("facing",-1)),"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true,
 		"skill_cd":{}}
-	if not reserved.is_empty():
+	if reserved.has("level"):
 		enemy["source_level"] = int(reserved["level"])
-		var launch: Dictionary = reserved["launch"]
+		var launch: Dictionary = reserved.get("launch",{})
 		if not launch.is_empty():
 			start_native_flight(enemy,launch["z"],launch["velocity"],launch["lift"],NativePotMonsters.GRAVITY)
-	else:
-		_next_entity_id += 1
+	if reserved.has("summon_owner"):enemy["summon_owner"] = reserved["summon_owner"]
+	if not reserved.has("id"):_next_entity_id += 1
 	if numeric_player != null:configure_enemy_numbers(enemy)
 	monsters.append(enemy)
 	bus.emit("combat.entity_spawned",{"entity_id":enemy["id"],"kind":"monster","appearance":String(m["bank"]),"chief":chief})
@@ -2982,6 +3025,7 @@ func enemy_ani(enemy: Dictionary) -> Array:
 	match String(enemy["state"]):
 		"move":return ["move",float(enemy["clock"])]
 		"native_suicide":return [m["native_suicide"]["pose"],float(enemy["clock"])]
+		NativeZealotSummons.CAST_STATE:return ["cast",float(enemy["clock"])]
 		"attack":
 			var bite_phase := String(enemy.get("starfish_bite_phase",""))
 			if bite_phase in ["bite","release"]:
@@ -3040,10 +3084,12 @@ func view_snapshot() -> Dictionary:
 		var e_ani := enemy_ani(enemy)
 		var is_alive := float(enemy["hp"])>0
 		if is_alive:alive += 1
+		var casting: bool = is_alive and enemy["state"] == NativeZealotSummons.CAST_STATE
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"z":float(enemy["z"]),"facing":int(enemy["facing"]),
 			"ani":String(enemy["def"]["motions"].get(e_ani[0],e_ani[0])),"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
 			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"],
 			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind"),
+			"cast_layers":enemy["def"]["native_spirit_summon"]["cast_layers"] if casting else [],
 			"poison":enemy["numeric"].effects.poison_visual() if is_alive and enemy.has("numeric") else 0})
 	var friendly: Array = []
 	for companion: Dictionary in companions:
@@ -3065,6 +3111,7 @@ func view_snapshot() -> Dictionary:
 		else:
 			objs.append(item)
 	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
+	objs.append_array(native_zealot_summons.view_objects())
 	var route: Array = native_maze.route_view() if native_maze != null else []
 	if native_maze == null:
 		for i in rules["rooms"].size():

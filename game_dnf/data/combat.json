@@ -462,6 +462,16 @@
    "bank": "native_bosspope",
    "name": "GBL教大主教"
   },
+  "native_darkspirit": {
+   "mob": "monster/spirit/darkspirit.mob",
+   "bank": "native_darkspirit",
+   "name": "瑟冥特克"
+  },
+  "native_lightspirit": {
+   "mob": "monster/spirit/lightspirit.mob",
+   "bank": "native_lightspirit",
+   "name": "雷沃斯"
+  },
   "native_catapult": {
    "mob": "monster/vehicle/catapult.mob",
    "bank": "native_catapult",

@@ -141,6 +141,8 @@ if ($Test) {
         $popeExit=$LASTEXITCODE
         $raxyCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_raxy_combat.gd 2>&1
         $raxyExit=$LASTEXITCODE
+        $zealotSummons=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_zealot_summons.gd 2>&1
+        $zealotExit=$LASTEXITCODE
         $mazeCore=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_maze.gd 2>&1
         $mazeCoreExit=$LASTEXITCODE
         $mazeSession=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_maze_session.gd 2>&1
@@ -154,6 +156,8 @@ if ($Test) {
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
     $raxyCombat | Write-Output
     if ($raxyExit -ne 0 -or ($raxyCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($raxyCombat -match '\[NATIVE_RAXY\] COMPLETE checks=\d+ failures=0')) {throw "Native Raxy summons regression failed."}
+    $zealotSummons | Write-Output
+    if ($zealotExit -ne 0 -or ($zealotSummons -match 'SCRIPT ERROR|ERROR:') -or -not ($zealotSummons -match '\[NATIVE_ZEALOT_SUMMONS\] COMPLETE checks=\d+ failures=0')) {throw "Original Zealot summon regression failed."}
     $mazeCore | Write-Output
     if ($mazeCoreExit -ne 0 -or ($mazeCore -match 'SCRIPT ERROR|ERROR:') -or -not ($mazeCore -match '\[NATIVE_MAZE\] COMPLETE checks=\d+ failures=0')) {throw "Native maze selection regression failed."}
     $mazeSession | Write-Output

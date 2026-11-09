@@ -91,7 +91,9 @@
   "native_starfish_rukuku",
   "native_bossfather",
   "native_bosspope",
-  "native_catapult"
+  "native_catapult",
+  "native_darkspirit",
+  "native_lightspirit"
  ],
  "objects": [
   "gorecross",
@@ -130,9 +132,9 @@
   "native_cannonball",
   "native_pope_thunderbolt"
  ],
- "effects": 230,
+ "effects": 236,
  "digits": 61,
- "audio_keys": 222,
+ "audio_keys": 225,
  "unresolved": 32,
  "unresolved_items": [
   {

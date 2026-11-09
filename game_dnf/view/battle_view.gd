@@ -229,6 +229,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
 		actor.present_status_overlay(poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
+		_present_cast_layers(actor,e)
 	_present_objects(s.get("objects",[]))
 	for i in range(ghosts.size()-1,-1,-1):
 		var g: Dictionary = ghosts[i]
@@ -325,6 +326,28 @@ func _present_blind(actor: ActorView, enemy: Dictionary, sim_ms: float) -> void:
 			# The status owns the ANI pair for the actor's lifetime. Expiry
 			# hides it and a later application does not rebuild the animation.
 			fx.clock_ms = elapsed
+
+func _present_cast_layers(actor: Node2D, enemy: Dictionary) -> void:
+	var layers: Array = enemy.get("cast_layers",[])
+	var views: Dictionary = actor.get_meta("native_cast_layers",{})
+	if layers.is_empty():
+		for layer: Node2D in views.values():layer.hide()
+		return
+	for info: Dictionary in layers:
+		var key: String = info["bank"]
+		var view = views.get(key)
+		if view == null:
+			view = FxView.new()
+			view.show_behind_parent = int(info["order"]) < 0
+			view.setup(_effects[key],int(enemy["facing"]))
+			view.loop = true
+			actor.add_child(view)
+			views[key] = view
+		view.position.y = -roundf(float(enemy["z"]))
+		view.facing = int(enemy["facing"])
+		view.seek(float(enemy["clock"]))
+		view.show()
+	actor.set_meta("native_cast_layers",views)
 
 func _present_objects(list: Array) -> void:
 	var live := {}

@@ -115,8 +115,34 @@ NATIVE_OUTERWALL_MOBS = {
           NATIVE_ATTACK_CONTACTS['monster/zealot/bosspope.mob']['sha256']['monster/zealot/bosspope.mob']),
     270: ('native_catapult', 'monster/vehicle/catapult.mob',
           NATIVE_ATTACK_EMISSIONS['monster/vehicle/catapult.mob']['sha256']['monster/vehicle/catapult.mob']),
+    602: ('native_darkspirit', 'monster/spirit/darkspirit.mob',
+          '58e243582fd7abd32c7bd68f2c72228c5f6b2dc911776d8205bd9db2741eafae'),
+    603: ('native_lightspirit', 'monster/spirit/lightspirit.mob',
+          'c41f36f3dc2c5fcbd16d16a4e37671df7469060a5e82b8a84e48c49b02c282ce'),
 }
 NATIVE_OUTERWALL_BANKS = {key: path for key, path, _sha in NATIVE_OUTERWALL_MOBS.values()}
+NATIVE_SPIRIT_PROXY_ID = 48024
+NATIVE_SPIRIT_PROXY = 'passiveobject/common/summonmonster.obj'
+NATIVE_SPIRIT_PROXY_SHA = 'be422bb480005ca368a384abf84b0cd78c8927c0d191c378294228ea6ac9d16e'
+NATIVE_SPIRIT_SUMMONS = {
+    265: (602, 3, 0, 800, 'dark', '5dc652209673e4f62b149f54cba3d9e12f3e903a21b1fde70c07948bb1a81203',
+          '41fd6c2f3ecd6d8aa0e93e0b811417e54dcff981b5dae5ff9cfae54c0b08e06d'),
+    266: (603, 4, 40, 900, 'light', '37f3297f35cc9e35633b5bbd7e479e89d926edb3f01731bc90ce63119ba69943',
+          '4d3ffb148619cd77c9b9bc31b4669388f6fc42ae884c11f1303ad015096e0842'),
+}
+NATIVE_SPIRIT_LIGHT_ATTACK2 = 'monster/spirit/lightanimation/attack2effect.ani'
+NATIVE_SPIRIT_CAST_LAYERS = (
+    (4, 'castbg', 'native_zealot_cast_bg', -100, '9e5ca2cb0efd67304a1b9526d69b21630e912016c3a3de5ac48e9644d7dacd12'),
+    (5, 'casteffect', 'native_zealot_cast_effect', 100, '48a1c6fcec4849ca571c54a638a709396d10801bf8b5f2d0ead334f3641e6a3d'),
+    (6, 'casteffectglow', 'native_zealot_cast_glow', 200, '9a2f8fb29bd73280e967d4988a75d754a75411eb0512ec3ba622aab0b619b5ed'),
+)
+NATIVE_CLASSIC_HOSTILE_SELECTION = {
+    'initial_ms': 3000, 'down_gate_percent': 0,
+    'target_class': 0x11, 'alternate_target_class': 0x21,
+    'normal_ai_call': '0x8782ED', 'attempt_deadline': '0x8837DE..0x88384F',
+    'target_area': '0x877CE0', 'slot_probabilities': '0x8784D0..0x8786FC',
+    'no_target_probability': '0x878710..0x87875A', 'uniform_candidate': '0x8838FB..0x88394E',
+}
 OUTERWALL_BREAKABLE_ROOT = 'passiveobject/mapobject/breakableobject/'
 NATIVE_OUTERWALL_BREAKABLES = {
     300: ('collectionboxforlotus', 'collectionboxforlotus', 'collectionboxdestroy',
@@ -884,13 +910,7 @@ def compile_native_starfish_jump(mob: dict, mob_id: int, spec: dict, add) -> dic
     selection = compile_native_attack_selection(mob, [
         {'slot': index} for index, (motion, attack) in enumerate(zip(motions, attacks, strict=True))
         if motion and attack
-    ], {
-        'initial_ms': 3000, 'down_gate_percent': 0,
-        'target_class': 0x11, 'alternate_target_class': 0x21,
-        'normal_ai_call': '0x8782ED', 'attempt_deadline': '0x8837DE..0x88384F',
-        'target_area': '0x877CE0', 'slot_probabilities': '0x8784D0..0x8786FC',
-        'no_target_probability': '0x878710..0x87875A', 'uniform_candidate': '0x8838FB..0x88394E',
-    })
+    ], NATIVE_CLASSIC_HOSTILE_SELECTION)
     return {
         'slot': 1, 'state': 8, 'start_ani': start_ani, 'rolling_ani': rolling_ani, 'end_ani': end_ani,
         'rolling_atk': etc_attacks[1], 'rolling_etc_motion_index': 2, 'end_etc_motion_index': 3,
@@ -926,6 +946,47 @@ def compile_native_starfish_bite(mob: dict, add) -> dict:
             'release': '0xDB60F0 / 0xDB3EA0 → 0xDB4530',
         },
     }
+
+
+def compile_native_spirit_summons(records: dict, passive_index: dict, add) -> None:
+    proxy_path = resolve('passiveobject/passiveobject.lst', passive_index.get(NATIVE_SPIRIT_PROXY_ID, ''))
+    if proxy_path != NATIVE_SPIRIT_PROXY:
+        raise ValueError('Native spirit summon needs original OBJ48024')
+    proxy = add(proxy_path, 'obj', 'native spirit summon')
+    proxy_data = checked_zealot_source(proxy, proxy_path, {proxy_path: NATIVE_SPIRIT_PROXY_SHA})
+    if any(proxy_data.get('basic_motion', [])):
+        raise ValueError('Native spirit summon proxy must select its motion by packet mode')
+    specs = {}
+    for caster_id, (mob_id, extra, birth_z, duration, spirit, proxy_sha, cast_sha) in NATIVE_SPIRIT_SUMMONS.items():
+        _, caster, _ = NATIVE_OUTERWALL_MOBS[caster_id]
+        mob_bank, mob, _ = NATIVE_OUTERWALL_MOBS[mob_id]
+        caster_data = records[caster]['decoded']
+        if caster_data['int_data'][0] != mob_id:
+            raise ValueError('Native spirit summon MOB integer binding differs: ' + caster)
+        cast_ani = caster_data['etc_motions'][2]
+        checked_zealot_source(records.get(cast_ani), cast_ani, {cast_ani: cast_sha})
+        proxy_ani = f'monster/spirit/{spirit}animation/summon.ani'
+        motion = checked_zealot_source(add(proxy_ani, 'ani', proxy_path), proxy_ani, {proxy_ani: proxy_sha})
+        timeline = motion['timeline']
+        if (timeline[0]['end_ms'] != 0 or timeline[-1]['end_ms'] != duration
+                or motion['global_items'].get('0') or any(frame['attack_boxes'] for frame in timeline)):
+            raise ValueError('Native spirit summon proxy timing or collision differs: ' + proxy_ani)
+        cast_layers = []
+        for slot, stem, bank, order, digest in NATIVE_SPIRIT_CAST_LAYERS:
+            path = f'monster/zealot/commonani/{stem}.ani'
+            if caster_data['etc_motions'][slot] != path:
+                raise ValueError('Native spirit cast ETC binding differs: ' + caster)
+            checked_zealot_source(records.get(path), path, {path: digest})
+            cast_layers.append({'bank': bank, 'order': order})
+        specs[caster] = {
+            'mob': mob, 'mob_id': mob_id, 'mob_bank': mob_bank, 'birth_z': birth_z, 'extra': extra,
+            'proxy_id': NATIVE_SPIRIT_PROXY_ID, 'proxy_ani': proxy_ani,
+            'proxy_bank': f'native_spirit_{spirit}_summon', 'proxy_duration_ms': duration,
+            'cast_ani': cast_ani, 'cast_layers': cast_layers, 'cast_sound': 'BELIEVER_PRAY',
+            'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'request': '0x26CAF3F → 0x86E090',
+                       'layers': '0xDBA6D0..0xDBA7D0', 'birth': '0x230C30A → 0x234DDFA'},
+        }
+    proxy['native_spirit_summons'] = specs
 
 
 def compile_native_outerwall_breakables(passive_index: dict, add) -> None:
@@ -1233,6 +1294,11 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     for mob_id, (_key, path, sha) in NATIVE_OUTERWALL_MOBS.items():
         if monster_index.get(str(mob_id)) != path or records[path]['source']['sha256'] != sha:
             raise ValueError(f'Native Outerwall MOB{mob_id} needs exact source {path}')
+        if mob_id in (265, 266, 602, 603):
+            records[path]['native_attack_selection'] = compile_native_attack_selection(
+                records[path], [{'slot': 0}], NATIVE_CLASSIC_HOSTILE_SELECTION)
+    compile_native_spirit_summons(records, passive_objects, add)
+    object_index[str(NATIVE_SPIRIT_PROXY_ID)] = NATIVE_SPIRIT_PROXY
     for p in object_paths:
         obj = add(p, 'obj', 'scope')
         if not obj:

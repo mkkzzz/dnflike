@@ -10,6 +10,7 @@ const MASK := {"right":1,"up":2,"left":4,"down":8}
 
 var _rolls: RefCounted
 var _size := Vector2i.ZERO
+var basis_level := 0
 var _cells: Dictionary = {}
 var _pools: Dictionary = {}
 var _visited: Dictionary = {}
@@ -26,6 +27,10 @@ func start(export: Dictionary, roll_source: RefCounted) -> bool:
 	if dungeon.get("path") != SOURCE or dungeon.get("sha256") != SOURCE_SHA:return false
 	var size := _point(dungeon.get("size"))
 	if size.x < 1 or size.y < 1:return false
+	for field: Dictionary in dungeon.get("raw",[]):
+		if field["tag"] == "[basis level]":
+			basis_level = int(field["values"][0][2])
+			break
 	var cells := _read_cells(dungeon.get("cells"),size)
 	var starts := _read_endpoint_cells(dungeon.get("start_map_raw"),cells,"start_candidate")
 	var bosses := _read_endpoint_cells(dungeon.get("boss_map_raw"),cells,"boss_candidate")
