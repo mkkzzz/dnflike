@@ -484,6 +484,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
 			if name == "charge_crash":
+				# CD0279/CD0561/CD07E8 use the ordinary weapon ATK installer.
+				for hit: Dictionary in built["hits"]:
+					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],float(weapon_hit_info(weapon)[2]))
 				# CD0201/CD0235 play the dash voice and motion sound. CD0502 plays the upper voice.
 				match stage["ani"]:
 					"chargecrashdash":
@@ -568,7 +571,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 					move["charge_crash_wave"] = {"kind":"object","object":CHARGE_CRASH_WAVE_OBJ,
 						"atk":wave["atk"],"atk_path":wave["atk_path"],"skill":true,"skill_id":name,
 						"percent":0.0,"fixed":spec["charge_crash_wave_percent"],"damage_type":"physical",
-						"element":"none","offset":Vector3(135,0,0),"starts_at_zero":true,"object_fx":"charge_crash_wave"}
+						"element":"none","offset":Vector3(135,0,0),"starts_at_zero":true,"object_fx":"charge_crash_wave",
+						"hitstop_ms":_atk_hitstop(wave["atk"],0.0)}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
@@ -581,6 +585,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			hit["skill_id"] = name
 			if spec.get("form_normal",false):hit["skill"] = false
 	return move
+
+static func _atk_hitstop(atk: Dictionary, fallback: float) -> float:
+	# 12D1365 stores the first numeric hit-info value as ATK hitstop.
+	var info: Array = atk.get("hit_info",[])
+	if info.size() < 2:return fallback
+	var args: Array = info[1]["args"]
+	if args.is_empty() or int(args[0]) == -1:return fallback
+	return float(args[0])
 
 func _draw_slash_cues(slots: Array, shot: float, under: int, upper: int) -> Array:
 	# CB23F1..CB2477 installs two normal layers, then the colored pair.

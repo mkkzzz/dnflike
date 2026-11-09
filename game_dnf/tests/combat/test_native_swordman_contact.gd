@@ -3135,6 +3135,7 @@ func check_charge_crash_uppercut() -> void:
 	for rate: float in [0.5,1.0,1.25]:
 		start_room("original_27000","shortsword",1,spec)
 		game.numeric_player.values["attack_speed"] = rate
+		game.numeric_player.values["hit"] = 1.0
 		for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(600,0))
 		var target: Dictionary = game.monsters[0]
 		var late_target: Dictionary = game.monsters[1]
@@ -3144,6 +3145,7 @@ func check_charge_crash_uppercut() -> void:
 		press(KEY_A)
 		step(0)
 		check(game.hit_count==1,"the dash has an attack box from body frame zero")
+		check(game.player["stuck_ms"]==30.0 and target["stuck_ms"]==30.0,"the dash uses its authored 30 ms hitstop on both sides")
 		move_target(target,POINT+Vector2(110 if rate == 0.5 else 180,0))
 		if rate == 0.5:
 			step(301)
@@ -3173,6 +3175,13 @@ func check_charge_crash_uppercut() -> void:
 		check(game.hit_count==dash_hits,"the uppercut cannot hit in its two opening frames")
 		step(1)
 		check(game.hit_count==dash_hits+1,"the uppercut can hit the dash target with its own ATK from frame two")
+		check(game.player["stuck_ms"]==90.0 and target["stuck_ms"]==90.0,"the short-sword uppercut uses its weapon's 90 ms hitstop")
+	start_room("original_27000","shortsword",1,spec)
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(35,0))
+	press(KEY_A)
+	game.step_game(1.0)
+	check(game.hit_count==1 and game.player["stuck_ms"]==30.0 and target["stuck_ms"]==30.0,
+		"the integrated contact tick does not use up the target's new hitstop")
 
 func check_charge_crash_mastery() -> void:
 	var profile := ProfileSession.new()
@@ -3263,6 +3272,9 @@ func check_charge_crash_mastery() -> void:
 		if not full:
 			check(targets[0]["hp"]<5000.0 and targets[1]["hp"]==5000.0 and targets[2]["hp"]==5000.0,
 				"the first downstroke frame hits in front without inheriting the effect's reach behind the actor")
+			var stop := 120.0 if heavy else 100.0
+			check(game.player["stuck_ms"]==stop and targets[0]["stuck_ms"]==stop,
+				"the direct downstroke uses the equipped family's stop rather than the shockwave's stop")
 			var initial_hp: float = targets[0]["hp"]
 			step(79.0/rate)
 			check(targets[1]["hp"]==5000.0,"the greatsword's longer second box cannot land one frame early")
@@ -3285,11 +3297,17 @@ func check_charge_crash_wave(wave: Dictionary) -> void:
 	var a: Dictionary = api.spawn_dummy(origin+Vector2(15,0))
 	var b: Dictionary = game.spawn_enemy(origin-Vector2(15,0))
 	b["hp"] = 5000.0
+	b["stuck_ms"] = 45.0
 	game.step_objects(16,id)
 	check(wave["clock"]==0.0 and wave["hits"].has(a["id"]) and wave["hits"].has(b["id"])
 		and a["state"]=="air" and b["state"]=="air" and game.last_damage["trace"]["fixed_part"]==1363.0,
 		"invisible frame zero reaches two targets with the independent ATK and upward knockdown")
 	check(game.player["stuck_ms"]==0.0 and cues("FLAMES_HIT").size()==2,"wave contact uses its own hit sound without freezing the caster")
+	check(a["stuck_ms"]==20.0 and b["stuck_ms"]==45.0,"the original wave requests 20 ms and preserves an existing longer pause")
+	game.update_enemy(a,19.0)
+	check(a["stuck_ms"]==1.0 and a["clock"]==0.0,"wave target remains paused through 19 ms")
+	game.update_enemy(a,1.0)
+	check(a["stuck_ms"]==0.0,"the wave target resumes at 20 ms")
 	game.step_objects(100)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(game.view.object_views[id].frame["frame"]==1 and wave["hits"].size()==2 and cues("FLAMES_HIT").size()==2,

@@ -2703,7 +2703,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			attacker["attack_success"] = true
 			var source_id = attacker["skills"].find_key(hit_skill_id)
 			attacker["last_attack"] = -1 if source_id == null else int(source_id)
-	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
+	var stop := float(hit.get("hitstop_ms",rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"]))
 	# The independent delayed hit and short-sword wave keep their unset pause.
 	if draw_contact:stop = float(hit["draw_stop_ms"])
 	elif draw_impact or hit.get("native_controller",{}).get("kind","") == "draw_short_wave":stop = 0.0
@@ -2712,7 +2712,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	if not grab_strike and stop > float(target.get("stuck_ms",0)):
 		target["stuck_ms"] = stop
-		if draw_contact and _stepping_player:target["draw_stop_fresh"] = true
+		if _stepping_player and (draw_contact or hit.has("hitstop_ms")):target["hitstop_fresh"] = true
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	var damage_event := {"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,"show_number":not contact_only,
@@ -2883,7 +2883,7 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
-	var fresh_draw_stop := enemy.erase("draw_stop_fresh")
+	var fresh_hitstop := enemy.erase("hitstop_fresh")
 	var held_by_grab := int(player.get("grab_blast_target",-1)) == int(enemy["id"])
 	var summon_poll: bool = m.has("native_spirit_summon") and NativeZealotSummons.poll_due(enemy,ms)
 	if enemy.has("starfish_capture") and (enemy["state"] != "attack" or float(enemy["hp"]) <= 0.0):
@@ -2912,7 +2912,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["grab_blast_pose"][1] += ms
 		return
 	if float(enemy["stuck_ms"]) > 0:
-		if not fresh_draw_stop:enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
+		if not fresh_hitstop:enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
 		return
 	var dt := ms/1000
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)
