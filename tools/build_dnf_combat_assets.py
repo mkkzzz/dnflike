@@ -236,6 +236,7 @@ OBJECTS = {
 PLAYER_CLIPS = {
     'getitem': 'character/swordman/animation/getitem.ani',
     'hardattack': 'character/swordman/animation/hardattack.ani',
+    'hardattackchargeafter': 'character/swordman/animation/hardattackchargeafter.ani',
     'moonlightslash1': 'character/swordman/animation/moonlightslash1.ani',
     'moonlightslash2': 'character/swordman/animation/moonlightslash2.ani',
     'chargecrashdash': 'character/swordman/animation/chargecrashdash.ani',
@@ -263,6 +264,9 @@ EFFECTS = {
     'hardattack_charge2': 'character/swordman/effect/animation/hardattackoncharge2.ani',
     'hardattack_full1': 'character/swordman/effect/animation/hardattackfullcharge1.ani',
     'hardattack_full2': 'character/swordman/effect/animation/hardattackfullcharge2.ani',
+    'hardattack_dash_dust': 'character/swordman/effect/animation/hardattackchargeafterdust.ani',
+    'hardattack_dash_down': 'character/swordman/effect/animation/wave-down.ani',
+    'hardattack_dash_up': 'character/swordman/effect/animation/wave-up.ani',
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
     'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
@@ -1298,6 +1302,8 @@ def main() -> int:
                         help='Add the original Ghost Slash voice group')
     parser.add_argument('--extend-hardattack-charge', action='store_true',
                         help='Add Ghost Slash charge and full-charge cues')
+    parser.add_argument('--extend-hardattack-dash', action='store_true',
+                        help='Add the original full-charge Ghost Slash follow-up animation and effects')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1378,6 +1384,11 @@ def main() -> int:
         keys = ('hardattack_charge1', 'hardattack_charge2', 'hardattack_full1', 'hardattack_full2')
         specs = [('effects', key, EFFECTS[key]) for key in keys]
         specs.extend(('audio', key, path) for key, path in HARDATTACK_CHARGE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_hardattack_dash:
+        specs = [('player_clips', 'hardattackchargeafter', PLAYER_CLIPS['hardattackchargeafter'])]
+        specs.extend(('effects', key, EFFECTS[key]) for key in ('hardattack_dash_dust', 'hardattack_dash_down', 'hardattack_dash_up'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_triple_cues:

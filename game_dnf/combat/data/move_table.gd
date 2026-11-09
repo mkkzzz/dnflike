@@ -338,8 +338,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["guard_min_hold_ms"] = float(guard_static[0]) if not guard_static.is_empty() else 0.0
 	if name == "hardattack" and job == "soulbringer" and int(skill_levels.get("hardattackcharge",0)) > 0:
 		var charge := _skill_row("skill/swordman/hardattackcharge.skl")
+		var values: Array = charge["static"]
 		# CC6391 sets the charge threshold. CC6798 reads the rank's maximum bonus.
-		move["hardattack_charge"] = {"duration_ms":int(charge["static"][1]),"bonus_percent":int(charge["level_row"][0])}
+		var followup := _build_stage({"ani":"hardattackchargeafter",
+			"fx":[{"key":"hardattack_dash_down","at":0.0,"action_clock":true},
+				{"key":"hardattack_dash_up","at":0.0,"action_clock":true}]},skill)
+		# CC688E / CC689E install this motion on the X axis. The pose has no attack boxes.
+		followup["slide"] = {"speed":float(values[2]),"accel":float(values[3])}
+		followup["swing"] = -1
+		move["hardattack_charge"] = {"duration_ms":int(values[1]),"bonus_percent":int(charge["level_row"][0]),"followup":followup}
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
 		move["native_recovery_ms"] = float(skill["static"][0])

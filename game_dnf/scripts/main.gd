@@ -702,6 +702,7 @@ func leave_action() -> void:
 		player.erase("triple_cast")
 	end_hardattack_charge()
 	player.erase("hardattack_release")
+	player.erase("action_slide")
 	end_action_fx()
 
 func end_action() -> void:
@@ -958,14 +959,14 @@ func step_action(ms: float, move: Vector2) -> void:
 	if not native_phase.is_empty() and not native_phase.has("charge_rate"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
-	if m.has("dash"):
-		var motion: Dictionary = m["dash"]
+	var native_slide := player.has("action_slide")
+	if native_slide or m.has("dash"):
+		var motion: Dictionary = player["action_slide"] if native_slide else m["dash"]
 		var old_motion_clock := old_clock
 		var new_motion_clock := clock
-		if name == "triple":
-			motion = player["triple_slide"]
+		if native_slide:
 			old_motion_clock = float(motion["elapsed_ms"])
-			# State 22 uses real milliseconds for motion, independently of the ANI clock.
+			# Original forced movement uses its own clock, independently of the ANI.
 			var remaining_ms := maxf(0.0,(action_duration(name)-old_clock)/maxf(speed,0.001))
 			new_motion_clock = old_motion_clock+minf(ms,remaining_ms)
 			motion["elapsed_ms"] = new_motion_clock
@@ -977,7 +978,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		var dx := (v0*t1+0.5*a*t1*t1)-(v0*t0+0.5*a*t0*t0)
 		if dx != 0:
 			dx *= int(player["facing"])
-			if name == "triple":move_along_ground_pixels(dx)
+			if native_slide:move_along_ground_pixels(dx)
 			else:move_player(Vector2(dx,0))
 	if bool(m.get("air",false)) and move.length_squared() > 0:
 		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
@@ -988,6 +989,10 @@ func step_action(ms: float, move: Vector2) -> void:
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
 	apply_player_hits(stage,old_event_clock,event_clock)
+	# CB1BB3 checks the full-charge release's body frame before the next phase.
+	if stage.has("hardattack_followup") and clock >= float(stage["timeline"][9]["start_ms"]):
+		start_hardattack_followup(stage["hardattack_followup"])
+		return
 	var duration := action_duration(name)
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
@@ -1199,6 +1204,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	player["clock"] = opening_clock
 	player["hits"] = {}
 	player.erase("queued_upper_followup")
+	player.erase("action_slide")
 	action_seq += 1
 	var m := move_def(name)
 	player["native_phase"] = {}
@@ -1217,12 +1223,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		if numeric_player == null and float(player["buff_ms"]) > 0.0:
 			attack_rate = float(rules["buff"]["attack_speed"])
-		var motion_rate := int(attack_rate*1000.0)/1000.0
-		# CC7C56 requests attack speed. 827F20 scales velocity and truncates acceleration.
-		var velocity := float(m["dash"]["speed"])*motion_rate
-		var acceleration := int(float(m["dash"]["accel"])*motion_rate)
-		var stop := int(-velocity*1000.0/acceleration)/1000.0 if acceleration < 0 else INF
-		player["triple_slide"] = {"speed":velocity,"accel":acceleration,"stop_s":stop,"elapsed_ms":0.0}
+		# CC7C56 requests attack speed for Triple Slash movement.
+		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
 	if m.has("stages") and not (name == "upper" and index == 1):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
@@ -1234,7 +1236,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
 	if name == "triple":play_sound("R_TSLASH")
-	var swing := int(m.get("swing",-1))
+	var swing := int(stage.get("swing",m.get("swing",-1)))
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
 		if swing < wav.size() and String(wav[swing]) != "":play_sound(String(wav[swing]))
@@ -1256,6 +1258,7 @@ func step_hardattack_charge(ms: float) -> void:
 		var spent := clampi(int(elapsed)-warmup,0,duration)
 		var bonus := int(float(charge["bonus_percent"])*spent/duration)
 		var release := action_def().duplicate(true)
+		if charge.get("full",false):release["hardattack_followup"] = charge["followup"]
 		for hit: Dictionary in release["hits"]:
 			hit["percent"] = int(float(hit["percent"])*(100+bonus)/100.0)
 		# CB1A52 emits the release cue once when the body reaches frame 3.
@@ -1281,6 +1284,28 @@ func step_hardattack_charge(ms: float) -> void:
 			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"fresh":true})
 		play_sound("GHOSTSLASH_CHARGE_END")
+
+func begin_action_slide(config: Dictionary, rate: float) -> void:
+	# 827F20 scales velocity and truncates acceleration. 8A7210 uses integer ms.
+	var motion_rate := int(rate*1000.0)/1000.0
+	var velocity := float(config["speed"])*motion_rate
+	var acceleration := int(float(config["accel"])*motion_rate)
+	var stop := int(-velocity*1000.0/acceleration)/1000.0 if acceleration < 0 else INF
+	player["action_slide"] = {"speed":velocity,"accel":acceleration,"stop_s":stop,"elapsed_ms":0.0}
+
+func start_hardattack_followup(stage: Dictionary) -> void:
+	end_action_fx()
+	player["hardattack_release"] = stage
+	player["fx_tag"] = "act:%d" % (action_seq+1)
+	player["queued_skill"] = ""
+	start_stage(1)
+	var facing := int(player["facing"])
+	var direction := int(held.get(KEY_RIGHT,false))-int(held.get(KEY_LEFT,false))
+	# CC68D9 zeros the movement when holding the opposite direction.
+	# CC6940 uses the fixed movement rate and attack speed for the ANI.
+	if direction != -facing:begin_action_slide(stage["slide"],1.0)
+	bus.emit("combat.cue",{"kind":"fx","key":"hardattack_dash_dust","point":Vector2(player["pos"]).round(),
+		"height":0.0,"facing":facing,"fresh":true})
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:

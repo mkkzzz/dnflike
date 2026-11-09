@@ -693,6 +693,50 @@ func check_hardattack_charge() -> void:
 	step(0)
 	check(not game.player.has("hardattack_charge") and cues("R_SM_GUE").is_empty(),"interrupting the hold never releases an attack")
 
+func check_hardattack_followup() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"soulbringer"})
+	profile.command("numbers.skill_grant",{"id":"hardattackcharge","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hardattack"]
+	for variant: Array in [[250,1,0,1.0],[250,-1,KEY_LEFT,1.25],[250,1,KEY_LEFT,1.0],[249,1,0,1.0]]:
+		var hold: int = variant[0]
+		var facing: int = variant[1]
+		var direction: int = variant[2]
+		var speed: float = variant[3]
+		start_room("original_27601","katana",facing,spec,"soulbringer")
+		game.numeric_player.values["attack_speed"] = speed
+		session.submit_key(KEY_A,true)
+		step(hold)
+		session.submit_key(KEY_A,false)
+		step(0)
+		var release_window := 350.0/speed
+		step(release_window-1.0)
+		check(game.player_ani()[0]=="hardattack" and cues("hardattack_dash_dust").is_empty(),
+			"Ghost Slash stays in the release ANI before body frame 9")
+		if direction!=0:session.submit_key(direction,true)
+		step(1)
+		if direction!=0:session.submit_key(direction,false)
+		if hold<250:
+			check(game.player_ani()[0]=="hardattack" and cues("hardattack_dash_dust").is_empty(),"a partial charge never enters the follow-up")
+			continue
+		check(game.player_ani()==["hardattackchargeafter",0.0] and game.player["stage"]==1,
+			"a full charge enters the original follow-up on frame 9")
+		check(cues("hardattack_dash_dust").size()==1 and cues("hardattack_dash_down").size()==1 and cues("hardattack_dash_up").size()==1,
+			"the follow-up spawns original dust and two body attachments once")
+		check(cues("hardattack_dash_dust")[0]["point"]==POINT and cues("hardattack_dash_dust")[0]["height"]==0.0,
+			"dust stays at the ground origin of the follow-up")
+		check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("img_frame",-1))==10),
+			"the follow-up uses both original weapon pose clips")
+		step(100)
+		var dx := 69.0*facing if direction!=KEY_LEFT or facing==-1 else 0.0
+		check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(dx,0)),
+			"follow-up X motion uses fixed rate, mirrored facing and the back-key veto")
+		check(game.hit_count==0,"the follow-up actor pose has no attack boxes")
+		step(650)
+		check(game.player["action"]=="" and not game.player.has("action_slide"),"the follow-up returns to idle and clears motion")
+
 func check_triple_cooldown() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -827,6 +871,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_hardattack()
 	check_hardattack_charge()
+	check_hardattack_followup()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)
