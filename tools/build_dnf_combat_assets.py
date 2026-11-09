@@ -366,6 +366,17 @@ OVERDRIVE_AUDIO = {
 }
 EFFECTS.update(SELF_BUFF_EFFECTS)
 
+WEAPON_COMBO_FINISH_EFFECTS = {
+    'weapon_combo_short_finish': 'character/swordman/effect/animation/weaponcombo/short.ani',
+    'weapon_combo_blade_finish': 'character/swordman/effect/animation/weaponcombo/blade.ani',
+}
+WEAPON_COMBO_MASTERY_EFFECTS = {
+    f'weapon_combo_short_mastery{i}':
+    f'character/swordman/effect/animation/shortswordmastery/shortweaponcombo{i}.ani'
+    for i in range(1, 4)
+}
+EFFECTS.update(WEAPON_COMBO_FINISH_EFFECTS | WEAPON_COMBO_MASTERY_EFFECTS)
+
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
 UPPER_FOLLOWUP_AUDIO = {
     'UPPER_SLASH_02': 'sounds/char/swordman/effect/upper_slash_02.ogg',
@@ -1365,6 +1376,8 @@ def main() -> int:
                         help='Add the original Frenzy release animation and cast sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
+    parser.add_argument('--extend-weapon-combo', action='store_true',
+                        help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
                         help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-guard', action='store_true',
@@ -1460,6 +1473,13 @@ def main() -> int:
     if args.extend_overdrive:
         specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]
         specs.extend(('audio', key, path) for key, path in OVERDRIVE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_weapon_combo:
+        specs = [('player_clips', f'weaponcomboshort{i}',
+                  f'character/swordman/animation/weaponcomboshort{i}.ani') for i in range(1, 4)]
+        specs.extend(('effects', key, path) for key, path in
+                     (WEAPON_COMBO_FINISH_EFFECTS | WEAPON_COMBO_MASTERY_EFFECTS).items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_armor_light:

@@ -96,6 +96,15 @@ STAGE_ANI_OVERRIDES = {
     "backstepcutter": ["hitback"],
 }
 
+# C9F238, C9F35D and C9F4B5 index four columns per native weapon subtype.
+WEAPON_COMBO_VARIANTS = {
+    "shortsword": ("short", (1, 2, 3), (4, 5), "weapon_combo_short_finish"),
+    "katana": ("blade", (1, 2, 3, 4), (3, 4, 4), "weapon_combo_blade_finish"),
+    "club": ("blunt", (1, 2, 2, 3), (4, 5, 5), ""),
+    "greatsword": ("heavy", (1, 2), (5,), ""),
+    "beamsword": ("light", (1, 2, 3), (3, 3), ""),
+}
+
 STAGE_ATK_OVERRIDES = {
     "upperslash": [CHR_ATK + "upperslash.atk"],
     "backstepcutter": [CHR_ATK + "upperslash.atk"],
@@ -1393,29 +1402,9 @@ def mastery_variants() -> dict:
             }
         ],
         "weaponcombo": [
-            {
-                "priority": 40,
-                "weapon": ["beamsword", "katana", "shortsword"],
-                "replace_stages": [
-                    "weaponcombolight1",
-                    "weaponcombolight2",
-                    "weaponcombolight3",
-                ],
-            },
-            {
-                "priority": 35,
-                "weapon": ["greatsword"],
-                "replace_stages": ["weaponcomboheavy1", "weaponcomboheavy2"],
-            },
-            {
-                "priority": 35,
-                "weapon": ["club"],
-                "replace_stages": [
-                    "weaponcomboblunt1",
-                    "weaponcomboblunt2",
-                    "weaponcomboblunt3",
-                ],
-            },
+            {"priority": 40, "weapon": [family],
+             "replace_stages": [f"weaponcombo{stem}{stage}" for stage in stages]}
+            for family, (stem, stages, _, _) in WEAPON_COMBO_VARIANTS.items()
         ],
         "hardattack": [
             {
@@ -1483,17 +1472,19 @@ def build_variant_moves(
             names = option.get("replace_stages", [])
             if names:
                 for index, ani in enumerate(names):
-                    stage = build_stage(
-                        base_id,
-                        index,
-                        stage_names.get(ani, ani),
-                        records,
-                        atk_by_stem,
-                        effect_paths,
-                        fx,
-                        effects,
-                        percent_col=index,
-                    )
+                    if base_id == "weaponcombo":
+                        _, _, gates, finish_fx = WEAPON_COMBO_VARIANTS[option["weapon"][0]]
+                        stage = {"ani": ani, "atk": CHR_ATK + ani + ".atk",
+                                 "hits": [{"attached_weapon": True}]}
+                        if index < len(gates):
+                            stage["continue_frame"] = gates[index]
+                        elif finish_fx:
+                            stage["fx"] = [{"key": finish_fx, "at": 0.0, "action_clock": True}]
+                    else:
+                        stage = build_stage(
+                            base_id, index, stage_names.get(ani, ani), records,
+                            atk_by_stem, effect_paths, fx, effects, percent_col=index,
+                        )
                     stages.append(stage)
                     player_anims[stage["ani"]] = CHR_ANI + stage["ani"] + ".ani"
             else:
@@ -1544,10 +1535,12 @@ def build_variant_moves(
                             "percent_col": 0,
                         }
                     )
-            if stages and not any(stage.get("hits") for stage in stages):
+            # Weapon Combo keeps its previous substitute reach when no original layer is mounted.
+            if stages and (base_id == "weaponcombo" or not any(stage.get("hits") for stage in stages)):
                 generic_key = add_fx(fx, effects, GENERIC_HIT_EFFECT)
                 if generic_key != "":
-                    stages[-1].setdefault("hits", []).append(
+                    hit_key = "fallback_hits" if base_id == "weaponcombo" else "hits"
+                    stages[-1].setdefault(hit_key, []).append(
                         {
                             "derived": generic_key,
                             "window": [0, 240],
@@ -1560,6 +1553,8 @@ def build_variant_moves(
                 "name": base.get("name", ""),
                 "stages": stages,
             }
+            if base_id == "weaponcombo":
+                variant_move["swing"] = 0
             if base.get("effect_id"):
                 variant_move["effect_id"] = base["effect_id"]
             moves[variant_id] = variant_move

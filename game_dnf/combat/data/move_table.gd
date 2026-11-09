@@ -13,12 +13,15 @@ const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3
 	"hardattack":"hardattack",
 	"frenzy1":"frenzy1","frenzy2":"frenzy2","frenzy3":"frenzy3","frenzy4":"frenzy4",
 	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3",
-	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5"}
+	"tripleslash4":"tripleslash4","tripleslash5":"tripleslash5",
+	"weaponcomboshort1":"weaponcomboshort1","weaponcomboshort2":"weaponcomboshort2","weaponcomboshort3":"weaponcomboshort3",
+	"weaponcomboblade1":"weaponcomboblade1","weaponcomboblade2":"weaponcomboblade2","weaponcomboblade3":"weaponcomboblade3","weaponcomboblade4":"weaponcomboblade4"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
 const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
-	"upper":"upperslash","upper_followup":"upperslashafter"}
+	"upper":"upperslash","upper_followup":"upperslashafter",
+	"weaponcomboshort1":"combo1","weaponcomboshort2":"combo2","weaponcomboshort3":"combo3"}
 # swordman.sd [upper slash start frame], consumed at CBF0C8.
 const UPPER_FOLLOWUP_FRAME := 3
 # CB9EF6 compares the current body frame against the stage table at 16EB9D8.
@@ -233,11 +236,14 @@ func bind_swordman_weapon(item: String, body_clips: Dictionary) -> bool:
 
 func _swordman_hits(name: String) -> Array:
 	if weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name):return []
-	var rank := int(skill_levels.get("shortswordmastery",0))
-	if job == "weaponmaster" and rank > 0 and _swordman_mastery_hits.has(name):
-		var mastery: Array = _skill_row(SHORT_MASTERY_SKL).get("static",[])
-		if mastery.size() > 12 and rank >= int(mastery[12]):return _swordman_mastery_hits[name]
+	if _uses_short_mastery_boxes(name):return _swordman_mastery_hits[name]
 	return _swordman_weapon_hits[name]
+
+func _uses_short_mastery_boxes(name: String) -> bool:
+	var rank := int(skill_levels.get("shortswordmastery",0))
+	if job != "weaponmaster" or rank <= 0 or not _swordman_mastery_hits.has(name):return false
+	var mastery: Array = _skill_row(SHORT_MASTERY_SKL).get("static",[])
+	return mastery.size() > 12 and rank >= int(mastery[12])
 
 func configure_skills(levels: Dictionary, active_job := "", active_weapon := "") -> void:
 	skill_levels = levels.duplicate(true)
@@ -379,10 +385,16 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:
 			var stage_hits := weapon_hits if move["stages"].is_empty() else []
-			if name == "triple":
+			if name in ["triple","weaponcombo"]:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if stage.has("continue_frame"):
+				built["continue_at"] = float(frames[int(stage["continue_frame"])]["start_ms"])
+			if name == "weaponcombo" and weapon == "shortsword" and _uses_short_mastery_boxes(String(stage["ani"])):
+				# CD459B attaches the same ShortWeaponCombo clip whose boxes CD45CA copies.
+				built["fx"].push_front({"key":"weapon_combo_short_mastery%d"%(move["stages"].size()+1),
+					"at":0.0,"action_clock":true})
 			if stage.has("combo_frame"):
 				built["combo_at"] = float(frames[int(stage["combo_frame"])]["start_ms"])
 			if name == "triple":
@@ -440,7 +452,10 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 	var hits: Array = []
 	var row: Array = skill.get("level_row",[])
 	var prior_cancel := 0.0
-	for h: Dictionary in spec.get("hits",[]):
+	var hit_specs: Array = spec.get("hits",[])
+	if weapon_hits.is_empty() and spec.has("fallback_hits"):
+		hit_specs = spec["fallback_hits"]
+	for h: Dictionary in hit_specs:
 		var atk_path := String(h.get("atk",default_atk))
 		if h.get("attached_weapon",false) and weapon_hits.is_empty():continue
 		var obj: Dictionary = {}

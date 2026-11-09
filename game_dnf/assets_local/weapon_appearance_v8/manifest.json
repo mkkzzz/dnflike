@@ -1,0 +1,1880 @@
+{
+ "schema": "dnf_weapon_pose_overlay/1",
+ "base_manifest_sha256": "e67cb0bc4f6fb20d44ea9345602e4a7de2d88375d23733b6d786341bdb3731eb",
+ "bindings": {
+  "equipment/character/swordman/weapon/ssword/sswdb/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort3.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort3.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort3.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort3.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort3.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/stay.ani": {
+   "weaponcomboshort1": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort1.ani",
+   "weaponcomboshort2": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort2.ani",
+   "weaponcomboshort3": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort3.ani"
+  }
+ },
+ "animations": {
+  "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -30,
+        -15,
+        16,
+        120,
+        26,
+        43
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -41,
+        -20,
+        23,
+        124,
+        26,
+        37
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort1.ani",
+   "sha256": "fa76c5dee3ddf1d7e04bd123b60c7aa473bf7c8810d67c3efa0a926b6afa4827"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort2.ani",
+   "sha256": "b442046afef58d735e52233a429a91d3c13077ba5f655408363292825268d7e1"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -6,
+        -10,
+        9,
+        85,
+        25,
+        136
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -40,
+        -10,
+        70,
+        95,
+        25,
+        103
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02db.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdb/weaponcomboshort3.ani",
+   "sha256": "c46dd87b4e1807f6f20bae5ae5e692db6e8d46a3b4512652b581e90e659bd8c2"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        15,
+        -12,
+        44,
+        104,
+        25,
+        59
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort1.ani",
+   "sha256": "b8b78f87d3f627013f407fee6b63c27f3bc37da2aa2854a49edbac4e3878bd1b"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        2,
+        -10,
+        14,
+        120,
+        30,
+        100
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -43,
+        -5,
+        11,
+        104,
+        30,
+        48
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -76,
+        -5,
+        10,
+        103,
+        30,
+        47
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort2.ani",
+   "sha256": "88e03f08552a18573b362cb3d6f4c483806c14500df3a7fdf40b3d202edb590a"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/sswd/sswd%02d%02dc.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdc/weaponcomboshort3.ani",
+   "sha256": "c50cc83c58e1ce400b88d853451b459bf08fbf0a7eb361e55f3baaf3263fe715"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -30,
+        -15,
+        16,
+        120,
+        26,
+        43
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -41,
+        -20,
+        23,
+        124,
+        26,
+        37
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort1.ani",
+   "sha256": "648dd48cd4b2db4730c9c51aaf0c7cc3dd88bf20733cec8217021ccb7fa0ab46"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort2.ani",
+   "sha256": "53571b635d157f475fa49954dc4e6b8819164924b443be0a9b5a782c7b0f8a2a"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -6,
+        -10,
+        9,
+        85,
+        25,
+        136
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -40,
+        -10,
+        70,
+        95,
+        25,
+        103
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02db.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdb/weaponcomboshort3.ani",
+   "sha256": "cb3fdf5da2b69d65d9fec6cbb2ad50e64d3279e954d6d2341b4fac2a6105b11e"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        15,
+        -12,
+        44,
+        104,
+        25,
+        59
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort1.ani",
+   "sha256": "01f246282de41c9c5363a9a77a40926036b80b09c60943288278dec47a001453"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        2,
+        -10,
+        14,
+        120,
+        30,
+        100
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -43,
+        -5,
+        11,
+        104,
+        30,
+        48
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -76,
+        -5,
+        10,
+        103,
+        30,
+        47
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort2.ani",
+   "sha256": "14e61a8f02ebc3c20fb655611d516aa855df743c995bd39130cac46649b44927"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/boneswd/bswd%02d%02dc.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdc/weaponcomboshort3.ani",
+   "sha256": "1579bce2464c8179c060aba1e62ebf70b9df683668c214a4b486e88e3c11c52b"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -30,
+        -15,
+        16,
+        120,
+        26,
+        43
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -41,
+        -20,
+        23,
+        124,
+        26,
+        37
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort1.ani",
+   "sha256": "6e00923ca287ed5b7e565b03122d7d1eaa9dc848db633efee9f4c93ebdddea8f"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort2.ani",
+   "sha256": "e47feafb2a184b987cee339fafee3cd6065604b7bc822e5aca8307693373d62a"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -6,
+        -10,
+        9,
+        85,
+        25,
+        136
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -40,
+        -10,
+        70,
+        95,
+        25,
+        103
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02db.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdb/weaponcomboshort3.ani",
+   "sha256": "9b41c5bf63bbe58341f7719b27ae3eefed02564b945440851c81d22bfb14ea3c"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort1.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 1,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 2,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 3,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        15,
+        -12,
+        44,
+        104,
+        25,
+        59
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 4,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 5,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 6,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort1.ani",
+   "sha256": "1406a1936ce8dac7fe35ee014e74141081dcb8f33b1c2a83d3debd64b22e3d5f"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort2.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 188,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 189,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 190,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        2,
+        -10,
+        14,
+        120,
+        30,
+        100
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 191,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -43,
+        -5,
+        11,
+        104,
+        30,
+        48
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 192,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [
+      {
+       "kind": "attack",
+       "box": [
+        -76,
+        -5,
+        10,
+        103,
+        30,
+        47
+       ]
+      }
+     ],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 5,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 193,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 600,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort2.ani",
+   "sha256": "7b890111e1c76f4ca42040c1caa71b0494cfb47e88174f3cd6567df45a427291"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort3.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 199,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 1,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 200,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 2,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 201,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 3,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 202,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 60
+     },
+     "delay_ms": 60
+    },
+    {
+     "frame": 4,
+     "img": "Character/Swordman/Equipment/Weapon/gemswd/gemswd%02d%02dc.img",
+     "img_frame": 203,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 300
+     },
+     "delay_ms": 300
+    }
+   ],
+   "duration_ms": 540,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdc/weaponcomboshort3.ani",
+   "sha256": "97fb7834e63b7c808000f5d3e4a949929c1d3d1f551dfaffb1f63c0d8815200e"
+  }
+ }
+}

@@ -199,7 +199,10 @@
    "weaponcomboheavy2": "character/swordman/animation/weaponcomboheavy2.ani",
    "weaponcombolight1": "character/swordman/animation/weaponcombolight1.ani",
    "weaponcombolight2": "character/swordman/animation/weaponcombolight2.ani",
-   "weaponcombolight3": "character/swordman/animation/weaponcombolight3.ani"
+   "weaponcombolight3": "character/swordman/animation/weaponcombolight3.ani",
+   "weaponcomboshort1": "character/swordman/animation/weaponcomboshort1.ani",
+   "weaponcomboshort2": "character/swordman/animation/weaponcomboshort2.ani",
+   "weaponcomboshort3": "character/swordman/animation/weaponcomboshort3.ani"
   }
  },
  "effects": {
@@ -4771,21 +4774,31 @@
    "skill": "skill/swordman/weaponcombo.skl",
    "stages": [
     {
-     "ani": "weaponcombolight1",
-     "atk": "character/swordman/attackinfo/weaponcombolight1.atk",
-     "hits": []
-    },
-    {
-     "ani": "weaponcombolight2",
-     "atk": "character/swordman/attackinfo/weaponcombolight2.atk",
-     "hits": []
-    },
-    {
-     "ani": "weaponcombolight3",
-     "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+     "ani": "weaponcomboshort1",
+     "atk": "character/swordman/attackinfo/weaponcomboshort1.atk",
+     "continue_frame": 4,
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboshort2",
+     "atk": "character/swordman/attackinfo/weaponcomboshort2.atk",
+     "continue_frame": 5,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboshort3",
+     "atk": "character/swordman/attackinfo/weaponcomboshort3.atk",
+     "fallback_hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcomboshort3.atk",
        "derived": "skillfx_upperslash1_65c825d8",
        "percent_col": 0,
        "window": [
@@ -4793,25 +4806,63 @@
         240
        ]
       }
+     ],
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "key": "weapon_combo_short_finish"
+      }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true
+      }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "weaponcombo__variant_2": {
    "name": "里 · 鬼剑术",
    "skill": "skill/swordman/weaponcombo.skl",
    "stages": [
     {
-     "ani": "weaponcomboheavy1",
-     "atk": "character/swordman/attackinfo/weaponcomboheavy1.atk",
-     "hits": []
-    },
-    {
-     "ani": "weaponcomboheavy2",
-     "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+     "ani": "weaponcomboblade1",
+     "atk": "character/swordman/attackinfo/weaponcomboblade1.atk",
+     "continue_frame": 3,
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboblade2",
+     "atk": "character/swordman/attackinfo/weaponcomboblade2.atk",
+     "continue_frame": 4,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboblade3",
+     "atk": "character/swordman/attackinfo/weaponcomboblade3.atk",
+     "continue_frame": 4,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboblade4",
+     "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
+     "fallback_hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcomboblade4.atk",
        "derived": "skillfx_upperslash1_65c825d8",
        "percent_col": 0,
        "window": [
@@ -4819,9 +4870,22 @@
         240
        ]
       }
+     ],
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0.0,
+       "key": "weapon_combo_blade_finish"
+      }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true
+      }
      ]
     }
-   ]
+   ],
+   "swing": 0
   },
   "weaponcombo__variant_3": {
    "name": "里 · 鬼剑术",
@@ -4830,17 +4894,37 @@
     {
      "ani": "weaponcomboblunt1",
      "atk": "character/swordman/attackinfo/weaponcomboblunt1.atk",
-     "hits": []
+     "continue_frame": 4,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
     },
     {
      "ani": "weaponcomboblunt2",
      "atk": "character/swordman/attackinfo/weaponcomboblunt2.atk",
-     "hits": []
+     "continue_frame": 5,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboblunt2",
+     "atk": "character/swordman/attackinfo/weaponcomboblunt2.atk",
+     "continue_frame": 5,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
     },
     {
      "ani": "weaponcomboblunt3",
      "atk": "character/swordman/attackinfo/weaponcomboblunt3.atk",
-     "hits": [
+     "fallback_hits": [
       {
        "atk": "character/swordman/attackinfo/weaponcomboblunt3.atk",
        "derived": "skillfx_upperslash1_65c825d8",
@@ -4850,9 +4934,99 @@
         240
        ]
       }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true
+      }
      ]
     }
-   ]
+   ],
+   "swing": 0
+  },
+  "weaponcombo__variant_4": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcomboheavy1",
+     "atk": "character/swordman/attackinfo/weaponcomboheavy1.atk",
+     "continue_frame": 5,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcomboheavy2",
+     "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+     "fallback_hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcomboheavy2.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    }
+   ],
+   "swing": 0
+  },
+  "weaponcombo__variant_5": {
+   "name": "里 · 鬼剑术",
+   "skill": "skill/swordman/weaponcombo.skl",
+   "stages": [
+    {
+     "ani": "weaponcombolight1",
+     "atk": "character/swordman/attackinfo/weaponcombolight1.atk",
+     "continue_frame": 3,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcombolight2",
+     "atk": "character/swordman/attackinfo/weaponcombolight2.atk",
+     "continue_frame": 3,
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    },
+    {
+     "ani": "weaponcombolight3",
+     "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+     "fallback_hits": [
+      {
+       "atk": "character/swordman/attackinfo/weaponcombolight3.atk",
+       "derived": "skillfx_upperslash1_65c825d8",
+       "percent_col": 0,
+       "window": [
+        0,
+        240
+       ]
+      }
+     ],
+     "hits": [
+      {
+       "attached_weapon": true
+      }
+     ]
+    }
+   ],
+   "swing": 0
   }
  },
  "passive_count": 101,
@@ -9724,19 +9898,43 @@
     "move": "weaponcombo__variant_1",
     "priority": 40,
     "replace_stages": [
-     "weaponcombolight1",
-     "weaponcombolight2",
-     "weaponcombolight3"
+     "weaponcomboshort1",
+     "weaponcomboshort2",
+     "weaponcomboshort3"
     ],
     "weapon": [
-     "beamsword",
-     "katana",
      "shortsword"
     ]
    },
    {
     "move": "weaponcombo__variant_2",
-    "priority": 35,
+    "priority": 40,
+    "replace_stages": [
+     "weaponcomboblade1",
+     "weaponcomboblade2",
+     "weaponcomboblade3",
+     "weaponcomboblade4"
+    ],
+    "weapon": [
+     "katana"
+    ]
+   },
+   {
+    "move": "weaponcombo__variant_3",
+    "priority": 40,
+    "replace_stages": [
+     "weaponcomboblunt1",
+     "weaponcomboblunt2",
+     "weaponcomboblunt2",
+     "weaponcomboblunt3"
+    ],
+    "weapon": [
+     "club"
+    ]
+   },
+   {
+    "move": "weaponcombo__variant_4",
+    "priority": 40,
     "replace_stages": [
      "weaponcomboheavy1",
      "weaponcomboheavy2"
@@ -9746,15 +9944,15 @@
     ]
    },
    {
-    "move": "weaponcombo__variant_3",
-    "priority": 35,
+    "move": "weaponcombo__variant_5",
+    "priority": 40,
     "replace_stages": [
-     "weaponcomboblunt1",
-     "weaponcomboblunt2",
-     "weaponcomboblunt3"
+     "weaponcombolight1",
+     "weaponcombolight2",
+     "weaponcombolight3"
     ],
     "weapon": [
-     "club"
+     "beamsword"
     ]
    }
   ]
