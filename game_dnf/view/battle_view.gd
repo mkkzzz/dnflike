@@ -535,7 +535,7 @@ func _spawn_fx(event: Dictionary) -> void:
 	var point: Vector2 = event["point"]
 	var fx = FxView.new()
 	world.add_child(fx)
-	fx.follow_offset = Vector2(float(event.get("offset_x",0))*int(event["facing"]),0)
+	fx.follow_offset = Vector2(float(event.get("offset_x",0))*int(event["facing"]),float(event.get("offset_y",0)))
 	fx.position = _canvas(point, float(event["height"]))+fx.follow_offset
 	fx.z_index = int(point.y)+4
 	fx.base_scale = float(event.get("scale",1.0))

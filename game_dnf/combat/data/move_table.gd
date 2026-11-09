@@ -6,7 +6,11 @@ extends RefCounted
 ##   assets_local/combat/manifest.json        — baked banks for presentation and borrowed ANIs.
 const Timeline = preload("res://combat/action/timeline.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
+const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
+const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3","upper":"hitback"}
+const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
+const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3","upper":"upperslash"}
 ## D2FC90 factory cases: Goblin/Thrower use CNMonster's +788 and
 ## +58C. These Haze IDs all dispatch to the generic CNAIMonster constructor.
 const NATIVE_TARGET_IDS := {
@@ -31,6 +35,10 @@ var player: Dictionary = {}
 var problems: Array = []
 var _timelines: Dictionary = {}
 var _native_target_classes: Dictionary = {}
+var _swordman_weapon_item := ""
+var _swordman_weapon_family := ""
+var _swordman_weapon_hits: Dictionary = {}
+var _swordman_mastery_hits: Dictionary = {}
 ## 原版 HP 基准表（monster/monsterbaseparameter.tbl，每 5 级一档）。
 var base_table: Array = []
 ## 原版选招规则（由 .ai 反编译提取）：按怪物名精确索引 + 按族目录索引。
@@ -186,6 +194,35 @@ func _skill_row(path: String) -> Dictionary:
 		"cast_ms":float(cast[0]) if not cast.is_empty() else 0.0,"level_row":info.slice(1,1+cols) if cols > 0 else [],
 		"static":static_data}
 
+## 81A6B0 tests the current body ANI first, then the attached weapon ANIs.
+func bind_swordman_weapon(item: String, body_clips: Dictionary) -> void:
+	if item == _swordman_weapon_item:return
+	_swordman_weapon_item = item
+	_swordman_weapon_family = String(WeaponAppearance.skin(item).get("family",""))
+	_swordman_weapon_hits.clear()
+	_swordman_mastery_hits.clear()
+	var layers := WeaponAppearance.layers(item,body_clips)
+	if layers.is_empty():return
+	for move: String in SWORDMAN_WEAPON_POSES:
+		var pose: String = SWORDMAN_WEAPON_POSES[move]
+		var body := player_timeline(pose)
+		var children: Array = []
+		for layer: Dictionary in layers:
+			children.append(Timeline.from_ani(layer["clips"].get(pose,{})))
+		_swordman_weapon_hits[move] = Timeline.attached_attack_segments(body,children)
+		if _swordman_weapon_family == "shortsword":
+			# 108CE20 appends the extra boxes to the body before checking equipment.
+			children.push_front(timeline(SHORT_MASTERY_ANI+String(SHORT_MASTERY_MOVES[move])+".ani"))
+			_swordman_mastery_hits[move] = Timeline.attached_attack_segments(body,children)
+
+func _swordman_hits(name: String) -> Array:
+	if weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name):return []
+	var rank := int(skill_levels.get("shortswordmastery",0))
+	if job == "weaponmaster" and rank > 0 and _swordman_mastery_hits.has(name):
+		var mastery: Array = _skill_row("skill/swordman/shortswordmastery.skl").get("static",[])
+		if mastery.size() > 12 and rank >= int(mastery[12]):return _swordman_mastery_hits[name]
+	return _swordman_weapon_hits[name]
+
 func configure_skills(levels: Dictionary, active_job := "", active_weapon := "") -> void:
 	skill_levels = levels.duplicate(true)
 	if active_job != "":job = active_job
@@ -271,9 +308,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["native_state"] = "ghost_cast"
 		move["native_charge_ani"] = String(spec["native_charge_ani"])
 		move["native_recovery_ms"] = float(skill["static"][0])
+	var weapon_hits := _swordman_hits(name)
 	if spec.has("stages"):
 		move["stages"] = []
-		for stage: Dictionary in spec["stages"]:move["stages"].append(_build_stage(stage,skill))
+		for stage: Dictionary in spec["stages"]:
+			move["stages"].append(_build_stage(stage,skill,weapon_hits if move["stages"].is_empty() else []))
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
 		if spec.has("dash"):
@@ -284,17 +323,18 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			move["dash"] = {"speed":float(stat[vi]) if stat.size() > vi else 0.0,"accel":float(stat[ai]) if stat.size() > ai else 0.0}
 		move.merge(move["stages"][0],false)
 	else:
-		move.merge(_build_stage(spec,skill),false)
+		move.merge(_build_stage(spec,skill,weapon_hits),false)
 	for stage: Dictionary in move.get("stages",[move]):
 		for hit: Dictionary in stage.get("hits",[]):hit["skill_id"] = name
 	return move
 
-func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
+func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) -> Dictionary:
 	var ani := String(spec.get("ani",""))
 	var body := player_timeline(ani) if ani != "" else []
 	var default_atk := String(spec.get("atk",""))
 	var hits: Array = []
 	var row: Array = skill.get("level_row",[])
+	var prior_cancel := 0.0
 	for h: Dictionary in spec.get("hits",[]):
 		var atk_path := String(h.get("atk",default_atk))
 		var obj: Dictionary = {}
@@ -313,7 +353,16 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 			"fixed":float(row[int(h["fixed_col"])]) if h.has("fixed_col") and row.size()>int(h["fixed_col"]) else float(decoded.get("absolute_damage",0)),
 			"damage_type":String(h.get("damage_type","magical" if enum_value(decoded,"attack_type")=="[magic]" else "physical")),
 			"element":String(h.get("element",enum_value(decoded,"element", "[none element]").trim_prefix("[").trim_suffix(" element]")))}
-		if h.get("body",false):
+		if not weapon_hits.is_empty():
+			hit["kind"] = "boxes"
+			hit["source"] = "attached_weapon"
+			hit["segments"] = weapon_hits
+			# Keep the existing cancel gate until its native input rules are mapped.
+			if h.has("borrow"):
+				prior_cancel = maxf(prior_cancel,Timeline.last_active_ms(Timeline.attack_segments(timeline(String(h["borrow"])))))
+			elif h.has("window"):
+				prior_cancel = maxf(prior_cancel,float(h["window"][1]))
+		elif h.get("body",false):
 			hit["kind"] = "boxes"
 			hit["source"] = "body"
 			hit["segments"] = Timeline.attack_segments(body)
@@ -380,14 +429,25 @@ func _build_stage(spec: Dictionary, skill: Dictionary) -> Dictionary:
 		if hit.get("kind","") == "boxes" and hit["segments"].is_empty():
 			problems.append("no attack boxes for "+ani+" ("+String(hit["source"])+")")
 		hits.append(hit)
-	var last := 0.0
+	var last := prior_cancel
 	for hit: Dictionary in hits:
 		if hit["kind"] == "boxes":last = maxf(last,Timeline.last_active_ms(hit["segments"]))
 		else:last = maxf(last,float(hit["at"])+maxf(0,float(hit["active_ms"])))
 	# Moves without hits (buffs) cannot be cancelled before their motion ends.
 	if hits.is_empty():last = Timeline.duration(body)
+	var fx: Array = spec.get("fx",[])
+	var sounds: Array = spec.get("sounds",[])
+	var voice := String(spec.get("voice",""))
+	if ani == "hitback" and not weapon_hits.is_empty():
+		# CB0D80 attaches ordinary FX slot 0 once at body frame 3.
+		var short_sword := weapon == "shortsword"
+		fx = [{"key":"upper1","at":float(body[3]["start_ms"]),"action_clock":true,
+			"scale":0.8 if short_sword else 0.9,"offset_x":5.0 if short_sword else 0.0,
+			"offset_y":-18.0 if short_sword else 0.0}]
+		sounds = [{"key":"UPPER_SLASH_01","at":0.0},{"key":"upper","at":0.0}]
+		voice = ""
 	return {"ani":ani,"timeline":body,"duration":Timeline.duration(body),"hits":hits,"cancel_at":last,
-		"fx":spec.get("fx",[]),"voice":String(spec.get("voice","")),"sounds":spec.get("sounds",[])}
+		"fx":fx,"voice":voice,"sounds":sounds}
 
 ## Explicit native field bindings only; never infer columns for other skills.
 func _level_effects(specs: Array, row: Array) -> Array:

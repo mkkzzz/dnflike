@@ -50,6 +50,14 @@ static func attack_segments(timeline: Array) -> Array:
 	if not current.is_empty():out.append(current)
 	return out
 
+## Mounted equipment and copied mastery boxes use the body's frame ordinals.
+static func attached_attack_segments(body: Array, sources: Array) -> Array:
+	var frames := body.duplicate(true)
+	for source: Array in sources:
+		for index in mini(frames.size(),source.size()):
+			frames[index]["attack_boxes"].append_array(source[index]["attack_boxes"])
+	return attack_segments(frames)
+
 ## Attack boxes of a segment that are live anywhere in (old_t, new_t].
 static func segment_boxes(segment: Dictionary, old_t: float, new_t: float) -> Array:
 	var out: Array = []

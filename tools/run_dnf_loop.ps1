@@ -137,6 +137,8 @@ if ($Test) {
     $popePreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"
+        $swordmanContact=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_swordman_contact.gd 2>&1
+        $swordmanExit=$LASTEXITCODE
         $popeCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_pope_combat.gd 2>&1
         $popeExit=$LASTEXITCODE
         $raxyCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_raxy_combat.gd 2>&1
@@ -152,6 +154,8 @@ if ($Test) {
         $particles=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_continuous_particles.gd 2>&1
         $particlesExit=$LASTEXITCODE
     } finally {$ErrorActionPreference=$popePreference}
+    $swordmanContact | Write-Output
+    if ($swordmanExit -ne 0 -or ($swordmanContact -match 'SCRIPT ERROR|ERROR:') -or -not ($swordmanContact -match '\[SWORDMAN_CONTACT\] COMPLETE checks=\d+ failures=0')) {throw "Native swordman contact regression failed."}
     $popeCombat | Write-Output
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
     $raxyCombat | Write-Output

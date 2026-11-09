@@ -186,13 +186,15 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	var seed: Dictionary = spec.get("number_seed", {})
 	if seed.has("growtype"):
 		job = String(seed["growtype"])
+	if spec.has("weapon") and assets["players"].has(spec["weapon"]) and weapon != spec["weapon"]:
+		weapon = spec["weapon"]
+	if spec.has("weapon_item"):table.bind_swordman_weapon(String(spec["weapon_item"]),player_clips)
 	table.configure_skills(skill_levels, job, weapon)
 	configure_skill_slots(spec.get("skill_slots",skill_slots))
 	max_hp = float(numeric_player.values["hp_max"])
 	max_mp = float(numeric_player.values["mp_max"])
 	player["hp"] = max_hp if vitals_policy=="refill" else clampf(float(player["hp"]),0,max_hp)
 	player["mp"] = max_mp if vitals_policy=="refill" else clampf(float(player["mp"]),0,max_mp)
-	if spec.has("weapon") and assets["players"].has(spec["weapon"]):weapon = spec["weapon"]
 	bus.emit("combat.attributes_changed",{"target":PLAYER_ID,"numbers":numeric_player.values.duplicate(true)})
 	return true
 
@@ -320,20 +322,21 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	last_damage = {}
 	numeric_monster_level = 1
 	numeric_difficulty = "normal"
-	table.configure_skills({}, job, weapon)
+	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
+	if assets["players"].has(String(snapshot.get("weapon",""))) and weapon != snapshot["weapon"]:
+		weapon = String(snapshot["weapon"])
+	table.bind_swordman_weapon(String(snapshot.get("weapon_item","")),player_clips)
 	max_hp = float(snapshot.get("hp_max",table.player["hp_max"]))
 	max_mp = float(snapshot.get("mp_max",table.player["mp_max"]))
 	damage_scale = float(snapshot.get("damage_multiplier",1.0))
 	player = new_player()
-	if snapshot.has("numbers"):update_numbers(snapshot,"refill")
+	if not update_numbers(snapshot,"refill"):table.configure_skills({},job,weapon)
 	if String(spec.get("run_id","standalone")) == "standalone":
 		configure_skill_slots(["draw","triple","rage_slash","buff","guard",""])
 	else:
 		configure_skill_slots(snapshot.get("skill_slots",[]))
 	if snapshot.has("hp"):player["hp"] = clampf(float(snapshot["hp"]),1,max_hp)
 	if snapshot.has("mp"):player["mp"] = clampf(float(snapshot["mp"]),0,max_mp)
-	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
-	if assets["players"].has(String(snapshot.get("weapon",""))):weapon = String(snapshot["weapon"])
 	var audio_spec: Dictionary = spec.get("audio",{})
 	if audio_spec.has("muted"):_muted = bool(audio_spec["muted"])
 	if leaving_maze or (maze != null and _muted):view.audio.music.stop()
@@ -442,6 +445,7 @@ func _input(event: InputEvent) -> void:
 			view.audio.music.volume_db = -80 if _muted else -28
 		KEY_1,KEY_2,KEY_3:
 			weapon = ["shortsword","katana","greatsword"][code-KEY_1]
+			table.configure_skills(skill_levels,job,weapon)
 		KEY_X,KEY_Z,KEY_C,KEY_SPACE:
 			if not paused and not finished:requests.append(code)
 		_:
@@ -1160,7 +1164,8 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			var synchronized := bool(fx.get("action_clock",false))
 			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
-				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0))})
+				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
+				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))
@@ -1181,19 +1186,23 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			var at := float(hit["at"])
 			if at > old_t and at <= new_t:spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
 			continue
-		for s in hit["segments"].size():
-			var boxes: Array = Kernel.Timeline.segment_boxes(hit["segments"][s],maxf(old_t,0.0) if old_t >= 0 else -1.0,new_t)
+		# The original actor ledger survives all layers and frames until a new ATK is installed.
+		var attached: bool = hit.get("source","") == "attached_weapon"
+		var sample_from := new_t if attached else old_t
+		for s: int in hit["segments"].size():
+			var boxes: Array = Kernel.Timeline.segment_boxes(hit["segments"][s],sample_from,new_t)
 			if boxes.is_empty():continue
+			var group: int = 0 if attached else s
 			var world: Array = Kernel.HitJudge.world_boxes(boxes,anchor,facing)
 			for enemy: Dictionary in monsters:
-				var id := "%d:%d:%d"%[i,s,int(enemy["id"])]
+				var id := "%d:%d:%d"%[i,group,int(enemy["id"])]
 				if player["hits"].has(id) or float(enemy["hp"])<=0:continue
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
 				player["hits"][id] = true
 				land_hit(player,enemy,hit,c["point"],facing,attack_power())
 			if native_maze != null:
-				apply_native_prop_hits(world,hit,attack_power(),player["hits"],"prop:%d:%d:"%[i,s])
+				apply_native_prop_hits(world,hit,attack_power(),player["hits"],"prop:%d:%d:"%[i,group])
 				continue
 			for p in props.size():
 				var prop: Dictionary = props[p]
