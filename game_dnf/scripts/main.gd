@@ -12,6 +12,7 @@ const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
+const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
@@ -248,7 +249,7 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	var ratio := float(enemy["hp"])/maxf(1,float(enemy["max_hp"]))
 	var actor = enemy.get("numeric")
 	if actor == null:actor = ActorNumbers.new()
-	var stats := Numbers.monster(monster_base,numeric_monster_level,bool(enemy["chief"]),numeric_difficulty)
+	var stats := Numbers.monster(monster_base,int(enemy.get("source_level",numeric_monster_level)),bool(enemy["chief"]),numeric_difficulty)
 	stats["blind_resistance"] = int(m["blind_resistance"])
 	actor.configure({"numbers":stats})
 	enemy["numeric"] = actor
@@ -722,11 +723,14 @@ func step_game(ms: float) -> void:
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
 	var all_dead := true
+	var living := 0
 	for enemy: Dictionary in monsters:
-		if float(enemy["hp"])<=0:report_defeat(enemy)
-		if float(enemy["hp"])>0 or float(enemy["death_ms"])<820:all_dead = false
+		var alive := float(enemy["hp"])>0
+		if alive:living += 1
+		else:report_defeat(enemy)
+		if alive or float(enemy["death_ms"])<820:all_dead = false
 	if all_dead and not room_cleared:finish_current_room()
-	if room_cleared and not finished and door_lock_ms<=0:
+	if room_is_open(living) and not finished and door_lock_ms<=0:
 		for door: Dictionary in doors:
 			# Walking into the gate passes; standing right on it passes as well.
 			# The trigger zone follows the gate's own orientation: side doors are narrow in x,
@@ -1221,6 +1225,12 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 		if not items.is_empty():
 			bus.emit("combat.prop_loot_released",{"run_id":run_id,"room_id":room_id,
 				"node":prop["node"],"position":pos,"items":items.duplicate()})
+		for child: Dictionary in prop.get("pot_monsters",[]):
+			var entry := child.duplicate()
+			entry["launch"] = NativePotMonsters.launch(rng,child["force_ground"],height)
+			entry["facing"] = int(prop["facing"])
+			spawn_enemy(pos,false,table.monster_by_mob(child["mob"]),entry)
+			if not entry["launch"].is_empty() and child["mob"] == NativePotMonsters.MOBS[250]:play_sound("ZGM_SPRING")
 		var offset: Array = source["particle_offset"]
 		bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
 			"point":pos+Vector2(float(offset[0]),float(offset[1])),"height":height+float(offset[2])})
@@ -1548,14 +1558,16 @@ func step_native_suicide(enemy: Dictionary, suicide: Dictionary, ms: float) -> v
 		var offset_x := native_spawn_roll(spec["offset_x"])
 		var path := String(spec["mobs"][rng.range_int(0,0x7fffffff)%spec["mobs"].size()])
 		var child := spawn_enemy(origin+Vector2(offset_x,offset_y),false,table.monster_by_mob(path))
-		var gravity := float(spec["ground_gravity"])
-		child["z"] = height
-		child["vz"] = sqrt(absf(2.0*gravity*rise))
 		child["facing"] = x_sign
-		child["state"] = "native_summon_jump"
-		child["native_jump_velocity"] = Vector2(vx*x_sign,vy*y_sign)
-		child["native_jump_gravity"] = gravity
+		start_native_flight(child,height,Vector2(vx*x_sign,vy*y_sign),rise,float(spec["ground_gravity"]))
 		play_sound(spec["sound"])
+
+func start_native_flight(enemy: Dictionary, height: float, velocity: Vector2, rise: int, gravity: float) -> void:
+	enemy["z"] = height
+	enemy["vz"] = sqrt(absf(2.0*gravity*rise))
+	enemy["state"] = "native_summon_jump"
+	enemy["native_jump_velocity"] = velocity
+	enemy["native_jump_gravity"] = gravity
 
 func native_spawn_roll(bounds: Array) -> int:
 	return int(bounds[0])+rng.range_int(0,0x7fffffff)%(int(bounds[1])-int(bounds[0])+1)
@@ -2356,6 +2368,12 @@ func build_props(room: Dictionary) -> Array:
 				var draws := NativeBoxLoot.draw_count(item)
 				if draws > 0:
 					prop["box_items"] = NativeBoxLoot.prepare(draws,hash("%s:%s:box:%d"%[run_id,room_id,object_index]))
+				var roster := NativePotMonsters.prepared(map_loader.data["dungeon"]["sha256"],room["sha256"],object_index)
+				if not roster.is_empty():
+					for child: Dictionary in roster:
+						child["id"] = _next_entity_id
+						_next_entity_id += 1
+					prop["pot_monsters"] = roster
 				out.append(prop)
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
@@ -2438,8 +2456,12 @@ func route_room_count() -> int:
 func route_room_number() -> int:
 	return native_maze.room_number() if native_maze != null else room_index+1
 
-func route_exit_target() -> Vector2:
-	if not room_cleared or finished:return Vector2.ZERO
+## room_cleared records the once-per-room event. A new source hostile can lock the gate again.
+func room_is_open(alive_count: int) -> bool:
+	return room_cleared and (native_maze == null or alive_count == 0)
+
+func route_exit_target(alive_count: int) -> Vector2:
+	if not room_is_open(alive_count) or finished:return Vector2.ZERO
 	if native_maze != null:return Vector2.ZERO if doors.is_empty() else Vector2(doors[0]["pos"])
 	return door_point(String(rules["rooms"][room_index]["next"]))
 
@@ -2637,19 +2659,25 @@ func door_point(side: String) -> Vector2:
 	return Vector2(float(p[0]),float(p[1])) if p != null else Vector2.ZERO
 
 ## HP and attack are the adapt bases scaled by the MOB [ability category] percentages.
-func spawn_enemy(point: Vector2, chief := false, kind := "goblin") -> Dictionary:
+func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {}) -> Dictionary:
 	var m: Dictionary = table.monsters[kind]
 	var base: Dictionary = rules["monster_base"]
 	var hp := float(m["hp"])*(float(base["boss_hp_scale"]) if chief else 1.0)
-	var enemy := {"id":_next_entity_id,"kind":kind,"def":m,"mob":m["mob"],"pos":constrain_pos(point),"z":0.0,"vz":0.0,
-		"facing":-1,"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
+	var enemy := {"id":int(reserved.get("id",_next_entity_id)),"kind":kind,"def":m,"mob":m["mob"],"pos":constrain_pos(point),"z":0.0,"vz":0.0,
+		"facing":int(reserved.get("facing",-1)),"state":"idle","clock":0.0,"hp":hp,"max_hp":hp,"chief":chief,
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true,
 		"skill_cd":{}}
+	if not reserved.is_empty():
+		enemy["source_level"] = int(reserved["level"])
+		var launch: Dictionary = reserved["launch"]
+		if not launch.is_empty():
+			start_native_flight(enemy,launch["z"],launch["velocity"],launch["lift"],NativePotMonsters.GRAVITY)
+	else:
+		_next_entity_id += 1
 	if numeric_player != null:configure_enemy_numbers(enemy)
 	monsters.append(enemy)
-	_next_entity_id += 1
 	bus.emit("combat.entity_spawned",{"entity_id":enemy["id"],"kind":"monster","appearance":String(m["bank"]),"chief":chief})
 	return enemy
 
@@ -3008,8 +3036,9 @@ func view_snapshot() -> Dictionary:
 			var room: Dictionary = rules["rooms"][i]
 			route.append({"cell":room_placement(i).get("cell",[0,0]),"visited":room_snapshots.has(i),"current":i==room_index,"boss":bool(room.get("boss",false))})
 	var placement_id := String(native_room["placement"]["id"]) if native_maze != null else String(rules["rooms"][room_index]["placement"])
+	var open := room_is_open(alive)
 	var stage_info := {"room_index":room_index,"placement":placement_id,
-		"cleared":room_cleared and not route_boss_room(),"doors":doors.duplicate(true)}
+		"cleared":open and not route_boss_room(),"doors":doors.duplicate(true)}
 	if native_maze != null:
 		stage_info["resolved_placement"] = native_room["placement"]
 		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
@@ -3020,7 +3049,7 @@ func view_snapshot() -> Dictionary:
 			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":stage_info,
-		"hud":{"room_name":route_room_name(),"alive":alive,"room_cleared":room_cleared,
+		"hud":{"room_name":route_room_name(),"alive":alive,"room_cleared":open,
 			"route":route,"combo":combo_count,"toast":toast,"toast_ms":toast_ms,"skills":skill_bar(),"monster_bar":monster_bar(),
 			"player":{"hp":float(player["hp"]),"mp":float(player["mp"]),"hp_max":max_hp,"mp_max":max_mp,
 				"job":job,"weapon":weapon,"buff_ms":float(player["buff_ms"]),"buff_label":String(move_def("buff").get("label","")),

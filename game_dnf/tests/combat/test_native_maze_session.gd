@@ -4,6 +4,7 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const FlowSession = preload("res://flow/session.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
+const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const Loot = preload("res://loot/service.gd")
 const Inventory = preload("res://items/inventory.gd")
@@ -11,6 +12,16 @@ const EXPORT := "res://assets_local/native_maps/outerwall_v1/map_export.json"
 const ROUTE := {"mode":"native_maze","map_export":EXPORT,"name":"神殿周边"}
 const NORMAL_MUSIC := "res://assets_local/audio/bgm/outer_temple.ogg"
 const BOSS_MUSIC := "res://assets_local/audio/bgm/behemoth_b01_1.ogg"
+
+class PotRolls extends DetRng:
+	var queue: Array
+	func _init(rolls: Array) -> void:queue = rolls.duplicate()
+	func randi_range(low: int, high: int) -> int:return range_int(low,high)
+	func range_int(low: int, high: int) -> int:
+		var roll: int = queue.pop_front()
+		assert(roll >= low and roll <= high)
+		return roll
+	func next_float() -> float:return 0.5
 
 var session := CombatSession.new()
 var game
@@ -37,9 +48,11 @@ func run() -> void:
 	session.prop_loot_released.connect(record_loot)
 	check(not game.missing_assets,"production combat tables and new source atlases load")
 	if not game.missing_assets:
+		prepare_pot_fixture()
 		check_upper_run()
 		check_lower_run()
 		check_breakable_run()
+		check_pot_run()
 		check(session.start_room({"run_id":"lorien-reset","dungeon":"lorien","audio":{"muted":true}})
 			and game.native_maze == null and game.room_placement(0)["map"].begins_with("map/lorien/")
 			and not game.view.audio.music.playing,
@@ -347,6 +360,113 @@ func check_prop_burst(prop: Dictionary, count: int, burst_count := 1) -> void:
 		and game.bus.events_of("combat.prop_broken").size() == burst_count,"depletion advances one stage and hides the exact original sprite")
 	check(particles.size() == count*burst_count and particles.all(func(node):return node.errors.is_empty()),
 		"the battle view instantiates every original PTL fragment")
+
+func prepare_pot_fixture() -> void:
+	var export: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(EXPORT))
+	var dungeon: Dictionary = export["dungeon"]
+	var rolls := PotRolls.new([60,80,0,40,21,99,99])
+	NativePotMonsters.prepare_catalog(dungeon,rolls)
+	check(rolls.queue.is_empty(),"catalog load draws once for every original hidden monster row")
+	var unused := PotRolls.new([0])
+	NativePotMonsters.prepare_catalog(dungeon,unused)
+	check(unused.queue == [0],"later adventures reuse the prepared source catalog")
+	var miss := NativePotMonsters.select([[260,30,1,5,-1]],PotRolls.new([21]))
+	var match_edge := NativePotMonsters.select([[260,30,1,5,-1]],PotRolls.new([20]))
+	check(miss.is_empty() and match_edge.size() == 1,"catalog chance rejects above the threshold and accepts equality")
+	check(NativePotMonsters.launch(PotRolls.new([1]),true,17.0).is_empty(),"the original override forces a ground release")
+
+func check_pot_run() -> void:
+	var spec := start_spec(0,1,0)
+	var started := session.start_room(spec)
+	check(started,"the normal session admits the original hidden monster pot route")
+	if not started:return
+	for side: String in ["right","down","right","right","down"]:
+		clear_all()
+		if not hop(side):return
+	present_room()
+	var pots := monster_pots()
+	check(game.native_room["source_map_id"] == 3006 and pots.size() == 2,"the route enters the original MAP3006 with two hidden rosters")
+	if pots.size() != 2:return
+	var first: Dictionary = pots[0]
+	var mixed: Dictionary = pots[1]
+	var reserved_ids: Array = first["pot_monsters"].map(func(row):return row["id"])
+	reserved_ids.append_array(mixed["pot_monsters"].map(func(row):return row["id"]))
+	check(reserved_ids.size() == 4 and reserved_ids.all(func(id):return game.monsters.all(func(enemy):return enemy["id"] != id)),
+		"four reserved ids are absent from the living actor table before release")
+	clear_all()
+	present_room()
+	check(game.view.stage.cleared and session.read_runtime_view()["room_cleared"],"hidden rosters leave the original door open after clear")
+	var clears := events.size()
+	if not hop("up"):return
+	if not hop("down"):return
+	present_room()
+	pots = monster_pots()
+	first = pots[0]
+	mixed = pots[1]
+	check(first["pot_monsters"][0]["id"] == reserved_ids[0] and events.size() == clears,
+		"visiting again keeps the same hidden id and does not repeat clear")
+	var atk: Dictionary = game.move_def("attack1")["hits"][0]["atk"]
+	var real_rng = game.rng
+	game.rng = PotRolls.new([1,0,0,1,0,0])
+	var box: AABB = first["damage_boxes"][0]
+	game.bus.clear_history()
+	prop_melee(box.get_center(),atk,1000)
+	check(game.rng.queue.is_empty(),"airborne release consumes the six original draws in order")
+	check(game.bus.events_of("combat.cue").filter(func(event):return event.get("key") == "ZGM_SPRING").size() == 1,
+		"the shared source airborne receiver plays its jump cue once")
+	game.rng = real_rng
+	check(game.monsters.size() == 1,"striking the first pot creates its one selected actor")
+	if game.monsters.size() != 1:return
+	var enemy: Dictionary = game.monsters[0]
+	check(enemy["id"] == reserved_ids[0] and enemy["mob"] == NativePotMonsters.MOBS[250]
+		and enemy["pos"] == game.constrain_pos(first["pos"]) and enemy["facing"] == 1 and enemy["z"] == 10.0
+		and enemy["native_jump_velocity"] == Vector2(-50,25) and enemy["numeric"].values["level"] == 30,
+		"airborne Starfish uses original reserved id, position, facing, signed velocity and level")
+	check(session.configure_monsters(28,"adventure") and enemy["numeric"].values["level"] == 30,
+		"room scaling keeps the hidden MOB source level")
+	present_room()
+	check(game.room_cleared and not game.view.stage.cleared and not session.read_view()["room_cleared"]
+		and not session.read_runtime_view()["room_cleared"] and session.read_runtime_view()["exit_target"] == Vector2.ZERO,
+		"actual birth closes the source gate and removes the exit while keeping the clear receipt")
+	game.player["pos"] = game.door_point("up")
+	game.door_lock_ms = 0.0
+	game.step_game(100.0)
+	check(game.native_room["source_map_id"] == 3006 and float(enemy["z"]) > 10.0 and game.enemy_ani(enemy)[0] == "stay",
+		"the airborne actor updates in battle and physically blocks crossing the reopened door")
+	for tick in range(64):
+		game.update_enemy(enemy,16.0)
+		if enemy["state"] != "native_summon_jump":break
+	check(enemy["state"] == "idle" and enemy["z"] == 0.0 and game.enemy_ani(enemy) == ["stay",0.0],
+		"the physical landing returns to a restarted waiting clip in the same tick")
+	game.player["pos"] = Vector2(741,314)
+	clear_all()
+	present_room()
+	check(game.view.stage.cleared and events.size() == clears,"defeating the new actor reopens the door without a second clear event")
+	box = mixed["damage_boxes"][0]
+	game.rng = PotRolls.new([0,0,1,99,49,1,1,59])
+	game.bus.clear_history()
+	prop_melee(box.get_center(),atk,1000)
+	check(game.rng.queue.is_empty(),"each grounded child uses one draw before the airborne Raxy draws")
+	check(not game.bus.events_of("combat.cue").any(func(event):return event.get("key") == "ZGM_SPRING"),
+		"grounded Starfish and airborne Raxy skip the Starfish jump cue")
+	game.rng = real_rng
+	var children: Array = game.monsters.filter(func(actor):return actor["hp"] > 0)
+	check(children.map(func(actor):return actor["id"]) == reserved_ids.slice(1)
+		and children.map(func(actor):return actor["mob"]) == [NativePotMonsters.MOBS[250],NativePotMonsters.MOBS[250],NativePotMonsters.MOBS[260]]
+		and children.slice(0,2).all(func(actor):return actor["z"] == 0.0 and actor["facing"] == 1 and actor["state"] == "idle")
+		and children[2]["z"] == 10.0 and children[2]["facing"] == 1 and children[2]["native_jump_velocity"] == Vector2(-149,-74),
+		"one pot releases the ordered original mix of two grounded Starfish and one airborne Raxy")
+	prop_melee(box.get_center(),atk,1000)
+	check(game.monsters.size() == 4,"a repeated strike cannot release another roster")
+	clear_all()
+	if not hop("up"):return
+	if not hop("down"):return
+	present_room()
+	check(game.monsters.is_empty() and game.view.stage.cleared and monster_pots().all(func(prop):return prop["broken"]),
+		"returning after both releases preserves destruction with no respawn or relock")
+
+func monster_pots() -> Array:
+	return game.props.filter(func(prop):return prop.has("pot_monsters"))
 
 func hop(side: String) -> bool:
 	var previous: int = game.room_index

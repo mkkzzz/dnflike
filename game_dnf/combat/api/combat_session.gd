@@ -19,6 +19,7 @@ const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", 
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
+const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
@@ -62,6 +63,7 @@ func start_room(spec: Dictionary) -> bool:
 		if not NativeBoxLoot.ready(probe.data["dungeon"]):return false
 		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
 			return false
+		NativePotMonsters.prepare_catalog(probe.data["dungeon"])
 		_use_map_export(probe)
 	elif not route.has("map_export") and game.native_maze != null:
 		var probe = game.map_loader.get_script().new()
@@ -130,6 +132,9 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 			if not game.can_spawn_companion(companion):return false
 		for item: Dictionary in room.get("objects",[]):
 			if not NativeBreakable.supports(item):continue
+			for row: Array in NativePotMonsters.rows(item):
+				var mob: String = NativePotMonsters.MOBS[int(row[0])]
+				if mob not in pending:pending.append(mob)
 			var obj := String(item["obj"])
 			var source: Dictionary = game.content.record(obj).get("native_breakable",{})
 			if source.is_empty() or int(source["object_index"]) != int(item["id"]):return false
@@ -256,7 +261,7 @@ func read_view() -> Dictionary:
 	for enemy: Dictionary in game.monsters:
 		if float(enemy["hp"]) > 0:enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
 	var room_count: int = game.route_room_count()
-	var exit_target: Vector2 = game.route_exit_target()
+	var exit_target: Vector2 = game.route_exit_target(enemies.size())
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
 		"revive_fx_count":game.view.revive_fx_count,
@@ -270,7 +275,7 @@ func read_view() -> Dictionary:
 		"skills":game.skill_levels.duplicate(true),"last_damage":game.last_damage.duplicate(true),
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
 		"enemies":enemies,"companions":game.companion_views(),"alive_monsters":enemies.size(),"exit_target":exit_target,
-		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
+		"room_cleared":game.room_is_open(enemies.size()),"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
 ## Lightweight per-frame view for HUD/loot consumers. It intentionally omits
 ## full numeric sources, learned skills and effect values; those belong to the
@@ -283,7 +288,7 @@ func read_runtime_view() -> Dictionary:
 		if float(enemy["hp"]) <= 0:continue
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
 	var room_count: int = game.route_room_count()
-	var exit_target: Vector2 = game.route_exit_target()
+	var exit_target: Vector2 = game.route_exit_target(enemies.size())
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
 		"revive_fx_count":game.view.revive_fx_count,
@@ -294,7 +299,7 @@ func read_runtime_view() -> Dictionary:
 		"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
 		"enemies":enemies,"companions":game.companion_views(),"alive_monsters":enemies.size(),"exit_target":exit_target,
-		"room_cleared":game.room_cleared,"finished":game.finished,"victory":game.victory,"paused":game.paused}
+		"room_cleared":game.room_is_open(enemies.size()),"finished":game.finished,"victory":game.victory,"paused":game.paused}
 
 func events():
 	return game.bus if _alive() else null
