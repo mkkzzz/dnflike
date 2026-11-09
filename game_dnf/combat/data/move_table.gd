@@ -273,6 +273,7 @@ func _selected_move_spec(name: String) -> Dictionary:
 	if name == "triple":
 		_apply_triple_blade_mastery(base)
 		return base
+	if name == "hardattack":return base
 	var options: Array = skill_runtime.get("variants", {}).get(name, [])
 	options = options.duplicate(true)
 	options.sort_custom(func(a, b): return int(a.get("priority", 0)) > int(b.get("priority", 0)))
@@ -335,6 +336,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		# CC615E stores the initial phase's release threshold from static column 0.
 		var guard_static: Array = skill.get("static",[])
 		move["guard_min_hold_ms"] = float(guard_static[0]) if not guard_static.is_empty() else 0.0
+	if name == "hardattack" and job == "soulbringer" and int(skill_levels.get("hardattackcharge",0)) > 0:
+		var charge := _skill_row("skill/swordman/hardattackcharge.skl")
+		# CC6391 sets the charge threshold. CC6798 reads the rank's maximum bonus.
+		move["hardattack_charge"] = {"duration_ms":int(charge["static"][1]),"bonus_percent":int(charge["level_row"][0])}
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
 		move["native_recovery_ms"] = float(skill["static"][0])

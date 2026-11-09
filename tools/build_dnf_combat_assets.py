@@ -259,6 +259,10 @@ EFFECTS = {
     'item_fastheal': 'common/commoneffect/animation/fastheal.ani',
     'hardattack1': 'character/swordman/effect/animation/hardattack1.ani',
     'hardattack2': 'character/swordman/effect/animation/hardattack2.ani',
+    'hardattack_charge1': 'character/swordman/effect/animation/hardattackoncharge1.ani',
+    'hardattack_charge2': 'character/swordman/effect/animation/hardattackoncharge2.ani',
+    'hardattack_full1': 'character/swordman/effect/animation/hardattackfullcharge1.ani',
+    'hardattack_full2': 'character/swordman/effect/animation/hardattackfullcharge2.ani',
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
     'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
@@ -360,6 +364,11 @@ TRIPLE_SWING = 'R_TSLASH'
 TRIPLE_SWING_FILES = [f'sounds/char/swordman/effect/tslash_{index:02}.ogg' for index in (1, 2, 3)]
 HARDATTACK_VOICE = 'R_SM_GUE'
 HARDATTACK_VOICE_FILES = [f'sounds/char/swordman/sm_gue_{index:02}.ogg' for index in (1, 2)]
+HARDATTACK_CHARGE_AUDIO = {
+    'SM_GUE_CHARGE': 'sounds/char/swordman/sm_gue_charge.ogg',
+    'GHOSTSLASH_CHARGE_END': 'sounds/effect/gslash_charged.ogg',
+    'GHOSTSLASH_CRY': 'sounds/effect/ghostslashcry.ogg',
+}
 # Original audio.xml RANDOM groups, in the same order as their source items.
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
@@ -368,6 +377,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
     HARDATTACK_VOICE: HARDATTACK_VOICE_FILES,
+    **{key: [path] for key, path in HARDATTACK_CHARGE_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1286,6 +1296,8 @@ def main() -> int:
                         help='Add the final two Triple Slash animations and original weapon sound group')
     parser.add_argument('--extend-hardattack-voice', action='store_true',
                         help='Add the original Ghost Slash voice group')
+    parser.add_argument('--extend-hardattack-charge', action='store_true',
+                        help='Add Ghost Slash charge and full-charge cues')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1361,6 +1373,12 @@ def main() -> int:
         return 0
     if args.extend_hardattack_voice:
         print(json.dumps(extend_skill_banks(args.library, OUT, [('audio', HARDATTACK_VOICE, HARDATTACK_VOICE_FILES)])))
+        return 0
+    if args.extend_hardattack_charge:
+        keys = ('hardattack_charge1', 'hardattack_charge2', 'hardattack_full1', 'hardattack_full2')
+        specs = [('effects', key, EFFECTS[key]) for key in keys]
+        specs.extend(('audio', key, path) for key, path in HARDATTACK_CHARGE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_triple_cues:
         specs = [('effects', key, EFFECTS[key]) for key in ('triple4', 'triple5')]

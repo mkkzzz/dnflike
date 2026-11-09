@@ -398,8 +398,11 @@ func skill_request(code: int) -> String:
 	return id
 
 func guard_input_held() -> bool:
+	return skill_input_held("guard")
+
+func skill_input_held(name: String) -> bool:
 	for code: int in SKILL_SLOT_KEYS:
-		if held.get(code,false) and skill_request(code) == "guard":return true
+		if held.get(code,false) and skill_request(code) == name:return true
 	return false
 
 func configure_skill_slots(slots: Array) -> void:
@@ -597,6 +600,7 @@ func pulse_passive_auras() -> void:
 
 ## Current stage of the running action (three-stage skills keep one move with stages).
 func action_def() -> Dictionary:
+	if player.has("hardattack_release"):return player["hardattack_release"]
 	var m := move_def(String(player["action"]))
 	if m.has("stages"):return m["stages"][int(player["stage"])]
 	return m
@@ -696,6 +700,8 @@ func leave_action() -> void:
 	if player.has("triple_cast"):
 		begin_skill_cooldown("triple",player["triple_cast"])
 		player.erase("triple_cast")
+	end_hardattack_charge()
+	player.erase("hardattack_release")
 	end_action_fx()
 
 func end_action() -> void:
@@ -921,6 +927,9 @@ func step_player(ms: float, move: Vector2) -> void:
 				end_action()
 
 func step_action(ms: float, move: Vector2) -> void:
+	if player.has("hardattack_charge"):
+		step_hardattack_charge(ms)
+		return
 	var name: String = player["action"]
 	var queued := String(player["queued_skill"])
 	if queued != "" and queued != name and normal_attack_cancel_allowed(move_def(queued)):
@@ -1172,15 +1181,22 @@ func start_action(name: String, cancel := false) -> bool:
 		apply_skill_effect(name,String(m["effect_id"]))
 		return true
 	player["fx_tag"] = "act:%d" % (action_seq+1)
+	if m.has("hardattack_charge"):
+		var charge: Dictionary = m["hardattack_charge"].duplicate()
+		var speed := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		charge["release_clock"] = float(m["timeline"][1]["start_ms"])
+		charge["warmup_ms"] = int(float(charge["release_clock"])/maxf(speed,0.001))
+		charge["elapsed_ms"] = 0.0
+		player["hardattack_charge"] = charge
 	start_stage(0)
 	match name:
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
 
-func start_stage(index: int) -> void:
+func start_stage(index: int, opening_clock := 0.0) -> void:
 	var name: String = player["action"]
 	player["stage"] = index
-	player["clock"] = 0.0
+	player["clock"] = opening_clock
 	player["hits"] = {}
 	player.erase("queued_upper_followup")
 	action_seq += 1
@@ -1212,6 +1228,9 @@ func start_stage(index: int) -> void:
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
+	if player.has("hardattack_charge"):
+		bus.emit("combat.cue",{"kind":"sound","key":"SM_GUE_CHARGE","voice_tag":"hardattack_charge"})
+		return
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
 	if name == "triple":play_sound("R_TSLASH")
@@ -1219,9 +1238,49 @@ func start_stage(index: int) -> void:
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
 		if swing < wav.size() and String(wav[swing]) != "":play_sound(String(wav[swing]))
-	var event_clock := action_event_clock(0.0)
+	var event_clock := action_event_clock(opening_clock)
 	action_cues(stage,-1.0,event_clock)
 	apply_player_hits(stage,-1.0,event_clock)
+
+func end_hardattack_charge() -> void:
+	if player.erase("hardattack_charge"):
+		bus.emit("combat.cue",{"kind":"sound","stop":true,"voice_tag":"hardattack_charge"})
+
+func step_hardattack_charge(ms: float) -> void:
+	var charge: Dictionary = player["hardattack_charge"]
+	var elapsed := float(charge["elapsed_ms"])
+	var warmup := int(charge["warmup_ms"])
+	var duration := int(charge["duration_ms"])
+	# CB9CBD sends max(0, state time - frame 1 start) on release.
+	if not skill_input_held("hardattack"):
+		var spent := clampi(int(elapsed)-warmup,0,duration)
+		var bonus := int(float(charge["bonus_percent"])*spent/duration)
+		var release := action_def().duplicate(true)
+		for hit: Dictionary in release["hits"]:
+			hit["percent"] = int(float(hit["percent"])*(100+bonus)/100.0)
+		# CB1A52 emits the release cue once when the body reaches frame 3.
+		release["sounds"].append({"key":"GHOSTSLASH_CRY","at":float(release["timeline"][3]["start_ms"])})
+		player["hardattack_release"] = release
+		end_hardattack_charge()
+		end_action_fx()
+		player["fx_tag"] = "act:%d" % (action_seq+1)
+		player["queued_skill"] = ""
+		start_stage(0,float(charge["release_clock"]))
+		return
+	var next := elapsed+ms
+	charge["elapsed_ms"] = next
+	if not charge.get("holding_fx",false) and next >= warmup:
+		charge["holding_fx"] = true
+		for key: String in ["hardattack_charge1","hardattack_charge2"]:
+			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
+				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"loop":true,"fresh":true})
+	if not charge.get("full",false) and next >= warmup+duration:
+		charge["full"] = true
+		end_action_fx()
+		for key: String in ["hardattack_full2","hardattack_full1"]:
+			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
+				"facing":int(player["facing"]),"fresh":true})
+		play_sound("GHOSTSLASH_CHARGE_END")
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
@@ -2106,7 +2165,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if was_action and int(skill_levels.get("stuckuponcounter",0)) > 0:
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
-		if player.has("triple_cast"):leave_action()
+		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false

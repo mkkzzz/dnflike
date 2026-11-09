@@ -24,9 +24,9 @@ func check(ok: bool, label: String) -> void:
 		failures += 1
 		print("[SWORDMAN_CONTACT] FAIL ",label)
 
-func start_room(item: String, family: String, facing := 1, numbers := {}) -> void:
+func start_room(item: String, family: String, facing := 1, numbers := {}, job := "weaponmaster") -> void:
 	var spec: Dictionary = numbers.duplicate()
-	spec.merge({"weapon_item":item,"weapon":family,"job":"weaponmaster"},true)
+	spec.merge({"weapon_item":item,"weapon":family,"job":job},true)
 	check(session.start_room({"run_id":"native-swordman-contact","room_id":"lorien:1",
 		"player":spec,"audio":{"muted":true}}),
 		"public room entry accepts "+item)
@@ -647,6 +647,52 @@ func check_hardattack() -> void:
 		step(120)
 		check(game.hit_count==1 and expired["hp"]==expired["max_hp"],"the frame-7 boundary ends Ghost Slash contact")
 
+func check_hardattack_charge() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"soulbringer"})
+	profile.command("numbers.skill_grant",{"id":"hardattackcharge","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","","hardattack"]
+	for hold: int in [0,49,50,150,249,250,1200]:
+		start_room("original_27000","shortsword",1,spec,"soulbringer")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(100,0))
+		session.submit_key(KEY_D,true)
+		step(hold)
+		check(game.player_ani()==["hardattack",0.0] and game.hit_count==0 and game.objects.is_empty(),
+			"holding the bound D key keeps the original pose without hitting at "+str(hold))
+		check(cues("SM_GUE_CHARGE").size()==1 and cues("R_SM_GUE").is_empty(),"the charge voice is separate from release")
+		check(cues("hardattack_charge1").size()==int(hold>=50) and cues("hardattack_charge2").size()==int(hold>=50),
+			"both held effects begin at the original warmup boundary")
+		check(cues("GHOSTSLASH_CHARGE_END").size()==int(hold>=250)
+			and cues("hardattack_full1").size()==int(hold>=250) and cues("hardattack_full2").size()==int(hold>=250),
+			"both full effects and the cue fire once at warmup plus the source threshold")
+		session.submit_key(KEY_D,false)
+		step(0)
+		check(game.bus.events_of("combat.cue").any(func(cue):return cue.get("stop",false) and cue.get("voice_tag","")=="hardattack_charge"),
+			"release stops the original charge voice channel")
+		var expected: int = {0:378,49:378,50:378,150:408,249:434,250:438,1200:438}[hold]
+		var hit: Dictionary = game.action_def()["hits"][0]
+		check(game.player_ani()==["hardattack",50.0] and hit["percent"]==expected and hit["fixed"]==85.0,
+			"release starts at frame 1 with the native integer bonus at "+str(hold))
+		check(cues("R_SM_GUE").size()==1 and game.view.effects.all(func(fx):return not fx.data["source"].contains("hardattackoncharge")),
+			"release discards held layers and plays the ordinary slash voice")
+		step(99)
+		check(game.hit_count==0 and cues("GHOSTSLASH_CRY").is_empty(),"release preserves the original sound and contact gate")
+		step(1)
+		check(game.hit_count==1 and target["hp"]<target["max_hp"] and cues("GHOSTSLASH_CRY").size()==1,
+			"released charge uses original weapon contact and its frame-3 cry")
+	start_room("original_27000","shortsword",1,spec,"soulbringer")
+	game.numeric_player.values["attack_speed"] = 1.0
+	session.submit_key(KEY_D,true)
+	step(100)
+	game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+	session.submit_key(KEY_D,false)
+	step(0)
+	check(not game.player.has("hardattack_charge") and cues("R_SM_GUE").is_empty(),"interrupting the hold never releases an attack")
+
 func check_triple_cooldown() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -780,6 +826,7 @@ func run() -> void:
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
 	check_hardattack()
+	check_hardattack_charge()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)
