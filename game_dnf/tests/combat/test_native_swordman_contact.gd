@@ -3073,8 +3073,8 @@ func check_rapid_move_slash() -> void:
 	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rapidmoveslash"]
-	for rank: int in [6,7]:
-		spec["skills"]["weaponmasteryup"] = 1
+	for rank: int in [3,4]:
+		spec["skills"]["weapon_mastery_up"] = 1
 		spec["skills"]["shortswordmastery"] = rank
 		start_room("original_27000","shortsword",1,spec)
 		game.clear_monsters()
@@ -3090,8 +3090,9 @@ func check_rapid_move_slash() -> void:
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
 		target["hp"] = 50000.0
 		var move: Dictionary = game.move_def("rapidmoveslash")
-		var count := 5 if int(game.skill_levels["shortswordmastery"]) >= 7 else 4
-		check(move["stages"].size()==2*count,"Rapid Move Slash counts the native short sword mastery bonus")
+		var count := 4 if rank == 3 else 5
+		check(game.skill_levels["shortswordmastery"]==rank+3 and move["stages"].size()==2*count,
+			"the effective short sword rank crosses the native extra slash gate")
 		press(KEY_A)
 		step(159)
 		check(game.player["stage"]==0 and game.player["pos"]==POINT and game.hit_count==0 and payments==[[3037,1]],
@@ -3153,6 +3154,62 @@ func check_rapid_move_slash() -> void:
 		step(300)
 		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==15.0,
 			"final recovery starts the full source cooldown with the actor modifier")
+
+func check_rapid_move_slash_shock() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for sample: Array in [["beamsword",0,9,9],["beamsword",1,6,8],["katana",1,7,9],["beamsword",1,7,9]]:
+		var family: String = sample[0]
+		spec["skills"]["weapon_mastery_up"] = sample[1]
+		spec["skills"]["lightswordmastery"] = sample[2]
+		start_room("",family,1,spec)
+		var enabled: bool = family == "beamsword" and int(sample[1]) > 0 and int(sample[3]) >= 9
+		check(game.weapon==family and game.skill_levels["lightswordmastery"]==sample[3]
+			and game.move_def("rapidmoveslash").has("rapid_shock")==enabled,
+			"the public room applies the source weapon, Oath and effective rank gate "+str(sample))
+		if not enabled:continue
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 500.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(20,0))
+		var resistant: Dictionary = game.spawn_enemy(POINT+Vector2(25,0))
+		for victim: Dictionary in [target,resistant]:
+			victim["hp"] = 50000.0
+			victim["numeric"].values["level"] = 47
+			victim["numeric"].values["lightning_resistance"] = -400 if victim == target else 100
+			victim["numeric"].values["abnormal_resistance"] = 0
+		press(KEY_A)
+		step(159)
+		check(game.hit_count==0 and game.action_def()["hits"].is_empty(),"the ready pose cannot apply Rapid Move Slash lightning")
+		step(1)
+		var hit: Dictionary = game.action_def()["hits"][0]
+		var shock: Dictionary = hit["effects"][0]
+		check(is_equal_approx(shock["chance"],0.294) and shock["status_level"]==47 and shock["source_shock_amount"]==347,
+			"effective mastery nine uses the original Rapid Move Slash columns and level 60 base")
+		check(target["numeric"].effects.active.get("shock",{}).get("source_shock",[])==[{"remaining_ms":9197.0,"amount":347,"hits_left":19}]
+			and not resistant["numeric"].effects.active.has("shock"),
+			"first contact installs lightning without consuming it and respects lightning resistance")
+		for ordinal: int in range(1,4):
+			game.player["stuck_ms"] = 0.0
+			step(200)
+			press(KEY_A)
+			step(0)
+			move_target(target,Vector2(game.player["pos"])+Vector2(20,0))
+			target["invuln_ms"] = 0.0
+			step(160)
+		var instances: Array = target["numeric"].effects.active.get("shock",{}).get("source_shock",[])
+		var triggers: Array = game.bus.events_of("combat.damage").filter(func(event):return event.get("status","")=="shock")
+		check(game.player["stage"]==7 and instances.size()==4 and triggers.size()==3
+			and instances[0]["hits_left"]==16 and instances[-1]["hits_left"]==19,
+			"each continued slash and the finisher trigger existing lightning and install one fresh entry")
+		check(game.table.moves["rapidmoveslash"]["stages"][1]["hits"][0]["effects"].is_empty(),
+			"live lightning installation leaves reusable move templates intact")
 
 func check_rapid_move_slash_fee_failure() -> void:
 	var profile := ProfileSession.new()
@@ -4343,6 +4400,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
 	check_rapid_move_slash_depth()
 	check_charge_crash_body_armor()

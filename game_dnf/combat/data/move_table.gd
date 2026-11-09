@@ -590,11 +590,20 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		if name == "rapidmoveslash":
 			var stat: Array = skill["static"]
 			var count := int(stat[0])
-			var mastery := _skill_row(SHORT_MASTERY_SKL)
-			# CCC44F..CCC4C2 grants one extra slash after the Short Sword gate.
-			if job == "weaponmaster" and weapon == "shortsword" and int(skill_levels.get("weaponmasteryup",0)) > 0 \
-					and int(mastery["rank"]) >= int(mastery["static"][0]):
-				count += 1
+			if int(skill_levels.get("weapon_mastery_up",0)) > 0:
+				# CCC44F..CCC4C2 grants one extra slash after the Short Sword gate.
+				if job == "weaponmaster" and weapon == "shortsword":
+					var mastery := _skill_row(SHORT_MASTERY_SKL)
+					if int(mastery["rank"]) >= int(mastery["static"][0]):count += 1
+				# CCC320..CCC377 uses the effective Light Sword rank and static column 2.
+				elif weapon == "beamsword" and int(skill_levels.get("lightswordmastery",0)) > 0:
+					var mastery := _skill_row(LIGHT_MASTERY_SKL)
+					if int(mastery["rank"]) >= int(mastery["static"][2]):
+						var row: Array = mastery["level_row"]
+						var chance := NativeMotion.f32(float(row[4])*0.10000000149011612)
+						move["rapid_shock"] = {"id":"shock","chance":chance/100.0,"status_level":int(row[5]),
+							"duration_ms":int(row[6]),"damage_percent":int(row[7]),"hit_ms":int(spec["shock_hit_ms"])}
+						move["rapid_shock_base"] = spec["shock_base"]["by_level"]
 			var sequence: Array = []
 			for index in count-1:
 				sequence.append_array(move["stages"].slice(0,2))

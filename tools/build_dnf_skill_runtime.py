@@ -2049,7 +2049,7 @@ def main() -> int:
         bloodblast_script = bloodblast_layer_script(library, records)
         fixed_attack_base = dungeon_fixed_attack_base(library, 1)
         bleed_attack_base = dungeon_fixed_attack_base(library, 3)
-        draw_shock_base = dungeon_fixed_attack_base(library, 5)
+        shock_attack_base = dungeon_fixed_attack_base(library, 5)
         draw_stagger = draw_stagger_parameters(library)
         shock_table = library.script(DRAW_SHOCK_STATUS_SOURCE)
         if not shock_table or shock_table["sha256"] != "8c94c682a3e2e39835816a1af27b8ffa66d50d161e15aee50d07d0604776a599":
@@ -2181,7 +2181,8 @@ def main() -> int:
             if not all(layers):
                 raise ValueError("missing Rapid Move Slash effect layers")
             move = {"skill": skill["path"], "name": skill["name"], "material_cost": fixed_cube_cost(skill, records),
-                    "weapon_tracks": rapid_tracks, "stages": []}
+                    "weapon_tracks": rapid_tracks, "shock_base": shock_attack_base, "shock_hit_ms": shock_hit_ms,
+                    "stages": []}
             for index in (1, 2):
                 move["stages"].extend([
                     {"ani": f"rapidmoveslashready{index}"},
@@ -2208,7 +2209,7 @@ def main() -> int:
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base
-                move["draw_shock_base"] = draw_shock_base
+                move["draw_shock_base"] = shock_attack_base
                 move["draw_shock_hit_ms"] = shock_hit_ms
                 move["draw_stagger"] = draw_stagger
                 slash_fx = [add_fx(fx, effects, path) for path in draw_slashes["paths"]]

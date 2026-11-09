@@ -303,7 +303,13 @@ func _set_weapon(weapon: String) -> void:
 			return
 		# Explicit debug family changes remain a temporary visual override.
 		_item_appearance_enabled=false
-	player_actor.setup(_assets["players"][weapon],_player_clips, _combat.get("player_locomotion", {}).get("battle", {}).get(weapon, {}))
+	setup_weapon_family(player_actor,weapon)
+
+func setup_weapon_family(actor, family: String) -> void:
+	if _assets["players"].has(family):
+		actor.setup(_assets["players"][family],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(family,{}))
+	else:
+		WeaponAppearance.apply(actor,"",_player_clips)
 
 func set_equipped_weapon(item: String) -> bool:
 	if not WeaponAppearance.can_display(item):return false
@@ -667,8 +673,8 @@ func _spawn_fx(event: Dictionary) -> void:
 func _spawn_ghost(event: Dictionary) -> void:
 	var node = ActorView.new()
 	world.add_child(node)
-	node.setup(_assets["players"][_weapon],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(_weapon,{}))
 	if _item_appearance_enabled:WeaponAppearance.apply(node,_weapon_item,_player_clips)
+	else:setup_weapon_family(node,_weapon)
 	node.shadow_width = 0
 	node.position = _canvas(Vector2(event["pos"]), 0.0)
 	node.z_index = int(Vector2(event["pos"]).y)-1

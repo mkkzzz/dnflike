@@ -195,8 +195,7 @@ func update_numbers(spec: Dictionary, vitals_policy := "preserve") -> bool:
 	var seed: Dictionary = spec.get("number_seed", {})
 	if seed.has("growtype"):
 		job = String(seed["growtype"])
-	if spec.has("weapon") and assets["players"].has(spec["weapon"]) and weapon != spec["weapon"]:
-		weapon = spec["weapon"]
+	apply_combat_weapon(String(spec.get("weapon","")))
 	if spec.has("weapon_item"):table.bind_swordman_weapon(String(spec["weapon_item"]),player_clips)
 	table.configure_skills(skill_levels, job, weapon)
 	configure_skill_slots(spec.get("skill_slots",skill_slots))
@@ -350,8 +349,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	numeric_monster_level = 1
 	numeric_difficulty = "normal"
 	if snapshot.get("job","") in ["weaponmaster","berserker"]:job = String(snapshot["job"])
-	if assets["players"].has(String(snapshot.get("weapon",""))) and weapon != snapshot["weapon"]:
-		weapon = String(snapshot["weapon"])
+	apply_combat_weapon(String(snapshot.get("weapon","")))
 	table.bind_swordman_weapon(String(snapshot.get("weapon_item","")),player_clips)
 	max_hp = float(snapshot.get("hp_max",table.player["hp_max"]))
 	max_mp = float(snapshot.get("mp_max",table.player["mp_max"]))
@@ -393,6 +391,10 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	else:
 		load_room(clampi(int(spec.get("room_index",0)),0,rules["rooms"].size()-1),String(spec.get("from","start")))
 		if spec.has("room_id"):room_id = String(spec["room_id"])
+
+func apply_combat_weapon(family: String) -> void:
+	if family != weapon and (rules["player"]["weapon_index"].has(family) or assets["players"].has(family)):
+		weapon = family
 
 func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
@@ -1422,7 +1424,12 @@ func start_action(name: String, cancel := false) -> bool:
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	if name == "weaponcombo":player["weapon_combo_cast"] = m
-	if name == "rapidmoveslash":player["rapid_move_slash_cast"] = m
+	if name == "rapidmoveslash":
+		var cast := m
+		if m.has("rapid_shock"):
+			cast = m.duplicate()
+			cast["stages"] = m["stages"].duplicate()
+		player["rapid_move_slash_cast"] = cast
 	if m.has("draw_hit_count_bonus"):
 		player["draw_cast"] = m.duplicate(true)
 		player["draw_targets"] = {}
@@ -1953,6 +1960,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			var motion := action_slide_axis(m["rapid_depth_slide"],attack_rate)
 			motion["direction"] = depth
 			player["action_slide"]["depth"] = motion
+		if m.has("rapid_shock") and numeric_player != null:
+			# CCC91F..CCCA53 installs the status on the ATK for this slash.
+			var slash: Dictionary = m["stages"][index].duplicate(true)
+			var shock: Dictionary = m["rapid_shock"].duplicate()
+			shock["source_shock_amount"] = native_status_attack_amount(float(shock["damage_percent"]),m["rapid_shock_base"])
+			slash["hits"][0]["effects"].append(shock)
+			m["stages"][index] = slash
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
