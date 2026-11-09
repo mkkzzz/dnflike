@@ -368,9 +368,8 @@
    "stacking": "refresh"
   },
   "frenzy": {
-   "duration_ms": 8000,
    "form": "dual_wield",
-   "interval_ms": 10000,
+   "hp_drain_level_row": 1,
    "max_stacks": 1,
    "modifiers": [
     {
@@ -410,9 +409,9 @@
     "grabblastblood": 0.1,
     "rage_slash": 0.1
    },
+   "source_skill": "buff",
    "stacking": "refresh",
-   "super_armor": true,
-   "tick_damage": 75
+   "super_armor": true
   },
   "ghoststep": {
    "duration_ms": 120000,

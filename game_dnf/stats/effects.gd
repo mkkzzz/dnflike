@@ -63,9 +63,12 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 		if effect.has("applications"):
 			step_source_poison(effect,ms,events)
 			continue
+		var definition: Dictionary = effect["definition"]
+		if definition.has("hp_drain_per_second"):
+			step_frenzy_drain(effect,ms,events)
+			continue
 		var duration := maxf(0,minf(ms,float(effect["remaining_ms"])))
 		effect["remaining_ms"] = maxf(0,float(effect["remaining_ms"])-ms)
-		var definition: Dictionary = effect["definition"]
 		var interval := float(definition.get("interval_ms",0))
 		if interval > 0:
 			effect["tick_ms"] = float(effect["tick_ms"])+duration
@@ -76,6 +79,19 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 			active.erase(id)
 			events.append({"type":"removed","id":id})
 	return events
+
+func step_frenzy_drain(effect: Dictionary, ms: float, events: Array) -> void:
+	var previous := float(effect.get("drain_elapsed_ms",0.0))
+	var elapsed := previous+ms
+	effect["drain_elapsed_ms"] = elapsed
+	# 9975C0 uses integer milliseconds and retains the fractional HP between callbacks.
+	var rate := float(effect["definition"]["hp_drain_per_second"])
+	var weighted_ms := PackedFloat32Array([(int(elapsed)-int(previous))*rate])[0]
+	var drain := PackedFloat32Array([weighted_ms*0.0010000000474974513])[0]
+	var total := PackedFloat32Array([drain+float(effect.get("drain_fraction",0.0))])[0]
+	var amount := int(total)
+	effect["drain_fraction"] = total-amount
+	if amount>0:events.append({"type":"frenzy_drain","id":effect["id"],"damage":amount})
 
 func step_source_poison(effect: Dictionary, ms: float, events: Array) -> void:
 	var remaining: Array = []

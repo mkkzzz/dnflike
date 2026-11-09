@@ -282,6 +282,14 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
 		if int(body["id"])==PLAYER_ID and god_mode:continue
+		if event["type"]=="frenzy_drain":
+			# The appendage writes HP directly and removes itself at the HP floor.
+			var hp := float(body["hp"])
+			var drain := int(event["damage"])
+			body["hp"] = maxf(1.0,hp-drain)
+			if int(hp)<=drain and actor.remove_effect(event["id"]):
+				bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
+			continue
 		var point := Vector3(body["pos"].x,body["pos"].y,float(body["z"]))
 		if event["type"] == "damage_number":
 			bus.emit("combat.damage_number",{"target":body["id"],"amount":event["damage"],"id":event["id"],
@@ -3528,13 +3536,14 @@ func view_snapshot() -> Dictionary:
 	if native_maze != null:
 		stage_info["resolved_placement"] = native_room["placement"]
 		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
+	var buff_active: bool = float(player["buff_ms"])>0 or (numeric_player != null and numeric_player.effects.active.has("frenzy"))
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
-			"flash":float(player["flash_ms"])>0,"buff":float(player["buff_ms"])>0,"weapon":weapon,
+			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
-			"aura":String(move_def("buff").get("aura_fx","")) if float(player["buff_ms"])>0 else ""},
+			"aura":String(move_def("buff").get("aura_fx","")) if buff_active else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":stage_info,
 		"hud":{"room_name":route_room_name(),"alive":alive,"room_cleared":open,

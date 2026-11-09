@@ -332,7 +332,7 @@ func run_combat() -> void:
 	api.set_p("mp",500.0)
 	await tap(KEY_F)
 	await ticks(2)
-	check(float(api.p("buff_ms"))>0 and String(api.p("action"))=="buff","F casts frenzy with its original buff motion")
+	check(game.view_snapshot()["player"]["buff"] and String(api.p("action"))=="buff","F casts frenzy with its original buff motion")
 	await ticks(40)
 	await tap(KEY_D)
 	await ticks(2)

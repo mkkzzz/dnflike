@@ -414,13 +414,12 @@ BUFF_EFFECTS = {
     },
     "frenzy": {
         "name": "血之狂暴",
-        "duration_ms": 8000,
+        "source_skill": "buff",
+        "hp_drain_level_row": 1,
         "stacking": "refresh",
         "max_stacks": 1,
         "form": "dual_wield",
         "super_armor": True,
-        "interval_ms": 10000,
-        "tick_damage": 75,
         "modifiers": [
             {"stat": "attack_speed", "op": "mul", "value": 1.25},
             {"stat": "move_speed", "op": "mul", "value": 1.2},

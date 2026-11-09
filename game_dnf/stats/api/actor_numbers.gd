@@ -132,7 +132,7 @@ func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 		if parameters.has(field):definition[field] = parameters[field]
 	var abnormal: bool = definition.has("control") or float(definition.get("tick_damage",0))>0 or bool(definition.get("harmful",false))
 	definition["duration_ms"] = float(definition.get("duration_ms",0))*(1-clampf(float(values.get("status_resist",0)),0,1) if abnormal else 1.0)
-	if float(definition["duration_ms"])<=0:return false
+	if float(definition["duration_ms"])<=0 and not definition.has("hp_drain_per_second"):return false
 	if not effects.add(id,definition,rank):return false
 	recalculate()
 	return true
@@ -148,6 +148,12 @@ func sample_source_effect(definition: Dictionary, rank: int) -> bool:
 	var columns := int(info[0])
 	if columns <= 0 or (info.size()-1)%columns != 0 or rank*columns >= info.size():return false
 	var row: Array = Numbers.Skills.sample(source,rank)["level_row"]
+	if definition.has("hp_drain_level_row"):
+		var drain_column := int(definition["hp_drain_level_row"])
+		if not valid_source_column(row,drain_column) or float(row[drain_column])<=0:return false
+		# CA4BC1 samples the Frenzy HP drain in tenths per second.
+		definition["hp_drain_per_second"] = native_scalar(float(row[drain_column])*native_scalar(0.1))
+		return true
 	var duration_column := int(definition.get("duration_level_row",-1))
 	if not valid_source_column(row,duration_column):return false
 	definition["duration_ms"] = float(row[duration_column])

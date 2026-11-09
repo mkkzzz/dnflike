@@ -907,6 +907,45 @@ func check_overdrive_critical() -> void:
 		check(not game.numeric_player.effects.active.has("overdrive") and
 			is_equal_approx(game.numeric_player.values["physical_crit"],base_crit),"Overdrive expires and restores baseline critical chance")
 
+func check_frenzy_drain() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["buff"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(0)
+	check(game.primary_normal_attack()=="frenzy1" and game.view_snapshot()["player"]["buff"],
+		"the Frenzy shortcut activates the dual-wield form and its presentation")
+	game.player["hp"] = 100.0
+	game.step_numeric_actor(game.player,game.numeric_player,133)
+	check(game.player["hp"]==100.0,"rank-one Frenzy keeps fractional drain below one HP")
+	game.step_numeric_actor(game.player,game.numeric_player,1)
+	check(game.player["hp"]==99.0,"rank-one Frenzy drains one HP at the 134th millisecond")
+	game.step_numeric_actor(game.player,game.numeric_player,8000)
+	check(game.player["hp"]==39.0 and game.primary_normal_attack()=="frenzy1",
+		"Frenzy keeps draining beyond the former eight-second timeout")
+	game.player["hp"] = 3.0
+	game.step_numeric_actor(game.player,game.numeric_player,400)
+	check(game.player["hp"]==1.0 and game.primary_normal_attack()=="attack1" and not game.view_snapshot()["player"]["buff"],
+		"Frenzy leaves one HP and clears the dual-wield form and its presentation")
+	check(game.bus.events_of("combat.damage").is_empty() and game.bus.events_of("combat.damage_number").is_empty()
+		and not game.finished,"Frenzy drain produces no hit, damage number or defeat")
+
+	profile.command("numbers.skill_grant",{"id":"buff","level":2})
+	spec = profile.stats()
+	spec["skill_slots"] = ["buff"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(0)
+	game.player["hp"] = 100.0
+	game.step_numeric_actor(game.player,game.numeric_player,1000)
+	check(game.player["hp"]==92.0,"rank-two Frenzy samples its own HP drain column")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -1014,6 +1053,7 @@ func run() -> void:
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
 	check_overdrive_critical()
+	check_frenzy_drain()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()

@@ -249,14 +249,6 @@ func skill_tip(id: String, rect: Rect2, detailed := false) -> void:
 		damage_label.size.x = 268
 	if detailed:
 		var detail: String = data["detail"]
-		if id == "buff":
-			var effect: Dictionary = game.session.Numbers.shared_config()["effects"]["frenzy"]
-			detail = "持续 %.1f 秒" % (float(effect["duration_ms"])/1000)
-			var index := 0
-			for mod: Dictionary in effect["modifiers"]:
-				if index%2 == 0:detail += "\n"
-				detail += "  %s ×%.2f" % [game.number_windows.NAMES.get(mod["stat"],mod["stat"]),float(mod["value"])+float(mod.get("per_level",0))*(rank-1)]
-				index += 1
 		if id == "guard":
 			var skills = game.session.Numbers.Skills
 			var guard_row: Array = skills.sample(game.session.Numbers.record(id),rank)["level_row"]
