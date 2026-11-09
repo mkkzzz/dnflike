@@ -391,6 +391,7 @@ BUFF_EFFECTS = {
         "name": "破极兵刃",
         "source_skill": "overdrive",
         "duration_level_row": 0,
+        "weapon_wear_level_row": 1,
         "stacking": "refresh",
         "max_stacks": 1,
         "modifiers": [
@@ -399,7 +400,6 @@ BUFF_EFFECTS = {
             # CD936A selects column 3 in tenths of a percentage point (enum 15).
             {"stat": "physical_crit", "op": "add", "level_row": 3, "scale": 0.001},
         ],
-        "durability_rate": 3.0,
     },
     "reckless": {
         "name": "暴走",
@@ -814,7 +814,7 @@ PASSIVE_BUILDERS = {
         "weapon_switch_cooldown_rate": 0.5,
         "weapon_switch_buff": {"damage_rate": 0.1, "physical_crit": 0.1, "duration_ms": 5000},
     },
-    "durabilityup": {"durability_rate": 0.96},
+    "durabilityup": {"runtime_hook": "weapon_wear"},
     "mindflash": {"on_hurt": {"effect": "mindflash", "max_stacks": 5}},
     "senseviolenttemper": {
         "passive": [

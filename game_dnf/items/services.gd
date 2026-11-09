@@ -139,8 +139,29 @@ static func wear(p: Dictionary, run: Dictionary, event: Dictionary) -> Dictionar
 		if (slot=="weapon")!=(event.get("victim")=="monster"):continue
 		var gear: Dictionary=p["gear"][p["equipment"][slot]]
 		if int(gear["durability"])<=0:continue
-		gear["wear_progress"]=int(gear["wear_progress"])+1;changed=true
 		var threshold:=int(config()["wear"]["weapon_hits" if slot=="weapon" else "armor_hits"])
+		if slot=="weapon":
+			# Retain the current hit ledger until the original base probability is resolved.
+			# Skill multipliers can advance it by a fractional hit.
+			var units:=Numbers.WEAR_UNITS_PER_HIT
+			var weight:=int(event.get("weapon_wear_units",units))
+			if weight<=0:continue
+			var limit:=threshold*units
+			var progress:=int(gear["wear_progress"])*units+int(gear.get("wear_fraction",0))+weight
+			@warning_ignore("integer_division")
+			var loss:=progress/limit
+			var remainder:=progress%limit
+			gear["durability"]=maxi(0,int(gear["durability"])-loss)
+			if int(gear["durability"])==0:remainder=0
+			@warning_ignore("integer_division")
+			gear["wear_progress"]=remainder/units
+			if remainder%units==0:gear.erase("wear_fraction")
+			else:gear["wear_fraction"]=remainder%units
+			changed=true
+			save=save or loss>0
+			broken=broken or int(gear["durability"])==0
+			continue
+		gear["wear_progress"]=int(gear["wear_progress"])+1;changed=true
 		if int(gear["wear_progress"])>=threshold:
 			gear["wear_progress"]=0;gear["durability"]=maxi(0,int(gear["durability"])-1)
 			broken=broken or int(gear["durability"])==0
@@ -161,6 +182,7 @@ static func valid(p: Dictionary) -> bool:
 	if not state["buyback"].is_empty() and (not ledger is Dictionary or not ledger.get("stacks") is Dictionary):return false
 	for gear: Dictionary in p["gear"].values():
 		if not Numbers.whole(gear.get("durability_max"),1,100000) or not Numbers.whole(gear.get("durability"),0,int(gear["durability_max"])) or not Numbers.whole(gear.get("wear_progress"),0,1000000):return false
+		if not Numbers.whole(gear.get("wear_fraction",0),0,Numbers.WEAR_UNITS_PER_HIT-1):return false
 	for entry in state["buyback"]:
 		if not entry is Dictionary or not entry.get("id") is String or not entry["id"].begins_with("sale_") or not entry["id"].trim_prefix("sale_").is_valid_int() or int(entry["id"].trim_prefix("sale_"))<1 or seen.has(entry["id"]):return false
 		if not entry.get("uid") is String or not Numbers.whole(entry.get("price"),0,1000000000):return false

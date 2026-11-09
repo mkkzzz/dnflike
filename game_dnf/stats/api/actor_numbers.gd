@@ -127,6 +127,22 @@ static func native_level_rate(level_delta: int, rate: float) -> float:
 static func native_scalar(value: float) -> float:
 	return PackedFloat32Array([value])[0]
 
+func weapon_wear_units(passive_rank: int) -> int:
+	var overdrive: Dictionary = effects.active.get("overdrive",{})
+	var rate := int(overdrive.get("definition",{}).get("weapon_wear_percent",100))
+	var reduction := 0
+	if passive_rank > 0:
+		var row: Array = Numbers.Skills.sample(Numbers.record("durabilityup"),passive_rank)["level_row"]
+		if not row.is_empty():reduction = int(row[0])
+	return scale_weapon_wear(Numbers.WEAR_UNITS_PER_HIT,rate,reduction)
+
+static func scale_weapon_wear(base: int, overdrive_percent: int, reduction: int) -> int:
+	# CA1DE0 truncates after Overdrive, then again after Weapon Conservation.
+	@warning_ignore("integer_division")
+	var increased := base*overdrive_percent/100
+	@warning_ignore("integer_division")
+	return increased*(100-reduction)/100
+
 func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not config["effects"].has(id):return false
 	var definition: Dictionary = config["effects"][id].duplicate(true)
@@ -161,6 +177,10 @@ func sample_source_effect(definition: Dictionary, rank: int) -> bool:
 		var duration_column := int(definition.get("duration_level_row",-1))
 		if not valid_source_column(row,duration_column):return false
 		definition["duration_ms"] = float(row[duration_column])
+	if definition.has("weapon_wear_level_row"):
+		var wear_column := int(definition["weapon_wear_level_row"])
+		if not valid_source_column(row,wear_column):return false
+		definition["weapon_wear_percent"] = int(row[wear_column])
 	for mod: Dictionary in definition.get("modifiers",[]):
 		var column := int(mod.get("level_row",-1))
 		if not valid_source_column(row,column):return false

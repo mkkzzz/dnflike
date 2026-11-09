@@ -1662,9 +1662,13 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
-	bus.emit("combat.damage",{"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
+	var damage_event := {"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,"show_number":not contact_only,
-		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))})
+		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))}
+	if by_player and victim=="monster" and amount>0 and numeric_player!=null:
+		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
+		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
+	bus.emit("combat.damage",damage_event)
 	hit_cues(atk,point,facing,by_player)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0:
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)

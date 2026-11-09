@@ -81,10 +81,25 @@ func _initialize() -> void:
 	check(wear.profile.gear[worn].durability==39 and wear.profile.gear[worn].wear_progress==0,"duplicate combat facts cannot wear twice")
 	Services.wear(wear.profile,wear.run,{"type":"combat.damage","run_id":"expired","event_id":21,"victim":"monster","amount":99})
 	check(wear.profile.gear[worn].wear_progress==0,"stale run cannot wear current equipment")
+	var weighted_gear: Dictionary=wear.profile.gear[worn]
+	weighted_gear.wear_progress=19
+	var weighted_hit:={"type":"combat.damage","run_id":wear.run.id,"event_id":22,"victim":"monster","amount":1,"weapon_wear_units":920}
+	var result:=Services.wear(wear.profile,wear.run,weighted_hit)
+	check(result.changed and not result.save and weighted_gear.durability==39 and weighted_gear.wear_progress==19
+		and weighted_gear.wear_fraction==920,"Weapon Conservation carries fractional wear without deducting a point early")
+	check(loaded.restore(JSON.parse_string(JSON.stringify(wear.serialize()))) and loaded.profile.gear[worn].wear_fraction==920,
+		"Fractional weapon wear survives the actual save and restore")
+	weighted_hit["event_id"]=23
+	weighted_hit["weapon_wear_units"]=2714
+	result=Services.wear(wear.profile,wear.run,weighted_hit)
+	check(result.save and weighted_gear.durability==38 and weighted_gear.wear_progress==2 and weighted_gear.wear_fraction==634,
+		"Overdrive crosses the threshold once and preserves the fractional remainder")
+	Services.wear(wear.profile,wear.run,weighted_hit)
+	check(weighted_gear.durability==38 and weighted_gear.wear_fraction==634,"Repeated weighted damage does not consume durability again")
 	wear.combat_event({"type":"combat.player_defeated","run_id":wear.run.id,"stats":{}})
-	check(wear.profile.gear[worn].durability==36,"real defeat applies configured penalty once")
+	check(wear.profile.gear[worn].durability==35,"real defeat applies configured penalty once")
 	wear.combat_event({"type":"combat.player_defeated","run_id":wear.run.id,"stats":{}})
-	check(wear.profile.gear[worn].durability==36,"duplicate defeat is harmless")
+	check(wear.profile.gear[worn].durability==35,"duplicate defeat is harmless")
 	var old=Session.new().serialize();old.schema="dnf_loop_save/3";old.profile.erase("services");old.profile.inventory.erase("scrap_iron")
 	for instance: Dictionary in old.profile.gear.values():
 		for key in ["durability","durability_max","wear_progress"]:instance.erase(key)

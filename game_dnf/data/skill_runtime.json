@@ -524,7 +524,6 @@
    "stacking": "stack"
   },
   "overdrive": {
-   "durability_rate": 3.0,
    "duration_level_row": 0,
    "max_stacks": 1,
    "modifiers": [
@@ -542,7 +541,8 @@
    ],
    "name": "破极兵刃",
    "source_skill": "overdrive",
-   "stacking": "refresh"
+   "stacking": "refresh",
+   "weapon_wear_level_row": 1
   },
   "quick_standing": {
    "duration_ms": 1,
@@ -6416,7 +6416,6 @@
   "durabilityup": {
    "active": false,
    "cost": 20,
-   "durability_rate": 0.96,
    "growtype_max_level": [
     0,
     10,
@@ -6428,6 +6427,7 @@
    "max_level": 20,
    "name": "武器节制",
    "path": "skill/swordman/durabilityup.skl",
+   "runtime_hook": "weapon_wear",
    "source_id": 39,
    "source_path": "skill/swordman/durabilityup.skl",
    "speed": "attack",

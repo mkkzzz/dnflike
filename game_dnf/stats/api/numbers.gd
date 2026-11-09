@@ -9,6 +9,7 @@ const Effects = preload("res://stats/effects.gd")
 const Damage = preload("res://stats/damage.gd")
 const ContentDB = preload("res://content/api/content_db.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
+const WEAR_UNITS_PER_HIT := 1000
 static var _config: Dictionary = {}
 static var _content_db
 static var _records: Dictionary = {}
@@ -101,7 +102,7 @@ static func canonicalize(profile: Dictionary) -> void:
 	for purchases: Array in profile["skill_purchases"].values():
 		for index in purchases.size():purchases[index] = int(purchases[index])
 	for instance: Dictionary in profile["gear"].values():
-		for key in ["durability","durability_max","wear_progress"]:
+		for key in ["durability","durability_max","wear_progress","wear_fraction"]:
 			if instance.has(key):instance[key]=int(instance[key])
 		instance["quality"] = int(instance["quality"])
 		instance["reinforce"] = int(instance["reinforce"])
@@ -318,6 +319,7 @@ static func valid(profile: Dictionary) -> bool:
 		if not gear is Dictionary or not cfg["equipment"].has(gear.get("definition","")):return false
 		if not whole(gear.get("quality"),0,100) or not whole(gear.get("reinforce"),0,30) or not gear.get("enchants") is Array:return false
 		if gear.has("durability_max") and (not whole(gear["durability_max"],1,100000) or not whole(gear.get("durability"),0,int(gear["durability_max"])) or not whole(gear.get("wear_progress"),0,1000000)):return false
+		if not whole(gear.get("wear_fraction",0),0,WEAR_UNITS_PER_HIT-1):return false
 		for mod in gear["enchants"]:
 			if not valid_modifier(mod,cfg):return false
 		counts[gear["definition"]] = int(counts.get(gear["definition"],0))+1

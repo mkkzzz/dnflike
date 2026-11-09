@@ -886,6 +886,7 @@ func check_overdrive_attributes() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"durabilityup","level":2})
 	for sample: Array in [[1,0.05,30],[2,0.055,36],[4,0.066,50],[20,0.15,252]]:
 		profile.command("numbers.skill_grant",{"id":"overdrive","level":sample[0]})
 		var spec := profile.stats()
@@ -919,6 +920,9 @@ func check_overdrive_attributes() -> void:
 			step(210)
 			check(target["hp"]<5000.0 and is_equal_approx(game.last_damage.get("trace",{}).get("attack",0.0),base_physical+36.0),
 				"Overdrive's original rank two weapon attack reaches the normal-hit damage resolver")
+			var damage: Array = game.bus.events_of("combat.damage")
+			check(not damage.is_empty() and damage[-1].get("weapon_wear_units")==2714,
+				"Rank two Overdrive and Weapon Conservation both reach the landed-hit wear fact")
 		game.step_numeric_actor(game.player,game.numeric_player,119999)
 		check(game.numeric_player.effects.active.get("overdrive",{}).get("remaining_ms")==1.0,
 			"Overdrive lasts through the last millisecond")
@@ -928,6 +932,8 @@ func check_overdrive_attributes() -> void:
 			and is_equal_approx(game.numeric_player.values["physical_attack"],base_physical)
 			and is_equal_approx(game.numeric_player.values["physical_panel"],base_panel),
 			"Overdrive expiry restores baseline physical attack, panel and critical chance")
+		check(game.numeric_player.weapon_wear_units(2)==920 and game.numeric_player.weapon_wear_units(0)==1000,
+			"Overdrive expiry leaves only the learned Weapon Conservation reduction")
 
 func check_overdrive_cast() -> void:
 	var profile := ProfileSession.new()
