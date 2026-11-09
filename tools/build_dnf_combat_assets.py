@@ -339,6 +339,7 @@ EFFECTS = {
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
     'charge_dash_dust': 'character/swordman/effect/animation/chargecrash/dustdash.ani',
     'charge_upper': 'character/swordman/effect/animation/chargecrash/up-slash.ani',
+    'charge_crash_wave': 'passiveobject/character/swordman/animation/chargecrash/damage-front.ani',
     'upper1': 'character/swordman/effect/animation/upperslash1.ani',
     'upper2': 'character/swordman/effect/animation/upperslash2.ani',
     'upper_short_followup': 'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani',

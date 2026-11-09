@@ -21,6 +21,7 @@ const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
 const LIGHT_MASTERY_SKL := "skill/swordman/lightswordmastery.skl"
 const HEAVY_MASTERY_SKL := "skill/swordman/heavyswordmastery.skl"
+const CHARGE_CRASH_WAVE_OBJ := "passiveobject/character/swordman/chargecrashsub.obj"
 const NORMAL_ATTACK_CHAIN := ["attack1","attack2","attack3"]
 # CA5474 and CA548A append the two native normal-attack cancel frames.
 const NORMAL_CONTINUE_FRAMES := [5,4]
@@ -301,6 +302,7 @@ func _selected_move_spec(name: String) -> Dictionary:
 		base["stages"].append(variant["stages"][2].duplicate(true))
 		var row: Array = mastery["level_row"]
 		base["charge_crash_power"] = row.slice(8,10) if heavy else row.slice(5,7)
+		if not heavy:base["charge_crash_wave_percent"] = float(row[4])
 		return base
 	var options: Array = skill_runtime.get("variants", {}).get(name, [])
 	options = options.duplicate(true)
@@ -556,6 +558,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 					"action_clock":true,"depth_offset":1,"offset_x":135.0,"offset_y":10.0}]
 				move["stages"].append(_build_stage({"ani":finish["ani"],"voice":"CCRASH_GET"},skill))
 				move["stages"].append(finish)
+				if spec.has("charge_crash_wave_percent"):
+					var wave := object(CHARGE_CRASH_WAVE_OBJ)
+					move["fixed_attack_base"] = skill_runtime["moves"][name]["fixed_attack_base"]["by_level"]
+					# CB76D5 sends the fixed attack calculated from Blunt Mastery column 4.
+					move["charge_crash_wave"] = {"kind":"object","object":CHARGE_CRASH_WAVE_OBJ,
+						"atk":wave["atk"],"atk_path":wave["atk_path"],"skill":true,"skill_id":name,
+						"percent":0.0,"fixed":spec["charge_crash_wave_percent"],"damage_type":"physical",
+						"element":"none","offset":Vector3(135,0,0),"starts_at_zero":true,"object_fx":"charge_crash_wave"}
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)

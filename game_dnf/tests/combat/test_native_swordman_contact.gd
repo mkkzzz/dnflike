@@ -3179,10 +3179,12 @@ func check_charge_crash_mastery() -> void:
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
 	profile.command("numbers.skill_grant",{"id":"charge_crash","level":1})
-	for sample: Array in [["greatsword",6,7,true,1.0], ["club",7,6,true,1.0],
-			["greatsword",7,6,false,1.0], ["greatsword",7,6,true,1.0], ["club",6,7,true,1.25]]:
+	for sample: Array in [["greatsword",6,7,true,1.0,false], ["club",7,6,true,1.0,false],
+			["greatsword",7,6,false,1.0,false], ["greatsword",7,6,true,1.0,false],
+			["greatsword",7,6,true,1.0,true], ["club",6,7,true,1.25,false], ["club",6,7,true,1.25,true]]:
 		var family: String = sample[0]
 		var heavy := family == "greatsword"
+		var full: bool = sample[5]
 		var spec := profile.stats()
 		spec["skill_slots"] = ["charge_crash"]
 		spec["skills"]["heavyswordmastery"] = sample[1]
@@ -3215,20 +3217,23 @@ func check_charge_crash_mastery() -> void:
 		step(33.0/rate)
 		check(game.player_ani()==["chargecrashfinish",0.0] and charge_layer.size()==1 and charge_layer[0].frame["frame"]==1,
 			"the body stays frozen while the original charge effect advances")
-		if heavy:
-			step(167)
+		var limit := 400.0/rate
+		if not full:
+			step((200.0-33.0)/rate)
 			session.submit_key(KEY_A,false)
 			step(0)
 		else:
-			step(319.0-33.0/rate)
-			check(game.player.has("charge_crash_hold") and cues("CCRASH_CRASH").is_empty(),"the accelerated hold lasts through 319 ms")
+			step(limit-1.0-33.0/rate)
+			check(game.player.has("charge_crash_hold") and game.objects.is_empty() and cues("CCRASH_CRASH").is_empty(),
+				"the hold has no impact or wave through the tick before full charge")
 			step(1)
 			session.submit_key(KEY_A,false)
 		check(game.player["stage"]==3 and game.player_ani()==["chargecrashfinish",240.0]
 			and not game.player.has("charge_crash_hold") and game.player["mp"]==mp,
 			"partial release and full charge both start at the original downstroke frame without paying again")
 		var hit: Dictionary = game.action_def()["hits"][0]
-		check(hit["percent"]==(293 if heavy else 118),"downstroke reads the equipped mastery and actual hold time")
+		var percent: int = (498 if full else 293) if heavy else (118 if full else 88)
+		check(hit["percent"]==percent,"downstroke reads the equipped mastery and actual hold time")
 		var down_fx := "skillfx_down_slash_f79b50a7"
 		var down_layers: Array = game.view.effects.filter(func(fx):return fx.cue_key==down_fx)
 		check(down_layers.size()==1 and down_layers[0].follow_offset==Vector2(135 if heavy else -135,10)
@@ -3238,6 +3243,38 @@ func check_charge_crash_mastery() -> void:
 		var shake: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("kind","")=="screen_shake")
 		check(shake.size()==1 and shake[0]["degree"]==8 and shake[0]["duration_ms"]==500,
 			"the downstroke requests the original room shake")
+		check(game.objects.size()==int(not heavy and full),"only a fully charged club downstroke spawns the shockwave")
+		if not heavy and full and game.objects.size()==1:check_charge_crash_wave(game.objects[0])
+
+func check_charge_crash_wave(wave: Dictionary) -> void:
+	var origin: Vector2 = Vector2(Vector2i(game.player["pos"]))-Vector2(135,0)
+	var id: int = wave["id"]
+	check(wave["pos"]==origin and wave["z"]==0.0 and wave["facing"]==-1 and wave["clock"]==0.0,
+		"the club wave uses mirrored native spawn offset and starts at age zero")
+	check(wave["hit"]["fixed_amount"]==1363.0 and game.view.object_views.has(id),
+		"rank seven snapshots its original fixed attack and mounts the front ANI")
+	var a: Dictionary = api.spawn_dummy(origin+Vector2(15,0))
+	var b: Dictionary = game.spawn_enemy(origin-Vector2(15,0))
+	b["hp"] = 5000.0
+	game.step_objects(16,id)
+	check(wave["clock"]==0.0 and wave["hits"].has(a["id"]) and wave["hits"].has(b["id"])
+		and a["state"]=="air" and b["state"]=="air" and game.last_damage["trace"]["fixed_part"]==1363.0,
+		"invisible frame zero reaches two targets with the independent ATK and upward knockdown")
+	check(game.player["stuck_ms"]==0.0 and cues("FLAMES_HIT").size()==2,"wave contact uses its own hit sound without freezing the caster")
+	game.step_objects(100)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view.object_views[id].frame["frame"]==1 and wave["hits"].size()==2 and cues("FLAMES_HIT").size()==2,
+		"front ANI changes frame at 100 ms and the object remembers earlier contacts")
+	var late: Dictionary = game.spawn_enemy(origin)
+	game.step_objects(300)
+	check(not wave["hits"].has(late["id"]),"the wave cannot hit once the fourth attack frame has ended")
+	game.step_objects(100)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.objects.has(wave) and not game.view.object_views.has(id),"the front layer ends at 500 ms independently of the object")
+	game.step_objects(299)
+	check(game.objects.has(wave),"the shockwave object survives through 799 ms")
+	game.step_objects(1)
+	check(not game.objects.has(wave),"the shockwave object retires at the end of its 800 ms main ANI")
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:

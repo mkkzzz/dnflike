@@ -2167,7 +2167,7 @@ def main() -> int:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)
         if move:
-            if key in ("bloodblast", "grabblastblood"):
+            if key in ("bloodblast", "grabblastblood", "chargecrash"):
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "grabblastblood":
                 move["grab_bleed_base"] = bleed_attack_base

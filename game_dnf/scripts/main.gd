@@ -2017,6 +2017,13 @@ func step_charge_crash_hold(ms: float) -> void:
 	start_stage(3,float(config["release_clock"]))
 	# CB75C2 shakes the room on the first downstroke frame.
 	bus.emit("combat.cue",{"kind":"screen_shake","degree":8,"duration_ms":500})
+	if elapsed >= limit and move.has("charge_crash_wave"):
+		var wave: Dictionary = move["charge_crash_wave"]
+		var base := native_fixed_attack_base(move["fixed_attack_base"])
+		var amount := int(native_fixed_attack_product(float(wave["fixed"]),base))
+		# A61AA0 snapshots the packet amount in the object's own attack record.
+		spawn_object(native_fixed_hit(wave,float(amount)),"player",Vector2(Vector2i(player["pos"])),
+			float(int(player["z"])),int(player["facing"]),attack_power())
 
 func begin_weapon_combo_charge(config: Dictionary) -> void:
 	var charge := config.duplicate()
@@ -4818,9 +4825,14 @@ func view_snapshot() -> Dictionary:
 	for o: Dictionary in objects:
 		var controller: Dictionary = o["hit"].get("native_controller",{})
 		var bank := String(o["def"]["bank"])
-		if bank == "" and controller.get("kind","") != "bloodblast":continue
+		var effect := String(o["hit"].get("object_fx",""))
+		if bank == "" and effect == "" and controller.get("kind","") != "bloodblast":continue
 		var item := {"id":o["id"],"bank":bank,"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0}
-		if controller.get("kind","") in GHOST_FIELD_KINDS:
+		if effect != "":
+			if float(item["clock"]) < float(combat_assets["effects"][effect]["duration_ms"]):
+				item["effect"] = effect
+				objs.append(item)
+		elif controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
 		elif controller.get("kind","") == "sayaex_ice":
 			var phase := String(o["crystal_phase"])
