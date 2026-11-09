@@ -60,8 +60,58 @@ class Rules(unittest.TestCase):
         self.assertEqual(m.groups([1, 2, 3, 4, 5], 2, '[x]', 'p', diags), [[1, 2], [3, 4]])
         self.assertEqual(diags[0]['level'], 'error')
 
+    def test_monster_optional_fields_do_not_shift_following_rows(self):
+        prefix = [61262, 1, 0, 295, 227, 0, 1, 1, '[fixed]']
+        boss = prefix + ['[NPC]', 1009, '[boss]']
+        champion = prefix + ['[champion]', 1, 'option']
+        normal = prefix + ['[normal]']
+        diags = []
+        self.assertEqual(m.monster_records(boss + champion + normal, 'p', diags),
+                         [(boss, 1009), (champion, None), (normal, None)])
+        self.assertFalse(diags)
+        for broken in (boss[:-1], prefix + ['[NPC]', '[boss]'], champion[:-1]):
+            diags = []
+            self.assertEqual(m.monster_records(normal + broken, 'p', diags), [(normal, None)])
+            self.assertEqual(diags[0]['code'], 'monster_layout')
+
 
 class LibraryExport(unittest.TestCase):
+    def test_moonlight_rooms_keep_the_boss_npc_link_and_original_stand_animations(self):
+        from build_dnf_dungeon_route import resolve_selected_room, source_map_specifications
+
+        lock = json.loads(LOCK.read_text(encoding='utf-8'))
+        library = cache_home() / lock['version'] / 'library_v1'
+        if not (library / 'pvf_config.sqlite').exists():
+            self.skipTest('full library not synced')
+        (ROOT / 'temp').mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / 'temp') as folder:
+            result = m.run(library, 'dungeon/quest/training2.dgn', Path(folder), [])
+            self.assertFalse([d for d in result['diagnostics'] if d['level'] == 'error'])
+            dungeon = result['dungeon']
+            self.assertEqual(dungeon['index'], 511)
+            self.assertEqual(dungeon['start_map_raw'], [1, 0])
+            self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+            self.assertEqual([(p['cell'], dungeon['rooms'][p['map']]['map_id']) for p in dungeon['placements']],
+                             [([0, 0], 15270), ([1, 0], 15129)])
+            pools = source_map_specifications(dungeon)
+            self.assertEqual(pools['[map specification]'], {(1, 0): [15129]})
+            self.assertEqual(pools['[boss map specification]'], {(0, 0): [15270]})
+            self.assertEqual(resolve_selected_room(result, (1, 0), 15129, 'start')['id'], '1_0:15129training')
+            self.assertEqual(resolve_selected_room(result, (0, 0), 15270, 'boss')['id'], '0_0:15270training')
+            start, boss_room = (dungeon['rooms'][f'map/training2/{i}training.map'] for i in (15129, 15270))
+            self.assertEqual([m['id'] for m in start['monsters']], [61301, 61300, 61300, 61301])
+            self.assertTrue(all('npc_id' not in m for m in start['monsters']))
+            boss, = boss_room['monsters']
+            self.assertEqual((boss['id'], boss['npc_id'], boss['anchor']), (61262, 1009, [295, 227, 0]))
+            self.assertEqual(boss['raw'][-3:], ['[NPC]', 1009, '[boss]'])
+            self.assertEqual(boss['sprite']['ani'], 'monster/newmonsters/albert/animation/stay.ani')
+            self.assertEqual(boss['sprite']['ani_sha256'], '5092a9df3e91721863b94ac3bfe10d529ca7c5cc720545d55dae2e8db0cfff5c')
+            for entry in [boss, *start['monsters']]:
+                self.assertTrue(all((Path(folder) / result['images'][frame['image']]['file']).is_file()
+                                    for frame in entry['sprite']['frames']))
+            self.assertEqual(dungeon['gate_objects']['5542']['parts'], [])
+            self.assertEqual(dungeon['gate_objects']['5545']['parts'], [])
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

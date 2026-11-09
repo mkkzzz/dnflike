@@ -117,6 +117,37 @@ def special_records(values: list, path: str, diags: list) -> list[list]:
     return records
 
 
+def monster_records(values: list, path: str, diags: list) -> list[tuple[list, int | None]]:
+    """MAP reader 0x131DE80: fixed prefix, optional NPC, then classification."""
+    records, start = [], 0
+    while start < len(values):
+        classification = start + 9
+        npc_id = None
+        if values[classification:classification + 1] == ['[NPC]']:
+            npc = values[classification + 1:classification + 2]
+            if not npc or type(npc[0]) is not int:
+                diags.append(diag('error', 'monster_layout', path, f'invalid NPC id in row at value {start}'))
+                break
+            npc_id = npc[0]
+            classification += 2
+        if (classification >= len(values)
+                or any(type(v) is not int for v in values[start:start + 8])
+                or values[start + 8] not in ('[fixed]', '[half]', '[ratio]')
+                or values[classification] not in ('[normal]', '[champion]', '[super champion]', '[boss]')):
+            diags.append(diag('error', 'monster_layout', path, f'invalid monster row at value {start}'))
+            break
+        end = classification + 1
+        if values[classification] in ('[champion]', '[super champion]'):
+            count = values[end] if end < len(values) else None
+            if type(count) is not int or end + 1 + max(0, count) > len(values):
+                diags.append(diag('error', 'monster_layout', path, f'invalid champion options in row at value {start}'))
+                break
+            end += 1 + max(0, count)
+        records.append((values[start:end], npc_id))
+        start = end
+    return records
+
+
 def diag(level: str, code: str, path: str, detail: str) -> dict:
     return {'level': level, 'code': code, 'path': path, 'detail': detail}
 
@@ -402,12 +433,14 @@ def export_map(lib: Library, path: str, ids: dict) -> dict:
         room['objects'].append(export_object(lib, group, '[special passive object]', objects, path))
     handled.update({'[passive object]', '[/passive object]', '[special passive object]', '[/special passive object]'})
 
-    for group in groups(span_values(spans, '[monster]') or [], 10, '[monster]', path, diags):
+    for group, npc_id in monster_records(flatten(span_values(spans, '[monster]') or []), path, diags):
         mob_id, x, y, z = group[0], group[3], group[4], group[5]
         mob_rel = ids['monsters'].get(mob_id)
         entry = {'id': mob_id, 'anchor': [x, y, z], 'raw': group, 'mob': None, 'sprite': None,
                  'field_meaning': {'0': 'monster id (E-PARSE via monster.lst)', '3-5': 'x,y,z (E-INFER)',
                                    'others': 'unknown (level/count/type/AI candidates)'}}
+        if npc_id is not None:
+            entry['npc_id'] = npc_id
         if mob_rel is None:
             diags.append(diag('error', 'monster_id', path, f'monster id {mob_id} absent from monster.lst'))
         else:
@@ -418,7 +451,14 @@ def export_map(lib: Library, path: str, ids: dict) -> dict:
             if motion:
                 entry['sprite'] = lib.sprite(resolve(mob_path, motion[0]), mob_path)
             else:
-                diags.append(diag('error', 'monster_motion', mob_path, 'no [waiting motion]'))
+                waiting = mob and span_values(mob['spans'], '[waiting action]')
+                action_path = resolve(mob_path, waiting[0]) if waiting else ''
+                action = lib.script(action_path) if action_path else None
+                base = action and span_values(action['spans'], '[BASE ANI]')
+                if base:
+                    entry['sprite'] = lib.sprite(resolve(action_path, base[0]), mob_path)
+                else:
+                    diags.append(diag('error', 'monster_motion', mob_path, 'missing waiting motion or waiting action base ANI'))
         room['monsters'].append(entry)
     handled.update({'[monster]', '[/monster]'})
 
@@ -485,6 +525,9 @@ def export_gate_object(lib: Library, obj_id: int, objects: dict) -> dict:
         lib.diags.append(diag('warning', 'gate_int_pairs', obj_path, f'{len(strings)} strings vs {len(ints)} ints'))
     for index, name in enumerate(strings):
         state, variant = (ints[index * 2:index * 2 + 2] + [None, None])[:2]
+        if name == '':
+            # Some wall slots reserve an integer pair with no ANI or TIL.
+            continue
         if str(name).lower().endswith('.til'):
             result['door_tile'] = {'til': resolve(obj_path, name), 'raw_pair': [state, variant],
                                    'note': 'E-UNKNOWN: pass overlay semantics not applied'}
