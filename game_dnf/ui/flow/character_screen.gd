@@ -78,7 +78,8 @@ func show_roster(message := "") -> void:
 			var record: Dictionary = records[i]
 			slot_paths.append(record["path"])
 			slot_selection_frames.append(selection_frame)
-			hit.tooltip_text = game.skin.chinese(String(record["name"]))
+			hit.tooltip_text = game.skin.chinese(String(record["name"])
+				+ (" · 已从备份恢复" if bool(record.get("recovered",false)) else ""))
 			var name_label := center_text(record["name"], at + Vector2(0, 17), 119, 12, Color("fff0b8") if active else Color("b9ad94"))
 			slot_name_labels.append(name_label)
 			center_text("Lv.%d  鬼剑士" % record["level"], at + Vector2(0, 40), 119, 10)
