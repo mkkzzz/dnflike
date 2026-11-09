@@ -1077,7 +1077,8 @@ def draw_stagger_parameters(library) -> dict:
             "max_recovery": fields["[hit recovery max]"][0]}
 
 
-def swordman_weapon_tracks(library, pose: str, folders: dict[str, str], active_frames: list[int]) -> dict:
+def swordman_weapon_tracks(library, pose: str, folders: dict[str, str],
+                           active_frames: list[int] | dict[str, list[int]]) -> dict:
     tracks = {}
     for family, folder in folders.items():
         path = f"equipment/character/swordman/weapon/{folder}/{pose}.ani"
@@ -1085,7 +1086,8 @@ def swordman_weapon_tracks(library, pose: str, folders: dict[str, str], active_f
         frames = [{"frame": frame["frame"], "delay_ms": frame["delay_ms"],
                    "boxes": [box for box in frame.get("boxes", []) if box["kind"] == "attack"]}
                   for frame in source["metadata"]["frames"]]
-        if [frame["frame"] for frame in frames if frame["boxes"]] != active_frames:
+        expected = active_frames[family] if isinstance(active_frames, dict) else active_frames
+        if [frame["frame"] for frame in frames if frame["boxes"]] != expected:
             raise ValueError(f"unexpected native weapon attack frames: {path}")
         tracks[family] = {"source": path, "sha256": source["sha256"], "frames": frames}
     return tracks
@@ -1100,6 +1102,19 @@ def rapid_move_slash_tracks(library) -> dict:
         "rapidmoveslashmove1": swordman_weapon_tracks(library, "rapidmoveslashmove1", folders, [0, 1, 2, 3]),
         "rapidmoveslashmove2": swordman_weapon_tracks(library, "rapidmoveslashmove2", folders, [0, 1, 2]),
     }
+
+
+def illusion_finish_tracks(library) -> dict:
+    pose = "illusionslashfinal"
+    upper = swordman_weapon_tracks(library, pose, {
+        "shortsword": "ssword/sswdb", "katana": "katana/katanab", "greatsword": "hsword/lswdb",
+        "club": "club/clubb", "beamsword": "beamsword/beamswdb",
+    }, [2])
+    smash = swordman_weapon_tracks(library, pose, {
+        "shortsword": "ssword/sswdc", "katana": "katana/katanac", "greatsword": "hsword/lswdc",
+        "club": "club/clubc", "beamsword": "beamsword/beamswdc",
+    }, {"shortsword": [6], "katana": [6], "greatsword": [6, 7], "club": [5], "beamsword": [6, 7]})
+    return {family: [upper[family], smash[family]] for family in upper}
 
 
 DRAW_WAVE_ALS = OBJ_ROOT + "animation/momentaryslash/start.ani.als"
@@ -2065,6 +2080,7 @@ def main() -> int:
             "greatsword": "hsword/lswdc", "club": "club/clubb",
         }, [3, 4])
         rapid_tracks = rapid_move_slash_tracks(library)
+        illusion_tracks = illusion_finish_tracks(library)
         rapid_effects = swordman_skill_effect_slots(library, b"SKILL_RAPID_MOVE_SLASH")["paths"]
         if len(rapid_effects) != 4 or not all(path.startswith(CHR_FX + "rapidmoveslash/") for path in rapid_effects):
             raise ValueError("unexpected Rapid Move Slash effect slots")
@@ -2147,6 +2163,8 @@ def main() -> int:
         if key == "momentaryslashex":
             move = build_move(by_id[9], records, atk_by_stem, effect_paths, fx, effects, objects,
                               native_draw=False)
+        if key == "illusionslashexp":
+            move = build_move(by_id[73], records, atk_by_stem, effect_paths, fx, effects, objects)
         if move:
             move = json.loads(json.dumps(move))
             move["skill"] = str(skill["path"])
@@ -2196,6 +2214,19 @@ def main() -> int:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)
         if move:
+            if key == "illusionslash":
+                move["finish_weapon_tracks"] = illusion_tracks
+                move["material_cost"] = fixed_cube_cost(skill, records)
+                move["stages"][0]["voice"] = "SM_HOANYOUNG_START"
+                final = move["stages"][-1]
+                final["hits"] = [hit for hit in final["hits"] if "object" in hit]
+                upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
+                smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")
+                if not upper or not smash:
+                    raise ValueError("missing original Illusion Slash finisher effect")
+                final["fx"] = [{"key": upper, "at": 100, "action_clock": True, "depth_offset": 1},
+                               {"key": smash, "at": 300, "action_clock": True, "depth_offset": 2}]
+                final["sounds"] = [{"key": "SM_HOANYOUNG_FIN", "at": 300}]
             if key in ("bloodblast", "grabblastblood", "chargecrash"):
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "chargecrash":

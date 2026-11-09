@@ -5587,6 +5587,726 @@
    ]
   },
   "illusionslash": {
+   "finish_weapon_tracks": {
+    "beamsword": [
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -14,
+           -22,
+           4,
+           107,
+           45,
+           163
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "00393984663c7895e8d66694c29129131e7ed2a936dbe57ddbb74ac23ee26cb0",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdb/illusionslashfinal.ani"
+     },
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -1,
+           120,
+           38,
+           139
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -14,
+           114,
+           38,
+           95
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "ae5f1cb7feb9558e2c6bdc897cf7c89878219fe871c5a79952575ad3a39848f2",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdc/illusionslashfinal.ani"
+     }
+    ],
+    "club": [
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -14,
+           -22,
+           4,
+           107,
+           45,
+           163
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "721f99b2221f8372fde865b6f64c2c4810760561ba8890e3121f4d705109408b",
+      "source": "equipment/character/swordman/weapon/club/clubb/illusionslashfinal.ani"
+     },
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -1,
+           125,
+           38,
+           139
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "3bf9424f3f92f501429dea56d67a3a6278a2e58bb316d0f0e9492e29a8732342",
+      "source": "equipment/character/swordman/weapon/club/clubc/illusionslashfinal.ani"
+     }
+    ],
+    "greatsword": [
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -14,
+           -22,
+           4,
+           115,
+           48,
+           163
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "c1c1860483c79be4045c92ea2644b5d291eefcd7fbd3f72e9d50619a169fb940",
+      "source": "equipment/character/swordman/weapon/hsword/lswdb/illusionslashfinal.ani"
+     },
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -1,
+           134,
+           41,
+           139
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -14,
+           136,
+           41,
+           95
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "9d29106cb67b7aa4c651119364ff8b7499dcce37d3f173f97b385774731526fe",
+      "source": "equipment/character/swordman/weapon/hsword/lswdc/illusionslashfinal.ani"
+     }
+    ],
+    "katana": [
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -14,
+           -22,
+           4,
+           107,
+           45,
+           163
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "d82fb50d6efc1601d9a1d4be514a2716ae33bb96acba4fe68c118629f8d2c2f1",
+      "source": "equipment/character/swordman/weapon/katana/katanab/illusionslashfinal.ani"
+     },
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -1,
+           125,
+           38,
+           139
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "a85410954a4f4ec178be2764a87bd5581acfca5736a1156957e58261da7723d0",
+      "source": "equipment/character/swordman/weapon/katana/katanac/illusionslashfinal.ani"
+     }
+    ],
+    "shortsword": [
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -14,
+           -22,
+           4,
+           107,
+           42,
+           163
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "2fa581afebda4fcc9502513cb082c9dc8764f1ee60c2209db874d981b0dfaecc",
+      "source": "equipment/character/swordman/weapon/ssword/sswdb/illusionslashfinal.ani"
+     },
+     {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           36,
+           -18,
+           -1,
+           107,
+           35,
+           139
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 80,
+        "frame": 6
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 7
+       },
+       {
+        "boxes": [],
+        "delay_ms": 80,
+        "frame": 8
+       },
+       {
+        "boxes": [],
+        "delay_ms": 400,
+        "frame": 9
+       }
+      ],
+      "sha256": "861c54b7e6bea7a48a19d57aecd40d8feb2dffb4e7c0674d7f26b65d8711a819",
+      "source": "equipment/character/swordman/weapon/ssword/sswdc/illusionslashfinal.ani"
+     }
+    ]
+   },
+   "material_cost": {
+    "amount": 2,
+    "source_id": 3037
+   },
    "name": "幻影剑舞",
    "skill": "skill/swordman/illusionslash.skl",
    "stages": [
@@ -5610,7 +6330,8 @@
         160.0
        ]
       }
-     ]
+     ],
+     "voice": "SM_HOANYOUNG_START"
     },
     {
      "ani": "illusionslash2",
@@ -5683,27 +6404,31 @@
      "atk": "",
      "fx": [
       {
-       "at": 0,
+       "action_clock": true,
+       "at": 100,
+       "depth_offset": 1,
        "key": "skillfx_upper_4c1c9ad1"
+      },
+      {
+       "action_clock": true,
+       "at": 300,
+       "depth_offset": 2,
+       "key": "skillfx_smash_c789bbe3"
       }
      ],
      "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upper_4c1c9ad1",
-       "effects": [],
-       "percent_col": 4,
-       "window": [
-        0.0,
-        150.0
-       ]
-      },
       {
        "at": 900,
        "life_ms": 1600,
        "object": "passiveobject/character/swordman/illusionslashwave.obj",
        "percent_col": 0,
        "speed": 520.0
+      }
+     ],
+     "sounds": [
+      {
+       "at": 300,
+       "key": "SM_HOANYOUNG_FIN"
       }
      ]
     }

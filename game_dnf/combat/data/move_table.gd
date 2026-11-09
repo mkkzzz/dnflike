@@ -487,6 +487,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = Timeline.attached_attack_segments(player_timeline(stage["ani"]),[Timeline.from_ani(track)])
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if name == "illusionslash" and stage["ani"] == "illusionslashfinal":
+				_append_illusion_finish_hits(built,skill,spec["finish_weapon_tracks"].get(weapon,[]))
 			if name == "rapidmoveslash" and not built["hits"].is_empty():
 				var hit: Dictionary = built["hits"][0]
 				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
@@ -638,6 +640,34 @@ func _draw_slash_cues(slots: Array, shot: float, under: int, upper: int) -> Arra
 	for binding: Array in [[0,-2],[2,1],[under,-1],[upper,2]]:
 		cues.append({"key":slots[binding[0]],"at":shot,"depth_offset":binding[1],"action_clock":true})
 	return cues
+
+func _append_illusion_finish_hits(stage: Dictionary, skill: Dictionary, tracks: Array) -> void:
+	# CCD2D4..CCD335 scales the upper light before it is attached.
+	stage["fx"] = stage["fx"].duplicate(true)
+	stage["fx"][0]["scale"] = 1.0 if weapon == "greatsword" else (0.85 if weapon == "shortsword" else 0.9)
+	var body: Array = stage["timeline"]
+	var sources: Array = []
+	for track: Dictionary in tracks:sources.append(Timeline.from_ani(track))
+	var segments := Timeline.attached_attack_segments(body,sources)
+	# CCD34E installs Upper. CB5186 replaces it with Smash at body frame six.
+	var switch_at := float(body[6]["start_ms"])
+	var upper := segments.filter(func(segment):return float(segment["start"]) < switch_at)
+	var smash := segments.filter(func(segment):return float(segment["start"]) >= switch_at)
+	for suffix: String in ["upper","smash"]:
+		var boxes := upper if suffix == "upper" else smash
+		if boxes.is_empty():continue
+		var path := "character/swordman/attackinfo/illusionslash"+suffix+".atk"
+		var hit: Dictionary = _build_stage({"atk":path,"hits":[{"attached_weapon":true,"percent_col":0}]},skill,boxes)["hits"][0]
+		hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
+		var stat: Array = skill["static"]
+		var blade := weapon == "katana"
+		if job == "weaponmaster" and (blade or (weapon == "beamsword" and suffix == "smash")):
+			var mastery := _skill_row(BLADE_MASTERY_SKL if blade else LIGHT_MASTERY_SKL)
+			if int(mastery.get("rank",0)) >= int(stat[19 if blade else 22]):
+				# CCD42E, CB526F and CB531B convert the scaled percent into an integer ATK bonus.
+				var ratio := NativeMotion.f32(1.0+NativeMotion.f32(float(stat[21 if blade else 24])*0.0010000000474974513))
+				hit["percent"] = 100.0+int(float(hit["percent"])*ratio-100.0)
+		stage["hits"].append(hit)
 
 func _append_draw_second_slash(move: Dictionary, spec: Dictionary) -> void:
 	# CBA09E checks Oath and each weapon's effective mastery against its own gate.

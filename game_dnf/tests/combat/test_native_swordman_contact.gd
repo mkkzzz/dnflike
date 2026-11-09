@@ -3066,6 +3066,66 @@ func check_grab_blast_thirst() -> void:
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
+func check_illusion_finish() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"illusionslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["illusionslash"]
+	for sample: Array in [["katana",6,281,281],["katana",7,140,140],["beamsword",7,281,210],["club",0,281,0]]:
+		var family: String = sample[0]
+		spec["skills"]["blademastery"] = sample[1] if family == "katana" else 0
+		spec["skills"]["lightswordmastery"] = sample[1] if family == "beamsword" else 0
+		start_room("",family,1,spec)
+		var spent: Array = []
+		session.set_skill_material_spender(func(id: int,amount: int):
+			spent.append([id,amount])
+			return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 1000.0
+		press(KEY_A)
+		step(0)
+		check(spent==[[3037,2]] and cues("SM_HOANYOUNG_START").size()==1,
+			"the entry uses the original two cubes and start voice")
+		for stage_index: int in 4:
+			press(KEY_A)
+			step(float(game.action_def()["cancel_at"]))
+			check(game.player["stage"]==stage_index+1,"Illusion Slash reaches the next phase through the public shortcut")
+		var finish: Dictionary = game.action_def()
+		var direct: Array = finish["hits"].filter(func(hit):return hit["kind"]=="boxes")
+		check(finish["ani"]=="illusionslashfinal" and direct.size()==(1 if family == "club" else 2),
+			"the finisher selects the original weapon tracks")
+		if direct.is_empty():continue
+		check(direct[0]["percent"]==sample[2] and direct[0]["atk_path"].ends_with("/illusionslashupper.atk")
+			and direct[0]["atk"]["lift_up"]==300,"the uppercut uses the first rank column and original attack record")
+		if direct.size()==2:
+			check(direct[1]["percent"]==sample[3] and direct[1]["atk_path"].ends_with("/illusionslashsmash.atk")
+				and direct[1]["atk"]["lift_up"]==50,"the smash installs its own attack record and mastery scale")
+		var near: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
+		var far: Dictionary = game.spawn_enemy(POINT+Vector2(118,0))
+		near["hp"] = 50000.0
+		far["hp"] = 50000.0
+		step(99)
+		check(game.hit_count==0 and game.attack_body_armor(),"the armored first two frames do not borrow a visual rectangle")
+		step(1)
+		check(game.hit_count==1 and game.player["stuck_ms"]==40.0 and far["hp"]==50000.0,
+			"frame two hits with the narrow uppercut weapon box and original hitstop")
+		game.player["stuck_ms"] = 0.0
+		move_target(near,POINT+Vector2(55,0))
+		near["invuln_ms"] = 0.0
+		step(150)
+		check(game.hit_count==(2 if family == "club" else 1) and cues("SM_HOANYOUNG_FIN").is_empty(),
+			"only the club C layer reaches the target on frame five, before the finishing voice")
+		step(50)
+		check(game.hit_count==(2 if family == "club" else 3)
+			and cues("skillfx_upper_4c1c9ad1").filter(func(cue):return cue["action_clock_at"]==100.0).size()==1
+			and cues("skillfx_smash_c789bbe3").filter(func(cue):return cue["action_clock_at"]==300.0).size()==1
+			and cues("SM_HOANYOUNG_FIN").size()==1 and spent==[[3037,2]],
+			"frame six switches attack records and attaches the second original effect")
+
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -4400,6 +4460,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_illusion_finish()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
 	check_rapid_move_slash_depth()

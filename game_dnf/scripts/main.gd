@@ -3429,7 +3429,7 @@ func attack_body_armor() -> bool:
 	# Charge Crash uses the authored dash, uppercut and frozen preparation pose.
 	if not upper and player["action"] != "charge_crash" \
 			and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash", \
-				"rapidmoveslashmove1","rapidmoveslashmove2"]:return false
+				"rapidmoveslashmove1","rapidmoveslashmove2","illusionslashfinal"]:return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))
