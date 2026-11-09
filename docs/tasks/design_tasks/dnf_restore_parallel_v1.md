@@ -8,14 +8,27 @@
 
 | 顺序 | 任务 | 开工材料与交付 |
 |---|---|---|
-| P0 | 鬼剑士真实按键与手感回归 | 用 ws2 发布的原帧与接触边界，从实际战斗入口测输入缓冲、快捷栏、连续普攻、衔接和取消。提交可重跑输入、逐帧差异和帧耗，适配层返修与原规则缺口分开登记 |
-| P0 | 建立无原客户端的可重跑基线 | 同步主仓库，确认本区已有 DNF asset 的版本与本次运行包。以 [战斗依赖检查](../../../tools/ensure_dnf_combat.ps1) 为切入点，修正已发布包因文件时间触发全库重建的问题。用只有共享运行包的工作区验收正常启动、哈希校验和缺损资源诊断 |
+| P0 | 鬼剑士真实按键与手感回归 | 先按下表采集共享版本的实际表现。ws2 发布该招的原帧与接触边界后，再加入逐帧断言并回归 |
+| P0 | 建立无原客户端的可重跑基线 | 用只有仓库运行包的干净目录验证正式入口和武器专项。若完整包仍因时间戳误触发重建，ws1 可单独修改[战斗依赖检查](../../../tools/ensure_dnf_combat.ps1)并验证完整包与缺件两种情况。若问题落在共同启动器，由 ws2 集成 |
 | P1 | 已闭合战斗能力的正式验收与返修 | 先做章鱼和信徒的同房打断、死亡、回访与召唤清场。神殿战斗接线包发布后，将 [炮车专项](../../../game_dnf/tests/combat/test_native_cannon_combat.gd) 和 [主教专项](../../../game_dnf/tests/combat/test_native_pope_combat.gd) 改为默认读取正式怪物注册。验证炮车双槽、双朝向、每次只发一枚，主教雷击触发边界及实际命中 |
 | P1 | 已取证技能的跨帧回归 | 在 [技能效果专项](../../../game_dnf/tests/combat/test_skill_effects.gd) 用共享波动三招与普通鬼阵的数据测试跨释放帧、暂停、取消与重复更新。核对单次扣蓝、单次生成、音效去重和原动画帧与命中框同步 |
-| P1 | 输入、战斗 HUD 与性能 | 从正常战斗入口验快捷键、暂停恢复、受击输入缓冲、目标血条与战斗事件的可见反馈。处理可测的交互错误、资源阻塞、重复结算通知和卡顿，提交真实输入回归及改动前后的帧耗数据 |
+| P1 | 其它战斗 HUD 与性能 | 从正常战斗入口测暂停恢复、目标血条、重复结算通知和帧耗。鬼剑士首批范围内的问题走下表，范围外的修复按文件认领 |
 | P2 | 承接后续已闭合的技能、怪物和通用系统 | 每次领一组带明确来源、状态顺序、资源和验收脚本的任务。对照共享 ANI、ATK、SKL、PVF 或已验证规则接实现。缺少原证据的分支独立登记，继续该组已闭合的部分 |
 
 ws1 可从 [普通章鱼抓咬](../../reports/ws2/2026-11/2026-11-09_章鱼原抓咬技能演示与迷宫状态.md)、[炮车双发射](../../reports/ws2/2026-11/2026-11-09_罗刹鬼阵与炮车双发射验证.md)、[主教雷击](../../reports/ws2/2026-11/2026-11-09_主教普通攻击原雷击.md)和[战斗任务包](ws1_combat_iteration_v1.md)起步。共享材料入口在 [source_materials.json](../../../game_dnf/source_materials.json) 与 [asset_store.json](../../../game_dnf/asset_store.json)。有缺件时按版本锁同步，日常运行优先使用随仓库分发的资源。
+
+## 鬼剑士首批执行边界
+
+| 负责人 | 任务与开工条件 | 本批可写文件与交付 |
+|---|---|---|
+| ws1 | **输入回归，可以立即开始。** 走正式流程，以短剑 original_27000、太刀 original_27601 测 X 连段、Z 上挑、命中停顿与暂停恢复中的输入缓冲。记录按下/抬起顺序、动作帧、命中事件与扣蓝次数。格挡、三段斩的原版取消窗口在 ws2 发布后加断言 | 在 `game_dnf/tests/combat/` 新增独立专项 test_ws1_swordman_inputs.gd 及其 UID |
+| ws1 | **快捷栏和性能，可以立即开始。** 先测上排 QWERTY、下排 ASDFGH、D 与相邻槽、跨排移动、解绑和重载。记录技能面板首开与热开、悬停、拖放耗时。原像素与有效拖放边界在 ws2 发布后加断言 | 在 `game_dnf/tests/flow/` 新增独立专项 test_ws1_skill_interaction.gd 及其 UID。可运行现有[性能测试](../../../game_dnf/tests/flow/test_ui_performance.gd)，报告归档到 ws1 自己的月度目录 |
+| ws2 | **招式还原。** 先普攻三段和上挑，再格挡与三段斩。核对原状态机、输入与取消、武器类别、动作与特效层、音效触发、命中盒、伤害与硬直 | [战斗入口](../../../game_dnf/scripts/main.gd)、[会话](../../../game_dnf/combat/api/combat_session.gd)、[招式表](../../../game_dnf/combat/data/move_table.gd)、[帧时序](../../../game_dnf/combat/action/timeline.gd)、[战斗配置](../../../game_dnf/data/combat.json)、[武器层接口](../../../game_dnf/content/api/weapon_appearance.gd)、相关战斗视图、武器层回归及技能运行包 |
+| ws2 | **技能栏与原画校对。** 取原格底、键字、原坐标与边界，校对技能面板清晰度、拖放和旧存档兼容 | [正式流程 HUD](../../../game_dnf/flow/loop_root.gd)、[槽位契约](../../../game_dnf/stats/api/skill_slots.gd)、[资源构建器](../../../tools/build_dnf_flow_assets.py)、快捷栏运行包、现有[循环专项](../../../game_dnf/tests/flow/test_loop.gd)及[技能交互专项](../../../game_dnf/tests/flow/test_skill_shortcuts.gd) |
+
+ws1 用仓库的[基础资源清单](../../../game_dnf/assets_local/manifest.json)、[战斗资源](../../../game_dnf/assets_local/combat/manifest.json)、[运行数据](../../../game_dnf/assets_local/content/combat_content.json)和[武器层清单](../../../game_dnf/assets_local/weapon_appearance_v3/manifest.json)。从仓库根目录执行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_dnf_loop.ps1 -Test -WeaponAppearanceOnly` 验证换装、存档和实际进图。独立专项通过 Godot 的 `--headless --path game_dnf --script` 运行，回归入口集成由 ws2 处理。上述任务不需要安装原客户端，也无需下载完整提取库。报告分别标记“当前版本复现”和“已按原规则核对”。
+
+首批重叠文件由 ws2 编辑。ws1 将可复跑用例、基准提交和观察结果交给 ws2 集成修复；适合 ws1 独立实现的返修，可按单项交接对应文件和断言。以后交接到现有生产文件或生成物时，先写交接记录，由接收方登记接手后切换唯一编辑方。
 
 ## ws2 继续
 
@@ -31,7 +44,7 @@ ws1 可从 [普通章鱼抓咬](../../reports/ws2/2026-11/2026-11-09_章鱼原�
 
 1. ws2 每批交接提供适用原版路径与 SHA256、已证规则、必要运行资产或版本锁、可复现输入与预期输出，以及仍缺的原证据。原客户端安装目录和临时取证目录留在本机。
 2. ws1 以仓库提交和共享包为输入，从正常入口复现。缺原证时只退回具体字段、状态或资源版本，接着做同批其余工作。两边分别登记接收、实现与验收。
-3. 房间、战斗和流程通过 [CombatSession](../../../game_dnf/combat/api/combat_session.gd) 及其视图、击杀、房间清场与死亡事件衔接。ws2 完成本批迷宫接线前，ws1 可先改独立战斗内核、战斗 HUD 和测试。跨区会改同一文件时按[工作区登记](../../project/03_工作区登记.md)占位并明确本批唯一编辑方。
+3. 房间、战斗和流程通过 [CombatSession](../../../game_dnf/combat/api/combat_session.gd) 及其视图、击杀、房间清场与死亡事件衔接。独立任务遵守上表及[分工契约](../../design/28_工作区分工与原版资料共享.md)，共享入口和生成物先按[工作区登记](../../project/03_工作区登记.md)占位并指定唯一编辑方。
 4. 每批跑正常入口、专项和相邻旧路线。计划以本地运行回归、原版对照、用户实机验收分别登记。神殿正式入口、完整技能与后续章节都按对应证据开通。
 
 ws1 开工入口见[项目待办](../../project/02_待办.md)。
