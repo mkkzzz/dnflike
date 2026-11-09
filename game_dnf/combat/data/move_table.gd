@@ -412,6 +412,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["grab_strike"] = {"atk":atk(strike_path),"atk_path":strike_path,"skill_id":name,
 			"skill":true,"percent":0.0,"fixed":float(row[0]),"damage_type":"physical","grab_strike":true}
 		move["grab_bleed_bonus"] = float(row[4])
+	if spec.get("native_state","") == "bloody_rave":
+		move["native_state"] = "bloody_rave"
+		move["hold_min_ms"] = int(skill["static"][0])
+		move["hold_max_ms"] = int(skill["static"][1])
+		move["hold_hp_per_second"] = NativeMotion.f32(float(skill["level_row"][6])*0.10000000149011612)
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
@@ -698,6 +703,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 				hit["native_controller"] = controller
 				if controller.get("kind","") == "bloodblast":hit["starts_at_zero"] = true
 			hit["rear_fx"] = String(h.get("rear_fx",""))
+			if h.get("starts_at_zero",false):hit["starts_at_zero"] = true
 			# Explicit skill-specific size column; other objects retain native size.
 			if not hit.has("size_rate"):
 				hit["size_rate"] = float(row[int(h["size_col"])])/100.0 if h.has("size_col") and row.size()>int(h["size_col"]) else 1.0

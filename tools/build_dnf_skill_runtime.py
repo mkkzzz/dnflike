@@ -180,7 +180,6 @@ DIRECT_OBJECTS = {
     "chargecrash": (OBJ_ROOT + "chargecrashsub.obj", 700, 0.0, 1200),
     "wavespinarea": (OBJ_ROOT + "wavespinarea.obj", 420, 0.0, 5000),
     "illusionslash": (OBJ_ROOT + "illusionslashwave.obj", 900, 520.0, 1600),
-    "bloodyrave": (OBJ_ROOT + "bloodyrave.obj", 980, 0.0, 1600),
     "outragebreak": (OBJ_ROOT + "outragebreakfloor.obj", 440, 0.0, 2400),
     "hellbenter": (OBJ_ROOT + "hellbenterfinish.obj", 760, 0.0, 1800),
     "hundredsword": (OBJ_ROOT + "hundredswordhit.obj", 780, 0.0, 3000),
@@ -266,7 +265,6 @@ HIT_STATUS = {
                  "status_level_col": 5, "duration_ms_col": 6}],
     "firewave": [{"id": "burn", "chance": 0.25}],
     "gorecross": [{"id": "bleed", "chance": 0.2}],
-    "bloodyrave": [{"id": "bleed", "chance": 0.3}],
     "outragebreak": [{"id": "bleed", "chance": 0.3}],
 }
 
@@ -1133,6 +1131,36 @@ def draw_wave_layer(library) -> dict:
             "source": DRAW_WAVE_ALS, "sha256": script["sha256"]}
 
 
+def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objects: dict, slots: list[str]) -> dict:
+    # CAA22B, CAA300 and CAA360 attach two original layers per body frame gate.
+    inhale = records[CHR_ANI + "bloodyraveinhale.ani"]["decoded"]["timeline"]
+    release = records[CHR_ANI + "bloodyraveslash.ani"]["decoded"]["timeline"]
+    inhale_fx = []
+    for first, frame in ((0, 3), (2, 6), (4, 8)):
+        for index in (first, first + 1):
+            inhale_fx.append({"key": add_fx(fx, effects, slots[index]), "at": inhale[frame]["start_ms"],
+                              "action_clock": True, "loop": True, "offset_x": 55, "offset_y": -96,
+                              "depth_offset": (1, 2, 3, 4, 6, 7)[index]})
+    if any(frame.get("img") for frame in records[slots[9]]["decoded"]["timeline"]):
+        raise ValueError("Bloody Rave's empty sword slot now contains images")
+    sword_fx = [{"key": add_fx(fx, effects, slots[slot]), "at": 0, "action_clock": True,
+                 "depth_offset": depth} for slot, depth in ((8, -2), (10, 1), (11, 2))]
+    slash = add_object(objects, OBJ_ROOT + "bloodyrave.obj")
+    rear = add_fx(fx, effects, OBJ_ROOT + "animation/bloodyravelayer.ani")
+    if not slash or not rear or not all(cue["key"] for cue in inhale_fx + sword_fx):
+        raise ValueError("Missing original Bloody Rave presentation bank")
+    if records[slash]["decoded"].get("add_object_effect") != ["Animation/BloodyRaveLayer.ani", -1]:
+        raise ValueError("Unexpected Bloody Rave slash attachment")
+    return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
+            "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
+            "fidelity_pending": ["suction_targets_and_motion", "target_count_damage", "contact_status",
+                                 "effect_fade_and_end", "native_audio", "cancel_permission"],
+            "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx},
+                       {"ani": "bloodyraveslash", "fx": sword_fx,
+                        "hits": [{"object": slash, "at": release[3]["start_ms"], "percent_col": 0,
+                                  "speed": 0, "life_ms": -1, "rear_fx": rear, "starts_at_zero": True}]}]}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1921,6 +1949,9 @@ def main() -> int:
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
         grab_hold = grab_hold_effect_slot(library)
+        rave_slots = swordman_skill_effect_slots(library, b"SKILL_BLOODY_RAVE")["paths"]
+        if len(rave_slots) != 15:
+            raise ValueError("Unexpected Bloody Rave animation slots")
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
@@ -1930,6 +1961,8 @@ def main() -> int:
         SAFE_EFFECTS.update(path for path in draw_slashes["paths"] if safe_animation(library, path))
         if safe_animation(library, grab_hold["path"]):
             SAFE_EFFECTS.add(grab_hold["path"])
+        SAFE_EFFECTS.update(path for path in [*rave_slots, OBJ_ROOT + "animation/bloodyravelayer.ani"]
+                            if safe_animation(library, path))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -1947,6 +1980,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "blastbloodpresuborigin.obj")
         object_candidates.add(OBJ_ROOT + "givebloodsub.obj")
         object_candidates.add(OBJ_ROOT + "grabblastblood.obj")
+        object_candidates.add(OBJ_ROOT + "bloodyrave.obj")
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
@@ -2008,6 +2042,8 @@ def main() -> int:
                             hit.pop(field, None)
                         hit.update(speed=360.0, life_ms=1800, percent_col=0, effects=HIT_STATUS["firewave"])
                 move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
+        elif key == "bloodyrave":
+            move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots)
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)

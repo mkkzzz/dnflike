@@ -1062,6 +1062,9 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
+	if m.get("native_state","") == "bloody_rave" and int(player["stage"]) == 0:
+		step_bloody_rave_hold(m,old_clock,clock)
+		return
 	if m.get("native_state","") == "grab_blast":
 		if int(player["stage"]) == 0:
 			if try_grab_blast(stage,event_clock):return
@@ -1404,6 +1407,26 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
 
+func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
+	var phase: Dictionary = player["native_phase"]
+	var hold_start := int(phase["hold_start_ms"])
+	# C9ECA0 begins fractional HP accumulation at the scaled frame-nine time.
+	var drain_ms := int(to)-maxi(int(from),hold_start)
+	if drain_ms > 0:
+		var drain := ActorNumbers.native_scalar(drain_ms*float(move["hold_hp_per_second"]))
+		drain = ActorNumbers.native_scalar(drain*0.0010000000474974513)
+		var total := ActorNumbers.native_scalar(float(phase["hold_hp_fraction"])+drain)
+		var whole := int(total)
+		phase["hold_hp_fraction"] = total-whole
+		if whole > 0:player["hp"] = float(maxi(1,int(player["hp"])-whole))
+	var held_ms := int(to)-hold_start
+	# CBDEDE measures the SKL hold limits after frame nine, independently of ANI speed.
+	if int(player["hp"]) > 1 and held_ms < int(move["hold_max_ms"]) \
+			and (held_ms < int(move["hold_min_ms"]) or skill_input_held("bloodyrave")):return
+	end_action_fx()
+	player["fx_tag"] = "act:%d" % (action_seq+1)
+	start_stage(1)
+
 func step_thirst_cast(ms: float) -> void:
 	var phase: Dictionary = player["native_phase"]
 	var move := move_def("sacrifice")
@@ -1555,6 +1578,14 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC98DE..CC991C writes the scaled result to the ATK as a float.
 		amount = ActorNumbers.native_scalar(ActorNumbers.native_scalar(amount*grab_frenzy_percent())*ActorNumbers.NATIVE_PERCENT)
 		player["native_phase"]["grab_strike"] = grab_fixed_hit(strike,amount)
+	elif m.get("native_state","") == "bloody_rave":
+		# CCED47 sets the ANI to weapon attack speed for both state phases.
+		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+		var rate := maxi(1,int(attack_rate*1000.0))/1000.0
+		var stage := action_def()
+		var hold_start := int(float(stage["timeline"][9]["start_ms"])/rate) if index == 0 else 0
+		var end := hold_start+int(m["hold_max_ms"]) if index == 0 else int(float(stage["duration"])/rate)
+		player["native_phase"] = {"cast_stage_rate":rate,"hold_start_ms":hold_start,"hold_hp_fraction":0.0,"end_ms":end}
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -1757,7 +1788,7 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
 				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
 				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0)),
-				"depth_offset":int(fx.get("depth_offset",4))})
+				"depth_offset":int(fx.get("depth_offset",4)),"loop":bool(fx.get("loop",false))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))
@@ -3069,7 +3100,8 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		bus.emit("combat.cue",{"kind":"native_particle",
 			"path":"passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl",
 			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
-	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
+	if String(obj["add_fx"]) not in ["",String(hit.get("rear_fx",""))]:
+		spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 	return entity
 
 func step_objects(ms: float, first_new_object_id := -1) -> void:

@@ -1874,6 +1874,69 @@ func check_draw_target_deadlines() -> void:
 	game.step_game(1)
 	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty(),"the public battle update settles on the first tick beyond the deadline")
 
+func check_bloody_rave_phases() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodyrave"]
+	for scenario: String in ["no_cube","tap","fast_tap","hold","one_hp"]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		var rate := 2.0 if scenario=="fast_tap" else 1.0
+		game.numeric_player.values["attack_speed"] = rate
+		game.player["hp"] = 1.0 if scenario=="one_hp" else 1000.0
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int, amount: int):
+			payments.append([id,amount])
+			return scenario!="no_cube")
+		var before_mp: float = game.player["mp"]
+		if scenario == "hold":session.submit_key(KEY_A,true)
+		else:press(KEY_A)
+		step(0)
+		check(payments==[[3037,1]],"Bloody Rave asks for one original cube through the combat session")
+		if scenario == "no_cube":
+			check(game.player["action"]=="" and game.player["mp"]==before_mp and not game.player["cooldowns"].has("bloodyrave"),
+				"cube rejection leaves Bloody Rave's MP, action and cooldown untouched")
+			continue
+		var hold_start := 790.0/rate
+		var move: Dictionary = game.move_def("bloodyrave")
+		var first_fx: String = move["stages"][0]["fx"][0]["key"]
+		if scenario == "one_hp":
+			check(game.player["stage"]==1 and game.player["hp"]==1.0,"Bloody Rave releases immediately at the one-HP gate")
+			continue
+		check(game.view.player_actor.pose=="bloodyraveinhale" and game.player["stage"]==0,"Bloody Rave starts its original inhale pose")
+		step(309.0/rate)
+		check(cues(first_fx).is_empty() and game.objects.is_empty(),"the first inhale layers wait for the native frame-three gate")
+		step(1.0/rate)
+		check(cues(first_fx).size()==1 and cues(first_fx)[0]["offset_x"]==55.0 and cues(first_fx)[0]["offset_y"]==-96.0,
+			"the original inhale layer is bound to the mirrored hand offset")
+		step(480.0/rate)
+		check(game.player["hp"]==1000.0 and game.player["stage"]==0,"HP drain starts after the scaled frame-nine gate")
+		var hold_ms := 3000.0 if scenario=="hold" else 500.0
+		step(hold_ms-1.0)
+		check(game.player["stage"]==0 and game.objects.is_empty() and game.player["hp"]==1000.0-float(int((hold_ms-1.0)*0.0023)),
+			"the SKL hold limit and fractional HP drain use their own milliseconds after %s" % hold_start)
+		step(1)
+		check(game.player["stage"]==1 and game.view.player_actor.pose=="bloodyraveslash" and game.objects.is_empty(),
+			"release enters the original slash pose before its damaging frame")
+		if scenario == "hold":session.submit_key(KEY_A,false)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
+		target["hp"] = 50000.0
+		target["z"] = 60.0
+		game.numeric_player.values["hit"] = 1.0
+		step(460.0/rate-1.0)
+		check(game.objects.is_empty(),"Bloody Rave has no slash object before release frame three")
+		step(1)
+		check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==1231.0
+			and game.objects[0]["life_ms"]==-1.0 and not String(game.objects[0]["hit"]["rear_fx"]).is_empty(),
+			"the release uses its original 1231-percent base, ANI lifetime and rear layer")
+		var object_id: int = game.objects[0]["id"]
+		game.step_objects(16.0,object_id)
+		check(target["hp"]<50000.0 and game.objects[0]["clock"]==0.0,"the original slash attack box is active from its first frame")
+
 func check_grab_blast_startup() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2939,6 +3002,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_draw_second_slash()
+	check_bloody_rave_phases()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()
 	check_grab_blast_thirst()

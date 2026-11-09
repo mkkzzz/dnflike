@@ -25,6 +25,7 @@
    "skillfx_blood6_8c574314": "passiveobject/character/swordman/animation/blastblood/blood6.ani",
    "skillfx_blood7_0253e775": "passiveobject/character/swordman/animation/blastblood/blood7.ani",
    "skillfx_blood8_78f7a94f": "passiveobject/character/swordman/animation/blastblood/blood8.ani",
+   "skillfx_bloodyravelayer_f539ec38": "passiveobject/character/swordman/animation/bloodyravelayer.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
    "skillfx_bremen2_267aab10": "passiveobject/character/swordman/animation/bremen2.ani",
    "skillfx_bremenareaappear1_558ce479": "passiveobject/character/swordman/animation/bremenareaappear1.ani",
@@ -73,6 +74,10 @@
    "skillfx_lightmove1_1_847fea3b": "character/swordman/effect/animation/rapidmoveslash/lightmove1-1.ani",
    "skillfx_lightmove1_2_b2a9b7bc": "character/swordman/effect/animation/rapidmoveslash/lightmove1-2.ani",
    "skillfx_lightmove2_1_7a67e3a5": "character/swordman/effect/animation/rapidmoveslash/lightmove2-1.ani",
+   "skillfx_line1_e722e7d8": "character/swordman/effect/animation/bloodyrave/line1.ani",
+   "skillfx_line2_3c639b26": "character/swordman/effect/animation/bloodyrave/line2.ani",
+   "skillfx_loop1_531a5c7f": "character/swordman/effect/animation/bloodyrave/loop1.ani",
+   "skillfx_loop2_6e5fdb64": "character/swordman/effect/animation/bloodyrave/loop2.ani",
    "skillfx_momentaryslash_blue_ldodge_under_5f7d8fce": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_under.ani",
    "skillfx_momentaryslash_blue_ldodge_upper_6f91f65b": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_upper.ani",
    "skillfx_momentaryslash_none_under_785ce934": "character/swordman/effect/animation/momentaryslash/momentaryslash_none_under.ani",
@@ -101,12 +106,17 @@
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
    "skillfx_slashmove1_afe914cf": "character/swordman/effect/animation/ghoststep/slashmove1.ani",
    "skillfx_smash_c789bbe3": "character/swordman/effect/animation/illusionslash/smash.ani",
+   "skillfx_start1_7658c82b": "character/swordman/effect/animation/bloodyrave/start1.ani",
+   "skillfx_start2_f8a2516e": "character/swordman/effect/animation/bloodyrave/start2.ani",
    "skillfx_start_c9ff53c9": "passiveobject/character/swordman/animation/sayaex/start.ani",
    "skillfx_startb_82b8530b": "passiveobject/character/swordman/animation/momentaryslash/startb.ani",
    "skillfx_startup_ldodge_0030e5f5": "passiveobject/character/swordman/animation/epidemicrasa/startup_ldodge.ani",
    "skillfx_stay_633ceea4": "passiveobject/character/swordman/animation/epidemicrasa/stay.ani",
    "skillfx_stay_fe49f3a2": "passiveobject/character/swordman/animation/sayaex/stay.ani",
    "skillfx_stay_ldodge_e8328c3d": "passiveobject/character/swordman/animation/epidemicrasa/stay_ldodge.ani",
+   "skillfx_sword1_2c85afcf": "character/swordman/effect/animation/bloodyrave/sword1.ani",
+   "skillfx_sword3_f71eb3aa": "character/swordman/effect/animation/bloodyrave/sword3.ani",
+   "skillfx_sword4_7bc4b286": "character/swordman/effect/animation/bloodyrave/sword4.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
@@ -1185,37 +1195,113 @@
    ]
   },
   "bloodyrave": {
+   "fidelity_pending": [
+    "suction_targets_and_motion",
+    "target_count_damage",
+    "contact_status",
+    "effect_fade_and_end",
+    "native_audio",
+    "cancel_permission"
+   ],
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "嗜魂封魔斩",
+   "native_state": "bloody_rave",
    "requires_effect": "frenzy",
    "skill": "skill/swordman/bloodyrave.skl",
    "stages": [
     {
      "ani": "bloodyraveinhale",
-     "atk": "",
-     "hits": [
+     "fx": [
       {
-       "atk": "",
-       "body": true,
-       "effects": [
-        {
-         "chance": 0.3,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 0
+       "action_clock": true,
+       "at": 310,
+       "depth_offset": 1,
+       "key": "skillfx_start1_7658c82b",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
+      },
+      {
+       "action_clock": true,
+       "at": 310,
+       "depth_offset": 2,
+       "key": "skillfx_start2_f8a2516e",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
+      },
+      {
+       "action_clock": true,
+       "at": 550,
+       "depth_offset": 3,
+       "key": "skillfx_loop1_531a5c7f",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
+      },
+      {
+       "action_clock": true,
+       "at": 550,
+       "depth_offset": 4,
+       "key": "skillfx_loop2_6e5fdb64",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
+      },
+      {
+       "action_clock": true,
+       "at": 710,
+       "depth_offset": 6,
+       "key": "skillfx_line1_e722e7d8",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
+      },
+      {
+       "action_clock": true,
+       "at": 710,
+       "depth_offset": 7,
+       "key": "skillfx_line2_3c639b26",
+       "loop": true,
+       "offset_x": 55,
+       "offset_y": -96
       }
      ]
     },
     {
      "ani": "bloodyraveslash",
-     "atk": "",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": -2,
+       "key": "skillfx_sword1_2c85afcf"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "skillfx_sword3_f71eb3aa"
+      },
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 2,
+       "key": "skillfx_sword4_7bc4b286"
+      }
+     ],
      "hits": [
       {
-       "at": 980,
-       "life_ms": 1600,
+       "at": 460,
+       "life_ms": -1,
        "object": "passiveobject/character/swordman/bloodyrave.obj",
        "percent_col": 0,
-       "speed": 0.0
+       "rear_fx": "skillfx_bloodyravelayer_f539ec38",
+       "speed": 0,
+       "starts_at_zero": true
       }
      ]
     }
