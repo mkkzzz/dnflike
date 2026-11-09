@@ -9,8 +9,8 @@ func run() -> void:
 	state.profile["level"]=4
 	state.profile["town_location"]="hendon_main"
 	state.profile["town_position"]=[838.0,240.0]
-	for id: String in state.quests.catalog.definitions:
-		if id.begins_with("gran.") or id=="legacy.trial":continue
+	for id: String in ["elvengard.meet_linus", "lorien.first_clear", "lorien.goblin_noise",
+			"elvengard.seria_fate", "hendon.meet_pungjin"]:
 		var entry: Dictionary=state.quests.new_entry(state.quests.catalog.definitions[id])
 		entry["state"]="completed"
 		state.profile["quest_state"]["entries"][id]=entry
@@ -27,6 +27,18 @@ func run() -> void:
 	await frame("gran_01_tau_task")
 	await forest_entrance()
 	check(game.selected_dungeon=="mirkwood" and game.modal.find_children("*","Button",true,false).any(func(b):return b.get_meta("dungeon_id","")=="mirkwood_deep"),"forest edge opens Granfloris cards including the locked deeper map")
+	var backdrop: TextureRect = game.modal.find_child("dungeon_region_background", true, false)
+	var selected: TextureRect = game.modal.find_child("selected_dungeon_card", true, false)
+	var locked_card: TextureRect = game.modal.find_child("dungeon_card_mirkwood_deep", true, false)
+	check(backdrop != null and backdrop.texture.get_size() == Vector2(800, 600) and
+		selected != null and selected.position == Vector2(156, 381) and
+		locked_card != null and locked_card.position.is_equal_approx(Vector2(109, 258.8)) and
+		locked_card.modulate != Color.WHITE and game.modal.find_child("dungeon_page_next", true, false) == null,
+		"Granfloris draws the native map, expanded trim and dimmed compact art together")
+	check(select_dungeon("mirkwood_deep"),"the native locked deeper-forest hotspot is reachable")
+	await ticks(3)
+	check(game.selected_dungeon=="mirkwood" and not game.session.dungeon_available("mirkwood_deep"),
+		"real pointer clicks respect the deeper-forest prerequisite before hand-in")
 	await frame("gran_02_forest_selection")
 	check(click_text("进入地下城"),"native selection launches original Mirkwood")
 	await ticks(6)
@@ -38,6 +50,7 @@ func run() -> void:
 	check(game.session.dungeon_available("mirkwood_deep"),"105 hand-in unlocks original Mirkwood Deep")
 	await task("gran.cat_trouble","接受委托",0)
 	await forest_entrance()
+	await check_source_card_hotspots()
 	check(select_dungeon("mirkwood_deep"),"unlocked native deeper-forest card is selectable")
 	await ticks(3)
 	check(game.selected_dungeon=="mirkwood_deep","selection keeps the exact source dungeon identity")
@@ -98,6 +111,30 @@ func select_dungeon(id: String) -> bool:
 	for b in game.modal.find_children("*","Button",true,false):
 		if b.get_meta("dungeon_id","")==id:click_control(b);return true
 	return false
+
+func check_source_card_hotspots() -> void:
+	var quest_state: Dictionary = game.session.profile["quest_state"].duplicate(true)
+	var level: int = game.session.profile["level"]
+	var selected: String = game.selected_dungeon
+	var routes := ["mirkwood_deep", "mirkwood_frost", "sunderland_poison", "sunderland",
+		"grakkarak", "grakkarak_burning", "sunderland_dark", "mirkwood"]
+	game.session.profile["level"] = 30
+	for id: String in routes:
+		for required: String in game.session.dungeons[id].get("requires", []):
+			var entry: Dictionary = game.session.quests.new_entry(game.session.quests.catalog.definitions[required])
+			entry["state"] = "completed"
+			game.session.profile["quest_state"]["entries"][required] = entry
+	game.show_overlay("dungeon")
+	await ticks(3)
+	for id: String in routes:
+		var clicked := select_dungeon(id)
+		await ticks(3)
+		check(clicked and game.selected_dungeon == id, "real Granfloris pointer selects " + id)
+	game.session.profile["quest_state"] = quest_state
+	game.session.profile["level"] = level
+	game.selected_dungeon = selected
+	game.show_overlay("dungeon")
+	await ticks(3)
 
 func return_to_pungjin() -> void:
 	if game.session.state!="result":return

@@ -1,0 +1,530 @@
+{
+ "schema": "dnf_native_map/1",
+ "selector_schema": "dnf_dungeon_selector/1",
+ "source": {
+  "files": {
+   "worldmap/worldmappatterntable2nd.tbl": "223e151db80545f2d85a5d89effc71b8f76079ea934c149aff4d05e40fe83dae",
+   "dungeon/dungeon.lst": "f34fd5395389a2ce54832ba1c0dc721aa4572851764150c2be17c1c70a714c48",
+   "worldmap/granfloris.wdm": "665b5ef8ecdb1abec1f4023f4557d806f4e5a6eb2fbf3fc8768272366a333560",
+   "worldmap/ui/granfloris.ui": "537f6da2b5c3883892788c6289e0652328660498dc4b52a1d0d99798b885986c",
+   "dungeon/act1/mirkwood.dgn": "f3b7f6c7cfe548e22697c10d988e0d100122a0276c27ca39d295aad121d9568a",
+   "dungeon/act1/mirkwooddeep.dgn": "dd9cbcf079744fe683d6d4efd704c239781a284e4a9eaecf4565245a992569c6",
+   "dungeon/act1/mirkwoodfrost.dgn": "920805e3b32c8fb007473a45fde847d7ec511feb3a1334a54ec14ad19ccc2dca",
+   "dungeon/act1/grakkarakburning.dgn": "767b6ebb77563a22797ab4e08d976aa12ec5934a3dd733c264763958aa536cd1",
+   "dungeon/act1/sunderland.dgn": "09701e5f530bab84178d0cd78604435bbe380d4358d841e4763a3889b3c7f1dc",
+   "dungeon/act1/sunderlanddark.dgn": "0010a2b0306eba62124ba6fc27af46ee5000a40193ef7ece0a1e5b85099eae29",
+   "dungeon/act1/sunderlandpoison.dgn": "c3c9a35364fcdcc125424524eee56a5e58137a0f10c60be95b243f5e99ff7a53",
+   "dungeon/act1/grakkarak.dgn": "f7bdf1dc94b047058b35cef9d6227c03624c8e4d7165b8532282c1fb52a7cece"
+  },
+  "dungeon_listing": "dungeon/dungeon.lst",
+  "layout_consumer": "EXERESX 0x106DBBD/0x106D630/0x106CF40",
+  "engine_sha256": "187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84"
+ },
+ "regions": {
+  "granfloris": {
+   "wdm": "worldmap/granfloris.wdm",
+   "ui": "worldmap/ui/granfloris.ui",
+   "background": "4b16732c351e_0",
+   "cards": {
+    "mirkwood": {
+     "dgn_index": 3,
+     "dgn": "dungeon/act1/mirkwood.dgn",
+     "control": "IDC_WORLDMAP_BUTTON1",
+     "anchor": [
+      202,
+      326
+     ],
+     "ui_pattern": 9,
+     "dgn_pattern": [
+      1,
+      1,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      0
+     ],
+     "compact": [
+      181,
+      385
+     ],
+     "expanded": [
+      156,
+      387
+     ],
+     "connector": [
+      181,
+      344
+     ],
+     "card": "97d0bd599509_0",
+     "connector_image": "9c96b6d8c417_39"
+    },
+    "mirkwood_deep": {
+     "dgn_index": 4,
+     "dgn": "dungeon/act1/mirkwooddeep.dgn",
+     "control": "IDC_WORLDMAP_BUTTON2",
+     "anchor": [
+      145,
+      340
+     ],
+     "ui_pattern": 13,
+     "dgn_pattern": [
+      1,
+      2,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      1
+     ],
+     "compact": [
+      109,
+      263
+     ],
+     "expanded": [
+      82,
+      243
+     ],
+     "connector": [
+      109,
+      263
+     ],
+     "card": "97d0bd599509_1",
+     "connector_image": "9c96b6d8c417_43"
+    },
+    "mirkwood_frost": {
+     "dgn_index": 9,
+     "dgn": "dungeon/act1/mirkwoodfrost.dgn",
+     "control": "IDC_WORLDMAP_BUTTON5",
+     "anchor": [
+      518,
+      327
+     ],
+     "ui_pattern": 4,
+     "dgn_pattern": [
+      1,
+      8,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      2
+     ],
+     "compact": [
+      579,
+      267
+     ],
+     "expanded": [
+      578,
+      246
+     ],
+     "connector": [
+      539,
+      267
+     ],
+     "card": "97d0bd599509_2",
+     "connector_image": "9c96b6d8c417_34"
+    },
+    "grakkarak_burning": {
+     "dgn_index": 8,
+     "dgn": "dungeon/act1/grakkarakburning.dgn",
+     "control": "IDC_WORLDMAP_BUTTON7",
+     "anchor": [
+      274,
+      224
+     ],
+     "ui_pattern": 5,
+     "dgn_pattern": [
+      1,
+      6,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      6
+     ],
+     "compact": [
+      242,
+      140
+     ],
+     "expanded": [
+      216,
+      118
+     ],
+     "connector": [
+      242,
+      140
+     ],
+     "card": "97d0bd599509_6",
+     "connector_image": "9c96b6d8c417_35"
+    },
+    "sunderland": {
+     "dgn_index": 5,
+     "dgn": "dungeon/act1/sunderland.dgn",
+     "control": "IDC_WORLDMAP_BUTTON3",
+     "anchor": [
+      264,
+      287
+     ],
+     "ui_pattern": 10,
+     "dgn_pattern": [
+      1,
+      3,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      3
+     ],
+     "compact": [
+      324,
+      329
+     ],
+     "expanded": [
+      323,
+      330
+     ],
+     "connector": [
+      284,
+      307
+     ],
+     "card": "97d0bd599509_3",
+     "connector_image": "9c96b6d8c417_40"
+    },
+    "sunderland_dark": {
+     "dgn_index": 1000,
+     "dgn": "dungeon/act1/sunderlanddark.dgn",
+     "control": "IDC_WORLDMAP_BUTTON8",
+     "anchor": [
+      223,
+      203
+     ],
+     "ui_pattern": 6,
+     "dgn_pattern": [
+      1,
+      7,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      7
+     ],
+     "compact": [
+      76,
+      145
+     ],
+     "expanded": [
+      26,
+      125
+     ],
+     "connector": [
+      76,
+      145
+     ],
+     "card": "97d0bd599509_7",
+     "connector_image": "9c96b6d8c417_36"
+    },
+    "sunderland_poison": {
+     "dgn_index": 6,
+     "dgn": "dungeon/act1/sunderlandpoison.dgn",
+     "control": "IDC_WORLDMAP_BUTTON4",
+     "anchor": [
+      340,
+      260
+     ],
+     "ui_pattern": 11,
+     "dgn_pattern": [
+      1,
+      4,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      4
+     ],
+     "compact": [
+      415,
+      242
+     ],
+     "expanded": [
+      415,
+      231
+     ],
+     "connector": [
+      363,
+      242
+     ],
+     "card": "97d0bd599509_4",
+     "connector_image": "9c96b6d8c417_41"
+    },
+    "grakkarak": {
+     "dgn_index": 7,
+     "dgn": "dungeon/act1/grakkarak.dgn",
+     "control": "IDC_WORLDMAP_BUTTON6",
+     "anchor": [
+      358,
+      219
+     ],
+     "ui_pattern": 4,
+     "dgn_pattern": [
+      1,
+      5,
+      "WorldMap/SelectdungeonSlot/granfloris.img",
+      5
+     ],
+     "compact": [
+      419,
+      159
+     ],
+     "expanded": [
+      418,
+      138
+     ],
+     "connector": [
+      379,
+      159
+     ],
+     "card": "97d0bd599509_5",
+     "connector_image": "9c96b6d8c417_34"
+    }
+   }
+  }
+ },
+ "images": {
+  "97d0bd599509_0": {
+   "file": "img/97d0bd599509_0.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 0,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_39": {
+   "file": "img/9c96b6d8c417_39.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 39,
+   "size": [
+    118,
+    79
+   ],
+   "canvas_offset": [
+    0,
+    13
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_1": {
+   "file": "img/97d0bd599509_1.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 1,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_43": {
+   "file": "img/9c96b6d8c417_43.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 43,
+   "size": [
+    118,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_2": {
+   "file": "img/97d0bd599509_2.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 2,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_34": {
+   "file": "img/9c96b6d8c417_34.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 34,
+   "size": [
+    145,
+    73
+   ],
+   "canvas_offset": [
+    13,
+    0
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_6": {
+   "file": "img/97d0bd599509_6.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 6,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_35": {
+   "file": "img/9c96b6d8c417_35.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 35,
+   "size": [
+    118,
+    85
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_3": {
+   "file": "img/97d0bd599509_3.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 3,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_40": {
+   "file": "img/9c96b6d8c417_40.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 40,
+   "size": [
+    145,
+    65
+   ],
+   "canvas_offset": [
+    12,
+    8
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_7": {
+   "file": "img/97d0bd599509_7.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 7,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_36": {
+   "file": "img/9c96b6d8c417_36.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 36,
+   "size": [
+    153,
+    65
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_4": {
+   "file": "img/97d0bd599509_4.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 4,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "9c96b6d8c417_41": {
+   "file": "img/9c96b6d8c417_41.png",
+   "source_path": "sprite/worldmap/selectdungeon02.img",
+   "source_npk": "ImagePacks2/sprite_character_fighter_effect_crashlowkick.NPK",
+   "img_sha256": "9c96b6d8c417f8a9059dc878586b3baf895d70d2bfc3fc6885c37b5415a3ea49",
+   "frame": 41,
+   "size": [
+    158,
+    51
+   ],
+   "canvas_offset": [
+    12,
+    0
+   ],
+   "variants": 1
+  },
+  "97d0bd599509_5": {
+   "file": "img/97d0bd599509_5.png",
+   "source_path": "sprite/worldmap/selectdungeonslot/granfloris.img",
+   "source_npk": "ImagePacks2/sprite_worldmap_selectdungeonslot.NPK",
+   "img_sha256": "97d0bd5995095acd9bd274f9cbbbc2c43dd449184f5babd11c25107b2428da75",
+   "frame": 5,
+   "size": [
+    168,
+    80
+   ],
+   "canvas_offset": [
+    0,
+    -6
+   ],
+   "variants": 1
+  },
+  "4b16732c351e_0": {
+   "file": "img/4b16732c351e_0.png",
+   "source_path": "sprite/worldmap/lorien.img",
+   "source_npk": "ImagePacks2/sprite_worldmap.NPK",
+   "img_sha256": "4b16732c351ee69ca73c35b374db864930c91b5ccce46bfa0d3b925a16cdf203",
+   "frame": 0,
+   "size": [
+    800,
+    600
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 2
+  }
+ }
+}

@@ -15,6 +15,8 @@ class QuestAssets(unittest.TestCase):
         cls.art = json.loads((cls.base/'manifest.json').read_text(encoding='utf-8'))
         cls.selector_base = cls.base.parent/'dungeon_selector_v1'
         cls.selector = json.loads((cls.selector_base/'manifest.json').read_text(encoding='utf-8'))
+        cls.gran_selector_base = cls.base.parent/'dungeon_selector_gran_v1'
+        cls.gran_selector = json.loads((cls.gran_selector_base/'manifest.json').read_text(encoding='utf-8'))
         cls.sky_selector_base = cls.base.parent/'dungeon_selector_sky_v1'
         cls.sky_selector = json.loads((cls.sky_selector_base/'manifest.json').read_text(encoding='utf-8'))
         cls.routes = json.loads((ROOT/'game_dnf/data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
@@ -46,6 +48,33 @@ class QuestAssets(unittest.TestCase):
                 self.assertEqual((info['source_path'].lower(), info['frame'], info['canvas_offset']),
                                  ('sprite/worldmap/selectdungeonslot/elvengard.img', index - 1, [0, -6]))
                 self.assertEqual(self.selector['images'][card['connector_image']]['frame'], connector)
+
+    def test_granfloris_selector_preserves_registered_source_cards(self):
+        region = self.gran_selector['regions']['granfloris']
+        images = self.gran_selector['images']
+        background = images[region['background']]
+        self.assertEqual((background['source_path'].lower(), background['frame'], background['size']),
+                         ('sprite/worldmap/lorien.img', 0, [800, 600]))
+        expected = {
+            'mirkwood': (3, 0, [181, 385], [156, 387], [181, 344], 39),
+            'mirkwood_deep': (4, 1, [109, 263], [82, 243], [109, 263], 43),
+            'mirkwood_frost': (9, 2, [579, 267], [578, 246], [539, 267], 34),
+            'sunderland': (5, 3, [324, 329], [323, 330], [284, 307], 40),
+            'sunderland_poison': (6, 4, [415, 242], [415, 231], [363, 242], 41),
+            'grakkarak': (7, 5, [419, 159], [418, 138], [379, 159], 34),
+            'grakkarak_burning': (8, 6, [242, 140], [216, 118], [242, 140], 35),
+            'sunderland_dark': (1000, 7, [76, 145], [26, 125], [76, 145], 36),
+        }
+        self.assertEqual(set(region['cards']), set(expected))
+        for key, (index, frame, compact, expanded, connector, connector_frame) in expected.items():
+            with self.subTest(key=key):
+                card = region['cards'][key]
+                self.assertEqual((card['dgn_index'], card['dgn_pattern'][3]), (index, frame))
+                self.assertEqual((card['compact'], card['expanded'], card['connector']), (compact, expanded, connector))
+                self.assertEqual(images[card['connector_image']]['frame'], connector_frame)
+                info = images[card['card']]
+                self.assertEqual((info['source_path'].lower(), info['frame'], info['canvas_offset']),
+                                 ('sprite/worldmap/selectdungeonslot/granfloris.img', frame, [0, -6]))
 
     def test_sky_selector_uses_normal_ui_background_and_registered_source_cards(self):
         region = self.sky_selector['regions']['skytower']
@@ -113,6 +142,7 @@ class QuestAssets(unittest.TestCase):
         lib=Library(library,ROOT/'temp/quest_pixel_audit')
         try:
             for base, pack in [(self.base, self.art), (self.selector_base, self.selector),
+                               (self.gran_selector_base, self.gran_selector),
                                (self.sky_selector_base, self.sky_selector)]:
                 for info in pack['images'].values():
                     row=lib.catalog.execute('select local_path from assets where sha256=?',(info['img_sha256'],)).fetchone()

@@ -18,6 +18,7 @@ from export_dnf_map import (Library, export_map, plain, span_values, resolve, CO
 OUTPUT = ROOT / 'game_dnf/assets_local/flow_v1'
 SELECTOR_PACKS = {
     'lorien': ('worldmap/lorien.wdm', OUTPUT / 'dungeon_selector_v1'),
+    'granfloris': ('worldmap/granfloris.wdm', OUTPUT / 'dungeon_selector_gran_v1'),
     'skytower': ('worldmap/skycastle.wdm', OUTPUT / 'dungeon_selector_sky_v1'),
 }
 SKY_CARD_BANK = 'worldmap/selectdungeonslot/skycastle.img'

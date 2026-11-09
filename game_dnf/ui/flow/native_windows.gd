@@ -3,6 +3,7 @@ extends RefCounted
 ## Guide screenshots prove HUD/inventory/map style; unspecified anchors are adapted.
 const SELECTOR_EXPORTS := {
 	"lorien": "res://assets_local/flow_v1/dungeon_selector_v1/manifest.json",
+	"granfloris": "res://assets_local/flow_v1/dungeon_selector_gran_v1/manifest.json",
 	"skytower": "res://assets_local/flow_v1/dungeon_selector_sky_v1/manifest.json",
 }
 const MapLoader = preload("res://scripts/native_map_loader.gd")
