@@ -10,6 +10,11 @@ var actors: Array = []
 var clock_ms := 0.0
 var enter_button: TextureButton
 var slot_buttons: Array[Button] = []
+var slot_paths: Array[String] = []
+var slot_selection_frames: Array[TextureRect] = []
+var slot_icons: Array[TextureRect] = []
+var slot_name_labels: Array[Label] = []
+var chosen_label: Label
 
 func setup(owner_game) -> void:
 	game = owner_game
@@ -21,6 +26,11 @@ func setup(owner_game) -> void:
 func clear_screen() -> void:
 	actors.clear()
 	slot_buttons.clear()
+	slot_paths.clear()
+	slot_selection_frames.clear()
+	slot_icons.clear()
+	slot_name_labels.clear()
+	chosen_label = null
 	name_input = null
 	for child in get_children():
 		if child is Control:child.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -51,7 +61,10 @@ func show_roster(message := "") -> void:
 		var occupied: bool = i < records.size()
 		var active: bool = occupied and records[i]["path"] == selected_path
 		if not occupied:game.skin.image(self, game.skin.texture("characters", 17), at)
-		if active:game.skin.image(self, game.skin.texture("characters", 3), at)
+		var selection_frame: TextureRect = game.skin.image(self, game.skin.texture("characters", 3), at) if occupied else null
+		if selection_frame != null:
+			selection_frame.visible = active
+			selection_frame.name = "character_selected_%d" % i
 		var hit := Button.new()
 		hit.set_meta("ui_sound", "character_select")
 		hit.position = at
@@ -63,10 +76,14 @@ func show_roster(message := "") -> void:
 		slot_buttons.append(hit)
 		if occupied:
 			var record: Dictionary = records[i]
+			slot_paths.append(record["path"])
+			slot_selection_frames.append(selection_frame)
 			hit.tooltip_text = game.skin.chinese(String(record["name"]))
-			center_text(record["name"], at + Vector2(0, 17), 119, 12, Color("fff0b8") if active else Color("b9ad94"))
+			var name_label := center_text(record["name"], at + Vector2(0, 17), 119, 12, Color("fff0b8") if active else Color("b9ad94"))
+			slot_name_labels.append(name_label)
 			center_text("Lv.%d  鬼剑士" % record["level"], at + Vector2(0, 40), 119, 10)
-			game.skin.image(self, game.skin.texture("characters", 11 if active else 12), at + Vector2(0, 155))
+			var icon: TextureRect = game.skin.image(self, game.skin.texture("characters", 11 if active else 12), at + Vector2(0, 155))
+			slot_icons.append(icon)
 			add_actor(at + Vector2(59, 179))
 			hit.pressed.connect(func(): select_path(record["path"]))
 			hit.gui_input.connect(func(event):
@@ -74,13 +91,17 @@ func show_roster(message := "") -> void:
 					selected_path = record["path"]
 					enter_selected())
 		else:
+			slot_paths.append("")
+			slot_selection_frames.append(null)
+			slot_icons.append(null)
+			slot_name_labels.append(null)
 			center_text("创建角色", at + Vector2(0, 97), 119, 12, Color("8a806c"))
 			hit.pressed.connect(show_create)
 	game.skin.image(self, game.skin.texture("characters", 6), Vector2(298, 454))
 	var chosen: Dictionary = {}
 	for record in records:
 		if record["path"] == selected_path:chosen = record
-	center_text(chosen.get("name", "尚未创建角色"), Vector2(298, 462), 204, 14)
+	chosen_label = center_text(chosen.get("name", "尚未创建角色"), Vector2(298, 462), 204, 14)
 	var create_button: Button = game.skin.button(self, "创建角色", Vector2(46, 537), show_create)
 	create_button.disabled = records.size() >= game.characters.LIMIT
 	enter_button = game.skin.sprite_button(self, "characters", [7, 8, 9], Vector2(646, 516), enter_selected, "进入游戏 Enter")
@@ -93,11 +114,28 @@ func show_roster(message := "") -> void:
 
 func select_path(path: String) -> void:
 	selected_path = path
-	# Defer rebuilding until the GUI has completed dispatching the click.
-	call_deferred("show_roster")
+	for i in slot_paths.size():
+		var active := slot_paths[i] == path
+		if is_instance_valid(slot_selection_frames[i]):
+			slot_selection_frames[i].visible = active
+		if is_instance_valid(slot_icons[i]):
+			slot_icons[i].texture = game.skin.texture("characters", 11 if active else 12)
+		if is_instance_valid(slot_name_labels[i]):
+			slot_name_labels[i].add_theme_color_override("font_color", Color("fff0b8") if active else Color("b9ad94"))
+	if is_instance_valid(chosen_label):
+		for entry: Dictionary in game.characters.entries:
+			if entry["path"] == path:
+				chosen_label.text = entry["name"]
+				break
+	if is_instance_valid(enter_button):
+		enter_button.disabled = selected_path.is_empty()
 
 func show_create() -> void:
-	if game.characters.entries.size() >= game.characters.LIMIT:return
+	if game.characters.entries.size() >= game.characters.LIMIT:
+		if is_instance_valid(message_label):
+			message_label.text = "角色位置已满"
+		game.ui_audio.play("error")
+		return
 	creating = true
 	game.ui_audio.play("window_open")
 	clear_screen()
@@ -168,5 +206,4 @@ func handle_key(key: int) -> void:
 		var index := 0
 		for i in records.size():
 			if records[i]["path"] == selected_path:index = i
-		selected_path = records[posmod(index + (-1 if key == KEY_LEFT else 1), records.size())]["path"]
-		show_roster()
+		select_path(records[posmod(index + (-1 if key == KEY_LEFT else 1), records.size())]["path"])
