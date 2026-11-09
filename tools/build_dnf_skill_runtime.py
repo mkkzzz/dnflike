@@ -38,6 +38,7 @@ CHR_FX = "character/swordman/effect/animation/"
 OBJ_ROOT = "passiveobject/character/swordman/"
 BLOODBLAST_LAYER_SCRIPT = OBJ_ROOT + "animation/blastblood1.ani.als"
 FIXED_ATTACK_BASE_SOURCE = "etc/etcparameter.etc"
+DRAW_SHOCK_STATUS_SOURCE = "etc/activestatustable_ex.etc"
 
 # Keep the existing save IDs stable while giving every other tree node a
 # deterministic canonical ID. The catalog builder uses this same map.
@@ -1886,6 +1887,12 @@ def main() -> int:
         bloodblast_script = bloodblast_layer_script(library, records)
         fixed_attack_base = dungeon_fixed_attack_base(library, 1)
         draw_bleed_base = dungeon_fixed_attack_base(library, 3)
+        draw_shock_base = dungeon_fixed_attack_base(library, 5)
+        shock_table = library.script(DRAW_SHOCK_STATUS_SOURCE)
+        if not shock_table or shock_table["sha256"] != "8c94c682a3e2e39835816a1af27b8ffa66d50d161e15aee50d07d0604776a599":
+            raise ValueError("Unverified original lightning status table")
+        shock_hit_ms, = next(field["values"] for field in shock_table["fields"]
+                             if field["tag"] == "[lightning time per number]")
         draw_tracks = draw_weapon_tracks(library)
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
@@ -1982,6 +1989,8 @@ def main() -> int:
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = draw_bleed_base
+                move["draw_shock_base"] = draw_shock_base
+                move["draw_shock_hit_ms"] = shock_hit_ms
                 slash_fx = [add_fx(fx, effects, path) for path in draw_slashes["paths"]]
                 if not all(slash_fx):
                     raise ValueError("missing original Draw Sword slash layer")

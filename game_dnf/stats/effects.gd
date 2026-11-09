@@ -32,6 +32,40 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int) -> bool:
 	source["applications"].append({"remaining_ms":float(duration_ms),"amount":amount,"status_level":status_level})
 	return true
 
+func add_source_shock(amount: int, duration_ms: int, hit_ms: int) -> bool:
+	if duration_ms <= 0 or hit_ms <= 0:return false
+	if not active.get("shock",{}).has("source_shock"):
+		add("shock",{"name":"感电"})
+		active["shock"]["source_shock"] = []
+	var shock: Dictionary = active["shock"]
+	# 8AF2D5 sets the limit. 8B3626 and 8B3874 admit counter values 0 through the limit.
+	@warning_ignore("integer_division")
+	var hits_left := duration_ms/hit_ms+1
+	shock["source_shock"].append({"remaining_ms":float(duration_ms),"amount":amount,"hits_left":hits_left})
+	shock["remaining_ms"] = maxf(float(shock["remaining_ms"]),duration_ms)
+	return true
+
+func trigger_source_shock() -> Dictionary:
+	var shock: Dictionary = active.get("shock",{})
+	if not shock.has("source_shock"):return {}
+	var entries: Array = shock["source_shock"]
+	var amount := 0
+	var display := 0
+	for entry: Dictionary in entries:
+		amount = int(entry["amount"])
+		display += amount
+		entry["hits_left"] -= 1
+	var remaining := 0.0
+	for index in range(entries.size()-1,-1,-1):
+		if int(entries[index]["hits_left"]) == 0:
+			entries.remove_at(index)
+			continue
+		remaining = maxf(remaining,float(entries[index]["remaining_ms"]))
+	shock["remaining_ms"] = remaining
+	if entries.is_empty():active.erase("shock")
+	# 8B3928 subtracts the last eligible amount. 8B3987 sends their sum to the display.
+	return {"amount":amount,"display":display,"removed":entries.is_empty()}
+
 ## 8B5160 appends each poison application with an independent timer and HP ledger.
 func add_source_poison(amount: int, duration_ms: int) -> void:
 	if not active.has("poison"):
@@ -77,6 +111,19 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 		if id == "sleep" and not sleep_on_ground:continue
 		var effect: Dictionary = active[id]
 		if effect.has("source_bleed"):step_source_bleed(effect,ms,events)
+		if effect.has("source_shock"):
+			var entries: Array = effect["source_shock"]
+			var remaining := 0.0
+			for index in range(entries.size()-1,-1,-1):
+				entries[index]["remaining_ms"] -= ms
+				var duration := float(entries[index]["remaining_ms"])
+				if duration <= 0.0:entries.remove_at(index)
+				remaining = maxf(remaining,duration)
+			effect["remaining_ms"] = remaining
+			if entries.is_empty():
+				active.erase(id)
+				events.append({"type":"removed","id":id})
+			continue
 		if effect.has("applications"):
 			step_source_poison(effect,ms,events)
 			continue

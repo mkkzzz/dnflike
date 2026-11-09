@@ -507,12 +507,14 @@ func _append_draw_second_slash(move: Dictionary, spec: Dictionary) -> void:
 	var slots: Array = spec["slash_layers"]["slots"]
 	followup["fx"] = _draw_slash_cues(slots,shot,6,7) if blade else _draw_slash_cues(slots,shot,4,5)
 	followup["hits"][0]["percent"] = float(row[4 if blade else 8])
-	if blade:
-		# CC8777..CC8830 writes status 11 from effective Katana Mastery.
-		var chance_percent := NativeMotion.f32(float(row[5])*0.10000000149011612)
-		followup["hits"][0]["draw_bleed"] = {"id":"bleed","chance":chance_percent/100.0,
-			"status_level":int(row[6]),"duration_ms":int(row[7]),"damage_percent":int(row[8])}
-		move["draw_bleed_base"] = spec["draw_bleed_base"]["by_level"]
+	# CC8777 and CC88A9 use separate mastery columns for status 11 and 6.
+	var column := 5 if blade else 9
+	var chance_percent := NativeMotion.f32(float(row[column])*0.10000000149011612)
+	var status := {"id":"bleed" if blade else "shock","chance":chance_percent/100.0,
+		"status_level":int(row[column+1]),"duration_ms":int(row[column+2]),"damage_percent":int(row[column+3])}
+	if not blade:status["hit_ms"] = int(spec["draw_shock_hit_ms"])
+	followup["hits"][0]["draw_status"] = status
+	move["draw_status_base"] = spec["draw_bleed_base" if blade else "draw_shock_base"]["by_level"]
 	move["draw_second_slash_at"] = float(opening["timeline"][8]["start_ms"])
 	move["stages"].append(followup)
 
@@ -864,6 +866,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"sleep_resistance":int(mob.get("sleep_resistance",0)),
 		"poison_resistance":int(mob.get("poison_resistance",0)),
 		"bleeding_resistance":int(mob.get("bleeding_resistance",0)),
+		"lightning_resistance":int(mob.get("lightning_resistance",0)),
 		"attack_delay":float(mob.get("attack_delay",mob.get("think_term",1200))),
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),

@@ -1913,6 +1913,7 @@ func check_draw_second_slash() -> void:
 			game.monsters[index]["hp"] = 10000.0
 			game.monsters[index]["numeric"].values["level"] = 38
 			game.monsters[index]["numeric"].values["bleeding_resistance"] = -100
+			game.monsters[index]["numeric"].values["lightning_resistance"] = -100
 		var move: Dictionary = game.move_def("draw")
 		check(game.skill_levels[mastery]==7 and move["stages"].size()==2 and move["draw_second_slash_at"]==775.0,
 			"effective mastery seven enables a second slash at body frame eight for "+family)
@@ -1923,6 +1924,7 @@ func check_draw_second_slash() -> void:
 		step(525)
 		check_draw_slash_layers("blue",0)
 		check(not game.monsters[0]["numeric"].effects.active.has("bleed"),"the opening contact does not apply the second slash's bleeding")
+		check(not game.monsters[0]["numeric"].effects.active.has("shock"),"the opening contact does not apply the second slash's lightning")
 		step(248)
 		press(KEY_A)
 		step(1)
@@ -1957,6 +1959,14 @@ func check_draw_second_slash() -> void:
 			if not active.is_empty():
 				check(active["source_bleed"]["applications"]==[{"remaining_ms":9000.0,"amount":154,"status_level":38}],
 					"second slash bleeding preserves native duration, level and per-tick integer conversion")
+		else:
+			var effect: Dictionary = game.action_def()["hits"][0]["effects"][0]
+			var active: Dictionary = fresh["numeric"].effects.active.get("shock",{})
+			check(is_equal_approx(effect["chance"],1.0) and effect["status_level"]==41 and effect["source_shock_amount"]==291,
+				"rank seven Light Sword Mastery uses its own chance, level and level-60 lightning base")
+			check(active.get("source_shock",[])==[{"remaining_ms":15504.0,"amount":291,"hits_left":32}]
+				and game.bus.events_of("combat.damage").all(func(event):return event.get("status","")!="shock"),
+				"the applying slash installs lightning without consuming its first hit")
 		var after_second: float = fresh["hp"]
 		check(game.draw_pending_hits.size()==1 and game.draw_pending_hits[0]["target"]==fresh,
 			"only the previously untouched target registers a delayed hit on the second slash")
@@ -1968,6 +1978,29 @@ func check_draw_second_slash() -> void:
 		if blade:
 			var applications: Array = fresh["numeric"].effects.active.get("bleed",{}).get("source_bleed",{}).get("applications",[])
 			check(applications.size()==1,"the new target bleeds once from the immediate second slash")
+		else:
+			var hits: Array = game.bus.events_of("combat.damage").filter(func(event):return event.get("status","")=="shock")
+			var active: Dictionary = fresh["numeric"].effects.active.get("shock",{})
+			check(hits.size()==1 and hits[0]["amount"]==291 and active.get("source_shock",[])==[
+				{"remaining_ms":15504.0,"amount":291,"hits_left":31}],"the delayed object consumes one lightning hit without reapplying it")
+
+func check_source_shock_limits() -> void:
+	var actor := preload("res://stats/api/actor_numbers.gd").new()
+	actor.values = {"level":41,"lightning_resistance":20,"abnormal_resistance":0}
+	var source := {"status_level":41,"chance":1.0,"duration_ms":15504,"source_shock_amount":291,"hit_ms":500}
+	check(not actor.apply_source_shock(source,8000) and actor.apply_source_shock(source,7999),
+		"lightning uses its own resistance on the original percent threshold")
+	var effects := Numbers.Effects.new()
+	effects.add_source_shock(12,500,500)
+	effects.add_source_shock(25,1000,500)
+	check(effects.step(499).is_empty(),"lightning has no periodic damage event")
+	check(effects.trigger_source_shock()=={"amount":25,"display":37,"removed":false},"lightning separates HP subtraction from the sum used for display")
+	check(effects.trigger_source_shock()=={"amount":25,"display":37,"removed":false}
+		and effects.trigger_source_shock()=={"amount":25,"display":25,"removed":true}
+		and effects.trigger_source_shock().is_empty(),"lightning retains the zero-based last hit and then exhausts each application")
+	effects.add_source_shock(25,500,500)
+	check(effects.step(500)==[{"type":"removed","id":"shock"}] and effects.trigger_source_shock().is_empty(),
+		"an untriggered lightning application expires by time")
 
 func check_draw_greatsword_charge() -> void:
 	var profile := ProfileSession.new()
@@ -2603,6 +2636,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_draw_second_slash()
+	check_source_shock_limits()
 	check_draw_greatsword_charge()
 	check_draw_short_wave()
 	check_thirst()

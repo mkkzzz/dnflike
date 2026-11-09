@@ -264,6 +264,7 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	stats["sleep_resistance"] = int(m["sleep_resistance"])
 	stats["poison_resistance"] = int(m["poison_resistance"])
 	stats["bleeding_resistance"] = int(m.get("bleeding_resistance",0))
+	stats["lightning_resistance"] = int(m.get("lightning_resistance",0))
 	if m.has("native_attack_rate"):stats["attack_speed"] = m["native_attack_rate"]
 	if m.has("native_spirit_summon"):stats["cast_speed"] = m["native_spirit_summon"]["cast_rate"]
 	actor.configure({"numbers":stats})
@@ -1075,16 +1076,17 @@ func step_action(ms: float, move: Vector2) -> void:
 			var followup: Dictionary = m["stages"][1]
 			var hit: Dictionary = followup["hits"][0]
 			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"],player["draw_targets"].size()))
-			if hit.has("draw_bleed") and numeric_player != null:
-				var bleed: Dictionary = hit["draw_bleed"]
-				var base_by_level: Array = m["draw_bleed_base"]
+			if hit.has("draw_status") and numeric_player != null:
+				var status: Dictionary = hit["draw_status"]
+				var base_by_level: Array = m["draw_status_base"]
 				var level := int(numeric_player.values["level"])
 				var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
 				# 90A6B0..90A6D8 uses the status base column and truncates after SSE scaling.
-				var ratio := Kernel.NativeMotion.f32(float(bleed["damage_percent"])-100.0)
+				var ratio := Kernel.NativeMotion.f32(float(status["damage_percent"])-100.0)
 				ratio = Kernel.NativeMotion.f32(1.0+Kernel.NativeMotion.f32(ratio*ActorNumbers.NATIVE_PERCENT))
-				bleed["source_bleed_total"] = int(Kernel.NativeMotion.f32(ratio*Kernel.NativeMotion.f32(base)))
-				hit["effects"].append(bleed)
+				var field := "source_bleed_total" if status["id"] == "bleed" else "source_shock_amount"
+				status[field] = int(Kernel.NativeMotion.f32(ratio*Kernel.NativeMotion.f32(base)))
+				hit["effects"].append(status)
 			end_action_fx()
 			player["fx_tag"] = "act:%d" % (action_seq+1)
 			start_stage(1,float(followup["entry_clock"]))
@@ -2061,6 +2063,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
 	if not draw_impact:hit_cues(atk,point,facing,by_player)
+	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
+		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
@@ -2068,6 +2072,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if hit_skill_id == "hopsmash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				effect_list.append({"id":"bleed","chance":0.4})
 		for effect: Dictionary in effect_list:
+			if effect.has("source_shock_amount"):
+				if target["numeric"].apply_source_shock(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+					bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"added"})
+				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
 				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
 					bus.emit("combat.status",{"target":target["id"],"id":"bleed","change":"added"})
@@ -2114,6 +2122,17 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.cue", {"kind":"fx", "key":"hit_blow_l", "point":Vector2(target["pos"]),
 				"height":float(target["z"]), "facing":int(target["facing"]), "scale":1.0})
 			report_defeat(target)
+
+func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
+	if not target.has("numeric"):return
+	var trigger: Dictionary = target["numeric"].effects.trigger_source_shock()
+	if trigger.is_empty():return
+	if bool(trigger["removed"]):bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"removed"})
+	if int(trigger["amount"]) <= 0:return
+	target["hp"] = maxf(0.0,float(target["hp"])-int(trigger["amount"]))
+	bus.emit("combat.damage",{"target":target["id"],"amount":trigger["amount"],"critical":false,"category":"magical",
+		"victim":"monster","reaction":"none","point":point,"show_number":false,"status":"shock"})
+	bus.emit("combat.damage_number",{"target":target["id"],"amount":trigger["display"],"id":"shock","victim":"monster","point":point})
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
