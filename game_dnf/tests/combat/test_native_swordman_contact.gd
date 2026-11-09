@@ -3174,6 +3174,71 @@ func check_charge_crash_uppercut() -> void:
 		step(1)
 		check(game.hit_count==dash_hits+1,"the uppercut can hit the dash target with its own ATK from frame two")
 
+func check_charge_crash_mastery() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"charge_crash","level":1})
+	for sample: Array in [["greatsword",6,7,true,1.0], ["club",7,6,true,1.0],
+			["greatsword",7,6,false,1.0], ["greatsword",7,6,true,1.0], ["club",6,7,true,1.25]]:
+		var family: String = sample[0]
+		var heavy := family == "greatsword"
+		var spec := profile.stats()
+		spec["skill_slots"] = ["charge_crash"]
+		spec["skills"]["heavyswordmastery"] = sample[1]
+		spec["skills"]["bluntmastery"] = sample[2]
+		start_room("","greatsword" if heavy else "shortsword",1 if heavy else -1,spec)
+		# The club logic fixture uses the current neutral body art.
+		if not heavy:game.table.configure_skills(game.skill_levels,"weaponmaster","club")
+		game.clear_monsters()
+		var rate: float = sample[4]
+		game.numeric_player.values["attack_speed"] = rate
+		session.submit_key(KEY_A,true)
+		if not sample[3]:session.submit_key(KEY_A,false)
+		step(0)
+		var mp: float = game.player["mp"]
+		step(350.0/rate)
+		step(340.0/rate-1.0)
+		check(game.player["stage"]==1 and cues("CCRASH_GET").is_empty(),"mastery preparation waits until uppercut finishes")
+		step(1)
+		var charge_allowed: bool = sample[3] and int(sample[1 if heavy else 2])==7
+		check(game.player.has("charge_crash_hold")==charge_allowed,"Charge Crash checks held input and the equipped family's mastery")
+		if not charge_allowed:
+			check(game.player["action"]=="" and cues("CCRASH_GET").is_empty(),"ineligible uppercut recovers without a downstroke")
+			session.submit_key(KEY_A,false)
+			continue
+		var charge_fx := "skillfx_charge_623ff08a"
+		var charge_layer: Array = game.view.effects.filter(func(fx):return fx.cue_key==charge_fx)
+		check(charge_layer.size()==1 and charge_layer[0].follow_offset==Vector2(-55 if heavy else 55,-130)
+			and charge_layer[0].uniform_frame_ms==33.0 and cues("CCRASH_GET").size()==1,
+			"mastery preparation mounts the original offset and per-frame delay")
+		step(33.0/rate)
+		check(game.player_ani()==["chargecrashfinish",0.0] and charge_layer.size()==1 and charge_layer[0].frame["frame"]==1,
+			"the body stays frozen while the original charge effect advances")
+		if heavy:
+			step(167)
+			session.submit_key(KEY_A,false)
+			step(0)
+		else:
+			step(319.0-33.0/rate)
+			check(game.player.has("charge_crash_hold") and cues("CCRASH_CRASH").is_empty(),"the accelerated hold lasts through 319 ms")
+			step(1)
+			session.submit_key(KEY_A,false)
+		check(game.player["stage"]==3 and game.player_ani()==["chargecrashfinish",240.0]
+			and not game.player.has("charge_crash_hold") and game.player["mp"]==mp,
+			"partial release and full charge both start at the original downstroke frame without paying again")
+		var hit: Dictionary = game.action_def()["hits"][0]
+		check(hit["percent"]==(293 if heavy else 118),"downstroke reads the equipped mastery and actual hold time")
+		var down_fx := "skillfx_down_slash_f79b50a7"
+		var down_layers: Array = game.view.effects.filter(func(fx):return fx.cue_key==down_fx)
+		check(down_layers.size()==1 and down_layers[0].follow_offset==Vector2(135 if heavy else -135,10)
+			and game.view.effects.all(func(fx):return fx.cue_key!=charge_fx),"downstroke replaces the charge with the mirrored native effect")
+		check(cues("SM_CHARGE_CRASH_DOWN").size()==1 and cues("JAKYEOL_SWING").size()==1 and cues("CCRASH_CRASH").size()==1,
+			"the downstroke issues the original voice, swing and impact sounds once")
+		var shake: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("kind","")=="screen_shake")
+		check(shake.size()==1 and shake[0]["degree"]==8 and shake[0]["duration_ms"]==500,
+			"the downstroke requests the original room shake")
+
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
 		var blade := family == "katana"
@@ -3947,6 +4012,7 @@ func run() -> void:
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
+	check_charge_crash_mastery()
 	check_draw_second_slash()
 	check_bloody_rave_phases()
 	check_bloody_rave_fade()

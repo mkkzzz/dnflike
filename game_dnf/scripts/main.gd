@@ -640,6 +640,7 @@ func pulse_passive_auras() -> void:
 func action_def() -> Dictionary:
 	if player.has("hardattack_release"):return player["hardattack_release"]
 	if player.has("weapon_combo_release"):return player["weapon_combo_release"]
+	if player.has("charge_crash_release"):return player["charge_crash_release"]
 	var m := move_def(String(player["action"]))
 	if m.has("stages"):return m["stages"][int(player["stage"])]
 	return m
@@ -754,6 +755,8 @@ func leave_action() -> void:
 	player.erase("weapon_combo_charge")
 	player.erase("weapon_combo_release")
 	player.erase("weapon_combo_chain")
+	player.erase("charge_crash_hold")
+	player.erase("charge_crash_release")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
@@ -996,6 +999,9 @@ func step_player(ms: float, move: Vector2) -> void:
 		player.erase("thirst_idle_origin_ms")
 
 func step_action(ms: float, move: Vector2) -> void:
+	if player.has("charge_crash_hold"):
+		step_charge_crash_hold(ms)
+		return
 	if player.has("draw_charge"):
 		step_draw_charge(ms)
 		return
@@ -1111,6 +1117,12 @@ func step_action(ms: float, move: Vector2) -> void:
 		if player["queued_skill"] == name:player["queued_skill"] = ""
 		start_stage(1)
 		return
+	if name == "charge_crash" and int(player["stage"]) == 1 and clock >= duration \
+			and m.has("charge_crash_hold") and skill_input_held(name):
+		# CBE8F2..CBE9F8 starts preparation only with the command still held.
+		player["queued_skill"] = ""
+		start_stage(2)
+		return
 	if name == "bloodblast" and int(player["stage"]) == 0 and clock >= duration:
 		start_stage(1)
 		return
@@ -1177,6 +1189,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["queued_jump"] = false
 		play_sound("jump")
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
+		and name != "charge_crash" \
 		and not m.has("upper_followup_at") and m.get("native_state","") != "grab_blast" and int(player["stage"]) < m["stages"].size()-1 \
 		and (name != "weaponcombo" or (input_ready and clock < duration)):
 		player["queued_skill"] = ""
@@ -1909,6 +1922,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		if m.has("dash_rehit_ms"):player["action_slide"]["rehit_at_ms"] = m["dash_rehit_ms"]
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
+			and not (name == "charge_crash" and index > 0) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -1921,6 +1935,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		return
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
+	if name == "charge_crash" and index == 2:
+		begin_charge_crash_hold(m["charge_crash_hold"])
+		return
 	if name == "grabblastblood" and index == 1:play_sound("BLOODR_GET")
 	if name == "triple":play_sound("R_TSLASH")
 	var swing := int(stage.get("swing",m.get("swing",-1)))
@@ -1965,6 +1982,41 @@ func step_draw_charge(ms: float) -> void:
 	end_action_fx()
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	start_stage(0,float(config["release_clock"]))
+
+func begin_charge_crash_hold(config: Dictionary) -> void:
+	var key := "skillfx_charge_623ff08a"
+	var frames: Array = combat_assets["effects"][key]["frames"]
+	var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+	var speed := maxi(1,roundi(rate*1000.0))
+	# CD0632 truncates the FX frame delay before CD06D5 scales the hold duration.
+	player["charge_crash_hold"] = {"elapsed_ms":0.0,"fx_clock":0.0,"rate":speed/1000.0,
+		"limit_ms":int(float(config["duration_ms"])*1000.0/speed)}
+	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":float(player["z"]),
+		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,
+		"offset_x":-55.0,"offset_y":-130.0,"depth_offset":1,"action_clock_at":0.0,
+		"action_instance":action_seq,"uniform_frame_ms":int(float(config["duration_ms"])/frames.size())})
+
+func step_charge_crash_hold(ms: float) -> void:
+	var charge: Dictionary = player["charge_crash_hold"]
+	charge["elapsed_ms"] += ms
+	charge["fx_clock"] = float(charge["elapsed_ms"])*float(charge["rate"])
+	var elapsed := int(charge["elapsed_ms"])
+	var limit := int(charge["limit_ms"])
+	if elapsed < limit and skill_input_held("charge_crash"):return
+	var move := move_def("charge_crash")
+	var config: Dictionary = move["charge_crash_hold"]
+	var power: Array = config["power"]
+	var percent := int(power[1]) if elapsed >= limit else int(Kernel.NativeMotion.ramp(power[0],power[1],elapsed,limit))
+	var release: Dictionary = move["stages"][3].duplicate(true)
+	for hit: Dictionary in release["hits"]:hit["percent"] = percent
+	player.erase("charge_crash_hold")
+	player["charge_crash_release"] = release
+	player["queued_skill"] = ""
+	end_action_fx()
+	player["fx_tag"] = "act:%d" % (action_seq+1)
+	start_stage(3,float(config["release_clock"]))
+	# CB75C2 shakes the room on the first downstroke frame.
+	bus.emit("combat.cue",{"kind":"screen_shake","degree":8,"duration_ms":500})
 
 func begin_weapon_combo_charge(config: Dictionary) -> void:
 	var charge := config.duplicate()
@@ -4855,7 +4907,7 @@ func view_snapshot() -> Dictionary:
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"action_elapsed_ms":float(player["clock"]),
-			"fx_clock":player.get("draw_charge",{}).get("fx_clock",ani[1]),
+			"fx_clock":player.get("draw_charge",{}).get("fx_clock",player.get("charge_crash_hold",{}).get("fx_clock",ani[1])),
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,

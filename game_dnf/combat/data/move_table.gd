@@ -290,6 +290,18 @@ func _selected_move_spec(name: String) -> Dictionary:
 		_apply_triple_blade_mastery(base)
 		return base
 	if name == "hardattack":return base
+	if name == "charge_crash":
+		if job != "weaponmaster" or weapon not in ["greatsword","club"]:return base
+		# CBE956/CBE997 use each weapon's own mastery and its original gate column.
+		var heavy := weapon == "greatsword"
+		var mastery := _skill_row(HEAVY_MASTERY_SKL if heavy else "skill/swordman/bluntmastery.skl")
+		if int(mastery.get("rank",0)) < int(mastery["static"][2 if heavy else 1]):return base
+		var variant: Dictionary = move_specs.get("charge_crash__variant_1",{})
+		if variant.is_empty():return base
+		base["stages"].append(variant["stages"][2].duplicate(true))
+		var row: Array = mastery["level_row"]
+		base["charge_crash_power"] = row.slice(8,10) if heavy else row.slice(5,7)
+		return base
 	var options: Array = skill_runtime.get("variants", {}).get(name, [])
 	options = options.duplicate(true)
 	options.sort_custom(func(a, b): return int(a.get("priority", 0)) > int(b.get("priority", 0)))
@@ -532,6 +544,18 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		if name == "charge_crash":
 			# CD038E initializes the hit-ledger timer from static column 2.
 			move["dash_rehit_ms"] = int(skill["static"][2])
+			if spec.has("charge_crash_power"):
+				var finish: Dictionary = move["stages"].pop_back()
+				var release_at := float(finish["timeline"][3]["start_ms"])
+				move["charge_crash_hold"] = {"duration_ms":int(skill["static"][3]),
+					"power":spec["charge_crash_power"],"release_clock":release_at}
+				# CD0787/CD07A9 play the release cues. CB75A1/CB75E7 add the impact.
+				finish["voice"] = "SM_CHARGE_CRASH_DOWN"
+				finish["sounds"] = [{"key":"JAKYEOL_SWING","at":release_at},{"key":"CCRASH_CRASH","at":release_at}]
+				finish["fx"] = [{"key":"skillfx_down_slash_f79b50a7","at":release_at,
+					"action_clock":true,"depth_offset":1,"offset_x":135.0,"offset_y":10.0}]
+				move["stages"].append(_build_stage({"ani":finish["ani"],"voice":"CCRASH_GET"},skill))
+				move["stages"].append(finish)
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
