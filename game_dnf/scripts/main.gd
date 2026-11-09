@@ -30,6 +30,7 @@ const ActorNumbers = preload("res://stats/api/actor_numbers.gd")
 const CompanionProgram = preload("res://combat/action/companion_program.gd")
 var numeric_player
 var skill_levels: Dictionary = {}
+var skill_material_spender: Callable
 var skill_slots: Array = ["", "", "", "", "", "", "", "", "", "", "", ""]
 var numeric_monster_level := 1
 var numeric_difficulty := "normal"
@@ -1150,11 +1151,18 @@ func start_action(name: String, cancel := false) -> bool:
 		if column >= 0 and column < row.size():hp_cost = float(row[column])
 	if hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
 	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
-	if name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
+	var pay_mp_with_hp := name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0
+	if pay_mp_with_hp:
 		if float(player["hp"]) <= mp_cost:return reject_action(name,"hp")
+	elif float(player["mp"]) < mp_cost:return reject_action(name,"mp")
+	if m.has("material_cost"):
+		var cost: Dictionary = m["material_cost"]
+		# CBBD13 -> 863552/8635C1 handles the item before requesting state 13.
+		if not skill_material_spender.is_valid() or not skill_material_spender.call(int(cost["source_id"]),int(cost["amount"])):
+			return reject_action(name,"material")
+	if pay_mp_with_hp:
 		player["hp"] = float(player["hp"])-mp_cost
 	else:
-		if float(player["mp"])<mp_cost:return reject_action(name,"mp")
 		player["mp"] = float(player["mp"])-mp_cost
 	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if name != "triple":begin_skill_cooldown(name,m)

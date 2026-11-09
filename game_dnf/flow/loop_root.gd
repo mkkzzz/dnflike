@@ -675,6 +675,7 @@ func depart() -> void:
 	town.hide()
 	combat = CombatSession.new()
 	battle = combat.mount(world_clip)
+	combat.set_skill_material_spender(spend_skill_material)
 	# 战斗视图与城镇同用 800×600 画布基准（view/world_frame.gd），1:1 像素，
 	# 不缩放、不位移；地图与角色的纵向定位由 loader/view 统一承担。
 	# CanvasLayer 不继承父变换：战斗 HUD 单独套同一份内容变换。
@@ -705,6 +706,22 @@ func depart() -> void:
 		combat.configure_monsters(int(session.dungeons[selected_dungeon]["monster_level"]),String(session.run.get("difficulty","normal")))
 	notice(String(session.dungeons[selected_dungeon]["name"])+" · 清除怪物后前往出口")
 	sync_debug_pause()
+
+func spend_skill_material(source_id: int, amount: int) -> bool:
+	if not character_active or transitioning or not recovery_bridge.pending_death.is_empty():return false
+	var result: Dictionary = session.prepare_skill_material(source_id,amount)
+	if not result["ok"]:
+		notice(result["message"])
+		return false
+	var profile: Dictionary = result["profile"]
+	if not store.write(session,profile):
+		save_failed = true
+		notice("技能消耗未提交，存档写入失败")
+		return false
+	session.profile = profile
+	session.invalidate_stats()
+	save_failed = false
+	return true
 
 func on_combat_event(event: Dictionary) -> void:
 	if event.get("type")=="combat.player_defeated":recovery_bridge.receive(event);return

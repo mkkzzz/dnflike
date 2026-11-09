@@ -50,6 +50,10 @@ func attach(existing: Node) -> void:
 	_localize_monster_labels()
 	_bind()
 
+## The flow owns the inventory and commits the cost synchronously before action entry.
+func set_skill_material_spender(spend: Callable) -> void:
+	if _alive():game.skill_material_spender = spend
+
 func start_room(spec: Dictionary) -> bool:
 	if not _alive() or game.missing_assets:return false
 	var player_spec: Dictionary=spec.get("player",{})

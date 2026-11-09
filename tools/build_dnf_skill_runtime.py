@@ -1189,6 +1189,11 @@ def build_move(
             hit["effects"] = [{"id": "freeze", "chance_col": 2, "chance_scale": 0.001,
                                "status_level_col": 3, "duration_ms_col": 4}]
             hit["native_controller"]["height_limit"] = statics[2]
+            item_id, first_cost, last_cost = records[str(skill["path"]).lower()]["decoded"]["consume_item"]
+            if item_id != 3037 or first_cost != last_cost or first_cost <= 0:
+                raise ValueError(f"Unverified item cost for {source_key}")
+            result["material_cost"] = {"source_id": item_id, "amount": first_cost}
+            result["fidelity_pending"].append("skill_item_cost_modifiers")
         if source_key == "sayaex":
             # CD7C73 distinguishes 20062 from ordinary 20012, and the last
             # summoned spirit remains skill 96 after the field disappears.
@@ -1214,7 +1219,7 @@ def build_move(
                 }},
             }
             result["fidelity_pending"].extend(["crystal_target_predicates", "crystal_native_height",
-                                               "crystal_world_rng_seed", "normal_learning_and_cube_cost"])
+                                               "crystal_world_rng_seed", "second_growth_learning"])
         # The actor sound is in the phase 1 branch, before object creation.
         stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": [],
                       "sounds": [{"at": 0, "key": cast_sound}]}]

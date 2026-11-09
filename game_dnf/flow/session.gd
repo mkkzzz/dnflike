@@ -268,6 +268,19 @@ func use_consumable(id: String, view: Dictionary, tx: String) -> Dictionary:
 func consume_potion(view: Dictionary={}, tx: String="") -> Dictionary:
 	return use_consumable("potion",view,tx)
 
+func prepare_skill_material(source_id: int, amount: int) -> Dictionary:
+	if state != "battle":return reject("请在战斗中使用技能")
+	var id := "original_%d"%source_id
+	var item: Dictionary = CATALOG.ITEMS.get(id,{})
+	if int(item.get("source",{}).get("id",-1)) != source_id or item.get("kind") != "material":
+		return reject("技能消耗物品未配置")
+	if Inventory.stock(profile,id) < amount:
+		return reject("可用%s不足，需要 %d 个"%[item["name"],amount])
+	var candidate := profile.duplicate(true)
+	var result := Inventory.consume(candidate,id,amount)
+	if result["ok"]:result["profile"] = candidate
+	return result
+
 func revive_command(payload: Dictionary) -> Dictionary:
 	if state!="defeated":return reject("当前没有待处理的死亡")
 	var response:=Recovery.revive(profile,run,payload)

@@ -3669,8 +3669,13 @@
    "fidelity_pending": [
     "area_membership_filters",
     "area_draw_order",
-    "status_level_resistance_formula"
+    "status_level_resistance_formula",
+    "skill_item_cost_modifiers"
    ],
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "冰霜之萨亚",
    "native_charge_ani": "throw1",
    "native_state": "ghost_cast",
@@ -3736,11 +3741,16 @@
     "area_membership_filters",
     "area_draw_order",
     "status_level_resistance_formula",
+    "skill_item_cost_modifiers",
     "crystal_target_predicates",
     "crystal_native_height",
     "crystal_world_rng_seed",
-    "normal_learning_and_cube_cost"
+    "second_growth_learning"
    ],
+   "material_cost": {
+    "amount": 1,
+    "source_id": 3037
+   },
    "name": "冰晶之萨亚",
    "native_charge_ani": "throw1",
    "native_state": "ghost_cast",

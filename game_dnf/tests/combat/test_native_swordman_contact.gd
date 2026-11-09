@@ -754,6 +754,7 @@ func check_hardattack_waves() -> void:
 	for variant: Array in [["khazan",567,[]],["saya",595,[KEY_S,KEY_F,KEY_D]],["bremen",638,[KEY_D,KEY_F]]]:
 		var ghost: String = variant[0]
 		start_room("original_27601","katana",1,spec,"soulbringer")
+		session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 		game.clear_monsters()
 		for key: int in variant[2]:
 			press(key)

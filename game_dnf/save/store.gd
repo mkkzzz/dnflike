@@ -17,7 +17,7 @@ func read_into(session) -> bool:
 			return true
 	return false
 
-func write(session) -> bool:
+func write(session, profile_override: Dictionary = {}) -> bool:
 	var absolute := ProjectSettings.globalize_path(path)
 	var parent := absolute.get_base_dir()
 	while not DirAccess.dir_exists_absolute(parent):
@@ -26,7 +26,9 @@ func write(session) -> bool:
 		if ancestor == parent:return false
 		parent = ancestor
 	if DirAccess.make_dir_recursive_absolute(absolute.get_base_dir()) != OK:return false
-	var payload := JSON.stringify(session.serialize(), "\t")
+	var snapshot: Dictionary = session.serialize()
+	if not profile_override.is_empty():snapshot["profile"] = profile_override
+	var payload := JSON.stringify(snapshot, "\t")
 	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null:return false
 	file.store_string(payload)

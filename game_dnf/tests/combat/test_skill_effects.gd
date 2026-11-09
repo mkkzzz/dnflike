@@ -25,6 +25,8 @@ func run() -> void:
 	game.view.audio.muted = true
 	game.set_process(false)
 	game.set_physics_process(false)
+	# Isolated timing tests supply a material owner. The loop test covers the real ledger and disk.
+	game.skill_material_spender = func(id: int, amount: int):return id==3037 and amount==1
 	check(not game.missing_assets,"internal combat scene loads existing skill resources")
 	game.restart()
 	var ordinary: Dictionary = game.spawn_enemy(Vector2(400,250))
