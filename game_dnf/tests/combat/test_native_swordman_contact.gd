@@ -1906,10 +1906,13 @@ func check_draw_second_slash() -> void:
 			spent.append([id,amount])
 			return true)
 		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
 		for target: Dictionary in game.monsters:move_target(target,POINT+Vector2(1200,0))
 		for index in 2:
 			move_target(game.monsters[index],POINT+Vector2(125 if index==0 else -125,0))
 			game.monsters[index]["hp"] = 10000.0
+			game.monsters[index]["numeric"].values["level"] = 38
+			game.monsters[index]["numeric"].values["bleeding_resistance"] = -100
 		var move: Dictionary = game.move_def("draw")
 		check(game.skill_levels[mastery]==7 and move["stages"].size()==2 and move["draw_second_slash_at"]==775.0,
 			"effective mastery seven enables a second slash at body frame eight for "+family)
@@ -1919,6 +1922,7 @@ func check_draw_second_slash() -> void:
 		press(KEY_A)
 		step(525)
 		check_draw_slash_layers("blue",0)
+		check(not game.monsters[0]["numeric"].effects.active.has("bleed"),"the opening contact does not apply the second slash's bleeding")
 		step(248)
 		press(KEY_A)
 		step(1)
@@ -1945,6 +1949,14 @@ func check_draw_second_slash() -> void:
 			and game.player["cooldowns"]["draw"]==paid_cooldown and spent==[[3037,1]],
 			"the next frame hits the same targets independently without a second skill payment")
 		check_draw_slash_layers("red" if blade else "white",0)
+		if blade:
+			var effect: Dictionary = game.action_def()["hits"][0]["effects"][0]
+			var active: Dictionary = game.monsters[0]["numeric"].effects.active.get("bleed",{})
+			check(is_equal_approx(effect["chance"],0.912) and effect["source_bleed_total"]==2779 and not active.is_empty(),
+				"rank seven Katana Mastery installs source bleeding on the second slash at owner level 60")
+			if not active.is_empty():
+				check(active["source_bleed"]["applications"]==[{"remaining_ms":9000.0,"amount":154,"status_level":38}],
+					"second slash bleeding preserves native duration, level and per-tick integer conversion")
 		var after_second: float = fresh["hp"]
 		check(game.draw_pending_hits.size()==1 and game.draw_pending_hits[0]["target"]==fresh,
 			"only the previously untouched target registers a delayed hit on the second slash")
@@ -1953,6 +1965,9 @@ func check_draw_second_slash() -> void:
 		check(game.player["action"]=="" and cues("SWD_BAL_END").size()==2,
 			"the second slash sheathes and cannot loop to a third strike")
 		check(fresh["hp"]<after_second and game.draw_pending_hits.is_empty(),"the new target also takes the delayed base slash")
+		if blade:
+			var applications: Array = fresh["numeric"].effects.active.get("bleed",{}).get("source_bleed",{}).get("applications",[])
+			check(applications.size()==1,"the new target bleeds once from the immediate second slash")
 
 func check_draw_greatsword_charge() -> void:
 	var profile := ProfileSession.new()

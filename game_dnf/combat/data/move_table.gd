@@ -5,6 +5,7 @@ extends RefCounted
 ##                                             unit scales and missing base tables;
 ##   assets_local/combat/manifest.json        — baked banks for presentation and borrowed ANIs.
 const Timeline = preload("res://combat/action/timeline.gd")
+const NativeMotion = preload("res://combat/particles/native_motion.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
@@ -447,7 +448,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				built["cancel_at"] = built["duration"]
 				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
-		if native_draw:_append_draw_second_slash(move,spec["slash_layers"]["slots"])
+		if native_draw:_append_draw_second_slash(move,spec)
 		if native_draw and job == "weaponmaster" and weapon == "greatsword":
 			var mastery := _skill_row(HEAVY_MASTERY_SKL)
 			var values: Array = mastery["static"]
@@ -485,7 +486,7 @@ func _draw_slash_cues(slots: Array, shot: float, under: int, upper: int) -> Arra
 		cues.append({"key":slots[binding[0]],"at":shot,"depth_offset":binding[1],"action_clock":true})
 	return cues
 
-func _append_draw_second_slash(move: Dictionary, slots: Array) -> void:
+func _append_draw_second_slash(move: Dictionary, spec: Dictionary) -> void:
 	# CBA09E checks Oath and each weapon's effective mastery against its own gate.
 	if int(skill_levels.get("weapon_mastery_up",0)) <= 0:return
 	var blade := weapon == "katana"
@@ -503,8 +504,15 @@ func _append_draw_second_slash(move: Dictionary, slots: Array) -> void:
 	# from the mastery skill, then C9F980 applies the first slash's target count.
 	followup["entry_clock"] = float(opening["timeline"][1]["start_ms"])
 	var shot := float(opening["timeline"][2]["start_ms"])
+	var slots: Array = spec["slash_layers"]["slots"]
 	followup["fx"] = _draw_slash_cues(slots,shot,6,7) if blade else _draw_slash_cues(slots,shot,4,5)
 	followup["hits"][0]["percent"] = float(row[4 if blade else 8])
+	if blade:
+		# CC8777..CC8830 writes status 11 from effective Katana Mastery.
+		var chance_percent := NativeMotion.f32(float(row[5])*0.10000000149011612)
+		followup["hits"][0]["draw_bleed"] = {"id":"bleed","chance":chance_percent/100.0,
+			"status_level":int(row[6]),"duration_ms":int(row[7]),"damage_percent":int(row[8])}
+		move["draw_bleed_base"] = spec["draw_bleed_base"]["by_level"]
 	move["draw_second_slash_at"] = float(opening["timeline"][8]["start_ms"])
 	move["stages"].append(followup)
 

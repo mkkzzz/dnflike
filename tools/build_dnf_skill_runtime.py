@@ -1060,7 +1060,7 @@ def bloodblast_layer_script(library, records: dict) -> dict:
             "layers": sorted(layers, key=lambda layer: layer["order"])}
 
 
-def dungeon_fixed_attack_base(library) -> dict:
+def dungeon_fixed_attack_base(library, column: int) -> dict:
     script = library.script(FIXED_ATTACK_BASE_SOURCE)
     if not script or script["sha256"] != "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4":
         raise ValueError("Unverified dungeon fixed attack base table")
@@ -1068,7 +1068,7 @@ def dungeon_fixed_attack_base(library) -> dict:
                 if field["tag"] == "[skill damage base parameter dungeon]")
     if len(rows) != 700 or rows[::7] != list(range(1, 101)):
         raise ValueError("Invalid level rows in dungeon fixed attack base table")
-    return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"], "by_level": rows[1::7]}
+    return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"], "by_level": rows[column::7]}
 
 
 def draw_weapon_tracks(library) -> dict:
@@ -1884,7 +1884,8 @@ def main() -> int:
     library = open_library()
     try:
         bloodblast_script = bloodblast_layer_script(library, records)
-        fixed_attack_base = dungeon_fixed_attack_base(library)
+        fixed_attack_base = dungeon_fixed_attack_base(library, 1)
+        draw_bleed_base = dungeon_fixed_attack_base(library, 3)
         draw_tracks = draw_weapon_tracks(library)
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
@@ -1980,6 +1981,7 @@ def main() -> int:
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
+                move["draw_bleed_base"] = draw_bleed_base
                 slash_fx = [add_fx(fx, effects, path) for path in draw_slashes["paths"]]
                 if not all(slash_fx):
                     raise ValueError("missing original Draw Sword slash layer")

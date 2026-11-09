@@ -1075,6 +1075,16 @@ func step_action(ms: float, move: Vector2) -> void:
 			var followup: Dictionary = m["stages"][1]
 			var hit: Dictionary = followup["hits"][0]
 			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"],player["draw_targets"].size()))
+			if hit.has("draw_bleed") and numeric_player != null:
+				var bleed: Dictionary = hit["draw_bleed"]
+				var base_by_level: Array = m["draw_bleed_base"]
+				var level := int(numeric_player.values["level"])
+				var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
+				# 90A6B0..90A6D8 uses the status base column and truncates after SSE scaling.
+				var ratio := Kernel.NativeMotion.f32(float(bleed["damage_percent"])-100.0)
+				ratio = Kernel.NativeMotion.f32(1.0+Kernel.NativeMotion.f32(ratio*ActorNumbers.NATIVE_PERCENT))
+				bleed["source_bleed_total"] = int(Kernel.NativeMotion.f32(ratio*Kernel.NativeMotion.f32(base)))
+				hit["effects"].append(bleed)
 			end_action_fx()
 			player["fx_tag"] = "act:%d" % (action_seq+1)
 			start_stage(1,float(followup["entry_clock"]))
