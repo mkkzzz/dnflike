@@ -102,6 +102,8 @@ func load_export(path: String) -> bool:
 		return false
 	data = parsed
 	base_dir = path.get_base_dir()
+	if data.has("image_base"):
+		base_dir = base_dir.path_join(String(data["image_base"])).simplify_path()
 	return true
 
 func texture(key) -> Texture2D:

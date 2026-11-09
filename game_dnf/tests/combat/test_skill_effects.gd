@@ -74,9 +74,18 @@ func check_khazan(game, session) -> void:
 	check(game.objects.size()==1,"cast places a single field object")
 	if game.objects.size()!=1:return
 	var field: Dictionary = game.objects[0]
+	var field_id: int = field["id"]
 	check(field["pos"]==origin+Vector2(122,0) and field["life_ms"]==120000,"field uses original mirrored X argument and dungeon duration")
 	game.step_objects(1)
 	check(game.numeric_player.values["strength"]==strength+31 and game.numeric_player.values["intelligence"]==intelligence+31,"rank one field grants both source columns")
+	var view = game.view
+	view.present(game.view_snapshot(),0,0)
+	var ghost = view.object_views.get("%s:ghost"%field_id)
+	var first_ring = view.object_views.get("%s:entry:0"%field_id)
+	var second_ring = view.object_views.get("%s:entry:1"%field_id)
+	check(ghost!=null and ghost.atlas!=null and String(ghost.data["source"]).ends_with("/khazan2.ani"),"second source ghost draws from its own image bank")
+	check(first_ring!=null and first_ring.atlas!=null and not first_ring.frame.has("sprite"),"first source ring preserves its opening blank frames")
+	check(second_ring!=null and second_ring.atlas!=null and int(second_ring.frame.get("img_frame",-1))==0,"second source ring shows its first visible frame at placement")
 	game.pulse_passive_auras()
 	check(float(target["hp"])==hp,"placement and aura do not damage the enemy")
 	game.player["pos"] = origin+Vector2(500,0)
@@ -85,14 +94,35 @@ func check_khazan(game, session) -> void:
 	game.player["pos"] = origin
 	game.step_objects(1)
 	check(game.active_effect("khazan_aura").get("remaining_ms")==118998,"re-entry grants only the field's remaining life")
+	game.step_objects(38)
+	view.present(game.view_snapshot(),0,0)
+	var stay = view.object_views.get("%s:stay"%field_id)
+	check(stay!=null and stay.loop and stay.clock_ms==0 and int(stay.frame.get("img_frame",-1))==13,"appearance switches to the original looping stay frames")
+	check(not view.object_views.has("%s:entry:0"%field_id) and not view.object_views.has("%s:entry:1"%field_id),"stay detaches both appearance layers")
+	check(ghost!=null and is_equal_approx(ghost.fade,180.0/255.0),"the ghost layers reach original maximum opacity")
+	for sample: Array in [[Vector2(0,72),true],[Vector2(0,73),false],[Vector2(250,-6),true],[Vector2(250,-7),false]]:
+		game.player["pos"] = Vector2(field["pos"])+Vector2(sample[0])
+		game.step_objects(0)
+		check((not game.active_effect("khazan_aura").is_empty())==bool(sample[1]),"source projected and truncated aura range at "+str(sample[0]))
+	game.player["pos"] = origin
 	game.skill_levels["khazan"] = 4
 	game.table.configure_skills(game.skill_levels,"swordman","katana")
 	game.player["cooldowns"].erase("khazan")
 	game.player["facing"] = -1
 	check(game.start_action("khazan"),"recast starts after cooldown")
 	game.step_action(2000,Vector2.ZERO)
-	check(game.objects.size()==1 and game.objects[0]["id"]!=field["id"] and game.objects[0]["pos"]==origin-Vector2(122,0),"recast replaces old field and mirrors placement")
+	check(game.objects.size()==2 and game.objects[1]["id"]!=field_id and game.objects[1]["pos"]==origin-Vector2(122,0),"recast mirrors the new field and leaves the old exit visual")
 	game.step_objects(1)
 	check(game.numeric_player.values["strength"]==strength+58 and game.numeric_player.values["intelligence"]==intelligence+58,"replacement uses rank four without stacking")
-	game.step_objects(119999)
-	check(game.objects.is_empty() and game.active_effect("khazan_aura").is_empty() and game.numeric_player.values["strength"]==strength,"field and modifier end at source lifetime")
+	view.present(game.view_snapshot(),0,0)
+	var exit_ring = view.object_views.get("%s:exit"%field_id)
+	check(exit_ring!=null and not exit_ring.loop and int(exit_ring.frame.get("img_frame",-1))==17,"recast switches the old field to its original exit ANI")
+	game.step_objects(159)
+	view.present(game.view_snapshot(),0,0)
+	check(ghost!=null and is_equal_approx(ghost.fade,90.0/255.0),"replaced ghost fades over the exit interval")
+	game.step_objects(160)
+	check(game.objects.size()==1 and game.objects[0]["id"]!=field_id,"old field disappears when its exit ANI ends")
+	game.step_objects(119680)
+	check(game.objects.size()==1 and game.active_effect("khazan_aura").is_empty() and game.numeric_player.values["strength"]==strength,"buff ends at source lifetime while exit ANI remains")
+	game.step_objects(320)
+	check(game.objects.is_empty(),"expired field is deleted after the exit ANI")

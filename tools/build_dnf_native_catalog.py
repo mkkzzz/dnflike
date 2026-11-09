@@ -46,7 +46,8 @@ RATE_STATS = {'[attack speed]': ('attack_speed', 1000), '[cast speed]': ('cast_s
 RESIST = {'[' + x + ' resistance]': x + '_resist' for x in ['fire', 'water', 'light', 'dark']}
 NPCS = {1: 'linus', 2: 'seria', 3: 'kanna', 4: 'sinda', 5: 'shusia',
         6: 'pungjin', 7: 'gsd', 8: 'danjin', 9: 'shylock', 10: 'lorian',
-        12: 'sharan', 13: 'norton', 17: 'kiri', 27: 'albert', 45: 'grandis',
+        11: 'kagon', 12: 'sharan', 13: 'norton', 17: 'kiri', 18: 'birken',
+        27: 'albert', 45: 'grandis',
         127: 'the_last_mehmet'}
 # IDs independently present in the existing dungeon source definitions.
 DUNGEONS = {1: 'lorien', 2: 'lorien_inside', 3: 'mirkwood', 4: 'mirkwood_deep',

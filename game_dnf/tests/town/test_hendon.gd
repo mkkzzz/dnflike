@@ -36,7 +36,6 @@ func run() -> void:
 	key(KEY_LEFT,false)
 	check(auto_entries.count("elven_to_city")==1,"failed automatic entry does not retry every frame while holding into edge")
 	game.town.world.data["locations"]["hendon_city"]["asset"]=asset
-	game.town.hendon_loader.errors.clear()
 	var original_path: String=game.store.path
 	game.store.path="res://data/towns.json/not_a_directory.json"
 	await walk_to(Vector2(100,260))
@@ -164,9 +163,47 @@ func run() -> void:
 	game.save_profile()
 	var final_state=game.Session.new()
 	check(game.store.read_into(final_state) and final_state.profile==game.session.profile,"round trip persists all rewards and current world state")
+	await westcoast_errand()
 	OS.delay_msec(100)
 	print("[HENDON_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks,failures,captured.size()])
 	get_tree().quit(1 if failures else 0)
+
+func westcoast_errand() -> void:
+	var quest := "original.quest.298"
+	var prior := "original.quest.7"
+	var entry: Dictionary=game.session.quests.new_entry(game.session.quests.catalog.definitions[prior])
+	entry["state"]="completed"
+	game.session.profile["quest_state"]["entries"][prior]=entry
+	game.session.profile["quest_state"]["transactions"][game.session.Quests.transaction_id(prior)]=true
+	game.session.profile["level"]=25
+	await walk_to(Vector2(32,260))
+	await cross("elven_to_city","hendon_city")
+	await walk_to(Vector2(20,260))
+	await cross("hendon_city_to_westcoast","westcoast")
+	check(game.town.map_loaders["westcoast"].errors.is_empty(),"West Coast manifest resolves the shared native room textures")
+	await walk_to(Vector2(2800,260))
+	await walk_to(Vector2(1876,240))
+	await talk("kagon")
+	var portrait = game.modal.find_child("kagon_dialogue_illustration",true,false)
+	check(is_instance_valid(portrait) and portrait.texture.get_size()==Vector2(64,130),"Kagon dialogue shows the original NPC big face")
+	await task(quest,"接受委托",0)
+	check(game.session.quests.status(game.session.profile,quest)=="active","original 298 accepts at Kagon")
+	await walk_to(Vector2(2450,260))
+	await walk_to(Vector2(2450,320))
+	await cross("westcoast_to_westcoast_magic","westcoast_magic")
+	check(game.town.map_loaders["westcoast_magic"].errors.is_empty(),"Sharan's room resolves the shared textures with its own manifest")
+	await walk_to(Vector2(1500,260))
+	await walk_to(Vector2(1500,320))
+	await cross("westcoast_magic_exit","westcoast")
+	await walk_to(Vector2(2540,340))
+	await walk_to(Vector2(2800,320))
+	await cross("westcoast_exit","hendon_city")
+	await walk_to(Vector2(1975,245))
+	await talk("birken")
+	portrait=game.modal.find_child("birken_dialogue_illustration",true,false)
+	check(is_instance_valid(portrait) and portrait.texture.get_size()==Vector2(64,130),"Birken dialogue shows the original NPC big face")
+	await task(quest,"领取报酬",1)
+	check(game.session.quests.status(game.session.profile,quest)=="completed","E conversation and GUI claim complete original 298 at Birken")
 
 func walk_to(point: Vector2) -> void:
 	game.show_overlay("")

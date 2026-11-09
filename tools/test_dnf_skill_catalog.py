@@ -113,17 +113,26 @@ class SkillPanelSourceTest(unittest.TestCase):
         from PIL import Image
         part = self.manifest['parts']['sp_digits']
         reference = part['ui_reference']
-        values = self.build.ui_control(self.source, reference['path'], reference['control'])
+        node = self.build.ui_control_node(self.source, reference['path'], reference['control'])
+        values = node['values']
         self.assertEqual((values[0], values[5], values[2:4], values[6:]),
                          ('[numberset]', part['bank'], reference['position'], reference['parameters']))
+        self.assertIn({'tag': '[parent]', 'values': [reference['parent']]},
+                      [{'tag': child['tag'], 'values': child['values']} for child in node['children']])
+        parent = self.build.ui_control(self.source, reference['path'], reference['parent'])
+        _, parent_meta = self.source.frame(parent[5], parent[7])
+        self.assertEqual(part['max_digits'], values[8])
+        self.assertEqual(values[10], 1)
         with Image.open(ROOT / 'game_dnf/assets_local/skill_panel' / part['file']) as exported:
             atlas = exported.convert('RGBA')
         self.assertEqual(len(part['regions']), 10)
         self.assertEqual(part['frames'], list(range(1, 11)))
-        for frame, (x, y, width, height) in zip(part['frames'], part['regions']):
-            image, _ = self.source.frame(part['bank'], frame)
+        for digit, (frame, (x, y, width, height)) in enumerate(zip(part['frames'], part['regions'])):
+            image, meta = self.source.frame(part['bank'], frame)
             self.assertEqual((width, height), image.size)
             self.assertEqual(atlas.crop((x, y, x + width, y + height)).tobytes(), image.convert('RGBA').tobytes())
+            self.assertEqual(part['digit_advances'][digit], meta['cw'] + values[9])
+            self.assertEqual(part['glyph_offsets'][digit], [meta['x'] - parent_meta['x'], meta['y'] - parent_meta['y']])
         self.assertEqual(self.source.sources['sprite/' + part['bank'].lower()], part['bank_sha256'])
 
     def test_rank_buttons_are_plus_minus_not_reset_or_lock(self):

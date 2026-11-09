@@ -26,12 +26,9 @@ func dialogue() -> void:
 	game.record_npc_visit(npc)
 	var node = game.windows.container(game.modal, Vector2(41,343), Vector2(718,165))
 	game.skin.image(node,game.skin.texture("dialog"),Vector2.ZERO)
-	var portrait: Texture2D
-	if npc=="seria":portrait=game.town.quest_loader.texture(game.town.quest_loader.data["ui"]["seria_portrait"])
-	elif npc=="linus":portrait=game.skin.texture("dialog_face")
-	elif npc=="shylock":portrait=game.town.gran_loader.texture(game.town.gran_loader.data["ui"]["portraits"][npc])
-	else:portrait=game.town.hendon_loader.texture(game.town.hendon_loader.data["ui"]["portraits"][npc])
-	game.skin.image(node,portrait,Vector2(8,165-portrait.get_height())).name = npc + "_dialogue_illustration"
+	var portrait: Texture2D=game.skin.texture("dialog_face") if npc=="linus" else game.town.dialogue_portrait(npc)
+	if portrait!=null:
+		game.skin.image(node,portrait,Vector2(8,165-portrait.get_height())).name = npc + "_dialogue_illustration"
 	text(node,game.session.quests.npc_name(npc),Vector2(215,18),Vector2(370,25),16,Color("f0d18a"))
 	var line: String=game.town.npc_definition(npc)["dialogue"]
 	if npc=="linus" and game.session.quests.status(game.session.profile,"hendon.meet_pungjin") in ["available","active"]:line="你已经历练了一番。沿防线左侧去赫顿玛尔吧，经城市区向上走，到主街找风振聊聊。"

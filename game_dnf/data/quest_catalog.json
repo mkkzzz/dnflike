@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 121,
+  "implemented": 127,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -81424,9 +81424,9 @@
     100
    ],
    "name_ref": "string:332230",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4316",
+   "local_name": "石刃拉泽尔"
   },
   {
    "path": "n_quest/westcost/grozni/daily_53_grozni_mishell.qst",
@@ -81822,9 +81822,9 @@
     150
    ],
    "name_ref": "string:332284",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.298",
+   "local_name": "失眠症"
   },
   {
    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_stone_statue.qst",
@@ -81844,9 +81844,9 @@
     100
    ],
    "name_ref": "string:332288",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.4314",
+   "local_name": "变成石像的冒险家"
   },
   {
    "path": "n_quest/westcost/odesa/daily_52_odesa_roketman.qst",
@@ -82180,9 +82180,9 @@
     100
    ],
    "name_ref": "string:332351",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.18",
+   "local_name": "光之城主的诞生"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_4.qst",
@@ -82199,9 +82199,9 @@
    "reward_type": "[item]",
    "reward": [],
    "name_ref": "string:332355",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.19",
+   "local_name": "巴卡尔的遗言"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_5.qst",
@@ -82221,9 +82221,9 @@
     100
    ],
    "name_ref": "string:332359",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.20",
+   "local_name": "盛载记忆的水晶球"
   },
   {
    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_6.qst",

@@ -35,7 +35,7 @@ class HendonAssets(unittest.TestCase):
     def test_source_diagnostics_have_no_silent_errors(self):
         self.assertFalse([d for d in self.art['diagnostics'] if d['level']=='error'])
         self.assertIn('(r)hendon',self.art['source']['selection'])
-        self.assertEqual(len(self.art['ui']['portraits']),8)
+        self.assertEqual(len(self.art['ui']['portraits']),9)
         self.assertLessEqual(self.art['ui']['portraits'].keys(),self.world['npcs'].keys())
 
     def test_new_pngs_equal_original_IMG_pixels(self):
@@ -61,7 +61,7 @@ class HendonAssets(unittest.TestCase):
                'hendon_main':'map/hendonmyre/(r)hendon.map','hendon_auction':'map/hendonmyre/hendon_auction.map'}
         try:
             for portal in self.world['portals'].values():
-                if not portal['source_raw']:continue
+                if not portal.get('source_raw'):continue
                 if portal['from'] not in paths:continue # New region has its own source audit.
                 raw=span_values(lib.script(paths[portal['from']])['spans'],'[town movable area]')
                 self.assertIn(portal['source_raw'],[raw[i:i+6] for i in range(0,len(raw),6)])

@@ -9,17 +9,17 @@ import argparse
 import json
 from pathlib import Path
 from dnf_asset_store import ROOT, LOCK, cache_home
-from export_dnf_map import (Library, export_map, span_values, resolve, COORDINATES, LAYERS,
+from export_dnf_map import (Library, export_map, export_town_npc, span_values, resolve, COORDINATES, LAYERS,
                             TILE_W, TILE_H, CELL_W, CELL_H, GRID_COLS, GRID_ROWS)
 
 OUTPUT = ROOT/'game_dnf/assets_local/flow_v1/hendon_v1'
 MAPS = {'hendon_city':'map/hendonmyre/hendon_city.map',
         'hendon_main':'map/hendonmyre/(r)hendon.map',
         'hendon_auction':'map/hendonmyre/hendon_auction.map'}
-# NPC ID: (runtime key, Chinese name, dialogue illustration frame).
+# NPC ID: (runtime key, Chinese name, interface portrait frame or None for NPC big face).
 NPCS = {6:('pungjin','风振',5),4:('sinda','辛达',3),7:('gsd','G.S.D',6),
         3:('kanna','卡妮娜',2),17:('kiri','凯丽',9),13:('norton','诺顿',12),
-        45:('grandis','歌兰蒂斯',19),27:('albert','阿尔伯特',14)}
+        45:('grandis','歌兰蒂斯',19),27:('albert','阿尔伯特',14),18:('birken','博肯',None)}
 
 
 def build(library: Path, output: Path) -> dict:
@@ -31,6 +31,7 @@ def build(library: Path, output: Path) -> dict:
         npcs=lib.listing('npc/npc.lst')
         rooms={}
         residents={}
+        portraits={}
         for key,path in MAPS.items():
             room=export_map(lib,path,ids)
             # Original extended floor is a second row of native 224x120 tiles,
@@ -48,22 +49,16 @@ def build(library: Path, output: Path) -> dict:
             raw=span_values(lib.script(path)['spans'],'[NPC]')
             residents[key]=[]
             for i in range(0,len(raw),5):
-                npc_id,direction,x,y,z=raw[i:i+5]
+                row=raw[i:i+5]
+                npc_id=row[0]
                 if npc_id not in NPCS:continue
                 npc_key,name,frame=NPCS[npc_id]
-                npc_path='npc/'+npcs[npc_id].lower()
-                script=lib.script(npc_path)
-                ani=resolve(npc_path,span_values(script['spans'],'[field animation]')[0])
-                sprite=lib.sprite(ani,npc_path)
-                if not sprite:raise ValueError('Required original NPC missing: '+npc_path)
-                # Original [left] is the neutral orientation of these NPC banks.
-                if direction=='[right]':
-                    for f in sprite['frames']:f['flip_x']=not f.get('flip_x',False)
-                room['animations'].append({'layer':'normal','anchor':[x,y,z],'space':'map','sprite':sprite})
-                residents[key].append({'id':npc_key,'source_id':npc_id,'name':name,'anchor':[x,y,z],
-                                       'source':npc_path,'sha256':script['sha256'],'ani':ani})
-        portraits={key:lib.image('Interface/npc_dialog_face.img',frame,'hendon/portrait/'+key)
-                   for key,_name,frame in NPCS.values()}
+                resident,animation,portrait=export_town_npc(lib,npcs,row,npc_key,name,native_portrait=frame is None)
+                room['animations'].append(animation)
+                residents[key].append(resident)
+                if portrait:portraits[npc_key]=portrait
+        portraits.update({key:lib.image('Interface/npc_dialog_face.img',frame,'hendon/portrait/'+key)
+                          for key,_name,frame in NPCS.values() if frame is not None})
         if not all(portraits.values()):raise ValueError('Required original portrait missing')
         # Town MAPs intentionally lack the dungeon's eight pathgate positions.
         for d in lib.diags:

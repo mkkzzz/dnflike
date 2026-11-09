@@ -170,13 +170,14 @@ DIRECT_OBJECTS = {
     "waveeye": (OBJ_ROOT + "waveeye.obj", 850, 0.0, 5000),
 }
 
-# Source bindings proved in CNSwordman state 24. Other newly eligible blank-frame
-# clips must not enter the old filename heuristic and create new guessed damage.
-NATIVE_WAVE_BINDINGS = {
+# Source bindings in CNSwordman state 24 and the ghost object's motion vector.
+# Keep other blank-frame clips out of the legacy filename heuristic.
+NATIVE_ANIMATION_BINDINGS = {
     CHR_FX + "icewave.ani",
     CHR_FX + "firewavebig-sword-effect.ani",
     OBJ_ROOT + "animation/firewavebig/blast-front.ani",
     *(OBJ_ROOT + f"animation/icewave{i}.ani" for i in range(1, 7)),
+    OBJ_ROOT + "animation/khazanareaappear1.ani",
 }
 
 SAFE_EFFECTS: set[str] = set()
@@ -623,7 +624,7 @@ def supported_animation_binding(library, path: str) -> bool:
         return False
     # Keep legacy inferred choices stable while migrating each skill to a native
     # controller. Asset availability alone cannot establish a hit/FX binding.
-    return path in NATIVE_WAVE_BINDINGS or all(
+    return path in NATIVE_ANIMATION_BINDINGS or all(
         frame.get("img") for frame in library.animation(path)["metadata"]["frames"]
     )
 
@@ -1081,13 +1082,33 @@ def build_move(
         path = add_object(objects, OBJ_ROOT + "khazan.obj")
         if not path:
             raise ValueError("Missing original Khazan object 20011")
+        motions = records[path]["decoded"]["etc_motions"]
+        if len(motions) != 6:
+            raise ValueError("Khazan object 20011 needs all six original motions")
+        # CNGhost::draw colors ETC slots 0/1. procAppend detaches 2/3,
+        # attaches 4, then replaces 4 with 5 when the active interval ends.
+        ghost_fx, appear_1, appear_2, stay, disappear = (
+            add_fx(fx, effects, motion) for motion in motions[1:]
+        )
+        if not all((ghost_fx, appear_1, appear_2, stay, disappear)):
+            raise ValueError("Incomplete original Khazan animation banks")
+        area_values = records[str(skill["path"]).lower()]["decoded"]["dungeon"]["static_data"]
+        if len(area_values) != 2 or area_values[0] != area_values[1] or area_values[0] <= 0:
+            raise ValueError("Expected equal original Khazan area inputs")
         # CD6026 -> 86DE68/86DE70: the original spawn mirrors a 122 px X offset.
-        # Cast-frame timing and circular area membership still use adapters.
-        result["fidelity_pending"] = ["cast_frame", "area_membership_geometry", "area_animation", "voice"]
+        result["fidelity_pending"] = ["cast_frame", "area_membership_filters", "area_phase_timers", "area_draw_order", "voice"]
         stages[:] = [{"ani": CAST_ANIM, "atk": "", "hits": [{
             "object": path, "at": 320, "offset": [122, 0, 0],
             "percent": 0, "speed": 0,
-            "native_controller": {"kind": "khazan_field", "duration_col": 1, "radius": 250},
+            "native_controller": {
+                "kind": "khazan_field", "duration_col": 1, "radius": area_values[0],
+                # 7F10B3 multiplies the depth ratio 29 by float32 0.01.
+                "depth_scale": 0.29,
+                "ghost_fx": ghost_fx, "appear_fx": [appear_1, appear_2],
+                "stay_fx": stay, "disappear_fx": disappear,
+                "appear_ms": duration_ms(records[motions[2]]),
+                "disappear_ms": duration_ms(records[motions[5]]),
+            },
         }], "fx": []}]
     if key in ("icewave", "firewave"):
         # 0xCC899D CHR motion 9; 0xCC8B05 trigger frame4. Unlike skill20,

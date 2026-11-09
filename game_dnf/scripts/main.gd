@@ -666,6 +666,7 @@ func step_game(ms: float) -> void:
 		if float(player["stuck_ms"]) <= 0.0:
 			player["guard_recoil_ms"] = maxf(0.0,float(player["guard_recoil_ms"])-ms)
 		if float(player["guard_recoil_ms"]) <= 0.0 and not guard_input_held():player["state"] = "idle"
+	var first_new_object_id := _next_entity_id
 	# Local hitstop: only the attacker and its targets freeze; inputs are buffered meanwhile.
 	if float(player["stuck_ms"]) > 0:
 		player["stuck_ms"] = maxf(0,float(player["stuck_ms"])-ms)
@@ -677,7 +678,7 @@ func step_game(ms: float) -> void:
 	else:
 		step_player(ms,move)
 	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
-	step_objects(ms)
+	step_objects(ms,first_new_object_id)
 	if _aura_pulse_ms <= 0:
 		_aura_pulse_ms = 1000.0
 		pulse_passive_auras()
@@ -1428,10 +1429,10 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		"speed":float(hit.get("speed",0)),"life_ms":float(hit.get("life_ms",-1)),"size_rate":float(hit.get("size_rate",1)),"hits":{}}
 	var controller: Dictionary = hit.get("native_controller",{})
 	if controller.get("kind","") == "khazan_field":
-		for i in range(objects.size()-1,-1,-1):
-			var previous: Dictionary = objects[i]
+		for previous: Dictionary in objects:
 			if previous["owner"] == owner and previous["hit"].get("native_controller",{}).get("kind") == "khazan_field":
-				objects.remove_at(i)
+				# C9E490 -> A665D0 ends the active interval and keeps the exit interval.
+				previous["life_ms"] = minf(float(previous["life_ms"]),float(previous["clock"]))
 		entity["field_rank"] = int(skill_levels.get("khazan",1))
 		if numeric_player != null:numeric_player.remove_effect("khazan_aura")
 	if controller.get("kind","") == "icewave_chain":
@@ -1459,25 +1460,32 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
 	if String(obj["add_fx"]) != "":spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 
-func step_objects(ms: float) -> void:
+func step_objects(ms: float, first_new_object_id := -1) -> void:
 	var khazan_field: Dictionary = {}
 	for i in range(objects.size()-1,-1,-1):
 		var o: Dictionary = objects[i]
 		var obj: Dictionary = o["def"]
-		var old_t := float(o["clock"])
-		var t := old_t+ms
-		o["clock"] = t
-		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*ms/1000.0,0)
 		var hit: Dictionary = o["hit"]
-		if hit.get("native_controller",{}).get("kind") == "khazan_field":
-			if t >= float(o["life_ms"]):objects.remove_at(i)
-			elif o["owner"] == "player":khazan_field = o
+		var object_ms := ms
+		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o["owner"] == "player" \
+				and hit.get("skill_id","") in ["normalwave","icewave","firewave"]:
+			# CB25FB..CB2819 creates a fresh object at release. Evaluate frame zero
+			# now without charging the new object for the caster's creation update.
+			object_ms = 0.0
+		var old_t := float(o["clock"])
+		var t := old_t+object_ms
+		o["clock"] = t
+		o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
+		var controller: Dictionary = hit.get("native_controller",{})
+		if controller.get("kind","") == "khazan_field":
+			var active_until := float(o["life_ms"])
+			if t >= active_until+float(controller["disappear_ms"]):objects.remove_at(i)
+			elif t < active_until and o["owner"] == "player":khazan_field = o
 			continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
-		var controller: Dictionary = hit.get("native_controller",{})
 		if controller.get("kind","") == "firewave_chain" and t >= Kernel.Timeline.duration(tl):
 			# Native ANI+1EC bit 8: create 20025 at +/-360, then delete 20024.
 			# The successor starts at age zero, independently of the actor clock.
@@ -1544,8 +1552,11 @@ func update_khazan_aura(field: Dictionary = {}) -> void:
 	if numeric_player == null:return
 	if not field.is_empty():
 		var controller: Dictionary = field["hit"].get("native_controller",{})
-		var radius := float(controller["radius"])
-		if Vector2(player["pos"]).distance_squared_to(Vector2(field["pos"])) <= radius * radius:
+		# Aura range 9269E0 -> 406580 -> 7F10A0 uses integer world axes,
+		# depth projected through the native scale, then truncates the distance.
+		var delta := Vector2i(player["pos"])-Vector2i(field["pos"])
+		var depth := int(_native_float32(float(delta.y)/_native_float32(float(controller["depth_scale"]))))
+		if int(sqrt(delta.x*delta.x+depth*depth)) <= int(controller["radius"]):
 			if active_effect("khazan_aura").is_empty():
 				var remaining := float(field["life_ms"]) - float(field["clock"])
 				numeric_player.add_effect("khazan_aura",int(field["field_rank"]),{"duration_ms":remaining})
@@ -1568,6 +1579,32 @@ func object_view_clock(o: Dictionary) -> float:
 			var progress := (clock-float(frame["start_ms"]))/maxf(0.001,float(frame["end_ms"])-float(frame["start_ms"]))
 			return lerpf(float(source[i]["start_ms"]),float(source[i]["end_ms"]),progress)
 	return Kernel.Timeline.duration(source)
+
+func _khazan_layers(base: Dictionary, controller: Dictionary, end_ms: float) -> Array:
+	var age := float(base["clock"])
+	var appear_ms := float(controller["appear_ms"])
+	var disappear_ms := float(controller["disappear_ms"])
+	# A66680 colors the first two motions to 180/255 with a ramp on entry/exit.
+	var opacity := minf(age/appear_ms,clampf(1.0-(age-end_ms)/disappear_ms,0.0,1.0))
+	base["fade"] = int(opacity*180.0)/255.0
+	base["loop"] = true
+	var second := base.duplicate()
+	second.merge({"id":"%s:ghost"%base["id"],"effect":controller["ghost_fx"]},true)
+	var layers: Array = [base,second]
+	var area := base.duplicate()
+	area.merge({"fade":1.0,"depth_offset":-1,"loop":false},true)
+	if age >= end_ms:
+		area.merge({"id":"%s:exit"%base["id"],"effect":controller["disappear_fx"],"clock":age-end_ms},true)
+		layers.append(area)
+	elif age >= appear_ms:
+		area.merge({"id":"%s:stay"%base["id"],"effect":controller["stay_fx"],"clock":age-appear_ms,"loop":true},true)
+		layers.append(area)
+	else:
+		for i in controller["appear_fx"].size():
+			var entry := area.duplicate()
+			entry.merge({"id":"%s:entry:%d"%[base["id"],i],"effect":controller["appear_fx"][i]},true)
+			layers.append(entry)
+	return layers
 
 # ---------------------------------------------------------------- world
 # Rooms are original Lorien maps (data/combat.json "rooms" -> map export placement). Ground
@@ -1960,7 +1997,12 @@ func view_snapshot() -> Dictionary:
 	var objs: Array = []
 	for o: Dictionary in objects:
 		if String(o["def"]["bank"]) == "":continue
-		objs.append({"id":o["id"],"bank":String(o["def"]["bank"]),"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0})
+		var item := {"id":o["id"],"bank":String(o["def"]["bank"]),"rear_fx":String(o["hit"].get("rear_fx","")),"pos":Vector2(o["pos"]),"z":float(o["z"]),"facing":int(o["facing"]),"clock":object_view_clock(o),"size_rate":float(o.get("size_rate",1)),"loop":float(o["life_ms"])>0}
+		var controller: Dictionary = o["hit"].get("native_controller",{})
+		if controller.get("kind","") == "khazan_field":
+			objs.append_array(_khazan_layers(item,controller,float(o["life_ms"])))
+		else:
+			objs.append(item)
 	var route: Array = []
 	for i in rules["rooms"].size():
 		var room: Dictionary = rules["rooms"][i]

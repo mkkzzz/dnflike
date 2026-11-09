@@ -468,6 +468,7 @@ func run_skill_fidelity() -> void:
 	check_normalwave_lifecycle()
 	check_normalwave_phases()
 	check_wave_family_phases()
+	check_wave_object_birth()
 	check_normalwave_movement_and_cancel()
 	await check_normalwave_cancel_input()
 	for code in [KEY_A,KEY_D,KEY_Y]:
@@ -735,6 +736,34 @@ func check_wave_family_phases() -> void:
 			game.step_action(1.0,Vector2.ZERO)
 			game.view.present(game.view_snapshot(),0.0,0.0)
 			check(api.p("state")=="idle" and attached[0].is_queued_for_deletion(),skill+" ends at source cast-speed duration plus its own recovery column")
+
+func check_wave_object_birth() -> void:
+	for sample: Array in [["normalwave",150.0,65.0],["icewave",300.0,80.0],["firewave",400.0,70.0]]:
+		var skill := String(sample[0])
+		var release_ms := float(sample[1])
+		var first_frame_ms := float(sample[2])
+		api.restart()
+		api.set_god(true)
+		api.set_p("mp",500.0)
+		api.spawn_dummy(Vector2(360 if skill=="firewave" else 550,250))
+		check(api.start_action(skill),skill+" starts for the live object clock fixture")
+		game.step_game(release_ms-100.0)
+		check(game.objects.is_empty(),skill+" has no object before its source release frame")
+		game.step_game(100.0)
+		check(game.objects.size()==1,skill+" creates exactly one object in the release update")
+		if game.objects.size()!=1:continue
+		var wave: Dictionary = game.objects[0]
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		var sprite = game.view.object_views.get(wave["id"])
+		check(float(wave["clock"])==0.0 and sprite!=null and int(sprite.frame.get("frame",-1))==0,skill+" renders the original frame zero on creation even after a long update")
+		if skill=="firewave":check(api.hit_count()==0,"fire wave cannot hit a frame-one-only target at birth")
+		game.step_objects(first_frame_ms-1.0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(float(wave["clock"])==first_frame_ms-1.0 and sprite!=null and int(sprite.frame.get("frame",-1))==0,skill+" holds its complete original first-frame duration")
+		game.step_objects(1.0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(float(wave["clock"])==first_frame_ms and sprite!=null and int(sprite.frame.get("frame",-1))==1,skill+" advances at the source frame-one boundary")
+		if skill=="firewave":check(api.hit_count()==1,"fire wave hits the target when frame one becomes active")
 
 func check_normalwave_movement_and_cancel() -> void:
 	var saved_job: String = api.job()

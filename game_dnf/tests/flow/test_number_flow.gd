@@ -81,6 +81,21 @@ func run() -> void:
 	var initial_sp := Numbers.Skills.available(game.session.profile,Numbers.config_snapshot())
 	var retained_tree: Control = game.modal.find_child("skill_tree_content",true,false)
 	var sp_digits: Control = game.modal.find_child("skill_sp_digits",true,false)
+	if is_instance_valid(sp_digits):
+		skill_panel._set_sp(1380)
+		var positions: Array[Vector2] = []
+		for glyph: TextureRect in sp_digits.get_children():
+			if glyph.visible:
+				positions.append(sp_digits.position + glyph.position)
+		host.check(positions == [Vector2(356,45), Vector2(364,45), Vector2(373,45), Vector2(382,45)],
+			"mixed-width SP glyphs use the source center, crop origins, and canvas advance")
+		skill_panel._set_sp(99999)
+		host.check(sp_digits.visible and sp_digits.get_child_count() == 5 and sp_digits.get_child(4).visible,
+			"the SP number set renders five digits with its original atlas")
+		skill_panel._set_sp(100000)
+		host.check(not sp_digits.visible and skill_panel._sp_label.visible and skill_panel._sp_label.text == "100000",
+			"custom SP above the source limit remains readable")
+		skill_panel._set_sp(initial_sp)
 	host.check(host.click_text("加点"),"actual skill learn button accepts mouse click")
 	await host.ticks(3)
 	host.check(game.session.profile["skills"]["upper"]==2 and Numbers.Skills.available(game.session.profile,Numbers.config_snapshot())==initial_sp-20,"UI purchase changes skill rank and spends SP")

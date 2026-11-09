@@ -11113,6 +11113,7 @@
    "ani": "npc/animation/npc_sr.ani"
   }
  ],
+ "image_base": "..",
  "images": {
   "06c58cb34dcf_0": {
    "file": "img/06c58cb34dcf_0.png",

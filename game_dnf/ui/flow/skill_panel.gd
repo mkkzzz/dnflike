@@ -12,7 +12,6 @@ const TREE_SIZE := Vector2(540, 342)
 const TREE_INSET := Vector2(24, 8)
 const NODE_SLOT := 38
 const NODE_CENTER := 19
-const SP_DIGIT_SLOTS := 6
 const JOB_NAMES := {
 	"swordman": "鬼剑士",
 	"weaponmaster": "剑魂",
@@ -166,8 +165,9 @@ func _header(root: Control) -> void:
 	var job := String(profile["growtype"])
 	var sp := Numbers.Skills.available(profile, Numbers.shared_config())
 	var sp_bar := _part("sp_icon")
+	var bar_position := Vector2(342, 41)
 	if sp_bar != null:
-		var bar: TextureRect = skin.image(root, sp_bar, Vector2(342, 41))
+		var bar: TextureRect = skin.image(root, sp_bar, bar_position)
 		bar.name = "skill_sp_bar"
 	var sp_label: Label = skin.label(root, str(sp), Vector2(364, 43), 12, Color("f0d18a"))
 	_sp_label = sp_label
@@ -175,16 +175,16 @@ func _header(root: Control) -> void:
 	sp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_sp_digits_view = null
 	var atlas := _part("sp_digits")
-	var regions: Array = parts.get("sp_digits", {}).get("regions", [])
-	if atlas != null and regions.size() == 10:
+	var layout: Dictionary = parts.get("sp_digits", {})
+	if atlas != null and layout.has("digit_advances"):
 		var digits := Control.new()
 		digits.name = "skill_sp_digits"
-		digits.position = Vector2(364, 47)
-		digits.size = Vector2(44, 9)
+		var anchor: Array = layout["ui_reference"]["position"]
+		digits.position = bar_position + Vector2(anchor[0], anchor[1])
 		digits.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		digits.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		root.add_child(digits)
-		for i in SP_DIGIT_SLOTS:
+		for i in int(layout["max_digits"]):
 			skin.image_region(digits, atlas, Rect2(0, 0, 6, 9), Vector2.ZERO)
 		_sp_digits_view = digits
 	_set_sp(sp)
@@ -196,25 +196,32 @@ func _header(root: Control) -> void:
 func _set_sp(amount: int) -> void:
 	_sp_label.text = str(amount)
 	if not is_instance_valid(_sp_digits_view):return
-	# Six widest glyphs plus the gaps fit the existing 44 px value area.
 	var value := _sp_label.text
-	var fits := amount >= 0 and value.length() <= SP_DIGIT_SLOTS
+	var fits := amount >= 0 and value.length() <= _sp_digits_view.get_child_count()
 	_sp_label.visible = not fits
 	_sp_digits_view.visible = fits
 	if not fits:return
-	var regions: Array = parts["sp_digits"]["regions"]
-	var x := _sp_digits_view.size.x
-	for i in SP_DIGIT_SLOTS:
+	var layout: Dictionary = parts["sp_digits"]
+	var advances: Array = layout["digit_advances"]
+	var offsets: Array = layout["glyph_offsets"]
+	var regions: Array = layout["regions"]
+	var width := 0
+	for digit in value:
+		width += int(advances[int(digit)])
+	# CNNumberSet includes the final digit's advance in the integer center.
+	var x := -(width >> 1)
+	for i in _sp_digits_view.get_child_count():
 		var glyph: TextureRect = _sp_digits_view.get_child(i)
 		glyph.visible = i < value.length()
 		if not glyph.visible:continue
-		var r: Array = regions[int(value[value.length() - 1 - i])]
+		var digit := int(value[i])
+		var r: Array = regions[digit]
+		var offset: Array = offsets[digit]
 		var texture := glyph.texture as AtlasTexture
 		texture.region = Rect2(r[0], r[1], r[2], r[3])
 		glyph.size = texture.region.size
-		x -= glyph.size.x
-		glyph.position.x = x
-		x -= 1.0
+		glyph.position = Vector2(x + int(offset[0]), offset[1])
+		x += int(advances[digit])
 
 func _tree(root: Control, branch: Dictionary) -> void:
 	var skin = game.skin

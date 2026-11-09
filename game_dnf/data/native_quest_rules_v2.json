@@ -1,13 +1,13 @@
 {
  "schema": "dnf_native_quest_rules/2",
  "source_inputs": {
-  "game_dnf/data/quests.json": "c3077f4fb92652dee347a6e399025e7a0bfa89cbcb47f693c70e2f2c91500100",
+  "game_dnf/data/quests.json": "3fe85110f884cad46ec67f068d0bcd2c46a297e98dc263242e229aae414c984e",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "cba7ae4b96d0bc2b49a74037d0cb112d87e324262f8ce8ac76bda107caea8d23",
   "game_dnf/data/dungeons.json": "a6ec38f8da83fddf7747f6eb4ac67105742728f72f3f9bd69057c1be42bab65c",
-  "game_dnf/data/towns.json": "9ad3908636807b646cee1e1ad8a31cefd457834c1841eb4136808debf81d8075",
+  "game_dnf/data/towns.json": "a9e8b5eba1dd97cdd3e12f7fe1eee2ba2010971f905f7ae2d8e7af4f37508f64",
   "game_dnf/data/campaign_1_16.json": "976058418137f7de23e97d0d0c70d58201e4386b6751ea737bb361a151ced221",
   "game_dnf/assets_local/native_data_v1/manifest.json": "7828c4203fabb534006b8b178ed24251242f144ab7bb69e572f6420a0cd08f15",
   "game_dnf/assets_local/native_maps/lorien/map_export.json": "47688ac4e4a56968173148b850e4a97b098ed8541d7e8cf5359af0efd4bce94d",
@@ -225,6 +225,149 @@
      "limit": 10
     }
    ]
+  },
+  {
+   "id": "original.quest.4314",
+   "source": {
+    "id": 4314,
+    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_stone_statue.qst",
+    "sha256": "34b5cf27eacec2b9fa28934a000127ddd4b739362e49bc69623884967ec422e7",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     12,
+     -1,
+     81,
+     10,
+     12,
+     -1,
+     82,
+     10,
+     12,
+     -1,
+     84,
+     10
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "变成石像的冒险家",
+   "description": "前往天空之城的人偶玄关，消灭变成石像的神枪手、魔法师和鬼剑士各10名。",
+   "dialogue": {
+    "accept": "……真是的！ 没实力却还非要跟大夥去挑战天空之城。 看那些冒险家的样子， 最多也只能到人偶玄关。 与其被人偶师捉住变成石像， 妨碍冒险家， 还不如好好呆着呢。\n喂， 你也想想办法吧。 如果你也变成石头， 我就派其他人去了……",
+    "complete": "咦？ 你不是之前那个家伙吗？ 你没有变成石头， 还是没有上去？ \n你说你成功了？ 啊哈， 不赖嘛！"
+   },
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kagon",
+   "receiver": "kagon",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 10,
+     "target": "monster/characterstatue/gunnerstatue.mob",
+     "dungeon": "hallofdoll"
+    },
+    {
+     "id": "objective_1",
+     "type": "kill_monster",
+     "amount": 10,
+     "target": "monster/characterstatue/magicianstatue.mob",
+     "dungeon": "hallofdoll"
+    },
+    {
+     "id": "objective_2",
+     "type": "kill_monster",
+     "amount": 10,
+     "target": "monster/characterstatue/swordmanstatue.mob",
+     "dungeon": "hallofdoll"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.4316",
+   "source": {
+    "id": 4316,
+    "path": "n_quest/westcost/golemtower/normal_20_golemtower_stone.qst",
+    "sha256": "288de84135d3a309e8641c61e1b80509123cb6f2933264b2ca845e21ba4b7319",
+    "raw_type": [
+     "[hunt monster]"
+    ],
+    "raw_int_data": [
+     13,
+     1,
+     50008,
+     2
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "石刃拉泽尔",
+   "description": "前往天空之城的石巨人塔，打败石刃拉泽尔2次，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "你知道天空之城的石刃拉泽尔吗？ 那些前往天空之城的家伙与石刃拉泽尔动手后， 都跑回来了， 因为他们的刀刃都被拉泽尔损坏了。\n这倒也罢了， 但为什么都来找我磨刀呢， 真是烦死了。\n要不这样吧， 上次看你的实力还不错， 你去把那个石刃拉泽尔消灭了吧。",
+    "complete": "不错， 你是个值得信赖的家伙。 我终於少了件烦心事了， 呼~"
+   },
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 20,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kagon",
+   "receiver": "kagon",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "kill_monster",
+     "amount": 2,
+     "target": "monster/new_golem/stoneblade_razor.mob",
+     "dungeon": "golemtower",
+     "difficulty": [
+      "adventure"
+     ]
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
   },
   {
    "id": "original.quest.4465",
@@ -2922,6 +3065,67 @@
    ]
   },
   {
+   "id": "original.quest.298",
+   "source": {
+    "id": 298,
+    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_insomnia.qst",
+    "sha256": "d429e4aafd4f6c78a776c061ce6523e6d620ae416f3e5b16454ea0b0b555ce09",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     18
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "失眠症",
+   "description": "找博肯谈谈。",
+   "dialogue": {
+    "accept": "啊… 最近我都睡不好。已经有多久没做梦了呢… 啊.. 这样下去，我大概会发疯吧。… 呼… \n 虽然已经向莎兰和其他可能知道的人询问过了，但是却没有得到任何线索。啊！！如果是散发诡异气息的博肯呢… 听说他知道许多稀奇的事情，\n 可以请你去询问博肯关於我的症状吗？因为我现在的身体根本就不听使唤，似乎有点困难。",
+    "complete": "找我什么事？ 卡坤……哦， 听说过， 但和他不熟。"
+   },
+   "category": "side",
+   "chapter": "westcost",
+   "min_level": 18,
+   "max_level": 99,
+   "requires": [
+    "original.quest.7"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kagon",
+   "receiver": "birken",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "birken"
+    }
+   ],
+   "reward": {
+    "gold": 150,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[relation quest]": [
+     299
+    ]
+   }
+  },
+  {
    "id": "original.quest.4440",
    "source": {
     "id": 4440,
@@ -4457,6 +4661,248 @@
    "enabled": true,
    "abandonable": true,
    "source_metadata": {}
+  },
+  {
+   "id": "original.quest.18",
+   "source": {
+    "id": 18,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_3.qst",
+    "sha256": "9e738d4fc3c4daf1b3254df6ee130bf477e163c0be645b2ae964b172730f1aff",
+    "raw_type": [
+     "[meet npc]"
+    ],
+    "raw_int_data": [
+     11
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "光之城主的诞生",
+   "description": "找卡坤打听暴龙王巴卡尔的消息。",
+   "dialogue": {
+    "accept": "赛格哈特是巴卡尔创造的魔法生命体，\n 巴卡尔为统治天界，用魔法制造了无比忠诚的赛格哈特并派他去守卫天空之城。\n 赛格哈特把自己的存在和对巴卡尔的忠诚联系在一起，也就是说只要赛格哈特相信巴卡尔存在，就没人能够杀死赛格哈特。 \n 如果不让赛格哈特知道巴卡尔已经死亡的消息，赛格哈特的灵魂将永远被亡灵缠绕，成为杀不死的怪物。  就这样在活不了也死不了的状况下，他守护了天空之城将近千年。 \n 其实巴卡尔以经死掉很久了，赛格哈特可能已经怀疑巴卡尔是否还存在很久了。 这种疑心 有可能会将赛格哈特带向消灭之路 \n 啊！ 想起来了 精灵的记忆说巴卡尔和西海岸卡坤的爸爸卡拉斯有过密切往来。 你去卡坤那看看，\n 说不定能找到一些线索呢。",
+    "complete": "找我干嘛？ 有话快说！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.17"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "seria",
+   "receiver": "kagon",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "meet_npc",
+     "amount": 1,
+     "target": "kagon"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {},
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {}
+  },
+  {
+   "id": "original.quest.19",
+   "source": {
+    "id": 19,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_4.qst",
+    "sha256": "ef2c036abb6e58a2dd0863e4b3515c704babc1cc690c119bd2c1136f47a78c19",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3105,
+     1,
+     3107,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "巴卡尔的遗言",
+   "description": "拿着卡坤给的[巴卡尔的遗言]前往天空之城的城主宫殿，击败领主光之城主赛格哈特，要求地下城难度为中等难度(Medium)以上。",
+   "dialogue": {
+    "accept": "为什么突然问我父亲的事？ 巴卡尔？ 你从哪知道巴卡尔的？ \n 既然如此 赛莉亚说的？我就告诉你吧！在我的记忆里，我父亲对暗精灵世代相传的飞行器摩伽陀有很深的兴趣。\n 他喜欢坐摩伽陀往高处飞，曾经到过天界， 和天界的巴卡尔有过交往。\n 在我出生后，父亲更频繁的和天界的巴卡尔见面。\n 后来天界发生战争，我父亲被连累了， 幸好他及时离开天界才保全了性命。\n 我父亲去世前留有遗言， 说如果以后无法通过天空之城，就把巴卡尔的遗言交给「城主宫殿的赛格哈特」 … \n 我也不知道为什么， 但按我父亲的说法， 应该是有了它就可以让赛格哈特脱离魔法束缚了， 你父亲托付给我的遗言，收下来吧。",
+    "complete": "光之城主消失了？ 那你手上那个发光的物体是什么？"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.18"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kagon",
+   "receiver": "kagon",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3105"
+    },
+    {
+     "id": "objective_1",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3107"
+    }
+   ],
+   "reward": {
+    "gold": 0,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3105": 1,
+    "original_3107": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[depend give item]": [
+     3105,
+     1
+    ],
+    "[monster reward item]": [
+     3000,
+     15,
+     1,
+     3107,
+     1,
+     100,
+     1,
+     3000,
+     15,
+     2,
+     3107,
+     1,
+     100,
+     1
+    ]
+   },
+   "grant_items": {
+    "original_3105": 1
+   },
+   "drops": [
+    {
+     "monster": "monster/lordoflight/lordoflight.mob",
+     "dungeon": "palaceofload",
+     "difficulty": [
+      "adventure"
+     ],
+     "item": "original_3107",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    },
+    {
+     "monster": "monster/lordoflight/lordoflight.mob",
+     "dungeon": "palaceofload",
+     "difficulty": [
+      "expert"
+     ],
+     "item": "original_3107",
+     "amount": 1,
+     "chance": 100,
+     "limit": 1
+    }
+   ]
+  },
+  {
+   "id": "original.quest.20",
+   "source": {
+    "id": 20,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_5.qst",
+    "sha256": "48d9b194724a3357442d0f78f701e9c13272c7d6a9767dd56b53732409742cea",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3107,
+     1
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "盛载记忆的水晶球",
+   "description": "拿着[赛格哈特的水晶球]找莎兰帮忙。",
+   "dialogue": {
+    "accept": "光之城主消失时留下了这个水晶球？  难道他的存在另有隐情？\n   看来这水晶球里的文字藏有秘密啊， 你把它拿给魔法公会会长莎兰看看吧。",
+    "complete": "你打败赛格哈特了？ 噢， 你做了件了不起的事！"
+   },
+   "category": "main",
+   "chapter": "westcost",
+   "min_level": 25,
+   "max_level": 99,
+   "requires": [
+    "original.quest.19"
+   ],
+   "eligibility": {
+    "jobs": [
+     -1
+    ],
+    "grow_types": [
+     -1
+    ]
+   },
+   "giver": "kagon",
+   "receiver": "sharan",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3107"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {},
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3107": 1
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[depend give item]": [
+     3107,
+     1
+    ]
+   },
+   "grant_items": {
+    "original_3107": 1
+   }
   }
  ],
  "auto_quest_ids": [
@@ -4471,13 +4917,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 57,
-  "total_executable": 121,
+  "new_executable": 63,
+  "total_executable": 127,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 57
+   "once": 63
   },
-  "blocked": 2703
+  "blocked": 2697
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -4694,5 +5140,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "e9d00c2e0bf01ac8d8939c38dedb4584825dd2dfc41aedc3a0e1505274967382"
+ "status_sha256": "177327dc86becab472fe6ec8435ad4cf8bb2b022c0e7b69cc0e55f04f46cb57e"
 }

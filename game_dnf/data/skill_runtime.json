@@ -29,7 +29,12 @@
    "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
    "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
+   "skillfx_khazan2_47804aa3": "passiveobject/character/swordman/animation/khazan2.ani",
    "skillfx_khazan_down_45a97897": "passiveobject/character/swordman/animation/hardattackcharge/khazan-down.ani",
+   "skillfx_khazanareaappear1_5ef16f6c": "passiveobject/character/swordman/animation/khazanareaappear1.ani",
+   "skillfx_khazanareaappear2_fbc292d4": "passiveobject/character/swordman/animation/khazanareaappear2.ani",
+   "skillfx_khazanareadisappear_6c00971a": "passiveobject/character/swordman/animation/khazanareadisappear.ani",
+   "skillfx_khazanareastay_1bc3c7a4": "passiveobject/character/swordman/animation/khazanareastay.ani",
    "skillfx_lightmove1_1_847fea3b": "character/swordman/effect/animation/rapidmoveslash/lightmove1-1.ani",
    "skillfx_lightmove1_2_b2a9b7bc": "character/swordman/effect/animation/rapidmoveslash/lightmove1-2.ani",
    "skillfx_lightmove2_1_7a67e3a5": "character/swordman/effect/animation/rapidmoveslash/lightmove2-1.ani",
@@ -2863,8 +2868,9 @@
   "khazan": {
    "fidelity_pending": [
     "cast_frame",
-    "area_membership_geometry",
-    "area_animation",
+    "area_membership_filters",
+    "area_phase_timers",
+    "area_draw_order",
     "voice"
    ],
    "name": "刀魂之卡赞",
@@ -2878,9 +2884,19 @@
       {
        "at": 320,
        "native_controller": {
+        "appear_fx": [
+         "skillfx_khazanareaappear1_5ef16f6c",
+         "skillfx_khazanareaappear2_fbc292d4"
+        ],
+        "appear_ms": 1040.0,
+        "depth_scale": 0.29,
+        "disappear_fx": "skillfx_khazanareadisappear_6c00971a",
+        "disappear_ms": 320.0,
         "duration_col": 1,
+        "ghost_fx": "skillfx_khazan2_47804aa3",
         "kind": "khazan_field",
-        "radius": 250
+        "radius": 250,
+        "stay_fx": "skillfx_khazanareastay_1bc3c7a4"
        },
        "object": "passiveobject/character/swordman/khazan.obj",
        "offset": [

@@ -9,9 +9,7 @@ const UIFont = preload("res://ui/flow/ui_font.gd")
 const World = preload("res://town/world.gd")
 var world=World.new()
 var loader=Loader.new()
-var quest_loader=Loader.new()
-var hendon_loader=Loader.new()
-var gran_loader=Loader.new()
+var asset_loaders: Dictionary={}
 var map_root: Node2D
 var map_nodes: Dictionary={}
 var map_loaders: Dictionary={}
@@ -238,10 +236,15 @@ func set_equipped_weapon(item: String, shape: String) -> bool:
 func ensure_location(id: String) -> bool:
 	if map_nodes.has(id):return true
 	if not world.location_exists(id):return false
-	var active_loader=quest_loader if id=="seria_room" else gran_loader if id in ["hendon_forest_gate","hendon_alley"] else hendon_loader
-	if active_loader.data.is_empty() and not active_loader.load_export(world.scene(id)["asset"]):return false
+	var scene: Dictionary=world.scene(id)
+	var asset: String=scene["asset"]
+	var active_loader: Loader=asset_loaders.get(asset)
+	if active_loader==null:
+		active_loader=Loader.new()
+		if not active_loader.load_export(asset):return false
+		asset_loaders[asset]=active_loader
 	for placement: Dictionary in active_loader.placements():
-		if placement["id"]!=world.scene(id)["placement"]:continue
+		if placement["id"]!=scene["placement"]:continue
 		var node: Node2D=active_loader.build(placement)
 		add_child(node)
 		node.hide()
@@ -250,6 +253,15 @@ func ensure_location(id: String) -> bool:
 		if id=="seria_room":inn=node
 		return true
 	return false
+
+func dialogue_portrait(npc: String) -> Texture2D:
+	var active_loader: Loader=map_loaders.get(location)
+	if active_loader!=null:
+		var ui: Dictionary=active_loader.data.get("ui",{})
+		var key=ui.get("seria_portrait") if npc=="seria" else ui.get("portraits",{}).get(npc)
+		var portrait: Texture2D=active_loader.texture(key)
+		if portrait!=null:return portrait
+	return npc_face(npc)
 
 func set_location(id: String, point:=Vector2.ZERO) -> bool:
 	if not ensure_location(id):return false

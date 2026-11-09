@@ -283,7 +283,7 @@ func _present_objects(list: Array) -> void:
 		live[o["id"]] = true
 		var v = object_views.get(o["id"])
 		if v == null:
-			var bank: Dictionary = _combat.get("objects",{}).get(String(o["bank"]),{})
+			var bank: Dictionary = _effects.get(String(o["effect"]),{}) if o.has("effect") else _combat.get("objects",{}).get(String(o["bank"]),{})
 			if bank.is_empty():continue
 			v = FxView.new()
 			world.add_child(v)
@@ -298,8 +298,9 @@ func _present_objects(list: Array) -> void:
 			object_views[o["id"]] = v
 		v.loop = bool(o.get("loop",false))
 		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
-		v.z_index = int(Vector2(o["pos"]).y)+2
+		v.z_index = int(Vector2(o["pos"]).y)+int(o.get("depth_offset",2))
 		v.base_scale = float(o.get("size_rate",1))
+		v.fade = float(o.get("fade",1))
 		v.seek(float(o["clock"]))
 		var rear = v.get_node_or_null("RearAnimation")
 		if is_instance_valid(rear) and not rear.is_queued_for_deletion():

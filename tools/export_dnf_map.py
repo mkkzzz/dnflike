@@ -272,6 +272,31 @@ def span_values(spans: list[dict], tag: str) -> list | None:
     return None
 
 
+def export_town_npc(lib: Library, npc_listing: dict, row: list, key: str, name: str,
+                    native_portrait: bool = False) -> tuple[dict, dict, str | None]:
+    npc_id, direction, x, y, z = row
+    npc_path = 'npc/' + npc_listing[npc_id].lower()
+    script = lib.script(npc_path)
+    ani = resolve(npc_path, span_values(script['spans'], '[field animation]')[0])
+    sprite = lib.sprite(ani, npc_path)
+    if not sprite or not all(frame['image'] for frame in sprite['frames']):
+        raise ValueError('Required original NPC animation missing: ' + npc_path)
+    if direction == '[right]':
+        for frame in sprite['frames']:
+            frame['flip_x'] = not frame.get('flip_x', False)
+    portrait = None
+    if native_portrait:
+        ref, index = span_values(script['spans'], '[big face]')
+        portrait = lib.image(ref, index, npc_path + '/big face')
+        if not portrait:
+            raise ValueError('Required original NPC portrait missing: ' + npc_path)
+    anchor = [x, y, z]
+    resident = {'id': key, 'source_id': npc_id, 'name': name, 'anchor': anchor,
+                'source': npc_path, 'sha256': script['sha256'], 'ani': ani}
+    animation = {'layer': 'normal', 'anchor': anchor, 'space': 'map', 'sprite': sprite}
+    return resident, animation, portrait
+
+
 def raw_spans(script: dict) -> list[dict]:
     return [{'tag': s['tag'], 'offset': s['offset'],
              'values': [[t['type'], t['raw_hex'], t.get('value')] for t in s['values']]} for s in script['spans']]

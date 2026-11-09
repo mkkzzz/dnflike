@@ -813,24 +813,37 @@ def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
 
 def extend_firewave(library: Path | None, output: Path = OUT) -> dict:
     """Add the verified ordinary firewave banks without touching existing PNGs."""
+    runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
+    prefix = 'passiveobject/character/swordman/'
+    specs = [('objects', key, path) for key, path in runtime['assets']['objects'].items()
+             if path == prefix+'firewavebigsub.obj']
+    specs += [('effects', key, path) for key, path in runtime['assets']['effect_anims'].items()
+              if path in [prefix+'animation/firewavebig/'+n+'.ani' for n in ('fire-back', 'blast-back')]]
+    if len(specs) != 3:
+        raise ValueError('Build skill runtime first; need explosion and two rear banks')
+    return extend_skill_banks(library, output, specs)
+
+
+def extend_khazan(library: Path | None, output: Path = OUT) -> dict:
+    runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
+    hit = runtime['moves']['khazan']['stages'][0]['hits'][0]['native_controller']
+    keys = [hit['ghost_fx'], *hit['appear_fx'], hit['stay_fx'], hit['disappear_fx']]
+    specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+    return extend_skill_banks(library, output, specs)
+
+
+def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
+    """Add explicitly bound banks while retaining every existing asset byte."""
     global ACTIVE_OUT
     src = Source(library)
     previous = ACTIVE_OUT
     (ROOT/'temp').mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix='dnf-firewave-extend-', dir=ROOT/'temp'))
+    stage = Path(tempfile.mkdtemp(prefix='dnf-skill-extend-', dir=ROOT/'temp'))
     try:
         shutil.copytree(output, stage, dirs_exist_ok=True)
         ACTIVE_OUT = stage
         manifest = json.loads((output/'manifest.json').read_text(encoding='utf8'))
-        runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))
-        prefix = 'passiveobject/character/swordman/'
         additions, unresolved = [], []
-        specs = [('objects', key, path) for key, path in runtime['assets']['objects'].items()
-                 if path == prefix+'firewavebigsub.obj']
-        specs += [('effects', key, path) for key, path in runtime['assets']['effect_anims'].items()
-                  if path in [prefix+'animation/firewavebig/'+n+'.ani' for n in ('fire-back', 'blast-back')]]
-        if len(specs) != 3:
-            raise ValueError('Build skill runtime first; need explosion and two rear banks')
         for section, key, path in specs:
             ani = src.object_animation(path) if section == 'objects' else path
             bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
@@ -841,7 +854,7 @@ def extend_firewave(library: Path | None, output: Path = OUT) -> dict:
             manifest[section][key] = bank
             additions.append(bank['atlas']['texture'])
         if unresolved:
-            raise ValueError('Incomplete firewave assets: '+str(unresolved))
+            raise ValueError('Incomplete skill assets: '+str(unresolved))
         for image in output.glob('*.png'):
             if image.read_bytes() != (stage/image.name).read_bytes():
                 raise ValueError('Cannot overwrite existing original image: '+image.name)
@@ -872,7 +885,12 @@ def main() -> int:
                         help='Add native particle banks atomically, preserving every existing asset')
     parser.add_argument('--extend-firewave', action='store_true',
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
+    parser.add_argument('--extend-khazan', action='store_true',
+                        help='Add the Khazan ghost and area banks, preserving existing assets')
     args = parser.parse_args()
+    if args.extend_khazan:
+        print(json.dumps(extend_khazan(args.library)))
+        return 0
     if args.extend_firewave:
         print(json.dumps(extend_firewave(args.library)))
         return 0

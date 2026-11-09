@@ -12474,6 +12474,83 @@
      {
       "layer": "normal",
       "anchor": [
+       1975,
+       215,
+       0
+      ],
+      "space": "map",
+      "sprite": {
+       "ani": "npc/animation/npc_bk.ani",
+       "ani_sha256": "b246386a525b7a5d0e6a30461ecc93c414f0ef8906406ff2dc0424ae3b497881",
+       "loop_flag": 1,
+       "duration_ms": 720,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "8460943d12ee_0",
+         "offset": [
+          -28,
+          -147
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "8460943d12ee_1",
+         "offset": [
+          -28,
+          -147
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "8460943d12ee_2",
+         "offset": [
+          -28,
+          -147
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 3,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "8460943d12ee_3",
+         "offset": [
+          -28,
+          -147
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "layer": "normal",
+      "anchor": [
        474,
        195,
        0
@@ -45453,6 +45530,19 @@
     "ani": "npc/animation/npc_al.ani"
    },
    {
+    "id": "birken",
+    "source_id": 18,
+    "name": "博肯",
+    "anchor": [
+     1975,
+     215,
+     0
+    ],
+    "source": "npc/birken.npc",
+    "sha256": "7425789a1b7c88312b0136f3132eaac1ad3f2594f11e49350d39f16e2957238a",
+    "ani": "npc/animation/npc_bk.ani"
+   },
+   {
     "id": "norton",
     "source_id": 13,
     "name": "诺顿",
@@ -45545,7 +45635,8 @@
    "kiri": "a1cb78881704_9",
    "norton": "a1cb78881704_12",
    "grandis": "a1cb78881704_19",
-   "albert": "a1cb78881704_14"
+   "albert": "a1cb78881704_14",
+   "birken": "05e5c50456ae_26"
   }
  },
  "topology_source": {
@@ -48305,6 +48396,86 @@
    "size": [
     184,
     248
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "8460943d12ee_0": {
+   "file": "img/8460943d12ee_0.png",
+   "source_path": "sprite/map/npc/npc_bk.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "8460943d12eeeb116b776323e6b81f577bec6946708872c1d433dfc19e4cdb24",
+   "frame": 0,
+   "size": [
+    59,
+    149
+   ],
+   "canvas_offset": [
+    221,
+    187
+   ],
+   "variants": 1
+  },
+  "8460943d12ee_1": {
+   "file": "img/8460943d12ee_1.png",
+   "source_path": "sprite/map/npc/npc_bk.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "8460943d12eeeb116b776323e6b81f577bec6946708872c1d433dfc19e4cdb24",
+   "frame": 1,
+   "size": [
+    59,
+    149
+   ],
+   "canvas_offset": [
+    221,
+    187
+   ],
+   "variants": 1
+  },
+  "8460943d12ee_2": {
+   "file": "img/8460943d12ee_2.png",
+   "source_path": "sprite/map/npc/npc_bk.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "8460943d12eeeb116b776323e6b81f577bec6946708872c1d433dfc19e4cdb24",
+   "frame": 2,
+   "size": [
+    59,
+    149
+   ],
+   "canvas_offset": [
+    221,
+    187
+   ],
+   "variants": 1
+  },
+  "8460943d12ee_3": {
+   "file": "img/8460943d12ee_3.png",
+   "source_path": "sprite/map/npc/npc_bk.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "8460943d12eeeb116b776323e6b81f577bec6946708872c1d433dfc19e4cdb24",
+   "frame": 3,
+   "size": [
+    59,
+    149
+   ],
+   "canvas_offset": [
+    221,
+    187
+   ],
+   "variants": 1
+  },
+  "05e5c50456ae_26": {
+   "file": "img/05e5c50456ae_26.png",
+   "source_path": "sprite/map/npc/npcface02.img",
+   "source_npk": "ImagePacks2/!!!!!!!!!!补丁文件 (8).NPK",
+   "img_sha256": "05e5c50456ae5f70eec9480214ed6fa46577753d8432f10bd3f84de57f4bc37a",
+   "frame": 26,
+   "size": [
+    64,
+    130
    ],
    "canvas_offset": [
     0,

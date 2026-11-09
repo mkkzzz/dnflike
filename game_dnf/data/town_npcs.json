@@ -120,6 +120,7 @@
    "placement": "hendon_city",
    "declared": [
     "albert",
+    "birken",
     "grandis",
     "norton"
    ],
@@ -189,6 +190,39 @@
       ]
      },
      "field_animation": "npc/animation/npc_al.ani"
+    },
+    {
+     "id": "birken",
+     "local_id": "birken",
+     "anchor": [
+      1975,
+      215,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      ""
+     ],
+     "popup_wav": [
+      "R_NPC_BIRKEN02_TALK",
+      "R_NPC_BIRKEN02_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace02.img",
+       27
+      ],
+      "big": [
+       "Map/Npc/NpcFace02.img",
+       26
+      ],
+      "popup": [
+       "Map/Npc/NpcFace02.img",
+       28
+      ]
+     },
+     "field_animation": "npc/animation/npc_bk.ani"
     },
     {
      "id": "rothon",
@@ -509,9 +543,43 @@
   "westcoast": {
    "placement": "westcoast",
    "declared": [
+    "kagon",
     "lorian"
    ],
    "npcs": [
+    {
+     "id": "kagon",
+     "local_id": "kagon",
+     "anchor": [
+      1876,
+      200,
+      0
+     ],
+     "layer": "normal",
+     "implemented": true,
+     "field_wav": [
+      "R_NPC_KAGON_AMB_LOOP"
+     ],
+     "popup_wav": [
+      "R_NPC_KAGON_TALK",
+      "R_NPC_KAGON_FAREWELL"
+     ],
+     "faces": {
+      "small": [
+       "Map/Npc/NpcFace01.img",
+       18
+      ],
+      "big": [
+       "Map/Npc/NpcFace01.img",
+       17
+      ],
+      "popup": [
+       "Map/Npc/NpcFace01.img",
+       19
+      ]
+     },
+     "field_animation": "npc/animation/npc_kg.ani"
+    },
     {
      "id": "lorian",
      "local_id": "lorian",

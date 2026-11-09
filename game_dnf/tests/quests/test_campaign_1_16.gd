@@ -95,6 +95,50 @@ func draconian_eyes() -> void:
 		and session.quests.has_completed(session.profile, quest_id) and int(session.profile.gold) == gold + 5000,
 		"G.S.D. consumes the source eyes and pays the original fixed gold")
 
+func light_lord_chain() -> void:
+	var session := Session.new()
+	var meeting := "original.quest.18"
+	var message := "original.quest.19"
+	var delivery := "original.quest.20"
+	var seria := {"npc":"seria", "nearby":true}
+	var kagon := {"npc":"kagon", "nearby":true}
+	var sharan := {"npc":"sharan", "nearby":true}
+	session.profile.level = 25
+	completed(session, "original.quest.17")
+	check(session.quest_command("quest.accept", {"id":meeting}, seria).ok, "Seria offers the original Lord of Light chain")
+	session.npc_met("kagon")
+	check(session.quest_command("quest.claim", {"id":meeting}, kagon).ok
+		and session.quest_command("quest.accept", {"id":message}, kagon).ok
+		and Inventory.stock(session.profile, "original_3105") == 1, "Kagon supplies the source quest item after meeting")
+	var room := "palaceofload:1_0:(1,0)b2408"
+	var boss := {"type":"combat.monster_defeated", "entity_id":0, "event_id":"lord:0", "room_id":room,
+		"position":Vector2(100, 200), "monster_id":"monster/lordoflight/lordoflight.mob", "boss":true}
+	check(session.command("flow.depart", {"dungeon":"palaceofload"}).ok, "the source Palace of the Lord route is selectable")
+	boss.run_id = session.run.id
+	session.combat_event(boss)
+	check(session.Loot.pending(session.run, room).all(func(drop):return drop.item != "original_3107"), "normal mode does not drop the memory crystal")
+	session.finish_run(true, {})
+	session.command("flow.return")
+	check(session.command("flow.difficulty", {"id":"adventure"}).ok
+		and session.command("flow.depart", {"dungeon":"palaceofload"}).ok, "Adventure Palace departure succeeds")
+	boss.run_id = session.run.id
+	session.combat_event(boss)
+	var crystals: Array = session.Loot.pending(session.run, room).filter(func(drop):return drop.item == "original_3107")
+	check(crystals.size() == 1 and session.quests.status(session.profile, message) == "active", "the original boss drops one unclaimed crystal")
+	if crystals.size() != 1:return
+	var crystal: Dictionary=crystals[0]
+	var position := Vector2(float(crystal.position[0]), float(crystal.position[1]))
+	check(session.Loot.claim(session.profile, session.run, crystal.id, room, position).ok, "the player can pick up the source memory crystal")
+	session.finish_run(true, {})
+	session.command("flow.return")
+	check(session.quest_command("quest.claim", {"id":message}, kagon).ok
+		and Inventory.stock(session.profile, "original_3105") == 0
+		and Inventory.stock(session.profile, "original_3107") == 0, "Kagon consumes both original quest items")
+	check(session.quest_command("quest.accept", {"id":delivery}, kagon).ok
+		and Inventory.stock(session.profile, "original_3107") == 1, "Kagon gives the memory crystal for delivery to Sharan")
+	check(session.quest_command("quest.claim", {"id":delivery}, sharan).ok
+		and Inventory.stock(session.profile, "original_3107") == 0, "Sharan receives the memory crystal")
+
 func run() -> void:
 	var rules: Dictionary=Native.quest_rules()
 	var campaign: Dictionary=rules.campaign
@@ -189,6 +233,7 @@ func run() -> void:
 		if remaining.is_empty() or not acted:break
 	check(remaining.is_empty(),"all campaign nodes form one playable dependency graph")
 	draconian_eyes()
+	light_lord_chain()
 
 	print("[CAMPAIGN] COMPLETE checks=%d failures=%d" % [checks,failures])
 	quit(1 if failures else 0)

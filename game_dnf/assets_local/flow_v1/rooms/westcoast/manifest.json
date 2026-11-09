@@ -11800,6 +11800,83 @@
      {
       "layer": "normal",
       "anchor": [
+       1876,
+       200,
+       0
+      ],
+      "space": "map",
+      "sprite": {
+       "ani": "npc/animation/npc_kg.ani",
+       "ani_sha256": "d063288b8a8c1d350e9b17ae53e842812d4b072262b2e7b5f4c14add36ce4e53",
+       "loop_flag": 1,
+       "duration_ms": 1220,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "fb25f9646549_0",
+         "offset": [
+          -35,
+          -130
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "fb25f9646549_1",
+         "offset": [
+          -39,
+          -130
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 180,
+         "items": {
+          "12": 180
+         },
+         "image": "fb25f9646549_2",
+         "offset": [
+          -34,
+          -130
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 3,
+         "delay_ms": 680,
+         "items": {
+          "12": 680
+         },
+         "image": "fb25f9646549_3",
+         "offset": [
+          -34,
+          -130
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      }
+     },
+     {
+      "layer": "normal",
+      "anchor": [
        1206,
        206,
        0
@@ -17443,6 +17520,19 @@
  },
  "npcs": [
   {
+   "id": "kagon",
+   "source_id": 11,
+   "name": "卡坤",
+   "anchor": [
+    1876,
+    200,
+    0
+   ],
+   "source": "npc/kagon.npc",
+   "sha256": "7868cd83e244803bff38d09a530a5281dd990dc505dd367695bab5958124b199",
+   "ani": "npc/animation/npc_kg.ani"
+  },
+  {
    "id": "lorian",
    "source_id": 10,
    "name": "罗莉安",
@@ -19152,6 +19242,86 @@
     59
    ],
    "variants": 1
+  },
+  "fb25f9646549_0": {
+   "file": "img/fb25f9646549_0.png",
+   "source_path": "sprite/map/npc/npc_kg.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "fb25f964654942d7848029ee3ee2896fbe5cb7fa9c758ac0d5654b777251100b",
+   "frame": 0,
+   "size": [
+    56,
+    133
+   ],
+   "canvas_offset": [
+    16,
+    29
+   ],
+   "variants": 1
+  },
+  "fb25f9646549_1": {
+   "file": "img/fb25f9646549_1.png",
+   "source_path": "sprite/map/npc/npc_kg.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "fb25f964654942d7848029ee3ee2896fbe5cb7fa9c758ac0d5654b777251100b",
+   "frame": 1,
+   "size": [
+    60,
+    133
+   ],
+   "canvas_offset": [
+    12,
+    29
+   ],
+   "variants": 1
+  },
+  "fb25f9646549_2": {
+   "file": "img/fb25f9646549_2.png",
+   "source_path": "sprite/map/npc/npc_kg.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "fb25f964654942d7848029ee3ee2896fbe5cb7fa9c758ac0d5654b777251100b",
+   "frame": 2,
+   "size": [
+    55,
+    133
+   ],
+   "canvas_offset": [
+    17,
+    29
+   ],
+   "variants": 1
+  },
+  "fb25f9646549_3": {
+   "file": "img/fb25f9646549_3.png",
+   "source_path": "sprite/map/npc/npc_kg.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "fb25f964654942d7848029ee3ee2896fbe5cb7fa9c758ac0d5654b777251100b",
+   "frame": 3,
+   "size": [
+    55,
+    133
+   ],
+   "canvas_offset": [
+    17,
+    29
+   ],
+   "variants": 1
+  },
+  "9b32dd449bba_17": {
+   "file": "img/9b32dd449bba_17.png",
+   "source_path": "sprite/map/npc/npcface01.img",
+   "source_npk": "ImagePacks2/sprite_map_npc.NPK",
+   "img_sha256": "9b32dd449bba896c322bd90d2983d127dd29d16a30c0b98642c60f6d45b49536",
+   "frame": 17,
+   "size": [
+    64,
+    130
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
   }
  },
  "walk": [
@@ -19257,5 +19427,11 @@
    2912,
    12
   ]
- ]
+ ],
+ "ui": {
+  "portraits": {
+   "kagon": "9b32dd449bba_17"
+  }
+ },
+ "image_base": ".."
 }

@@ -264,7 +264,7 @@ def build_detail_board(src: B.Source) -> Image.Image:
     return board
 
 
-def ui_control(src: B.Source, path: str, control_id: str) -> list:
+def ui_control_node(src: B.Source, path: str, control_id: str) -> dict:
     """Read a specific source control instead of guessing from IMG contact sheets."""
     script = src.lib.script(path)
     if script is None:
@@ -274,16 +274,20 @@ def ui_control(src: B.Source, path: str, control_id: str) -> list:
         for node in nodes:
             values = node.get('values', [])
             if node['tag'] == '[ui controls]' and len(values) > 1 and values[1] == control_id:
-                return values
+                return node
             found = walk(node.get('children', []))
             if found:
                 return found
         return None
 
-    values = walk(script['fields'])
-    if values is None:
+    node = walk(script['fields'])
+    if node is None:
         raise ValueError('Missing UI control: %s #%s' % (path, control_id))
-    return values
+    return node
+
+
+def ui_control(src: B.Source, path: str, control_id: str) -> list:
+    return ui_control_node(src, path, control_id)['values']
 
 
 def build_ui_revision(src: B.Source, parts: dict) -> dict:
@@ -379,11 +383,17 @@ def build_rank_controls(src: B.Source, parts: dict) -> None:
 
 def build_sp_digits(src: B.Source, parts: dict) -> None:
     """Pack the ten original digit crops with no scaling or recoloring."""
-    control = ui_control(src, SKILL_WINDOW_UI, '2000')
-    if control[0] != '[numberset]' or control[5].lower() != SP_DIGIT_BANK.lower():
+    node = ui_control_node(src, SKILL_WINDOW_UI, '2000')
+    control = node['values']
+    parent_id = next(child['values'][0] for child in node['children'] if child['tag'] == '[parent]')
+    if (control[0] != '[numberset]' or control[5].lower() != SP_DIGIT_BANK.lower()
+            or parent_id != '24' or control[7] != 0 or control[10] != 1):
         raise ValueError('Unexpected SP digit control')
+    parent = ui_control(src, SKILL_WINDOW_UI, parent_id)
+    _, parent_meta = src.frame(parent[5], parent[7])
     frames = list(range(1, 11))
-    glyphs = [src.frame(SP_DIGIT_BANK, frame)[0].convert('RGBA') for frame in frames]
+    digits = [src.frame(SP_DIGIT_BANK, frame) for frame in frames]
+    glyphs = [image.convert('RGBA') for image, _ in digits]
     atlas = Image.new('RGBA', (sum(glyph.width for glyph in glyphs), max(glyph.height for glyph in glyphs)))
     regions = []
     x = 0
@@ -404,7 +414,13 @@ def build_sp_digits(src: B.Source, parts: dict) -> None:
         'regions': regions, 'bank': SP_DIGIT_BANK,
         'bank_sha256': src.sources['sprite/' + SP_DIGIT_BANK.lower()],
         'ui_reference': {'path': SKILL_WINDOW_UI, 'control': '2000',
-                         'position': control[2:4], 'parameters': control[6:]},
+                         'parent': parent_id, 'position': control[2:4], 'parameters': control[6:]},
+        # CNNumberSet measures canvas width + spacing (0x11B2275/0x11B2A16).
+        # This popup mounts the cropped bar, so express each crop origin relative to it.
+        'digit_advances': [meta['cw'] + control[9] for _, meta in digits],
+        'glyph_offsets': [[meta['x'] - parent_meta['x'], meta['y'] - parent_meta['y']]
+                          for _, meta in digits],
+        'max_digits': control[8],
     }
 
 
