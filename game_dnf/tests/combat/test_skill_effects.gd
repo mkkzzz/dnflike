@@ -4,6 +4,7 @@ const Numbers = preload("res://stats/api/numbers.gd")
 const Actor = preload("res://stats/api/actor_numbers.gd")
 const Session = preload("res://flow/session.gd")
 const DetRng = preload("res://core/det_rng.gd")
+const MonsterAI = preload("res://combat/ai/monster_ai.gd")
 var checks := 0
 var failures := 0
 
@@ -62,6 +63,7 @@ func run() -> void:
 	check_bremen_freeze(game,session)
 	check_rasa(game,session)
 	check_rasa_blind(game,session)
+	check_native_monster_vision(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
@@ -519,6 +521,13 @@ func rasa_contact_seed() -> int:
 		if close >= 3:return seed_value
 	return -1
 
+func rasa_blind_seed() -> int:
+	var draw = DetRng.new()
+	for seed_value in range(100):
+		draw.reseed(seed_value)
+		if draw.range_int(0,2)==1:return seed_value
+	return -1
+
 func check_rasa_blind(game, session) -> void:
 	game.restart()
 	game.monsters.clear()
@@ -559,22 +568,17 @@ func check_rasa_blind(game, session) -> void:
 	check(resister.apply_source_blind(stronger,0) and resister.effects.active["blind"]["remaining_ms"]==7020.0
 		and resister.effects.active["blind"]["definition"]["vision_percent"]==60,"stronger blind replaces the previous entry after source level scaling")
 
-	game.player["pos"] = point-Vector2(211,0)
+	game.player["pos"] = point-Vector2(420,0)
 	game.update_enemy(enemy,16.0)
-	check(enemy["state"]=="move","ordinary Goblin tracks a visible target 211 units away before blind")
+	check(enemy["state"]=="move","ordinary Goblin acquires a target at its source 420-unit boundary before blind")
 	enemy["pos"] = point
 	enemy["state"] = "idle"
+	game.player["pos"] = point-Vector2(211,0)
 	# Align one already-attached child's grab completion with the deadline.
 	late_child["rasa_attached_at"] = 2600.0-float(controller["grab_ms"])
 	game.step_objects(1399.0)
 	check(not actor.effects.active.has("blind"),"attached children do not draw at age 2599")
-	var draw = DetRng.new()
-	var blind_seed := 0
-	while blind_seed < 100:
-		draw.reseed(blind_seed)
-		if draw.range_int(0,2)==1:break
-		blind_seed += 1
-	game.rng.reseed(blind_seed)
+	game.rng.reseed(rasa_blind_seed())
 	game.bus.clear_history()
 	game.step_objects(1.0)
 	var blind: Dictionary = actor.effects.active.get("blind",{})
@@ -640,3 +644,68 @@ func check_rasa_blind(game, session) -> void:
 		enemy["hp"] = 0
 		game.view.present(game.view_snapshot(),0,0)
 		check(not rear.visible and not front.visible,"dead monsters stop rendering the blind pair")
+
+
+func check_native_monster_vision(game, session) -> void:
+	game.restart()
+	game.clear_monsters()
+	var origin := Vector2(400,250)
+	var point := origin+Vector2(122,0)
+	var sample := {"pos":Vector2.ZERO,"facing":1}
+	var goblin: Dictionary = game.table.monsters["goblin"]
+	var thrower: Dictionary = game.table.monsters["goblin_thrower"]
+	var haze_key := "newmonsters_haze_chainbiker_chainbiker"
+	var haze: Dictionary = game.table.monsters[haze_key]
+	check(goblin["native_target_profile"] == thrower["native_target_profile"]
+		and not goblin["native_target_profile"]["uses_ai_vision"],
+		"Goblin and Thrower consume the original protected sight input")
+	check(MonsterAI.target_visible(sample,goblin,Vector2(420,0),false)
+		and not MonsterAI.target_visible(sample,goblin,Vector2(421,0),false)
+		and MonsterAI.target_visible(sample,goblin,Vector2(0,122),false)
+		and not MonsterAI.target_visible(sample,goblin,Vector2(0,123),false),
+		"ordinary target eligibility uses the native inclusive projected distance on both axes")
+	check(haze["native_target_profile"]=={"uses_ai_vision":true,"sight":200,"vision":1000,"back_vision":1500,"keep_distance":-1},
+		"Chainbiker keeps source vision separate from default sight and its preferred movement distance")
+	check(MonsterAI.target_visible(sample,haze,Vector2(1400,0),false)
+		and not MonsterAI.target_visible(sample,haze,Vector2(1401,0),false),
+		"normal CNAI acquisition uses authored vision instead of the legacy sight default")
+	var limited := haze.duplicate()
+	var profile: Dictionary = haze["native_target_profile"].duplicate()
+	limited["native_target_profile"] = profile
+	profile["keep_distance"] = 100
+	profile["back_vision"] = -1
+	check(MonsterAI.target_visible(sample,limited,Vector2(140,0),true)
+		and not MonsterAI.target_visible(sample,limited,Vector2(141,0),true)
+		and not MonsterAI.target_visible(sample,limited,Vector2(-1,0),true),
+		"the original keep-distance override remains subject to the separate front-only sentinel")
+
+	game.numeric_player = Actor.new()
+	game.numeric_player.configure(session.stats())
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.skill_levels = {"epidemicrasa":1}
+	game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+	game.player["mp"] = game.numeric_player.values["mp_max"]
+	game.player["pos"] = origin
+	game.player["facing"] = 1
+	var enemy: Dictionary = game.spawn_enemy(point,false,haze_key)
+	enemy["pos"] = point
+	var actor = enemy["numeric"]
+	actor.configure({"numbers":actor.base.merged({"level":47},true)})
+	check(game.start_action("epidemicrasa"),"Chainbiker fixture enters the real Rasa cast")
+	game.step_action(250.0,Vector2.ZERO)
+	game.rng.reseed(rasa_contact_seed())
+	game.step_objects(1000.0)
+	game.step_objects(1200.0)
+	game.step_objects(1399.0)
+	game.rng.reseed(rasa_blind_seed())
+	game.step_objects(1.0)
+	check(actor.effects.active.has("blind") and enemy.get("native_blind_applied",false),
+		"real Rasa attachment applies blind to CNAI and saves its original expiry destination")
+	check(MonsterAI.target_visible(enemy,haze,point+Vector2(70,0),true)
+		and not MonsterAI.target_visible(enemy,haze,point+Vector2(71,0),true),
+		"the CNAI field receives a second truncating half of the protected sight")
+	actor.step(6500.0)
+	check(not actor.effects.active.has("blind")
+		and MonsterAI.target_visible(enemy,haze,point+Vector2(280,0),false)
+		and not MonsterAI.target_visible(enemy,haze,point+Vector2(281,0),false),
+		"blind expiry restores protected sight into CNAI vision through the same actor lifetime")

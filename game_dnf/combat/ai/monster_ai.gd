@@ -71,19 +71,39 @@ static func native_attack_poll(actor: Dictionary, policy: Dictionary, targets: A
 	return {"slot":slot, "next_attack_ms":deadline}
 
 
+## 880270 checks projected distance. CNMonster and CNAIMonster supply
+## different +788 getters; CNAIMonster's +58C adds a front-only sentinel.
+static func target_visible(enemy: Dictionary, m: Dictionary, target: Vector2, blind: bool) -> bool:
+	var profile: Dictionary = m.get("native_target_profile",{})
+	var origin: Vector2 = enemy["pos"]
+	if profile.is_empty():
+		if not blind:return origin.distance_to(target) <= float(m["sight"])
+		var reduced_sight := int(float(m["sight"])*0.5)
+		return reduced_sight == 0 or CompanionProgram.target_distance(origin,target) <= int(reduced_sight*1.4)
+	var sight := int(profile["sight"])
+	var reach := int(sight*0.5) if blind else sight
+	if profile["uses_ai_vision"]:
+		var facing := int(enemy["facing"])
+		var x := int(target.x)-int(origin.x)
+		if int(profile["back_vision"]) == -1 and x*facing < 0:return false
+		# 8B5CC1 halves the already-halved secure sight; 8B4708
+		# restores the saved sight into the AI field on expiry.
+		if blind:reach = int(reach*0.5)
+		elif not enemy.get("native_blind_applied",false):reach = int(profile["vision"])
+	if reach == 0:return true
+	var distance := CompanionProgram.target_distance(origin,target)
+	var keep := int(profile["keep_distance"])
+	return (keep != -1 and distance <= keep*1.4) or distance <= int(reach*1.4)
+
+
 ## Returns {"move": Vector2 direction, "face": int, "attack": bool}.
 static func think(enemy: Dictionary, m: Dictionary, target: Vector2, target_z: float, blind := false) -> Dictionary:
 	var offset: Vector2 = target-Vector2(enemy["pos"])
 	var face := 1 if offset.x >= 0 else -1
 	var out := {"move":Vector2.ZERO,"face":face,"attack":false,"move_index":-1,"visible":false}
-	if blind:
-		# 8B5CC1 halves monster back vision. 880487..8804D0 tests the
-		# projected distance against trunc(back_vision * 1.4).
-		var reduced_sight := int(float(m["sight"])*0.5)
-		if reduced_sight != 0 and CompanionProgram.target_distance(enemy["pos"],target) > int(reduced_sight*1.4):
-			out["face"] = int(enemy["facing"])
-			return out
-	elif offset.length() > float(m["sight"]):return out
+	if not target_visible(enemy,m,target,blind):
+		if blind or m.has("native_target_profile"):out["face"] = int(enemy["facing"])
+		return out
 	out["visible"] = true
 	var ready := float(enemy["cooldown_ms"]) <= 0 and target_z < 40
 	if m.has("throw"):

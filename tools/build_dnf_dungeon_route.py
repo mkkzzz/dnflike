@@ -6,8 +6,9 @@
 所以路线 = 从起点 cell 沿 doors 走到 boss cell 的最短路径，每格选一张候选地图。
 
 用法：
-  python tools/build_dnf_dungeon_route.py --check              # 只校验已有路线与 cell 图是否一致
+  python tools/build_dnf_dungeon_route.py                      # 只校验已有路线与 cell 图是否一致
   python tools/build_dnf_dungeon_route.py --write --id mirkwood --export <path> --name 幽暗密林
+  python tools/build_dnf_dungeon_route.py --export <path> --selected-map 5 0 3024 --room-role boss
 """
 from __future__ import annotations
 
@@ -104,10 +105,7 @@ def has_source_boss(room: dict) -> bool:
     return any(monster.get('raw') and monster['raw'][-1] == '[boss]' for monster in room.get('monsters', []))
 
 
-def normal_map_specifications(dungeon: dict) -> dict:
-    if dungeon.get('path') not in VERIFIED_NORMAL_MAP_SPECIFICATIONS:
-        return {}
-    fixed = {}
+def ordinary_specification_rows(dungeon: dict, tags):
     ordinary_maze = False
     for span in dungeon['raw']:
         tag = span['tag']
@@ -117,17 +115,74 @@ def normal_map_specifications(dungeon: dict) -> dict:
             ordinary_maze = True
         elif ordinary_maze and tag == '[quest connection]':
             raise ValueError('Expected the ordinary maze before quest mazes')
-        elif ordinary_maze and tag == '[map specification]':
+        elif ordinary_maze and tag in tags:
             values = [token[2] for token in span['values']]
-            if len(values) != 3 or any(type(value) is not int for value in values):
-                raise ValueError('Expected one source MAP in ordinary [map specification]')
-            x, y, map_id = values
-            if (x, y) in fixed:
-                raise ValueError('Duplicate cell in ordinary [map specification]')
-            fixed[x, y] = map_id
+            if len(values) < 3 or any(type(value) is not int for value in values):
+                raise ValueError(f'Invalid ordinary {tag} row: {values}')
+            x, y, *map_ids = values
+            yield tag, (x, y), map_ids
+
+
+def source_map_specifications(dungeon: dict) -> dict:
+    """Read the ordinary maze's per-cell MAP pools without choosing a role or slot."""
+    specifications = {tag: {} for tag in ('[map specification]', '[boss map specification]',
+                                           '[layered map specification]')}
+    for tag, cell, map_ids in ordinary_specification_rows(dungeon, specifications):
+        # The native parser clears this pool on every row, then appends its IDs.
+        specifications[tag][cell] = map_ids
+    return specifications
+
+
+def normal_map_specifications(dungeon: dict) -> dict:
+    if dungeon.get('path') not in VERIFIED_NORMAL_MAP_SPECIFICATIONS:
+        return {}
+    fixed = {}
+    for _, cell, map_ids in ordinary_specification_rows(dungeon, {'[map specification]'}):
+        if len(map_ids) != 1:
+            raise ValueError('Expected one source MAP in ordinary [map specification]')
+        if cell in fixed:
+            raise ValueError('Duplicate cell in ordinary [map specification]')
+        fixed[cell] = map_ids[0]
     if not fixed:
         raise ValueError('Missing ordinary [map specification]')
     return fixed
+
+
+def resolve_selected_room(export: dict, cell: tuple[int, int], map_id: int, role: str, *, layered: bool = False) -> dict:
+    """Resolve an already selected MAP to an existing ordinary-maze placement.
+
+    The original START_MAP notification supplies the cell and MAP ID. Source
+    pools remain distinct because this adapter cannot establish selection priority.
+    """
+    valid_cell = len(cell) == 2 and all(type(coordinate) is int and 0 <= coordinate <= 0xff for coordinate in cell)
+    if not valid_cell or type(map_id) is not int or not 0 <= map_id <= 0xffff:
+        raise ValueError(f'Invalid selected room {cell}, MAP{map_id}')
+    dungeon = export['dungeon']
+    definition = cell_graph(export).get(cell)
+    if definition is None:
+        raise ValueError(f'Invalid selected room {cell}, MAP{map_id}')
+    maps = dungeon['rooms']
+    candidates = [path for path in definition['map_candidates'] if maps[path]['map_id'] == map_id]
+    if len(candidates) != 1:
+        raise ValueError(f'MAP{map_id} is not a unique source candidate at {cell}')
+    path = candidates[0]
+    room = maps[path]
+    starts = bool(room.get('start_area'))
+    boss = has_source_boss(room)
+    eligible = {'start': definition.get('start_candidate') and starts and not boss,
+                'normal': not starts and not boss,
+                'boss': definition.get('boss_candidate') and boss and not starts}
+    if not eligible.get(role):
+        raise ValueError(f'MAP{map_id} is not an eligible {role} room at {cell}')
+    if layered:
+        pools = source_map_specifications(dungeon)['[layered map specification]']
+        if map_id not in pools.get(cell, []):
+            raise ValueError(f'MAP{map_id} is not a source layered room at {cell}')
+    placements = [p for p in dungeon['placements'] if p['cell'] == list(cell) and p['map'] == path
+                  and not p.get('quest_maze')]
+    if len(placements) != 1:
+        raise ValueError(f'MAP{map_id} has no unique ordinary placement at {cell}')
+    return placements[0]
 
 
 def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
@@ -333,7 +388,23 @@ def main() -> int:
     parser.add_argument('--apply-all', action='store_true', help='把已导出的待入表副本批量写入 dungeons.json')
     parser.add_argument('--refresh-existing', action='store_true', help='显式刷新已有路线，并保留运行时手工字段')
     parser.add_argument('--quest-mazes', action='store_true', help='核对原任务专用迷宫；加 --write 重建地图元数据和路线')
+    parser.add_argument('--selected-map', nargs=3, type=int, metavar=('X', 'Y', 'MAP_ID'),
+                        help='只读校验已选原房间，输出既有地图放置记录')
+    parser.add_argument('--room-role', choices=('start', 'normal', 'boss'), default='normal')
+    parser.add_argument('--layered-map', action='store_true', help='校验原多层地图池')
     args = parser.parse_args()
+    if args.selected_map is not None:
+        if not args.export or args.write or args.status or args.apply_all or args.quest_mazes:
+            parser.error('--selected-map requires --export and is read-only')
+        path = GAME / args.export.removeprefix('res://')
+        x, y, map_id = args.selected_map
+        try:
+            export = json.loads(path.read_text(encoding='utf-8'))
+            placement = resolve_selected_room(export, (x, y), map_id, args.room_role, layered=args.layered_map)
+        except (OSError, ValueError) as error:
+            parser.error(str(error))
+        print(json.dumps(placement, ensure_ascii=False))
+        return 0
     doc = json.loads(DUNGEONS.read_text(encoding='utf-8'))
     dungeons = doc['dungeons']
     if args.quest_mazes:

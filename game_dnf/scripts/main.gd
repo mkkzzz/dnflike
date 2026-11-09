@@ -1375,9 +1375,15 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			return
 		enemy_attack(enemy,advance)
 	elif state in ["idle","move"] and enemy.get("ai",true):
-		var target := player if companions.is_empty() else nearest_living(enemy["pos"],friendly_targets())
-		if target.is_empty():return
 		var blind: bool = enemy.has("numeric") and enemy["numeric"].effects.active.has("blind")
+		var target := player
+		if not companions.is_empty():
+			var candidates := friendly_targets()
+			if m.has("native_target_profile"):
+				var eligible := candidates.filter(func(actor):return Kernel.MonsterAI.target_visible(enemy,m,actor["pos"],blind))
+				if not eligible.is_empty():candidates = eligible
+			target = nearest_living(enemy["pos"],candidates)
+		if target.is_empty():return
 		var intent: Dictionary = Kernel.MonsterAI.think(enemy,m,target["pos"],float(target["z"]),blind)
 		if not native_selection.is_empty() and (not blind or bool(intent["visible"])):
 			var slot := poll_native_enemy_attack(enemy,native_selection)
@@ -1948,6 +1954,8 @@ func step_rasa_child(object: Dictionary, controller: Dictionary) -> bool:
 			# Native order is poison, blind, bleed. Only blind is connected.
 			if rng.range_int(0,2) == 1 and not bool(target["chief"]) and target.has("numeric") \
 					and target["numeric"].apply_source_blind(controller["blind"],rng.range_int(0,9999)):
+				if target["def"].get("native_target_profile",{}).get("uses_ai_vision",false):
+					target["native_blind_applied"] = true
 				bus.emit("combat.status",{"target":target["id"],"id":"blind","change":"added"})
 		return true
 	if age >= float(object["life_ms"]):return false

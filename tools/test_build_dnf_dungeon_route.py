@@ -4,10 +4,10 @@ import unittest
 
 try:
     from .bake_dnf_bgm import source_dungeon_tracks
-    from .build_dnf_dungeon_route import GAME, build, merge_route, pick_map
+    from .build_dnf_dungeon_route import GAME, build, merge_route, pick_map, resolve_selected_room, source_map_specifications
 except ImportError:
     from bake_dnf_bgm import source_dungeon_tracks
-    from build_dnf_dungeon_route import GAME, build, merge_route, pick_map
+    from build_dnf_dungeon_route import GAME, build, merge_route, pick_map, resolve_selected_room, source_map_specifications
 
 
 class DungeonRouteMergeTest(unittest.TestCase):
@@ -133,6 +133,62 @@ class DungeonSpecifiedMapTest(unittest.TestCase):
         escort = spec['quest_routes']['original.quest.4312']['rooms']
         self.assertEqual(dungeon['rooms'][placements[escort[0]['placement']]['map']]['map_id'], 2421)
         self.assertFalse(any('quest4312_' in r['placement'] for r in generated))
+
+
+class DungeonSelectedMapTest(unittest.TestCase):
+    def setUp(self):
+        def span(tag, *values):
+            return {'tag': tag, 'values': [[0, 'int', value] for value in values]}
+
+        maps = {
+            'start_a.map': {'map_id': 3001, 'start_area': [260, 181, 75, 234]},
+            'start_b.map': {'map_id': 3002, 'start_area': [236, 213, 71, 208]},
+            'normal.map': {'map_id': 3020},
+            'boss.map': {'map_id': 3024, 'monsters': [{'raw': [265, '[boss]']}]},
+            'layered.map': {'map_id': 3026},
+        }
+        self.export = {'dungeon': {
+            'raw': [span('[maze info]'), span('[map specification]', 5, 0, 3019, 3020),
+                    span('[map specification]', 5, 0, 3020, 3021),
+                    span('[boss map specification]', 5, 0, 3024),
+                    span('[layered map specification]', 5, 0, 3026),
+                    span('[maze info]'), span('[quest connection]', 0, 23, 1),
+                    span('[map specification]', 5, 0, 3025)],
+            'cells': [{'x': 0, 'y': 0, 'start_candidate': True, 'map_candidates': ['start_a.map', 'start_b.map']},
+                      {'x': 5, 'y': 0, 'boss_candidate': True, 'map_candidates': ['normal.map', 'boss.map', 'layered.map']}],
+            'rooms': maps,
+            'placements': [
+                {'id': '0_0:start_a', 'cell': [0, 0], 'map': 'start_a.map'},
+                {'id': '0_0:start_b', 'cell': [0, 0], 'map': 'start_b.map'},
+                {'id': '5_0:normal', 'cell': [5, 0], 'map': 'normal.map'},
+                {'id': '5_0:boss', 'cell': [5, 0], 'map': 'boss.map'},
+                {'id': '5_0:quest23_boss', 'cell': [5, 0], 'map': 'boss.map', 'quest_maze': 'original.quest.23'},
+                {'id': '5_0:layered', 'cell': [5, 0], 'map': 'layered.map'},
+            ],
+        }}
+
+    def test_packet_map_keeps_both_start_candidates_and_distinguishes_same_cell_roles(self):
+        for cell, map_id, role, expected in [
+            ((0, 0), 3001, 'start', '0_0:start_a'), ((0, 0), 3002, 'start', '0_0:start_b'),
+            ((5, 0), 3020, 'normal', '5_0:normal'), ((5, 0), 3024, 'boss', '5_0:boss'),
+        ]:
+            self.assertEqual(resolve_selected_room(self.export, cell, map_id, role)['id'], expected)
+        for cell, map_id, role in [
+            ((0, 0), 3024, 'boss'), ((5, 0), 3020, 'boss'), ((5, 0), 3024, 'normal'),
+            ((0, 0), 3002, 'normal'), ((5, 0), 3025, 'normal'), ((False, 0), 3001, 'start'),
+        ]:
+            with self.subTest(cell=cell, map_id=map_id, role=role), self.assertRaises(ValueError):
+                resolve_selected_room(self.export, cell, map_id, role)
+
+    def test_map_pools_preserve_separate_roles_order_and_native_replacement(self):
+        self.assertEqual(source_map_specifications(self.export['dungeon']), {
+            '[map specification]': {(5, 0): [3020, 3021]},
+            '[boss map specification]': {(5, 0): [3024]},
+            '[layered map specification]': {(5, 0): [3026]},
+        })
+        self.assertEqual(resolve_selected_room(self.export, (5, 0), 3026, 'normal', layered=True)['id'], '5_0:layered')
+        with self.assertRaisesRegex(ValueError, 'source layered room'):
+            resolve_selected_room(self.export, (5, 0), 3020, 'normal', layered=True)
 
 
 if __name__ == "__main__":

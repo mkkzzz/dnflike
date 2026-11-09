@@ -7,6 +7,12 @@ extends RefCounted
 const Timeline = preload("res://combat/action/timeline.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
+## D2FC90 factory cases: Goblin/Thrower use CNMonster's +788 and
+## +58C. These Haze IDs all dispatch to the generic CNAIMonster constructor.
+const NATIVE_TARGET_IDS := {
+	"legacy":["1","2"],
+	"ai":["56032","59016","59017","61243","61244","61245","61247","61263","61267","61269","63007"],
+}
 var skill_levels: Dictionary = {}
 var job := "weaponmaster"
 var weapon := "katana"
@@ -24,6 +30,7 @@ var objects: Dictionary = {}
 var player: Dictionary = {}
 var problems: Array = []
 var _timelines: Dictionary = {}
+var _native_target_classes: Dictionary = {}
 ## 原版 HP 基准表（monster/monsterbaseparameter.tbl，每 5 级一档）。
 var base_table: Array = []
 ## 原版选招规则（由 .ai 反编译提取）：按怪物名精确索引 + 按族目录索引。
@@ -54,6 +61,11 @@ func build(content_db, adapt_rules: Dictionary, combat_assets: Dictionary) -> bo
 		if "__variant_" in name:
 			continue
 		moves[name] = _build_move(name, _selected_move_spec(name))
+	_native_target_classes.clear()
+	var source_ids: Dictionary = db.index("monsters_goblin")
+	for target_class: String in NATIVE_TARGET_IDS:
+		for id: String in NATIVE_TARGET_IDS[target_class]:
+			if source_ids.has(id):_native_target_classes[source_ids[id]] = target_class
 	for key: String in rules["monsters"]:monsters[key] = _build_monster(key,rules["monsters"][key])
 	return problems.is_empty()
 
@@ -494,6 +506,16 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
 		"motions":motions, "ani_paths":ani_paths}
+	if _native_target_classes.has(path):
+		var profile := {"uses_ai_vision":_native_target_classes[path]=="ai","sight":int(mob.get("sight",200)),
+			"vision":int(mob.get("vision",1500)),"back_vision":1500,"keep_distance":-1}
+		# [keep distance with target] is the separate movement preference.
+		for field: Dictionary in record.get("raw",[]):
+			if field["values"].is_empty():continue
+			match field["tag"]:
+				"[keep distance]":profile["keep_distance"] = int(field["values"][0])
+				"[back vision]":profile["back_vision"] = int(field["values"][0])
+		m["native_target_profile"] = profile
 	if record.has("native_attack_selection"):m["native_attack_selection"] = record["native_attack_selection"]
 	if record.has("native_suicide"):
 		var suicide: Dictionary = record["native_suicide"].duplicate(true)
