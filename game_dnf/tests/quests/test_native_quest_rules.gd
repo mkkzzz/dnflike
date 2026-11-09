@@ -3,6 +3,7 @@ const Session=preload("res://flow/session.gd")
 const Catalog=preload("res://quests/catalog.gd")
 const Service=preload("res://quests/service.gd")
 const Conditions=preload("res://quests/clear_conditions.gd")
+const Inventory=preload("res://items/inventory.gd")
 var checks:=0
 var failures:=0
 var clock_state={"now":172800.0}
@@ -66,10 +67,40 @@ func check_growth_eligibility() -> void:
 	unknown.growtype="unrecognized"
 	check(Service.new().reward_for(unknown,q).items.potion==8,"unknown growth receives only the wildcard row")
 
+func check_soulbringer_awakening_collection() -> void:
+	var s=Session.new()
+	var id:="original.quest.981"
+	var request:={"id":id}
+	s.profile.level=48
+	check(not s.quest_command("quest.accept",request,npc()).ok,"base Swordman cannot accept the Soulbringer awakening collection")
+	check(s.command("numbers.growtype",{"growtype":"soulbringer"}).ok,"ordinary job command creates the eligible Soulbringer")
+	s.profile.level=47
+	check(not s.quest_command("quest.accept",request,npc()).ok,"Soulbringer must reach the original minimum level")
+	s.profile.level=48
+	s.profile.awakening_stage=1
+	check(not s.quest_command("quest.accept",request,npc()).ok,"the offline first-awakening collection is limited to stage zero")
+	s.profile.awakening_stage=0
+	check(not s.quest_command("quest.accept",request,npc("albert")).ok,"only G.S.D. offers the collection")
+	check(s.quest_command("quest.accept",request,npc()).ok,"level 48 Soulbringer accepts the original collection")
+	for item: String in ["original_3038","original_3039","original_3040","original_3041","original_3042"]:
+		check(Inventory.give(s.profile,item,1).ok,"fixture supplies "+item)
+	check(Inventory.give(s.profile,"original_3155",29).ok,"fixture supplies fewer than thirty high-grade materials")
+	check(s.quests.status(s.profile,id)=="active" and not s.quest_command("quest.claim",request,npc()).ok,"twenty-nine materials do not satisfy the original requirement")
+	check(Inventory.give(s.profile,"original_3155",2).ok,"fixture supplies one spare material above the requirement")
+	check(not s.quest_command("quest.claim",request,npc("albert")).ok,"only G.S.D. can complete the collection")
+	var gold: int=s.profile.gold
+	check(s.quest_command("quest.claim",request,npc()).ok,"original collection is handed in through the quest service")
+	check(Inventory.stock(s.profile,"original_3155")==1 and Inventory.stock(s.profile,"original_3038")==0,"hand-in consumes the original amounts and leaves the surplus")
+	check(Inventory.stock(s.profile,"original_1089")==20 and Inventory.stock(s.profile,"original_1090")==20 and s.profile.gold==gold+100,"original collection grants both twenty-item stacks and one hundred gold")
+	check(s.profile.awakening_stage==0 and not s.quest_command("quest.claim",request,npc()).ok,"collection preserves stage zero and cannot pay twice")
+	var loaded=Session.new()
+	check(loaded.restore(JSON.parse_string(JSON.stringify(s.serialize()))) and loaded.quests.status(loaded.profile,id)=="completed","ordinary save restore preserves the completed collection")
+
 func run() -> void:
 	var plain=Session.new()
 	check(plain.quests.catalog.errors.is_empty(),"all old and additive native definitions validate")
 	check_growth_eligibility()
+	check_soulbringer_awakening_collection()
 	var commands=preload("res://debug/native_commands.gd")
 	var quest217: String=commands.execute(PackedStringArray(["quests","217"])).message
 	check(quest217.contains("admitted") or quest217.contains("existing"),"GM original-ID lookup reports the current compiler instead of stale migration status")
@@ -79,6 +110,12 @@ func run() -> void:
 		var min_level:=int(q.min_level)
 		var s=Session.new();s.profile.level=mini(min_level,level_cap)
 		s.profile.job_index=0 if -1 in q.eligibility.jobs else int(q.eligibility.jobs[0])
+		if not q.eligibility.grow_types.is_empty() and -1 not in q.eligibility.grow_types:
+			var growth: Dictionary=Session.Numbers.shared_config().growtype_index
+			for branch: String in growth:
+				if int(growth[branch])==int(q.eligibility.grow_types[0]):
+					s.profile.growtype=branch
+					break
 		for required: String in q.requires:completed(s,required)
 		if min_level>level_cap:
 			if q.get("auto_accept",false):s.advance_auto_quests()

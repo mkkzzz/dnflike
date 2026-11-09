@@ -250,7 +250,8 @@ func active_count(profile: Dictionary) -> int:
 func eligible(profile: Dictionary, quest: Dictionary) -> bool:
 	if int(profile.get("level",1)) > int(quest.get("max_level",999)):return false
 	var rules: Dictionary=quest.get("eligibility",{})
-	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":growtype_index(profile)}
+	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":growtype_index(profile),
+		"awakening_stages":int(profile.get("awakening_stage",0))}
 	for field: String in rules:
 		if not rules[field].any(func(value):return int(value)==-1 or int(value)==int(values[field])):return false
 	return true

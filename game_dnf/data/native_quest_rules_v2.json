@@ -1677,6 +1677,119 @@
    "source_metadata": {}
   },
   {
+   "id": "original.quest.981",
+   "source": {
+    "id": 981,
+    "path": "n_quest/epicjob/achievement_50_epicjob_soul_4.qst",
+    "sha256": "a8cf35a39dee25dac2e641f0965a96db02be0f1dd022b748b3d2a09fdf9f380a",
+    "raw_type": [
+     "[seeking]"
+    ],
+    "raw_int_data": [
+     3038,
+     1,
+     3039,
+     1,
+     3040,
+     1,
+     3041,
+     1,
+     3042,
+     1,
+     3155,
+     30
+    ],
+    "xp_adaptation": "No unverified XP formula; newly compiled bulk rows award zero XP until source formula is implemented"
+   },
+   "name": "觉醒 - 魂狩 1",
+   "description": "如果想要觉醒，请收集以下材料。",
+   "dialogue": {
+    "accept": "嗯…。 你……你到底是人还是鬼？  不过感觉你操控鬼神的技术，应该可以成为 ?魂」了。 \n 「不过光是能操纵鬼神之力还不够，身体和精神也必须变得足够强大才行。 \n 否则会像吉格那样被恶鬼吞噬…… 对了，你知道吉格吧？。 \n 身为鬼剑士，竟然不清楚。唉~算了，你收集回来，我再接着说。",
+    "complete": "吉格虽然成功的召唤邪神之怖拉修，但是却无法控制怖拉修，被怖拉修带往冥界。\n这么优秀的鬼泣因为一点点的不注意就丧命了…\n你也要注意。"
+   },
+   "category": "side",
+   "chapter": "epicjob",
+   "min_level": 48,
+   "max_level": 99,
+   "requires": [],
+   "eligibility": {
+    "jobs": [
+     0
+    ],
+    "grow_types": [
+     2
+    ],
+    "awakening_stages": [
+     0
+    ]
+   },
+   "giver": "gsd",
+   "receiver": "gsd",
+   "objectives": [
+    {
+     "id": "objective_0",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3038"
+    },
+    {
+     "id": "objective_1",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3039"
+    },
+    {
+     "id": "objective_2",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3040"
+    },
+    {
+     "id": "objective_3",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3041"
+    },
+    {
+     "id": "objective_4",
+     "type": "collect_item",
+     "amount": 1,
+     "target": "original_3042"
+    },
+    {
+     "id": "objective_5",
+     "type": "collect_item",
+     "amount": 30,
+     "target": "original_3155"
+    }
+   ],
+   "reward": {
+    "gold": 100,
+    "xp": 0,
+    "items": {
+     "original_1089": 20,
+     "original_1090": 20
+    },
+    "conditional_items": [],
+    "choices": []
+   },
+   "consume": {
+    "original_3038": 1,
+    "original_3039": 1,
+    "original_3040": 1,
+    "original_3041": 1,
+    "original_3042": 1,
+    "original_3155": 30
+   },
+   "enabled": true,
+   "abandonable": true,
+   "source_metadata": {
+    "[relation quest]": [
+     982
+    ]
+   }
+  },
+  {
    "id": "original.quest.116",
    "source": {
     "id": 116,
@@ -5664,13 +5777,13 @@
  "coverage": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 75,
-  "total_executable": 139,
+  "new_executable": 76,
+  "total_executable": 140,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 75
+   "once": 76
   },
-  "blocked": 2685
+  "blocked": 2684
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -5887,5 +6000,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "d6b26da7c510cd8638a5e1f583472d8f507879a2c9d43c4a844546a986f2fcda"
+ "status_sha256": "d8b8f82a033239abf94bec9124db3f4e137c3fe65c6f2ff6eac018466618dbb3"
 }

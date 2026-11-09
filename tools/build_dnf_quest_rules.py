@@ -17,6 +17,7 @@ STATUS=DATA/'native_quest_status_v2.json.gz'
 CAMPAIGN=DATA/'campaign_1_16.json'
 CATALOG=DATA/'quest_catalog.json'
 SUPPORTED_ESCORT_QUESTS = frozenset({4307, 4308, 4312})
+SOULBRINGER_AWAKENING_COLLECTION_SHA = 'a8cf35a39dee25dac2e641f0965a96db02be0f1dd022b748b3d2a09fdf9f380a'
 
 def load(path):return json.loads(path.read_text(encoding='utf-8'))
 def compressed(path):return json.loads(gzip.decompress(path.read_bytes()))
@@ -119,6 +120,12 @@ def build():
                 if any(job in ['[all]','[swordman]'] for job in source_jobs.get(required,['[all]']))
             ]
         q,plan,reasons=compile_quest(int(number),path,record['sha256'],fields,record['text'],existing,items,monsters,custom_events={211},dungeon_index=dungeons,npc_index=npcs,map_index=map_targets)
+        # QST 981 is the ordinary collection step in the type-2 chain. It
+        # changes no job, skill or stage. Offline eligibility uses the original
+        # job/growth/level requirements plus an unawakened profile.
+        if int(number)==981 and record['sha256']==SOULBRINGER_AWAKENING_COLLECTION_SHA and fields.get('[job change quest]')==[2]:
+            reasons.remove('field:[job change quest]')
+            q['eligibility']['awakening_stages']=[0]
         if int(number) not in campaign.get('auto_source_ids',[]):
             q.pop('auto_accept',None)
             q.pop('auto_complete',None)

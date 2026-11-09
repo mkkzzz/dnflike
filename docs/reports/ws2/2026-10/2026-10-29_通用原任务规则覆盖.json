@@ -3,13 +3,13 @@
  "summary": {
   "indexed_quests": 2824,
   "existing": 64,
-  "new_executable": 75,
-  "total_executable": 139,
+  "new_executable": 76,
+  "total_executable": 140,
   "objective_parsed": 2359,
   "new_lifecycles": {
-   "once": 75
+   "once": 76
   },
-  "blocked": 2685
+  "blocked": 2684
  },
  "campaign": {
   "id": "campaign_1_16",
@@ -319,11 +319,11 @@
  },
  "blocked_reasons": {
   "npc_not_in_town": 2078,
-  "prerequisite_not_executable": 1813,
+  "prerequisite_not_executable": 1812,
   "quest_grade:[urgent]": 1114,
   "field:[enemy reward item]": 285,
-  "field:[job change quest]": 184,
   "target_npc_not_in_town": 183,
+  "field:[job change quest]": 183,
   "field:[substitutive names]": 178,
   "missing_chinese_text": 178,
   "quest_grade:[title]": 175,
@@ -36858,10 +36858,8 @@
      "amount": 30
     }
    ],
-   "reasons": [
-    "field:[job change quest]"
-   ],
-   "state": "blocked",
+   "reasons": [],
+   "state": "admitted",
    "raw_job_change_quest": [
     2
    ]
@@ -36932,8 +36930,7 @@
    "reasons": [
     "field:[job change quest]",
     "npc_not_in_town",
-    "target_npc_not_in_town",
-    "prerequisite_not_executable"
+    "target_npc_not_in_town"
    ],
    "state": "blocked",
    "raw_job_change_quest": [

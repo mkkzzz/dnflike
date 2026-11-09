@@ -164,9 +164,44 @@ func run() -> void:
 	var final_state=game.Session.new()
 	check(game.store.read_into(final_state) and final_state.profile==game.session.profile,"round trip persists all rewards and current world state")
 	await westcoast_errand()
+	await soulbringer_awaken_collection()
 	OS.delay_msec(100)
 	print("[HENDON_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks,failures,captured.size()])
 	get_tree().quit(1 if failures else 0)
+
+func soulbringer_awaken_collection() -> void:
+	var fixture=game.Session.new()
+	fixture.command("numbers.level",{"level":48})
+	fixture.command("numbers.growtype",{"growtype":"soulbringer"})
+	fixture.profile["town_location"]="hendon_auction"
+	fixture.profile["town_position"]=[1496.0,245.0]
+	var storage=game.Store.new()
+	storage.path="res://../temp/hendon_tests/awakening_collection.json"
+	game.show_character_selection()
+	var entered: bool=storage.write(fixture) and game.enter_character(storage.path)
+	check(entered,"level 48 Soulbringer loads next to the original mentor")
+	if not entered:return
+	await ticks(3)
+	await talk("gsd")
+	var quest := "original.quest.981"
+	await task(quest,"接受委托",0)
+	check(game.session.quests.status(game.session.profile,quest)=="active","G.S.D. quest window accepts original 981")
+	var definition: Dictionary=game.session.quests.catalog.definitions[quest]
+	for item: String in definition.consume:
+		check(game.Session.Inventory.give(game.session.profile,item,int(definition.consume[item])).ok,"awakening GUI fixture supplies "+item)
+	var before: Dictionary=game.session.serialize()
+	game.store.path="res://data/towns.json/invalid_save.json"
+	await task(quest,"领取报酬",1)
+	check(game.save_failed and game.session.serialize()==before,"failed GUI claim keeps materials, progress and rewards unchanged")
+	game.store.path=storage.path
+	await task(quest,"领取报酬",1)
+	check(not game.save_failed and game.session.quests.status(game.session.profile,quest)=="completed","G.S.D. GUI retry completes the original task")
+	var loaded=game.Session.new()
+	check(game.store.read_into(loaded) and loaded.quests.status(loaded.profile,quest)=="completed"
+		and game.Session.Inventory.stock(loaded.profile,"original_1089")==20
+		and game.Session.Inventory.stock(loaded.profile,"original_1090")==20
+		and game.Session.Inventory.stock(loaded.profile,"original_3155")==0
+		and loaded.profile.awakening_stage==0,"real disk save contains the two rewards, consumed materials and unchanged stage")
 
 func westcoast_errand() -> void:
 	var quest := "original.quest.298"

@@ -81,6 +81,11 @@ class QuestRules(unittest.TestCase):
         admitted={r['id'] for r in audit['rows'] if r['state']=='admitted'}
         self.assertEqual(admitted,{q['source']['id'] for q in runtime['quests']})
         self.assertTrue(all(not r['reasons'] for r in audit['rows'] if r['state']=='admitted'))
+        awakening = next(q for q in runtime['quests'] if q['source']['id'] == 981)
+        self.assertEqual(awakening['eligibility'], {'jobs': [0], 'grow_types': [2], 'awakening_stages': [0]})
+        self.assertEqual(awakening['consume'], {**{f'original_{i}': 1 for i in range(3038, 3043)}, 'original_3155': 30})
+        self.assertEqual(awakening['reward']['items'], {'original_1089': 20, 'original_1090': 20})
+        self.assertTrue({982, 983, 984}.isdisjoint(admitted))
         entry = next(r for r in audit['rows'] if r['id']==9925)
         self.assertEqual(entry['state'], 'blocked')
         self.assertIn('quest_entry_dungeon_unavailable:1506', entry['reasons'])

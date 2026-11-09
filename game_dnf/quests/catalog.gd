@@ -64,9 +64,11 @@ func validate_definition(q: Dictionary) -> void:
 	if not eligibility is Dictionary:errors.append("任务职业资格无效："+id)
 	else:
 		for field: String in eligibility:
-			if field not in ["jobs","grow_types"] or not eligibility[field] is Array or eligibility[field].is_empty():errors.append("任务职业资格无效："+id);continue
+			if field not in ["jobs","grow_types","awakening_stages"] or not eligibility[field] is Array or eligibility[field].is_empty():errors.append("任务职业资格无效："+id);continue
+			var minimum := 0 if field=="awakening_stages" else -1
+			var maximum := 2 if field=="awakening_stages" else 30
 			for value in eligibility[field]:
-				if not whole(value,-1,30):errors.append("任务职业资格无效："+id)
+				if not whole(value,minimum,maximum):errors.append("任务职业资格无效："+id)
 	for key in ["name", "description", "giver", "receiver", "category"]:
 		if not q.get(key) is String or q[key].is_empty():errors.append("任务字段无效：" + id + "/" + key)
 	for key in ["enabled", "abandonable"]:

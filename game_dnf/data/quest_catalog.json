@@ -3,7 +3,7 @@
  "evidence": "原版 .qst 结构化字段 E-PARSE；总账保留名称/描述字符串引用，完整简体正文见 native_data_v1，启用名称取运行定义",
  "summary": {
   "total": 3716,
-  "implemented": 140,
+  "implemented": 141,
   "failed": 0,
   "pending_name_refs": 1383,
   "groups": {
@@ -17819,9 +17819,9 @@
     100
    ],
    "name_ref": "",
-   "implemented": false,
-   "local_id": "",
-   "local_name": ""
+   "implemented": true,
+   "local_id": "original.quest.981",
+   "local_name": "觉醒 - 魂狩 1"
   },
   {
    "path": "n_quest/epicjob/achievement_50_epicjob_soul_5.qst",
