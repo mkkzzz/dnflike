@@ -1052,8 +1052,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
 	var native_slide := player.has("action_slide")
-	# CD0504..CD0532 clears both forced movement axes on the uppercut entry.
-	if native_slide or (m.has("dash") and (name != "charge_crash" or int(player["stage"]) == 0)):
+	if native_slide or (m.has("dash") and name != "charge_crash"):
 		var motion: Dictionary = player["action_slide"] if native_slide else m["dash"]
 		var old_motion_clock := old_clock
 		var new_motion_clock := clock
@@ -1073,6 +1072,10 @@ func step_action(ms: float, move: Vector2) -> void:
 			dx *= int(player["facing"])
 			if native_slide:move_along_ground_pixels(dx)
 			else:move_player(Vector2(dx,0))
+		# CB742E..CB7453 clears the current ATK's contact ledger at the action timer deadline.
+		if motion.has("rehit_at_ms") and new_motion_clock >= float(motion["rehit_at_ms"]):
+			player["hits"].clear()
+			motion["rehit_at_ms"] += int(m["dash_rehit_ms"])
 	if bool(m.get("air",false)) and move.length_squared() > 0:
 		# Jump attacks keep the airborne steering of a plain jump; facing stays locked.
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
@@ -1897,12 +1900,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		else:
 			player["native_phase"] = {"cast_stage_rate":speed/1000.0,
 				"end_ms":int(float(m["native_recovery_ms"])*1000.0/speed)}
-	if name == "triple":
+	if name == "triple" or (name == "charge_crash" and index == 0):
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		if numeric_player == null and float(player["buff_ms"]) > 0.0:
 			attack_rate = float(rules["buff"]["attack_speed"])
-		# CC7C56 requests attack speed for Triple Slash movement.
+		# CC7C56 and CD0366 use the same attack-speed movement mode.
 		begin_action_slide(m["dash"],attack_rate)
+		if m.has("dash_rehit_ms"):player["action_slide"]["rehit_at_ms"] = m["dash_rehit_ms"]
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
@@ -2288,7 +2292,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
-		var sample_from := new_t if attached else old_t
+		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
 			contact = hit.duplicate()

@@ -3096,6 +3096,9 @@ func check_charge_crash_uppercut() -> void:
 		check(dash.size()==1 and dust.size()==1 and dash[0].frame["frame"]==1 and dust[0].frame["frame"]==1
 			and dash[0].position==game.view.player_actor.position and dust[0].position==game.view.player_actor.position,
 			"dash attachments follow the actor and advance at the same action rate")
+		var expected_dash := 51.2 if rate == 1.0 else 52.16
+		check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(expected_dash*facing,0)),
+			"the dash integrates attack-speed-adjusted force on its own clock")
 		step(dash_end-80.0/rate-1.0)
 		check(game.player["stage"]==0 and cues("SM_CHARGE_CRASH_UP").is_empty(),
 			"the uppercut stays silent before the dash ANI finishes")
@@ -3107,6 +3110,8 @@ func check_charge_crash_uppercut() -> void:
 			and cues("SM_CHARGE_CRASH_UP").size()==1 and game.player["mp"]==mp,
 			"the uppercut plays automatically with its own voice and no second payment")
 		var upper_x: float = game.player["pos"].x
+		var expected_end := 153.125 if rate == 1.0 else 171.5
+		check(is_equal_approx(upper_x,POINT.x+expected_end*facing),"dash movement is clipped at the phase boundary")
 		step(20)
 		check(game.player["pos"].x==upper_x and cues("SM_CHARGE_CRASH_UP").size()==1,
 			"uppercut does not repeat the dash movement or its entry voice")
@@ -3126,6 +3131,48 @@ func check_charge_crash_uppercut() -> void:
 		for key in ["SM_CHARGE_CRASH","CCRASH_MOVING","SM_CHARGE_CRASH_UP"]:
 			var streams: Array = game.view.audio.variants.get(key,[])
 			check(streams.size()==1 and streams[0] is AudioStreamOggVorbis,"original Charge Crash stream mounted for "+key)
+
+	for rate: float in [0.5,1.0,1.25]:
+		start_room("original_27000","shortsword",1,spec)
+		game.numeric_player.values["attack_speed"] = rate
+		for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(600,0))
+		var target: Dictionary = game.monsters[0]
+		var late_target: Dictionary = game.monsters[1]
+		target["hp"] = 100000.0
+		late_target["hp"] = 100000.0
+		move_target(target,POINT+Vector2(35,0))
+		press(KEY_A)
+		step(0)
+		check(game.hit_count==1,"the dash has an attack box from body frame zero")
+		move_target(target,POINT+Vector2(110 if rate == 0.5 else 180,0))
+		if rate == 0.5:
+			step(301)
+			check(game.hit_count==2,"a late dash update opens the elapsed rehit window once")
+			step(298)
+			check(game.hit_count==2,"the third dash hit cannot arrive before the original 600 ms deadline")
+			step(1)
+			check(game.hit_count==3,"a late update does not shift subsequent dash rehit deadlines")
+			step(99)
+		elif rate == 1.0:
+			step(299)
+			check(game.hit_count==1,"a dash target cannot be hit again before 300 ms")
+			step(1)
+			check(game.hit_count==2,"the same target is eligible again at 300 ms of dash time")
+			step(49)
+		else:
+			step(279)
+			check(game.hit_count==1,"attack speed does not accelerate the dash rehit timer")
+		var dash_hits: int = game.hit_count
+		move_target(late_target,Vector2(game.player["pos"])+Vector2(40,0))
+		step(1)
+		check(game.player["stage"]==1 and game.hit_count==dash_hits,
+			"the expired dash body cannot contact a new target on the uppercut transition")
+		move_target(late_target,POINT+Vector2(600,0))
+		move_target(target,Vector2(game.player["pos"])+Vector2(40,0))
+		step(60.0/rate-1.0)
+		check(game.hit_count==dash_hits,"the uppercut cannot hit in its two opening frames")
+		step(1)
+		check(game.hit_count==dash_hits+1,"the uppercut can hit the dash target with its own ATK from frame two")
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:

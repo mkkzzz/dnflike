@@ -529,6 +529,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var vi := int(dash.get("speed_static",0))
 			var ai := int(dash.get("accel_static",1))
 			move["dash"] = {"speed":float(stat[vi]) if stat.size() > vi else 0.0,"accel":float(stat[ai]) if stat.size() > ai else 0.0}
+		if name == "charge_crash":
+			# CD038E initializes the hit-ledger timer from static column 2.
+			move["dash_rehit_ms"] = int(skill["static"][2])
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
