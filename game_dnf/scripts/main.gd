@@ -1942,17 +1942,18 @@ func spawn_attack_contact(attacker: Dictionary, target: Dictionary, contact: Dic
 func target_invulnerable(target: Dictionary) -> bool:
 	return float(target.get("invuln_ms",0.0)) > 0.0 or (int(target["id"]) == PLAYER_ID and native_jar_traps.player_protected)
 
-func upper_start_armor() -> bool:
+func upper_body_armor() -> bool:
 	if player["state"] != "action" or player["action"] != "upper" or int(player["stage"]) != 0:return false
-	# CD42F3 sets the armor override. CB0E2E clears it when the base ANI passes frame 1.
+	# CD42F3 installs an override for the first two frames. After CB0E2E
+	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(action_def()["timeline"],action_ani_clock(float(player["clock"])))
-	return not frame.is_empty() and int(frame["frame"]) <= 1
+	return not frame.is_empty() and (int(frame["frame"]) <= 1 or int(frame["items"].get("13",0)) == 1)
 
 func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) -> String:
 	if god_mode or target_invulnerable(player) or finished:return "blocked"
 	var state := String(player["state"])
 	var was_action := state == "action"
-	var upper_armor := upper_start_armor()
+	var upper_armor := upper_body_armor()
 	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
 	var manual_guard := state == "guard" and front_hit
 	var guard_rank := int(skill_levels.get("guard",0))

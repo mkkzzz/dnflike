@@ -52,28 +52,29 @@ func move_target(target: Dictionary, point: Vector2, height := 0.0) -> void:
 func cues(key: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("key","")==key)
 
-func check_upper_start_armor() -> void:
+func check_upper_body_armor() -> void:
 	var source := {"pos":POINT+Vector2(40,0)}
 	var atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
-	for clock: int in [0,149,150]:
+	for clock: int in [0,149,150,350,849,850]:
 		start_room("original_27601","katana")
 		press(KEY_Z)
 		step(clock)
 		var before_hp: float = game.player["hp"]
 		var reaction: String = game.hurt_player(7,source,atk,-1)
 		check(game.player["hp"]==before_hp-7,"upper takes incoming damage at "+str(clock))
-		check((game.player["action"]=="upper" and reaction=="none") if clock<150
+		check((game.player["action"]=="upper" and reaction=="none") if clock<850
 			else (game.player["action"]=="" and reaction=="stagger"),
-			"only the first two source frames resist the reaction at "+str(clock))
-		check(cues("upper_armor_light").size()==int(clock<150),"only an armored hit lights the actor at "+str(clock))
-	start_room("original_27000","shortsword")
-	press(KEY_Z)
-	step(100)
+			"the original body state resists the reaction until HitBack ends at "+str(clock))
+		check(cues("upper_armor_light").size()==int(clock<850),"only an armored hit lights the actor at "+str(clock))
 	var piercing := atk.duplicate()
 	piercing["ignore_super_armor"] = 1
-	check(game.hurt_player(7,source,piercing,-1)=="stagger" and game.player["action"]=="",
-		"native ATK bypass can interrupt Upper during the opening frames")
-	check(cues("upper_armor_light").is_empty(),"a piercing hit leaves no upper armor light")
+	for clock: int in [100,350]:
+		start_room("original_27000","shortsword")
+		press(KEY_Z)
+		step(clock)
+		check(game.hurt_player(7,source,piercing,-1)=="stagger" and game.player["action"]=="",
+			"native ATK bypass interrupts the override and the frame body armor at "+str(clock))
+		check(cues("upper_armor_light").is_empty(),"a piercing hit leaves no upper armor light")
 	start_room("original_27000","shortsword")
 	press(KEY_Z)
 	step(100)
@@ -85,14 +86,14 @@ func check_upper_start_armor() -> void:
 	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
 	profile.command("numbers.skill_grant",{"id":"guard","level":1})
 	profile.command("numbers.skill_grant",{"id":"autoguard","level":20})
-	for elapsed: int in [99,100]:
+	for elapsed: int in [99,100,566,567]:
 		start_room("original_27000","shortsword",1,profile.stats())
 		check(game.apply_effect({"kind":"effect","id":"autoguard","rank":20}),"source auto guard fixture is active")
 		game.numeric_player.values["attack_speed"] = 1.5
 		press(KEY_Z)
 		step(elapsed)
 		var reaction: String = game.hurt_player(7,source,atk,-1)
-		check((reaction=="none" and game.player["action"]=="upper") if elapsed==99
+		check((reaction=="none" and game.player["action"]=="upper") if elapsed<567
 			else (reaction=="guard" and game.player["state"]=="guard"),
 			"auto guard gate follows the accelerated body frame at "+str(elapsed)+" ms")
 
@@ -138,12 +139,6 @@ func check_upper_armor_visuals() -> void:
 	game.step_game(599.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	game.view.present(game.view_snapshot(),599.0,599.0)
-	# A second armor sample isolates the visual timer from recovery and cooldown.
-	game.end_action()
-	game.player["cooldowns"]["upper"] = 0.0
-	press(KEY_Z)
-	step(0)
-	game.player["invuln_ms"] = 0.0
 	check(game.hurt_player(7,source,{},-1)=="none" and cues("upper_armor_light").size()==1,
 		"an armored hit at 599 ms does not restart the light")
 	check(armor_particles().is_empty(),"the occupied light gate also suppresses a second particle burst")
@@ -233,6 +228,14 @@ func check_followup() -> void:
 	press(KEY_Z)
 	step(1000)
 	check(game.player["action"]=="" and cues("UPPER_SLASH_02").is_empty(),"qualified cast without another input ends after the first action")
+	start_room("original_27000","shortsword",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.0
+	press(KEY_Z)
+	step(200)
+	press(KEY_X)
+	step(0)
+	check(game.player["stage"]==1 and game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)=="stagger",
+		"state 30 no longer uses HitBack armor and can be interrupted")
 
 func run() -> void:
 	game = session.mount(root)
@@ -330,7 +333,7 @@ func run() -> void:
 	var mastery: Array = game.table.moves["attack1"]["hits"][0]["segments"][0]["frames"]
 	check(ordinary[0]["boxes"].size()==1 and mastery[0]["boxes"][0]==[0.0,-10.0,30.0,160.0,20.0,84.0]
 		and mastery[0]["start"]==150.0,"mastery adds the source frame 3 box on the body clock at rank 3")
-	check_upper_start_armor()
+	check_upper_body_armor()
 	check_upper_armor_visuals()
 	check_followup()
 	session.stop()

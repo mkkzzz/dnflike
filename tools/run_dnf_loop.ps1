@@ -139,6 +139,10 @@ if ($Test) {
         $ErrorActionPreference="Continue"
         $swordmanContact=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_native_swordman_contact.gd 2>&1
         $swordmanExit=$LASTEXITCODE
+        $swordmanInputs=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/combat/test_ws1_swordman_inputs.gd 2>&1
+        $swordmanInputsExit=$LASTEXITCODE
+        $skillInteraction=& $GodotPath --headless --path $gamePath --quit-after 1200 --script res://tests/flow/test_ws1_skill_interaction.gd 2>&1
+        $skillInteractionExit=$LASTEXITCODE
         $popeCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_pope_combat.gd 2>&1
         $popeExit=$LASTEXITCODE
         $raxyCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_raxy_combat.gd 2>&1
@@ -156,6 +160,10 @@ if ($Test) {
     } finally {$ErrorActionPreference=$popePreference}
     $swordmanContact | Write-Output
     if ($swordmanExit -ne 0 -or ($swordmanContact -match 'SCRIPT ERROR|ERROR:') -or -not ($swordmanContact -match '\[SWORDMAN_CONTACT\] COMPLETE checks=\d+ failures=0')) {throw "Native swordman contact regression failed."}
+    $swordmanInputs | Write-Output
+    if ($swordmanInputsExit -ne 0 -or ($swordmanInputs -match 'SCRIPT ERROR|ERROR:') -or -not ($swordmanInputs -match '\[WS1_SWORDMAN_INPUTS\] COMPLETE checks=\d+ failures=0')) {throw "Swordman input regression failed."}
+    $skillInteraction | Write-Output
+    if ($skillInteractionExit -ne 0 -or ($skillInteraction -match 'SCRIPT ERROR|ERROR:') -or -not ($skillInteraction -match '\[WS1_SKILL_INTERACTION\] COMPLETE checks=\d+ failures=0')) {throw "Skill panel and shortcut regression failed."}
     $popeCombat | Write-Output
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
     $raxyCombat | Write-Output
