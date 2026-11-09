@@ -60,10 +60,12 @@
    "skillfx_rasa_be541dd4": "passiveobject/character/swordman/animation/epidemicrasa/rasa.ani",
    "skillfx_rasa_ldodge_91e196e9": "passiveobject/character/swordman/animation/epidemicrasa/rasa_ldodge.ani",
    "skillfx_saya2_078bfa10": "passiveobject/character/swordman/animation/saya2.ani",
+   "skillfx_saya2_abfdbd8c": "passiveobject/character/swordman/animation/sayaex/saya2.ani",
    "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
    "skillfx_sayaareaappear1_d0189262": "passiveobject/character/swordman/animation/sayaareaappear1.ani",
    "skillfx_sayaareaappear2_5b29c727": "passiveobject/character/swordman/animation/sayaareaappear2.ani",
    "skillfx_sayaareadisappear_f0a73c78": "passiveobject/character/swordman/animation/sayaareadisappear.ani",
+   "skillfx_sayaareastay_5d009c3f": "passiveobject/character/swordman/animation/sayaex/sayaareastay.ani",
    "skillfx_sayaareastay_b8c12288": "passiveobject/character/swordman/animation/sayaareastay.ani",
    "skillfx_slash1_06aaa5c5": "character/swordman/effect/animation/ghoststepslash/slash1.ani",
    "skillfx_slash2_0ba3d5ec": "character/swordman/effect/animation/ghoststepslash/slash2.ani",
@@ -107,6 +109,7 @@
    "passiveobject/character/swordman/outragebreakfloor.obj": "passiveobject/character/swordman/outragebreakfloor.obj",
    "passiveobject/character/swordman/reflectguardbead.obj": "passiveobject/character/swordman/reflectguardbead.obj",
    "passiveobject/character/swordman/saya.obj": "passiveobject/character/swordman/saya.obj",
+   "passiveobject/character/swordman/sayaex.obj": "passiveobject/character/swordman/sayaex.obj",
    "passiveobject/character/swordman/wavespinarea.obj": "passiveobject/character/swordman/wavespinarea.obj"
   },
   "player_anims": {
@@ -3726,41 +3729,68 @@
   },
   "sayaex": {
    "fidelity_pending": [
-    "cast_state",
-    "object_controller",
-    "damage_and_status",
-    "voice"
+    "area_membership_filters",
+    "area_draw_order",
+    "status_level_resistance_formula",
+    "crystal_lifecycle",
+    "charged_ghost_slash_interaction"
    ],
    "name": "冰晶之萨亚",
+   "native_charge_ani": "throw1",
+   "native_state": "ghost_cast",
    "skill": "skill/swordman/sayaex.skl",
    "stages": [
     {
-     "ani": "summon2",
+     "ani": "throw2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_saya_down_ced86275"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_saya_down_ced86275",
-       "effects": [],
+       "at": 0,
+       "effects": [
+        {
+         "chance_col": 2,
+         "chance_scale": 0.001,
+         "duration_ms_col": 4,
+         "id": "freeze",
+         "status_level_col": 3
+        }
+       ],
+       "native_controller": {
+        "appear_fx": [
+         "skillfx_sayaareaappear1_d0189262",
+         "skillfx_sayaareaappear2_5b29c727"
+        ],
+        "appear_ms": 1040.0,
+        "area_scale": 1.0729613733905579,
+        "depth_scale": 0.29,
+        "disappear_fx": "skillfx_sayaareadisappear_f0a73c78",
+        "disappear_ms": 320.0,
+        "duration_col": 1,
+        "first_update_sound": "GHOST_SAYA",
+        "ghost_fx": "skillfx_saya2_abfdbd8c",
+        "ghost_variant": "sayaex",
+        "height_limit": 70,
+        "kind": "saya_field",
+        "pulse_ms": 1000,
+        "radius": 250,
+        "stay_fx": "skillfx_sayaareastay_5d009c3f"
+       },
+       "object": "passiveobject/character/swordman/sayaex.obj",
+       "offset": [
+        122,
+        0,
+        0
+       ],
+       "percent": 0,
        "percent_col": 0,
-       "window": [
-        0.0,
-        425.0
-       ]
-      },
+       "speed": 0
+      }
+     ],
+     "sounds": [
       {
-       "at": 420,
-       "effects": [],
-       "life_ms": 25000,
-       "object": "passiveobject/character/swordman/saya.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "at": 0,
+       "key": "SM_GHOST_SAYA"
       }
      ]
     }
@@ -9092,7 +9122,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "542e85ad58c704923efbda7f2cb911f8fa93cb05337c21408e02aa342e4b07b3"
+  "pack_sha256": "161c35c9905f58220e37a67ff546317e5418b64d713210f7707402010a99d905"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

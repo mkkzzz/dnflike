@@ -111,7 +111,7 @@ GENERIC_HIT_EFFECT = CHR_FX + "upperslash1.ani"
 
 # Cast skills without a dedicated hostile body motion.
 CAST_ANIM = "summon2"
-GHOST_FIELD_SKILLS = ("khazan", "bremen", "saya")
+GHOST_FIELD_SKILLS = ("khazan", "bremen", "saya", "sayaex")
 RASA_CREATOR = OBJ_ROOT + "epidemicrasacreater.obj"
 RASA_CHILD = OBJ_ROOT + "epidemicrasa.obj"
 RASA_ANIMATION = OBJ_ROOT + "animation/epidemicrasa/"
@@ -1135,10 +1135,8 @@ def build_move(
             "object": OBJ_ROOT + "normalwave.obj", "at": sum(delays[:3]),
             "speed": 0.0, "life_ms": -1, "percent_col": 2, "fixed_col": 0, "size_col": 1,
         }], "fx": [{"key": slash, "at": delays[0], "action_clock": True}]}]
-    if source_key == "sayaex":
-        result["fidelity_pending"] = ["cast_state", "object_controller", "damage_and_status", "voice"]
     if source_key in GHOST_FIELD_SKILLS:
-        path = add_object(objects, OBJ_ROOT + key + ".obj")
+        path = add_object(objects, OBJ_ROOT + source_key + ".obj")
         if not path:
             raise ValueError(f"Missing original {key} field object")
         motions = records[path]["decoded"]["etc_motions"]
@@ -1153,7 +1151,8 @@ def build_move(
             raise ValueError(f"Incomplete original {key} animation banks")
         dungeon = records[str(skill["path"]).lower()]["decoded"]["dungeon"]
         statics = dungeon["static_data"]
-        if len(statics) != (4 if key == "saya" else 2) or min(statics) <= 0:
+        static_count = {"saya": 4, "sayaex": 6}.get(source_key, 2)
+        if len(statics) != static_count or min(statics) <= 0:
             raise ValueError(f"Missing original {key} recovery or area radius")
         radius = statics[1]
         # CBBCE0..CBBE7E starts state 13 with SKL casting time, static[0]
@@ -1190,6 +1189,11 @@ def build_move(
             hit["effects"] = [{"id": "freeze", "chance_col": 2, "chance_scale": 0.001,
                                "status_level_col": 3, "duration_ms_col": 4}]
             hit["native_controller"]["height_limit"] = statics[2]
+        if source_key == "sayaex":
+            # CD7C73 distinguishes 20062 from ordinary 20012, and the last
+            # summoned spirit remains skill 96 after the field disappears.
+            hit["native_controller"]["ghost_variant"] = "sayaex"
+            result["fidelity_pending"].extend(["crystal_lifecycle", "charged_ghost_slash_interaction"])
         # The actor sound is in the phase 1 branch, before object creation.
         stages[:] = [{"ani": "throw2", "atk": "", "hits": [hit], "fx": [],
                       "sounds": [{"at": 0, "key": cast_sound}]}]

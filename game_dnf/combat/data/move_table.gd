@@ -582,6 +582,8 @@ func _hardattack_waves(row: Array, speed: int) -> Dictionary:
 				"status_level":int(row[11]),"duration_ms":int(row[12])}]
 		waves[ghost] = {"definition":definition,"hit":hit,"voice":"GHOST_DRIVE_"+ghost.to_upper()}
 	waves["khazan"]["caster_buff"] = {"strength":int(row[4]),"intelligence":int(row[5]),"duration_ms":int(row[6])}
+	# Selector 96 uses the same two wave clips and hit packet as selector 36.
+	waves["sayaex"] = waves["saya"]
 	return waves
 
 ## Passive object: motion timeline, attack info, particle motion and the render bank key.

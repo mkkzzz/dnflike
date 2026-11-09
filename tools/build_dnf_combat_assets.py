@@ -1192,6 +1192,9 @@ def extend_ghost_field(library: Path | None, skill: str, output: Path = OUT) -> 
     controller = stage['hits'][0]['native_controller']
     keys = [controller['ghost_fx'], *controller['appear_fx'], controller['stay_fx'], controller['disappear_fx']]
     specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+    if skill == 'sayaex':
+        path = stage['hits'][0]['object']
+        specs.append(('objects', path, path))
     for key in (stage['sounds'][0]['key'], controller['first_update_sound']):
         specs.append(('audio', key, GHOST_FIELD_AUDIO[key]))
     return extend_skill_banks(library, output, specs)
@@ -1329,6 +1332,8 @@ def main() -> int:
                         help='Add the Bremen ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-saya', action='store_true',
                         help='Add the Saya ghost and area banks, preserving existing assets')
+    parser.add_argument('--extend-sayaex', action='store_true',
+                        help='Add the original EX Saya field and its animation banks')
     parser.add_argument('--extend-rasa', action='store_true',
                         help='Add the original Rasa creator, child animations and cast voice')
     parser.add_argument('--extend-cannon', action='store_true',
@@ -1373,6 +1378,9 @@ def main() -> int:
         motions = json.loads(SKILL_RUNTIME.read_text(encoding='utf8'))['assets']['player_anims']
         specs = [('player_clips', key, motions[key]) for key in ('throw1', 'throw2')]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_sayaex:
+        print(json.dumps(extend_ghost_field(args.library, 'sayaex')))
         return 0
     if args.extend_khazan or args.extend_bremen or args.extend_saya:
         skill = 'saya' if args.extend_saya else 'bremen' if args.extend_bremen else 'khazan'

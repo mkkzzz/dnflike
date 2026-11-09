@@ -70,7 +70,7 @@ func run() -> void:
 	quit(0 if failures==0 else 1)
 
 func check_ghost_casts(game, session) -> void:
-	for sample: Array in [["khazan",150,250],["bremen",200,300],["saya",250,450]]:
+	for sample: Array in [["khazan",150,250],["bremen",200,300],["saya",250,450],["sayaex",500,600]]:
 		var name := String(sample[0])
 		for rates: Array in [[1000,1000],[1001,1001],[1600,1600],[1600,1250]]:
 			game.restart()
@@ -79,7 +79,7 @@ func check_ghost_casts(game, session) -> void:
 			game.numeric_player.values["cast_speed"] = float(rates[0])/1000.0
 			game.skill_levels = {name:1}
 			game.table.configure_skills(game.skill_levels,"swordman","katana")
-			game.player["mp"] = game.numeric_player.values["mp_max"]
+			game.player["mp"] = maxf(game.numeric_player.values["mp_max"],game.move_def(name)["mp"])
 			var release_ms := int(float(sample[1])*1000.0/float(rates[0]))
 			var recovery_ms := int(sample[2])
 			var label := "%s %d/%d" % [name,rates[0],rates[1]]
@@ -103,7 +103,7 @@ func check_ghost_casts(game, session) -> void:
 		game.restart()
 		game.numeric_player = Actor.new()
 		game.numeric_player.configure(session.stats())
-		game.player["mp"] = game.numeric_player.values["mp_max"]
+		game.player["mp"] = maxf(game.numeric_player.values["mp_max"],game.move_def(name)["mp"])
 		game.player["invuln_ms"] = 0.0
 		check(game.start_action(name),name+" starts the interrupt fixture")
 		game.step_action(1,Vector2.ZERO)
@@ -116,18 +116,23 @@ func check_ghost_cast_sounds(game, session) -> void:
 	var was_muted: bool = audio.muted
 	audio.muted = false
 	for sample: Array in [["khazan",150,"SM_GHOST_KAZHAN","GHOST_KAJAN"],
-			["bremen",200,"SM_GHOST_BREMEN","GHOST_BREMEN"],["saya",250,"SM_GHOST_SAYA","GHOST_SAYA"]]:
+			["bremen",200,"SM_GHOST_BREMEN","GHOST_BREMEN"],["saya",250,"SM_GHOST_SAYA","GHOST_SAYA"],
+			["sayaex",500,"SM_GHOST_SAYA","GHOST_SAYA"]]:
 		var skill := String(sample[0])
 		var cast_key := String(sample[2])
 		var field_key := String(sample[3])
 		game.restart()
 		for voice in audio.voice_pool:voice.stop()
+		# Ordinary and EX Saya share both samples. Isolate the fixture from
+		# the audio router's real-time same-key throttle.
+		audio._last.erase(cast_key)
+		audio._last.erase(field_key)
 		game.numeric_player = Actor.new()
 		game.numeric_player.configure(session.stats())
 		game.numeric_player.values["cast_speed"] = 1.0
 		game.skill_levels = {skill:1}
 		game.table.configure_skills(game.skill_levels,"swordman","katana")
-		game.player["mp"] = game.numeric_player.values["mp_max"]
+		game.player["mp"] = maxf(game.numeric_player.values["mp_max"],game.move_def(skill)["mp"])
 		game.bus.clear_history()
 		var cues := func() -> Array:
 			return game.bus.events_of("combat.cue").filter(func(e):return e.get("kind")=="sound" and e["key"] in [cast_key,field_key]).map(func(e):return e["key"])
@@ -239,20 +244,24 @@ func saya_freeze_seed(low: int, high: int) -> int:
 	return -1
 
 func check_saya(game, session) -> void:
-	var freeze_seed := saya_freeze_seed(0,1469)
+	var freeze_seed := saya_freeze_seed(0,999)
 	check(freeze_seed >= 0,"deterministic Saya hit and freeze fixture")
-	for sample: Array in [[1,251,0.147,40,1950],[4,329,0.153,48,2258]]:
+	for sample: Array in [[1,251,0.147,40,1950,"saya",250,13000],[4,329,0.153,48,2258,"saya",250,13000],
+			[1,121,0.10,62,1500,"sayaex",500,10000]]:
 		var rank := int(sample[0])
-		var label := "Saya rank %d" % rank
+		var skill: String = sample[5]
+		var cast_ms: int = sample[6]
+		var life_ms: int = sample[7]
+		var label := "%s rank %d" % [skill,rank]
 		game.restart()
 		game.monsters.clear()
 		game.numeric_player = Actor.new()
 		game.numeric_player.configure(session.stats())
 		game.numeric_player.values["cast_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
-		game.skill_levels = {"saya":rank}
+		game.skill_levels = {skill:rank}
 		game.table.configure_skills(game.skill_levels,"swordman","katana")
-		game.player["mp"] = game.numeric_player.values["mp_max"]
+		game.player["mp"] = maxf(game.numeric_player.values["mp_max"],game.move_def(skill)["mp"])
 		var origin := Vector2(400,250)
 		var center := origin+Vector2(122,0)
 		game.player["pos"] = origin
@@ -266,15 +275,15 @@ func check_saya(game, session) -> void:
 		too_high["z"] = 71.0
 		var outside_hp := float(outside["hp"])
 		var high_hp := float(too_high["hp"])
-		var move: Dictionary = game.move_def("saya")
+		var move: Dictionary = game.move_def(skill)
 		var hit: Dictionary = move["stages"][0]["hits"][0]
 		var freeze: Dictionary = hit["effects"][0]
 		check(move["stages"][0]["hits"].size()==1 and move["stages"][0]["fx"].is_empty(),label+" has no unrelated cast contact box or effect")
 		check(hit["percent"]==sample[1] and is_equal_approx(float(freeze["chance"]),float(sample[2])) and freeze["status_level"]==sample[3] and freeze["duration_ms"]==sample[4],label+" compiles original damage and freeze columns")
 		game.bus.clear_history()
 		game.rng.reseed(freeze_seed)
-		check(game.start_action("saya"),label+" starts through the actual action path")
-		game.step_action(249,Vector2.ZERO)
+		check(game.start_action(skill),label+" starts through the actual action path")
+		game.step_action(cast_ms-1,Vector2.ZERO)
 		game.pulse_passive_auras()
 		check(game.objects.is_empty() and game.bus.events_of("combat.damage").is_empty() and game.active_effect("saya_aura").is_empty(),label+" has neither pre-release damage nor a caster aura")
 		game.step_action(1,Vector2.ZERO)
@@ -282,7 +291,9 @@ func check_saya(game, session) -> void:
 		if game.objects.size()!=1:continue
 		var field: Dictionary = game.objects[0]
 		var field_id := int(field["id"])
-		check(field["pos"]==center and field["life_ms"]==13000 and field["exit_at_ms"]==12680,label+" matches the native field offset and lifetime")
+		check(field["pos"]==center and field["life_ms"]==life_ms and field["exit_at_ms"]==life_ms-320,label+" matches the native field offset and lifetime")
+		check(field["def"]["path"].ends_with("/"+skill+".obj") and game.player["hardattack_ghost"]==skill,
+			label+" creates the matching passive object and selects the last summoned spirit")
 		game.step_objects(17,field_id)
 		var hits: Array = game.bus.events_of("combat.hit")
 		check(field["clock"]==0.0 and hits.size()==1 and hits[0]["target"]==inside["id"] and hits[0]["point"]==Vector3(inside["pos"].x,inside["pos"].y,35.0),label+" first pulse uses field age zero and the native impact height")
@@ -312,11 +323,32 @@ func check_saya(game, session) -> void:
 			check(game.start_action("saya"),label+" starts a recast with cleared cooldown")
 			game.step_action(250,Vector2.ZERO)
 			check(game.objects.size()==2 and not field.get("superseded",false) and game.objects[1]["pos"]==Vector2(game.player["pos"])-Vector2(122,0),label+" mirrors placement and keeps the previous native field")
-		game.step_objects(11640)
+		game.step_objects(life_ms-320-1040)
 		game.view.present(game.view_snapshot(),0,0)
-		check(game.view.object_views.has("%s:exit"%field_id),label+" enters the original exit clip at 12680ms")
+		check(game.view.object_views.has("%s:exit"%field_id),label+" enters the original exit clip 320 ms before expiry")
 		game.step_objects(320)
-		check(game.objects.all(func(object):return int(object["id"])!=field_id),label+" deletes the original field at 13000ms")
+		check(game.objects.all(func(object):return int(object["id"])!=field_id) and game.player["hardattack_ghost"]==skill,
+			label+" deletes the original field and retains the last summoned spirit")
+		if skill=="sayaex":
+			game.step_action(600,Vector2.ZERO)
+			game.skill_levels["hardattack"] = 1
+			game.skill_levels["hardattackcharge"] = 1
+			game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+			game.configure_skill_slots(["hardattack"])
+			game.player["mp"] = game.move_def("hardattack")["mp"]
+			game.numeric_player.values["attack_speed"] = 1.0
+			var key := InputEventKey.new()
+			key.physical_keycode = KEY_A
+			key.pressed = true
+			game._input(key)
+			game.step_player(250,Vector2.ZERO)
+			key.pressed = false
+			game._input(key)
+			game.step_player(0,Vector2.ZERO)
+			game.step_player(350,Vector2.ZERO)
+			check(game.objects.size()==1 and game.objects[0]["def"]["bank"]=="hardattack_wave_saya_up"
+				and game.objects[0]["hit"]["percent"]==595.0,
+				"the last EX Saya summon selects the Saya wave even after the EX field expires")
 
 func check_bremen_freeze(game, session) -> void:
 	# Equal rank and resistance gives a strict 2500/10000 threshold.

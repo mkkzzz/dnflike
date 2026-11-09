@@ -2245,7 +2245,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var kind := String(controller.get("kind",""))
 	if kind in GHOST_FIELD_KINDS:
 		if owner == "player" and kind != "rasa_field":
-			player["hardattack_ghost"] = kind.trim_suffix("_field")
+			player["hardattack_ghost"] = controller.get("ghost_variant",kind.trim_suffix("_field"))
 		var exit_ms := float(controller["disappear_ms"])
 		if kind in ["khazan_field","bremen_field"]:
 			for previous: Dictionary in objects:

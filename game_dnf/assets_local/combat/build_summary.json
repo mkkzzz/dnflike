@@ -133,9 +133,10 @@
   "native_pope_thunderbolt",
   "hardattack_wave_khazan_up",
   "hardattack_wave_saya_up",
-  "hardattack_wave_bremen_up"
+  "hardattack_wave_bremen_up",
+  "passiveobject/character/swordman/sayaex.obj"
  ],
- "effects": 256,
+ "effects": 258,
  "digits": 61,
  "audio_keys": 240,
  "unresolved": 32,
