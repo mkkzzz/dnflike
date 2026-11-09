@@ -48,7 +48,8 @@
       234
      ],
      "card": "f7fc1e07302d_0",
-     "connector_image": "9c96b6d8c417_33"
+     "connector_image": "9c96b6d8c417_33",
+     "minimum_required_level": 1
     },
     "lorien_inside": {
      "dgn_index": 2,
@@ -78,9 +79,14 @@
       301
      ],
      "card": "f7fc1e07302d_1",
-     "connector_image": "9c96b6d8c417_31"
+     "connector_image": "9c96b6d8c417_31",
+     "minimum_required_level": 2
     }
-   }
+   },
+   "keyboard_order": [
+    "lorien",
+    "lorien_inside"
+   ]
   }
  },
  "images": {

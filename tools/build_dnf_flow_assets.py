@@ -81,6 +81,9 @@ def build_dungeon_selector(library: Path, output: Path, region: str = 'lorien') 
             pattern = span_values(dgn, '[worldmap pattern info]')
             if len(pattern) != 4:
                 raise ValueError(f'{key} has an unsupported original card record')
+            minimum_level = span_values(dgn, '[minimum required level]')
+            if not minimum_level or len(minimum_level) != 1 or not isinstance(minimum_level[0], int):
+                raise ValueError(f'{key} is missing its original minimum level for keyboard ordering')
             _, control, x, y, _, connector_bank, _, _, ui_pattern, _ = balloons[index]
             offsets = table[ui_pattern]
             compact, expanded, connector = ([x + dx, y + dy] for dx, dy in zip(offsets[::2], offsets[1::2], strict=True))
@@ -101,10 +104,18 @@ def build_dungeon_selector(library: Path, output: Path, region: str = 'lorien') 
             cards[key] = {'dgn_index': index, 'dgn': dgn_path, 'control': control,
                           'anchor': [x, y], 'ui_pattern': ui_pattern, 'dgn_pattern': pattern,
                           'compact': compact, 'expanded': expanded, 'connector': connector,
-                          'card': card, 'connector_image': image(connector_bank, 30 + ui_pattern)}
+                          'card': card, 'connector_image': image(connector_bank, 30 + ui_pattern),
+                          'minimum_required_level': minimum_level[0]}
             if missing_card:
                 cards[key]['missing_card_frame'] = True
-        layout = {'wdm': wdm_path, 'ui': ui_path.lower(), 'background': image(background, frame), 'cards': cards}
+        # Normal client navigation sorts by this DGN field. Equal levels need the
+        # server's active DGN list order, which is unnecessary for these distinct levels.
+        levels = {key: card['minimum_required_level'] for key, card in cards.items()}
+        if len(set(levels.values())) != len(levels):
+            raise ValueError(f'{region} needs its original active list order for tied keyboard levels')
+        keyboard_order = sorted(levels, key=levels.__getitem__)
+        layout = {'wdm': wdm_path, 'ui': ui_path.lower(), 'background': image(background, frame),
+                  'cards': cards, 'keyboard_order': keyboard_order}
         if (background.lower(), frame) != (wdm_background.lower(), wdm_frame):
             # Normal selection loads the WDM [ui path] into the visible UI tree.
             layout['background_control'] = background_control

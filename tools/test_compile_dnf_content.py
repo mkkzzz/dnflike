@@ -84,7 +84,7 @@ class NativeAttackEmissionTest(unittest.TestCase):
                          [(0, 20, 0), (1, 60, 0)])
         self.assertEqual([row['area'] for row in policy['slots']], [[200, 0, 0, 0, 40, 0, 40, 0]] * 2)
         self.mob['decoded']['attack_kind'][3] = 0
-        with self.assertRaisesRegex(ValueError, 'disagrees with the emitted attack slots'):
+        with self.assertRaisesRegex(ValueError, 'disagrees with its bound attack slots'):
             compile_native_attack_selection(self.mob, emissions, source)
 
     def test_attack_policy_rejects_unhandled_target_affiliation(self):

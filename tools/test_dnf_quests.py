@@ -33,6 +33,7 @@ class QuestAssets(unittest.TestCase):
     def test_lorien_selector_joins_ui_pattern_to_dgn_card_identity(self):
         region = self.selector['regions']['lorien']
         self.assertEqual(set(region['cards']), {'lorien', 'lorien_inside'})
+        self.assertEqual(region['keyboard_order'], ['lorien', 'lorien_inside'])
         background = self.selector['images'][region['background']]
         self.assertEqual((background['source_path'].lower(), background['frame'], background['size']),
                          ('sprite/worldmap/lorien.img', 0, [800, 600]))
@@ -43,6 +44,7 @@ class QuestAssets(unittest.TestCase):
             with self.subTest(key=key):
                 card = region['cards'][key]
                 self.assertEqual(card['dgn_index'], index)
+                self.assertEqual(card['minimum_required_level'], index)
                 self.assertEqual((card['compact'], card['expanded']), (compact, expanded))
                 info = self.selector['images'][card['card']]
                 self.assertEqual((info['source_path'].lower(), info['frame'], info['canvas_offset']),
@@ -52,6 +54,10 @@ class QuestAssets(unittest.TestCase):
     def test_granfloris_selector_preserves_registered_source_cards(self):
         region = self.gran_selector['regions']['granfloris']
         images = self.gran_selector['images']
+        self.assertEqual(region['keyboard_order'], ['mirkwood', 'mirkwood_deep', 'sunderland',
+                         'sunderland_poison', 'mirkwood_frost', 'grakkarak', 'grakkarak_burning', 'sunderland_dark'])
+        self.assertEqual([region['cards'][key]['minimum_required_level'] for key in region['keyboard_order']],
+                         [2, 3, 5, 7, 8, 10, 12, 14])
         background = images[region['background']]
         self.assertEqual((background['source_path'].lower(), background['frame'], background['size']),
                          ('sprite/worldmap/lorien.img', 0, [800, 600]))
@@ -79,6 +85,10 @@ class QuestAssets(unittest.TestCase):
     def test_sky_selector_uses_normal_ui_background_and_registered_source_cards(self):
         region = self.sky_selector['regions']['skytower']
         images = self.sky_selector['images']
+        self.assertEqual(region['keyboard_order'], ['draconiantower_amonlow', 'draconiantower', 'hallofdoll',
+                         'golemtower', 'darkentrance', 'floatingcastle', 'palaceofload'])
+        self.assertEqual([region['cards'][key]['minimum_required_level'] for key in region['keyboard_order']],
+                         [11, 16, 18, 20, 22, 24, 25])
         background = images[region['background']]
         self.assertEqual((background['source_path'].lower(), background['frame'], background['size']),
                          ('sprite/worldmap/lorien.img', 0, [800, 600]))

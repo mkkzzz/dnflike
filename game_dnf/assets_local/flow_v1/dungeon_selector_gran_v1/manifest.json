@@ -54,7 +54,8 @@
       344
      ],
      "card": "97d0bd599509_0",
-     "connector_image": "9c96b6d8c417_39"
+     "connector_image": "9c96b6d8c417_39",
+     "minimum_required_level": 2
     },
     "mirkwood_deep": {
      "dgn_index": 4,
@@ -84,7 +85,8 @@
       263
      ],
      "card": "97d0bd599509_1",
-     "connector_image": "9c96b6d8c417_43"
+     "connector_image": "9c96b6d8c417_43",
+     "minimum_required_level": 3
     },
     "mirkwood_frost": {
      "dgn_index": 9,
@@ -114,7 +116,8 @@
       267
      ],
      "card": "97d0bd599509_2",
-     "connector_image": "9c96b6d8c417_34"
+     "connector_image": "9c96b6d8c417_34",
+     "minimum_required_level": 8
     },
     "grakkarak_burning": {
      "dgn_index": 8,
@@ -144,7 +147,8 @@
       140
      ],
      "card": "97d0bd599509_6",
-     "connector_image": "9c96b6d8c417_35"
+     "connector_image": "9c96b6d8c417_35",
+     "minimum_required_level": 12
     },
     "sunderland": {
      "dgn_index": 5,
@@ -174,7 +178,8 @@
       307
      ],
      "card": "97d0bd599509_3",
-     "connector_image": "9c96b6d8c417_40"
+     "connector_image": "9c96b6d8c417_40",
+     "minimum_required_level": 5
     },
     "sunderland_dark": {
      "dgn_index": 1000,
@@ -204,7 +209,8 @@
       145
      ],
      "card": "97d0bd599509_7",
-     "connector_image": "9c96b6d8c417_36"
+     "connector_image": "9c96b6d8c417_36",
+     "minimum_required_level": 14
     },
     "sunderland_poison": {
      "dgn_index": 6,
@@ -234,7 +240,8 @@
       242
      ],
      "card": "97d0bd599509_4",
-     "connector_image": "9c96b6d8c417_41"
+     "connector_image": "9c96b6d8c417_41",
+     "minimum_required_level": 7
     },
     "grakkarak": {
      "dgn_index": 7,
@@ -264,9 +271,20 @@
       159
      ],
      "card": "97d0bd599509_5",
-     "connector_image": "9c96b6d8c417_34"
+     "connector_image": "9c96b6d8c417_34",
+     "minimum_required_level": 10
     }
-   }
+   },
+   "keyboard_order": [
+    "mirkwood",
+    "mirkwood_deep",
+    "sunderland",
+    "sunderland_poison",
+    "mirkwood_frost",
+    "grakkarak",
+    "grakkarak_burning",
+    "sunderland_dark"
+   ]
   }
  },
  "images": {

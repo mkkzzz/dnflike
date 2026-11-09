@@ -141,6 +141,16 @@ func check_sky_selector_open() -> void:
 		await ticks()
 		host.check(game.selected_dungeon == "golemtower" and not game.session.dungeon_available("draconiantower"),
 			"real pointer clicks respect the Dragon Tower prerequisite")
+		locked.grab_focus()
+	for transition: Array in [[KEY_UP, "darkentrance"], [KEY_UP, "floatingcastle"],
+			[KEY_UP, "palaceofload"], [KEY_UP, "draconiantower_amonlow"], [KEY_UP, "hallofdoll"],
+			[KEY_DOWN, "draconiantower_amonlow"], [KEY_DOWN, "palaceofload"]]:
+		host.key(transition[0], true)
+		await ticks(1)
+		host.key(transition[0], false)
+		await ticks()
+		var arrow := "up" if transition[0] == KEY_UP else "down"
+		host.check(game.selected_dungeon == transition[1], "real Sky Tower " + arrow + " selects " + transition[1])
 	var quest_id := "original.quest.8"
 	var entry: Dictionary = game.session.quests.new_entry(game.session.quests.catalog.definitions[quest_id])
 	entry["state"] = "completed"
@@ -166,10 +176,12 @@ func check_sky_selector_open() -> void:
 		and caption.position == Vector2(3, 20) and caption.size == Vector2(118, 53),
 		"DGN19 keeps the native error image and a visible localized route caption")
 	await host.frame("18c_skycastle_missing_source_card")
-	host.click_text("进入地下城")
+	host.key(KEY_SPACE, true)
+	await ticks(1)
+	host.key(KEY_SPACE, false)
 	await ticks()
 	host.check(game.session.run.get("dungeon") == "draconiantower_amonlow" and is_instance_valid(game.battle),
-		"the displayed DGN19 route reaches the real combat scene through the enter button")
+		"Space enters the real combat scene for the displayed DGN19 route")
 	if is_instance_valid(game.battle):
 		game.act("flow.retreat")
 		game.return_town()

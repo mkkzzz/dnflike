@@ -1369,6 +1369,10 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		step_native_summon_jump(enemy,dt)
 		return
 	elif state == "attack":
+		var jump: Dictionary = m.get("native_starfish_jump",{})
+		if not jump.is_empty() and int(enemy.get("move_index",-1)) == int(jump["move_index"]):
+			step_starfish_jump(enemy,jump,advance,dt)
+			return
 		enemy_attack(enemy,advance)
 	elif state in ["idle","move"] and enemy.get("ai",true):
 		var target := player if companions.is_empty() else nearest_living(enemy["pos"],friendly_targets())
@@ -1378,7 +1382,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		if not native_selection.is_empty() and (not blind or bool(intent["visible"])):
 			var slot := poll_native_enemy_attack(enemy,native_selection)
 			intent["attack"] = slot >= 0
-			intent["move_index"] = slot
+			intent["move_index"] = int(m.get("native_move_indices",{}).get(slot,slot))
 			if slot >= 0:intent["face"] = enemy["facing"]
 		enemy["facing"] = int(intent["face"])
 		if intent["attack"]:
@@ -1389,6 +1393,10 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["hits"] = {}
 			enemy["thrown"] = false
 			enemy["move_index"] = int(intent.get("move_index", -1))
+			if m.has("native_starfish_jump"):
+				enemy.erase("starfish_phase")
+				enemy.erase("native_jump_velocity")
+				enemy.erase("native_jump_gravity")
 		elif state == "idle" and m.has("native_suicide") and start_native_suicide(enemy,m["native_suicide"]):
 			return
 		elif Vector2(intent["move"]).length_squared() > 0:
@@ -1445,18 +1453,54 @@ func native_spawn_roll(bounds: Array) -> int:
 	return int(bounds[0])+rng.range_int(0,0x7fffffff)%(int(bounds[1])-int(bounds[0])+1)
 
 func step_native_summon_jump(enemy: Dictionary, dt: float) -> void:
+	if advance_native_flight(enemy,dt):
+		enemy["state"] = "idle"
+		enemy["clock"] = 0.0
+
+func advance_native_flight(enemy: Dictionary, dt: float) -> bool:
 	var velocity: Vector2 = enemy["native_jump_velocity"]
 	var gravity := float(enemy["native_jump_gravity"])
 	var vz := float(enemy["vz"])
 	enemy["pos"] = move_in_world(enemy["pos"],velocity*dt)
 	enemy["z"] = maxf(0.0,float(enemy["z"])+(vz+0.5*gravity*dt)*dt)
 	enemy["vz"] = vz+gravity*dt
-	if float(enemy["z"]) == 0.0 and float(enemy["vz"]) <= 0.0:
-		enemy["state"] = "idle"
-		enemy["clock"] = 0.0
+	var landed := float(enemy["z"]) == 0.0 and float(enemy["vz"]) <= 0.0
+	if landed:
 		enemy["vz"] = 0.0
 		enemy.erase("native_jump_velocity")
 		enemy.erase("native_jump_gravity")
+	return landed
+
+func step_starfish_jump(enemy: Dictionary, jump: Dictionary, animation_ms: float, dt: float) -> void:
+	var phase := String(enemy.get("starfish_phase","start"))
+	var age := float(enemy["clock"])
+	var landed := false
+	if enemy.has("native_jump_velocity"):
+		landed = advance_native_flight(enemy,dt)
+	elif phase == "start" and age >= float(jump["launch_at"]):
+		# DB52A5 starts the mover after the native launch frame becomes current.
+		var gravity := float(jump["gravity"])
+		enemy["native_jump_gravity"] = gravity
+		enemy["native_jump_velocity"] = Vector2(float(jump["forward_speed"])*int(enemy["facing"]),0)
+		enemy["vz"] = sqrt(absf(2.0*gravity*float(jump["jump_height"])))
+	var z := int(enemy["z"])
+	var vz := float(enemy["vz"])
+	if phase != "end" and (landed or (vz < 0.0 and z < int(jump["end_below_z"]))):
+		enemy["starfish_phase"] = "end"
+		enemy["clock"] = 0.0
+		return
+	if phase == "start" and vz > 0.0 and z > int(jump["roll_above_z"]):
+		enemy["starfish_phase"] = "rolling"
+		enemy["clock"] = 0.0
+		play_sound(jump["sound"])
+		resolve_enemy_melee(enemy,jump["rolling_segments"],jump["rolling_hit"],-1.0,0.0)
+	elif phase == "rolling":
+		var cycle := Kernel.Timeline.duration(jump["rolling_timeline"])
+		var from := fposmod(maxf(0.0,age-animation_ms),cycle)
+		resolve_enemy_melee(enemy,jump["rolling_segments"],jump["rolling_hit"],from,from+animation_ms)
+	elif phase == "end" and age >= Kernel.Timeline.duration(jump["end_timeline"]):
+		enemy.erase("starfish_phase")
+		finish_enemy_attack(enemy,enemy["def"]["moves"][int(jump["move_index"])])
 
 func poll_native_enemy_attack(enemy: Dictionary, policy: Dictionary) -> int:
 	var width: Array = table.player["width"]
@@ -1507,34 +1551,40 @@ func enemy_attack(enemy: Dictionary, ms: float) -> void:
 			spawn_object(hit,"monster",enemy["pos"],float(enemy["z"]),facing,float(enemy["attack"]),enemy)
 			if String(throw["sound"]) != "":play_sound(String(throw["sound"]))
 	else:
-		var targets := friendly_targets()
-		for s in move_segments.size():
-			var boxes: Array = Kernel.Timeline.segment_boxes(move_segments[s],old_t,t)
-			if boxes.is_empty():continue
-			var world: Array = Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
-			for target: Dictionary in targets:
-				var key := Vector2i(s,int(target["id"]))
-				if enemy["hits"].has(key) or float(target["hp"]) <= 0:continue
-				var c: Dictionary = Kernel.HitJudge.contact(world,friendly_damage_boxes(target))
-				if c.is_empty():continue
-				enemy["hits"][key] = true
-				var hit := {"atk":move_atk,"atk_path":move_atk_path,
-					"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0}
-				if not contact.is_empty():
-					hit["native_contact"] = contact
-					hit["atk_path"] = contact["atk_path"]
-					hit["skill_id"] = ""
-				land_hit(enemy,target,hit,c["point"],int(enemy["facing"]),float(enemy["attack"]))
+		var hit := {"atk":move_atk,"atk_path":move_atk_path,
+			"percent":100.0+float(move_atk.get("damage_bonus",0)),"lift":-1.0}
+		if not contact.is_empty():
+			hit["native_contact"] = contact
+			hit["atk_path"] = contact["atk_path"]
+			hit["skill_id"] = ""
+		resolve_enemy_melee(enemy,move_segments,hit,old_t,t)
 	if t >= Kernel.Timeline.duration(move_timeline):
-		enemy["state"] = "idle"
-		enemy["clock"] = 0.0
-		# 出手间隔只用 .mob 的 [attack delay]，不叠加自制系数。
-		enemy["cooldown_ms"] = float(m["attack_delay"])
-		var used := int(enemy.get("move_index", -1))
-		if used >= 0:
-			var cds: Dictionary = enemy.get("skill_cd", {})
-			cds[used] = float(move.get("cool_ms",m["attack_delay"]))
-			enemy["skill_cd"] = cds
+		finish_enemy_attack(enemy,move)
+
+func resolve_enemy_melee(enemy: Dictionary, segments: Array, hit: Dictionary, old_t: float, t: float) -> void:
+	var targets := friendly_targets()
+	for s in segments.size():
+		var boxes := Kernel.Timeline.segment_boxes(segments[s],old_t,t)
+		if boxes.is_empty():continue
+		var world := Kernel.HitJudge.world_boxes(boxes,Kernel.HitJudge.anchor(enemy["pos"],float(enemy["z"])),int(enemy["facing"]))
+		for target: Dictionary in targets:
+			var key := Vector2i(s,int(target["id"]))
+			if enemy["hits"].has(key) or float(target["hp"]) <= 0:continue
+			var contact := Kernel.HitJudge.contact(world,friendly_damage_boxes(target))
+			if contact.is_empty():continue
+			enemy["hits"][key] = true
+			land_hit(enemy,target,hit,contact["point"],int(enemy["facing"]),float(enemy["attack"]))
+
+func finish_enemy_attack(enemy: Dictionary, move: Dictionary) -> void:
+	enemy["state"] = "idle"
+	enemy["clock"] = 0.0
+	var delay := float(enemy["def"]["attack_delay"])
+	enemy["cooldown_ms"] = delay
+	var used := int(enemy.get("move_index", -1))
+	if used >= 0:
+		var cds: Dictionary = enemy.get("skill_cd", {})
+		cds[used] = float(move.get("cool_ms",delay))
+		enemy["skill_cd"] = cds
 
 func spawn_attack_contact(attacker: Dictionary, target: Dictionary, contact: Dictionary, facing: int, power: float) -> void:
 	# 7EF650 tests a bit mask against the original player, APC and MOB class flags.
@@ -2585,6 +2635,12 @@ func enemy_ani(enemy: Dictionary) -> Array:
 		"move":return ["move",float(enemy["clock"])]
 		"native_suicide":return [m["native_suicide"]["pose"],float(enemy["clock"])]
 		"attack":
+			var phase := String(enemy.get("starfish_phase",""))
+			if phase != "":
+				var jump: Dictionary = m["native_starfish_jump"]
+				var age := float(enemy["clock"])
+				if phase == "rolling":age = fposmod(age,Kernel.Timeline.duration(jump["rolling_timeline"]))
+				return [jump[phase+"_pose"],age]
 			# BOSS 多招：播放这一刀选中的招式 ANI（stem 来自 .mob 的 [attack motion]）。
 			var moves: Array = m.get("moves", [])
 			var pick := int(enemy.get("move_index", -1))

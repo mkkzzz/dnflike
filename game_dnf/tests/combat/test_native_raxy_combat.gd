@@ -26,6 +26,9 @@ class SourceRolls:
 			return result
 		return low
 
+	func next_float() -> float:
+		return 0.0
+
 func _initialize() -> void:
 	call_deferred("run")
 
@@ -50,6 +53,8 @@ func run() -> void:
 			check_suicide()
 			check_two_summons()
 			check_ordinary_death()
+			check_jump("native_starfish",[0,9999,9999,0,0],1)
+			check_jump("native_starfish_rukuku",[0,0,0],0)
 	print("[NATIVE_RAXY] COMPLETE checks=%d failures=%d"%[checks,failures])
 	quit(0 if failures == 0 else 1)
 
@@ -116,4 +121,69 @@ func check_two_summons() -> void:
 	check(enemy["state"] == "dead" and game.monsters.size() == 3 and draws.index == draws.rolls.size(),"the even count draw spawns two children")
 	game.step_game(900.0)
 	check(game.monsters.size() == 3 and sound_count("KNIFE_STICK") == 1 and sound_count("ZGM_SPRING") == 2,"large updates preserve the one-shot cue and summon lifecycle")
+	game.rng = rng_before
+
+func check_jump(kind: String, source_draws: Array[int], runtime_index: int) -> void:
+	start_room()
+	game.clear_monsters()
+	game.player["pos"] = Vector2(430,300)
+	game.player["invuln_ms"] = 0.0
+	var enemy: Dictionary = game.spawn_enemy(Vector2(350,300),false,kind)
+	var jump: Dictionary = enemy["def"]["native_starfish_jump"]
+	var rng_before = game.rng
+	var draws := SourceRolls.new(source_draws)
+	game.rng = draws
+	enemy["facing"] = 1
+	game.update_enemy(enemy,2999.0)
+	check(enemy["state"] != "attack" and draws.index == 0,"original attack polling waits 3000 ms")
+	enemy["pos"] = Vector2(350,300)
+	game.update_enemy(enemy,1.0)
+	var selected: bool = enemy["state"] == "attack" and enemy["move_index"] == runtime_index \
+		and enemy["def"]["moves"][runtime_index]["source_slot"] == 1 and draws.index == source_draws.size()
+	check(selected,"original poll selects slot one without renumbering a sparse attack table (%s, %s, %s)"
+		%[enemy["state"],enemy.get("move_index",-1),draws.index])
+	if not selected:
+		game.rng = rng_before
+		return
+	game.player["pos"] = Vector2(760,300)
+	game.bus.clear_history()
+	game.update_enemy(enemy,49.0)
+	check(enemy["z"] == 0.0 and enemy["vz"] == 0.0 and game.enemy_ani(enemy)[0] == "jumpattackstart",
+		"the original startup frame has neither vertical motion nor a hit")
+	game.update_enemy(enemy,1.0)
+	check(enemy["z"] == 0.0 and enemy.get("native_jump_velocity") == Vector2(80,0)
+		and is_equal_approx(enemy["vz"],sqrt(450000.0)),"native frame one launches toward the original 150-pixel apex")
+	for _tick in 40:
+		game.update_enemy(enemy,16.0)
+		if enemy.get("starfish_phase","") == "rolling":break
+	check(enemy.get("starfish_phase","") == "rolling" and int(enemy["z"]) > 130 and float(enemy["vz"]) > 0.0
+		and sound_count("ZGM_ATK") == 1,"the original rolling ANI and sound start once above 130 on ascent")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var actor = game.view.enemy_actors.get(enemy["id"])
+	check(actor != null and actor.atlas != null and actor.pose == "jumpattackrolling"
+		and actor.bank["texture"].ends_with("mob_"+kind+".png"),"each original monster uses its own rolling sprite bank")
+	check(game.bus.events_of("combat.hit").is_empty(),"startup and distant rolling cause no hits")
+	game.player["pos"] = enemy["pos"]
+	game.player["z"] = enemy["z"]
+	game.player["invuln_ms"] = 0.0
+	game.update_enemy(enemy,1.0)
+	var hits: Array = game.bus.events_of("combat.hit")
+	check(hits.size() == 1 and hits[0]["atk"] == jump["rolling_atk"],"a live rolling collision consumes the independent original ATK")
+	game.player["pos"] = Vector2(760,300)
+	game.player["z"] = 0.0
+	var looped := false
+	for _tick in 90:
+		game.update_enemy(enemy,16.0)
+		if enemy.get("starfish_phase","") == "rolling" and enemy["clock"] >= 140.0:
+			looped = looped or game.enemy_ani(enemy)[1] < 140.0
+		if enemy.get("starfish_phase","") == "end":break
+	check(looped and game.bus.events_of("combat.hit").size() == 1,
+		"rolling loops its own 140 ms visual without duplicating the resolved contact")
+	check(enemy.get("starfish_phase","") == "end" and int(enemy["z"]) < 15
+		and game.enemy_ani(enemy)[0] == "jumpattackend" and enemy["clock"] == 0.0,"the original landing pose starts below 15 on descent")
+	game.update_enemy(enemy,279.0)
+	check(enemy["state"] == "attack" and enemy["z"] == 0.0,"the last landing frame is held to its own ANI end")
+	game.update_enemy(enemy,1.0)
+	check(enemy["state"] == "idle" and not enemy.has("native_jump_velocity") and sound_count("ZGM_ATK") == 1,
+		"landing finishes after 280 ms and clears the native flight")
 	game.rng = rng_before

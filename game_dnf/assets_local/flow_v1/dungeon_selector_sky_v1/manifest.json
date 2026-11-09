@@ -53,7 +53,8 @@
       217
      ],
      "card": "8b91efb5a16d_0",
-     "connector_image": "9c96b6d8c417_43"
+     "connector_image": "9c96b6d8c417_43",
+     "minimum_required_level": 16
     },
     "golemtower": {
      "dgn_index": 13,
@@ -83,7 +84,8 @@
       479
      ],
      "card": "8b91efb5a16d_3",
-     "connector_image": "9c96b6d8c417_37"
+     "connector_image": "9c96b6d8c417_37",
+     "minimum_required_level": 20
     },
     "floatingcastle": {
      "dgn_index": 17,
@@ -113,7 +115,8 @@
       228
      ],
      "card": "8b91efb5a16d_5",
-     "connector_image": "9c96b6d8c417_36"
+     "connector_image": "9c96b6d8c417_36",
+     "minimum_required_level": 24
     },
     "palaceofload": {
      "dgn_index": 15,
@@ -143,7 +146,8 @@
       391
      ],
      "card": "8b91efb5a16d_4",
-     "connector_image": "9c96b6d8c417_46"
+     "connector_image": "9c96b6d8c417_46",
+     "minimum_required_level": 25
     },
     "darkentrance": {
      "dgn_index": 14,
@@ -173,7 +177,8 @@
       308
      ],
      "card": "8b91efb5a16d_2",
-     "connector_image": "9c96b6d8c417_36"
+     "connector_image": "9c96b6d8c417_36",
+     "minimum_required_level": 22
     },
     "hallofdoll": {
      "dgn_index": 12,
@@ -203,7 +208,8 @@
       289
      ],
      "card": "8b91efb5a16d_1",
-     "connector_image": "9c96b6d8c417_42"
+     "connector_image": "9c96b6d8c417_42",
+     "minimum_required_level": 18
     },
     "draconiantower_amonlow": {
      "dgn_index": 19,
@@ -234,9 +240,19 @@
      ],
      "card": "987c3569cc48_91",
      "connector_image": "9c96b6d8c417_42",
+     "minimum_required_level": 11,
      "missing_card_frame": true
     }
    },
+   "keyboard_order": [
+    "draconiantower_amonlow",
+    "draconiantower",
+    "hallofdoll",
+    "golemtower",
+    "darkentrance",
+    "floatingcastle",
+    "palaceofload"
+   ],
    "background_control": [
     "[image]",
     "IDC_WORLDMAP_BACKGROUND",

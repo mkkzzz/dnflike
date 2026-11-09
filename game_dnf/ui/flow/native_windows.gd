@@ -413,6 +413,11 @@ func dungeon_lock_reason(id: String) -> String:
 		if game.session.quests.status(game.session.profile, required) != "completed":return "需要先完成前置任务"
 	return "尚未开放"
 
+func _dungeon_regions() -> Array:
+	var scene: Dictionary = game.town.world.scene(game.town.location)
+	var regions = scene.get("dungeon_region", "lorien")
+	return regions if regions is Array else [regions]
+
 func _selector_pack(regions: Array, choices: Array) -> MapLoader:
 	if regions.size() != 1 or choices.is_empty() or game.selected_dungeon == "forest_trial":
 		return null
@@ -429,15 +434,30 @@ func _selector_pack(regions: Array, choices: Array) -> MapLoader:
 			return null
 	return pack
 
+func move_dungeon_selection(step: int) -> bool:
+	var regions := _dungeon_regions()
+	var pack := _selector_pack(regions, game.session.dungeon_choices(regions))
+	if pack == null:return false
+	var order: Array = pack.data["regions"][String(regions[0])].get("keyboard_order", [])
+	var current := order.find(game.selected_dungeon)
+	if current < 0:return false
+	if step == 0:return true
+	for distance in range(1, order.size()):
+		var id: String = order[posmod(current + step * distance, order.size())]
+		if game.session.dungeon_available(id):
+			game.selected_dungeon = id
+			game.ui_audio.play("map_hover")
+			game.show_overlay("dungeon")
+			break
+	return true
+
 func _selector_image(parent: Control, pack: MapLoader, key: String, at: Vector2, scale_factor := 1.0) -> TextureRect:
 	var offset: Array = pack.data["images"][key]["canvas_offset"]
 	return skin.image(parent, pack.texture(key), at + Vector2(offset[0], offset[1]) * scale_factor, scale_factor)
 
 func dungeon() -> void:
 	var node = container(game.modal, Vector2.ZERO, Vector2(800, 600))
-	var scene_data: Dictionary = game.town.world.scene(game.town.location)
-	var regions = scene_data.get("dungeon_region", "lorien")
-	if not regions is Array:regions = [regions]
+	var regions := _dungeon_regions()
 	var choices: Array = game.session.dungeon_choices(regions)
 	if game.selected_dungeon=="forest_trial":choices=["forest_trial"]
 	if not choices.is_empty() and game.selected_dungeon not in choices:game.selected_dungeon=choices[0]

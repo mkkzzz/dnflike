@@ -561,8 +561,11 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 					move["atk_path"] = atk_path
 			if index < cooltimes.size():move["cool_ms"] = float(cooltimes[index])
 			if emissions.has(index):_attach_attack_emission(move,emissions[index],path)
+			if record.has("native_starfish_jump"):move["source_slot"] = index
 			moves.append(move)
 	if not moves.is_empty():m["moves"] = moves
+	if record.has("native_starfish_jump"):
+		_bind_native_starfish_jump(m,record["native_starfish_jump"],moves)
 	for binding: Dictionary in record.get("native_attack_contacts",[]):
 		var slot := int(binding["slot"])
 		var object_path := String(binding["object_path"])
@@ -651,6 +654,35 @@ func _attach_attack_emission(move: Dictionary, emission: Dictionary, mob_path: S
 	}
 
 ## 一招能覆盖的水平区间（相对锚点，含朝向翻转前的正值侧）。
+func _bind_native_starfish_jump(monster: Dictionary, source: Dictionary, moves: Array) -> void:
+	var jump := source.duplicate(true)
+	var indices := {}
+	for index in moves.size():indices[int(moves[index]["source_slot"])] = index
+	var move_index := int(indices.get(int(source["slot"]),-1))
+	var clips: Dictionary = assets.get("monsters",{}).get(monster["bank"],{}).get("clips",{})
+	for phase: String in ["start","rolling","end"]:
+		var path := String(source[phase+"_ani"])
+		var pose := path.get_file().get_basename()
+		jump[phase+"_pose"] = pose
+		jump[phase+"_timeline"] = timeline(path)
+		if not clips.has(pose) or jump[phase+"_timeline"].is_empty():
+			problems.append("missing original StarFish "+phase+" clip for "+String(monster["mob"]))
+			return
+		monster["ani_paths"][pose] = path
+	var launch_frame := int(jump["launch_frame"])
+	if move_index < 0 or launch_frame >= jump["start_timeline"].size():
+		problems.append("missing original StarFish launch frame or slot for "+String(monster["mob"]))
+		return
+	jump["move_index"] = move_index
+	jump["launch_at"] = float(jump["start_timeline"][launch_frame]["start_ms"])
+	jump["rolling_segments"] = Timeline.attack_segments(jump["rolling_timeline"])
+	var attack := atk(String(jump["rolling_atk"]))
+	jump["rolling_hit"] = {"atk":attack,"atk_path":jump["rolling_atk"],"skill_id":"",
+		"percent":100.0+float(attack.get("damage_bonus",0)),"lift":-1.0}
+	monster["native_starfish_jump"] = jump
+	monster["native_attack_selection"] = source["selection"]
+	monster["native_move_indices"] = indices
+
 func reach_of(tl: Array) -> Array:
 	var low := INF
 	var high := -INF

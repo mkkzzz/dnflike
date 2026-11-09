@@ -291,6 +291,13 @@ func _input(event: InputEvent) -> void:
 		if event.is_pressed() and not event.is_echo() and key==KEY_X:recovery_windows.revive_now()
 		get_viewport().set_input_as_handled()
 		return
+	if overlay == "dungeon" and key in [KEY_UP, KEY_DOWN] and not debug_is_open():
+		var step := 0
+		if event.is_pressed() and not event.is_echo():
+			step = 1 if key == KEY_UP else -1
+		if windows.move_dungeon_selection(step):
+			get_viewport().set_input_as_handled()
+			return
 	if key == KEY_SHIFT:windows.update_skill_detail(event.pressed)
 	if key not in [KEY_P, KEY_ESCAPE, KEY_F3, KEY_F11]:
 		if session.state == "battle" and overlay == "" and not debug_is_open():

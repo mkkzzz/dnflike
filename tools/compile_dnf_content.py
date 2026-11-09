@@ -660,7 +660,7 @@ def compile_native_attack_emissions(mob: dict, mob_id: int, spec: dict, passive_
     return [rows[slot] for slot in sorted(rows)]
 
 
-def compile_native_attack_selection(mob: dict, emissions: list[dict], source: dict) -> dict:
+def compile_native_attack_selection(mob: dict, attack_slots: list[dict], source: dict) -> dict:
     """Compile the classic hostile slot poll for ordinary PvE targets."""
     path = mob['id']
     decoded = mob['decoded']
@@ -679,12 +679,16 @@ def compile_native_attack_selection(mob: dict, emissions: list[dict], source: di
             raise ValueError(f'Native attack selection for {path} has invalid area or eligibility flag')
         if not enabled:
             continue
-        if other != 0 or not all(0 <= chance <= 100 and int(chance) == chance for chance in (standing, no_target)):
+        if (other != 0 and 'alternate_target_class' not in source) or not all(
+                0 <= chance <= 100 and int(chance) == chance for chance in (standing, no_target, other)):
             raise ValueError(f'Native attack selection for {path} uses unverified probability modes')
-        slots.append({'slot': offset // 12, 'standing_percent': int(standing),
-                      'no_target_percent': int(no_target), 'area': area})
-    if {row['slot'] for row in slots} != {row['slot'] for row in emissions}:
-        raise ValueError(f'Native attack selection for {path} disagrees with the emitted attack slots')
+        row = {'slot': offset // 12, 'standing_percent': int(standing),
+               'no_target_percent': int(no_target), 'area': area}
+        if 'alternate_target_class' in source:
+            row['alternate_target_percent'] = int(other)
+        slots.append(row)
+    if {row['slot'] for row in slots} != {row['slot'] for row in attack_slots}:
+        raise ValueError(f'Native attack selection for {path} disagrees with its bound attack slots')
     return {'initial_ms': source['initial_ms'], 'down_gate_percent': source['down_gate_percent'],
             'delay_ms': delay, 'delay_spread_ms': delay // 5,
             'slots': slots, 'source': source}
@@ -788,11 +792,22 @@ def compile_native_starfish_jump(mob: dict, mob_id: int, spec: dict, add) -> dic
     for dependency in etc_attacks:
         if dependency:
             add(dependency, 'atk', path)
+    selection = compile_native_attack_selection(mob, [
+        {'slot': index} for index, (motion, attack) in enumerate(zip(motions, attacks, strict=True))
+        if motion and attack
+    ], {
+        'initial_ms': 3000, 'down_gate_percent': 0,
+        'target_class': 0x11, 'alternate_target_class': 0x21,
+        'normal_ai_call': '0x8782ED', 'attempt_deadline': '0x8837DE..0x88384F',
+        'target_area': '0x877CE0', 'slot_probabilities': '0x8784D0..0x8786FC',
+        'no_target_probability': '0x878710..0x87875A', 'uniform_candidate': '0x8838FB..0x88394E',
+    })
     return {
         'slot': 1, 'state': 8, 'start_ani': start_ani, 'rolling_ani': rolling_ani, 'end_ani': end_ani,
         'rolling_atk': etc_attacks[1], 'rolling_etc_motion_index': 2, 'end_etc_motion_index': 3,
         'rolling_etc_attack_index': 1, 'launch_frame': 1, 'forward_speed': 80,
         'jump_height': 150, 'roll_above_z': 130, 'end_below_z': 15, 'gravity': -1500, 'sound': 'ZGM_ATK',
+        'selection': selection,
         'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'entry': '0xDB75D0', 'update': '0xDB5270'},
     }
 
