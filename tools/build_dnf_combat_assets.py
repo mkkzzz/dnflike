@@ -35,7 +35,8 @@ from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from compile_dnf_content import NATIVE_OUTERWALL_BANKS, NATIVE_ZEALOT_MONSTERS
+from compile_dnf_content import (NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
+                                 NATIVE_ZEALOT_MONSTERS, OUTERWALL_BREAKABLE_ROOT)
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
@@ -51,13 +52,32 @@ NATIVE_PARTICLES = [
 def native_particle_definitions(src):
     """Small runtime subset, decoded from the source; retain duplicate choices."""
     particles, effects = {}, {}
-    for path in NATIVE_PARTICLES:
+    pinned = {}
+    for obj_name, ani_name, ptl_name, obj_sha, ani_sha, ptl_sha in NATIVE_OUTERWALL_BREAKABLES.values():
+        obj_path = OUTERWALL_BREAKABLE_ROOT + obj_name + '.obj'
+        motion = OUTERWALL_BREAKABLE_ROOT + 'animation/' + ani_name + '.ani'
+        path = OUTERWALL_BREAKABLE_ROOT + 'particle/' + ptl_name + '.ptl'
+        binding = src.pack_records.get(obj_path, {}).get('native_breakable', {})
+        hashes = binding.get('source_hashes', {})
+        if binding.get('destroy_particle') != path or binding.get('motion_ani') != motion or hashes.get(path) != ptl_sha:
+            raise ValueError('Compile the pinned native breakable before baking: ' + obj_path)
+        for source, digest in ((obj_path, obj_sha), (motion, ani_sha)):
+            raw = src.lib.raw(source)
+            if not raw or raw[1] != digest or hashes.get(source) != digest:
+                raise ValueError('Native breakable source differs from compiled pack: ' + source)
+            src.sources[source] = digest
+        pinned[path] = hashes
+    for path in [*NATIVE_PARTICLES, *pinned]:
         doc = src.lib.script(path)
         if not doc:
             raise ValueError('Missing original particle: '+path)
         entry = parse_particle(path, doc)
         if not entry or entry['unsupported'] or entry['diagnostics']:
             raise ValueError('Unresolved native particle: '+path)
+        if path in pinned and (entry['sha256'] != pinned[path][path] or any(
+                not (raw := src.lib.raw(animation)) or raw[1] != pinned[path].get(animation)
+                for animation in entry['animations'])):
+            raise ValueError('Native particle source differs from compiled pack: '+path)
         particles[path] = {'sha256': entry['sha256'], 'decoded': entry['decoded']}
         src.sources[path] = entry['sha256']
         for animation in entry['animations']:
@@ -180,11 +200,14 @@ ZEALOT_SOUNDS = {
 }
 # Father and Pope ATK [hit wav], resolved by the original audio.xml.
 OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg']}
+# Breakable OBJ string slot 4, resolved by the original audio.xml.
+OUTERWALL_BREAKABLE_SOUNDS = {'WOOD_HIT': ['sounds/effect/wood_hit.ogg']}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
+    **OUTERWALL_BREAKABLE_SOUNDS,
     'DRGCANNON_SHOOT': ['sounds/mon/act3/drgcan_shoot.ogg'],
     'R_BOMB_HIT': ['sounds/effect/bomb_hit_01.ogg', 'sounds/effect/bomb_hit_02.ogg'],
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
@@ -853,10 +876,10 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     return summary
 
 
-def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
+def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_path: Path | None = None) -> dict:
     """Stage the existing tree plus new banks; reject changes to existing PNGs."""
     global ACTIVE_OUT
-    src = Source(library)
+    src = Source(library, pack_path=pack_path)
     previous_output = ACTIVE_OUT
     (ROOT/'temp').mkdir(parents=True,exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix='dnf-particle-extend-', dir=ROOT/'temp'))
@@ -874,6 +897,15 @@ def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
             if (output/texture).exists() and (output/texture).read_bytes() != (stage/texture).read_bytes():
                 raise ValueError('Existing particle texture differs: '+texture)
             manifest['effects'][key] = bank
+        audio = {}
+        for key, paths in OUTERWALL_BREAKABLE_SOUNDS.items():
+            copy_audio(src, paths, audio, key, unresolved)
+            for clip in audio.get(key, []):
+                if sha((stage/'audio'/PurePosixPath(clip['source']).name).read_bytes()) != clip['sha256']:
+                    raise ValueError('Original particle audio identity differs: ' + clip['source'])
+            if key in manifest['audio'] and manifest['audio'][key] != audio.get(key):
+                raise ValueError('Existing particle audio binding differs: ' + key)
+        manifest['audio'].update(audio)
         if unresolved:
             raise ValueError('Incomplete particle assets: '+str(unresolved))
         for path, digest in src.sources.items():
@@ -881,11 +913,13 @@ def extend_native_particles(library: Path | None, output: Path = OUT) -> dict:
                 raise ValueError('Existing source identity differs: '+path)
         manifest.setdefault('particles', {}).update(definitions)
         manifest['sources'].update(src.sources)
+        manifest['skill_runtime_sha256'] = sha(SKILL_RUNTIME.read_bytes())
         (stage/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':')),encoding='utf8')
         summary_path = stage/'build_summary.json'
         if summary_path.is_file():
             summary = json.loads(summary_path.read_text(encoding='utf8'))
-            summary.update(effects=len(manifest['effects']),particle_templates=len(manifest['particles']))
+            summary.update(effects=len(manifest['effects']), particle_templates=len(manifest['particles']),
+                           audio_keys=len(manifest['audio']))
             summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=1),encoding='utf8')
         publish_tree(stage, output)
         return {'particle_templates': len(definitions), 'animation_banks': len(effects)}
@@ -1041,8 +1075,8 @@ def main() -> int:
     parser.add_argument('--output', type=Path, help='Existing asset tree for incremental monster builds')
     parser.add_argument('--pack', type=Path, help='Compiled source pack for incremental monster builds')
     args = parser.parse_args()
-    if (args.output or args.pack) and not (args.extend_raxy_starfish or args.extend_outerwall):
-        parser.error('--output and --pack require --extend-raxy-starfish or --extend-outerwall')
+    if (args.output or args.pack) and not (args.extend_raxy_starfish or args.extend_outerwall or args.extend_native_particles):
+        parser.error('--output and --pack require --extend-raxy-starfish, --extend-outerwall or --extend-native-particles')
     if args.extend_outerwall:
         specs = [('monsters', key, path) for key, path in NATIVE_OUTERWALL_BANKS.items()]
         specs.extend(('audio', key, paths) for key, paths in OUTERWALL_SOUNDS.items())
@@ -1082,7 +1116,7 @@ def main() -> int:
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_native_particles:
-        print(json.dumps(extend_native_particles(args.library)))
+        print(json.dumps(extend_native_particles(args.library, args.output or OUT, pack_path=args.pack)))
         return 0
     if args.refresh_ani_metadata:
         path = OUT / 'manifest.json'

@@ -17,6 +17,7 @@ const SCENE := "res://scenes/main.tscn"
 const FLOW_EVENTS := ["combat.monster_defeated", "combat.room_combat_finished", "combat.player_defeated", "combat.companion_defeated"]
 const SkillSlots = preload("res://stats/api/skill_slots.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
+const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
 var game: Node
@@ -116,6 +117,7 @@ func _use_map_export(loader) -> void:
 func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 	var pending: Array[String] = []
 	var checked := {}
+	var checked_props := {}
 	for path: String in maze.required_map_paths():
 		var room: Dictionary = loader.room(path)
 		for monster: Dictionary in room["monsters"]:
@@ -123,6 +125,16 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 			if mob not in pending:pending.append(mob)
 		for companion: Dictionary in room.get("companions",[]):
 			if not game.can_spawn_companion(companion):return false
+		for item: Dictionary in room.get("objects",[]):
+			if not NativeBreakable.supports(item):continue
+			var obj := String(item["obj"])
+			var source: Dictionary = game.content.record(obj).get("native_breakable",{})
+			if source.is_empty() or int(source["object_index"]) != int(item["id"]):return false
+			var sprite: Dictionary = item.get("sprite",{})
+			if sprite.get("ani") != source["motion_ani"] or sprite.get("ani_sha256") != source["source_hashes"][source["motion_ani"]]:return false
+			if not checked_props.has(obj):
+				if not _validate_native_breakable(source):return false
+				checked_props[obj] = true
 	while not pending.is_empty():
 		var mob: String = pending.pop_front()
 		if checked.has(mob):continue
@@ -138,6 +150,21 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 	for image: Dictionary in loader.data["images"].values():
 		if not FileAccess.file_exists(loader.base_dir.path_join(String(image["file"]))):return false
 	return true
+
+func _validate_native_breakable(source: Dictionary) -> bool:
+	var timeline: Array = game.table.timeline(source["motion_ani"])
+	if timeline.size() != 1 or timeline[0]["damage_boxes"].is_empty():return false
+	var particle := String(source["destroy_particle"])
+	var template: Dictionary = game.combat_assets.get("particles",{}).get(particle,{})
+	if template.get("sha256") != source["source_hashes"][particle]:return false
+	var textures := {}
+	for bank: Dictionary in game.combat_assets.get("effects",{}).values():
+		if bank.has("source"):textures[bank["source"]] = bank.get("atlas",{}).get("texture","")
+	for entry: Dictionary in template["decoded"]["object_entries"]:
+		if not ResourceLoader.exists(String(textures.get(entry["path"],"")),"Texture2D"):return false
+	for clip: Dictionary in game.combat_assets.get("audio",{}).get(source["hit_sound"],[]):
+		if ResourceLoader.exists(String(clip.get("file","")),"AudioStream"):return true
+	return false
 
 ## The outer flow owns configurable hotkeys; the internal test harness uses this bridge.
 func submit_key(code: int, pressed: bool, echo := false) -> void:

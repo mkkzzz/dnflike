@@ -117,6 +117,21 @@ NATIVE_OUTERWALL_MOBS = {
           NATIVE_ATTACK_EMISSIONS['monster/vehicle/catapult.mob']['sha256']['monster/vehicle/catapult.mob']),
 }
 NATIVE_OUTERWALL_BANKS = {key: path for key, path, _sha in NATIVE_OUTERWALL_MOBS.values()}
+OUTERWALL_BREAKABLE_ROOT = 'passiveobject/mapobject/breakableobject/'
+NATIVE_OUTERWALL_BREAKABLES = {
+    300: ('collectionboxforlotus', 'collectionboxforlotus', 'collectionboxdestroy',
+          '4966224594c08f2d04e23ab1da26b5e00756565767a096cf7b07eae54c720729',
+          '92cab2a2a6b9d89a227b2b674e2cdf20421c840bc40d951413b0b78696816cf9',
+          '581c42fbb7e606b681d7ab562ac83e9238e3f27c37e4bd19ad05f84851606a49'),
+    770: ('outerwalllongchair', 'longchair', 'longchairdestroy',
+          '169380edd84a84dfc77d33678a5e6ed2d6b4dd8e3b08277cd39775268ebce27d',
+          'a354a764957001a52eb0adb43709b8a559d022c6650ea2e7075a7651da561e9e',
+          'c659872bcf512a5e77ed9f77f8d80b0158dee98db873edec9fe593cdc1c604b8'),
+    771: ('outerwalllongpot', 'longpot', 'longpotdestroy',
+          '74b3c83364a8848f552798a663ad1e57cf8640f56ab146c7dcaf4e6306962c89',
+          'ebf839e8df70e9b1e4da0da1b76b3a339731c886861d59e75f7997e1595bfade',
+          '0856c4e55f330aa2d057b6831050777608db86cbec0f300c9ee1db0d951309fb'),
+}
 NATIVE_ZEALOT_SOURCE_SHA = '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'
 NATIVE_RAXY_SOURCE = {
     'monster/zealot/raxy-a.mob': '5a6e4599e577eff2668d7cbe14faefe7a577dff0f89b45fb9d1f3f5beb39e7b7',
@@ -855,6 +870,42 @@ def compile_native_starfish_bite(mob: dict, add) -> dict:
     }
 
 
+def compile_native_outerwall_breakables(passive_index: dict, add) -> None:
+    for source_id, (obj_name, ani_name, ptl_name, obj_sha, ani_sha, ptl_sha) in NATIVE_OUTERWALL_BREAKABLES.items():
+        path = OUTERWALL_BREAKABLE_ROOT + obj_name + '.obj'
+        motion = OUTERWALL_BREAKABLE_ROOT + 'animation/' + ani_name + '.ani'
+        particle = OUTERWALL_BREAKABLE_ROOT + 'particle/' + ptl_name + '.ptl'
+        hashes = {path: obj_sha, motion: ani_sha, particle: ptl_sha}
+        indexed = passive_index.get(source_id, '').replace('\\', '/').lower()
+        if 'passiveobject/' + indexed != path:
+            raise ValueError(f'Original OBJ{source_id} must resolve to {path}')
+        obj, ani, ptl = (add(source, kind, path) for source, kind in ((path, 'obj'), (motion, 'ani'), (particle, 'ptl')))
+        if any(not row or row['source']['sha256'] != digest for row, digest in zip((obj, ani, ptl), hashes.values())):
+            raise ValueError(f'Original breakable source changed: {path}')
+        fields = obj['decoded']
+        integers, strings = fields['int_data'], fields['string_data']
+        if (fields['basic_motion'] != [motion] or len(integers) != 7 or len(strings) != 6
+                or resolve(path, strings[2]) != particle or ptl['unsupported']
+                or ptl['decoded']['object_type'] != '[animation]'
+                or not any(frame['damage_boxes'] for frame in ani['decoded']['timeline'])):
+            raise ValueError(f'Original breakable fields or hit boxes changed: {path}')
+        for entry in ptl['decoded']['object_entries']:
+            animation = entry['path']
+            row = add(animation, 'ani', particle) if entry['parameter'] == -1 else None
+            if not row or not row['decoded']['timeline']:
+                raise ValueError(f'Original breakable particle animation missing: {animation}')
+            hashes[animation] = row['source']['sha256']
+        obj['native_breakable'] = {
+            'object_index': source_id, 'motion_ani': motion, 'destroy_particle': particle,
+            'particle_offset': integers[3:6], 'hp': integers[6],
+            'trigger_stage': integers[0], 'stages': integers[1], 'destroy_on_final_stage': bool(integers[2]),
+            'hit_sound': strings[4], 'destroy_sound': strings[5], 'source_hashes': hashes,
+            'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'factory': '0xA1CF36',
+                       'initialize': '0xA38DB0', 'damage': '0x7FAEB7..0x7FAF85',
+                       'stage': '0xA36600', 'destroy': '0xA368D0'},
+        }
+
+
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -930,6 +981,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     required = extra | NATIVE_ATTACK_CONTACTS.keys() | set(NATIVE_ZEALOT_MONSTERS.values()) | set(NATIVE_OUTERWALL_BANKS.values())
     needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
+    compile_native_outerwall_breakables(passive_objects, add)
     for index, rel in sorted(monsters.items()):
         p = ('monster/' + rel).lower()
         if not (p.startswith('monster/goblin/') or p in {

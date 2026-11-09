@@ -130,9 +130,9 @@
   "native_cannonball",
   "native_pope_thunderbolt"
  ],
- "effects": 194,
+ "effects": 213,
  "digits": 61,
- "audio_keys": 213,
+ "audio_keys": 214,
  "unresolved": 32,
  "unresolved_items": [
   {
@@ -299,5 +299,5 @@
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
   }
  ],
- "particle_templates": 3
+ "particle_templates": 6
 }

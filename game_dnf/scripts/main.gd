@@ -11,6 +11,7 @@ const Kernel = preload("res://combat/api/kernel.gd")
 const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
+const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
@@ -1161,6 +1162,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if c.is_empty():continue
 				player["hits"][id] = true
 				land_hit(player,enemy,hit,c["point"],facing,attack_power())
+			if native_maze != null:
+				apply_native_prop_hits(world,hit,attack_power(),player["hits"],"prop:%d:%d:"%[i,s])
+				continue
 			for p in props.size():
 				var prop: Dictionary = props[p]
 				if not prop.get("breakable",false) or prop.get("broken",false):continue
@@ -1180,6 +1184,43 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
+
+func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: Dictionary, prefix: String) -> void:
+	var atk: Dictionary = hit.get("atk",{})
+	# 293C11E checks the weapon flag, positive damage or positive absolute damage.
+	if int(atk.get("weapon_damage_apply",0)) == 0 and float(atk.get("damage",0)) <= 0.0 \
+			and float(atk.get("absolute_damage",0)) <= 0.0:return
+	for prop: Dictionary in props:
+		if not prop.has("native_breakable") or prop["broken"]:continue
+		var key := prefix+str(prop["node"])
+		if seen.has(key) or Kernel.HitJudge.contact(world,prop["damage_boxes"]).is_empty():continue
+		seen[key] = true
+		var source: Dictionary = prop["native_breakable"]
+		# A36A20 dispatches the contact sound before the incoming damage callback.
+		if not String(source["hit_sound"]).is_empty():play_sound(String(source["hit_sound"]))
+		var context := hit.duplicate()
+		context["percent"] = float(hit["percent"])*skill_damage_multiplier(String(hit.get("skill_id",player["action"])))
+		var resolved: Dictionary
+		if numeric_player != null:
+			if String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
+			# Adapt the project's damage result to the passive object's damage receiver.
+			resolved = Numbers.Damage.resolve(numeric_player.values,{},context,[rng.next_float(),rng.next_float()],Numbers.shared_config()["formula"])
+		else:
+			resolved = {"amount":maxi(0,roundi(power*float(context["percent"])/100.0+float(context.get("fixed",0)))),
+				"critical":false,"category":String(context.get("damage_type","physical"))}
+		var amount := int(resolved["amount"])
+		if amount <= 0:continue
+		var pos: Vector2 = prop["pos"]
+		var height := float(prop["z"])
+		var destroyed := NativeBreakable.apply_damage(prop,amount)
+		bus.emit("combat.damage",{"target":prop["id"],"amount":amount,"critical":resolved["critical"],
+			"category":resolved["category"],"victim":"prop","reaction":"none","point":Vector3(pos.x,pos.y,height)})
+		if not destroyed:continue
+		var offset: Array = source["particle_offset"]
+		bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
+			"point":pos+Vector2(float(offset[0]),float(offset[1])),"height":height+float(offset[2])})
+		if not String(source["destroy_sound"]).is_empty():play_sound(String(source["destroy_sound"]))
+		bus.emit("combat.prop_broken",{"node":prop["node"]})
 
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
@@ -2036,6 +2077,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break
+				if native_maze != null and o["owner"] == "player":
+					apply_native_prop_hits(world,hit,float(o["power"]),o["hits"],"prop:")
 		if life > 0 and t >= life:done = true
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
 		if active >= 0 and t >= active and life <= 0 and Kernel.Timeline.duration(tl) > 2000:done = true
@@ -2276,9 +2319,6 @@ func props_view() -> Array:
 			"broken": bool(prop.get("broken", false)), "hazard": bool(prop.get("hazard", false))})
 	return out
 
-## 地图里的可破坏物（`[passive object]` → breakableobject/*.obj）。
-## 血量与破坏音效写在 .obj 的 `[int data]` / `[string data]` 里；
-## `[int data][1]` 推断为可承受的击打次数（原版语义未完全解出，E-INFER）。
 func array_of(source: Variant) -> Array:
 	# GDScript 的 `or` 返回 bool（与 Python 不同），这里显式判类型。
 	return source if source is Array else []
@@ -2302,6 +2342,13 @@ func build_props(room: Dictionary) -> Array:
 	for object_index in objects.size():
 		var item: Dictionary = objects[object_index]
 		var path := String(item.get("obj", "")).to_lower()
+		if native_maze != null:
+			# Source routes only enable the exact payloads supported by the adapter.
+			if NativeBreakable.supports(item):
+				var source: Dictionary = content.record(path)["native_breakable"]
+				var timeline: Array = table.timeline(source["motion_ani"])
+				out.append(NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index))
+			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")
 		var hazard := path.contains("/trap/")
@@ -2320,6 +2367,7 @@ func build_props(room: Dictionary) -> Array:
 			width = [40, 20]
 		var data: Array = array_of(def.get("int_data"))
 		var strings: Array = array_of(def.get("string_data"))
+		# Legacy room adapter uses the previously inferred hit count.
 		var hits := int(data[1]) if data.size() > 1 else 1
 		var pos := Vector2(float(anchor[0]), float(anchor[1]))
 		var size := Vector2(float(width[0]), float(width[1]))

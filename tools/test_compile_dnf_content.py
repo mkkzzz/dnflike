@@ -1,11 +1,15 @@
 """Dependency checks for native state-handler bindings in the combat pack."""
 from copy import deepcopy
+import hashlib
 import json
+from pathlib import PurePosixPath
 import unittest
 
 from compile_dnf_content import (
     NATIVE_ATTACK_CONTACTS,
     NATIVE_ATTACK_EMISSIONS,
+    NATIVE_OUTERWALL_BREAKABLES,
+    OUTERWALL_BREAKABLE_ROOT,
     compile_native_attack_contact,
     compile_native_attack_emissions,
     compile_native_attack_selection,
@@ -141,6 +145,37 @@ class NativeAttackContactTest(unittest.TestCase):
 
 
 class OuterwallProductionContentTest(unittest.TestCase):
+    def test_native_breakable_dependencies_are_packaged(self):
+        game = ROOT / 'game_dnf'
+        assets = game / 'assets_local'
+        records = json.loads((assets / 'content/combat_content.json').read_text(encoding='utf8'))['records']
+        manifest = json.loads((assets / 'combat/manifest.json').read_text(encoding='utf8'))
+        for source_id, hp, boxes, pieces in ((300, 300, 2, 7), (770, 500, 3, 6), (771, 1, 2, 6)):
+            with self.subTest(source_id=source_id):
+                stem, _, _, obj_sha, ani_sha, ptl_sha = NATIVE_OUTERWALL_BREAKABLES[source_id]
+                path = OUTERWALL_BREAKABLE_ROOT + stem + '.obj'
+                binding = records[path]['native_breakable']
+                motion, particle = binding['motion_ani'], binding['destroy_particle']
+                self.assertEqual((binding['object_index'], binding['hp'], binding['stages']), (source_id, hp, 1))
+                self.assertEqual((binding['trigger_stage'], binding['destroy_on_final_stage']), (1, True))
+                for dependency, digest in ((path, obj_sha), (motion, ani_sha), (particle, ptl_sha)):
+                    self.assertEqual(binding['source_hashes'][dependency], digest)
+                    self.assertEqual(records[dependency]['source']['sha256'], digest)
+                    self.assertEqual(manifest['sources'][dependency], digest)
+                self.assertEqual(len(records[motion]['decoded']['timeline'][0]['damage_boxes']), boxes)
+                decoded = manifest['particles'][particle]['decoded']
+                self.assertEqual(decoded, records[particle]['decoded'])
+                self.assertEqual(len(decoded['object_entries']), pieces)
+                for row in decoded['object_entries']:
+                    animation = row['path']
+                    bank = manifest['effects']['native_' + PurePosixPath(animation).stem]
+                    self.assertEqual(bank['source'], animation)
+                    self.assertEqual(records[animation]['source']['sha256'], binding['source_hashes'][animation])
+                    self.assertTrue((game / bank['atlas']['texture'].removeprefix('res://')).is_file())
+        hit = manifest['audio']['WOOD_HIT'][0]
+        self.assertEqual(hit['source'], 'sounds/effect/wood_hit.ogg')
+        self.assertEqual(hashlib.sha256((game / hit['file'].removeprefix('res://')).read_bytes()).hexdigest(), hit['sha256'])
+
     def test_source_actors_and_attack_objects_are_packaged(self):
         assets = ROOT / 'game_dnf/assets_local'
         pack = json.loads((assets / 'content/combat_content.json').read_text(encoding='utf8'))

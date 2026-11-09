@@ -18,7 +18,7 @@
   "audit_dnf_native_strings.py": "60b30f2e51e5a744b106d8df955f5a7acbd7d4341ba51f52fd7a2941a5d29c6f",
   "audit_dnf_particle_axis.py": "59b463dcff6537cc89c597bcf2bb5f1f0a336eb25a67b09da4c228d524b1af8e",
   "dnf_native_vm_probe.py": "3a2f7fe0b68361f0b20d668436bc942b88768722f037b5c22e0d66e4c750609a",
-  "compile_dnf_content.py": "b89fdad8312437a54e6c8e7652c273dba6d235182eb2838cad986c6a3aa8f04a",
+  "compile_dnf_content.py": "bf2910d79d8d6ad2989eaa4ac2106901d36a3c62ef1188e25da7665f60a61915",
   "dnf_pvf.py": "85c92f7f970c7e59ae8b8e9756150b72e63c1ae4d1f456878a796e81458f4218",
   "dnf_particle_fields.py": "058105bd7b5b1604fc8ccef394f408c7bbcf03fb75d0a38f88bc1d678bf09204"
  },
