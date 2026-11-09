@@ -2635,9 +2635,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			var source_id = attacker["skills"].find_key(hit_skill_id)
 			attacker["last_attack"] = -1 if source_id == null else int(source_id)
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
-	# The independent temporary object keeps its unset pause.
+	# The independent delayed hit and short-sword wave keep their unset pause.
 	if draw_contact:stop = float(hit["draw_stop_ms"])
-	elif draw_impact:stop = 0.0
+	elif draw_impact or hit.get("native_controller",{}).get("kind","") == "draw_short_wave":stop = 0.0
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
 	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact and not grab_strike:
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)

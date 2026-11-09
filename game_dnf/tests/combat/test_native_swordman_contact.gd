@@ -3318,10 +3318,17 @@ func check_draw_short_wave() -> void:
 			and hit["atk"]["absolute_damage"]==1547 and hit["percent"]==0.0,
 			"rank two draw with rank seven mastery packs 1263 then 1547 for two distinct blade targets")
 		game.numeric_player.values["independent_attack"] = 500.0
+		game.player["stuck_ms"] = 0.0
+		front["stuck_ms"] = 25.0
 		game.step_objects(10,int(wave["id"]))
 		check(wave["clock"]==0.0 and wave["hits"].has(front["id"]) and not wave["hits"].has(rear["id"])
 			and game.last_damage["trace"]["fixed_part"]==1547.0,
 			"the wave hits at age zero with its own ledger and already packed fixed amount")
+		check(front["state"]=="down" and front["stuck_ms"]==25.0 and game.player["stuck_ms"]==0.0,
+			"the wave knocks down without extending the target stop or starting a caster stop")
+		check(cues("ASTROM_HIT_LIGHT").size()==1 and not game.view.audio.variants.has("ASTROM_HIT_LIGHT")
+			and not game.view.audio.sound_streams.has("ASTROM_HIT_LIGHT"),
+			"the wave retains the authored missing sound key without playing a different registered sound")
 		game.view.present(game.view_snapshot(),0.0,0.0)
 		check(game.view.object_views[wave["id"]].has_node("RearAnimation"),
 			"the native StartB clip is attached behind the main wave")

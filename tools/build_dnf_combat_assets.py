@@ -376,7 +376,7 @@ DIGITS = {'combo': (0, 10), 'combo_label': (10, 11), 'damage': (44, 54), 'damage
 # Sound keys -> filename stems. R_ prefix = random variants (_01.._0n) of the stem.
 # Aliases are inferred from file naming in the archive (E-INFER); unknown keys stay unresolved.
 SOUND_ALIASES = {'MINERAL_SWD': 'MINSWD', 'MINERALSWD': 'MINSWD', 'SQUARESWD': 'SQRSWD', 'KATANA': 'KAT',
-                 'SLESSSWDA': 'SLESSSWD', 'STICK_HIT': 'STICKA_HIT', 'ASTROM': 'ASTORM'}
+                 'SLESSSWDA': 'SLESSSWD', 'STICK_HIT': 'STICKA_HIT'}
 # State 24 entry keys at 0xCC8C2F, 0xCC901A, and 0xCC8EE4, resolved by original audio.xml.
 WAVE_CAST_AUDIO = {
     'HADOUKEN': 'sounds/char/swordman/effect/hadouken.ogg',
@@ -568,7 +568,7 @@ CUE_SOUNDS = {
     'goblin_die': ['sounds/mon/act1/gbn_die_01.ogg', 'sounds/mon/act1/gbn_die_02.ogg'],
 }
 SOUND_KEYS = ['STAFF_HIT', 'R_STICK_HIT', 'R_DRAWING_SWORD_HIT', 'R_SLESSSWDA_HIT', 'R_SQUARESWDC_HIT',
-              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'ASTROM_HIT_LIGHT', 'UPPER_SLASH_01']
+              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'UPPER_SLASH_01']
 MONSTER_HP_IMG = 'sprite/interface/newstyle/windows/monster_hp/monster_hp.img'
 
 
@@ -1236,6 +1236,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     copy_native_jar_trap_audio(src, manifest['audio'], unresolved)
     for key in SOUND_KEYS:
         copy_audio(src, sound_files(src, key), manifest['audio'], key, unresolved)
+    # MomentarySlashWave.atk requests ASTROM; audio.xml only registers ASTORM.
+    unresolved.append({'kind': 'audio', 'key': 'ASTROM_HIT_LIGHT', 'note': 'no original audio.xml entry'})
     for weapon, row in weapon_sounds(src).items():
         keys = []
         for key in row:
