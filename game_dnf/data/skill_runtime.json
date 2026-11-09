@@ -25,6 +25,11 @@
    "skillfx_blood6_8c574314": "passiveobject/character/swordman/animation/blastblood/blood6.ani",
    "skillfx_blood7_0253e775": "passiveobject/character/swordman/animation/blastblood/blood7.ani",
    "skillfx_blood8_78f7a94f": "passiveobject/character/swordman/animation/blastblood/blood8.ani",
+   "skillfx_bloodexp1_ldodge_61ed721c": "passiveobject/character/swordman/animation/outragebreak/bloodexp1_ldodge.ani",
+   "skillfx_bloodexp1_none_351f7cac": "passiveobject/character/swordman/animation/outragebreak/bloodexp1_none.ani",
+   "skillfx_bloodexp2_ldodge_1f1f9676": "passiveobject/character/swordman/animation/outragebreak/bloodexp2_ldodge.ani",
+   "skillfx_bloodexp2_none_612b7a8d": "passiveobject/character/swordman/animation/outragebreak/bloodexp2_none.ani",
+   "skillfx_bloodexp_glow_1ba69753": "passiveobject/character/swordman/animation/outragebreak/bloodexp_glow.ani",
    "skillfx_bloodyravelayer_f539ec38": "passiveobject/character/swordman/animation/bloodyravelayer.ani",
    "skillfx_bremen1_73d2043e": "passiveobject/character/swordman/animation/bremen1.ani",
    "skillfx_bremen2_267aab10": "passiveobject/character/swordman/animation/bremen2.ani",
@@ -54,6 +59,9 @@
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
+   "skillfx_floor_blood_e2d7d673": "passiveobject/character/swordman/animation/outragebreak/floor_blood.ani",
+   "skillfx_floor_impact_ldodge_9c706fc4": "passiveobject/character/swordman/animation/outragebreak/floor_impact_ldodge.ani",
+   "skillfx_floor_over_177f990f": "passiveobject/character/swordman/animation/outragebreak/floor_over.ani",
    "skillfx_floor_over_73b0876a": "passiveobject/character/swordman/animation/blastblood/floor_over.ani",
    "skillfx_givebloodshoot_7c29a18a": "character/swordman/effect/animation/giveblood/givebloodshoot.ani",
    "skillfx_givebloodstay_2f68bbdd": "character/swordman/effect/animation/giveblood/givebloodstay.ani",
@@ -5474,9 +5482,8 @@
    "fidelity_pending": [
     "hp_write_timing",
     "impact_stone_particles",
-    "floor_layering",
-    "magma_eruption",
-    "thirst_damage_branch"
+    "eruption_particles",
+    "special_target_dispatch"
    ],
    "fixed_attack_base": {
     "by_level": [
@@ -5650,6 +5657,33 @@
       {
        "at": 600,
        "fixed_col": 1,
+       "native_controller": {
+        "child": {
+         "fixed_col": 2,
+         "native_controller": {
+          "kind": "outrage_magma",
+          "layers": [
+           "skillfx_bloodexp1_none_351f7cac",
+           "skillfx_bloodexp1_ldodge_61ed721c",
+           "skillfx_bloodexp2_none_612b7a8d",
+           "skillfx_bloodexp2_ldodge_1f1f9676",
+           "skillfx_bloodexp_glow_1ba69753"
+          ],
+          "sha256": "1d0598357dba258d0ecdb14eea13a5ba431c7bdc98702021efacb2f147fa116c",
+          "source": "data/skill/swordman.sd",
+          "visual_interval_ms": 50
+         },
+         "object": "passiveobject/character/swordman/outragebreakbloodexp.obj",
+         "percent": 0
+        },
+        "eruption_at_ms": 1040,
+        "kind": "outrage_floor",
+        "layers": [
+         "skillfx_floor_over_177f990f",
+         "skillfx_floor_blood_e2d7d673",
+         "skillfx_floor_impact_ldodge_9c706fc4"
+        ]
+       },
        "object": "passiveobject/character/swordman/outragebreakfloor.obj",
        "offset": [
         150,

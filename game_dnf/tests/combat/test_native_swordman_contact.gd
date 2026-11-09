@@ -2220,6 +2220,83 @@ func check_outrage_break_impact() -> void:
 			check(floor_target["hp"]<50000.0 and game.objects[0]["clock"]==0.0 and not cues("FLAMES_HIT").is_empty(),
 				"the original floor ATK lands independently on its first frame")
 
+func check_outrage_break_eruption() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff","sacrifice"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	start_room("original_27601","katana",-1,spec,"berserker")
+	session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)
+	game.apply_skill_effect("buff","frenzy")
+	game.apply_skill_effect("sacrifice","thirst")
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
+	game.player["hp"] = 1000.0
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(900,0))
+	press(KEY_A)
+	step(0)
+	step(560)
+	step(600)
+	check(game.objects.size()==1,"impact creates the floor only")
+	if game.objects.size()!=1:return
+	var floor: Dictionary = game.objects[0]
+	var point: Vector2 = floor["pos"]
+	var layers: Array = floor["hit"]["native_controller"]["layers"]
+	check(game.view.object_views.has("%s:floor:0"%floor["id"])
+		and game.view.object_views.has("%s:floor:1"%floor["id"]) and cues(layers[2]).size()==1,
+		"the floor renders both synchronized ETC motions and a separate impact clip")
+	var target: Dictionary = game.spawn_enemy(point+Vector2(0,45))
+	game.numeric_player.remove_effect("thirst")
+	game.apply_effect({"kind":"effect","id":"bleed","target":target["id"]})
+	target["hp"] = 100000.0
+	game.step_objects(0)
+	check(game.last_damage["trace"]["fixed_part"]==6138.0,
+		"the shockwave uses packed Thirst column 5 when the target is bleeding at contact")
+	move_target(target,point+Vector2(0,45),110.0)
+	game.step_objects(1039)
+	check(game.objects.size()==1 and cues("OUTRAGE_CRASH").is_empty(),
+		"the ground-blood clip still holds frame three at 1039 ms")
+	game.step_objects(1)
+	check(game.objects.size()==2 and cues("OUTRAGE_CRASH").size()==1,
+		"ground-blood frame four creates one magma and plays the original eruption sound")
+	if game.objects.size()!=2:return
+	var magma: Dictionary = game.objects[1]
+	var hit: Dictionary = magma["hit"]
+	var glow: String = hit["native_controller"]["layers"][4]
+	check(magma["pos"]==point and magma["clock"]==0.0 and hit["fixed_amount"]==4094.0
+		and hit["fixed_amount_bleeding"]==4299 and hit["native_controller"]["reset_ms"]==126,
+		"magma inherits the floor origin and has its own packed amount and attack clock")
+	var before: int = game.hit_count
+	game.step_objects(0)
+	check(game.hit_count==before+1 and game.last_damage["trace"]["fixed_part"]==4299.0,
+		"the invisible attack ANI hits the bleeding target at its own frame zero")
+	check(cues(glow).size()==1 and cues(glow)[0]["point"]==point+Vector2(22,-12),
+		"magma glow starts at the first absolute point even for a left-facing caster")
+	game.step_objects(49)
+	check(cues(glow).size()==1 and game.hit_count==before+1,"neither timer is due at 49 ms")
+	game.step_objects(1)
+	check(cues(glow).size()==2 and cues(glow)[1]["point"]==point+Vector2(-117,15)
+		and game.hit_count==before+1,"the 50 ms art repeat leaves the hit ledger intact")
+	game.step_objects(75)
+	check(game.hit_count==before+1,"magma cannot hit a second time at 125 ms")
+	target["numeric"].remove_effect("bleed")
+	game.step_objects(1)
+	check(game.hit_count==before+2 and game.last_damage["trace"]["fixed_part"]==4094.0,
+		"126 ms clears the hit ledger and uses the ordinary amount once bleeding ends")
+	for index in range(2,6):
+		move_target(target,point+Vector2(0,45),110.0)
+		game.step_objects(126)
+		check(game.hit_count==before+index+1,"magma registers original hit interval "+str(index))
+	game.step_objects(129)
+	check(game.objects.has(magma) and game.hit_count==before+6,"the last interval has no seventh hit")
+	game.step_objects(1)
+	check(not game.objects.has(magma) and game.objects.has(floor) and cues("OUTRAGE_CRASH").size()==1,
+		"the 760 ms damage object retires separately from its parent")
+
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3505,6 +3582,7 @@ func run() -> void:
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
+	check_outrage_break_eruption()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()

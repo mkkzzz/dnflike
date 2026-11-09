@@ -714,6 +714,19 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 					# of the travelling-front reaction/damage definition.
 					var child_stage := _build_stage({"hits":[controller["child"]]},skill)
 					controller["child"] = child_stage["hits"][0]
+				elif controller.get("kind","") == "outrage_floor":
+					var child_stage := _build_stage({"hits":[controller["child"]]},skill)
+					controller["child"] = child_stage["hits"][0]
+					controller["child"]["skill_id"] = "outragebreak"
+				elif controller.get("kind","") == "outrage_magma":
+					var static_data: Array = skill["static"]
+					# A72219..A7229E sets the ANI rate before measuring duration.
+					var rate := NativeMotion.f32(float(static_data[4])*NativeMotion.f32(0.01))
+					var duration := int(NativeMotion.f32(Timeline.duration(obj["timeline"])/rate))
+					controller["rate"] = rate
+					controller["hit_count"] = int(static_data[3])
+					@warning_ignore("integer_division")
+					controller["reset_ms"] = duration/int(controller["hit_count"])
 				elif controller.get("kind","") == "thirst_burst":
 					# 61CA00 unpacks three integers and one float from skill 23.
 					hit["contact_only"] = true

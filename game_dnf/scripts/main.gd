@@ -22,6 +22,8 @@ const PLAYER_ID := 0
 # Actor sound slots are separate from entity loops. Reserve a player-only ID for native slot 25.
 const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
+const OUTRAGE_ERUPTION_OFFSETS := [Vector2i(22,-12),Vector2i(-117,15),Vector2i(-126,37),
+	Vector2i(104,-6),Vector2i(-60,58),Vector2i(76,33),Vector2i(10,80)]
 const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 ## Double tap window for running, measured from the release of the first tap.
@@ -2253,8 +2255,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("skill_id","") == "bloodyrave":
 					hit = bloody_rave_slash(hit)
 				elif hit.get("skill_id","") == "outragebreak":
-					var base := native_fixed_attack_base(move_def("outragebreak")["fixed_attack_base"])
-					hit = native_fixed_hit(hit,float(int(native_fixed_attack_product(float(hit["fixed"]),base))))
+					hit = prepare_outrage_damage(hit)
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -2391,6 +2392,25 @@ func native_status_attack_amount(percent: float, base_by_level: Array) -> int:
 	var level := int(numeric_player.values["level"])
 	var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
 	return int(native_fixed_attack_product(percent,base))
+
+func prepare_outrage_damage(template: Dictionary) -> Dictionary:
+	var base := native_fixed_attack_base(move_def("outragebreak")["fixed_attack_base"])
+	var multiplier := 1.0
+	if not active_effect("thirst").is_empty():
+		# CB47D9..CB481A uses Thirst column 5, distinct from Rage Burst.
+		var row: Array = Numbers.Skills.sample(Numbers.record("sacrifice"),int(skill_levels.get("sacrifice",1)))["level_row"]
+		multiplier = ActorNumbers.native_scalar(1.0+float(row[5])*ActorNumbers.native_scalar(0.001))
+	var floor := outrage_fixed_hit(template,base,multiplier)
+	var controller: Dictionary = floor["native_controller"].duplicate()
+	controller["child"] = outrage_fixed_hit(controller["child"],base,multiplier)
+	floor["native_controller"] = controller
+	return floor
+
+func outrage_fixed_hit(template: Dictionary, base: int, multiplier: float) -> Dictionary:
+	var product := native_fixed_attack_product(float(template["fixed"]),base)
+	var hit := native_fixed_hit(template,float(int(product)))
+	hit["fixed_amount_bleeding"] = int(ActorNumbers.native_scalar(product*multiplier))
+	return hit
 
 func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
 	var base := native_fixed_attack_base(move_def("bloodblast")["fixed_attack_base"])
@@ -3352,6 +3372,14 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		var first := float(obj["segments"][0]["start"])
 		entity["next_hit_reset"] = first+float(controller["reset_ms"])
 		entity["hit_resets_left"] = int(controller["reset_count"])
+	if kind == "outrage_floor":
+		bus.emit("combat.cue",{"kind":"fx","key":controller["layers"][2],"point":entity["pos"],
+			"height":entity["z"],"facing":facing,"depth_offset":1,"fresh":true})
+	elif kind == "outrage_magma":
+		entity["next_hit_reset"] = float(controller["reset_ms"])
+		entity["hit_resets_left"] = int(controller["hit_count"])-1
+		entity["next_eruption_fx"] = 0.0
+		entity["eruption_fx_index"] = 0
 	if kind in GHOST_FIELD_KINDS:
 		if owner == "player" and kind != "rasa_field":
 			player["hardattack_ghost"] = controller.get("ghost_variant",kind.trim_suffix("_field"))
@@ -3457,6 +3485,14 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
+		if kind == "outrage_floor" and old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
+			play_sound("OUTRAGE_CRASH")
+			spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
+		if kind == "outrage_magma":
+			if t*float(controller["rate"]) >= Kernel.Timeline.duration(tl):
+				objects.remove_at(i)
+				continue
+			step_outrage_magma(o,controller)
 		if kind == "bloodblast":
 			if int(o.get("hit_resets_left",0)) > 0 and t >= float(o["next_hit_reset"]):
 				o["hits"].clear()
@@ -3528,6 +3564,29 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 	if khazan_field.is_empty() or ghost_field_pulse(khazan_field):update_khazan_aura(khazan_field)
 	if (bremen_field.is_empty() and bremen_removed) or (not bremen_field.is_empty() and ghost_field_pulse(bremen_field)):
 		update_bremen_aura(bremen_field)
+
+func step_outrage_magma(magma: Dictionary, controller: Dictionary) -> void:
+	var age := float(magma["clock"])
+	if int(magma["hit_resets_left"]) <= 0:return
+	if age >= float(magma["next_eruption_fx"]):
+		# A724A9..A72830 selects one art pair, a mirror bit and a point
+		# in the repeating native seven-point table. The glow shares the point.
+		var layer_index := rng.range_int(0,1)*2
+		var facing := 1 if rng.range_int(0,1) == 0 else -1
+		var offset: Vector2i = OUTRAGE_ERUPTION_OFFSETS[int(magma["eruption_fx_index"])%OUTRAGE_ERUPTION_OFFSETS.size()]
+		var position: Vector2 = magma["pos"]
+		var point := Vector2(Vector2i(position+Vector2(offset)*float(controller["rate"])))
+		for layer in [layer_index,layer_index+1,4]:
+			bus.emit("combat.cue",{"kind":"fx","key":controller["layers"][layer],"point":point,
+				"height":magma["z"],"facing":facing,"depth_offset":2,"fresh":true})
+		magma["eruption_fx_index"] += 1
+		magma["next_eruption_fx"] = age+float(controller["visual_interval_ms"])
+	# A7286F clears the contact lists once per timer update. No replay of
+	# missed collisions when an update is late.
+	if age >= float(magma["next_hit_reset"]):
+		magma["hits"].clear()
+		magma["hit_resets_left"] -= 1
+		magma["next_hit_reset"] += float(controller["reset_ms"])
 
 func ghost_field_pulse(field: Dictionary) -> bool:
 	var age := float(field["clock"])
@@ -4637,6 +4696,15 @@ func view_snapshot() -> Dictionary:
 			objs.append(item)
 		elif controller.get("kind","") == "rasa_child":
 			objs.append_array(_rasa_child_layers(item,o,controller))
+		elif controller.get("kind","") == "outrage_floor":
+			item["depth_offset"] = -1
+			objs.append(item)
+			for index in 2:
+				var layer := item.duplicate()
+				layer["id"] = "%s:floor:%d"%[o["id"],index]
+				layer["effect"] = controller["layers"][index]
+				layer["depth_offset"] = index
+				objs.append(layer)
 		elif controller.get("kind","") in ["bloodblast","thirst_burst"]:
 			item["depth_offset"] = -1
 			if bank != "":objs.append(item)

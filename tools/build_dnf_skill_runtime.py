@@ -1197,14 +1197,43 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
                                   "speed": 0, "life_ms": -1, "rear_fx": rear, "starts_at_zero": True}]}]}
 
 
+OUTRAGE_OBJECT_ANIM = OBJ_ROOT + "animation/outragebreak/"
+OUTRAGE_FLOOR_FX = ("floor_over", "floor_blood", "floor_impact_ldodge")
+OUTRAGE_MAGMA_FX = ("bloodexp1_none", "bloodexp1_ldodge", "bloodexp2_none",
+                   "bloodexp2_ldodge", "bloodexp_glow")
+
+
+def outrage_eruption_timing(library) -> dict:
+    path = "data/skill/swordman.sd"
+    source, digest = library.raw(path)
+    tokens = decode_tokens(source, library.strings)["tokens"]
+    intervals = [following["value"] for current, following in zip(tokens, tokens[1:])
+                 if current.get("value") == "orb effect term"]
+    if len(intervals) != 1 or int(intervals[0]) <= 0:
+        raise ValueError("Missing original OutRageBreak visual interval")
+    return {"visual_interval_ms": int(intervals[0]), "source": path, "sha256": digest}
+
+
 def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, objects: dict,
-                        slots: list[str], fixed_attack_base: dict) -> dict:
+                        slots: list[str], fixed_attack_base: dict, timing: dict) -> dict:
     slash = records[CHR_ANI + "outragebreakslash.ani"]["decoded"]["timeline"]
     impact = slash[5]["start_ms"]
     layers = [add_fx(fx, effects, path) for path in slots[:6]]
     floor = add_object(objects, OBJ_ROOT + "outragebreakfloor.obj")
-    if not all(layers) or not floor:
+    # This object is collision-only. Its visible effects are separately spawned
+    # by A723A0 and do not follow its damage ANI.
+    magma = OBJ_ROOT + "outragebreakbloodexp.obj"
+    floor_fx = [add_fx(fx, effects, OUTRAGE_OBJECT_ANIM + name + ".ani") for name in OUTRAGE_FLOOR_FX]
+    magma_fx = [add_fx(fx, effects, OUTRAGE_OBJECT_ANIM + name + ".ani") for name in OUTRAGE_MAGMA_FX]
+    if magma not in records or not all([*layers, floor, *floor_fx, *magma_fx]):
         raise ValueError("Missing original OutRageBreak animation binding")
+    # A72A91 reads frame 4 of the second ETC motion. A7228F uses the
+    # complete damage-only ANI duration for the independent hit interval.
+    floor_motions = records[floor]["decoded"]["etc_motions"]
+    eruption_at = records[floor_motions[1]]["decoded"]["timeline"][4]["start_ms"]
+    controller = {"kind": "outrage_floor", "layers": floor_fx, "eruption_at_ms": eruption_at,
+                  "child": {"object": magma, "percent": 0, "fixed_col": 2,
+                            "native_controller": {"kind": "outrage_magma", "layers": magma_fx, **timing}}}
     ready_fx = [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
                 for slot, depth in ((0, 2), (1, 1))]
     slash_fx = [{"key": layers[slot], "at": at, "action_clock": True, "depth_offset": depth}
@@ -1212,14 +1241,15 @@ def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, obj
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "outrage_break",
             "requires_effect": "frenzy", "hp_cost_row": 3, "material_cost": fixed_cube_cost(skill, records),
             "fixed_attack_base": fixed_attack_base, "impact_frame": 5,
-            "fidelity_pending": ["hp_write_timing", "impact_stone_particles", "floor_layering",
-                                 "magma_eruption", "thirst_damage_branch"],
+            "fidelity_pending": ["hp_write_timing", "impact_stone_particles", "eruption_particles",
+                                 "special_target_dispatch"],
             "stages": [{"ani": "outragebreakready", "fx": ready_fx, "voice": "OUTRAGE_READY"},
                        {"ani": "outragebreakslash", "fx": slash_fx,
                         "sounds": [{"at": impact, "key": key} for key in ("OUTRAGE_SWING", "CCRASH_CRASH")],
                         "hits": [{"atk": CHR_ATK + "outragebreak.atk", "body": True, "percent_col": 0},
                                  {"object": floor, "at": impact, "offset": [150, 0, 0],
-                                  "percent": 0, "fixed_col": 1, "starts_at_zero": True}]}]}
+                                  "percent": 0, "fixed_col": 1, "starts_at_zero": True,
+                                  "native_controller": controller}]}]}
 
 
 def build_move(
@@ -2025,6 +2055,9 @@ def main() -> int:
         SAFE_EFFECTS.update(path for path in [*rave_slots, OBJ_ROOT + "animation/bloodyravelayer.ani"]
                             if safe_animation(library, path))
         SAFE_EFFECTS.update(path for path in outrage_slots if safe_animation(library, path))
+        outrage_timing = outrage_eruption_timing(library)
+        SAFE_EFFECTS.update(path for name in (*OUTRAGE_FLOOR_FX, *OUTRAGE_MAGMA_FX)
+                            if safe_animation(library, path := OUTRAGE_OBJECT_ANIM + name + ".ani"))
         object_candidates = {
             value[0]
             for value in CAST_OBJECTS.values()
@@ -2108,7 +2141,8 @@ def main() -> int:
         elif key == "bloodyrave":
             move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots, bleed_attack_base, rave_typhoon)
         elif key == "outragebreak":
-            move = build_outrage_break(skill, records, fx, effects, objects, outrage_slots, fixed_attack_base)
+            move = build_outrage_break(skill, records, fx, effects, objects, outrage_slots, fixed_attack_base,
+                                       outrage_timing)
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)

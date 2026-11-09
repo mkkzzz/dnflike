@@ -501,7 +501,7 @@ HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/e
                          for kind in (*HARDATTACK_WAVE_VARIANTS, 'hit')}
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
-                 for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH')}
+                 for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
@@ -1602,6 +1602,9 @@ def main() -> int:
         effects = runtime['assets']['effect_anims']
         stages = runtime['moves']['outragebreak']['stages']
         specs = [('effects', cue['key'], effects[cue['key']]) for stage in stages for cue in stage['fx']]
+        floor = stages[1]['hits'][1]['native_controller']
+        specs.extend(('effects', key, effects[key])
+                     for key in (*floor['layers'], *floor['child']['native_controller']['layers']))
         specs.extend(('audio', cue, paths) for cue, paths in OUTRAGE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
