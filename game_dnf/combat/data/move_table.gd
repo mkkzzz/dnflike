@@ -451,7 +451,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	var native_draw: bool = spec.get("native_state","") == "draw"
-	if native_draw:move["draw_hit_count_bonus"] = skill["static"].slice(1,6)
+	if native_draw:
+		move["draw_hit_count_bonus"] = skill["static"].slice(1,6)
+		move["draw_stagger"] = spec["draw_stagger"]
 	if native_draw and (weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name)):
 		var track: Dictionary = spec["weapon_tracks"].get(weapon,{})
 		var body := player_timeline("momentaryslash")

@@ -1993,6 +1993,13 @@
     "source": "etc/etcparameter.etc"
    },
    "draw_shock_hit_ms": 500,
+   "draw_stagger": {
+    "max_ms": 500,
+    "max_recovery": 2000,
+    "min_ms": 0,
+    "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+    "source": "etc/etcparameter.etc"
+   },
    "fidelity_pending": [
     "followup_abnormal_status",
     "beamsword_equipped_appearance",

@@ -2393,7 +2393,16 @@ func apply_draw_impact_reaction(target: Dictionary, atk: Dictionary, facing: int
 			else:motion = "damage1" if rng.range_int(0,1) == 0 else "damage2"
 		else:motion = "damage1" if first else "damage2"
 	var reaction := Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery)
-	if reaction == "stagger":target["hit_motion"] = motion
+	if reaction == "stagger":
+		target["hit_motion"] = motion
+		target["facing"] = -facing
+		var timing: Dictionary = move_def("draw")["draw_stagger"]
+		var limit := int(timing["max_recovery"])
+		var minimum := int(timing["min_ms"])
+		# 8292EF uses signed integer division and floors the delta at zero.
+		# The temporary ATK's default hit-delay factor resolves to 1.
+		var delta := int(float((int(timing["max_ms"])-minimum)*(limit-int(recovery)))/float(maxi(1,limit)))
+		target["stun_ms"] = float(minimum+maxi(0,delta))
 	return reaction
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:

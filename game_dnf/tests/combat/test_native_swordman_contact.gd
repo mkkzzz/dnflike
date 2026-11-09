@@ -1941,9 +1941,32 @@ func check_draw_target_deadlines() -> void:
 	target["state"] = "hurt"
 	target["hit_motion"] = "damage2"
 	target["clock"] = 50.0
+	target["numeric"].values["hit_recovery"] = 501.0
+	target["facing"] = 1
 	step(201)
 	check(target["hp"]<5000.0 and target["state"]=="hurt" and target["hit_motion"]=="damage1" and target["clock"]==0.0,
 		"another stagger alternates the original damage poses and restarts the motion")
+	check(target["stun_ms"]==374.0 and target["facing"]==-1,
+		"the delayed stagger truncates the original recovery formula and faces the temporary object")
+	target["stuck_ms"] = 0.0
+	game.update_enemy(target,373)
+	check(target["state"]=="hurt" and target["stun_ms"]==1.0,"the target is still staggered one millisecond before recovery")
+	game.update_enemy(target,1)
+	check(target["state"]=="idle" and target["stun_ms"]==0.0,"the target recovers at the original stagger boundary")
+
+	for recovery: float in [0.0,500.0,2000.0,2500.0]:
+		start_room("original_27601","katana",1,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		target = api.spawn_dummy(POINT+Vector2(100,0))
+		target["numeric"].values["hit_recovery"] = recovery
+		press(KEY_A)
+		step(525)
+		step(201)
+		var duration: float = {0.0:500.0,500.0:375.0,2000.0:0.0,2500.0:0.0}[recovery]
+		check(target["hp"]<5000.0 and target["stun_ms"]==duration,
+			"the delayed stagger respects the dungeon hit recovery curve at "+str(recovery))
 
 func check_bloody_rave_phases() -> void:
 	var profile := ProfileSession.new()

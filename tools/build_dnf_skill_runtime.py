@@ -1067,6 +1067,16 @@ def dungeon_fixed_attack_base(library, column: int) -> dict:
     return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"], "by_level": rows[column::7]}
 
 
+def draw_stagger_parameters(library) -> dict:
+    script = library.script(FIXED_ATTACK_BASE_SOURCE)
+    if not script or script["sha256"] != "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4":
+        raise ValueError("Unverified hit recovery table")
+    fields = {field["tag"]: field["values"] for field in script["fields"]}
+    return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"],
+            "min_ms": fields["[hit delay time min]"][0], "max_ms": fields["[hit delay time max]"][0],
+            "max_recovery": fields["[hit recovery max]"][0]}
+
+
 def draw_weapon_tracks(library) -> dict:
     # Default C layers for family-only combat actors. Item-specific ANI wins at runtime.
     folders = {"shortsword": "ssword/sswdc", "katana": "katana/katanac",
@@ -2038,6 +2048,7 @@ def main() -> int:
         fixed_attack_base = dungeon_fixed_attack_base(library, 1)
         bleed_attack_base = dungeon_fixed_attack_base(library, 3)
         draw_shock_base = dungeon_fixed_attack_base(library, 5)
+        draw_stagger = draw_stagger_parameters(library)
         shock_table = library.script(DRAW_SHOCK_STATUS_SOURCE)
         if not shock_table or shock_table["sha256"] != "8c94c682a3e2e39835816a1af27b8ffa66d50d161e15aee50d07d0604776a599":
             raise ValueError("Unverified original lightning status table")
@@ -2169,6 +2180,7 @@ def main() -> int:
                 move["draw_bleed_base"] = bleed_attack_base
                 move["draw_shock_base"] = draw_shock_base
                 move["draw_shock_hit_ms"] = shock_hit_ms
+                move["draw_stagger"] = draw_stagger
                 slash_fx = [add_fx(fx, effects, path) for path in draw_slashes["paths"]]
                 if not all(slash_fx):
                     raise ValueError("missing original Draw Sword slash layer")
