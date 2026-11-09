@@ -121,6 +121,13 @@ def build():
         reasons.extend('repeated_field:'+tag for tag in record.get('repeated_fields',[])
                        if tag not in ['[pre required quest]'])
         row={'id':int(number),'path':path,'sha256':record['sha256'],'name':q['name'],'grade':fields.get('[grade]',[]),'raw_type':fields.get('[type]',[]),'raw_sub_type':fields.get('[sub type]',[]),'raw_int_data':fields.get('[int data]',[]),'objective_plan':plan,'reasons':sorted(set(reasons)),'state':'existing' if int(number) in existing else 'blocked'}
+        if '[job change quest]' in fields:
+            row['raw_job_change_quest']=fields['[job change quest]']
+        if '[awakening type]' in fields.get('[reward type]',[]):
+            row['awakening_reward_source']={
+                tag: fields[tag] for tag in ('[reward type]', '[reward int data]', '[reward selection int data]')
+                if tag in fields
+            }
         rows.append(row);groups[str(fields.get('[grade]'))]+=1;types[str(fields.get('[type]'))+' / '+str(fields.get('[sub type]'))]+=1
         if int(number) not in existing:pending[q['id']]=(q,row)
     available=set(existing.values());quests=[]

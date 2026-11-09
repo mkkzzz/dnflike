@@ -3,6 +3,7 @@ extends RefCounted
 const Catalog = preload("res://quests/catalog.gd")
 const Cycle=preload("res://quests/lifecycle.gd")
 const Conditions=preload("res://quests/clear_conditions.gd")
+const Numbers=preload("res://stats/api/numbers.gd")
 var catalog
 var clock: Callable=func():return Time.get_unix_time_from_system()
 
@@ -249,7 +250,7 @@ func active_count(profile: Dictionary) -> int:
 func eligible(profile: Dictionary, quest: Dictionary) -> bool:
 	if int(profile.get("level",1)) > int(quest.get("max_level",999)):return false
 	var rules: Dictionary=quest.get("eligibility",{})
-	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":int({"swordman":0,"weaponmaster":1,"berserker":3}.get(profile.get("growtype","swordman"),-999))}
+	var values: Dictionary={"jobs":int(profile.get("job_index",0)),"grow_types":growtype_index(profile)}
 	for field: String in rules:
 		if not rules[field].any(func(value):return int(value)==-1 or int(value)==int(values[field])):return false
 	return true
@@ -257,11 +258,14 @@ func eligible(profile: Dictionary, quest: Dictionary) -> bool:
 func npc_name(id: String) -> String:
 	return String(catalog.config["npcs"].get(id, id))
 
+static func growtype_index(profile: Dictionary) -> int:
+	return int(Numbers.shared_config()["growtype_index"].get(profile.get("growtype","swordman"),-999))
+
 func reward_for(profile: Dictionary, quest: Dictionary) -> Dictionary:
 	var reward: Dictionary=quest["reward"].duplicate(true)
 	# Current playable class is swordman (original job 0); its growth is separate.
 	var job:=int(profile.get("job_index",0))
-	var grow:=int({"swordman":0,"weaponmaster":1,"berserker":3}.get(profile.get("growtype","swordman"),0))
+	var grow:=growtype_index(profile)
 	for row: Dictionary in reward.get("conditional_items",[]):
 		if not row["jobs"].any(func(value):return int(value)==-1 or int(value)==job):continue
 		if not row["grow_types"].any(func(value):return int(value)==-1 or int(value)==grow):continue

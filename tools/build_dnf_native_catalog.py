@@ -392,20 +392,31 @@ def compile_quest(number, path, sha, fields, words, existing, items, monster_ind
         if p.get('conditions'):o['conditions']=p['conditions']
         if p.get('conditions',{}).get('min_party_size',1)>1:reasons.append('multiplayer_not_implemented')
     reward = {'gold': 0, 'xp': 0, 'items': {}, 'conditional_items': [], 'choices': []}
-    try:
-        reward['gold'], reward['items'], reward['conditional_items'] = reward_rows(fields.get('[reward int data]', []))
-        choice_gold, choices, conditional = reward_rows(fields.get('[reward selection int data]', []))
-        if choice_gold or conditional:raise ValueError('conditional choice')
-        reward['choices'] = [{'id': k, 'item': k, 'amount': n} for k, n in choices.items()]
-        required_rewards = set(reward['items']) | set(choices)
-        required_rewards.update(
-            row['item'] for row in reward['conditional_items']
-            if -1 in row['jobs'] or 0 in row['jobs']
-        )
-        for item in required_rewards:
-            if item not in items:reasons.append('reward_item_unavailable:' + item)
-        if scalar(fields, '[reward type]', '[item]') != '[item]':reasons.append('reward_type')
-    except ValueError as exc:reasons.append('reward_grammar:' + str(exc))
+    reward_kind = scalar(fields, '[reward type]', '[item]')
+    fixed_reward = fields.get('[reward int data]', [])
+    choice_reward = fields.get('[reward selection int data]', [])
+    if reward_kind == '[awakening type]':
+        # The client reads a scalar into QST +0x2b8 for reward enum 2.
+        if (fields['[reward type]'] == ['[awakening type]'] and len(fixed_reward) == 1
+                and type(fixed_reward[0]) is int and fixed_reward[0] == 1 and not choice_reward):
+            reasons.append('awakening_reward_consumer_unavailable')
+        else:
+            reasons.append('awakening_reward_payload_unverified')
+    else:
+        try:
+            reward['gold'], reward['items'], reward['conditional_items'] = reward_rows(fixed_reward)
+            choice_gold, choices, conditional = reward_rows(choice_reward)
+            if choice_gold or conditional:raise ValueError('conditional choice')
+            reward['choices'] = [{'id': k, 'item': k, 'amount': n} for k, n in choices.items()]
+            required_rewards = set(reward['items']) | set(choices)
+            required_rewards.update(
+                row['item'] for row in reward['conditional_items']
+                if -1 in row['jobs'] or 0 in row['jobs']
+            )
+            for item in required_rewards:
+                if item not in items:reasons.append('reward_item_unavailable:' + item)
+            if reward_kind != '[item]':reasons.append('reward_type')
+        except ValueError as exc:reasons.append('reward_grammar:' + str(exc))
     dungeon_info = fields.get('[dungeon info]', [])
     if len(dungeon_info) == 2 and type(dungeon_info[0]) is int:
         entry_dungeon = dungeon_info[0]

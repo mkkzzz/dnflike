@@ -30,9 +30,46 @@ func fixture() -> Session:
 	s.quests=Service.new(Catalog.new(cfg));s.quests.clock=func():return clock_state.now
 	return s
 
+func check_growth_eligibility() -> void:
+	var base=Session.new()
+	var cfg: Dictionary=base.quests.catalog.config.duplicate(true)
+	var q: Dictionary=base.quests.catalog.definitions["original.quest.1106"].duplicate(true)
+	q.id="fixture.growth_gate";q.erase("source");q.requires=[];q.min_level=48
+	q.eligibility={"jobs":[0],"grow_types":[2]}
+	q.objectives=[{"id":"visit","type":"meet_npc","target":"gsd","amount":1}]
+	q.giver="gsd";q.receiver="gsd";q.consume={}
+	q.reward={"gold":0,"xp":0,"items":{},"choices":[],"conditional_items":[
+		{"item":"potion","amount":1,"jobs":[0],"grow_types":[0]},
+		{"item":"potion","amount":2,"jobs":[0],"grow_types":[2]},
+		{"item":"potion","amount":4,"jobs":[0],"grow_types":[4]},
+		{"item":"potion","amount":8,"jobs":[0],"grow_types":[-1]},
+		{"item":"potion","amount":16,"jobs":[1],"grow_types":[-1]},
+	]}
+	cfg.quests.append(q)
+	for row in [["swordman",9],["soulbringer",10],["asura",12]]:
+		var s=Session.new()
+		s.quests=Service.new(Catalog.new(cfg))
+		check(s.quests.catalog.errors.is_empty(),"growth restriction and reward rows validate")
+		s.profile.level=47
+		if row[0]!="swordman":
+			check(s.command("numbers.growtype",{"growtype":row[0]}).ok,"normal growth command sets "+row[0])
+		check(not s.quest_command("quest.accept",{"id":q.id},npc()).ok,"quest cannot start below level 48: "+row[0])
+		s.profile.level=48
+		check(s.quests.reward_for(s.profile,q).items.potion==row[1],"fixed and wildcard reward rows select "+row[0])
+		var accepted: Dictionary=s.quest_command("quest.accept",{"id":q.id},npc())
+		check(accepted.ok==(row[0]=="soulbringer"),"only swordman growth index 2 passes the original restriction: "+row[0])
+		if accepted.ok:
+			var before: int=Service.stock(s.profile,"potion")
+			meet(s,"growth-gate")
+			check(s.quest_command("quest.claim",{"id":q.id},npc()).ok and Service.stock(s.profile,"potion")==before+10,"quest claim grants index 2 and wildcard rows exactly once")
+	var unknown: Dictionary=base.profile.duplicate(true)
+	unknown.growtype="unrecognized"
+	check(Service.new().reward_for(unknown,q).items.potion==8,"unknown growth receives only the wildcard row")
+
 func run() -> void:
 	var plain=Session.new()
 	check(plain.quests.catalog.errors.is_empty(),"all old and additive native definitions validate")
+	check_growth_eligibility()
 	var commands=preload("res://debug/native_commands.gd")
 	var quest217: String=commands.execute(PackedStringArray(["quests","217"])).message
 	check(quest217.contains("admitted") or quest217.contains("existing"),"GM original-ID lookup reports the current compiler instead of stale migration status")

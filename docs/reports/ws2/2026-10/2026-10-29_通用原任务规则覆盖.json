@@ -329,11 +329,11 @@
   "field:[exposed by npc]": 151,
   "objective:[condition under clear]:sub=11:width=3": 150,
   "field:[exception quest]": 133,
-  "reward_grammar:Malformed fixed reward": 83,
   "field:[first exposed by npc]": 78,
   "hunt_enemy_nonmonster": 70,
   "objective:[mobile]:sub=-1:width=1": 62,
   "field:[event]": 56,
+  "reward_grammar:Malformed fixed reward": 51,
   "field:[condition data]": 50,
   "field:[quest point]": 49,
   "objective:[clear quest]:sub=-1:width=1": 49,
@@ -345,6 +345,7 @@
   "dungeon_unavailable:53": 33,
   "field:[grow number]": 33,
   "clear_map_unavailable:30030": 32,
+  "awakening_reward_consumer_unavailable": 32,
   "dungeon_unavailable:87": 31,
   "custom_callback_unverified": 31,
   "dungeon_unavailable:86": 31,
@@ -6822,7 +6823,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 157,
@@ -6858,7 +6862,10 @@
     "reward_item_unavailable:original_35943",
     "reward_item_unavailable:original_36256"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 158,
@@ -6889,7 +6896,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 159,
@@ -6924,10 +6934,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 160,
@@ -33373,7 +33395,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 904,
@@ -33409,7 +33434,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 905,
@@ -33440,7 +33468,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 906,
@@ -33475,10 +33506,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 907,
@@ -33611,7 +33654,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 910,
@@ -33647,7 +33693,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 911,
@@ -33680,7 +33729,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 912,
@@ -33715,10 +33767,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 913,
@@ -33818,7 +33882,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 915,
@@ -33854,7 +33921,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 916,
@@ -33885,7 +33955,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 917,
@@ -33920,15 +33993,27 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "dungeon_unavailable:1500",
     "field:[job change quest]",
     "monster_unavailable:17",
     "monster_unavailable:50070",
     "monster_unavailable:50071",
-    "monster_unavailable:50072",
-    "reward_grammar:Malformed fixed reward"
+    "monster_unavailable:50072"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 918,
@@ -34035,7 +34120,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 920,
@@ -34071,7 +34159,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 921,
@@ -34102,7 +34193,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 922,
@@ -34137,10 +34231,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 923,
@@ -34282,7 +34388,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 926,
@@ -34318,7 +34427,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 927,
@@ -34349,7 +34461,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 928,
@@ -34384,15 +34499,27 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "dungeon_unavailable:1500",
     "field:[job change quest]",
     "monster_unavailable:17",
     "monster_unavailable:50070",
     "monster_unavailable:50071",
-    "monster_unavailable:50072",
-    "reward_grammar:Malformed fixed reward"
+    "monster_unavailable:50072"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 929,
@@ -34494,7 +34621,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 931,
@@ -34530,7 +34660,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 932,
@@ -34561,7 +34694,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 933,
@@ -34596,10 +34732,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 934,
@@ -34730,7 +34878,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 937,
@@ -34766,7 +34917,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 938,
@@ -34799,7 +34953,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 939,
@@ -34834,10 +34991,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 940,
@@ -34962,7 +35131,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 943,
@@ -34998,7 +35170,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 944,
@@ -35029,7 +35204,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 945,
@@ -35064,10 +35242,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 946,
@@ -35210,7 +35400,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 949,
@@ -35246,7 +35439,10 @@
     "reward_item_unavailable:original_33963",
     "reward_item_unavailable:original_34224"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 950,
@@ -35277,7 +35473,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 951,
@@ -35312,10 +35511,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 952,
@@ -35615,7 +35826,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 958,
@@ -35651,7 +35865,10 @@
     "reward_item_unavailable:original_33963",
     "reward_item_unavailable:original_34224"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 959,
@@ -35682,7 +35899,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 960,
@@ -35717,10 +35937,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 961,
@@ -36054,7 +36286,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 968,
@@ -36090,7 +36325,10 @@
     "reward_item_unavailable:original_33963",
     "reward_item_unavailable:original_34224"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 969,
@@ -36121,7 +36359,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 970,
@@ -36156,10 +36397,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 971,
@@ -36351,7 +36604,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 975,
@@ -36387,7 +36643,10 @@
     "reward_item_unavailable:original_27998",
     "reward_item_unavailable:original_28269"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 976,
@@ -36419,7 +36678,10 @@
     "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 977,
@@ -36454,11 +36716,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 978,
@@ -36624,7 +36898,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 982,
@@ -36660,7 +36937,10 @@
     "reward_item_unavailable:original_27998",
     "reward_item_unavailable:original_28269"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 983,
@@ -36692,7 +36972,10 @@
     "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 984,
@@ -36727,11 +37010,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 985,
@@ -36899,7 +37194,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 989,
@@ -36935,7 +37233,10 @@
     "reward_item_unavailable:original_27998",
     "reward_item_unavailable:original_28269"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 990,
@@ -36967,7 +37268,10 @@
     "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 991,
@@ -37002,11 +37306,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 992,
@@ -37172,7 +37488,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 996,
@@ -37208,7 +37527,10 @@
     "reward_item_unavailable:original_27998",
     "reward_item_unavailable:original_28269"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 997,
@@ -37240,7 +37562,10 @@
     "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 998,
@@ -37275,11 +37600,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 999,
@@ -37311,7 +37648,10 @@
     "missing_chinese_text",
     "npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 1000,
@@ -61550,7 +61890,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2104,
@@ -61586,7 +61929,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2105,
@@ -61621,7 +61967,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2108,
@@ -61657,7 +62006,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2109,
@@ -61689,7 +62041,10 @@
     "field:[job change quest]",
     "npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2110,
@@ -61723,7 +62078,10 @@
     "target_npc_not_in_town",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2111,
@@ -61760,7 +62118,10 @@
     "reward_grammar:Malformed fixed reward",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2112,
@@ -61794,7 +62155,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    10
+   ]
   },
   {
    "id": 2254,
@@ -62267,7 +62631,10 @@
     "npc_not_in_town",
     "reward_item_unavailable:original_63521"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    0
+   ]
   },
   {
    "id": 2355,
@@ -62306,7 +62673,10 @@
     "npc_not_in_town",
     "reward_item_unavailable:original_64014"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    0
+   ]
   },
   {
    "id": 2502,
@@ -63905,7 +64275,10 @@
     "item_unavailable:original_3619",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    20
+   ]
   },
   {
    "id": 2708,
@@ -63965,7 +64338,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    20
+   ]
   },
   {
    "id": 2710,
@@ -64025,7 +64401,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    20
+   ]
   },
   {
    "id": 2712,
@@ -64085,7 +64464,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    20
+   ]
   },
   {
    "id": 2809,
@@ -70103,7 +70485,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4068,
@@ -70138,7 +70523,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4069,
@@ -70652,7 +71040,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4083,
@@ -70687,7 +71078,10 @@
     "reward_item_unavailable:original_33662",
     "reward_item_unavailable:original_33963"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4084,
@@ -70718,7 +71112,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4085,
@@ -70753,10 +71150,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 4086,
@@ -70823,7 +71232,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4087,
@@ -70858,7 +71270,10 @@
     "reward_item_unavailable:original_33662",
     "reward_item_unavailable:original_33963"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4088,
@@ -70889,7 +71304,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 4089,
@@ -70924,10 +71342,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 4090,
@@ -77439,7 +77869,10 @@
     "reward_item_unavailable:original_35058",
     "prerequisite_not_executable"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4428,
@@ -77473,7 +77906,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4429,
@@ -77507,7 +77943,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4430,
@@ -77541,7 +77980,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4431,
@@ -77575,7 +78017,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4432,
@@ -77609,7 +78054,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4433,
@@ -77645,7 +78093,10 @@
     "reward_item_unavailable:original_35058",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4434,
@@ -77679,7 +78130,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4435,
@@ -77713,7 +78167,10 @@
     "reward_item_unavailable:original_33962",
     "reward_item_unavailable:original_35058"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 4436,
@@ -82116,7 +82573,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5308,
@@ -82152,7 +82612,10 @@
     "reward_item_unavailable:original_35943",
     "reward_item_unavailable:original_36256"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5309,
@@ -82183,7 +82646,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5310,
@@ -82218,10 +82684,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5314,
@@ -82288,7 +82766,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5315,
@@ -82324,7 +82805,10 @@
     "reward_item_unavailable:original_35943",
     "reward_item_unavailable:original_36256"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5316,
@@ -82355,7 +82839,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5317,
@@ -82390,10 +82877,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5321,
@@ -82460,7 +82959,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5322,
@@ -82496,7 +82998,10 @@
     "reward_item_unavailable:original_35943",
     "reward_item_unavailable:original_36256"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5323,
@@ -82527,7 +83032,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5324,
@@ -82562,10 +83070,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5329,
@@ -82632,7 +83152,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5330,
@@ -82668,7 +83191,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5331,
@@ -82699,7 +83225,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5332,
@@ -82734,10 +83263,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5333,
@@ -82804,7 +83345,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5334,
@@ -82840,7 +83384,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5335,
@@ -82871,7 +83418,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5336,
@@ -82906,6 +83456,7 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "dungeon_unavailable:1500",
     "dungeon_unavailable:33",
     "field:[job change quest]",
@@ -82918,10 +83469,21 @@
     "monster_unavailable:50070",
     "monster_unavailable:50071",
     "monster_unavailable:50072",
-    "monster_unavailable:711",
-    "reward_grammar:Malformed fixed reward"
+    "monster_unavailable:711"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5340,
@@ -82988,7 +83550,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5341,
@@ -83025,7 +83590,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5342,
@@ -83061,7 +83629,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5343,
@@ -83096,11 +83667,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "npc_not_in_town",
-    "reward_grammar:Malformed fixed reward"
+    "npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5344,
@@ -83167,7 +83750,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5345,
@@ -83203,7 +83789,10 @@
     "reward_item_unavailable:original_31993",
     "reward_item_unavailable:original_32295"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5346,
@@ -83234,7 +83823,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5347,
@@ -83269,12 +83861,24 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "dungeon_unavailable:1500",
     "field:[job change quest]",
-    "monster_unavailable:17",
-    "reward_grammar:Malformed fixed reward"
+    "monster_unavailable:17"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5350,
@@ -83343,7 +83947,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5351,
@@ -83381,7 +83988,10 @@
     "reward_item_unavailable:original_33963",
     "reward_item_unavailable:original_34224"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5352,
@@ -83414,7 +84024,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5353,
@@ -83449,10 +84062,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5401,
@@ -85822,7 +86447,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5679,
@@ -85857,7 +86485,10 @@
     "reward_item_unavailable:original_37358",
     "reward_item_unavailable:original_37658"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5680,
@@ -85888,7 +86519,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5681,
@@ -85923,11 +86557,23 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[job change quest]",
-    "npc_not_in_town",
-    "reward_grammar:Malformed fixed reward"
+    "npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5684,
@@ -85995,7 +86641,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5685,
@@ -86030,7 +86679,10 @@
     "reward_item_unavailable:original_37358",
     "reward_item_unavailable:original_37658"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5686,
@@ -86061,7 +86713,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 5687,
@@ -86096,12 +86751,24 @@
     }
    ],
    "reasons": [
+    "awakening_reward_consumer_unavailable",
     "field:[enemy reward item]",
     "field:[job change quest]",
-    "npc_not_in_town",
-    "reward_grammar:Malformed fixed reward"
+    "npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 5720,
@@ -100300,7 +100967,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7613,
@@ -100336,7 +101006,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7614,
@@ -100367,7 +101040,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7615,
@@ -100402,10 +101078,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 7618,
@@ -100472,7 +101160,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7619,
@@ -100508,7 +101199,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7620,
@@ -100539,7 +101233,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7621,
@@ -100574,10 +101271,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 7628,
@@ -100644,7 +101353,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7629,
@@ -100680,7 +101392,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7630,
@@ -100711,7 +101426,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7631,
@@ -100746,10 +101464,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 7634,
@@ -100816,7 +101546,10 @@
     "reward_item_unavailable:original_1089",
     "reward_item_unavailable:original_1090"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7635,
@@ -100852,7 +101585,10 @@
     "reward_item_unavailable:original_29998",
     "reward_item_unavailable:original_30268"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7636,
@@ -100883,7 +101619,10 @@
     "npc_not_in_town",
     "target_npc_not_in_town"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ]
   },
   {
    "id": 7637,
@@ -100918,10 +101657,22 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_grammar:Malformed fixed reward"
+    "awakening_reward_consumer_unavailable",
+    "field:[job change quest]"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    2
+   ],
+   "awakening_reward_source": {
+    "[reward type]": [
+     "[awakening type]"
+    ],
+    "[reward int data]": [
+     1
+    ],
+    "[reward selection int data]": []
+   }
   },
   {
    "id": 7640,
@@ -101879,7 +102630,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7807,
@@ -101914,7 +102668,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7810,
@@ -101949,7 +102706,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7814,
@@ -101984,7 +102744,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7817,
@@ -102019,7 +102782,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7820,
@@ -102054,7 +102820,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7824,
@@ -102089,7 +102858,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7827,
@@ -102124,7 +102896,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7831,
@@ -102159,7 +102934,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7834,
@@ -102194,7 +102972,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7837,
@@ -102229,7 +103010,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7840,
@@ -102264,7 +103048,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7842,
@@ -102299,7 +103086,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7845,
@@ -102334,7 +103124,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7848,
@@ -102369,7 +103162,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7851,
@@ -102404,7 +103200,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7855,
@@ -102439,7 +103238,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7859,
@@ -102474,7 +103276,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7862,
@@ -102509,7 +103314,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7866,
@@ -102544,7 +103352,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7870,
@@ -102579,7 +103390,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7873,
@@ -102614,7 +103428,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7876,
@@ -102649,7 +103466,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7879,
@@ -102684,7 +103504,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7882,
@@ -102720,7 +103543,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7886,
@@ -102756,7 +103582,10 @@
     "npc_not_in_town",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7889,
@@ -102791,7 +103620,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7892,
@@ -102826,7 +103658,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7895,
@@ -102861,7 +103696,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 7898,
@@ -102896,7 +103734,10 @@
     "field:[job change quest]",
     "reward_grammar:Malformed fixed reward"
    ],
-   "state": "blocked"
+   "state": "blocked",
+   "raw_job_change_quest": [
+    1
+   ]
   },
   {
    "id": 9442,

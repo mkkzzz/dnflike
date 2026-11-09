@@ -97,6 +97,19 @@ class QuestRules(unittest.TestCase):
         f={'[type]':['[custom quest]'],'[sub type]':[0],'[int data]':[1,0,1]}
         _,_,reasons=compile_quest(999,'n_quest/example/a.qst','x',f,{}, {}, {}, {},custom_events={211})
         self.assertIn('custom_callback_unverified',reasons)
+    def test_awakening_reward_is_a_scalar_and_stays_blocked(self):
+        fields = {'[reward type]': ['[awakening type]'], '[reward int data]': [1]}
+        def compile_reward():
+            return compile_quest(984, 'n_quest/example/a.qst', 'x', fields, {}, {}, {}, {})
+        quest, _, reasons = compile_reward()
+        self.assertIn('awakening_reward_consumer_unavailable', reasons)
+        self.assertFalse(any(reason.startswith('reward_grammar') for reason in reasons))
+        self.assertEqual(quest['reward'], {'gold':0, 'xp':0, 'items':{}, 'conditional_items':[], 'choices':[]})
+        for payload in ([], [True], [1, 20], [2]):
+            fields['[reward int data]'] = payload
+            self.assertIn('awakening_reward_payload_unverified', compile_reward()[2])
+        fields.update({'[reward int data]': [1], '[reward selection int data]': [1089, 1]})
+        self.assertIn('awakening_reward_payload_unverified', compile_reward()[2])
 class StatusPackageChecks(unittest.TestCase):
     def setUp(self):
         self.folder=tempfile.TemporaryDirectory();self.addCleanup(self.folder.cleanup)
