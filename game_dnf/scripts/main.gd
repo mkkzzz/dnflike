@@ -2002,6 +2002,12 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		player["upper_armor_fx_ms"] = 600.0
 		bus.emit("combat.cue",{"kind":"fx","key":"upper_armor_light","point":Vector2(player["pos"]),
 			"height":float(player["z"]),"facing":int(player["facing"]),"follow":PLAYER_ID})
+		var path := "common/commoneffect/particle/superarmor_damage_particle.ptl"
+		var particle: Dictionary = combat_assets.get("particles",{}).get(path,{})
+		if not particle.is_empty():
+			# E4FFC0 clears the mirror flag. 81F486..81F4C1 adds half the stay height.
+			bus.emit("combat.cue",{"kind":"native_particle","path":path,"point":Vector2(player["pos"]),
+				"height":float(player["z"])+float(particle["z_offset"])})
 	if not guarded and state != "hold" and not armor_blocks_reaction and not buff_armor:
 		end_action_fx()
 		player["action"] = ""

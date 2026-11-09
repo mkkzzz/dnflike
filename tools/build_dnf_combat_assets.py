@@ -32,7 +32,7 @@ from PIL import Image
 
 from dnf_asset_reader import decode, parse
 from dnf_asset_store import ROOT
-from dnf_pvf import open_library, resolve
+from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
@@ -51,6 +51,29 @@ NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
     for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar')
 ]
+ARMOR_DAMAGE_PARTICLE = 'common/commoneffect/particle/superarmor_damage_particle.ptl'
+ARMOR_DAMAGE_SOURCES = {
+    ARMOR_DAMAGE_PARTICLE: 'e33073aedab87783f38e3551f08a22a218be1efbcc82f1b8c849e260ce0aa309',
+    'common/commoneffect/animation/superarmor_damage_particle01.ani': '814274ae6431e83ef19e2f4bc5ace7949406d97a7792af0ad3ae38f36dbf6268',
+    'common/commoneffect/animation/superarmor_damage_particle02.ani': '6b8add08c180862e3c7de28a7e6eb6477547808dfcafce1b83e646a495fdb122',
+    'common/commoneffect/animation/superarmor_damage_particle03.ani': 'bf47d08c2b70aa2f1c001cfb114e3a9bdf6f9f5b0a921f89c941311fbf12aa30',
+}
+
+
+def swordman_armor_particle_height(src) -> int:
+    chr_path = 'character/swordman/swordman.chr'
+    fields = src.lib.script(chr_path)['fields']
+    src.sources[chr_path] = src.lib.raw(chr_path)[1]
+    fixed_height = first_values(fields, '[fixed height]')
+    if fixed_height and fixed_height[0] != -1:
+        return int(fixed_height[0] / 2)
+    # 829F3A uses getStayAni frame 0. 1086316 uses the raw IMG offset,
+    # before atlas cropping. The current base actor uses skin index zero.
+    stay = resolve(chr_path, first_values(fields, '[waiting motion]')[0])
+    frame = src.animation(stay)['frames'][0]
+    skin = frame['img'] % 0
+    _, metadata = src.frame(skin, frame['img_frame'])
+    return int(-(frame['pos'][1] + metadata['y']) / 2)
 
 
 def native_particle_definitions(src, extra_pins=None):
@@ -72,6 +95,7 @@ def native_particle_definitions(src, extra_pins=None):
             src.sources[source] = digest
         pinned[path] = hashes
     pinned.update(extra_pins or {})
+    pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:
         doc = src.lib.script(path)
         if not doc:
@@ -87,6 +111,7 @@ def native_particle_definitions(src, extra_pins=None):
         src.sources[path] = entry['sha256']
         for animation in entry['animations']:
             effects['native_'+PurePosixPath(animation).stem] = animation
+    particles[ARMOR_DAMAGE_PARTICLE]['z_offset'] = swordman_armor_particle_height(src)
     return particles, effects
 
 

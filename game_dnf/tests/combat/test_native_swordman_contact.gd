@@ -4,7 +4,9 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const TestAPI = preload("res://debug/test_api.gd")
 const ProfileSession = preload("res://flow/session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
+const Frame = preload("res://view/world_frame.gd")
 const POINT := Vector2(400,300)
+const ARMOR_PARTICLE := "common/commoneffect/particle/superarmor_damage_particle.ptl"
 
 var session := CombatSession.new()
 var game
@@ -94,12 +96,35 @@ func check_upper_start_armor() -> void:
 			else (reaction=="guard" and game.player["state"]=="guard"),
 			"auto guard gate follows the accelerated body frame at "+str(elapsed)+" ms")
 
-func check_upper_armor_light() -> void:
+func armor_particles() -> Array:
+	return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==ARMOR_PARTICLE)
+
+func check_upper_armor_visuals() -> void:
 	start_room("original_27601","katana",-1)
 	var source := {"pos":POINT+Vector2(40,0)}
 	press(KEY_Z)
 	step(0)
 	game.hurt_player(7,source,{},-1)
+	var sparks := armor_particles()
+	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==ARMOR_PARTICLE)
+	check(sparks.size()==6,"the original armor PTL emits six particles at high quality")
+	check(bursts.size()==1 and bursts[0]["point"]==POINT and float(bursts[0]["height"])==50.0,
+		"the original burst origin uses the actor XYZ plus half the source Stay height")
+	if not sparks.is_empty():
+		var spark = sparks[0]
+		check(spark.facing==1 and spark.follow==-1 and spark.clock_ms==0.0,
+			"the original armor particles are free, unmirrored, and start at ANI frame zero")
+		var center := Vector2(POINT.x, POINT.y + Frame.MAP_DY - 50)
+		var delta: Vector2 = (spark.position-center).abs()
+		check(delta.x<=25 and delta.y<=25,"the armor particle birth area centers at half the original Stay height")
+		var tint: Vector3 = spark.material.get_shader_parameter("mono_rgb")
+		check(tint.is_equal_approx(Vector3(1.0,150.0/255.0,0.0)) and is_equal_approx(spark.fade,1.0),
+			"the original orange monochrome blend preserves starting opacity")
+		spark.advance(329.0)
+		check(not spark.is_queued_for_deletion() and is_equal_approx(spark.fade,1.0-0.57*329.0/330.0),
+			"the PTL fades to its original opacity just before the 330 ms deadline")
+		spark.advance(1.0)
+		check(spark.is_queued_for_deletion(),"the armor particle ends at the original 330 ms motion deadline")
 	var lights: Array = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/superarmordamage.ani"))
 	check(lights.size()==1,"the armored hit creates the original light view")
 	if not lights.is_empty():
@@ -111,6 +136,8 @@ func check_upper_armor_light() -> void:
 		light.seek(160.0)
 		check(light.is_queued_for_deletion(),"the light ends after the last visible original frame")
 	game.step_game(599.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	game.view.present(game.view_snapshot(),599.0,599.0)
 	# A second armor sample isolates the visual timer from recovery and cooldown.
 	game.end_action()
 	game.player["cooldowns"]["upper"] = 0.0
@@ -119,10 +146,12 @@ func check_upper_armor_light() -> void:
 	game.player["invuln_ms"] = 0.0
 	check(game.hurt_player(7,source,{},-1)=="none" and cues("upper_armor_light").size()==1,
 		"an armored hit at 599 ms does not restart the light")
+	check(armor_particles().is_empty(),"the occupied light gate also suppresses a second particle burst")
 	game.step_game(1.0)
 	game.player["invuln_ms"] = 0.0
 	check(game.hurt_player(7,source,{},-1)=="none" and cues("upper_armor_light").size()==2,
 		"an armored hit can replay the light at 600 ms")
+	check(armor_particles().size()==6,"the same 600 ms gate releases the original particle burst")
 
 func check_followup() -> void:
 	start_room("original_27000","shortsword")
@@ -302,7 +331,7 @@ func run() -> void:
 	check(ordinary[0]["boxes"].size()==1 and mastery[0]["boxes"][0]==[0.0,-10.0,30.0,160.0,20.0,84.0]
 		and mastery[0]["start"]==150.0,"mastery adds the source frame 3 box on the body clock at rank 3")
 	check_upper_start_armor()
-	check_upper_armor_light()
+	check_upper_armor_visuals()
 	check_followup()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)

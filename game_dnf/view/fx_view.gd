@@ -2,6 +2,7 @@ extends Node2D
 ## Original effect timeline: frames, delays, per-frame colour/scale/rotation/blend items.
 const TextureCache = preload("res://view/texture_cache.gd")
 static var _materials: Dictionary = {}
+static var _mono_shader: Shader
 
 var data: Dictionary
 var atlas: Texture2D
@@ -27,13 +28,13 @@ var follow := -1
 var follow_offset := Vector2.ZERO
 var fade := 1.0
 var _frame_local := 0.0
-var _blend_mode := -1
+var _blend_key: Variant
 
 func setup(info: Dictionary,direction: int) -> void:
 	data = info
 	facing = direction
 	atlas = TextureCache.load_texture(String(info["atlas"]["texture"]))
-	_blend_mode = -1
+	_blend_key = null
 
 func advance(ms: float) -> void:
 	seek(clock_ms+ms)
@@ -63,13 +64,31 @@ func seek(t: float) -> void:
 	if frame.is_empty() and not data["frames"].is_empty():frame = data["frames"][-1]
 	var blend: Dictionary = frame.get("items",{}).get("11",{})
 	var mode := int(blend.get("type",0))
-	if mode != _blend_mode:
-		_blend_mode = mode
-		if not _materials.has(mode):
-			var material_for_mode := CanvasItemMaterial.new()
-			material_for_mode.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD if mode in [1,2] else CanvasItemMaterial.BLEND_MODE_MIX
-			_materials[mode] = material_for_mode
-		material = _materials[mode]
+	var key: Variant = mode
+	if mode == 5:
+		var rgb: Array = blend["color"]
+		key = Vector3i(int(rgb[0]),int(rgb[1]),int(rgb[2]))
+	if key != _blend_key:
+		_blend_key = key
+		if not _materials.has(key):
+			if mode == 5:
+				if _mono_shader == null:
+					_mono_shader = Shader.new()
+					_mono_shader.code = """shader_type canvas_item;
+uniform vec3 mono_rgb;
+varying vec3 tint_rgb;
+void vertex() { tint_rgb = COLOR.rgb; }
+void fragment() { COLOR.rgb = mono_rgb * tint_rgb; }
+"""
+				var monochrome := ShaderMaterial.new()
+				monochrome.shader = _mono_shader
+				monochrome.set_shader_parameter("mono_rgb",Vector3(key)/255.0)
+				_materials[key] = monochrome
+			else:
+				var material_for_mode := CanvasItemMaterial.new()
+				material_for_mode.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD if mode in [1,2] else CanvasItemMaterial.BLEND_MODE_MIX
+				_materials[key] = material_for_mode
+		material = _materials[key]
 	queue_redraw()
 
 ## ANI item 9 supplies RGBA endpoints; item 10 enables interpolation. Keep
