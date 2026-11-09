@@ -393,6 +393,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["native_state"] = "bloodblast"
 		move["cast_ms"] = float(skill["level_row"][1])
 		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
+		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	if spec.has("stages"):

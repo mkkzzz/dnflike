@@ -1599,12 +1599,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		if hit["kind"] == "object":
 			var at := float(hit["at"])
 			if at > old_t and at <= new_t:
-				if hit.get("skill_id","") == "bloodblast" and not active_effect("frenzy").is_empty():
-					# C9D200 reads Frenzy level column 11 before CD80F7/CD8303 write the amounts.
-					var rank := int(skill_levels.get("buff",1))
-					var row: Array = Numbers.Skills.sample(Numbers.record("buff"),rank)["level_row"]
-					hit = hit.duplicate()
-					hit["fixed"] = int(float(hit["fixed"])*(100+int(row[11]))/100.0)
+				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
+					hit = prepare_bloodblast_damage(hit)
 				spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
@@ -1644,6 +1640,30 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
+
+func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
+	# 75EB80 takes dungeon column 1 by owner level. Use the current model's
+	# independent-attack addend alongside that base for ordinary dungeons.
+	var level := int(numeric_player.values["level"])
+	var table_values: Array = move_def("bloodblast")["fixed_attack_base"]
+	var equipment_addend := int(numeric_player.values["independent_attack"])-int(Numbers.shared_config()["base"]["independent_attack"])
+	var base := int(table_values[level-1])+equipment_addend if level > 0 and level < table_values.size() else 0
+	# 90A866..90A897 rounds each SSE operation separately, then truncates.
+	var ratio := ActorNumbers.native_scalar(float(template["fixed"])-100.0)
+	ratio = ActorNumbers.native_scalar(ratio*ActorNumbers.NATIVE_PERCENT)
+	ratio = ActorNumbers.native_scalar(1.0+ratio)
+	var amount := int(ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base)))
+	if not active_effect("frenzy").is_empty():
+		# CD80D3/CD82D9 apply C9D200 to the integer returned by 90A950.
+		var rank := int(skill_levels.get("buff",1))
+		var row: Array = Numbers.Skills.sample(Numbers.record("buff"),rank)["level_row"]
+		amount = int(float(amount*(100+int(row[11])))/100.0)
+	var hit := template.duplicate()
+	var atk: Dictionary = template["atk"].duplicate()
+	atk["absolute_damage"] = amount
+	hit["atk"] = atk
+	hit["fixed_amount"] = amount
+	return hit
 
 func native_attack_has_damage(atk: Dictionary) -> bool:
 	# 293C11E checks the weapon flag, positive damage or positive absolute damage.

@@ -4,6 +4,7 @@ The source of truth is:
   - game_dnf/data/skill_catalog.json (175 SKLs and five SP trees)
   - game_dnf/assets_local/content/combat_content.json (SKL/ANI/ATK/OBJ/PTL)
   - pinned passive-object animation layer script for ordinary Blood Blast
+  - pinned dungeon fixed-attack base table used by Blood Blast
   - explicit skill engine adapters in this file
 
 The generated file contains every unique SP-tree node. Resource references and
@@ -36,6 +37,7 @@ CHR_ATK = "character/swordman/attackinfo/"
 CHR_FX = "character/swordman/effect/animation/"
 OBJ_ROOT = "passiveobject/character/swordman/"
 BLOODBLAST_LAYER_SCRIPT = OBJ_ROOT + "animation/blastblood1.ani.als"
+FIXED_ATTACK_BASE_SOURCE = "etc/etcparameter.etc"
 
 # Keep the existing save IDs stable while giving every other tree node a
 # deterministic canonical ID. The catalog builder uses this same map.
@@ -1042,6 +1044,17 @@ def bloodblast_layer_script(library, records: dict) -> dict:
             "layers": sorted(layers, key=lambda layer: layer["order"])}
 
 
+def dungeon_fixed_attack_base(library) -> dict:
+    script = library.script(FIXED_ATTACK_BASE_SOURCE)
+    if not script or script["sha256"] != "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4":
+        raise ValueError("Unverified dungeon fixed attack base table")
+    rows = next(field["values"] for field in script["fields"]
+                if field["tag"] == "[skill damage base parameter dungeon]")
+    if len(rows) != 700 or rows[::7] != list(range(1, 101)):
+        raise ValueError("Invalid level rows in dungeon fixed attack base table")
+    return {"source": FIXED_ATTACK_BASE_SOURCE, "sha256": script["sha256"], "by_level": rows[1::7]}
+
+
 def build_move(
     skill: dict,
     records: dict,
@@ -1130,7 +1143,8 @@ def build_move(
         return {"skill": skill_path, "name": str(skill["name"]),
                 "native_state": "bloodblast", "native_recovery_col": 3,
                 "material_cost": fixed_cube_cost(skill, records),
-                "fidelity_pending": ["target_reaction_rules", "fixed_attack_scaling",
+                "fidelity_pending": ["target_reaction_rules", "fixed_attack_modifiers",
+                                     "fixed_attack_normalization", "final_damage", "thirst_bleeding_bonus",
                                      "etc_layer_order", "hit_fx_nested_lifetime", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key in BUFF_SKILLS:
@@ -1798,6 +1812,7 @@ def main() -> int:
     library = open_library()
     try:
         bloodblast_script = bloodblast_layer_script(library, records)
+        fixed_attack_base = dungeon_fixed_attack_base(library)
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
@@ -1878,6 +1893,8 @@ def main() -> int:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)
         if move:
+            if key == "bloodblast":
+                move["fixed_attack_base"] = fixed_attack_base
             moves[runtime_id] = move
             charge_ani = move.get("native_charge_ani")
             if charge_ani:

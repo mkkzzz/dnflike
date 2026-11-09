@@ -1718,6 +1718,7 @@ func check_bloodblast() -> void:
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
 	profile.command("numbers.skill_grant",{"id":"bloodblast","level":2})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["bloodblast"]
 	start_room("original_27601","katana",-1,spec,"berserker")
@@ -1736,6 +1737,7 @@ func check_bloodblast() -> void:
 	step(395)
 	check(game.view.player_actor.pose=="summon1" and game.objects.is_empty() and cues("SM_BLOOD_CAST").is_empty(),
 		"rank two Blood Blast charges for 396 ms at 1.25 attack speed, independently of cast speed")
+	game.numeric_player.values["independent_attack"] = 126.0
 	step(1)
 	check(game.view.player_actor.pose=="summon2" and game.player["clock"]==0.0
 		and spent==[[3037,1],[3037,1]] and game.player["mp"]<mp and cues("SM_BLOOD_CAST").size()==1,
@@ -1753,6 +1755,10 @@ func check_bloodblast() -> void:
 	check(sub["hit"]["fixed"]==179.0 and pillar["hit"]["fixed"]==179.0 and ground["hit"]["fixed"]==239.0
 		and [sub,pillar,ground].all(func(o):return o["hit"]["percent"]==0.0 and o["clock"]==0.0),
 		"rank two emits fixed columns 0/0/2 and starts each object at age zero")
+	check(sub["hit"]["fixed_amount"]==1084 and pillar["hit"]["fixed_amount"]==1084
+		and ground["hit"]["fixed_amount"]==1448 and ground["hit"]["atk"]["absolute_damage"]==1448,
+		"release packs the three original truncated amounts using level 60 base 580 and addend 26")
+	game.numeric_player.values["independent_attack"] = 500.0
 	var target: Dictionary = game.monsters[0]
 	for enemy: Dictionary in game.monsters:
 		move_target(enemy,POINT+Vector2(400,0))
@@ -1762,6 +1768,8 @@ func check_bloodblast() -> void:
 	game.step_objects(1)
 	check(ground["hits"].has(target["id"]) and sub["hits"].is_empty() and pillar["hits"].is_empty(),
 		"at 100 ms only the ground burst registers contact with the centered target")
+	check(game.last_damage["trace"]["fixed_part"]==1448.0,
+		"the damage pipeline uses the released integer even after independent attack changes")
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(game.view.object_views.has(ground["id"]) and game.view.object_views.has("%s:layer:0" % ground["id"]),
 		"the original ground burst exposes both its back and front layers")
@@ -1860,6 +1868,16 @@ func check_bloodblast() -> void:
 	game.view.present(game.view_snapshot(),70.0,70.0)
 	check(first.frame.has("sprite") and second.frame.has("sprite") and first.position==anchor and second.position==anchor,
 		"Hit1 starts at 470 ms and both effects stay at the grounded contact point")
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["independent_attack"] = 100.0
+	press(KEY_A)
+	step(495)
+	check(game.objects.size()==3 and game.objects[0]["hit"]["fixed_amount"]==1048
+		and game.objects[1]["hit"]["fixed_amount"]==1048 and game.objects[2]["hit"]["fixed_amount"]==1399,
+		"active rank one Frenzy applies its one percent after the original truncation on all three objects")
 
 func run() -> void:
 	game = session.mount(root)
