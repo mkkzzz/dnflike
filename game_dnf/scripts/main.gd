@@ -2367,7 +2367,8 @@ func step_draw_hits(ms: float, first_new_id: int) -> void:
 		if frame.get("damage_boxes",[]).is_empty() or int(frame.get("items",{}).get("13",0)) == 2:continue
 		# B2FE91 installs the object's own record. B2FEB0 updates its
 		# weapon damage bonus without importing the slash's ATK or status.
-		var hit := {"atk":{"weapon_damage_apply":1},"damage_type":"physical","skill":true,
+		var hit := {"atk":{"weapon_damage_apply":1,"damage_reaction":[{"value":"[damage]","args":[]}]},
+			"damage_type":"physical","skill":true,
 			"skill_id":"draw","percent":draw_count_adjusted_attack(int(entry["base_percent"]),entry["rates"],entry["targets"].size()),
 			"draw_impact":true,"draw_instance":entry["instance"]}
 		var point: Vector3 = entry["point"]
@@ -2376,6 +2377,24 @@ func step_draw_hits(ms: float, first_new_id: int) -> void:
 		if facing == 0:facing = int(entry["facing"])
 		land_hit(player,target,hit,point,facing,attack_power())
 	draw_pending_hits = waiting
+
+func apply_draw_impact_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
+	# 8185EB suppresses the reaction for body armor, while HP is resolved separately.
+	if int(enemy_frame(target).get("items",{}).get("13",0)) == 1:return "none"
+	var motions: Dictionary = target["def"]["motions"]
+	var motion := ""
+	if float(target["z"]) <= 0.0 and float(target["vz"]) <= 0.0:
+		var first := String(motions.get("damage1","")) != ""
+		var second := String(motions.get("damage2","")) != ""
+		if not first and not second:return "none"
+		# 81EBCC..81EC0A alternates on another stagger or rolls the first pose.
+		if first and second:
+			if target["state"] == "hurt":motion = "damage2" if target["hit_motion"] == "damage1" else "damage1"
+			else:motion = "damage1" if rng.range_int(0,1) == 0 else "damage2"
+		else:motion = "damage1" if first else "damage2"
+	var reaction := Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery)
+	if reaction == "stagger":target["hit_motion"] = motion
+	return reaction
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
 	# C9F980 reads the current distinct target count.
@@ -2587,7 +2606,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		if not draw_impact:
+		if draw_impact:
+			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
+			if reaction != "none":target["clock"] = 0.0
+		elif not contact_only:
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0

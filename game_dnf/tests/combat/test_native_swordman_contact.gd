@@ -1768,6 +1768,7 @@ func check_draw_sword() -> void:
 	step(1)
 	check(game.hit_count==2 and rear["hp"]==10000.0 and front["hp"]==10000.0 and game.objects.is_empty(),
 		"body frame 2 registers front and rear contacts before delayed damage")
+	check(rear["state"]=="idle" and front["state"]=="idle","the opening slash leaves both grounded poses intact")
 	check(cues("SM_BAL_SHOT").size()==1 and cues("R_KATANAA").size()==1
 		and cues("R_DRAWING_SWORD_HIT").size()==2 and cues("SWD_BAL_END").is_empty(),
 		"outgoing frame triggers the original shot, weapon swing and hit sounds")
@@ -1784,6 +1785,9 @@ func check_draw_sword() -> void:
 	check(rear["hp"]==10000.0 and front["hp"]==10000.0,"the first draw impact waits through the frame-two deadline")
 	step(1)
 	check(rear["hp"]<10000.0 and front["hp"]<10000.0,"both registered targets take damage after the frame-two deadline")
+	check(rear["state"]=="hurt" and front["state"]=="hurt" and front["stun_ms"]>0.0
+		and front["push_ms"]==0.0 and front["vz"]==0.0 and cues("R_DRAWING_SWORD_HIT").size()==2,
+		"the temporary object's neutral ATK staggers without copying the slash's push, lift or sound")
 	step(48)
 	check(game.hit_count==2 and cues("SWD_BAL_END").is_empty(),"one hit per target and no sheath sound before body frame 8")
 	step(1)
@@ -1908,6 +1912,38 @@ func check_draw_target_deadlines() -> void:
 		var hits: Array = game.bus.events_of("combat.damage").filter(func(event):return event.get("source_object",0)==35687)
 		check(hits.size()==count and (target["hp"]<before)==(count==1) and game.draw_pending_hits.is_empty(),
 			"the delayed attack checks the new frame once and never retries: "+guard)
+		check(target["state"]=="idle" and target["stun_ms"]==0.0,
+			"the target keeps its current action through the delayed attack: "+guard)
+
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	target = api.spawn_dummy(POINT+Vector2(100,0))
+	target["state"] = "air"
+	target["z"] = 20.0
+	target["vz"] = 12.0
+	press(KEY_A)
+	step(525)
+	check(game.draw_pending_hits.size()==1 and target["push_ms"]==0.0 and target["vz"]==12.0,
+		"first contact does not apply the slash's push and lift to an airborne target")
+	step(201)
+	check(target["hp"]<5000.0 and target["state"]=="air" and target["push_ms"]==0.0 and target["vz"]==12.0,
+		"the delayed hit keeps an airborne target airborne without a new lift")
+
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	target = api.spawn_dummy(POINT+Vector2(100,0))
+	press(KEY_A)
+	step(525)
+	target["state"] = "hurt"
+	target["hit_motion"] = "damage2"
+	target["clock"] = 50.0
+	step(201)
+	check(target["hp"]<5000.0 and target["state"]=="hurt" and target["hit_motion"]=="damage1" and target["clock"]==0.0,
+		"another stagger alternates the original damage poses and restarts the motion")
 
 func check_bloody_rave_phases() -> void:
 	var profile := ProfileSession.new()
