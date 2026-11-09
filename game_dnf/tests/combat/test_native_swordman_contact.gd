@@ -882,6 +882,31 @@ func check_triple_cooldown() -> void:
 	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
 		"the next cast uses the refreshed normal three-stage move")
 
+func check_overdrive_critical() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	for sample: Array in [[1,0.05],[2,0.055],[4,0.066]]:
+		profile.command("numbers.skill_grant",{"id":"overdrive","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["overdrive"]
+		start_room("original_27601","katana",1,spec)
+		game.player["mp"] = 5000.0
+		var base_crit: float = game.numeric_player.values["physical_crit"]
+		press(KEY_A)
+		step(0)
+		var effect: Dictionary = game.numeric_player.effects.active.get("overdrive",{})
+		check(effect.get("rank")==sample[0] and effect.get("remaining_ms")==120000.0,
+			"Overdrive shortcut applies the original duration at rank "+str(sample[0]))
+		check(is_equal_approx(game.numeric_player.values["physical_crit"]-base_crit,float(sample[1])),
+			"Overdrive adds the correct original critical chance at rank "+str(sample[0]))
+		game.step_numeric_actor(game.player,game.numeric_player,119999)
+		check(game.numeric_player.effects.active.get("overdrive",{}).get("remaining_ms")==1.0,
+			"Overdrive lasts through the last millisecond")
+		game.step_numeric_actor(game.player,game.numeric_player,1)
+		check(not game.numeric_player.effects.active.has("overdrive") and
+			is_equal_approx(game.numeric_player.values["physical_crit"],base_crit),"Overdrive expires and restores baseline critical chance")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -988,6 +1013,7 @@ func run() -> void:
 	check_triple_slash()
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
+	check_overdrive_critical()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()

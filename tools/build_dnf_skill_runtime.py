@@ -389,9 +389,12 @@ BUFF_EFFECTS = {
     },
     "overdrive": {
         "name": "破极兵刃",
-        "duration_ms": 120000,
+        "source_skill": "overdrive",
+        "duration_level_row": 0,
         "stacking": "refresh",
         "max_stacks": 1,
+        # CD936A selects column 3 in tenths of a percentage point (enum 15).
+        "modifiers": [{"stat": "physical_crit", "op": "add", "level_row": 3, "scale": 0.001}],
         "weapon_attack": 30,
         "durability_rate": 3.0,
     },
