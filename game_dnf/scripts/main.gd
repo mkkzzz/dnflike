@@ -116,6 +116,7 @@ var missing_reason := ""
 var door_lock_ms := 0.0
 var _dynamic_refresh_ms := 0.0
 var _aura_pulse_ms := 0.0
+var _stepping_player := false
 var test_drive
 var _frame := 0
 ## Isolated testbed bootstrap; set by a harness before add_child(). Empty keeps production paths.
@@ -812,7 +813,9 @@ func step_game(ms: float) -> void:
 		requests.clear()
 		Kernel.Reaction.step_body(player,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world)
 	else:
+		_stepping_player = true
 		step_player(ms,move)
+		_stepping_player = false
 	# A creature admitted by another monster participates in clear checks now,
 	# and receives its first movement update on the following battle tick.
 	for index in monsters.size():update_enemy(monsters[index],ms)
@@ -2632,10 +2635,15 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			var source_id = attacker["skills"].find_key(hit_skill_id)
 			attacker["last_attack"] = -1 if source_id == null else int(source_id)
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
+	# The independent temporary object keeps its unset pause.
+	if draw_contact:stop = float(hit["draw_stop_ms"])
+	elif draw_impact:stop = 0.0
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
 	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact and not grab_strike:
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
-	if not grab_strike:target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
+	if not grab_strike and stop > float(target.get("stuck_ms",0)):
+		target["stuck_ms"] = stop
+		if draw_contact and _stepping_player:target["draw_stop_fresh"] = true
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	var damage_event := {"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,"show_number":not contact_only,
@@ -2806,6 +2814,7 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
+	var fresh_draw_stop := enemy.erase("draw_stop_fresh")
 	var held_by_grab := int(player.get("grab_blast_target",-1)) == int(enemy["id"])
 	var summon_poll: bool = m.has("native_spirit_summon") and NativeZealotSummons.poll_due(enemy,ms)
 	if enemy.has("starfish_capture") and (enemy["state"] != "attack" or float(enemy["hp"]) <= 0.0):
@@ -2834,7 +2843,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["grab_blast_pose"][1] += ms
 		return
 	if float(enemy["stuck_ms"]) > 0:
-		enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
+		if not fresh_draw_stop:enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
 		return
 	var dt := ms/1000
 	enemy["cooldown_ms"] = maxf(0,float(enemy["cooldown_ms"])-ms)

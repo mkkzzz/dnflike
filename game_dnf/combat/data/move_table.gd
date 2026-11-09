@@ -181,7 +181,7 @@ func _build_player() -> void:
 		"motions":{"damage1":"damage1","damage2":"damage2","down":"down","overturn":"overturn"}}
 	if player["hp_max"] <= 0:problems.append("CHR initial HP missing")
 
-## Weapon row of CHR [weapon hit info]: [kind, blood, size, scale, x, y] per weapon subtype.
+## CHR weapon row: [kind, blood, pause_ms, hit_delay_rate, x, y].
 func weapon_hit_info(weapon: String) -> Array:
 	var index := int(rules["player"]["weapon_index"].get(weapon,0))
 	var flat: Array = player["weapon_hit_info"]
@@ -485,6 +485,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				built["fx"] = [{"key":"triple_move%d" % (index%2+1),"at":0.0,"action_clock":true},
 					{"key":"triple%d" % (index+1),"at":0.0,"action_clock":true}]
 			if native_draw:
+				# 83F7FF fills the ATK's unset stop from the installed weapon row.
+				if not built["hits"].is_empty():built["hits"][0]["draw_stop_ms"] = int(weapon_hit_info(weapon)[2])
 				# CB21D8 and CB22B3 are one-shot gates on body frames 2 and 8.
 				var shot := float(frames[2]["start_ms"])
 				built["fx"] = _draw_slash_cues(spec["slash_layers"]["slots"],shot,1,3)

@@ -1879,12 +1879,22 @@ func check_draw_target_deadlines() -> void:
 	target["numeric"].values["hp_max"] = 5000.0
 	press(KEY_A)
 	game.step_game(525)
-	check(target["hp"]==5000.0 and game.draw_pending_hits.size()==1 and float(game.player["stuck_ms"])>0.0,
-		"the public battle update registers without pre-aging its newborn impact")
-	game.step_game(200)
-	check(target["hp"]==5000.0 and game.player["clock"]==525.0,"the impact deadline advances even while the attacker is stopped")
+	check(target["hp"]==5000.0 and game.draw_pending_hits.size()==1
+		and game.player["stuck_ms"]==70.0 and target["stuck_ms"]==70.0,
+		"the public battle update registers both original katana stops without pre-aging")
+	game.step_game(69)
+	check(game.player["clock"]==525.0 and game.player["stuck_ms"]==1.0 and target["stuck_ms"]==1.0
+		and game.draw_pending_hits[0]["remaining_ms"]==131.0,
+		"the impact deadline advances while both actors are still stopped")
 	game.step_game(1)
-	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty(),"the public battle update settles on the first tick beyond the deadline")
+	check(game.player["clock"]==525.0 and game.player["stuck_ms"]==0.0 and target["stuck_ms"]==0.0,
+		"the weapon stop lasts exactly 70 ms")
+	game.step_game(130)
+	check(target["hp"]==5000.0 and game.player["clock"]==655.0,"the impact is still pending at its exact deadline")
+	game.step_game(1)
+	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty()
+		and game.player["stuck_ms"]==0.0 and target["stuck_ms"]==0.0,
+		"the temporary object settles once without starting a new stop")
 
 	for guard: String in ["no_hurtboxes","invulnerable_frame","super_armor"]:
 		start_room("original_27601","katana",1,spec)
@@ -3126,12 +3136,16 @@ func check_draw_second_slash() -> void:
 		check(game.hit_count==2 and cues("SM_BAL_SHOT").size()==1,"second slash waits through its opening frame")
 		var fresh: Dictionary = game.spawn_enemy(POINT+Vector2(180,0))
 		fresh["hp"] = 10000.0
+		game.player["stuck_ms"] = 0.0
 		step(1)
 		var swing := "R_KATANAA" if blade else "R_BEAMSWDA"
 		check(game.hit_count==5 and game.view.player_actor.sample()["frame"]==2
 			and cues("SM_BAL_SHOT").size()==2 and cues(swing).size()==2 and game.player["mp"]==paid_mp
 			and game.player["cooldowns"]["draw"]==paid_cooldown and spent==[[3037,1]],
 			"the next frame hits the same targets independently without a second skill payment")
+		var pause_ms := 70.0 if blade else 60.0
+		check(game.player["stuck_ms"]==pause_ms and fresh["stuck_ms"]==pause_ms,
+			"the second slash uses the original weapon stop for "+family)
 		check_draw_slash_layers("red" if blade else "white",0)
 		if blade:
 			var effect: Dictionary = game.action_def()["hits"][0]["effects"][0]
