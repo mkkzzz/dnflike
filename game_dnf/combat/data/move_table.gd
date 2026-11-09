@@ -472,8 +472,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 					"chargecrashdash":
 						built["voice"] = "SM_CHARGE_CRASH"
 						built["sounds"] = [{"key":"CCRASH_MOVING","at":0.0}]
+						# CD0440/CD044F attach slots 0 and 4 in front of the actor.
+						built["fx"] = [{"key":"charge_dash","at":0.0,"action_clock":true,"depth_offset":1},
+							{"key":"charge_dash_dust","at":0.0,"action_clock":true,"depth_offset":2}]
 					"chargecrashupper":
 						built["voice"] = "SM_CHARGE_CRASH_UP"
+						# CB74E9 attaches slot 1 after the first body frame.
+						built["fx"] = [{"key":"charge_upper","at":float(frames[1]["start_ms"]),
+							"action_clock":true,"depth_offset":1}]
 			if move.get("native_state","") == "grab_blast" and move["stages"].is_empty():
 				built["entry_clock"] = float(frames[3]["start_ms"])
 				built["cancel_at"] = built["duration"]

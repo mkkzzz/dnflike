@@ -3074,7 +3074,8 @@ func check_charge_crash_uppercut() -> void:
 	var spec := profile.stats()
 	spec["skill_slots"] = ["charge_crash"]
 	for rate: float in [1.0,1.25]:
-		start_room("original_27000","shortsword",1,spec)
+		var facing := 1 if rate == 1.0 else -1
+		start_room("original_27000","shortsword",facing,spec)
 		game.clear_monsters()
 		game.numeric_player.values["attack_speed"] = rate
 		press(KEY_A)
@@ -3086,9 +3087,20 @@ func check_charge_crash_uppercut() -> void:
 		var motion := cues("CCRASH_MOVING")
 		check(voice.size()==1 and motion.size()==1 and voice[0]["event_id"]<motion[0]["event_id"],
 			"the dash plays its original voice followed by the motion cue once")
-		step(dash_end-1.0)
+		var dash: Array = game.view.effects.filter(func(fx):return fx.cue_key=="charge_dash")
+		var dust: Array = game.view.effects.filter(func(fx):return fx.cue_key=="charge_dash_dust")
+		check(dash.size()==1 and dust.size()==1 and dash[0].z_index==int(POINT.y)+1
+			and dust[0].z_index==int(POINT.y)+2 and dash[0].facing==facing and dust[0].facing==facing,
+			"the dash starts the original streak and dust with their separate attachment depths")
+		step(80.0/rate)
+		check(dash.size()==1 and dust.size()==1 and dash[0].frame["frame"]==1 and dust[0].frame["frame"]==1
+			and dash[0].position==game.view.player_actor.position and dust[0].position==game.view.player_actor.position,
+			"dash attachments follow the actor and advance at the same action rate")
+		step(dash_end-80.0/rate-1.0)
 		check(game.player["stage"]==0 and cues("SM_CHARGE_CRASH_UP").is_empty(),
 			"the uppercut stays silent before the dash ANI finishes")
+		check(game.view.effects.all(func(fx):return fx.cue_key not in ["charge_dash","charge_dash_dust"]),
+			"the dash streak and dust finish before the dash body ANI")
 		var mp: float = game.player["mp"]
 		step(1)
 		check(game.player["stage"]==1 and game.view.player_actor.pose=="chargecrashupper"
@@ -3098,6 +3110,19 @@ func check_charge_crash_uppercut() -> void:
 		step(20)
 		check(game.player["pos"].x==upper_x and cues("SM_CHARGE_CRASH_UP").size()==1,
 			"uppercut does not repeat the dash movement or its entry voice")
+		step(30.0/rate-21.0)
+		check(cues("charge_upper").is_empty(),"the uppercut has no blade effect in body frame zero")
+		step(1)
+		var upper: Array = game.view.effects.filter(func(fx):return fx.cue_key=="charge_upper")
+		check(upper.size()==1 and upper[0].frame["frame"]==0 and upper[0].clock_ms==0.0
+			and upper[0].z_index==int(POINT.y)+1 and upper[0].facing==facing,
+			"body frame one attaches the uppercut blade once at its native depth")
+		step(60.0/rate)
+		check(cues("charge_upper").size()==1 and upper.size()==1 and upper[0].frame["frame"]==1,
+			"uppercut blade advances from its own birth frame at the action rate")
+		step(240.0/rate)
+		check(game.player["action"]=="charge_crash" and game.view.effects.all(func(fx):return fx.cue_key!="charge_upper"),
+			"the uppercut blade ends on its own ANI while the body is still recovering")
 		for key in ["SM_CHARGE_CRASH","CCRASH_MOVING","SM_CHARGE_CRASH_UP"]:
 			var streams: Array = game.view.audio.variants.get(key,[])
 			check(streams.size()==1 and streams[0] is AudioStreamOggVorbis,"original Charge Crash stream mounted for "+key)
