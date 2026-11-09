@@ -1060,8 +1060,11 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
-	if m.get("native_state","") == "grab_blast" and int(player["stage"]) == 0:
-		if try_grab_blast(stage,event_clock):return
+	if m.get("native_state","") == "grab_blast":
+		if int(player["stage"]) == 0:
+			if try_grab_blast(stage,event_clock):return
+		else:
+			step_grab_blast(m,stage,old_event_clock,event_clock)
 	else:
 		apply_player_hits(stage,old_event_clock,event_clock)
 	# CB1BB3 checks the full-charge release's body frame before the next phase.
@@ -1546,6 +1549,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
 	elif m.get("native_state","") == "grab_blast" and index == 1:
 		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"]}
+		var strike: Dictionary = m["grab_strike"]
+		var base := native_fixed_attack_base(m["fixed_attack_base"])
+		var amount := float(int(native_fixed_attack_product(float(strike["fixed"]),base)))
+		# CC98DE..CC991C writes the scaled result to the ATK as a float.
+		amount = ActorNumbers.native_scalar(ActorNumbers.native_scalar(amount*grab_frenzy_percent())*ActorNumbers.NATIVE_PERCENT)
+		player["native_phase"]["grab_strike"] = grab_fixed_hit(strike,amount)
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -1775,6 +1784,48 @@ func try_grab_blast(stage: Dictionary, clock: float) -> bool:
 		return true
 	return false
 
+func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
+	var strike_due := from < 100.0 and to >= 100.0 and active_effect("thirst").is_empty()
+	var sprays: Array = stage["hits"]
+	var at := float(sprays[0]["at"])
+	var spray_due := from < at and to >= at
+	if not strike_due and not spray_due:return
+	var target: Dictionary = {}
+	for enemy: Dictionary in monsters:
+		if int(enemy["id"]) == int(player.get("grab_blast_target",-1)) and float(enemy["hp"]) > 0.0:
+			target = enemy
+			break
+	var facing := int(player["facing"])
+	var position := Vector2i(player["pos"])
+	var height := int(player["z"])
+	if strike_due and not target.is_empty():
+		var point := Vector3(position.x+43*facing,position.y,height+90)
+		land_hit(player,target,player["native_phase"]["grab_strike"],point,facing,attack_power())
+	if not spray_due:return
+	var bleeding: bool = not target.is_empty() and float(target["hp"]) > 0.0 and target.has("numeric") \
+		and target["numeric"].effects.active.has("bleed")
+	var spray: Dictionary = sprays[1 if bleeding else 0]
+	var base := native_fixed_attack_base(move["fixed_attack_base"])
+	var amount := int(native_fixed_attack_product(float(spray["fixed"]),base))
+	# CB6D42 and CB6D83 truncate each column separately before adding them.
+	if bleeding:amount += int(native_fixed_attack_product(float(move["grab_bleed_bonus"]),base))
+	amount = int(float(amount*grab_frenzy_percent())/100.0)
+	player.erase("grab_blast_target")
+	spawn_object(grab_fixed_hit(spray,float(amount)),"player",Vector2(position),float(height),facing,attack_power())
+
+func grab_frenzy_percent() -> int:
+	if active_effect("frenzy").is_empty():return 100
+	var row: Array = Numbers.Skills.sample(Numbers.record("buff"),int(skill_levels.get("buff",1)))["level_row"]
+	return 100+int(row[9])
+
+func grab_fixed_hit(template: Dictionary, amount: float) -> Dictionary:
+	var hit := template.duplicate()
+	var atk: Dictionary = template["atk"].duplicate()
+	atk["absolute_damage"] = amount
+	hit["atk"] = atk
+	hit["fixed_amount"] = amount
+	return hit
+
 func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 	var anchor := Kernel.HitJudge.anchor(player["pos"],float(player["z"]))
 	var facing := int(player["facing"])
@@ -1785,11 +1836,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			if at > old_t and at <= new_t:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
-				if hit.get("skill_id","") == "grabblastblood":
-					# CB6F95 uses the integer position and the hand-relative offset.
-					player.erase("grab_blast_target")
-					spawn_object(hit,"player",Vector2(Vector2i(player["pos"])),float(int(player["z"])),facing,attack_power())
-				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
+				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
 				else:
@@ -1900,18 +1947,24 @@ func prepare_draw_short_wave(template: Dictionary) -> Dictionary:
 	hit["fixed_amount"] = amount
 	return hit
 
-func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
+func native_fixed_attack_base(table_values: Array) -> int:
 	# 75EB80 takes dungeon column 1 by owner level. Use the current model's
 	# independent-attack addend alongside that base for ordinary dungeons.
+	if numeric_player == null:return 0
 	var level := int(numeric_player.values["level"])
-	var table_values: Array = move_def("bloodblast")["fixed_attack_base"]
 	var equipment_addend := int(numeric_player.values["independent_attack"])-int(Numbers.shared_config()["base"]["independent_attack"])
-	var base := int(table_values[level-1])+equipment_addend if level > 0 and level < table_values.size() else 0
+	return int(table_values[level-1])+equipment_addend if level > 0 and level < table_values.size() else 0
+
+func native_fixed_attack_product(value: float, base: int) -> float:
 	# 90A866..90A897 rounds each SSE operation separately, then truncates.
-	var ratio := ActorNumbers.native_scalar(float(template["fixed"])-100.0)
+	var ratio := ActorNumbers.native_scalar(value-100.0)
 	ratio = ActorNumbers.native_scalar(ratio*ActorNumbers.NATIVE_PERCENT)
 	ratio = ActorNumbers.native_scalar(1.0+ratio)
-	var product := ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base))
+	return ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base))
+
+func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
+	var base := native_fixed_attack_base(move_def("bloodblast")["fixed_attack_base"])
+	var product := native_fixed_attack_product(float(template["fixed"]),base)
 	var amount := int(product)
 	var bleeding_amount := amount
 	var thirst_active := not active_effect("thirst").is_empty()
@@ -2004,6 +2057,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var contact_only := bool(hit.get("contact_only",false))
 	var draw_contact := hit.has("draw_delay_ms")
 	var draw_impact := bool(hit.get("draw_impact",false))
+	var grab_strike := bool(hit.get("grab_strike",false))
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
 	if numeric_player != null and (not contact_only or draw_contact):
@@ -2020,7 +2074,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
 		context["counter"] = String(target["state"]) in ["attack","action"]
 		context["back"] = int(target["facing"])==facing
-		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.shared_config()["formula"])
+		# CB6932/CB6984 bypass the ordinary hit gate on the already-held target.
+		var hit_roll := 0.0 if grab_strike else rng.next_float()
+		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[hit_roll,rng.next_float()],Numbers.shared_config()["formula"])
 		if not contact_only:last_damage = resolved.duplicate(true)
 		amount = int(resolved["amount"])
 		if amount <= 0 and (not starfish_grab or bool(resolved["missed"]) or bool(target_stats.get("immune",false))):
@@ -2076,9 +2132,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			attacker["last_attack"] = -1 if source_id == null else int(source_id)
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
-	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact:
+	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact and not grab_strike:
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
-	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
+	if not grab_strike:target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	var damage_event := {"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,"show_number":not contact_only,

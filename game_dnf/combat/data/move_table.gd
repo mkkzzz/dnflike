@@ -400,6 +400,12 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.get("native_state","") == "grab_blast":
 		move["native_state"] = "grab_blast"
 		move["grab_duration_ms"] = float(skill["static"][0])
+		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
+		var strike_path := String(spec["strike_atk"])
+		var row: Array = skill["level_row"]
+		move["grab_strike"] = {"atk":atk(strike_path),"atk_path":strike_path,"skill_id":name,
+			"skill":true,"percent":0.0,"fixed":float(row[0]),"damage_type":"physical","grab_strike":true}
+		move["grab_bleed_bonus"] = float(row[4])
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),

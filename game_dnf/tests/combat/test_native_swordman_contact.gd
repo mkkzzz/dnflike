@@ -1879,12 +1879,20 @@ func check_grab_blast_startup() -> void:
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
 	profile.command("numbers.skill_grant",{"id":"grabblastblood","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":2})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["grabblastblood"]
-	for outcome: String in ["whiff","invulnerable","hit","interrupted"]:
+	for outcome: String in ["whiff","invulnerable","hit","bleed_frenzy","interrupted"]:
 		start_room("original_27601","katana",1,spec,"berserker")
+		var empowered := outcome == "bleed_frenzy"
+		if empowered:game.apply_skill_effect("buff","frenzy")
 		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(200 if outcome == "whiff" else 50,0))
+		target["hp"] = 50000.0
+		target["numeric"].values["hp_max"] = 50000.0
+		if empowered:target["numeric"].effects.add_source_bleed(0,3000,38)
 		if outcome == "invulnerable":target["invuln_ms"] = 2000.0
 		press(KEY_A)
 		step(0)
@@ -1908,12 +1916,23 @@ func check_grab_blast_startup() -> void:
 			step(750)
 			check(not game.player.has("grab_blast_target") and game.objects.is_empty(),"interruption releases the target without spawning a spray")
 			continue
-		step(749)
+		step(99)
+		check(target["hp"]==50000.0,"Bloodlust has no direct damage through 99 ms after capture")
+		step(1)
+		var direct: Dictionary = game.last_damage.get("trace",{})
+		check(target["hp"]<50000.0 and direct.get("percent_part")==0.0
+			and is_equal_approx(float(direct.get("fixed_part",0)),1300.5 if empowered else 1275.0),
+			"Bloodlust's directed strike reads level column zero and the native Frenzy multiplier")
+		step(649)
 		check(game.objects.is_empty(),"Bloodlust waits through 749 ms after capture")
 		step(1)
 		check(not game.player.has("grab_blast_target") and game.objects.size()==1
 			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
 			"Bloodlust creates one spray at the original hand offset after 750 ms")
+		var spray: Dictionary = game.objects[0]["hit"]
+		var source := "grabblastbloodbig.obj" if empowered else "grabblastblood.obj"
+		check(spray["object"].ends_with(source) and spray["percent"]==0.0 and spray["fixed_amount"]==(3419.0 if empowered else 1821.0),
+			"Bloodlust selects the source spray and truncates each fixed damage component in order")
 		var hp: float = target["hp"]
 		game.step_objects(1.0)
 		check(target["hp"]<hp,"the spray attacks from its first authored frame")

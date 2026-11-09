@@ -1156,14 +1156,16 @@ def build_move(
                 "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
                             "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
     if key == "grabblastblood":
-        spray = add_object(objects, OBJ_ROOT + "grabblastblood.obj")
-        if not spray:
+        sprays = [add_object(objects, OBJ_ROOT + path) for path in ("grabblastblood.obj", "grabblastbloodbig.obj")]
+        if not all(sprays):
             raise ValueError("Missing original Bloodlust spray object")
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "grab_blast",
+                "strike_atk": "character/swordman/attackinfo/grabblastblood.atk",
                 "stages": [{"ani": "grab", "atk": "character/swordman/attackinfo/grab.atk",
                             "hits": [{"body": True}]},
-                           {"ani": "grab", "hits": [{"object": spray, "at": 750,
-                            "percent_col": 0, "speed": 0.0, "life_ms": 480, "offset": [43, 1, 90]}]}]}
+                           {"ani": "grab", "hits": [{"object": spray, "at": 750, "percent": 0,
+                            "fixed_col": 1, "speed": 0.0, "life_ms": 480, "offset": [43, 1, 90]}
+                            for spray in sprays]}]}
     if key == "frenzy":
         # CC10F0 uses throw slot 0. State 13 loads its charge and shoot motions.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
@@ -1993,7 +1995,7 @@ def main() -> int:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)
         if move:
-            if key == "bloodblast":
+            if key in ("bloodblast", "grabblastblood"):
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
