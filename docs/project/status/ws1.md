@@ -6,7 +6,7 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 已发布 |
-| 正在做 | 选人与建角独立契约与 2× 实绘已发布：37 项契约、正式循环 461 项均 failures=0；满员空位提示、六角色热切换和实绘完成。下一项按独立计划进行城镇任务追踪界面 |
+| 正在做 | 选人与建角独立契约与 2× 实绘已发布：37 项契约、正式循环 461 项均 failures=0；满员空位提示、六角色热切换和实绘完成。下一项按剩余工时计划进行任务日志、任务追踪和 NPC 对话 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
@@ -29,7 +29,7 @@
 - 175 条剑士 SKL 与 78 个树节点均有运行定义（52 主动 / 26 被动），但原版一致性未完成；ws2 继续逐招校准，ws1 本批只做独立输入、快捷栏与性能回归，不把运行入口计为完成。
 - 鬼剑士首批：输入专项 27 项、快捷栏专项 72 项已发布，均 failures=0；ws2 仍持有生产文件并负责集成正式回归入口。格挡、三段斩的取消窗口等 ws2 发布后补断言。
 - 技能面板独立契约已完成；本轮没有修改面板生产代码，后续面板缺陷需先用 `test_ws1_panel_contract.gd` 复现再改。
-- 选人与建角独立契约已完成；下一项为城镇任务追踪界面，之后为只读素材浏览工具。角色删除、多职业、正式转职和存档事务仍不在本区范围。
+- 选人与建角独立契约已完成；下一项为任务日志、任务追踪和 NPC 对话，随后是仓库、装备操作和 NPC 服务界面。只读素材浏览工具作为储备；角色删除、多职业、正式转职和存档事务仍不在本区范围。
 - `python tools/check_dnf_deps.py` 当前报告 2 个既有违规：`combat/api/combat_session.gd`、`combat/resolve/native_breakable.gd` 引用 `res://loot/native_box.gd`。两处属于 ws2 当前生产文件，本批未改，需由 ws2 处理依赖边界。
 - 标准 `run_dnf_loop.ps1 -Test` 预检停在既有 `build_dnf_quest_rules.py --check` stale；本轮未擅自重建 ws2 任务产物，直接运行同一 `loop.tscn --loop-test`，完整流程 393 项通过。
 - [ws2 多招式接收诊断](../../reports/ws2/2026-10/2026-10-29_ws1多招式接收回归差异.md)：ws1 已完成修复并从独立场景复跑通过；等待 ws2 在当前主线保留原断言接收复核。
