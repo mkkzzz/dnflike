@@ -3237,7 +3237,9 @@ func attack_body_armor() -> bool:
 	if player["state"] != "action":return false
 	var stage := action_def()
 	var upper := String(player["action"]) == "upper" and int(player["stage"]) == 0
-	if not upper and stage.get("ani","") != "weaponcomboheavy2":return false
+	# OutRageBreakSlash carries body mode 1 on frames 2..7. Ready uses the
+	# constructor's default mode, so only the authored slash frames qualify.
+	if not upper and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash"]:return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))

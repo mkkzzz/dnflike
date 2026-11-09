@@ -2354,6 +2354,47 @@ func check_outrage_break_eruption() -> void:
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 
+func check_outrage_break_armor() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"outragebreak","level":2})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	var normal_atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
+	var piercing_atk := normal_atk.duplicate()
+	piercing_atk["ignore_super_armor"] = 1
+	for sample: Array in [[0,559.0,1.0,false,false],[1,239.0,1.0,false,false],
+			[1,240.0,1.0,false,true],[1,779.0,1.0,false,true],[1,780.0,1.0,false,false],
+			[1,191.0,1.25,false,false],[1,192.0,1.25,false,true],[1,241.0,1.0,true,false]]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = sample[2]
+		game.player["hp"] = 1000.0
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int,amount: int):
+			payments.append([id,amount])
+			return true)
+		for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(900,0))
+		press(KEY_A)
+		step(0)
+		if sample[0] == 1:step(560.0/float(sample[2]))
+		step(sample[1])
+		var atk: Dictionary = piercing_atk if sample[3] else normal_atk
+		var hit_reaction: String = game.hurt_player(7,{"pos":game.player["pos"]+Vector2(50,0)},atk,-1)
+		var armored: bool = sample[4]
+		check(game.player["hp"]==563.0 and payments==[[3037,2]] and game.player["cooldowns"].has("outragebreak"),
+			"rank two keeps its 430 HP and cube payment across incoming damage")
+		check((game.player["action"]=="outragebreak" and hit_reaction=="none") if armored else game.player["action"]=="",
+			"native leap ANI armor respects frame and attack bypass at "+str(sample))
+		check(cues("upper_armor_light").size()==int(armored),
+			"only an absorbed reaction emits the native body armor feedback")
+		if sample[0] == 0:
+			step(700)
+			check(game.objects.is_empty() and cues("OUTRAGE_SWING").is_empty(),
+				"interrupting the unarmored ready frame keeps payment and prevents impact")
+
 func check_outrage_break_camera() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3690,6 +3731,7 @@ func run() -> void:
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
 	check_outrage_break_eruption()
+	check_outrage_break_armor()
 	check_outrage_break_camera()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
