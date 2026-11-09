@@ -1556,7 +1556,7 @@
     "followup_abnormal_status",
     "beamsword_equipped_appearance",
     "wave_wall_and_final_damage",
-    "temporary_hit_object_resolution",
+    "temporary_hit_atk_and_final_formula",
     "original_command",
     "weapon_durability"
    ],

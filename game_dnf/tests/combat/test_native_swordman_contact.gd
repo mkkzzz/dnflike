@@ -41,7 +41,9 @@ func press(code: int) -> void:
 	session.submit_key(code,false)
 
 func step(ms: float) -> void:
+	var first_new_id: int = game._next_entity_id
 	game.step_player(ms,Vector2.ZERO)
+	game.step_draw_hits(ms,first_new_id)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 
 func move_target(target: Dictionary, point: Vector2, height := 0.0) -> void:
@@ -1764,8 +1766,8 @@ func check_draw_sword() -> void:
 		and cues("SM_BAL_READY").size()==1 and cues("SM_BAL_SHOT").is_empty() and game.hit_count==0 and draw_slash_views().is_empty(),
 		"the paid cast winds up without damage through frame 1")
 	step(1)
-	check(game.hit_count==2 and rear["hp"]<10000.0 and front["hp"]<10000.0 and game.objects.is_empty(),
-		"body frame 2 hits in front and behind without substituting the mastery wave")
+	check(game.hit_count==2 and rear["hp"]==10000.0 and front["hp"]==10000.0 and game.objects.is_empty(),
+		"body frame 2 registers front and rear contacts before delayed damage")
 	check(cues("SM_BAL_SHOT").size()==1 and cues("R_KATANAA").size()==1
 		and cues("R_DRAWING_SWORD_HIT").size()==2 and cues("SWD_BAL_END").is_empty(),
 		"outgoing frame triggers the original shot, weapon swing and hit sounds")
@@ -1778,7 +1780,11 @@ func check_draw_sword() -> void:
 	check_draw_slash_layers("blue",4)
 	step(1)
 	check(draw_slash_views().is_empty(),"all four slash effects end at 175 action milliseconds")
-	step(74)
+	step(25)
+	check(rear["hp"]==10000.0 and front["hp"]==10000.0,"the first draw impact waits through the frame-two deadline")
+	step(1)
+	check(rear["hp"]<10000.0 and front["hp"]<10000.0,"both registered targets take damage after the frame-two deadline")
+	step(48)
 	check(game.hit_count==2 and cues("SWD_BAL_END").is_empty(),"one hit per target and no sheath sound before body frame 8")
 	step(1)
 	check(cues("SWD_BAL_END").size()==1,"body frame 8 plays the authored sheath cue")
@@ -1806,6 +1812,63 @@ func check_draw_sword() -> void:
 	check_draw_slash_layers("blue",0)
 	step(1)
 	check_draw_slash_layers("blue",1)
+
+func check_draw_target_deadlines() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"draw","level":2})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["draw"]
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(1200,0))
+	var first: Dictionary = game.monsters[0]
+	var late: Dictionary = game.monsters[1]
+	for enemy: Dictionary in [first,late]:enemy["hp"] = 5000.0
+	move_target(first,POINT+Vector2(100,0))
+	press(KEY_A)
+	step(525)
+	check(game.draw_pending_hits.size()==1 and game.draw_pending_hits[0]["remaining_ms"]==200.0,
+		"frame-two contact starts a 200 ms temporary hit without aging on birth")
+	move_target(first,POINT+Vector2(1200,0))
+	move_target(late,POINT+Vector2(100,0))
+	step(65)
+	check(game.draw_pending_hits.size()==2 and game.draw_pending_hits[1]["remaining_ms"]==150.0,
+		"frame-four contact sums only frames four through six")
+	step(135)
+	check(first["hp"]==5000.0 and late["hp"]==5000.0,"the first registered target takes no damage at the exact deadline")
+	step(1)
+	var trace: Dictionary = game.last_damage.get("trace",{})
+	check(first["hp"]<5000.0 and late["hp"]==5000.0
+		and is_equal_approx(float(trace.get("percent_part",0.0)),float(trace.get("attack",-1.0))*14.60),
+		"the tracked first target still takes damage after moving away and uses the current two-target bonus")
+	game.end_action()
+	step(14)
+	check(late["hp"]==5000.0,"the second target retains its own later deadline after interruption")
+	step(1)
+	var impacts: Array = game.bus.events_of("combat.damage").filter(func(event):return event.get("source_object",0)==35687)
+	check(late["hp"]<5000.0 and game.draw_pending_hits.is_empty() and impacts.size()==2 and game.hit_count==2
+		and impacts[0]["point"]==Vector3(500,300,0),
+		"both temporary hits resolve once without replaying the two initial contacts")
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	# Keep the fixture's fixed inputs through the normal battle update.
+	game._dynamic_refresh_ms = 1000.0
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(100,0))
+	target["numeric"].values["hp_max"] = 5000.0
+	press(KEY_A)
+	game.step_game(525)
+	check(target["hp"]==5000.0 and game.draw_pending_hits.size()==1 and float(game.player["stuck_ms"])>0.0,
+		"the public battle update registers without pre-aging its newborn impact")
+	game.step_game(200)
+	check(target["hp"]==5000.0 and game.player["clock"]==525.0,"the impact deadline advances even while the attacker is stopped")
+	game.step_game(1)
+	check(target["hp"]<5000.0 and game.draw_pending_hits.is_empty(),"the public battle update settles on the first tick beyond the deadline")
 
 func check_draw_second_slash() -> void:
 	for family: String in ["katana","beamsword"]:
@@ -1869,17 +1932,23 @@ func check_draw_second_slash() -> void:
 			"two first-slash targets apply the native 225 per-mille bonus before the new hit window")
 		step(24)
 		check(game.hit_count==2 and cues("SM_BAL_SHOT").size()==1,"second slash waits through its opening frame")
+		var fresh: Dictionary = game.spawn_enemy(POINT+Vector2(180,0))
+		fresh["hp"] = 10000.0
 		step(1)
 		var swing := "R_KATANAA" if blade else "R_BEAMSWDA"
-		check(game.hit_count==4 and game.view.player_actor.sample()["frame"]==2
+		check(game.hit_count==5 and game.view.player_actor.sample()["frame"]==2
 			and cues("SM_BAL_SHOT").size()==2 and cues(swing).size()==2 and game.player["mp"]==paid_mp
 			and game.player["cooldowns"]["draw"]==paid_cooldown and spent==[[3037,1]],
 			"the next frame hits the same targets independently without a second skill payment")
 		check_draw_slash_layers("red" if blade else "white",0)
+		var after_second: float = fresh["hp"]
+		check(game.draw_pending_hits.size()==1 and game.draw_pending_hits[0]["target"]==fresh,
+			"only the previously untouched target registers a delayed hit on the second slash")
 		press(KEY_X)
 		step(530)
 		check(game.player["action"]=="" and cues("SWD_BAL_END").size()==2,
 			"the second slash sheathes and cannot loop to a third strike")
+		check(fresh["hp"]<after_second and game.draw_pending_hits.is_empty(),"the new target also takes the delayed base slash")
 
 func check_draw_greatsword_charge() -> void:
 	var profile := ProfileSession.new()
@@ -1941,11 +2010,16 @@ func check_draw_greatsword_charge() -> void:
 			step(25.0/rate-1.0)
 			check(target["hp"]==5000.0 and draw_slash_views().is_empty(),"released greatsword waits for the outstroke")
 			step(1)
-		check(game.action_def()["hits"][0]["percent"]==sample[2] and target["hp"]<5000.0
+		check(game.action_def()["hits"][0]["percent"]==sample[2] and target["hp"]==5000.0
 			and game.hit_count==1 and spent==[[3037,1]] and game.player["mp"]==paid_mp
 			and game.player["cooldowns"]["draw"]==paid_cooldown,
-			"greatsword Draw Sword hits at the expected percentage and pays once for "+str(sample))
+			"greatsword Draw Sword registers the expected charge percentage and pays once for "+str(sample))
 		check_draw_slash_layers("blue",0)
+		step(200.0/rate+1)
+		var expected := int(float(sample[2])*1.3)
+		var trace: Dictionary = game.last_damage["trace"]
+		check(target["hp"]<5000.0 and is_equal_approx(trace["percent_part"],float(trace["attack"])*expected/100.0),
+			"the delayed greatsword impact applies the live one-target bonus to its charge percentage")
 	var spec := profile.stats()
 	spec["skill_slots"] = ["draw"]
 	start_room("","greatsword",1,spec)
@@ -2508,6 +2582,7 @@ func run() -> void:
 	check_frenzy_toggle()
 	check_bloodblast()
 	check_draw_sword()
+	check_draw_target_deadlines()
 	check_draw_second_slash()
 	check_draw_greatsword_charge()
 	check_draw_short_wave()

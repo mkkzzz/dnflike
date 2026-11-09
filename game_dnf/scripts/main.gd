@@ -36,6 +36,7 @@ var skill_slots: Array = ["", "", "", "", "", "", "", "", "", "", "", ""]
 var numeric_monster_level := 1
 var numeric_difficulty := "normal"
 var last_damage: Dictionary = {}
+var draw_pending_hits: Array[Dictionary] = []
 
 ## Set before entering the tree when a flow root manages this scene (see CombatSession.mount).
 var external_mode := false
@@ -746,7 +747,7 @@ func leave_action() -> void:
 	player.erase("overdrive_cast")
 	player.erase("draw_cast")
 	player.erase("draw_charge")
-	player.erase("draw_contact_count")
+	player.erase("draw_targets")
 	end_action_fx()
 
 func end_action() -> void:
@@ -805,6 +806,7 @@ func step_game(ms: float) -> void:
 	for index in monsters.size():update_enemy(monsters[index],ms)
 	for companion: Dictionary in companions:update_companion(companion,ms)
 	step_objects(ms,first_new_object_id)
+	step_draw_hits(ms,first_new_object_id)
 	native_zealot_summons.step(self,ms,first_new_object_id)
 	if _aura_pulse_ms <= 0:
 		_aura_pulse_ms = 1000.0
@@ -1072,7 +1074,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		if requested and clock >= float(m["draw_second_slash_at"]) and clock < duration:
 			var followup: Dictionary = m["stages"][1]
 			var hit: Dictionary = followup["hits"][0]
-			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"]))
+			hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),m["draw_hit_count_bonus"],player["draw_targets"].size()))
 			end_action_fx()
 			player["fx_tag"] = "act:%d" % (action_seq+1)
 			start_stage(1,float(followup["entry_clock"]))
@@ -1321,7 +1323,9 @@ func start_action(name: String, cancel := false) -> bool:
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	if name == "weaponcombo":player["weapon_combo_cast"] = m
-	if m.has("draw_second_slash_at") or m.has("draw_charge"):player["draw_cast"] = m.duplicate(true)
+	if m.has("draw_hit_count_bonus"):
+		player["draw_cast"] = m.duplicate(true)
+		player["draw_targets"] = {}
 	if m.has("draw_charge"):player["draw_charge"] = {"elapsed_ms":0.0,"fx_clock":0.0}
 	player["native_phase"] = {}
 	player["queued_combo"] = false
@@ -1753,6 +1757,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
 		var sample_from := new_t if attached else old_t
+		var contact := hit
+		if hit.get("skill_id","") == "draw":
+			contact = hit.duplicate()
+			contact["draw_delay_ms"] = draw_hit_delay(stage["timeline"],new_t)
+			contact["contact_only"] = int(player["stage"]) == 0
 		for s: int in hit["segments"].size():
 			var boxes: Array = Kernel.Timeline.segment_boxes(hit["segments"][s],sample_from,new_t)
 			if boxes.is_empty():continue
@@ -1764,7 +1773,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
 				player["hits"][id] = true
-				land_hit(player,enemy,hit,c["point"],facing,attack_power())
+				land_hit(player,enemy,contact,c["point"],facing,attack_power())
 			if native_maze != null:
 				apply_native_prop_hits(world,hit,attack_power(),player["hits"],"prop:%d:%d:"%[i,group])
 				continue
@@ -1788,15 +1797,59 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
 						break
 
-func draw_count_adjusted_attack(amount: int, rates: Array) -> int:
-	# C9F980 adjusts the attack with the first slash's distinct target count.
-	var count := int(player.get("draw_contact_count",0))
+func draw_hit_delay(timeline: Array, clock: float) -> int:
+	# CADB4F sums whole frames from the contact frame through frame six.
+	# 5B00F0 truncates each speed-adjusted delay before the sum.
+	var rate := float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 else 1.0
+	if numeric_player != null:rate = float(numeric_player.values["attack_speed"])
+	var first := int(Kernel.Timeline.frame_at(timeline,clock)["frame"])
+	var delay := 0
+	for index in range(first,7):
+		var frame: Dictionary = timeline[index]
+		delay += int(Kernel.NativeMotion.f32((float(frame["end_ms"])-float(frame["start_ms"]))/rate))
+	return delay
+
+func queue_draw_hit(target: Dictionary, facing: int, delay: int) -> void:
+	# CADAB1 keeps this ledger across the two slashes. The temporary object
+	# retains the accepted target even if it moves before the deadline.
+	var targets: Dictionary = player["draw_targets"]
+	var id := int(target["id"])
+	if targets.has(id):return
+	targets[id] = true
+	var draw := move_def("draw")
+	var position := Vector2i(target["pos"])
+	var point := Vector3(position.x,position.y,int(target["z"]))
+	draw_pending_hits.append({"id":_next_entity_id,"target":target,"point":point,"facing":facing,
+		"remaining_ms":float(delay),"targets":targets,"rates":draw["draw_hit_count_bonus"],"hit":draw["stages"][0]["hits"][0],
+		"instance":action_seq})
+	_next_entity_id += 1
+
+func step_draw_hits(ms: float, first_new_id: int) -> void:
+	if draw_pending_hits.is_empty():return
+	var waiting: Array[Dictionary] = []
+	for entry in draw_pending_hits:
+		if int(entry["id"]) < first_new_id:entry["remaining_ms"] -= ms
+		# B2FF76 requires now to be strictly greater than the deadline.
+		if float(entry["remaining_ms"]) >= 0.0:
+			waiting.append(entry)
+			continue
+		var target: Dictionary = entry["target"]
+		if not monsters.has(target) or float(target["hp"]) <= 0.0 or target_invulnerable(target):continue
+		var hit: Dictionary = entry["hit"].duplicate()
+		hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),entry["rates"],entry["targets"].size()))
+		hit["draw_impact"] = true
+		hit["draw_instance"] = entry["instance"]
+		land_hit(player,target,hit,entry["point"],int(entry["facing"]),attack_power())
+	draw_pending_hits = waiting
+
+func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
+	# C9F980 reads the current distinct target count.
 	if count == 0:return amount
 	return int(float(amount*(1000+int(rates[mini(count,rates.size())-1])))/1000.0)
 
 func prepare_draw_short_wave(template: Dictionary) -> Dictionary:
 	var controller: Dictionary = template["native_controller"]
-	var amount := draw_count_adjusted_attack(int(controller["base_amount"]),controller["hit_count_bonus"])
+	var amount := draw_count_adjusted_attack(int(controller["base_amount"]),controller["hit_count_bonus"],player["draw_targets"].size())
 	var hit := template.duplicate()
 	var atk: Dictionary = template["atk"].duplicate()
 	atk["absolute_damage"] = amount
@@ -1906,9 +1959,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var hit_skill_id := String(hit.get("skill_id",player["action"]))
 	var percent := float(hit["percent"])*(1.0 if by_companion else skill_damage_multiplier(hit_skill_id))
 	var contact_only := bool(hit.get("contact_only",false))
+	var draw_contact := hit.has("draw_delay_ms")
+	var draw_impact := bool(hit.get("draw_impact",false))
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
-	if numeric_player != null and not contact_only:
+	if numeric_player != null and (not contact_only or draw_contact):
 		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
 		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
 		if target["state"] == NativeZealotSummons.CAST_STATE:
@@ -1923,18 +1978,18 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		context["counter"] = String(target["state"]) in ["attack","action"]
 		context["back"] = int(target["facing"])==facing
 		resolved = Numbers.Damage.resolve(source_stats,target_stats,context,[rng.next_float(),rng.next_float()],Numbers.shared_config()["formula"])
-		last_damage = resolved.duplicate(true)
+		if not contact_only:last_damage = resolved.duplicate(true)
 		amount = int(resolved["amount"])
 		if amount <= 0 and (not starfish_grab or bool(resolved["missed"]) or bool(target_stats.get("immune",false))):
 			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":victim,"reaction":"none","point":point})
 			return
 	elif by_companion:
 		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
-	if by_player and player["action"] == "draw" and int(player["stage"]) == 0 and hit_skill_id == "draw" and hit.get("kind","") == "boxes":
-		# CADA24..CADADD records each direct hit target once for the follow-ups.
-		player["draw_contact_count"] = int(player.get("draw_contact_count",0))+1
+	if draw_contact:queue_draw_hit(target,facing,int(hit["draw_delay_ms"]))
+	if contact_only:amount = 0
 	var target_is_player := victim == "player"
-	bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
+	if not draw_impact:
+		bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
 	if starfish_grab:
 		start_starfish_capture(attacker)
 		return
@@ -1963,10 +2018,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
-		target["clock"] = 0.0
+		if not draw_impact:
+			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
+			target["clock"] = 0.0
 		target["flash_ms"] = 65.0
-		if victim == "monster" and by_player:
+		if victim == "monster" and by_player and not draw_impact:
 			combo_count += 1
 			combo_ms = float(rules["combo_window_ms"])
 			hit_count += 1
@@ -1977,19 +2033,23 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			attacker["last_attack"] = -1 if source_id == null else int(source_id)
 	var stop := float(rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"])
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
-	if String(hit.get("kind","")) != "object" and not hit.has("object"):
+	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact:
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
 	target["stuck_ms"] = maxf(float(target.get("stuck_ms",0)),stop)
 	if hit.has("native_contact"):spawn_attack_contact(attacker,target,hit["native_contact"],facing,power)
 	var damage_event := {"target":target["id"],"amount":amount,"critical":resolved["critical"],"category":resolved["category"],
 		"victim":victim,"reaction":reaction,"show_number":not contact_only,
 		"point":Vector3(Vector2(target["pos"]).x,Vector2(target["pos"]).y,float(target["z"]))}
+	if draw_impact:
+		damage_event["source_object"] = 35687
+		damage_event["instance"] = hit["draw_instance"]
+		damage_event["point"] = point
 	if by_player and victim=="monster" and amount>0 and numeric_player!=null:
 		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
-	hit_cues(atk,point,facing,by_player)
-	if numeric_player != null and not target_is_player and float(target["hp"])>0:
+	if not draw_impact:hit_cues(atk,point,facing,by_player)
+	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
 			effect_list.append_array(Numbers.shared_config()["skills"].get(hit_skill_id,{}).get("on_hit",[]))
@@ -3535,6 +3595,7 @@ func move_along_ground_pixels(dx: float) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	objects.clear()
+	draw_pending_hits.clear()
 	native_zealot_summons.proxies.clear()
 	native_jar_traps.clear(self)
 	update_khazan_aura()

@@ -408,6 +408,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	var native_draw: bool = spec.get("native_state","") == "draw"
+	if native_draw:move["draw_hit_count_bonus"] = skill["static"].slice(1,6)
 	if native_draw and (weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name)):
 		var track: Dictionary = spec["weapon_tracks"].get(weapon,{})
 		var body := player_timeline("momentaryslash")
@@ -446,7 +447,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				built["cancel_at"] = built["duration"]
 				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
-		if native_draw:_append_draw_second_slash(move,skill,spec["slash_layers"]["slots"])
+		if native_draw:_append_draw_second_slash(move,spec["slash_layers"]["slots"])
 		if native_draw and job == "weaponmaster" and weapon == "greatsword":
 			var mastery := _skill_row(HEAVY_MASTERY_SKL)
 			var values: Array = mastery["static"]
@@ -484,7 +485,7 @@ func _draw_slash_cues(slots: Array, shot: float, under: int, upper: int) -> Arra
 		cues.append({"key":slots[binding[0]],"at":shot,"depth_offset":binding[1],"action_clock":true})
 	return cues
 
-func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary, slots: Array) -> void:
+func _append_draw_second_slash(move: Dictionary, slots: Array) -> void:
 	# CBA09E checks Oath and each weapon's effective mastery against its own gate.
 	if int(skill_levels.get("weapon_mastery_up",0)) <= 0:return
 	var blade := weapon == "katana"
@@ -505,7 +506,6 @@ func _append_draw_second_slash(move: Dictionary, draw_skill: Dictionary, slots: 
 	followup["fx"] = _draw_slash_cues(slots,shot,6,7) if blade else _draw_slash_cues(slots,shot,4,5)
 	followup["hits"][0]["percent"] = float(row[4 if blade else 8])
 	move["draw_second_slash_at"] = float(opening["timeline"][8]["start_ms"])
-	move["draw_hit_count_bonus"] = draw_skill["static"].slice(1,6)
 	move["stages"].append(followup)
 
 func _append_draw_short_wave(stage: Dictionary, spec: Dictionary, draw_skill: Dictionary) -> void:
