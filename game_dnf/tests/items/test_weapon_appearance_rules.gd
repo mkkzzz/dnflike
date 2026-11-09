@@ -42,6 +42,14 @@ func run() -> void:
 				if pose in ["tripleslash4","tripleslash5"] and definition.weapon != "katana":
 					check(not layers[index].clips.has(pose),"enhanced katana pose is isolated to its family: "+id+"/"+pose)
 					continue
+				if pose.begins_with("weaponcomboshort") or pose.begins_with("weaponcomboblade"):
+					var family := "shortsword" if pose.begins_with("weaponcomboshort") else "katana"
+					if definition.weapon != family:
+						check(not layers[index].clips.has(pose),"Weapon Combo attachment stays in its source family: "+id+"/"+pose)
+						continue
+					if not layers[index].clips.has(pose):
+						check(false,"Weapon Combo attachment exists for its source family: "+id+"/"+pose)
+						continue
 				var body_delays: Array = clips[pose].frames.map(func(frame):return frame.delay_ms)
 				var weapon_delays: Array = layers[index].clips[pose].frames.map(func(frame):return frame.delay_ms)
 				check(body_delays==weapon_delays,"shared layer uses source body frame delays: "+id+"/"+pose)
