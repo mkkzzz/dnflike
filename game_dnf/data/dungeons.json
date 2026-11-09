@@ -584,12 +584,12 @@
     },
     {
      "name": "城主宫殿",
-     "placement": "1_4:(0,1)de2402",
+     "placement": "1_4:(1,4)h2412",
      "next": "up"
     },
     {
      "name": "城主宫殿",
-     "placement": "1_3:(0,1)de2402",
+     "placement": "1_3:(1,3)g2411",
      "next": "up"
     },
     {
@@ -599,7 +599,7 @@
     },
     {
      "name": "城主宫殿",
-     "placement": "1_1:(0,1)de2402",
+     "placement": "1_1:(1,1)dr2409",
      "next": "up"
     },
     {
@@ -611,9 +611,9 @@
    ],
    "monster_level": 16,
    "source": {
-    "path": "",
-    "sha256": "",
-    "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
+    "path": "dungeon/act2/palaceofload.dgn",
+    "sha256": "baf8aea1f8b0c30f953db28f3fe536ccd77d4f96499360adfefa29558def2bdb",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    },
    "quest_routes": {
     "original.quest.4312": {

@@ -120,17 +120,23 @@ func walk(node: Node, clip: Rect2, color := Color.WHITE) -> void:
 			"clip": rectangle(clip), "color": rgba(color),
 			"margins": [node.patch_margin_left, node.patch_margin_top, node.patch_margin_right, node.patch_margin_bottom]})
 	elif node is VScrollBar:
-		style_command(node.get_theme_stylebox("scroll"), rect, clip)
+		var track = node.get_node_or_null("skill_detail_scroll_track")
+		style_command(node.get_theme_stylebox("scroll"), track.get_global_rect() if track != null else rect, clip)
 		var up: Texture2D = node.get_theme_icon("decrement")
 		var down: Texture2D = node.get_theme_icon("increment")
-		var arrow_height := float(up.get_height())
 		for entry in [[up, rect.position], [down, rect.end - Vector2(rect.size.x, down.get_height())]]:
 			commands.append({"kind": "image", "texture": texture_file(entry[0]),
 				"rect": rectangle(Rect2(entry[1], Vector2(rect.size.x, entry[0].get_height()))), "clip": rectangle(clip), "color": rgba(color)})
-		var span := rect.size.y - arrow_height - down.get_height()
-		var height := maxf(12, span * node.page / maxf(1, node.max_value - node.min_value))
-		var offset: float = (span - height) * node.value / maxf(1, node.max_value - node.page)
-		style_command(node.get_theme_stylebox("grabber"), Rect2(rect.position + Vector2(0, arrow_height + offset), Vector2(rect.size.x, height)), clip)
+		if track != null:
+			var thumb: Rect2 = track.thumb_rect()
+			thumb.position += track.get_global_rect().position
+			style_command(node.theme.get_stylebox("grabber", "DetailScrollTrack"), thumb, clip)
+		else:
+			var arrow_height := float(up.get_height())
+			var span := rect.size.y - arrow_height - down.get_height()
+			var height := maxf(12, span * node.page / maxf(1, node.max_value - node.min_value))
+			var offset: float = (span - height) * node.value / maxf(1, node.max_value - node.page)
+			style_command(node.get_theme_stylebox("grabber"), Rect2(rect.position + Vector2(0, arrow_height + offset), Vector2(rect.size.x, height)), clip)
 	elif node is Button:
 		style_command(node.get_theme_stylebox("disabled" if node.disabled else "normal"), rect, clip)
 	elif node is Label or node is RichTextLabel:

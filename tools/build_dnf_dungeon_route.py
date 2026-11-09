@@ -26,6 +26,9 @@ DUNGEONS = GAME / 'data/dungeons.json'
 MOVE = {'left': (-1, 0), 'right': (1, 0), 'up': (0, -1), 'down': (0, 1)}
 QUEST_MAZES = {'draconiantower': 4307, 'hallofdoll': 4308, 'palaceofload': 4312}
 DIFFICULTIES = ['normal', 'adventure', 'expert', 'king']
+# Other original mazes may specify a pool per cell. Enable this mapping only
+# for the ordinary maze with verified single-map rows and playable traversal.
+VERIFIED_NORMAL_MAP_SPECIFICATIONS = {'dungeon/act2/palaceofload.dgn'}
 
 # 待入表的副本清单：id, 导出目录（相对 game_dnf），中文名, region, monster_level
 PENDING = [
@@ -101,6 +104,32 @@ def has_source_boss(room: dict) -> bool:
     return any(monster.get('raw') and monster['raw'][-1] == '[boss]' for monster in room.get('monsters', []))
 
 
+def normal_map_specifications(dungeon: dict) -> dict:
+    if dungeon.get('path') not in VERIFIED_NORMAL_MAP_SPECIFICATIONS:
+        return {}
+    fixed = {}
+    ordinary_maze = False
+    for span in dungeon['raw']:
+        tag = span['tag']
+        if tag == '[maze info]':
+            if ordinary_maze:
+                break
+            ordinary_maze = True
+        elif ordinary_maze and tag == '[quest connection]':
+            raise ValueError('Expected the ordinary maze before quest mazes')
+        elif ordinary_maze and tag == '[map specification]':
+            values = [token[2] for token in span['values']]
+            if len(values) != 3 or any(type(value) is not int for value in values):
+                raise ValueError('Expected one source MAP in ordinary [map specification]')
+            x, y, map_id = values
+            if (x, y) in fixed:
+                raise ValueError('Duplicate cell in ordinary [map specification]')
+            fixed[x, y] = map_id
+    if not fixed:
+        raise ValueError('Missing ordinary [map specification]')
+    return fixed
+
+
 def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
     cells = cell_graph(export)
     maps = export['dungeon']['rooms']
@@ -126,11 +155,19 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
     if best is None:
         return None
     start, boss, path = best
+    fixed = normal_map_specifications(export['dungeon'])
     rooms = []
     for index, (cell, door) in enumerate(path):
+        if index > 0 and cell in fixed:
+            specified = [p for p in cells[cell]['map_candidates'] if maps[p].get('map_id') == fixed[cell]]
+            if len(specified) != 1:
+                raise ValueError(f'Normal cell {cell} requires source MAP{fixed[cell]}')
+            stem = Path(specified[0]).stem
+        else:
+            stem = pick_map(cells[cell], 'start' if index == 0 else 'normal', maps)
         rooms.append({
             'name': '',
-            'placement': '%d_%d:%s' % (cell[0], cell[1], pick_map(cells[cell], 'start' if index == 0 else 'normal', maps)),
+            'placement': '%d_%d:%s' % (cell[0], cell[1], stem),
             'next': door,
         })
     rooms.append({

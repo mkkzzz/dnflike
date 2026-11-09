@@ -1205,12 +1205,17 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			var chance := float(effect.get("chance",1))
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)
-			if rng.chance(chance):
-				var ranks: Dictionary = attacker["ranks"] if by_companion else skill_levels
-				var request := {"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(ranks.get(hit_skill_id,1))}
-				for field: String in ["duration_ms","status_level"]:
-					if effect.has(field):request[field] = effect[field]
-				apply_effect(request)
+			var duration_ms := float(effect.get("duration_ms",0))
+			if effect.get("id","") == "freeze" and effect.has_all(["chance","status_level","duration_ms"]):
+				var roll: int = rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)
+				duration_ms = float(target["numeric"].source_freeze_duration(chance,int(effect["status_level"]),int(duration_ms),roll))
+				if duration_ms <= 0.0:continue
+			elif not rng.chance(chance):continue
+			var ranks: Dictionary = attacker["ranks"] if by_companion else skill_levels
+			var request := {"kind":"effect","id":effect["id"],"target":target["id"],"rank":int(ranks.get(hit_skill_id,1))}
+			if effect.has("duration_ms"):request["duration_ms"] = duration_ms
+			if effect.has("status_level"):request["status_level"] = effect["status_level"]
+			apply_effect(request)
 		if by_player and bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
 			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
 	if victim == "companion":

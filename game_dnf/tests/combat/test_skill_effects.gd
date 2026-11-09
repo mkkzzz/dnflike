@@ -3,6 +3,7 @@ extends SceneTree
 const Numbers = preload("res://stats/api/numbers.gd")
 const Actor = preload("res://stats/api/actor_numbers.gd")
 const Session = preload("res://flow/session.gd")
+const DetRng = preload("res://core/det_rng.gd")
 var checks := 0
 var failures := 0
 
@@ -53,6 +54,7 @@ func run() -> void:
 	check_ghost_cast_sounds(game,session)
 	check_khazan(game,session)
 	check_saya(game,session)
+	check_bremen_freeze(game,session)
 	game.queue_free()
 	await process_frame
 	print("[SKILL_EFFECTS] COMPLETE checks=",checks," failures=",failures)
@@ -217,16 +219,18 @@ func check_khazan(game, session) -> void:
 	game.step_objects(320)
 	check(game.objects.is_empty() and game.active_effect("khazan_aura").is_empty() and game.numeric_player.values["strength"]==strength,"expired field and modifier are deleted at the total source lifetime")
 
+func saya_freeze_seed(low: int, high: int) -> int:
+	var rolls = DetRng.new()
+	for candidate: int in range(10000):
+		rolls.reseed(candidate)
+		var accuracy: float = rolls.next_float()
+		rolls.next_float() # The damage path also samples a critical roll.
+		var status_roll: int = rolls.range_int(0,9999)
+		if accuracy < 0.8 and status_roll >= low and status_roll <= high:return candidate
+	return -1
+
 func check_saya(game, session) -> void:
-	var rolls := RandomNumberGenerator.new()
-	var freeze_seed := -1
-	for candidate: int in range(128):
-		rolls.seed = candidate
-		var accuracy := rolls.randf()
-		rolls.randf() # The damage path also samples a critical roll.
-		if accuracy < 0.8 and rolls.randf() < 0.147:
-			freeze_seed = candidate
-			break
+	var freeze_seed := saya_freeze_seed(0,1469)
 	check(freeze_seed >= 0,"deterministic Saya hit and freeze fixture")
 	for sample: Array in [[1,251,0.147,40,1950],[4,329,0.153,48,2258]]:
 		var rank := int(sample[0])
@@ -248,6 +252,7 @@ func check_saya(game, session) -> void:
 		var outside: Dictionary = game.spawn_enemy(center-Vector2(251,0))
 		var too_high: Dictionary = game.spawn_enemy(center)
 		inside["hp"] = 100000.0
+		inside["numeric"].values["level"] = sample[3]
 		inside["numeric"].values["status_resist"] = 0.0
 		too_high["z"] = 71.0
 		var outside_hp := float(outside["hp"])
@@ -303,3 +308,59 @@ func check_saya(game, session) -> void:
 		check(game.view.object_views.has("%s:exit"%field_id),label+" enters the original exit clip at 12680ms")
 		game.step_objects(320)
 		check(game.objects.all(func(object):return int(object["id"])!=field_id),label+" deletes the original field at 13000ms")
+
+func check_bremen_freeze(game, session) -> void:
+	# Equal rank and resistance gives a strict 2500/10000 threshold.
+	var actor = Actor.new()
+	actor.configure({"numbers":Numbers.shared_config()["base"].merged({"level":40},true)})
+	check(actor.source_freeze_duration(0.25,40,1950,2499)==1950 and actor.source_freeze_duration(0.25,40,1950,2500)==0,"native freeze compares the integer roll strictly to the threshold")
+	check(actor.source_freeze_duration(0.25,20,1950,0)==0,"twenty levels of disadvantage reduce native freeze chance to zero")
+	actor.values["abnormal_resistance"] = 100
+	check(actor.source_freeze_duration(0.25,40,1950,0)==0,"100 raw abnormal resistance prevents native freeze")
+	# Each seeded roll falls between the two thresholds calculated from the PVF
+	# coefficients, the target level and the signed Bremen source row.
+	for sample: Array in [[1,45,0,1103,1124,1852],[4,35,25,1379,1488,2047]]:
+		var rank := int(sample[0])
+		var resistance := int(sample[2])
+		var label := "Bremen rank %d with Saya rank 1" % rank
+		var seed_value := saya_freeze_seed(int(sample[3]),int(sample[4]))
+		check(seed_value>=0,label+" has a deterministic roll between the two thresholds")
+		game.restart()
+		game.monsters.clear()
+		game.numeric_player = Actor.new()
+		game.numeric_player.configure(session.stats())
+		game.numeric_player.values["cast_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.skill_levels = {"bremen":rank,"saya":1}
+		game.table.configure_skills(game.skill_levels,"soulbringer","katana")
+		game.player["mp"] = game.numeric_player.values["mp_max"]
+		var origin := Vector2(400,250)
+		game.player["pos"] = origin
+		game.player["facing"] = 1
+		var enemy: Dictionary = game.spawn_enemy(origin+Vector2(122,0))
+		var target = enemy["numeric"]
+		target.configure({"numbers":target.base.merged({"level":sample[1],"abnormal_resistance":resistance,"hp_max":10000.0},true)})
+		enemy["hp"] = float(target.values["hp_max"])
+		game.bus.clear_history()
+		check(game.start_action("saya"),label+" casts the source freeze field")
+		game.step_action(250,Vector2.ZERO)
+		game.step_action(450,Vector2.ZERO)
+		game.rng.reseed(seed_value)
+		game.step_objects(0.0)
+		check(game.hit_count==1 and not target.effects.active.has("freeze"),label+" first pulse hits but its roll fails without Bremen")
+		game.player["pos"] = origin-Vector2(100,0)
+		check(game.start_action("bremen"),label+" casts the source resistance field")
+		game.step_action(200,Vector2.ZERO)
+		game.step_objects(250.0)
+		check(target.effects.active.has("bremen_debuff") and target.values["abnormal_resistance"]==resistance-(2 if rank==1 else 6),label+" applies the signed source row before the next Saya pulse")
+		game.rng.reseed(seed_value)
+		game.step_objects(750.0)
+		var frozen: Dictionary = target.effects.active.get("freeze",{})
+		check(game.hit_count==2 and frozen.get("remaining_ms",0)==sample[5],label+" the same roll freezes for the native level-adjusted integer duration")
+		target.remove_effect("freeze")
+		enemy["pos"] = origin+Vector2(302,0) # Still in Saya, now outside the Bremen field.
+		game.step_objects(250.0)
+		check(not target.effects.active.has("bremen_debuff") and target.values["abnormal_resistance"]==resistance,label+" restores the base resistance at the next area check")
+		game.rng.reseed(seed_value)
+		game.step_objects(750.0)
+		check(game.hit_count==3 and not target.effects.active.has("freeze"),label+" the same roll fails again after leaving Bremen")

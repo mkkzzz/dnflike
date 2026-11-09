@@ -42,6 +42,76 @@ var _detail_line_height := 14
 var _detail_wrap_width := 174
 var _detail_scroll_theme: Theme
 
+class DetailScrollTrack extends Control:
+	const NATIVE_ROW_TRAVEL := 20.0
+	var _scroll: VScrollBar
+	var _normal: StyleBox
+	var _highlight: StyleBox
+	var _pointer := Vector2(-1, -1)
+	var _drag_row := -1
+	var _drag_y := 0.0
+
+	func _init(scroll: VScrollBar, normal: StyleBox, highlight: StyleBox) -> void:
+		_scroll = scroll
+		_normal = normal
+		_highlight = highlight
+		name = "skill_detail_scroll_track"
+		_scroll.changed.connect(queue_redraw)
+		_scroll.value_changed.connect(func(_value: float): queue_redraw())
+		resized.connect(queue_redraw)
+		mouse_exited.connect(func():
+			_pointer = Vector2(-1, -1)
+			queue_redraw())
+
+	func _row_count() -> int:
+		return roundi((_scroll.max_value - _scroll.page) / _scroll.step)
+
+	func thumb_rect() -> Rect2:
+		# 0x11CAC50: reserve 20 px per scrollable row until only the two caps fit.
+		var rows := _row_count()
+		var height := maxf(_normal.get_minimum_size().y, size.y - rows * NATIVE_ROW_TRAVEL)
+		var offset := 0 if rows == 0 else roundi((size.y - height) * (_scroll.value / _scroll.step) / rows)
+		return Rect2(0, offset, size.x, height)
+
+	func _draw() -> void:
+		if _row_count() > 0:
+			var thumb := thumb_rect()
+			var style := _highlight if _drag_row >= 0 or thumb.has_point(_pointer) else _normal
+			draw_style_box(style, thumb)
+
+	func _gui_input(event: InputEvent) -> void:
+		if not (event is InputEventMouseMotion or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT)):
+			return
+		_pointer = event.position
+		queue_redraw()
+		var rows := _row_count()
+		if rows <= 0:
+			return
+		var thumb := thumb_rect()
+		var travel := (size.y - thumb.size.y) / rows
+		if travel <= 0:
+			return
+		if event is InputEventMouseButton:
+			if not event.pressed:
+				_drag_row = -1
+				accept_event()
+				return
+			_drag_row = roundi(_scroll.value / _scroll.step)
+			_drag_y = floorf(event.position.y)
+		if _drag_row < 0:
+			return
+		# 0x11CAF7C/0x11CB0B2: a cap-only thumb follows the pointer at a
+		# third of its height. A long thumb drags relative to its starting row.
+		var pointer_y := floorf(_pointer.y)
+		if travel < NATIVE_ROW_TRAVEL:
+			_scroll.value = int((pointer_y - floorf(thumb.size.y / 3.0)) / travel) * _scroll.step
+		elif event is InputEventMouseButton and not thumb.has_point(_pointer):
+			_scroll.value += _scroll.step if _pointer.y >= thumb.end.y else -_scroll.step
+			_drag_row = -1
+		else:
+			_scroll.value = int(_drag_row + (pointer_y - _drag_y) / travel) * _scroll.step
+		accept_event()
+
 func _init(target) -> void:
 	game = target
 	_load()
@@ -333,6 +403,9 @@ func _style_detail_scroll(scroll: VScrollBar) -> void:
 		var part: Dictionary = parts["detail_scroll"]
 		var caps: Array = part["thumb_caps"]
 		_detail_scroll_theme = Theme.new()
+		var empty := StyleBoxEmpty.new()
+		for state in ["grabber", "grabber_highlight", "grabber_pressed"]:
+			_detail_scroll_theme.set_stylebox(state, "VScrollBar", empty)
 		for state: String in part["regions"]:
 			var region: Array = part["regions"][state]
 			var texture := AtlasTexture.new()
@@ -347,10 +420,17 @@ func _style_detail_scroll(scroll: VScrollBar) -> void:
 			if state.begins_with("grabber"):
 				style.texture_margin_top = caps[0]
 				style.texture_margin_bottom = caps[1]
-			_detail_scroll_theme.set_stylebox(state, "VScrollBar", style)
-			if state == "grabber_highlight":
-				_detail_scroll_theme.set_stylebox("grabber_pressed", "VScrollBar", style)
+				_detail_scroll_theme.set_stylebox(state, "DetailScrollTrack", style)
+			else:
+				_detail_scroll_theme.set_stylebox(state, "VScrollBar", style)
 	scroll.theme = _detail_scroll_theme
+	var track := DetailScrollTrack.new(scroll,
+		_detail_scroll_theme.get_stylebox("grabber", "DetailScrollTrack"),
+		_detail_scroll_theme.get_stylebox("grabber_highlight", "DetailScrollTrack"))
+	scroll.add_child(track)
+	track.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	track.offset_top = scroll.get_theme_icon("decrement").get_height()
+	track.offset_bottom = -scroll.get_theme_icon("increment").get_height()
 
 func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	var skin = game.skin
@@ -575,9 +655,10 @@ func _detail(root: Control) -> void:
 	body.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.add_child(body)
 	var scroll := body.get_v_scroll_bar()
-	_style_detail_scroll(scroll)
 	# Native arrows change the first visible row by one (0x11BCCC0).
 	scroll.custom_step = _detail_line_height
+	scroll.step = _detail_line_height
+	_style_detail_scroll(scroll)
 	# Measure the themed bar after attaching the control. Explain #4013 wraps at
 	# 179 + display marginwidth whether the scrollbar is shown or hidden.
 	var scroll_width := scroll.get_minimum_size().x

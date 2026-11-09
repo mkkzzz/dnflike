@@ -1,10 +1,11 @@
-"""Route generation must never erase authored runtime gates by accident."""
+"""Route generation preserves authored source maps and runtime gates."""
+import json
 import unittest
 
 try:
-    from .build_dnf_dungeon_route import build, merge_route, pick_map
+    from .build_dnf_dungeon_route import GAME, build, merge_route, pick_map
 except ImportError:
-    from build_dnf_dungeon_route import build, merge_route, pick_map
+    from build_dnf_dungeon_route import GAME, build, merge_route, pick_map
 
 
 class DungeonRouteMergeTest(unittest.TestCase):
@@ -84,6 +85,28 @@ class DungeonStartMapTest(unittest.TestCase):
         }
         self.assertEqual(pick_map(cell, 'start', maps), '(2,0)s1601')
         self.assertEqual(pick_map(cell, 'normal', maps), '(2,0)d1601')
+
+
+class DungeonSpecifiedMapTest(unittest.TestCase):
+    def test_unverified_map_pools_keep_the_existing_route(self):
+        spec = json.loads((GAME / 'data/dungeons.json').read_bytes())['dungeons']['mirkwood_deep']
+        export = json.loads((GAME / spec['map_export'].removeprefix('res://')).read_bytes())
+        generated = build(export)
+        self.assertEqual([r['placement'] for r in generated],
+                         ['0_3:s401', '1_3:403', '1_2:407', '0_2:405', '0_1:409', '0_0:b413'])
+
+    def test_palace_ordinary_route_preserves_specified_source_maps(self):
+        spec = json.loads((GAME / 'data/dungeons.json').read_bytes())['dungeons']['palaceofload']
+        export = json.loads((GAME / spec['map_export'].removeprefix('res://')).read_bytes())
+        dungeon = export['dungeon']
+        placements = {p['id']: p for p in dungeon['placements']}
+        generated = build(export)
+        ids = [dungeon['rooms'][placements[room['placement']]['map']]['map_id'] for room in generated]
+        self.assertEqual(ids, [2407, 2413, 2412, 2411, 2410, 2409, 2408])
+        self.assertEqual([r['placement'] for r in generated], [r['placement'] for r in spec['rooms']])
+        escort = spec['quest_routes']['original.quest.4312']['rooms']
+        self.assertEqual(dungeon['rooms'][placements[escort[0]['placement']]['map']]['map_id'], 2421)
+        self.assertFalse(any('quest4312_' in r['placement'] for r in generated))
 
 
 if __name__ == "__main__":

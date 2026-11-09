@@ -1105,7 +1105,7 @@ func check_icewave_level_data() -> void:
 	var template: Dictionary = Numbers.shared_config()["effects"]["freeze"].duplicate(true)
 	# Search deterministic rolls around both rank thresholds. The first two rolls
 	# belong to hit/critical resolution; the cut cue draws one variant before status.
-	for sample in [[1,0.13,0.25,true],[1,0.254,0.268,false],[2,0.254,0.268,true],[2,0.27,0.4,false]]:
+	for sample in [[1,1300,2500,true],[1,2540,2680,false],[2,2540,2680,true],[2,2700,4000,false]]:
 		var chosen := -1
 		var probe = preload("res://core/det_rng.gd").new()
 		for seed_value in range(10000):
@@ -1113,8 +1113,8 @@ func check_icewave_level_data() -> void:
 			var hit_roll: float = probe.next_float()
 			probe.next_float()
 			probe.range_int(1,3)
-			var status_roll: float = probe.next_float()
-			if hit_roll<0.5 and status_roll>=float(sample[1]) and status_roll<float(sample[2]):
+			var status_roll: int = probe.range_int(0,9999)
+			if hit_roll<0.5 and status_roll>=int(sample[1]) and status_roll<int(sample[2]):
 				chosen = seed_value
 				break
 		check(chosen>=0,"deterministic ice-wave threshold fixture is available")
@@ -1125,12 +1125,13 @@ func check_icewave_level_data() -> void:
 		game.table.configure_skills({"icewave":int(sample[0])},"asura","katana")
 		hit = api.move("icewave")["hits"][0].duplicate(true)
 		var enemy: Dictionary = api.spawn_dummy(Vector2(600,246))
+		enemy["numeric"].values["level"] = 34+2*int(sample[0])
 		enemy["numeric"].values["status_resist"] = 0.0
 		game.rng.reseed(chosen)
 		game.spawn_object(hit,"player",Vector2(500,250),0.0,1,1.0)
 		game.step_objects(1.0)
 		var effects: Dictionary = enemy["numeric"].effects.active
-		check(game.hit_count==1 and effects.has("freeze")==bool(sample[3]),"live ice-wave object uses rank %d freeze threshold for roll %.3f..%.3f" % [sample[0],sample[1],sample[2]])
+		check(game.hit_count==1 and effects.has("freeze")==bool(sample[3]),"live ice-wave object uses rank %d freeze threshold for integer roll %d..%d" % [sample[0],sample[1],sample[2]])
 		if effects.has("freeze"):
 			var duration: float = 2070.0 if int(sample[0])==1 else 2139.0
 			check(float(effects["freeze"]["remaining_ms"])==duration and int(effects["freeze"]["definition"]["status_level"])==34+2*int(sample[0]),"landed ice-wave preserves per-hit duration and abnormal level")

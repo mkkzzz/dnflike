@@ -63,9 +63,9 @@ func run() -> void:
 	wheel_release.pressed = false
 	game.get_viewport().push_input(wheel_release, true)
 	await host.ticks(3)
-	host.check(body.get_v_scroll_bar().value>0 and skill_panel.tree_scroll==initial_tree_scroll,
-		"mouse wheel scrolls a long explanation without moving the skill tree")
 	var detail_scroll := body.get_v_scroll_bar()
+	host.check(detail_scroll.value > 0 and fmod(detail_scroll.value, 14.0) == 0.0 and skill_panel.tree_scroll == initial_tree_scroll,
+		"mouse wheel scrolls the explanation by whole rows without moving the skill tree")
 	host.check(detail_scroll.size.x == 15 and detail_scroll.position.x == 174,
 		"the Explain scrollbar leaves the 174px text width intact")
 	var motion := InputEventMouseMotion.new()
@@ -85,33 +85,24 @@ func run() -> void:
 		await host.ticks(2)
 		host.check(is_equal_approx(detail_scroll.value, previous + direction * 14.0),
 			"the Explain scrollbar arrow moves exactly one row")
-	detail_scroll.value = 0
-	var thumb := InputEventMouseButton.new()
-	thumb.position = detail_scroll.get_global_transform_with_canvas() * Vector2(8, 24)
-	motion = motion.duplicate()
-	motion.position = thumb.position
-	game.get_viewport().push_input(motion, true)
-	await host.ticks(1)
-	thumb.button_index = MOUSE_BUTTON_LEFT
-	thumb.button_mask = MOUSE_BUTTON_MASK_LEFT
-	thumb.pressed = true
-	game.get_viewport().push_input(thumb, true)
-	await host.ticks(1)
-	motion = motion.duplicate()
-	motion.position = detail_scroll.get_global_transform_with_canvas() * Vector2(8, 100)
-	motion.relative = motion.position - thumb.position
-	motion.button_mask = MOUSE_BUTTON_MASK_LEFT
-	game.get_viewport().push_input(motion, true)
-	thumb = thumb.duplicate()
-	thumb.position = motion.position
-	thumb.button_mask = 0
-	thumb.pressed = false
-	game.get_viewport().push_input(thumb, true)
-	await host.ticks(2)
-	host.check(detail_scroll.value > 0 and skill_panel.tree_scroll == initial_tree_scroll,
-		"dragging the themed Explain thumb scrolls the text only")
+	var detail_track = detail_scroll.get_node("skill_detail_scroll_track")
 	var description := body.text
 	var fits_source_width := "汉".repeat(15) + "A"
+	body.text = (fits_source_width + "\n").repeat(28) + fits_source_width
+	await host.ticks(3)
+	detail_scroll.value = 0
+	host.check(detail_track.thumb_rect() == Rect2(0, 0, 15, 14),
+		"long Explain text uses the two original 7px thumb caps")
+	_explain_pointer(detail_track, 8, true)
+	_explain_motion(detail_track, 100)
+	await host.ticks(1)
+	host.check(detail_scroll.value == 8 * 14 and detail_track.thumb_rect().position.y == 94,
+		"the short Explain thumb maps the pointer one-third down its height to an integer row")
+	_explain_motion(detail_track, 220)
+	_explain_pointer(detail_track, 220, false)
+	await host.ticks(1)
+	host.check(detail_scroll.value == 14 * 14 and detail_track.thumb_rect().end.y == 178 and skill_panel.tree_scroll == initial_tree_scroll,
+		"the short thumb clamps at the last full row and drags independently of the skill tree")
 	body.text = fits_source_width
 	await host.ticks(3)
 	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 1,
@@ -120,6 +111,20 @@ func run() -> void:
 	await host.ticks(3)
 	host.check(body.get_v_scroll_bar().visible and body.get_line_count() == 20,
 		"showing the scrollbar preserves the source description wrap width")
+	detail_scroll.value = 0
+	host.check(detail_track.thumb_rect() == Rect2(0, 0, 15, 78),
+		"a five-row overflow leaves exactly 100px for the original long thumb travel")
+	_explain_pointer(detail_track, 160, true)
+	_explain_pointer(detail_track, 160, false)
+	host.check(detail_scroll.value == 14 and detail_track.thumb_rect().position.y == 20,
+		"clicking beyond the long Explain thumb moves one row instead of one page")
+	_explain_pointer(detail_track, 30, true)
+	_explain_motion(detail_track, 49)
+	host.check(detail_scroll.value == 14, "long Explain drag waits for the 20px row boundary")
+	_explain_motion(detail_track, 50)
+	_explain_pointer(detail_track, 50, false)
+	host.check(detail_scroll.value == 28 and detail_track.thumb_rect().position.y == 40,
+		"long Explain drag keeps the grabbed offset and moves one row at the source boundary")
 	body.text = "汉".repeat(16)
 	await host.ticks(3)
 	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 2,
@@ -302,6 +307,22 @@ func run() -> void:
 	var snapshot: Dictionary = game.session.serialize()
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(snapshot))) and restored.profile["skills"]["draw"]==2,"new progression and equipment survive real flow save")
+
+func _explain_motion(track: Control, y: float, pressed := true) -> void:
+	var motion := InputEventMouseMotion.new()
+	motion.position = track.get_global_transform_with_canvas() * Vector2(8, y)
+	motion.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed else 0
+	game.get_viewport().push_input(motion, true)
+
+func _explain_pointer(track: Control, y: float, pressed: bool) -> void:
+	if pressed:
+		_explain_motion(track, y, false)
+	var button := InputEventMouseButton.new()
+	button.position = track.get_global_transform_with_canvas() * Vector2(8, y)
+	button.button_index = MOUSE_BUTTON_LEFT
+	button.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed else 0
+	button.pressed = pressed
+	game.get_viewport().push_input(button, true)
 
 func drag_skill(source: Control, target: Control, target_at := Vector2(-1, -1)) -> bool:
 	var viewport:Viewport=game.get_viewport()

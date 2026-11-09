@@ -1,6 +1,11 @@
 extends RefCounted
 ## Runtime numeric state; owns temporary effects, never owns persistent profile data.
 const Numbers = preload("res://stats/api/numbers.gd")
+const STATUS_ROLL_SIZE := 10000
+# etc/activestatustable_ex.etc stores probability and power rates as 500 and 100.
+const STATUS_LEVEL_PROBABILITY_RATE := 5.0
+const STATUS_LEVEL_DURATION_RATE := 1.0
+const NATIVE_PERCENT := 0.009999999776482582
 var base: Dictionary = {}
 var seed: Dictionary = {}
 var values: Dictionary = {}
@@ -44,12 +49,30 @@ func set_runtime_modifiers(value: Array) -> void:
 	runtime_modifiers = value.duplicate(true)
 	recalculate()
 
+## Ordinary dungeon freeze, 0x8AC500 -> 0x8146A0 -> 0x8ADBB0 (enum 1).
+func source_freeze_duration(chance: float, status_level: int, duration_ms: int, roll: int) -> int:
+	if status_level <= 0:return 0
+	var level_delta := status_level-int(values.get("level",1))
+	var base_percent := native_scalar(chance*100.0)
+	var probability_rate := native_level_rate(level_delta,STATUS_LEVEL_PROBABILITY_RATE)
+	var adjusted_percent := maxf(0.0,native_scalar(base_percent*probability_rate))
+	var resistance := int(values.get("abnormal_resistance",0))
+	var resisted_percent := native_scalar(native_scalar(adjusted_percent*(100.0-resistance))/100.0)
+	if roll >= native_scalar(resisted_percent*100.0):return 0
+	var duration_rate := native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE)
+	return maxi(0,int(native_scalar(duration_ms*duration_rate)))
+
+static func native_level_rate(level_delta: int, rate: float) -> float:
+	return native_scalar(1.0+native_scalar(native_scalar(level_delta*rate)*NATIVE_PERCENT))
+
+static func native_scalar(value: float) -> float:
+	return PackedFloat32Array([value])[0]
+
 func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not config["effects"].has(id):return false
 	var definition: Dictionary = config["effects"][id].duplicate(true)
 	if definition.has("source_skill") and not sample_source_effect(definition,rank):return false
 	# Per-hit source values belong to this application, never the shared template.
-	# status_level is retained for the still-unresolved native resistance formula.
 	for field: String in ["duration_ms","status_level"]:
 		if parameters.has(field):definition[field] = parameters[field]
 	var abnormal: bool = definition.has("control") or float(definition.get("tick_damage",0))>0 or bool(definition.get("harmful",false))
