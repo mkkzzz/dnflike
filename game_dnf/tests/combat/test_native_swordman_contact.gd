@@ -2,6 +2,8 @@ extends SceneTree
 
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const TestAPI = preload("res://debug/test_api.gd")
+const ProfileSession = preload("res://flow/session.gd")
+const Numbers = preload("res://stats/api/numbers.gd")
 const POINT := Vector2(400,300)
 
 var session := CombatSession.new()
@@ -19,9 +21,11 @@ func check(ok: bool, label: String) -> void:
 		failures += 1
 		print("[SWORDMAN_CONTACT] FAIL ",label)
 
-func start_room(item: String, family: String, facing := 1) -> void:
+func start_room(item: String, family: String, facing := 1, numbers := {}) -> void:
+	var spec: Dictionary = numbers.duplicate()
+	spec.merge({"weapon_item":item,"weapon":family,"job":"weaponmaster"},true)
 	check(session.start_room({"run_id":"native-swordman-contact","room_id":"lorien:1",
-		"player":{"weapon_item":item,"weapon":family,"job":"weaponmaster"},"audio":{"muted":true}}),
+		"player":spec,"audio":{"muted":true}}),
 		"public room entry accepts "+item)
 	game.player["pos"] = POINT
 	game.player["facing"] = facing
@@ -43,6 +47,87 @@ func move_target(target: Dictionary, point: Vector2, height := 0.0) -> void:
 
 func cues(key: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("key","")==key)
+
+func check_followup() -> void:
+	start_room("original_27000","shortsword")
+	for ranks: Dictionary in [
+		{"upper":1,"shortswordmastery":3,"weapon_mastery_up":0},
+		{"upper":1,"shortswordmastery":2,"weapon_mastery_up":1},
+		{"upper":0,"shortswordmastery":3,"weapon_mastery_up":1}]:
+		game.table.configure_skills(ranks,"weaponmaster","shortsword")
+		check(not game.move_def("upper").has("upper_followup_at"),"source rank gate "+str(ranks))
+	start_room("original_27601","katana")
+	game.table.configure_skills({"upper":1,"shortswordmastery":3,"weapon_mastery_up":1},"weaponmaster","katana")
+	check(not game.move_def("upper").has("upper_followup_at"),"katana cannot enter state 30")
+
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"shortswordmastery","level":1})
+	profile.command("numbers.skill_grant",{"id":"weapon_mastery_up","level":1})
+	var spec := profile.stats()
+	for code: int in [KEY_X,KEY_Z]:
+		start_room("original_27000","shortsword",1,spec)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var rank := int(game.skill_levels["shortswordmastery"])
+		var row: Array = Numbers.Skills.sample(Numbers.record("shortswordmastery"),rank)["level_row"]
+		var move: Dictionary = game.move_def("upper")
+		check(rank >= 3 and move.get("upper_followup_at")==200.0,"room uses the effective mastery rank and source frame 3")
+		var second: Dictionary = move["stages"][1]
+		check(second["hits"][0]["percent"]==float(row[2]) and second["hits"][0]["lift"]==float(row[3]),
+			"state 30 uses short sword mastery damage and lift columns")
+		check(move["stages"][0]["hits"][0]["lift"]==350.0 and move["stages"][0]["hits"][0]["atk"]["push_aside"]==100.0,
+			"state 8 uses Upper Slash lift and horizontal push columns")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(85,0))
+		var before_mp: float = game.player["mp"]
+		press(KEY_Z)
+		step(199)
+		check(game.hit_count==1,"state 8 hits the target before state 30")
+		var first_cooldown: float = game.player["cooldowns"]["upper"]
+		session.submit_key(code,true)
+		step(0)
+		check(game.player["stage"]==0 and cues("UPPER_SLASH_02").is_empty(),"input at 199 ms cannot start state 30")
+		step(1)
+		check(game.player["stage"]==0,"a key held from before frame 3 does not leak into the opened gate")
+		session.submit_key(code,false)
+		session.submit_key(KEY_LEFT,true)
+		press(code)
+		step(0)
+		session.submit_key(KEY_LEFT,false)
+		check(game.player["stage"]==1 and game.player["clock"]==0.0 and game.view.player_actor.pose=="upperslashafter"
+			and api.weapon_layers_follow_actor() and game.player["hits"].is_empty() and game.player["facing"]==1,
+			"new X or Z edge enters state 30 with a fresh clock, weapon pose and ATK ledger while retaining facing")
+		check(cues("UPPER_SLASH_02").size()==1 and cues("SM_UPPERSLASH_ADD").size()==1
+			and cues("UPPER_SLASH_02")[0]["event_id"]<cues("SM_UPPERSLASH_ADD")[0]["event_id"]
+			and cues("upper_short_followup").size()==1 and cues("upper2").is_empty(),
+			"entry sounds and mastery overlay fire in source order, before skill FX 1")
+		move_target(target,POINT+Vector2(65,0),110.0)
+		step(199)
+		check(game.hit_count==1 and cues("upper2").is_empty(),"state 30 has no contact or skill FX before frame 2")
+		step(1)
+		var hit: Dictionary = game.bus.events_of("combat.hit")[-1]
+		check(game.hit_count==2 and hit["target"]==target["id"] and hit["atk"].ends_with("upperslashafter.atk")
+			and cues("upper2").size()==1,"frame 2 uses the distinct ATK and hits the same target again")
+		step(40)
+		var overlays: Array = game.view.effects.filter(func(view):return view.data.get("source","").ends_with("shortweaponupperslashafter.ani"))
+		check(overlays.size()==1 and overlays[0].frame.get("img_frame")==4,"mastery artwork keeps its original independent frame timing")
+		step(159)
+		var late: Dictionary = game.spawn_enemy(POINT+Vector2(115,0))
+		move_target(late,POINT+Vector2(115,0),150.0)
+		step(1)
+		check(game.hit_count==3 and game.bus.events_of("combat.hit")[-1]["target"]==late["id"],
+			"copied mastery box still hits on body frame 4 after the B-layer box ends")
+		press(code)
+		step(100)
+		check(game.player["action"]=="" and game.hit_count==3 and cues("UPPER_SLASH_02").size()==1
+			and game.player["mp"]==before_mp-move["mp"] and game.player["cooldowns"]["upper"]==first_cooldown,
+			"state 30 ends after 500 ms, with no third segment or second cast cost")
+
+	start_room("original_27000","shortsword",1,spec)
+	press(KEY_Z)
+	step(1000)
+	check(game.player["action"]=="" and cues("UPPER_SLASH_02").is_empty(),"qualified cast without another input ends after the first action")
 
 func run() -> void:
 	game = session.mount(root)
@@ -140,6 +225,7 @@ func run() -> void:
 	var mastery: Array = game.table.moves["attack1"]["hits"][0]["segments"][0]["frames"]
 	check(ordinary[0]["boxes"].size()==1 and mastery[0]["boxes"][0]==[0.0,-10.0,30.0,160.0,20.0,84.0]
 		and mastery[0]["start"]==150.0,"mastery adds the source frame 3 box on the body clock at rank 3")
+	check_followup()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)

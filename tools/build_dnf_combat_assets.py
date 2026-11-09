@@ -240,6 +240,7 @@ EFFECTS = {
     'charge_upper': 'character/swordman/effect/animation/chargecrash/up-slash.ani',
     'upper1': 'character/swordman/effect/animation/upperslash1.ani',
     'upper2': 'character/swordman/effect/animation/upperslash2.ani',
+    'upper_short_followup': 'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani',
     'triple1': 'character/swordman/effect/animation/tripleslash/slash1.ani',
     'triple2': 'character/swordman/effect/animation/tripleslash/slash2.ani',
     'triple3': 'character/swordman/effect/animation/tripleslash/slash3.ani',
@@ -275,6 +276,12 @@ WAVE_CAST_AUDIO = {
     'HADOUKEN': 'sounds/char/swordman/effect/hadouken.ogg',
     'SM_ICEWAVE': 'sounds/char/swordman/sm_icewave.ogg',
     'SM_FIREWAVE': 'sounds/char/swordman/sm_firewave.ogg',
+}
+
+# State 30 entry at CD152F and CD1578, resolved by original audio.xml.
+UPPER_FOLLOWUP_AUDIO = {
+    'UPPER_SLASH_02': 'sounds/char/swordman/effect/upper_slash_02.ogg',
+    'SM_UPPERSLASH_ADD': 'sounds/char/swordman/sm_upperslash_add.ogg',
 }
 
 # Preserve audio.xml spelling: Khazan's caster key is KAZHAN and the object key is KAJAN.
@@ -315,6 +322,7 @@ OUTERWALL_SOUNDS = {'SPEAR_HIT': ['sounds/effect/spear_hit.ogg'],
 OUTERWALL_BREAKABLE_SOUNDS = {'WOOD_HIT': ['sounds/effect/wood_hit.ogg']}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
+    **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1219,6 +1227,8 @@ def main() -> int:
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
     parser.add_argument('--extend-wave-sounds', action='store_true',
                         help='Add original wave cast sounds, preserving existing assets')
+    parser.add_argument('--extend-upper-followup', action='store_true',
+                        help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
                         help='Add the Khazan ghost and area banks, preserving existing assets')
     parser.add_argument('--extend-bremen', action='store_true',
@@ -1279,6 +1289,12 @@ def main() -> int:
         return 0
     if args.extend_wave_sounds:
         specs = [('audio', key, path) for key, path in WAVE_CAST_AUDIO.items()]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_upper_followup:
+        key = 'upper_short_followup'
+        specs = [('effects', key, EFFECTS[key])]
+        specs.extend(('audio', key, path) for key, path in UPPER_FOLLOWUP_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_native_particles:

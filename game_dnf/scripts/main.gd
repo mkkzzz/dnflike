@@ -618,6 +618,12 @@ func action_event_clock(elapsed: float) -> float:
 	return elapsed-float(phase["wait_ms"]) if phase.has("charge_rate") else action_ani_clock(elapsed)
 
 func buffering(code: int) -> void:
+	if code in [KEY_X,KEY_Z] and player["action"] == "upper":
+		var followup := float(move_def("upper").get("upper_followup_at",-1.0))
+		if followup >= 0.0:
+			if int(player["stage"]) == 0 and float(player["clock"]) >= followup:
+				player["queued_upper_followup"] = true
+			return
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
 	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","frenzy4","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
@@ -894,6 +900,13 @@ func step_action(ms: float, move: Vector2) -> void:
 		# not wait for the generic late combo/cancel window or emit its next hit.
 		if start_action(queued,true):return
 	var m := move_def(name)
+	if m.has("upper_followup_at") and int(player["stage"]) == 0 and player.get("queued_upper_followup",false):
+		end_action_fx()
+		player["fx_tag"] = "act:%d" % (action_seq+1)
+		player["queued_skill"] = ""
+		player["queued_jump"] = false
+		start_stage(1)
+		return
 	var stage := action_def()
 	var old_clock := float(player["clock"])
 	var speed: float = float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 and name != "buff" else 1.0
@@ -941,7 +954,8 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["air_ms"] = 0.0
 		player["queued_jump"] = false
 		play_sound("jump")
-	elif clock >= cancel_at and String(player["queued_skill"]) == name and m.has("stages") and int(player["stage"]) < m["stages"].size()-1:
+	elif clock >= cancel_at and String(player["queued_skill"]) == name and m.has("stages") \
+		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1:
 		player["queued_skill"] = ""
 		start_stage(int(player["stage"])+1)
 	elif clock >= cancel_at and String(player["queued_skill"]) != "" and String(player["queued_skill"]) != name:
@@ -1116,6 +1130,7 @@ func start_stage(index: int) -> void:
 	player["stage"] = index
 	player["clock"] = 0.0
 	player["hits"] = {}
+	player.erase("queued_upper_followup")
 	action_seq += 1
 	var m := move_def(name)
 	player["native_phase"] = {}
@@ -1130,8 +1145,8 @@ func start_stage(index: int) -> void:
 		# Phase 1 sets mode 0 at 8591E3. The 1000 rate then preserves static[0].
 		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
 			"end_ms":release_at+float(m["native_recovery_ms"])}
-	# Multi-stage slides may turn round between stages (each slash picks its own side).
-	if m.has("stages"):
+	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
+	if m.has("stages") and not (name == "upper" and index == 1):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})

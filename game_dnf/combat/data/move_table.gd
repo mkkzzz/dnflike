@@ -8,9 +8,14 @@ const Timeline = preload("res://combat/action/timeline.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
-const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3","upper":"hitback"}
+const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
+	"upper":"hitback","upper_followup":"upperslashafter"}
+const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
-const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3","upper":"upperslash"}
+const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
+	"upper":"upperslash","upper_followup":"upperslashafter"}
+# swordman.sd [upper slash start frame], consumed at CBF0C8.
+const UPPER_FOLLOWUP_FRAME := 3
 ## D2FC90 factory cases: Goblin/Thrower use CNMonster's +788 and
 ## +58C. These Haze IDs all dispatch to the generic CNAIMonster constructor.
 const NATIVE_TARGET_IDS := {
@@ -204,6 +209,7 @@ func bind_swordman_weapon(item: String, body_clips: Dictionary) -> void:
 	var layers := WeaponAppearance.layers(item,body_clips)
 	if layers.is_empty():return
 	for move: String in SWORDMAN_WEAPON_POSES:
+		if move == "upper_followup" and _swordman_weapon_family != "shortsword":continue
 		var pose: String = SWORDMAN_WEAPON_POSES[move]
 		var body := player_timeline(pose)
 		var children: Array = []
@@ -219,7 +225,7 @@ func _swordman_hits(name: String) -> Array:
 	if weapon != _swordman_weapon_family or not _swordman_weapon_hits.has(name):return []
 	var rank := int(skill_levels.get("shortswordmastery",0))
 	if job == "weaponmaster" and rank > 0 and _swordman_mastery_hits.has(name):
-		var mastery: Array = _skill_row("skill/swordman/shortswordmastery.skl").get("static",[])
+		var mastery: Array = _skill_row(SHORT_MASTERY_SKL).get("static",[])
 		if mastery.size() > 12 and rank >= int(mastery[12]):return _swordman_mastery_hits[name]
 	return _swordman_weapon_hits[name]
 
@@ -324,9 +330,32 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
+	if name == "upper":_append_upper_followup(move)
 	for stage: Dictionary in move.get("stages",[move]):
 		for hit: Dictionary in stage.get("hits",[]):hit["skill_id"] = name
 	return move
+
+func _append_upper_followup(move: Dictionary) -> void:
+	# CBF008: effective ranks of weapon mastery up (27), upper (46) and short sword (12).
+	if weapon != "shortsword" or int(skill_levels.get("weapon_mastery_up",0)) <= 0 \
+		or int(skill_levels.get("upper",0)) <= 0:return
+	var mastery := _skill_row(SHORT_MASTERY_SKL)
+	var static_data: Array = mastery["static"]
+	if static_data.size() <= 12 or int(mastery["rank"]) < int(static_data[2]):return
+	var weapon_hits := _swordman_hits("upper_followup")
+	if weapon_hits.is_empty():return
+	var stage := _build_stage({"ani":"upperslashafter","atk":"character/swordman/attackinfo/upperslashafter.atk",
+		"hits":[{"percent_col":2,"lift_col":3}],
+		"sounds":[{"key":"UPPER_SLASH_02","at":0.0},{"key":"SM_UPPERSLASH_ADD","at":0.0}]},
+		mastery,weapon_hits)
+	var fx: Array = stage["fx"]
+	# CD1824 attaches the mastery layer at entry. CBF23B starts the skill FX at frame 2.
+	if job == "weaponmaster" and int(mastery["rank"]) >= int(static_data[12]):
+		fx.append({"key":"upper_short_followup","at":0.0,"action_clock":true})
+	fx.append({"key":"upper2","at":float(stage["timeline"][2]["start_ms"]),"action_clock":true,"scale":0.8})
+	var first: Dictionary = move["stages"][0] if move.has("stages") else move.duplicate()
+	move["stages"] = [first,stage]
+	move["upper_followup_at"] = float(first["timeline"][UPPER_FOLLOWUP_FRAME]["start_ms"])
 
 func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) -> Dictionary:
 	var ani := String(spec.get("ani",""))
@@ -347,6 +376,11 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 		if h.has("percent_col") and row.size() > int(h["percent_col"]):percent = float(row[int(h["percent_col"])])
 		var lift := -1.0
 		if h.has("lift_col") and row.size() > int(h["lift_col"]):lift = float(row[int(h["lift_col"])])
+		if ani == "hitback" and not weapon_hits.is_empty() and row.size() > 2:
+			# CD428A / CD42C0 write the ATK lift and horizontal push slots respectively.
+			lift = float(row[1])
+			decoded = decoded.duplicate()
+			decoded["push_aside"] = float(row[2])
 		var hit := {"atk":decoded,"atk_path":atk_path,"percent":percent,"lift":lift,"skill":skill.size() > 0,
 			"ignore_defense":bool(h.get("ignore_defense",enum_value(decoded,"attack_type")=="[ignore defense]")),"true_damage":float(h.get("true_damage",0)),
 			"effects":_level_effects(h.get("effects",[]),row),
