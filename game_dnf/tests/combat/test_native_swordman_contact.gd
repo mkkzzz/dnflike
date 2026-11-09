@@ -63,6 +63,7 @@ func check_upper_start_armor() -> void:
 		check((game.player["action"]=="upper" and reaction=="none") if clock<150
 			else (game.player["action"]=="" and reaction=="stagger"),
 			"only the first two source frames resist the reaction at "+str(clock))
+		check(cues("upper_armor_light").size()==int(clock<150),"only an armored hit lights the actor at "+str(clock))
 	start_room("original_27000","shortsword")
 	press(KEY_Z)
 	step(100)
@@ -70,6 +71,7 @@ func check_upper_start_armor() -> void:
 	piercing["ignore_super_armor"] = 1
 	check(game.hurt_player(7,source,piercing,-1)=="stagger" and game.player["action"]=="",
 		"native ATK bypass can interrupt Upper during the opening frames")
+	check(cues("upper_armor_light").is_empty(),"a piercing hit leaves no upper armor light")
 	start_room("original_27000","shortsword")
 	press(KEY_Z)
 	step(100)
@@ -91,6 +93,36 @@ func check_upper_start_armor() -> void:
 		check((reaction=="none" and game.player["action"]=="upper") if elapsed==99
 			else (reaction=="guard" and game.player["state"]=="guard"),
 			"auto guard gate follows the accelerated body frame at "+str(elapsed)+" ms")
+
+func check_upper_armor_light() -> void:
+	start_room("original_27601","katana",-1)
+	var source := {"pos":POINT+Vector2(40,0)}
+	press(KEY_Z)
+	step(0)
+	game.hurt_player(7,source,{},-1)
+	var lights: Array = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/superarmordamage.ani"))
+	check(lights.size()==1,"the armored hit creates the original light view")
+	if not lights.is_empty():
+		var light = lights[0]
+		check(light.follow==0 and light.facing==-1 and light.frame["items"]["7"][0]<0.71,
+			"original light follows the actor and starts on its scaled frame")
+		light.seek(40.0)
+		check(int(light.frame["frame"])==1 and not light.frame["items"].has("7"),"original light alternates scale at 40 ms")
+		light.seek(160.0)
+		check(light.is_queued_for_deletion(),"the light ends after the last visible original frame")
+	game.step_game(599.0)
+	# A second armor sample isolates the visual timer from recovery and cooldown.
+	game.end_action()
+	game.player["cooldowns"]["upper"] = 0.0
+	press(KEY_Z)
+	step(0)
+	game.player["invuln_ms"] = 0.0
+	check(game.hurt_player(7,source,{},-1)=="none" and cues("upper_armor_light").size()==1,
+		"an armored hit at 599 ms does not restart the light")
+	game.step_game(1.0)
+	game.player["invuln_ms"] = 0.0
+	check(game.hurt_player(7,source,{},-1)=="none" and cues("upper_armor_light").size()==2,
+		"an armored hit can replay the light at 600 ms")
 
 func check_followup() -> void:
 	start_room("original_27000","shortsword")
@@ -270,6 +302,7 @@ func run() -> void:
 	check(ordinary[0]["boxes"].size()==1 and mastery[0]["boxes"][0]==[0.0,-10.0,30.0,160.0,20.0,84.0]
 		and mastery[0]["start"]==150.0,"mastery adds the source frame 3 box on the body clock at rank 3")
 	check_upper_start_armor()
+	check_upper_armor_light()
 	check_followup()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)

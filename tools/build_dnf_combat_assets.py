@@ -241,6 +241,7 @@ EFFECTS = {
     'upper1': 'character/swordman/effect/animation/upperslash1.ani',
     'upper2': 'character/swordman/effect/animation/upperslash2.ani',
     'upper_short_followup': 'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani',
+    'upper_armor_light': 'common/commoneffect/animation/superarmordamage.ani',
     'triple1': 'character/swordman/effect/animation/tripleslash/slash1.ani',
     'triple2': 'character/swordman/effect/animation/tripleslash/slash2.ani',
     'triple3': 'character/swordman/effect/animation/tripleslash/slash3.ani',
@@ -1227,6 +1228,8 @@ def main() -> int:
                         help='Add ordinary firewave explosion/rear banks, preserving existing assets')
     parser.add_argument('--extend-wave-sounds', action='store_true',
                         help='Add original wave cast sounds, preserving existing assets')
+    parser.add_argument('--extend-upper-armor-light', action='store_true',
+                        help='Add the original super-armor impact light animation')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1290,6 +1293,10 @@ def main() -> int:
     if args.extend_wave_sounds:
         specs = [('audio', key, path) for key, path in WAVE_CAST_AUDIO.items()]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_upper_armor_light:
+        key = 'upper_armor_light'
+        print(json.dumps(extend_skill_banks(args.library, OUT, [('effects', key, EFFECTS[key])])))
         return 0
     if args.extend_upper_followup:
         key = 'upper_short_followup'

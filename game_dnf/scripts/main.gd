@@ -372,7 +372,7 @@ func new_player() -> Dictionary:
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
 		"guard_recoil_ms":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
-		"invuln_ms":0.0,"flash_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
+		"invuln_ms":0.0,"flash_ms":0.0,"upper_armor_fx_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
 		"recovery_code":-1,"recovery_buffer_ms":0.0,"air_attack_used":false,"air_move_speed":0.0}
 
@@ -710,6 +710,7 @@ func step_game(ms: float) -> void:
 		max_mp = float(numeric_player.values["mp_max"])
 	player["invuln_ms"] = maxf(0,float(player["invuln_ms"])-ms)
 	player["flash_ms"] = maxf(0,float(player["flash_ms"])-ms)
+	player["upper_armor_fx_ms"] = maxf(0,float(player["upper_armor_fx_ms"])-ms)
 	player["recovery_buffer_ms"] = maxf(0,float(player.get("recovery_buffer_ms",0.0))-ms)
 	if numeric_player == null:player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
 	player["landing_ms"] = maxf(0,float(player["landing_ms"])-ms)
@@ -1996,6 +1997,11 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 	# 8184DF tests the incoming ATK's ignore-super-armor field before reaction dispatch.
 	var armor_blocks_reaction := upper_armor and int(atk.get("ignore_super_armor",0)) == 0
 	var buff_armor: bool = numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0
+	if armor_blocks_reaction and taken > 0.0 and float(player["hp"]) > 0.0 and float(player["upper_armor_fx_ms"]) <= 0.0:
+		# 81F427 starts a 600 ms gate. The attached light ANI itself ends after 160 ms.
+		player["upper_armor_fx_ms"] = 600.0
+		bus.emit("combat.cue",{"kind":"fx","key":"upper_armor_light","point":Vector2(player["pos"]),
+			"height":float(player["z"]),"facing":int(player["facing"]),"follow":PLAYER_ID})
 	if not guarded and state != "hold" and not armor_blocks_reaction and not buff_armor:
 		end_action_fx()
 		player["action"] = ""
