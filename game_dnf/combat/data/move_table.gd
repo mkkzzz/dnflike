@@ -577,7 +577,11 @@ func _hardattack_waves(row: Array, speed: int) -> Dictionary:
 			# The packet's three words become ATK freeze percent, level and duration.
 			hit["effects"] = [{"id":"freeze","chance":float(row[7])*0.01,
 				"status_level":int(row[8]),"duration_ms":int(row[9])}]
+		elif ghost == "bremen":
+			hit["effects"] = [{"id":"sleep","chance":float(row[10])*0.01,
+				"status_level":int(row[11]),"duration_ms":int(row[12])}]
 		waves[ghost] = {"definition":definition,"hit":hit,"voice":"GHOST_DRIVE_"+ghost.to_upper()}
+	waves["khazan"]["caster_buff"] = {"strength":int(row[4]),"intelligence":int(row[5]),"duration_ms":int(row[6])}
 	return waves
 
 ## Passive object: motion timeline, attack info, particle motion and the render bank key.
@@ -684,6 +688,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
 		"blind_resistance":int(mob.get("blind_resistance",0)),
+		"sleep_resistance":int(mob.get("sleep_resistance",0)),
 		"poison_resistance":int(mob.get("poison_resistance",0)),
 		"attack_delay":float(mob.get("attack_delay",mob.get("think_term",1200))),
 		"hit_recovery":float(mob.get("hit_recovery",[500])[0]),

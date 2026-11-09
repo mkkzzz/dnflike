@@ -764,6 +764,8 @@ func check_hardattack_waves() -> void:
 		game.step_objects(180000)
 		check(game.objects.is_empty(),"the selected ghost field is absent before the wave")
 		game.numeric_player.values["attack_speed"] = 1.0
+		var strength: float = game.numeric_player.values["strength"]
+		var intelligence: float = game.numeric_player.values["intelligence"]
 		session.submit_key(KEY_A,true)
 		step(250)
 		session.submit_key(KEY_A,false)
@@ -777,10 +779,15 @@ func check_hardattack_waves() -> void:
 		check(wave["hit"]["percent"]==variant[1] and wave["hit"]["atk_path"].ends_with(ghost+".atk")
 			and cues("GHOST_DRIVE_"+ghost.to_upper()).size()==1,
 			ghost+" wave installs the original attack record, rank column and voice")
+		if ghost == "khazan":
+			check(game.active_effect("khazan_drive").get("remaining_ms",0)==13000
+				and game.numeric_player.values["strength"]==strength+25
+				and game.numeric_player.values["intelligence"]==intelligence+25,
+				"Khazan gives the caster both native bonuses before any target contact")
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
 		var second: Dictionary = game.spawn_enemy(POINT+Vector2(65,0))
 		second["hp"] = 5000.0
-		if ghost == "saya":
+		if ghost in ["saya","bremen"]:
 			target["numeric"].values["level"] = 35
 			target["numeric"].values["abnormal_resistance"] = 0
 			# After the damage rolls, the first status roll is 403/10000.
@@ -804,6 +811,49 @@ func check_hardattack_waves() -> void:
 			"the original wave stays through 424 ms and each target is hit once")
 		game.step_objects(1)
 		check(game.objects.is_empty(),"the wave expires on the original 425 ms boundary")
+		if ghost == "khazan":
+			game.step_numeric_actor(game.player,game.numeric_player,12999)
+			check(not game.active_effect("khazan_drive").is_empty(),"Khazan's caster buff outlives the wave")
+			game.step_numeric_actor(game.player,game.numeric_player,1)
+			check(game.active_effect("khazan_drive").is_empty() and game.numeric_player.values["strength"]==strength
+				and game.numeric_player.values["intelligence"]==intelligence,"Khazan's two bonuses expire together")
+		elif ghost == "bremen":
+			check_bremen_sleep(target,wave["hit"]["effects"][0])
+
+func check_bremen_sleep(target: Dictionary, source: Dictionary) -> void:
+	var actor = target["numeric"]
+	check(actor.effects.active.get("sleep",{}).get("remaining_ms",0)==3900 and cues("CONDITION_SLEEP").size()>0,
+		"Bremen applies original level-one sleep and plays the native sound on contact")
+	check(not actor.apply_source_sleep(source,0),"an active sleep refuses a duplicate")
+	game.update_enemy(target,100)
+	check(target["state"]=="air" and actor.sleep_age()==0.0,"the sleep clock waits for landing")
+	for i in 120:
+		if target["state"]=="down":break
+		game.update_enemy(target,16)
+	check(target["state"]=="down" and actor.sleep_age()==0.0,"landing begins the sleep hold at age zero")
+	game.update_enemy(target,200)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var icon = game.view.enemy_actors[target["id"]].get_node_or_null("NativeSleep")
+	check(icon!=null and icon.visible and icon.clock_ms==200.0 and icon.data["source"].ends_with("/sleep.ani"),
+		"the looped native sleep ANI uses the down-state clock")
+	var damage := {"kind":"object","percent":1.0,"atk":{"damage_reaction":[{"value":"[none]"}]}}
+	game.land_hit(game.player,target,damage,Vector3(POINT.x,POINT.y,0),1,1.0)
+	check(actor.sleep_age()==200.0,"a landed hit at exactly 200 ms preserves sleep")
+	game.update_enemy(target,1)
+	game.land_hit(game.player,target,damage,Vector3(POINT.x,POINT.y,0),1,1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(actor.sleep_age()<0.0 and not icon.visible and target["down_ms"]==float(game.rules["reaction"]["down_hold_ms"]),
+		"a landed hit after 200 ms wakes, hides the status and starts get-up")
+	actor.values["sleep_resistance"] = 100
+	check(not actor.apply_source_sleep(source,0),"sleep consults its own full resistance")
+	actor.values["sleep_resistance"] = 0
+	actor.values["level"] = 35
+	check(actor.apply_source_sleep(source,0),"an awake target can sleep again")
+	game.update_enemy(target,3899)
+	check(actor.sleep_age()==3899.0 and target["state"]=="down","sleep holds the original down pose through the last millisecond")
+	game.update_enemy(target,1)
+	check(actor.sleep_age()<0.0 and target["down_ms"]>=float(game.rules["reaction"]["down_hold_ms"]),
+		"native duration releases the down hold and starts get-up")
 
 func check_triple_cooldown() -> void:
 	var profile := ProfileSession.new()

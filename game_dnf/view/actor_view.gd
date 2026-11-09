@@ -109,6 +109,16 @@ func present_status_overlay(color: Color) -> void:
 	_status_overlay.material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
 	_status_overlay.show()
 
+func sprite_bounds() -> Rect2:
+	var frame := sample()
+	var frame_bank: Dictionary = pose_banks.get(pose,bank)
+	var item: Dictionary = frame_bank["items"].get(str(int(frame.get("img_frame",0))),{})
+	if frame.is_empty() or item.is_empty():return Rect2()
+	var rect: Array = item["rect"]
+	var offset: Array = item["offset"]
+	var origin: Array = frame.get("pos",[0,0])
+	return Rect2(offset[0]+origin[0],offset[1]+origin[1],rect[2],rect[3])
+
 func _draw() -> void:
 	if atlas == null:return
 	# Shadow stays on the ground while only the sprite moves in height.

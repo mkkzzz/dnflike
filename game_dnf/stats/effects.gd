@@ -55,9 +55,10 @@ func flag(key: String) -> bool:
 func controlled() -> bool:
 	return flag("control")
 
-func step(ms: float) -> Array:
+func step(ms: float, sleep_on_ground := true) -> Array:
 	var events: Array = []
 	for id: String in active.keys():
+		if id == "sleep" and not sleep_on_ground:continue
 		var effect: Dictionary = active[id]
 		if effect.has("applications"):
 			step_source_poison(effect,ms,events)

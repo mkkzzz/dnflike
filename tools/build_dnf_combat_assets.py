@@ -275,6 +275,7 @@ EFFECTS = {
     'hardattack_dash_down': 'character/swordman/effect/animation/wave-down.ani',
     'hardattack_dash_up': 'character/swordman/effect/animation/wave-up.ani',
     **HARDATTACK_WAVE_REARS,
+    'native_sleep': 'common/activestatus/animation/sleep.ani',
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
     'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
@@ -393,6 +394,7 @@ CUE_SOUNDS = {
     HARDATTACK_VOICE: HARDATTACK_VOICE_FILES,
     **{key: [path] for key, path in HARDATTACK_CHARGE_AUDIO.items()},
     **{key: [path] for key, path in HARDATTACK_WAVE_AUDIO.items()},
+    'CONDITION_SLEEP': ['sounds/effect/c_sleep.ogg'],
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1317,6 +1319,8 @@ def main() -> int:
                         help='Add the original full-charge Ghost Slash follow-up animation and effects')
     parser.add_argument('--extend-hardattack-wave', action='store_true',
                         help='Add original Ghost Drive wave banks and voices')
+    parser.add_argument('--extend-sleep-status', action='store_true',
+                        help='Add the original sleep status ANI and sound')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1413,6 +1417,11 @@ def main() -> int:
         specs = [('objects', key, path) for key, path in HARDATTACK_WAVE_FRONTS.items()]
         specs.extend(('effects', key, path) for key, path in HARDATTACK_WAVE_REARS.items())
         specs.extend(('audio', key, path) for key, path in HARDATTACK_WAVE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_sleep_status:
+        specs = [('effects', 'native_sleep', EFFECTS['native_sleep']),
+                 ('audio', 'CONDITION_SLEEP', CUE_SOUNDS['CONDITION_SLEEP'])]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:

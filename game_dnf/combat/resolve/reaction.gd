@@ -43,7 +43,7 @@ static func apply(body: Dictionary, atk: Dictionary, attacker_facing: int, rp: D
 ## Advances knockback slide, gravity, landing/bounce and the down/get-up hold.
 ## `move` is a Callable(from: Vector2, delta: Vector2) -> Vector2 that applies world collision.
 ## Returns "landed" on the frame a launched body comes to rest on the ground, else "".
-static func step_body(body: Dictionary, ms: float, gravity: float, rp: Dictionary, move: Callable) -> String:
+static func step_body(body: Dictionary, ms: float, gravity: float, rp: Dictionary, move: Callable, hold_down := false) -> String:
 	var dt := ms/1000.0
 	var result := ""
 	if float(body.get("push_ms",0)) > 0:
@@ -69,7 +69,7 @@ static func step_body(body: Dictionary, ms: float, gravity: float, rp: Dictionar
 	elif state == "hurt":
 		body["stun_ms"] = maxf(0,float(body["stun_ms"])-ms)
 		if float(body["stun_ms"]) <= 0:body["state"] = "idle"
-	elif state == "down":
+	elif state == "down" and not hold_down:
 		body["down_ms"] = float(body["down_ms"])+ms
 		if float(body["down_ms"]) >= float(rp["down_hold_ms"])+float(rp["getup_ms"]):body["state"] = "idle"
 	return result

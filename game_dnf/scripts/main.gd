@@ -257,6 +257,7 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	if actor == null:actor = ActorNumbers.new()
 	var stats := Numbers.monster(monster_base,int(enemy.get("source_level",numeric_monster_level)),bool(enemy["chief"]),numeric_difficulty)
 	stats["blind_resistance"] = int(m["blind_resistance"])
+	stats["sleep_resistance"] = int(m["sleep_resistance"])
 	stats["poison_resistance"] = int(m["poison_resistance"])
 	if m.has("native_attack_rate"):stats["attack_speed"] = m["native_attack_rate"]
 	if m.has("native_spirit_summon"):stats["cast_speed"] = m["native_spirit_summon"]["cast_rate"]
@@ -268,13 +269,15 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 
 func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 	if float(body["hp"])<=0:return
-	var events: Array = actor.step(ms)
+	var events: Array = actor.step(ms,body["state"]=="down")
 	if int(body["id"])!=PLAYER_ID:
 		body["max_hp"] = float(actor.values["hp_max"])
 		body["attack"] = float(actor.values["physical_attack"])
 	body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
 	for event: Dictionary in events:
 		if event["type"]=="removed":
+			if event["id"]=="sleep" and body["state"]=="down":
+				body["down_ms"] = float(rules["reaction"]["down_hold_ms"])
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
 		if int(body["id"])==PLAYER_ID and god_mode:continue
@@ -1310,6 +1313,9 @@ func start_hardattack_followup(stage: Dictionary) -> void:
 	var wave: Dictionary = stage["waves"][player["hardattack_ghost"]]
 	play_sound(wave["voice"])
 	spawn_object(wave["hit"],"player",player["pos"],float(player["z"]),facing,attack_power(),{},wave["definition"])
+	# Native packet initialization attaches the modifier to the caster.
+	if wave.has("caster_buff") and numeric_player != null and numeric_player.apply_khazan_drive(wave["caster_buff"]):
+		bus.emit("combat.status",{"target":PLAYER_ID,"id":"khazan_drive","change":"added"})
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
@@ -1491,6 +1497,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
 		target["hp"] = maxf(0,float(target["hp"])-amount)
+		# The native hit callback removes sleep only after 200 elapsed ms.
+		if not contact_only and target.has("numeric") and int(target["numeric"].sleep_age())>200:
+			target["numeric"].remove_effect("sleep")
+			if target["state"]=="down":target["down_ms"] = float(rules["reaction"]["down_hold_ms"])
+			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
 		reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
@@ -1526,6 +1537,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)
 			var duration_ms := float(effect.get("duration_ms",0))
+			if effect.get("id","") == "sleep":
+				if target["numeric"].apply_source_sleep(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+					play_sound("CONDITION_SLEEP")
+					bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"added"})
+				continue
 			if effect.get("id","") == "freeze" and effect.has_all(["chance","status_level","duration_ms"]):
 				var roll: int = rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)
 				duration_ms = float(target["numeric"].source_freeze_duration(chance,int(effect["status_level"]),int(duration_ms),roll))
@@ -1655,7 +1671,12 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 				enemy.erase("starfish_bite_phase")
 				if enemy["state"] == "attack":
 					finish_enemy_attack(enemy,m["moves"][int(enemy["move_index"])])
-			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
+			var sleeping: bool = enemy["numeric"].effects.active.has("sleep")
+			# Enum 8 waits out the incoming hit/air reaction, then holds STATE_DOWN.
+			if sleeping and enemy["state"] not in ["air","hurt","down","dead"]:
+				enemy["state"] = "down"
+				enemy["down_ms"] = 0.0
+			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world,sleeping)
 			return
 	enemy["flash_ms"] = maxf(0,float(enemy["flash_ms"])-ms)
 	if float(enemy["stuck_ms"]) > 0:
@@ -3323,6 +3344,7 @@ func view_snapshot() -> Dictionary:
 			"ani":String(enemy["def"]["motions"].get(e_ani[0],e_ani[0])),"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
 			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"],
 			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind"),
+			"sleep_ms":enemy["numeric"].sleep_age() if is_alive and enemy.has("numeric") and enemy["state"]=="down" else -1.0,
 			"cast_layers":enemy["def"]["native_spirit_summon"]["cast_layers"] if casting else [],
 			"poison":enemy["numeric"].effects.poison_visual() if is_alive and enemy.has("numeric") else 0})
 	var friendly: Array = []

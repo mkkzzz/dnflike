@@ -135,9 +135,9 @@
   "hardattack_wave_saya_up",
   "hardattack_wave_bremen_up"
  ],
- "effects": 255,
+ "effects": 256,
  "digits": 61,
- "audio_keys": 239,
+ "audio_keys": 240,
  "unresolved": 32,
  "unresolved_items": [
   {

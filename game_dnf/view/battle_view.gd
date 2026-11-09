@@ -229,6 +229,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
 		actor.present_status_overlay(poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
+		_present_sleep(actor,float(e.get("sleep_ms",-1)))
 		_present_cast_layers(actor,e)
 	_present_objects(s.get("objects",[]))
 	for i in range(ghosts.size()-1,-1,-1):
@@ -326,6 +327,25 @@ func _present_blind(actor: ActorView, enemy: Dictionary, sim_ms: float) -> void:
 			# The status owns the ANI pair for the actor's lifetime. Expiry
 			# hides it and a later application does not rebuild the animation.
 			fx.clock_ms = elapsed
+
+func _present_sleep(actor: ActorView, age: float) -> void:
+	var fx := actor.get_node_or_null("NativeSleep") as FxView
+	if age < 0:
+		if fx != null:fx.hide()
+		return
+	if fx == null:
+		var bank: Dictionary = _effects.get("native_sleep",{})
+		if bank.is_empty():return
+		fx = FxView.new()
+		fx.name = "NativeSleep"
+		fx.setup(bank,1)
+		fx.loop = bool(bank["loop"])
+		actor.add_child(fx)
+	# The source uses the current down sprite's right edge and top.
+	var bounds := actor.sprite_bounds()
+	fx.position = Vector2(int(-actor.facing*bounds.end.x*0.75),-roundf(actor.height)+int(bounds.position.y*0.5))
+	fx.seek(age)
+	fx.show()
 
 func _present_cast_layers(actor: Node2D, enemy: Dictionary) -> void:
 	var layers: Array = enemy.get("cast_layers",[])

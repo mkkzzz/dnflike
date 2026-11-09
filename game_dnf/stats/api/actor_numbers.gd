@@ -56,6 +56,28 @@ func source_freeze_duration(chance: float, status_level: int, duration_ms: int, 
 	if not source_status_lands(chance,level_delta,int(values.get("abnormal_resistance",0)),roll):return 0
 	return maxi(0,int(native_scalar(duration_ms*native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE))))
 
+## Enum 8 shares the original level-duration branch with freeze, but reads
+## its own resistance slot and refuses a second application while active.
+func apply_source_sleep(source: Dictionary, roll: int) -> bool:
+	if effects.active.has("sleep"):return false
+	var level := int(source["status_level"])
+	var delta := level-int(values.get("level",1))
+	var resistance := int(values.get("sleep_resistance",0))+int(values.get("abnormal_resistance",0))
+	if level <= 0 or not source_status_lands(float(source["chance"]),delta,resistance,roll):return false
+	var duration := int(native_scalar(int(source["duration_ms"])*native_level_rate(delta,STATUS_LEVEL_DURATION_RATE)))
+	return duration > 0 and effects.add("sleep",{"name":"睡眠","control":"sleep","status_level":level,"duration_ms":duration})
+
+func sleep_age() -> float:
+	var sleep: Dictionary = effects.active.get("sleep",{})
+	return -1.0 if sleep.is_empty() else float(sleep["definition"]["duration_ms"])-float(sleep["remaining_ms"])
+
+func apply_khazan_drive(source: Dictionary) -> bool:
+	var added := effects.add("khazan_drive",{"name":"卡赞冲波","duration_ms":source["duration_ms"],
+		"modifiers":[{"stat":"strength","op":"add","value":source["strength"]},
+			{"stat":"intelligence","op":"add","value":source["intelligence"]}]})
+	if added:recalculate()
+	return added
+
 ## Blind uses its own resistance index and scales both payloads before storage.
 ## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.
 func apply_source_blind(source: Dictionary, roll: int) -> bool:
@@ -138,8 +160,8 @@ func remove_effect(id: String) -> bool:
 	if removed:recalculate()
 	return removed
 
-func step(ms: float) -> Array:
-	var events: Array = effects.step(ms)
+func step(ms: float, sleep_on_ground := true) -> Array:
+	var events: Array = effects.step(ms,sleep_on_ground)
 	for event: Dictionary in events:
 		if event["type"] == "removed":
 			recalculate()
