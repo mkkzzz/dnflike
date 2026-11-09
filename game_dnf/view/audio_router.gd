@@ -125,7 +125,7 @@ func on_cue(event: Dictionary) -> void:
 			voice.stream_paused = false
 			_loop_voices.erase(loop_id)
 		return
-	play(String(event["key"]),loop_id,voice_tag)
+	play(String(event["key"]),loop_id,voice_tag,int(event.get("max_same_key",0)))
 
 func variant_index(key: String, roll: int) -> int:
 	if not _variant_weight_ends.has(key):return roll%variants[key].size()
@@ -135,14 +135,19 @@ func variant_index(key: String, roll: int) -> int:
 		if point < ends[index]:return index
 	return ends.size()-1
 
-func play(key: String, loop_id := -1, voice_tag := "") -> void:
+func play(key: String, loop_id := -1, voice_tag := "", max_same_key := 0) -> void:
 	if (muted and loop_id < 0) or _loop_voices.has(loop_id):return
 	var stream: AudioStream = null
 	if variants.has(key) and not variants[key].is_empty():stream = variants[key][variant_index(key,randi())]
 	elif sound_streams.has(key):stream = sound_streams[key]
 	if stream == null:return
 	var now := Time.get_ticks_msec()
-	if loop_id < 0:
+	if max_same_key > 0:
+		var playing := 0
+		for candidate: AudioStreamPlayer in voice_pool:
+			if candidate.playing and candidate.get_meta("sound_key","") == key:playing += 1
+		if playing >= max_same_key:return
+	elif loop_id < 0:
 		if now-int(_last.get(key,-1000))<SAME_KEY_THROTTLE_MS:return
 		_last[key] = now
 	var voice: AudioStreamPlayer = null
@@ -160,6 +165,7 @@ func play(key: String, loop_id := -1, voice_tag := "") -> void:
 		(stream as AudioStreamOggVorbis).loop = true
 		_loop_voices[loop_id] = voice
 	voice.set_meta("voice_tag",voice_tag)
+	voice.set_meta("sound_key",key)
 	voice.stream = stream
 	# Conservative peak budget, even before source PCM normalization:
 	# 8*10^(-21/20)+10^(-28/20)=0.753 < 0.86 (assuming peak <= 1).

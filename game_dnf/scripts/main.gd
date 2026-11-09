@@ -1589,6 +1589,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		return
 	var stage := action_def()
 	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
+	if name == "grabblastblood" and index == 1:play_sound("BLOODR_GET")
 	if name == "triple":play_sound("R_TSLASH")
 	var swing := int(stage.get("swing",m.get("swing",-1)))
 	if swing >= 0:
@@ -1874,6 +1875,9 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, clock: float) -> bool:
 				# 1124860 schedules the next tick from this update's clock, without catch-up.
 				phase["grab_strikes_left"] -= 1
 				phase["grab_next_strike_ms"] = clock+float(move["grab_strike_interval_ms"])
+			# CB69E3 asks on each eligible update. 118DB62 caps live copies at three.
+			if player["action"] == "grabblastblood":
+				bus.emit("combat.cue",{"kind":"sound","key":"BLOOD_SUCK","max_same_key":3})
 		# CB6AFC samples through the update that advances to spray-ready.
 		if target.has("numeric") and target["numeric"].effects.active.has("bleed"):
 			phase["grab_bleed_seen"] = true
@@ -1907,6 +1911,7 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, clock: float) -> bool:
 		var saw_bleed := bool(phase.get("grab_bleed_seen",false))
 		if numeric_player.apply_bloodlust_strength(rank,saw_bleed):
 			bus.emit("combat.status",{"target":PLAYER_ID,"id":"bloodlust_strength","change":"added"})
+	if player["action"] == "grabblastblood":play_sound("BLOODR_FIRE")
 	phase["grab_substate"] = 2
 	release_grab_blast_victim(target)
 	return false

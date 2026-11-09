@@ -1919,11 +1919,12 @@ func check_grab_blast_startup() -> void:
 			"Bloodlust enters the authored Grab pose at frame three for "+outcome)
 		step(159)
 		check(game.player["stage"]==0 and game.objects.is_empty(),"Bloodlust cannot capture before frame seven")
+		check(cues("BLOODR_GET").is_empty(),"Bloodlust has no capture sound before contact")
 		step(1)
 		if previous_body_mode == null:frame_items.erase("13")
 		else:frame_items["13"] = previous_body_mode
 		if outcome in denied:
-			check(game.player["stage"]==0 and not game.view.object_views.has("player:grab_hold"),
+			check(game.player["stage"]==0 and not game.view.object_views.has("player:grab_hold") and cues("BLOODR_GET").is_empty(),
 				"Bloodlust never enters the spray phase or attaches the hand animation for "+outcome)
 			step(360)
 			check(game.player["action"]=="" and game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty(),
@@ -1931,6 +1932,7 @@ func check_grab_blast_startup() -> void:
 			continue
 		check(game.player.get("grab_blast_target",-1)==target["id"] and game.view.player_actor.sample()["frame"]==16,
 			"Bloodlust captures one target and holds the terminal pose at frame seven contact")
+		check(cues("BLOODR_GET").size()==1 and cues("BLOOD_SUCK").is_empty(),"capture plays the original grab sound once")
 		var hand = game.view.object_views["player:grab_hold"]
 		check(hand.loop and hand.facing==facing and hand.clock_ms==0.0 and not hand.frame.has("sprite")
 			and hand.position==game.view._canvas(POINT+Vector2(43*facing,0),90.0)
@@ -1954,12 +1956,13 @@ func check_grab_blast_startup() -> void:
 			check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose")
 				and target["state"]=="grab_blast_down" and game.objects.is_empty()
 				and not game.view.object_views.has("player:grab_hold")
+				and cues("BLOOD_SUCK").is_empty() and cues("BLOODR_FIRE").is_empty()
 				and target["facing"]==-facing and float(target["native_jump_velocity"].x)*facing>=633.0
 				and float(target["native_jump_velocity"].x)*facing<=950.0 and game.active_effect("bloodlust_strength").is_empty(),
 				"interruption releases the held target into the native knockdown in either direction")
 			continue
 		step(99)
-		check(target["hp"]==50000.0,"Bloodlust has no direct damage through 99 ms after capture")
+		check(target["hp"]==50000.0 and cues("BLOOD_SUCK").is_empty(),"Bloodlust has no direct damage or drain sound through 99 ms after capture")
 		step(1)
 		check(hand.clock_ms==100.0 and hand.frame.has("sprite") and hand.frame["items"]["11"]["type"]==2,
 			"the held hand's additive ANI starts drawing at its original 100 ms boundary")
@@ -1972,6 +1975,7 @@ func check_grab_blast_startup() -> void:
 		step(649)
 		check(game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty()
 			and game.numeric_player.values["strength"]==strength,"Bloodlust waits through 749 ms before spray and strength")
+		check(cues("BLOOD_SUCK").size()==1 and cues("BLOODR_FIRE").is_empty(),"ordinary Bloodlust asks for the drain sound once at the strike")
 		check(hand.clock_ms==749.0 and not hand.frame.has("sprite"),"the 650 ms hand ANI loops back through its blank frame")
 		if empowered:move_target(target,POINT+Vector2(320,0))
 		var bystander: Dictionary = game.spawn_enemy(POINT+Vector2(100,0))
@@ -1979,6 +1983,7 @@ func check_grab_blast_startup() -> void:
 		var before_spray: float = target["hp"]
 		step(1)
 		check(hand.clock_ms==750.0 and hand.frame.has("sprite"),"the hand ANI remains attached through the spray state")
+		check(cues("BLOODR_FIRE").size()==1,"spray plays its original release sound once")
 		check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose") and game.objects.size()==1
 			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
 			"Bloodlust creates one spray at the original hand offset after 750 ms")
@@ -2068,6 +2073,8 @@ func check_grab_blast_thirst() -> void:
 		check(grab_direct_hits().size()==1 and target["state"]=="hold", "Thirst automatically strikes at 100 ms after key release")
 		step(599)
 		check(grab_direct_hits().size()==1 and game.objects.is_empty(),"Thirst waits the configured 600 ms before repeating")
+		check(cues("BLOOD_SUCK").size()==2 and cues("BLOOD_SUCK")[1].get("max_same_key")==3,
+			"the original Thirst hold requests a drain voice between strikes with the three-voice cap")
 		if scenario == "expires":
 			game.active_effect("thirst")["remaining_ms"] = 1.0
 			game.step_numeric_actor(game.player,game.numeric_player,1.0)
@@ -2119,6 +2126,17 @@ func check_grab_blast_thirst() -> void:
 			check(applications.size()==(2 if large and victim==target else 1)
 				and applications.back()=={"remaining_ms":3000.0,"amount":22 if large else 21,"status_level":expected["status_level"]},
 				"the source spray applies the same bleed to the held victim and bystander without duplicating the held hit")
+	var audio = game.view.audio
+	audio.muted = false
+	for key: String in ["BLOODR_GET","BLOOD_SUCK","BLOODR_FIRE"]:
+		var event: Dictionary = cues(key).front()
+		var expected_voices := 3 if key=="BLOOD_SUCK" else 1
+		for attempt in expected_voices+2:audio.on_cue(event)
+		var stream = audio.variants.get(key,[null])[0]
+		var playing: Array = audio.voice_pool.filter(func(voice):return voice.stream==stream and voice.playing)
+		check(stream is AudioStreamOggVorbis and playing.size()==expected_voices,key+" reaches the audio player with the expected live voice limit")
+	for voice: AudioStreamPlayer in audio.voice_pool:voice.stop()
+	audio.muted = true
 
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))

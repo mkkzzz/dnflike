@@ -353,6 +353,11 @@ THIRST_AUDIO = {
     'SACRI': 'sounds/char/swordman/effect/sacri.ogg',
     'SACRI_LOOP': 'sounds/char/swordman/effect/sacri_loop.ogg',
 }
+GRAB_BLAST_AUDIO = {
+    'BLOODR_GET': 'sounds/char/swordman/effect/bloodr_get.ogg',
+    'BLOOD_SUCK': 'sounds/effect/blood_suck.ogg',
+    'BLOODR_FIRE': 'sounds/char/swordman/effect/bloodr_fire.ogg',
+}
 DRAW_AUDIO = {
     'SM_BAL_READY': 'sounds/char/swordman/sm_bal1.ogg',
     'SM_BAL_SHOT': 'sounds/char/swordman/sm_bal2.ogg',
@@ -470,6 +475,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
     **{key: [path] for key, path in THIRST_AUDIO.items()},
+    **{key: [path] for key, path in GRAB_BLAST_AUDIO.items()},
     **{key: [path] for key, path in DRAW_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
