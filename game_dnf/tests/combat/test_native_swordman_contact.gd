@@ -1884,13 +1884,14 @@ func check_grab_blast_startup() -> void:
 	spec["skill_slots"] = ["grabblastblood"]
 	var denied := ["whiff","invulnerable","freeze","stone","source_disabled","no_down","body_immune"]
 	for outcome: String in denied+["hit","bleed_frenzy","interrupted","body_armor"]:
-		start_room("original_27601","katana",1,spec,"berserker")
+		var facing := -1 if outcome == "body_armor" else 1
+		start_room("original_27601","katana",facing,spec,"berserker")
 		var empowered := outcome == "bleed_frenzy"
 		if empowered:game.apply_skill_effect("buff","frenzy")
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
 		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
-		var target: Dictionary = api.spawn_dummy(POINT+Vector2(200 if outcome == "whiff" else 50,0))
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2((200 if outcome == "whiff" else 50)*facing,0))
 		target["hp"] = 50000.0
 		target["numeric"].values["hp_max"] = 50000.0
 		if empowered:target["numeric"].effects.add_source_bleed(0,3000,38)
@@ -1927,14 +1928,24 @@ func check_grab_blast_startup() -> void:
 			continue
 		check(game.player.get("grab_blast_target",-1)==target["id"] and game.view.player_actor.sample()["frame"]==16,
 			"Bloodlust captures one target and holds the terminal pose at frame seven contact")
+		var held_actor = game.view.enemy_actors[target["id"]]
+		check(target["state"]=="hold" and target["pos"]==POINT+Vector2(43*facing,-1)
+			and target["z"]==110.0 and target["facing"]==-facing and held_actor.pose=="damage2" and held_actor.sample()["frame"]==0,
+			"Bloodlust places the victim at the mirrored native anchor in its second damage motion")
 		if outcome == "body_armor":continue
 		var clock: float = target["clock"]
+		game.player["pos"] = POINT+Vector2(5,4)
 		game.update_enemy(target,20.0)
-		check(target["clock"]==clock,"captured monster does not advance its action")
+		check(target["clock"]==clock and target["pos"]==POINT+Vector2(48,3) and game.enemy_ani(target)==["damage2",20.0],
+			"captured monster follows the caster and advances only its held animation")
+		game.player["pos"] = POINT
+		game.update_enemy(target,0.0)
 		if outcome == "interrupted":
 			game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)
 			step(750)
-			check(not game.player.has("grab_blast_target") and game.objects.is_empty(),"interruption releases the target without spawning a spray")
+			check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose")
+				and target["state"]=="air" and game.objects.is_empty(),
+				"interruption releases the held pose and lets the target fall without a spray")
 			continue
 		step(99)
 		check(target["hp"]==50000.0,"Bloodlust has no direct damage through 99 ms after capture")
@@ -1950,7 +1961,7 @@ func check_grab_blast_startup() -> void:
 		var distant: Dictionary = game.spawn_enemy(POINT+Vector2(330,0))
 		var before_spray: float = target["hp"]
 		step(1)
-		check(not game.player.has("grab_blast_target") and game.objects.size()==1
+		check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose") and game.objects.size()==1
 			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
 			"Bloodlust creates one spray at the original hand offset after 750 ms")
 		var spray: Dictionary = game.objects[0]["hit"]

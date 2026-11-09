@@ -751,7 +751,7 @@ func leave_action() -> void:
 	player.erase("draw_cast")
 	player.erase("draw_charge")
 	player.erase("draw_targets")
-	player.erase("grab_blast_target")
+	release_grab_blast_victim(grab_blast_victim())
 	end_action_fx()
 
 func end_action() -> void:
@@ -1783,11 +1783,42 @@ func try_grab_blast(stage: Dictionary, clock: float) -> bool:
 		if int(body_frame.get("items",{}).get("13",0)) not in [0,1]:continue
 		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
 		player["grab_blast_target"] = int(enemy["id"])
+		enemy["grab_blast_pose"] = ["damage2",0.0] if enemy["def"]["ani_paths"].has("damage2") else enemy_ani(enemy)
+		enemy["clock"] = 0.0
+		enemy.erase("native_jump_velocity")
+		enemy.erase("native_jump_gravity")
+		anchor_grab_blast_victim(enemy)
 		end_action_fx()
 		player["fx_tag"] = "act:%d" % (action_seq+1)
 		start_stage(1)
 		return true
 	return false
+
+func grab_blast_victim() -> Dictionary:
+	var id := int(player.get("grab_blast_target",-1))
+	if id < 0:return {}
+	for enemy: Dictionary in monsters:
+		if int(enemy["id"]) == id:return enemy
+	return {}
+
+func anchor_grab_blast_victim(enemy: Dictionary) -> void:
+	# 999510 positions the HOLD victim relative to the caster's integer XYZ.
+	var facing := int(player["facing"])
+	enemy["state"] = "hold"
+	enemy["pos"] = Vector2(player["pos"]).round()+Vector2(43*facing,-1)
+	enemy["z"] = roundf(float(player["z"]))+110.0
+	enemy["facing"] = -facing
+	enemy["vz"] = 0.0
+	enemy["push_ms"] = 0.0
+
+func release_grab_blast_victim(enemy: Dictionary) -> void:
+	player.erase("grab_blast_target")
+	if enemy.is_empty():return
+	enemy.erase("grab_blast_pose")
+	if enemy["state"] == "hold":
+		enemy["pos"] = constrain_pos(enemy["pos"])
+		enemy["state"] = "air" if float(enemy["z"]) > 0.0 else "idle"
+		enemy["bounced"] = false
 
 func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
 	var strike_due := from < 100.0 and to >= 100.0 and active_effect("thirst").is_empty()
@@ -1795,17 +1826,14 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	var at := float(sprays[0]["at"])
 	var spray_due := from < at and to >= at
 	if not strike_due and not spray_due:return
-	var target: Dictionary = {}
-	for enemy: Dictionary in monsters:
-		if int(enemy["id"]) == int(player.get("grab_blast_target",-1)) and float(enemy["hp"]) > 0.0:
-			target = enemy
-			break
+	var target := grab_blast_victim()
 	var facing := int(player["facing"])
 	var position := Vector2i(player["pos"])
 	var height := int(player["z"])
 	var point := Vector3(position.x+43*facing,position.y,height+90)
-	if strike_due and not target.is_empty():
+	if strike_due and not target.is_empty() and float(target["hp"]) > 0.0:
 		land_hit(player,target,player["native_phase"]["grab_strike"],point,facing,attack_power())
+		if float(target["hp"]) > 0.0:anchor_grab_blast_victim(target)
 	if not spray_due:return
 	var bleeding: bool = not target.is_empty() and float(target["hp"]) > 0.0 and target.has("numeric") \
 		and target["numeric"].effects.active.has("bleed")
@@ -1815,7 +1843,7 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	# CB6D42 and CB6D83 truncate each column separately before adding them.
 	if bleeding:amount += int(native_fixed_attack_product(float(move["grab_bleed_bonus"]),base))
 	amount = int(float(amount*grab_frenzy_percent())/100.0)
-	player.erase("grab_blast_target")
+	release_grab_blast_victim(target)
 	var spray_hit := grab_fixed_hit(spray,float(amount))
 	spray_hit["starts_at_zero"] = true
 	var object := spawn_object(spray_hit,"player",Vector2(position),float(height),facing,attack_power())
@@ -2339,8 +2367,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 				enemy["down_ms"] = 0.0
 			Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world,sleeping)
 			return
-	if held_by_grab and float(enemy["hp"]) > 0.0:return
 	enemy["flash_ms"] = maxf(0,float(enemy["flash_ms"])-ms)
+	if held_by_grab and float(enemy["hp"]) > 0.0:
+		anchor_grab_blast_victim(enemy)
+		enemy["grab_blast_pose"][1] += ms
+		return
 	if float(enemy["stuck_ms"]) > 0:
 		enemy["stuck_ms"] = maxf(0,float(enemy["stuck_ms"])-ms)
 		return
@@ -4106,6 +4137,7 @@ func player_ani() -> Array:
 func enemy_ani(enemy: Dictionary) -> Array:
 	var m: Dictionary = enemy["def"]
 	var rp: Dictionary = rules["reaction"]
+	if enemy.has("grab_blast_pose") and float(enemy["hp"]) > 0.0:return enemy["grab_blast_pose"]
 	match String(enemy["state"]):
 		"move":return ["move",float(enemy["clock"])]
 		"native_suicide":return [m["native_suicide"]["pose"],float(enemy["clock"])]
