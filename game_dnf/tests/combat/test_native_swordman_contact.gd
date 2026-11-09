@@ -2035,7 +2035,18 @@ func check_bloody_rave_fade() -> void:
 	var loop_keys := [inhale[2]["key"],inhale[3]["key"]]
 	session.submit_key(KEY_A,true)
 	step(0)
-	step(1389)
+	step(710)
+	check(not game.view.object_views.has("player:rave_typhoon:2"),"the independent Typhoon starts with zero opacity")
+	step(150)
+	var vortex: Array = game.view_snapshot()["objects"].filter(func(o):return o.get("effect","")==move["suction_typhoon"]["key"])
+	check(vortex.size()==7,"the native Typhoon emits the seven visible offsets for this clock")
+	if not vortex.is_empty():
+		var first: Dictionary = vortex[0]
+		check(first["pos"]==POINT-Vector2(95,0) and first["z"]==96.0 and first["clock"]==280.0
+			and is_equal_approx(float(first["fade"]),127.0/255.0)
+			and is_equal_approx(float(first["size_rate"]),0.55625),
+			"the first Typhoon layer mirrors its offset, uses the stepped source frame and interpolates size")
+	step(529)
 	var lines: Array = game.view.effects.filter(func(fx):return fx.cue_key in line_keys)
 	var loops: Array = game.view.effects.filter(func(fx):return fx.cue_key in loop_keys)
 	check(lines.size()==2 and loops.size()==2 and lines.all(func(fx):return int(fx.frame["frame"])==16),
@@ -2052,12 +2063,17 @@ func check_bloody_rave_fade() -> void:
 	check(lines.all(func(fx):return int(fx.frame["frame"])==0 and is_equal_approx(fx.fade,127.0/255.0))
 		and loops[0].clock_ms==loop_clock+150.0 and loops[0].fade==1.0,
 		"the release fades the first line frames while both vortex layers keep playing at full opacity")
+	vortex = game.view_snapshot()["objects"].filter(func(o):return o.get("effect","")==move["suction_typhoon"]["key"])
+	check(not vortex.is_empty() and vortex.all(func(o):return float(o["fade"])<=127.0/255.0),
+		"the independent Typhoon keeps moving during release while using the same fading alpha")
 	step(148)
 	check(cues(end_key).is_empty() and is_equal_approx(lines[1].fade,1.0/255.0),"at 298 ms the last alpha byte is still visible")
 	step(1)
 	var ending: Array = game.view.effects.filter(func(fx):return fx.cue_key==end_key)
 	check(ending.size()==1 and game.view.effects.all(func(fx):return not fx.cue_key in line_keys+loop_keys),
 		"the zero alpha byte removes only the inhale loops and lines and creates End.ani")
+	check(game.view.object_views.keys().all(func(id):return not String(id).begins_with("player:rave_typhoon:")),
+		"the independent Typhoon disappears with the end of the fade")
 	if ending.is_empty():return
 	check(ending[0].facing==-1 and ending[0].follow_offset==Vector2(-55,-96)
 		and ending[0].z_index==int(POINT.y)+1,"the end clip mirrors its native offset and uses its attached depth")

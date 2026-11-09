@@ -22,7 +22,7 @@ import sys
 from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from dnf_pvf import open_library
+from dnf_pvf import decode_tokens, open_library
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1131,8 +1131,26 @@ def draw_wave_layer(library) -> dict:
             "source": DRAW_WAVE_ALS, "sha256": script["sha256"]}
 
 
+def bloody_rave_typhoon_params(library) -> dict:
+    path = "data/skill/swordman.sd"
+    source, digest = library.raw(path)
+    keys = {"start offset": "start_x", "end offset": "end_x", "interval": "spacing",
+            "move speed": "speed", "start size": "start_scale", "end size": "end_scale"}
+    tokens = decode_tokens(source, library.strings)["tokens"]
+    params = {}
+    for current, following in zip(tokens, tokens[1:]):
+        tag = str(current.get("value", ""))
+        if tag.startswith("br typhoon ") and tag[11:] in keys:
+            params[keys[tag[11:]]] = following["value"]
+    if set(params) != set(keys.values()):
+        raise ValueError("Missing original Bloody Rave typhoon parameters")
+    if params["spacing"] <= 0 or params["end_x"] <= params["start_x"]:
+        raise ValueError("Invalid Bloody Rave typhoon distance parameters")
+    return {**params, "source": path, "sha256": digest}
+
+
 def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objects: dict,
-                      slots: list[str], bleed_attack_base: dict) -> dict:
+                      slots: list[str], bleed_attack_base: dict, typhoon_params: dict) -> dict:
     # CAA22B, CAA300 and CAA360 attach two original layers per body frame gate.
     inhale = records[CHR_ANI + "bloodyraveinhale.ani"]["decoded"]["timeline"]
     release = records[CHR_ANI + "bloodyraveslash.ani"]["decoded"]["timeline"]
@@ -1153,7 +1171,11 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
     slash = add_object(objects, OBJ_ROOT + "bloodyrave.obj")
     rear = add_fx(fx, effects, OBJ_ROOT + "animation/bloodyravelayer.ani")
     end_fx = add_fx(fx, effects, slots[7])
-    if not slash or not rear or not end_fx or not all(cue["key"] for cue in inhale_fx + sword_fx):
+    typhoon = add_fx(fx, effects, slots[6])
+    typhoon_frames = records[slots[6]]["decoded"]["timeline"]
+    if any(frame["end_ms"] - frame["start_ms"] != 40 for frame in typhoon_frames):
+        raise ValueError("Unexpected Bloody Rave typhoon frame timing")
+    if not slash or not rear or not end_fx or not typhoon or not all(cue["key"] for cue in inhale_fx + sword_fx):
         raise ValueError("Missing original Bloody Rave presentation bank")
     if records[slash]["decoded"].get("add_object_effect") != ["Animation/BloodyRaveLayer.ani", -1]:
         raise ValueError("Unexpected Bloody Rave slash attachment")
@@ -1165,8 +1187,10 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
             "suction_bleed_base": bleed_attack_base, "suction_end_fx": end_fx,
+            "suction_typhoon": {**typhoon_params, "key": typhoon, "frames": len(typhoon_frames), "frame_ms": 40,
+                                "at": inhale[8]["start_ms"], "fade_in_ms": 300},
             "fidelity_pending": ["special_target_permissions_and_weights", "contact_hit_presentation",
-                                 "suction_typhoon_attachment", "cancel_permission"],
+                                 "cancel_permission"],
             "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx, "voice": "SM_BLOOD_RAVE_STORM"},
                        {"ani": "bloodyraveslash", "fx": sword_fx,
                         "hits": [{"object": slash, "at": release[3]["start_ms"], "percent_col": 0,
@@ -1962,6 +1986,7 @@ def main() -> int:
         draw_slashes = draw_effect_slots(library)
         grab_hold = grab_hold_effect_slot(library)
         rave_slots = swordman_skill_effect_slots(library, b"SKILL_BLOODY_RAVE")["paths"]
+        rave_typhoon = bloody_rave_typhoon_params(library)
         if len(rave_slots) != 15:
             raise ValueError("Unexpected Bloody Rave animation slots")
         SAFE_EFFECTS.clear()
@@ -2055,7 +2080,7 @@ def main() -> int:
                         hit.update(speed=360.0, life_ms=1800, percent_col=0, effects=HIT_STATUS["firewave"])
                 move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
         elif key == "bloodyrave":
-            move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots, bleed_attack_base)
+            move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots, bleed_attack_base, rave_typhoon)
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)

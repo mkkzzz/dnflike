@@ -1421,6 +1421,8 @@ def main() -> int:
                         help='Add the original Bloody Rave cast, loop and release sounds')
     parser.add_argument('--extend-bloody-rave-end', action='store_true',
                         help='Add the original Bloody Rave End.ani bank')
+    parser.add_argument('--extend-bloody-rave-typhoon', action='store_true',
+                        help='Add the original Bloody Rave Typhoon.ani bank')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
@@ -1544,6 +1546,11 @@ def main() -> int:
     if args.extend_bloody_rave_end:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
         key = runtime['moves']['bloodyrave']['suction_end_fx']
+        print(json.dumps(extend_skill_banks(args.library, OUT, [('effects', key, runtime['assets']['effect_anims'][key])])))
+        return 0
+    if args.extend_bloody_rave_typhoon:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        key = runtime['moves']['bloodyrave']['suction_typhoon']['key']
         print(json.dumps(extend_skill_banks(args.library, OUT, [('effects', key, runtime['assets']['effect_anims'][key])])))
         return 0
     if args.extend_overdrive:

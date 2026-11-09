@@ -1524,6 +1524,7 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 		var first_frame := float(move["stages"][1]["timeline"][1]["start_ms"])
 		var rate := float(player["native_phase"]["cast_stage_rate"])
 		player["native_phase"]["fade_end_ms"] = int(first_frame/rate)
+		player["native_phase"]["typhoon_age_at_release"] = int(to)-int(float(move["suction_typhoon"]["at"])/float(phase["cast_stage_rate"]))
 		step_bloody_rave_end(move,0.0)
 
 func step_bloody_rave_end(move: Dictionary, clock: float) -> void:
@@ -1536,6 +1537,7 @@ func step_bloody_rave_end(move: Dictionary, clock: float) -> void:
 		var delta := ActorNumbers.native_scalar(-255.0*int(clock))
 		var alpha := int(ActorNumbers.native_scalar(255.0+ActorNumbers.native_scalar(delta/fade_end)))
 		if alpha > 0:
+			phase["typhoon_alpha"] = alpha
 			bus.emit("combat.cue",{"kind":"fx_fade_first_frame","tag":player["fx_tag"],
 				"keys":[inhale[4]["key"],inhale[5]["key"]],"opacity":alpha/255.0})
 			return
@@ -1545,6 +1547,44 @@ func step_bloody_rave_end(move: Dictionary, clock: float) -> void:
 	bus.emit("combat.cue",{"kind":"fx","key":move["suction_end_fx"],"tag":player["fx_tag"],"follow":PLAYER_ID,
 		"point":player["pos"],"height":player["z"],"facing":player["facing"],"offset_x":55,"offset_y":-96,
 		"depth_offset":1,"action_instance":action_seq,"action_clock_at":action_event_clock(clock)})
+
+func append_bloody_rave_typhoon(views: Array) -> void:
+	if player["action"] != "bloodyrave" or player["state"] != "action":return
+	var phase: Dictionary = player["native_phase"]
+	var config: Dictionary = move_def("bloodyrave")["suction_typhoon"]
+	var clock := int(player["clock"])
+	var age: int
+	var alpha: int
+	if int(player["stage"]) == 0:
+		# CA084F ramps the ordinary Typhoon in over 300 real milliseconds.
+		age = clock-int(float(config["at"])/float(phase["cast_stage_rate"]))
+		alpha = int(255.0*clampf(float(age)/float(config["fade_in_ms"]),0.0,1.0))
+	else:
+		if not phase.has("fade_end_ms"):return
+		age = clock+int(phase["typhoon_age_at_release"])
+		alpha = int(phase["typhoon_alpha"])
+	if alpha <= 0:return
+	# CA0A45..CA0BEF draws a spacing grid shifted inward by the ANI age.
+	var start: int = config["start_x"]
+	var end: int = config["end_x"]
+	var spacing: int = config["spacing"]
+	var first := start-int(age*float(config["speed"])/1000.0)
+	var index := ceili(float(start-first)/spacing)
+	var offset := first+index*spacing
+	var frame_ms: int = config["frame_ms"]
+	var base_frame := int(float(age)/frame_ms)
+	var facing := int(player["facing"])
+	while offset <= end:
+		var edge := mini(spacing,mini(offset-start,end-offset))
+		var opacity := int(float(alpha*edge)/spacing)
+		if opacity > 0:
+			var frame := (base_frame+index*2)%int(config["frames"])
+			var scale_rate := lerpf(float(config["start_scale"]),float(config["end_scale"]),float(offset-start)/(end-start))
+			views.append({"id":"player:rave_typhoon:%d" % index,"effect":config["key"],
+				"pos":Vector2(player["pos"])+Vector2((55+offset)*facing,0),"z":float(player["z"])+96.0,
+				"facing":facing,"clock":float(frame*frame_ms),"depth_offset":1,"fade":opacity/255.0,"size_rate":scale_rate})
+		offset += spacing
+		index += 1
 
 func step_thirst_cast(ms: float) -> void:
 	var phase: Dictionary = player["native_phase"]
@@ -4513,6 +4553,7 @@ func view_snapshot() -> Dictionary:
 		objs.append({"id":"player:grab_hold","effect":grab_phase["grab_hold_fx"],"pos":Vector2(player["pos"])+Vector2(43*facing,0),
 			"z":float(player["z"])+90.0,"facing":facing,"clock":float(player["clock"])*float(grab_phase["grab_hold_rate"]),
 			"loop":true,"depth_offset":1})
+	append_bloody_rave_typhoon(objs)
 	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
 	objs.append_array(native_zealot_summons.view_objects())
 	objs.append_array(frenzy_recovery.view_objects(self))

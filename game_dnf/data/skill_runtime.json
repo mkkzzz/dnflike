@@ -120,6 +120,7 @@
    "skillfx_sword4_7bc4b286": "character/swordman/effect/animation/bloodyrave/sword4.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
+   "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
    "skillfx_upperslash1_65c825d8": "character/swordman/effect/animation/upperslash1.ani",
    "skillfx_vaneslash_2607eaf7": "passiveobject/character/swordman/animation/vaneslash.ani"
@@ -1199,7 +1200,6 @@
    "fidelity_pending": [
     "special_target_permissions_and_weights",
     "contact_hit_presentation",
-    "suction_typhoon_attachment",
     "cancel_permission"
    ],
    "material_cost": {
@@ -1414,7 +1414,22 @@
     "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
     "source": "etc/etcparameter.etc"
    },
-   "suction_end_fx": "skillfx_end_3fcb6599"
+   "suction_end_fx": "skillfx_end_3fcb6599",
+   "suction_typhoon": {
+    "at": 710,
+    "end_scale": 1.2999999523162842,
+    "end_x": 250,
+    "fade_in_ms": 300,
+    "frame_ms": 40,
+    "frames": 12,
+    "key": "skillfx_typhoon_91cf2988",
+    "sha256": "1d0598357dba258d0ecdb14eea13a5ba431c7bdc98702021efacb2f147fa116c",
+    "source": "data/skill/swordman.sd",
+    "spacing": 30,
+    "speed": 200,
+    "start_scale": 0.44999998807907104,
+    "start_x": 10
+   }
   },
   "bremen": {
    "fidelity_pending": [
