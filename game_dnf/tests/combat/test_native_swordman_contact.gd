@@ -1983,6 +1983,66 @@ func check_bloody_rave_phases() -> void:
 	step(460)
 	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==3621.0,"eight or more normal targets use the original upper damage column")
 
+func check_bloody_rave_contact_bleed() -> void:
+	var seeds := {}
+	for seed_value in 100000:
+		game.rng.reseed(seed_value)
+		var roll: int = game.rng.range_int(0,9999)
+		if roll in [2279,2281] and not seeds.has(roll):seeds[roll] = seed_value
+		if seeds.size()==2:break
+	check(seeds.size()==2,"fixed seeds bracket the Bloody Rave status roll")
+	if seeds.size()!=2:return
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	for scenario: String in ["repeat","miss","resist","passive"]:
+		if scenario == "passive":profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":1})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["bloodyrave"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(145,0))
+		target["def"] = target["def"].duplicate()
+		target["def"]["grab_allowed"] = scenario != "repeat"
+		var level := 47 if scenario == "passive" else 45
+		target["numeric"].values["level"] = level
+		target["numeric"].values["bleeding_resistance"] = 100 if scenario == "resist" else 0
+		target["numeric"].values["abnormal_resistance"] = 0
+		press(KEY_A)
+		step(0)
+		game.rng.reseed(seeds[2281 if scenario == "miss" else 2279])
+		step(789)
+		check(not target["numeric"].effects.active.has("bleed"),"the pre-contact inhale frames never apply bleed")
+		step(1)
+		var entry: Dictionary = target["numeric"].effects.active.get("bleed",{})
+		check((not entry.is_empty()) == (scenario in ["repeat","passive"]) and target["hp"]==5000.0,
+			"Bloody Rave contact roll and resistance gate without direct damage: "+scenario)
+		if entry.is_empty():continue
+		var applications: Array = entry["source_bleed"]["applications"]
+		check(applications==[{"remaining_ms":5000.0,"amount":55,"status_level":level}],
+			"the inhale uses the original bleed duration, damage base and effective status level")
+		if scenario != "repeat":continue
+		check(game.player["native_phase"]["suction_targets"].is_empty(),"a contact can bleed a target that cannot be pulled")
+		game.rng.reseed(seeds[2279])
+		step(200)
+		step(49)
+		check(applications.size()==1,"an overlapping target cannot bleed again before the rearm boundary")
+		step(1)
+		check(applications.size()==2,"a new contact can independently stack bleed on the 250 ms rearm")
+		target["numeric"].values["hp_max"] = 5000.0
+		game.step_numeric_actor(target,target["numeric"],0.0)
+		check(target["hp"]==4890.0,"the two sourced bleed ticks deal 110 HP through the numeric actor")
+		step(250)
+		var release_count := applications.size()
+		game.rng.reseed(seeds[2279])
+		step(250)
+		check(game.player["stage"]==1 and applications.size()==release_count,
+			"the release animation no longer makes inhale contacts")
+
 func check_grab_blast_startup() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3049,6 +3109,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_draw_second_slash()
 	check_bloody_rave_phases()
+	check_bloody_rave_contact_bleed()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()
 	check_grab_blast_thirst()

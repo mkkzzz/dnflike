@@ -1131,7 +1131,8 @@ def draw_wave_layer(library) -> dict:
             "source": DRAW_WAVE_ALS, "sha256": script["sha256"]}
 
 
-def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objects: dict, slots: list[str]) -> dict:
+def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objects: dict,
+                      slots: list[str], bleed_attack_base: dict) -> dict:
     # CAA22B, CAA300 and CAA360 attach two original layers per body frame gate.
     inhale = records[CHR_ANI + "bloodyraveinhale.ani"]["decoded"]["timeline"]
     release = records[CHR_ANI + "bloodyraveslash.ani"]["decoded"]["timeline"]
@@ -1151,9 +1152,15 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
         raise ValueError("Missing original Bloody Rave presentation bank")
     if records[slash]["decoded"].get("add_object_effect") != ["Animation/BloodyRaveLayer.ani", -1]:
         raise ValueError("Unexpected Bloody Rave slash attachment")
+    contact_atk = CHR_ATK + "bloodyrave.atk"
+    contact = records[contact_atk]["decoded"]
+    if any(contact.get(field, 0) for field in ("damage", "absolute_damage", "weapon_damage_apply")) \
+            or contact["damage_reaction"][0]["value"] != "[none]":
+        raise ValueError("Unexpected Bloody Rave inhale attack")
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
-            "fidelity_pending": ["special_target_permissions_and_weights", "contact_status",
+            "suction_bleed_base": bleed_attack_base,
+            "fidelity_pending": ["special_target_permissions_and_weights", "contact_hit_presentation",
                                  "effect_fade_and_end", "native_audio", "cancel_permission"],
             "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx},
                        {"ani": "bloodyraveslash", "fx": sword_fx,
@@ -2043,7 +2050,7 @@ def main() -> int:
                         hit.update(speed=360.0, life_ms=1800, percent_col=0, effects=HIT_STATUS["firewave"])
                 move["fidelity_pending"] = ["object_controller", "damage_and_status", "effect_weapon_scale", "cancel_rules", "voice"]
         elif key == "bloodyrave":
-            move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots)
+            move = build_bloody_rave(skill, records, fx, effects, objects, rave_slots, bleed_attack_base)
         else:
             move = build_move(skill, records, atk_by_stem, effect_paths, fx, effects, objects,
                               bloodblast_script=bloodblast_script)

@@ -1424,15 +1424,27 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 			if not targets.has(id) or float(enemy["hp"]) <= 0.0:continue
 			step_bloody_rave_pull(enemy,targets[id],center,move["suction_speed"],elapsed)
 	if not inhale or to < float(phase["hold_start_ms"]):return
+	var now := int(to)
+	var contacted: Dictionary = phase["suction_contacted"]
+	if now >= int(phase["suction_poll_at"]):
+		# CB5807 polls every 50 ms and CB587F compares each target with static[5].
+		phase["suction_poll_at"] = now+50
+		for id: int in contacted.keys():
+			if now >= int(contacted[id])+int(move["suction_contact_ms"]):contacted.erase(id)
 	# The last inhale ANI frame supplies four distinct boxes for the whole hold.
 	var world := Kernel.HitJudge.world_boxes(stage["timeline"][9]["attack_boxes"],
 		Kernel.HitJudge.anchor(player["pos"],float(player["z"])),int(player["facing"]))
 	for enemy: Dictionary in monsters:
 		var id: int = enemy["id"]
-		if targets.has(id) or float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
-		if not bool(enemy["def"].get("grab_allowed",true)):continue
+		if contacted.has(id) or float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
 		if Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy)).is_empty():continue
-		targets[id] = {"fraction":Vector2.ZERO}
+		contacted[id] = now
+		# The ATK status is resolved separately from the pull permission.
+		if enemy.has("numeric") and not phase["suction_bleed"].is_empty():
+			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+				bus.emit("combat.status",{"target":id,"id":"bleed","change":"added"})
+		if not targets.has(id) and bool(enemy["def"].get("grab_allowed",true)):
+			targets[id] = {"fraction":Vector2.ZERO}
 
 func step_bloody_rave_pull(enemy: Dictionary, pull: Dictionary, center: Vector2, speed: Vector2, elapsed: int) -> void:
 	# 975560 steps X and Y separately, keeping the fraction and testing each pixel.
@@ -1655,7 +1667,16 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var hold_start := int(float(stage["timeline"][9]["start_ms"])/rate) if index == 0 else 0
 		var end := hold_start+int(m["hold_max_ms"]) if index == 0 else int(float(stage["duration"])/rate)
 		player["native_phase"] = {"cast_stage_rate":rate,"hold_start_ms":hold_start,"hold_hp_fraction":0.0,
-			"end_ms":end,"suction_targets":{}}
+			"end_ms":end,"suction_targets":{},"suction_contacted":{},"suction_poll_at":hold_start,"suction_bleed":{}}
+		if index == 0 and numeric_player != null:
+			var bleed: Dictionary = m["suction_bleed"].duplicate()
+			var passive_rank := int(skill_levels.get("bleedingmastery",0))
+			if passive_rank > 0:
+				# 2549B82 queries the effective rank of skill 90 and reads level column 0.
+				var row: Array = Numbers.Skills.sample(Numbers.record("bleedingmastery"),passive_rank)["level_row"]
+				bleed["status_level"] += int(row[0])
+			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],m["suction_bleed_base"])
+			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
