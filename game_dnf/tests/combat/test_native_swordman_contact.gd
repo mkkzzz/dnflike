@@ -29,6 +29,8 @@ func start_room(item: String, family: String, facing := 1, numbers := {}) -> voi
 		"public room entry accepts "+item)
 	game.player["pos"] = POINT
 	game.player["facing"] = facing
+	# Frame fixtures isolate action state from the room-entry grace period.
+	game.player["invuln_ms"] = 0.0
 	game.bus.clear_history()
 
 func press(code: int) -> void:
@@ -47,6 +49,48 @@ func move_target(target: Dictionary, point: Vector2, height := 0.0) -> void:
 
 func cues(key: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("key","")==key)
+
+func check_upper_start_armor() -> void:
+	var source := {"pos":POINT+Vector2(40,0)}
+	var atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
+	for clock: int in [0,149,150]:
+		start_room("original_27601","katana")
+		press(KEY_Z)
+		step(clock)
+		var before_hp: float = game.player["hp"]
+		var reaction: String = game.hurt_player(7,source,atk,-1)
+		check(game.player["hp"]==before_hp-7,"upper takes incoming damage at "+str(clock))
+		check((game.player["action"]=="upper" and reaction=="none") if clock<150
+			else (game.player["action"]=="" and reaction=="stagger"),
+			"only the first two source frames resist the reaction at "+str(clock))
+	start_room("original_27000","shortsword")
+	press(KEY_Z)
+	step(100)
+	var piercing := atk.duplicate()
+	piercing["ignore_super_armor"] = 1
+	check(game.hurt_player(7,source,piercing,-1)=="stagger" and game.player["action"]=="",
+		"native ATK bypass can interrupt Upper during the opening frames")
+	start_room("original_27000","shortsword")
+	press(KEY_Z)
+	step(100)
+	game.hurt_player(ceilf(game.player["hp"]),source,atk,-1)
+	check(game.player["hp"]==0.0 and game.player["state"]=="dead","opening armor does not prevent lethal damage")
+
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"guard","level":1})
+	profile.command("numbers.skill_grant",{"id":"autoguard","level":20})
+	for elapsed: int in [99,100]:
+		start_room("original_27000","shortsword",1,profile.stats())
+		check(game.apply_effect({"kind":"effect","id":"autoguard","rank":20}),"source auto guard fixture is active")
+		game.numeric_player.values["attack_speed"] = 1.5
+		press(KEY_Z)
+		step(elapsed)
+		var reaction: String = game.hurt_player(7,source,atk,-1)
+		check((reaction=="none" and game.player["action"]=="upper") if elapsed==99
+			else (reaction=="guard" and game.player["state"]=="guard"),
+			"auto guard gate follows the accelerated body frame at "+str(elapsed)+" ms")
 
 func check_followup() -> void:
 	start_room("original_27000","shortsword")
@@ -225,6 +269,7 @@ func run() -> void:
 	var mastery: Array = game.table.moves["attack1"]["hits"][0]["segments"][0]["frames"]
 	check(ordinary[0]["boxes"].size()==1 and mastery[0]["boxes"][0]==[0.0,-10.0,30.0,160.0,20.0,84.0]
 		and mastery[0]["start"]==150.0,"mastery adds the source frame 3 box on the body clock at rank 3")
+	check_upper_start_armor()
 	check_followup()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
