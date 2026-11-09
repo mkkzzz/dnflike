@@ -719,6 +719,7 @@ func leave_action() -> void:
 	end_hardattack_charge()
 	player.erase("hardattack_release")
 	player.erase("action_slide")
+	player.erase("frenzy_cast")
 	end_action_fx()
 
 func end_action() -> void:
@@ -972,6 +973,14 @@ func step_action(ms: float, move: Vector2) -> void:
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
 	player["clock"] = clock
+	if player.has("frenzy_cast"):
+		var cast: Dictionary = player["frenzy_cast"]
+		cast["elapsed_ms"] = float(cast["elapsed_ms"])+ms
+		if int(cast["elapsed_ms"]) < int(cast["duration_ms"]):return
+		# 85EB57 advances state 13 to its release phase. CD75E9 attaches Frenzy there.
+		player.erase("frenzy_cast")
+		end_action_fx()
+		apply_skill_effect(name,String(m["effect_id"]))
 	if not native_phase.is_empty() and not native_phase.has("charge_rate"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -1160,7 +1169,10 @@ func start_action(name: String, cancel := false) -> bool:
 		var row: Array = sample.get("level_row",[])
 		var column := int(m["hp_cost_row"])
 		if column >= 0 and column < row.size():hp_cost = float(row[column])
-	if hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
+	if name == "buff":
+		# CC0F72 compares integer HP against the rank cost plus one.
+		if int(player["hp"]) <= int(hp_cost)+1:return reject_action(name,"hp")
+	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
 	var mp_cost := float(m["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
 	var pay_mp_with_hp := name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0
 	if pay_mp_with_hp:
@@ -1205,8 +1217,19 @@ func start_action(name: String, cancel := false) -> bool:
 		player["hits"] = {}
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
-		if String(m["cast_fx"]) != "":spawn_effect(String(m["cast_fx"]),player["pos"],int(player["facing"]),float(player["z"]))
-		apply_skill_effect(name,String(m["effect_id"]))
+		var cast_fx := String(m["cast_fx"])
+		if name == "buff":
+			# 858FA6 scales the cast duration with integer thousandths.
+			var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
+			var speed := maxi(1,int(cast_rate*1000.0))
+			player["frenzy_cast"] = {"elapsed_ms":0.0,"duration_ms":int(float(m["cast_ms"])*1000.0/speed)}
+			player["fx_tag"] = "act:%d" % action_seq
+			if cast_fx != "":
+				bus.emit("combat.cue",{"kind":"fx","key":cast_fx,"point":player["pos"],"height":player["z"],
+					"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID})
+		else:
+			if cast_fx != "":spawn_effect(cast_fx,player["pos"],int(player["facing"]),float(player["z"]))
+			apply_skill_effect(name,String(m["effect_id"]))
 		return true
 	player["fx_tag"] = "act:%d" % (action_seq+1)
 	if m.has("hardattack_charge"):

@@ -918,6 +918,7 @@ func check_frenzy_drain() -> void:
 	game.player["hp"] = 1000.0
 	press(KEY_A)
 	step(0)
+	step(float(game.player["frenzy_cast"]["duration_ms"]))
 	check(game.primary_normal_attack()=="frenzy1" and game.view_snapshot()["player"]["buff"],
 		"the Frenzy shortcut activates the dual-wield form and its presentation")
 	game.player["hp"] = 100.0
@@ -942,6 +943,7 @@ func check_frenzy_drain() -> void:
 	game.player["hp"] = 1000.0
 	press(KEY_A)
 	step(0)
+	step(float(game.player["frenzy_cast"]["duration_ms"]))
 	game.player["hp"] = 100.0
 	game.step_numeric_actor(game.player,game.numeric_player,1000)
 	check(game.player["hp"]==92.0,"rank-two Frenzy samples its own HP drain column")
@@ -970,6 +972,7 @@ func check_frenzy_attributes() -> void:
 		check(game.last_damage["missed"],"the chosen roll misses before Frenzy")
 		press(KEY_A)
 		step(0)
+		step(float(game.player["frenzy_cast"]["duration_ms"]))
 		var after: Dictionary = game.numeric_player.values
 		check(is_equal_approx(float(after["hit"])-float(before["hit"]),float(sample[1]))
 			and float(after["hit_recovery"])-float(before["hit_recovery"])==float(sample[2]),
@@ -1007,6 +1010,53 @@ func check_frenzy_attributes() -> void:
 			"both sourced bonuses are removed with Frenzy")
 		check(game.frenzy_cooldown_reduction_ms("rage_slash")==0,
 			"Frenzy stops adjusting new cooldowns once the form expires")
+
+func check_frenzy_cast() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["buff"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.numeric_player.values["cast_speed"] = 1.25
+	game.player["hp"] = 221.9
+	var mp: float = game.player["mp"]
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["hp"]==221.9 and game.player["mp"]==mp
+		and game.player["cooldowns"].get("buff",0)==0,
+		"the Frenzy shortcut rejects integer HP equal to the cast cost plus one without spending")
+	game.player["hp"] = 222.0
+	press(KEY_A)
+	step(0)
+	check(game.player["hp"]==2.0 and game.player["action"]=="buff" and game.primary_normal_attack()=="attack1"
+		and cues("frenzy_cast").size()==1,"the next integer HP admits the cast and starts its attached effect")
+	step(399)
+	check(game.active_effect("frenzy").is_empty(),"1.25 cast speed keeps Frenzy inactive through 399 ms")
+	step(1)
+	check(game.primary_normal_attack()=="frenzy1" and game.view_snapshot()["player"]["buff"],
+		"the original cast gate enables Frenzy at 400 ms")
+
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(499)
+	check(game.active_effect("frenzy").is_empty(),"base cast speed has not activated at 499 ms")
+	step(1)
+	check(not game.active_effect("frenzy").is_empty(),"base cast speed activates at exactly 500 ms")
+
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(499)
+	game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+	step(500)
+	check(game.active_effect("frenzy").is_empty() and not game.player.has("frenzy_cast")
+		and game.bus.events_of("combat.cue").any(func(event):return event.get("kind")=="fx_clear"),
+		"an interrupted cast clears its effect and never enables the form")
 
 func run() -> void:
 	game = session.mount(root)
@@ -1117,6 +1167,7 @@ func run() -> void:
 	check_overdrive_critical()
 	check_frenzy_drain()
 	check_frenzy_attributes()
+	check_frenzy_cast()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()
