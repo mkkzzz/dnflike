@@ -4977,8 +4977,8 @@
        "derived": "skillfx_upperslash1_65c825d8",
        "percent_col": 0,
        "window": [
-        0,
-        240
+        180,
+        360
        ]
       }
      ],

@@ -500,6 +500,8 @@ func _physics_process(delta: float) -> void:
 func move_def(name: String) -> Dictionary:
 	if name == "triple" and player.get("action","") == "triple" and player.has("triple_cast"):
 		return player["triple_cast"]
+	if name == "weaponcombo" and player.get("action","") == name and player.has("weapon_combo_cast"):
+		return player["weapon_combo_cast"]
 	return table.moves.get(name,{})
 
 func active_effect(id: String) -> Dictionary:
@@ -621,6 +623,7 @@ func pulse_passive_auras() -> void:
 ## Current stage of the running action (three-stage skills keep one move with stages).
 func action_def() -> Dictionary:
 	if player.has("hardattack_release"):return player["hardattack_release"]
+	if player.has("weapon_combo_release"):return player["weapon_combo_release"]
 	var m := move_def(String(player["action"]))
 	if m.has("stages"):return m["stages"][int(player["stage"])]
 	return m
@@ -722,6 +725,9 @@ func leave_action() -> void:
 		player.erase("triple_cast")
 	end_hardattack_charge()
 	player.erase("hardattack_release")
+	player.erase("weapon_combo_cast")
+	player.erase("weapon_combo_charge")
+	player.erase("weapon_combo_release")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
@@ -951,6 +957,9 @@ func step_player(ms: float, move: Vector2) -> void:
 				end_action()
 
 func step_action(ms: float, move: Vector2) -> void:
+	if player.has("weapon_combo_charge"):
+		step_weapon_combo_charge(ms)
+		return
 	if player.has("hardattack_charge"):
 		step_hardattack_charge(ms)
 		return
@@ -1225,6 +1234,7 @@ func start_action(name: String, cancel := false) -> bool:
 	player["action"] = "" if guard else name
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
+	if name == "weaponcombo":player["weapon_combo_cast"] = m
 	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
@@ -1378,7 +1388,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
-	if m.has("stages") and not (name == "upper" and index == 1):
+	if m.has("stages") and not (name == "upper" and index == 1) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
@@ -1392,9 +1402,46 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	if swing >= 0:
 		var wav: Array = table.weapon_wav(weapon)
 		if swing < wav.size() and String(wav[swing]) != "":play_sound(String(wav[swing]))
+	if index == 1 and m.has("weapon_combo_charge") and not player.has("weapon_combo_release"):
+		begin_weapon_combo_charge(m["weapon_combo_charge"])
+		return
 	var event_clock := action_event_clock(opening_clock)
 	action_cues(stage,-1.0,event_clock)
 	apply_player_hits(stage,-1.0,event_clock)
+
+func begin_weapon_combo_charge(config: Dictionary) -> void:
+	var charge := config.duplicate()
+	charge["elapsed_ms"] = 0.0
+	player["weapon_combo_charge"] = charge
+	var key := "weapon_combo_heavy_charge"
+	var frames: Array = combat_assets["effects"][key]["frames"]
+	var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+	# CD492A divides the hold duration by the number of FX frames before attaching.
+	var delay := int(float(config["duration_ms"])/frames.size())
+	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":float(player["z"]),
+		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,"fresh":true,
+		"offset_x":-52.0,"offset_y":-70.0,"depth_offset":1,"uniform_frame_ms":delay/maxf(rate,0.001)})
+
+func step_weapon_combo_charge(ms: float) -> void:
+	var charge: Dictionary = player["weapon_combo_charge"]
+	var duration := int(charge["duration_ms"])
+	var elapsed := float(charge["elapsed_ms"])+ms
+	charge["elapsed_ms"] = elapsed
+	if int(elapsed) < duration and skill_input_held("weaponcombo"):return
+	# CBEFF7 re-enters state 8, same stage, with elapsed time and no new payment.
+	var release := action_def().duplicate(true)
+	var spent := mini(int(elapsed),duration)
+	for hit: Dictionary in release["hits"]:
+		var base := float(hit["percent"])
+		var scaled := Kernel.NativeMotion.f32(base*float(charge["peak_percent"]))
+		var maximum := int(Kernel.NativeMotion.f32(scaled*Kernel.NativeMotion.f32(0.01)))
+		hit["percent"] = int(Kernel.NativeMotion.ramp(base,maximum,spent,duration))
+	player.erase("weapon_combo_charge")
+	player["weapon_combo_release"] = release
+	player["queued_skill"] = ""
+	end_action_fx()
+	player["fx_tag"] = "act:%d" % (action_seq+1)
+	start_stage(1)
 
 func end_hardattack_charge() -> void:
 	if player.erase("hardattack_charge"):
@@ -2274,12 +2321,15 @@ func spawn_attack_contact(attacker: Dictionary, target: Dictionary, contact: Dic
 func target_invulnerable(target: Dictionary) -> bool:
 	return float(target.get("invuln_ms",0.0)) > 0.0 or (int(target["id"]) == PLAYER_ID and native_jar_traps.player_protected)
 
-func upper_body_armor() -> bool:
-	if player["state"] != "action" or player["action"] != "upper" or int(player["stage"]) != 0:return false
+func attack_body_armor() -> bool:
+	if player["state"] != "action":return false
+	var stage := action_def()
+	var upper := String(player["action"]) == "upper" and int(player["stage"]) == 0
+	if not upper and stage.get("ani","") != "weaponcomboheavy2":return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
-	var frame := Kernel.Timeline.frame_at(action_def()["timeline"],action_ani_clock(float(player["clock"])))
-	return not frame.is_empty() and (int(frame["frame"]) <= 1 or int(frame["items"].get("13",0)) == 1)
+	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))
+	return not frame.is_empty() and ((upper and int(frame["frame"]) <= 1) or int(frame["items"].get("13",0)) == 1)
 
 func play_guard_entry() -> void:
 	play_sound("SWD_GUARD")
@@ -2289,14 +2339,14 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if god_mode or target_invulnerable(player) or finished:return "blocked"
 	var state := String(player["state"])
 	var was_action := state == "action"
-	var upper_armor := upper_body_armor()
+	var body_armor := attack_body_armor()
 	var front_hit := (Vector2(source["pos"]).x-Vector2(player["pos"]).x)*int(player["facing"])>=0
 	var manual_guard := state == "guard" and front_hit
 	var guard_rank := int(skill_levels.get("guard",0))
 	var auto_rank := int(skill_levels.get("autoguard",0))
 	var auto_guard := false
 	var grounded := float(player["z"]) == 0.0 and float(player["vz"]) <= 0.0
-	if not manual_guard and not upper_armor and amount > 0 and guard_rank > 0 and auto_rank > 0 and grounded \
+	if not manual_guard and not body_armor and amount > 0 and guard_rank > 0 and auto_rank > 0 and grounded \
 			and state not in ["air","down","dead","hold"] and not active_effect("autoguard").is_empty() \
 			and not numeric_player.effects.controlled():
 		# CA9346..CA9484 resolves both current ranks and compares the original percentage on a 10000-point roll.
@@ -2348,7 +2398,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	player["invuln_ms"] = float(rules["player"]["hit_invuln_ms"])
 	var reaction := "guard" if guarded else "none"
 	# 8184DF tests the incoming ATK's ignore-super-armor field before reaction dispatch.
-	var armor_blocks_reaction := upper_armor and int(atk.get("ignore_super_armor",0)) == 0
+	var armor_blocks_reaction := body_armor and int(atk.get("ignore_super_armor",0)) == 0
 	var buff_armor: bool = numeric_player.effects.flag("super_armor") if numeric_player != null else float(player["buff_ms"])>0
 	if armor_blocks_reaction and taken > 0.0 and float(player["hp"]) > 0.0 and float(player["upper_armor_fx_ms"]) <= 0.0:
 		# 81F427 starts a 600 ms gate. The attached light ANI itself ends after 160 ms.
@@ -2376,7 +2426,7 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if was_action and int(skill_levels.get("stuckuponcounter",0)) > 0:
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
-		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release"):leave_action()
+		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") or player.has("weapon_combo_cast"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false

@@ -1550,10 +1550,13 @@ def build_variant_moves(
                 generic_key = add_fx(fx, effects, GENERIC_HIT_EFFECT)
                 if generic_key != "":
                     hit_key = "fallback_hits" if base_id == "weaponcombo" else "hits"
+                    # The greatsword B/C layers first strike on frame 3 and
+                    # cease before frame 6. The fallback retains substitute reach.
+                    window = [180, 360] if stages[-1]["ani"] == "weaponcomboheavy2" else [0, 240]
                     stages[-1].setdefault(hit_key, []).append(
                         {
                             "derived": generic_key,
-                            "window": [0, 240],
+                            "window": window,
                             "percent_col": 0,
                             "atk": stages[-1].get("atk", ""),
                         }

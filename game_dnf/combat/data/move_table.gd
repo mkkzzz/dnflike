@@ -18,6 +18,7 @@ const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3
 	"weaponcomboblade1":"weaponcomboblade1","weaponcomboblade2":"weaponcomboblade2","weaponcomboblade3":"weaponcomboblade3","weaponcomboblade4":"weaponcomboblade4"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
+const HEAVY_MASTERY_SKL := "skill/swordman/heavyswordmastery.skl"
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
 const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
 	"upper":"upperslash","upper_followup":"upperslashafter",
@@ -366,6 +367,12 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		followup["swing"] = -1
 		followup["waves"] = _hardattack_waves(charge["level_row"],int(values[5]))
 		move["hardattack_charge"] = {"duration_ms":int(values[1]),"bonus_percent":int(charge["level_row"][0]),"followup":followup}
+	if name == "weaponcombo" and job == "weaponmaster" and weapon == "greatsword":
+		# CBEC7D reads column 5 as the rank gate. CD4A7A and CBEF33 read columns 6 and 8.
+		var mastery := _skill_row(HEAVY_MASTERY_SKL)
+		var values: Array = mastery.get("static",[])
+		if values.size() > 8 and int(mastery.get("rank",0)) >= int(values[5]):
+			move["weapon_combo_charge"] = {"peak_percent":int(values[6]),"duration_ms":int(values[8])}
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
 		move["native_recovery_ms"] = float(skill["static"][0])

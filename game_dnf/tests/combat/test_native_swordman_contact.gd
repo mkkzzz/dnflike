@@ -1001,6 +1001,78 @@ func check_weapon_combo() -> void:
 		check(cues(front).size()==1 and cues("weapon_combo_light_%d_1"%(phase+1)).size()==1,
 			"Light Sword Weapon Combo selects the phase-specific layers and final extra effect")
 
+func check_heavy_weapon_combo() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"weaponcombo","level":1})
+	for sample: Array in [[2,0,210,1.0],[3,0,210,1.0],[3,250,367,1.0],[3,999,839,1.0],
+			[3,1000,840,1.25],[3,1030,840,1.0]]:
+		profile.command("numbers.skill_grant",{"id":"heavyswordmastery","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["weaponcombo"]
+		start_room("","greatsword",1,spec)
+		game.numeric_player.values["attack_speed"] = sample[3]
+		game.numeric_player.values["mp_cost_rate"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 12.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(65,0))
+		press(KEY_A)
+		step(0)
+		session.submit_key(KEY_A,true)
+		step(300.0/float(sample[3])-1.0)
+		check(game.player["stage"]==0 and game.player["mp"]==6.0,"Heavy Weapon Combo waits for frame five")
+		step(1)
+		check(game.player["stage"]==1 and game.player["mp"]==0.0,"Heavy Weapon Combo pays for the second stage at its gate")
+		if sample[0] >= 3:
+			var charge := cues("weapon_combo_heavy_charge")
+			check(charge.size()==1 and charge[0]["offset_x"]==-52.0 and charge[0]["offset_y"]==-70.0
+				and is_equal_approx(charge[0]["uniform_frame_ms"],55.0/float(sample[3])),
+				"Heavy Weapon Combo retimes and offsets the original charge attachment")
+			var held_ms := 240 if sample[1]==250 else mini(sample[1],999)
+			step(held_ms)
+			check(game.player.has("weapon_combo_charge") and game.player_ani()==["weaponcomboheavy2",0.0]
+				and target["hp"]==5000.0 and cues("weapon_combo_heavy_finish").is_empty(),
+				"Heavy Weapon Combo holds the opening pose without contact through "+str(held_ms)+" ms")
+			if sample[1]>=1000:
+				step(sample[1]-999)
+				check(not game.player.has("weapon_combo_charge") and game.player["clock"]==0.0,
+					"Heavy Weapon Combo enters the release at frame zero on the first tick at or past 1000 ms")
+		else:
+			check(cues("weapon_combo_heavy_charge").is_empty(),"Heavy Weapon Combo has no charge below mastery rank three")
+		session.submit_key(KEY_A,false)
+		step(10 if sample[1]==250 else 0)
+		check(game.action_def()["hits"][0]["percent"]==sample[2] and game.player["mp"]==0.0
+			and cues("weapon_combo_heavy_finish").size()==1,"Heavy Weapon Combo releases with the native damage ramp and no new cost")
+		var contact_ms := 180.0/float(sample[3])
+		step(contact_ms-1.0)
+		check(target["hp"]==5000.0,"Heavy Weapon Combo has no hit before the source contact frame")
+		step(1)
+		check(target["hp"]<5000.0 and game.hit_count==1,"Heavy Weapon Combo hits when the released body reaches frame three")
+		check(game.attack_body_armor(),"Heavy Weapon Combo keeps the source frame-three armor")
+		step(60.0/float(sample[3]))
+		check(not game.attack_body_armor(),"Heavy Weapon Combo clears body armor on source frame four")
+	var spec := profile.stats()
+	spec["skill_slots"] = ["weaponcombo"]
+	start_room("","greatsword",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.0
+	press(KEY_A)
+	step(0)
+	session.submit_key(KEY_A,true)
+	step(300)
+	var source := {"pos":POINT+Vector2(40,0)}
+	var atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
+	check(game.hurt_player(7,source,atk,-1)=="none" and game.player.has("weapon_combo_charge"),
+		"Heavy Weapon Combo retains its frame-zero armor while charging")
+	game.player["invuln_ms"] = 0.0
+	atk = atk.duplicate()
+	atk["ignore_super_armor"] = 1
+	check(game.hurt_player(7,source,atk,-1)=="stagger" and not game.player.has("weapon_combo_charge"),
+		"Heavy Weapon Combo drops its charge on armor-piercing interruption")
+	session.submit_key(KEY_A,false)
+	step(1000)
+	check(cues("weapon_combo_heavy_finish").is_empty(),"Interrupted Heavy Weapon Combo never emits the delayed release")
+
 func check_overdrive_attributes() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -1651,6 +1723,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_overdrive_attributes()
 	check_weapon_combo()
+	check_heavy_weapon_combo()
 	check_overdrive_cast()
 	check_overdrive_particles()
 	check_frenzy_drain()

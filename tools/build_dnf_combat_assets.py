@@ -383,6 +383,8 @@ WEAPON_COMBO_MASTERY_EFFECTS = {
     f'character/swordman/effect/animation/shortswordmastery/shortweaponcombo{i}.ani'
     for i in range(1, 4)
 }
+WEAPON_COMBO_MASTERY_EFFECTS['weapon_combo_heavy_charge'] = (
+    'character/swordman/effect/animation/shortswordmastery/heavyweaponcombochargedodge.ani')
 EFFECTS.update(WEAPON_COMBO_FINISH_EFFECTS | WEAPON_COMBO_MASTERY_EFFECTS)
 
 # State 30 entry at CD152F and CD1578, resolved by original audio.xml.
