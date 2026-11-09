@@ -1855,6 +1855,10 @@ func check_draw_target_deadlines() -> void:
 		"both temporary hits resolve once without replaying the two initial contacts")
 	start_room("original_27601","katana",1,spec)
 	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0416666966666668
+	var draw_timeline: Array = game.move_def("draw")["stages"][0]["timeline"]
+	check(game.draw_hit_delay(draw_timeline,525.0)==187,
+		"temporary hit delay uses the source percent clock and truncates each frame separately")
 	game.numeric_player.values["attack_speed"] = 1.0
 	game.numeric_player.values["hit"] = 1.0
 	# Keep the fixture's fixed inputs through the normal battle update.

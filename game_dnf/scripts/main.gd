@@ -1802,11 +1802,13 @@ func draw_hit_delay(timeline: Array, clock: float) -> int:
 	# 5B00F0 truncates each speed-adjusted delay before the sum.
 	var rate := float(rules["buff"]["attack_speed"]) if float(player["buff_ms"])>0 else 1.0
 	if numeric_player != null:rate = float(numeric_player.values["attack_speed"])
+	var rate_percent := Kernel.NativeMotion.f32(rate*100.0)
 	var first := int(Kernel.Timeline.frame_at(timeline,clock)["frame"])
 	var delay := 0
 	for index in range(first,7):
 		var frame: Dictionary = timeline[index]
-		delay += int(Kernel.NativeMotion.f32((float(frame["end_ms"])-float(frame["start_ms"]))/rate))
+		var frame_ms := float(frame["end_ms"])-float(frame["start_ms"])
+		delay += int(Kernel.NativeMotion.f32(Kernel.NativeMotion.f32(frame_ms*100.0)/rate_percent))
 	return delay
 
 func queue_draw_hit(target: Dictionary, facing: int, delay: int) -> void:
