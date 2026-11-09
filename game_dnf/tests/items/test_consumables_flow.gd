@@ -66,6 +66,8 @@ func run() -> void:
 	check(game.session.state=="battle" and game.session.profile.gear[weapon].durability==durability,"failed death save does not apply penalty to live profile")
 	check(not game.save_profile() and not game.recovery_bridge.pending_death.is_empty() and game.session.profile.gear[weapon].durability==durability,"manual save cannot bypass the pending death transaction")
 	await frame("recovery_03_death_save_retry")
+	var retry_save: Button=game.modal.find_child("recovery_window_retry_save",true,false)
+	check(retry_save!=null and get_tree().root.gui_get_focus_owner()==retry_save,"failed formal death focuses its retry-save action")
 	game.store.path=path;check(click_text("重试保存"),"death window offers real retry-save button");await ticks(3)
 	check(game.session.state=="defeated" and game.session.profile.gear[weapon].durability==durability-3 and game.session.profile.gold==1000 and game.session.profile.resurrection_coins==3,"retry saves one death penalty without charging a revival coin")
 	check(game.session.result.is_empty() and not game.session.profile.settled.has(game.session.run.id),"pending death does not prematurely settle the adventure")
@@ -73,6 +75,16 @@ func run() -> void:
 	death_loot=game.Session.Loot.pending(game.session.run,String(dead.room_id)).duplicate(true)
 	await frame("recovery_04_death_choice")
 	death_coins=int(game.session.profile.resurrection_coins)
+	var revive_button: Button=game.modal.find_child("recovery_window_revive",true,false)
+	check(revive_button!=null and get_tree().root.gui_get_focus_owner()==revive_button,"formal death prompt focuses the affordable revive action")
+	game.store.path="res://data/recovery.json/cannot_write.json"
+	await tap(KEY_X)
+	var feedback: Label=game.modal.find_child("recovery_window_feedback",true,false)
+	check(game.session.state=="defeated" and int(game.session.profile.resurrection_coins)==death_coins
+		and feedback!=null and feedback.visible and feedback.text.contains("存档写入失败"),
+		"failed formal revival save keeps the coin and reports the retry reason")
+	game.store.path=path
+	await frame("recovery_04b_revive_save_retry")
 	await tap(KEY_X)
 	var revived: Dictionary=game.combat.read_view()
 	check(game.session.state=="battle" and game.session.profile.resurrection_coins==death_coins-1 and game.session.profile.gold==1000,"X consumes one revival coin and returns to the same battle")

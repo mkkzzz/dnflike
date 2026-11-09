@@ -123,5 +123,23 @@ func _initialize() -> void:
 	var empty_id=Session.new();empty_id.command("flow.depart");empty_id.combat_event(death(empty_id,90))
 	invalid=empty_id.serialize();invalid.run.id=""
 	check(not Session.new().restore(invalid),"pending death requires a nonempty adventure identity")
+	var moving=Session.new();moving.profile.resurrection_coins=5;moving.command("flow.depart")
+	moving.combat_event(death(moving,50))
+	var moving_quote:=Recovery.quote(moving.profile,moving.run)
+	moving.run.recovery.pending.room_id="forest_trial:1";moving.run.recovery.pending.room_index=1
+	before=JSON.stringify(moving.serialize())
+	check(not moving.revive_command({"transaction":"move_revive","signature":moving_quote.signature}).ok
+		and JSON.stringify(moving.serialize())==before,"cross-room change invalidates the revival quote without charging")
+	moving_quote=Recovery.quote(moving.profile,moving.run)
+	check(moving_quote.ok and moving_quote.room_id=="forest_trial:1"
+		and moving.revive_command({"transaction":"move_revive_fresh","signature":moving_quote.signature}).ok
+		and moving.profile.resurrection_coins==4,"fresh quote commits the changed room exactly once")
+	moving.combat_event(death(moving,60));moving_quote=Recovery.quote(moving.profile,moving.run)
+	check(moving.revive_command({"transaction":"reused_tx","signature":moving_quote.signature}).ok,
+		"transaction fixture commits its first revival")
+	moving.combat_event(death(moving,70));moving_quote=Recovery.quote(moving.profile,moving.run)
+	before=JSON.stringify(moving.serialize())
+	check(not moving.revive_command({"transaction":"reused_tx","signature":moving_quote.signature}).ok
+		and JSON.stringify(moving.serialize())==before,"reused transaction ID cannot charge a later death")
 	check(Items.valid(winner.profile) and Recovery.valid(winner.run) and Consumables.valid(winner.run),"final ownership and lifecycle contracts remain valid")
 	print("[RECOVERY_TEST] COMPLETE checks=%d failures=%d" % [checks,failures]);quit(1 if failures else 0)

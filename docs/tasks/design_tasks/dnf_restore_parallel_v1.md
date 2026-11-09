@@ -2,11 +2,11 @@
 
 两区按可独立交付的模块分工。每区负责自己任务的开发、回归、验收和发布。新任务以当前可取得的资料和已发布的接口开工。完整目标仍覆盖技能、战斗、界面、系统、任务、副本和城镇。 [分工契约](../../design/28_工作区分工与原版资料共享.md)
 
-本批可并行的剩余估时为 **ws1 19–28 工程小时，ws2 45–69 工程小时**。ws1 的角色属性与装备管理、存档文件与角色档位已经交付；装备 NPC 服务、仓库也已完成。ws2 集中完成技能本体的取证、实装与自验，觉醒任务、技能解锁、副本另列后续批次。估算覆盖实装、失败分支、表现细节、回归和正式入口自验。用户试玩和原版同条件实机复核单独记账。
+本批可并行的剩余估时为 **ws1 8–12 工程小时，ws2 45–69 工程小时**。ws1 的角色属性与装备管理、存档文件与角色档位、死亡复活规则与窗口已经交付；装备 NPC 服务、仓库也已完成。ws2 集中完成技能本体的取证、实装与自验，觉醒任务、技能解锁、副本另列后续批次。估算覆盖实装、失败分支、表现细节、回归和正式入口自验。用户试玩和原版同条件实机复核单独记账。
 
 | 工作区 | 先完成 | 后续可并行接续 | 剩余中点 |
 |---|---|---|---:|
-| ws1 | 复活规则与界面 | 显示适配 | 24 小时 |
+| ws1 | 显示适配 | — | 10 小时 |
 | ws2 | 剑魂、狂战士核心技能 | 鬼剑士共通招式、鬼泣和阿修罗技能 | 57 小时 |
 
 各区按实际投入更新本区实耗、未闭合分支和剩余区间。任一任务包发布后立即扣除已交付工时，每累计约 10 工程小时再复算一次。若两区剩余中点相差超过较小值的 15%，优先交接尚未开工、资料已齐、可独立发布和验收的生产模块。原客户端专属工作仍由 ws2 完成。没有合适模块时记录差距和原因，下一批重新排程。
@@ -15,10 +15,11 @@
 
 | 顺序 | 任务 | 唯一编辑范围 | 开工材料与验收 | 估计工时 |
 |---|---|---|---|---|
-| P1 | 死亡记录与复活规则、死亡提示 | 独占 [recovery.gd](../../../game_dnf/flow/recovery.gd)、[recovery_windows.gd](../../../game_dnf/ui/flow/recovery_windows.gd)、[复活规则专项](../../../game_dnf/tests/items/test_recovery.gd)、recovery_window_ 专属组件和 test_ws1_recovery_window_ 隔离测试 | 按[已发布的复活交付和币图](../../reports/ws1/2026-10/2026-10-31_原地复活与复活币提示.md)核对死亡、报价、扣币、次数限制与重复请求，补跨房/过期报价、失败重试和旧档读回边界。完善费用、次数、失败原因、焦点与 X 键反馈。自行用同房复活、回城及失败注入夹具验证恰好扣币一次，并从正式死亡入口验收 | 11–16 小时 |
 | P1 | 窗口与全屏显示适配 | 独占 [display_settings.gd](../../../game_dnf/ui/flow/display_settings.gd)、display_setting_ 专属组件和 test_ws1_display_ 隔离测试 | 以[场景画面基准](../../design/41_场景画面基准.md)和既有 F11 入口为准。覆盖工作区小于输出尺寸、负坐标副屏、原屏断开、反复切全屏、嵌入编辑器与后台渲染，修复有复现的窗口定位和还原问题。自验 800×600 逻辑画布、1600×1200 固定输出、黑边、鼠标命中和文字清晰度，提交实绘。显式给出夹具和真实显示器分别覆盖的环境 | 8–12 小时 |
 
 [角色属性与装备管理](../../reports/ws1/2026-11/2026-11-09_角色属性与装备管理.md)和[角色存档提交与备份恢复](../../reports/ws1/2026-11/2026-11-09_角色存档提交与备份恢复.md)已发布，继续由 ws1 维护。[number_windows.gd](../../../game_dnf/ui/flow/number_windows.gd)、number_window_ 专属组件、test_ws1_number_window_、[store.gd](../../../game_dnf/save/store.gd)、[characters.gd](../../../game_dnf/save/characters.gd)、test_ws1_save_ 及已发布恢复提示继续归 ws1。
+
+[死亡复活规则与窗口重试](../../reports/ws1/2026-11/2026-11-09_死亡复活规则与窗口重试.md)已发布，继续由 ws1 维护。[recovery.gd](../../../game_dnf/flow/recovery.gd)、[recovery_windows.gd](../../../game_dnf/ui/flow/recovery_windows.gd)、recovery_window_ 专属组件和 test_ws1_recovery_window_ 归 ws1；复活配置、战斗恢复和共用路由仍由 ws2 持有。
 
 [装备 NPC 服务](../../reports/ws1/2026-11/2026-11-09_装备NPC服务全链路.md)和[仓库与装备操作界面](../../reports/ws1/2026-11/2026-11-09_仓库与装备操作界面.md)已发布，继续由 ws1 维护。范围含 [services.gd](../../../game_dnf/items/services.gd)、[upgrades.gd](../../../game_dnf/items/upgrades.gd)、[service_windows.gd](../../../game_dnf/ui/flow/service_windows.gd)、[upgrade_windows.gd](../../../game_dnf/ui/flow/upgrade_windows.gd)、[inventory_tools.gd](../../../game_dnf/ui/flow/inventory_tools.gd)、各自专属组件和专项。正式入口用现有运行脚本的 `-Test -ServicesOnly` 和 `-Test -UpgradesOnly` 自验。[交易规则](../../../game_dnf/tests/items/test_services.gd) · [养成规则](../../../game_dnf/tests/items/test_upgrades.gd) · [交易正式入口](../../../game_dnf/tests/items/test_services_flow.gd) · [养成正式入口](../../../game_dnf/tests/items/test_upgrades_flow.gd) · [运行脚本](../../../tools/run_dnf_loop.ps1)
 
