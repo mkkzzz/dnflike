@@ -153,10 +153,10 @@ func sample_source_effect(definition: Dictionary, rank: int) -> bool:
 		if not valid_source_column(row,drain_column) or float(row[drain_column])<=0:return false
 		# CA4BC1 samples the Frenzy HP drain in tenths per second.
 		definition["hp_drain_per_second"] = native_scalar(float(row[drain_column])*native_scalar(0.1))
-		return true
-	var duration_column := int(definition.get("duration_level_row",-1))
-	if not valid_source_column(row,duration_column):return false
-	definition["duration_ms"] = float(row[duration_column])
+	else:
+		var duration_column := int(definition.get("duration_level_row",-1))
+		if not valid_source_column(row,duration_column):return false
+		definition["duration_ms"] = float(row[duration_column])
 	for mod: Dictionary in definition.get("modifiers",[]):
 		var column := int(mod.get("level_row",-1))
 		if not valid_source_column(row,column):return false

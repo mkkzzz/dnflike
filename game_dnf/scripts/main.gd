@@ -525,13 +525,16 @@ func skill_damage_multiplier(skill_id: String) -> float:
 			result *= 1.0+float(bonuses[skill_id])
 	return result
 
-func skill_cooldown_multiplier(skill_id: String) -> float:
-	if numeric_player == null:return 1.0
-	var result := 1.0
-	for effect: Dictionary in numeric_player.effects.active.values():
-		var rates: Dictionary = effect.get("definition",{}).get("skill_cooldown_rate",{})
-		if rates.has(skill_id):result *= float(rates[skill_id])
-	return result
+func frenzy_cooldown_reduction_ms(skill_id: String) -> int:
+	var frenzy := active_effect("frenzy")
+	var columns: Dictionary = frenzy.get("definition",{}).get("skill_cooldown_reduction_rows",{})
+	if not columns.has(skill_id):return 0
+	# C9D2C0 reads the current effective Frenzy rank when starting the other skill.
+	var rank := int(skill_levels.get("buff",0))
+	if rank<=0:return 0
+	var row: Array = Numbers.Skills.sample(Numbers.record("buff"),rank)["level_row"]
+	var column := int(columns[skill_id])
+	return int(row[column]) if column<row.size() else 0
 
 func refresh_dynamic_modifiers(force := false) -> void:
 	if numeric_player == null:return
@@ -1120,10 +1123,10 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	return move.has("normal_cancel_job") and String(player["state"]) == "action" and job == String(move["normal_cancel_job"]) and String(player["action"]) in ["attack1","attack2","attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
-	var duration := float(move["cool_ms"])/1000.0
+	var duration := (float(move["cool_ms"])-frenzy_cooldown_reduction_ms(name))/1000.0
 	if duration <= 0.0:return
 	var rate := float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0
-	player["cooldowns"][name] = duration*rate*skill_cooldown_multiplier(name)
+	player["cooldowns"][name] = duration*rate
 
 func start_action(name: String, cancel := false) -> bool:
 	var m: Dictionary = table.moves.get(name,{})

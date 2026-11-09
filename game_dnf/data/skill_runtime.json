@@ -373,36 +373,23 @@
    "max_stacks": 1,
    "modifiers": [
     {
-     "op": "mul",
-     "stat": "attack_speed",
-     "value": 1.25
-    },
-    {
-     "op": "mul",
-     "stat": "move_speed",
-     "value": 1.2
-    },
-    {
-     "op": "mul",
-     "stat": "damage_rate",
-     "value": 1.2
-    },
-    {
-     "op": "mul",
-     "stat": "taken_rate",
-     "value": 1.3
-    },
-    {
+     "level_row": 3,
      "op": "add",
-     "stat": "hit",
-     "value": 0.1
+     "scale": 0.001,
+     "stat": "hit"
+    },
+    {
+     "level_row": 4,
+     "op": "add",
+     "stat": "hit_recovery"
     }
    ],
    "name": "血之狂暴",
-   "skill_cooldown_rate": {
-    "bloodblast": 0.85,
-    "grabblastblood": 0.85,
-    "rage_slash": 0.85
+   "skill_cooldown_reduction_rows": {
+    "bloodblast": 12,
+    "bloodblastex": 12,
+    "grabblastblood": 10,
+    "rage_slash": 14
    },
    "skill_damage": {
     "bloodblast": 0.1,
@@ -410,8 +397,7 @@
     "rage_slash": 0.1
    },
    "source_skill": "buff",
-   "stacking": "refresh",
-   "super_armor": true
+   "stacking": "refresh"
   },
   "ghoststep": {
    "duration_ms": 120000,

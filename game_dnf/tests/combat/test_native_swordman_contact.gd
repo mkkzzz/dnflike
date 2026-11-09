@@ -946,6 +946,68 @@ func check_frenzy_drain() -> void:
 	game.step_numeric_actor(game.player,game.numeric_player,1000)
 	check(game.player["hp"]==92.0,"rank-two Frenzy samples its own HP drain column")
 
+func check_frenzy_attributes() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
+	var cooldown_skills := ["grabblastblood","bloodblast","bloodblastex","rage_slash","upper"]
+	for sample: Array in [[1,0.002,10,[100,150,150,50,0]],[2,0.004,21,[174,318,318,106,0]]]:
+		profile.command("numbers.skill_grant",{"id":"buff","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["buff","rage_slash"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.player["hp"] = 1000.0
+		var before: Dictionary = game.numeric_player.values.duplicate()
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(40,0))
+		var point := Vector3(POINT.x+40,POINT.y,0)
+		var hit := {"atk":{},"percent":100,"skill_id":"attack1"}
+		game.rng.reseed(70)
+		var roll: float = game.rng.next_float()
+		target["numeric"].values["evasion"] = 1.0+float(before["hit"])-roll+0.001
+		game.rng.reseed(70)
+		game.land_hit(game.player,target,hit,point,1,100)
+		check(game.last_damage["missed"],"the chosen roll misses before Frenzy")
+		press(KEY_A)
+		step(0)
+		var after: Dictionary = game.numeric_player.values
+		check(is_equal_approx(float(after["hit"])-float(before["hit"]),float(sample[1]))
+			and float(after["hit_recovery"])-float(before["hit_recovery"])==float(sample[2]),
+			"Frenzy samples hit and recovery separately at rank "+str(sample[0]))
+		check(after["attack_speed"]==before["attack_speed"] and after["move_speed"]==before["move_speed"]
+			and after["damage_rate"]==before["damage_rate"] and after["taken_rate"]==before["taken_rate"],
+			"Frenzy adds no blanket speed, damage or vulnerability modifiers")
+		game.rng.reseed(70)
+		game.land_hit(game.player,target,hit,point,1,100)
+		check(not game.last_damage["missed"],"Frenzy turns the same roll into a hit")
+		var cooldown_rate := float(after["cooldown_rate"])
+		for index in cooldown_skills.size():
+			var skill: String = cooldown_skills[index]
+			var move: Dictionary = game.move_def(skill)
+			game.begin_skill_cooldown(skill,move)
+			check(is_equal_approx(float(game.player["cooldowns"].get(skill,0.0)),
+				(float(move["cool_ms"])-float(sample[3][index]))*cooldown_rate/1000.0),
+				"Frenzy adjusts only the sourced cooldown by flat milliseconds for "+skill)
+		game.end_action()
+		game.player["cooldowns"].erase("rage_slash")
+		press(KEY_S)
+		step(0)
+		check(game.player["action"]=="rage_slash" and is_equal_approx(float(game.player["cooldowns"].get("rage_slash",0.0)),
+			(float(game.move_def("rage_slash")["cool_ms"])-float(sample[3][3]))*cooldown_rate/1000.0),
+			"the Gore Cross shortcut uses the sourced cooldown through actual cast")
+		var reaction: String = game.hurt_player(1,target,{},-1)
+		var rules: Dictionary = game.rules["reaction"]
+		var stun := float(rules["stun_base_ms"])*float(rules["stun_reference_recovery"])/float(after["hit_recovery"])
+		check(reaction=="stagger" and is_equal_approx(float(game.player["stun_ms"]),stun),
+			"Frenzy shortens hit stun through recovery without granting blanket armor")
+		game.player["hp"] = 2.0
+		game.step_numeric_actor(game.player,game.numeric_player,1000)
+		check(game.numeric_player.values["hit"]==before["hit"]
+			and game.numeric_player.values["hit_recovery"]==before["hit_recovery"],
+			"both sourced bonuses are removed with Frenzy")
+		check(game.frenzy_cooldown_reduction_ms("rage_slash")==0,
+			"Frenzy stops adjusting new cooldowns once the form expires")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -1054,6 +1116,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_overdrive_critical()
 	check_frenzy_drain()
+	check_frenzy_attributes()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()
