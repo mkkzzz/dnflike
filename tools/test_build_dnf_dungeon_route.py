@@ -190,6 +190,27 @@ class DungeonSelectedMapTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'source layered room'):
             resolve_selected_room(self.export, (5, 0), 3020, 'normal', layered=True)
 
+    def test_verified_ingress_is_bound_to_layout_except_in_the_fixed_pool(self):
+        dungeon = self.export['dungeon']
+        dungeon['path'] = 'dungeon/act3/outerwall.dgn'
+        dungeon['cells'][1].update(mask=12, doors=['left', 'down'])
+        dungeon['cells'].extend([
+            {'x': 4, 'y': 0, 'doors': ['right']},
+            {'x': 5, 'y': 1, 'doors': ['up']},
+        ])
+        dungeon['rooms']['normal.map']['raw'] = [
+            {'tag': '[type]', 'values': [[0, '', '[normal]']]},
+            {'tag': '[greed]', 'values': [[0, '', 'MM II GG EE']]},
+        ]
+        # The fixed normal pool uses CMap::CheckEntrance across its masks.
+        self.assertEqual(resolve_selected_room(self.export, (5, 0), 3020, 'normal', ingress='left')['id'],
+                         '5_0:normal')
+        dungeon['raw'] = [span for span in dungeon['raw'] if span['tag'] != '[map specification]']
+        self.assertEqual(resolve_selected_room(self.export, (5, 0), 3020, 'normal', ingress='down')['id'],
+                         '5_0:normal')
+        with self.assertRaisesRegex(ValueError, 'does not accept ingress'):
+            resolve_selected_room(self.export, (5, 0), 3020, 'normal', ingress='left')
+
 
 if __name__ == "__main__":
     unittest.main()

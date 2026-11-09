@@ -33,6 +33,9 @@ GATE_ORDER = ['left', 'right', 'up', 'down']
 GATE_SLOTS = [('left', 'normal'), ('left', 'boss'), ('left', 'wall'), ('right', 'normal'),
               ('right', 'boss'), ('right', 'wall'), ('up', 'normal'), ('up', 'boss'),
               ('down', 'normal'), ('down', 'boss')]
+# The original server registers MAP [greed] layout/entrance pairs separately.
+# Enable the corrected candidate export for the dungeon checked across versions.
+VERIFIED_MAP_GREED_DUNGEONS = {'dungeon/act3/outerwall.dgn'}
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
 DEFAULT_OUTPUT = ROOT / 'game_dnf/assets_local/native_maps'
 
@@ -302,6 +305,17 @@ def raw_spans(script: dict) -> list[dict]:
              'values': [[t['type'], t['raw_hex'], t.get('value')] for t in s['values']]} for s in script['spans']]
 
 
+def source_map_greed_pairs(room: dict) -> list[list[int]]:
+    values = [token[2] for span in room['raw'] if span['tag'] == '[greed]' for token in span['values']]
+    if len(values) != 1 or not isinstance(values[0], str):
+        raise ValueError(f"Missing MAP [greed] pairs: {room['path']}")
+    codes = values[0].split()
+    if not codes or len(codes) % 2 or any(len(c) != 2 or c[0] != c[1] or not 'A' <= c[0] <= 'P' for c in codes):
+        raise ValueError(f"Invalid MAP [greed] pairs: {room['path']}: {values[0]!r}")
+    masks = [ord(code[0]) - ord('A') for code in codes]
+    return [masks[index:index + 2] for index in range(0, len(masks), 2)]
+
+
 def layer_name(token, path: str, diags: list) -> str:
     name = token.strip('[]') if isinstance(token, str) else None
     if name not in LAYERS:
@@ -535,8 +549,11 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
             codes = flatten(span_values(map_script['spans'], '[greed]') or [])
             candidates[map_path] = {'map_id': map_id, 'codes': [c[0] for c in codes[0].split()] if codes and codes[0] else []}
     rooms = {path: export_map(lib, path, ids) for path in sorted(candidates)}
+    verified_greed = dungeon_path in VERIFIED_MAP_GREED_DUNGEONS
     for path, room in rooms.items():
         room['map_id'] = candidates[path]['map_id']
+        if verified_greed:
+            room['greed_pairs'] = source_map_greed_pairs(room)
         stem = PurePosixPath(path).stem
         room['role_hint'] = ('start' if stem.startswith('s') else 'boss_near_or_unknown' if stem.startswith('bn')
                              else 'boss' if stem.startswith('b') else 'normal')
@@ -544,7 +561,11 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
     gate_objects = {str(i): export_gate_object(lib, i, ids['objects']) for i in sorted(set(slots.values()))}
     placements = []
     for (x, y), cell in sorted(cells.items(), key=lambda kv: (kv[0][1], kv[0][0])):
-        cell['map_candidates'] = sorted(p for p, c in candidates.items() if cell['code'][0] in c['codes'])
+        if verified_greed:
+            cell['map_candidates'] = [path for path, room in rooms.items()
+                                      if any(layout == cell['mask'] for layout, _ in room['greed_pairs'])]
+        else:
+            cell['map_candidates'] = sorted(p for p, c in candidates.items() if cell['code'][0] in c['codes'])
         cell['start_candidate'] = [x, y] in as_cells(start_raw)
         cell['boss_candidate'] = (x, y) in boss_cells
         if not cell['map_candidates']:
@@ -552,6 +573,8 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         for map_path in cell['map_candidates']:
             placements.append(dungeon_placement(rooms[map_path], cell, slots, boss_cells))
 
+    cell_map_rule = ('E-PARSE: MAP [greed] pairs hold layout and entrance masks; only layout contributes cell candidates'
+                     if verified_greed else 'E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter')
     return {'path': dungeon_path, 'sha256': script['sha256'], 'crc_ok': script['crc_ok'], 'index': dungeon_index,
             'raw': raw_spans(script), 'size': size,
             'cells': [cells[k] for k in sorted(cells, key=lambda c: (c[1], c[0]))],
@@ -559,7 +582,7 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
             'start_boss_interpretation': 'E-INFER: value pairs are candidate cells (x,y); random choice unverified',
             'background_pos_raw': span_values(spans, '[background pos]'), 'pathgate_slots': slots,
             'gate_objects': gate_objects, 'rooms': rooms, 'placements': placements,
-            'cell_map_rule': 'E-INFER: a map is a candidate when its [dungeon] lists this dungeon and its [greed] contains the cell letter'}
+            'cell_map_rule': cell_map_rule}
 
 
 def run(library: Path, dungeon: str, output: Path, extra_maps: list[str]) -> dict:

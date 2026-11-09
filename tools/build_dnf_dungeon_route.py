@@ -8,7 +8,7 @@
 用法：
   python tools/build_dnf_dungeon_route.py                      # 只校验已有路线与 cell 图是否一致
   python tools/build_dnf_dungeon_route.py --write --id mirkwood --export <path> --name 幽暗密林
-  python tools/build_dnf_dungeon_route.py --export <path> --selected-map 5 0 3024 --room-role boss
+  python tools/build_dnf_dungeon_route.py --export <path> --selected-map 5 0 3024 --room-role boss --ingress left
 """
 from __future__ import annotations
 
@@ -19,7 +19,8 @@ import sys
 from collections import deque
 from pathlib import Path
 from check_dnf_walk import visible_down_gate, visible_entry_point
-from export_dnf_map import CELL_H, CELL_W, dungeon_placement, parse_greed
+from export_dnf_map import (CELL_H, CELL_W, DOOR_BITS, OPPOSITE, VERIFIED_MAP_GREED_DUNGEONS,
+                            dungeon_placement, parse_greed, source_map_greed_pairs)
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -148,17 +149,20 @@ def normal_map_specifications(dungeon: dict) -> dict:
     return fixed
 
 
-def resolve_selected_room(export: dict, cell: tuple[int, int], map_id: int, role: str, *, layered: bool = False) -> dict:
+def resolve_selected_room(export: dict, cell: tuple[int, int], map_id: int, role: str, *,
+                          layered: bool = False, ingress: str | None = None) -> dict:
     """Resolve an already selected MAP to an existing ordinary-maze placement.
 
     The original START_MAP notification supplies the cell and MAP ID. Source
-    pools remain distinct because this adapter cannot establish selection priority.
+    pools remain distinct. Where the server selection has been verified, check
+    the selected pool and the entry side without choosing a random MAP.
     """
     valid_cell = len(cell) == 2 and all(type(coordinate) is int and 0 <= coordinate <= 0xff for coordinate in cell)
     if not valid_cell or type(map_id) is not int or not 0 <= map_id <= 0xffff:
         raise ValueError(f'Invalid selected room {cell}, MAP{map_id}')
     dungeon = export['dungeon']
-    definition = cell_graph(export).get(cell)
+    cells = cell_graph(export)
+    definition = cells.get(cell)
     if definition is None:
         raise ValueError(f'Invalid selected room {cell}, MAP{map_id}')
     maps = dungeon['rooms']
@@ -169,20 +173,62 @@ def resolve_selected_room(export: dict, cell: tuple[int, int], map_id: int, role
     room = maps[path]
     starts = bool(room.get('start_area'))
     boss = has_source_boss(room)
+    verified_greed = dungeon.get('path') in VERIFIED_MAP_GREED_DUNGEONS
+    if verified_greed:
+        # A start MAP can also be registered as a normal room by the server.
+        map_types = [token[2] for span in room['raw'] if span['tag'] == '[type]' for token in span['values']]
+        normal = map_types == ['[normal]']
+        boss = boss and map_types == ['[boss]']
+    else:
+        normal = not starts and not boss
     eligible = {'start': definition.get('start_candidate') and starts and not boss,
-                'normal': not starts and not boss,
-                'boss': definition.get('boss_candidate') and boss and not starts}
+                'normal': normal, 'boss': definition.get('boss_candidate') and boss and not starts}
     if not eligible.get(role):
         raise ValueError(f'MAP{map_id} is not an eligible {role} room at {cell}')
+    if ingress is not None and (not verified_greed or layered or role == 'start'):
+        raise ValueError('Ingress verification requires a supported ordinary transition')
     if layered:
         pools = source_map_specifications(dungeon)['[layered map specification]']
         if map_id not in pools.get(cell, []):
             raise ValueError(f'MAP{map_id} is not a source layered room at {cell}')
+    if verified_greed and not layered:
+        pairs = room.get('greed_pairs') or source_map_greed_pairs(room)
+        matching = [entrance for layout, entrance in pairs if layout == definition['mask']]
+        if not matching:
+            raise ValueError(f'MAP{map_id} has no matching source layout at {cell}')
+        if role in ('normal', 'boss'):
+            tag = '[boss map specification]' if role == 'boss' else '[map specification]'
+            pool = source_map_specifications(dungeon)[tag].get(cell, [])
+            if pool and map_id not in pool:
+                raise ValueError(f'MAP{map_id} is outside source {tag} at {cell}')
+            if pool:
+                # For a specified MAP the server checks all its ingress masks.
+                matching = [entrance for _, entrance in pairs]
+        if ingress is not None:
+            if ingress not in definition['doors']:
+                raise ValueError(f'No source {ingress} door at {cell}')
+            dx, dy = MOVE[ingress]
+            neighbour = cells.get((cell[0] + dx, cell[1] + dy), {})
+            if OPPOSITE[ingress] not in neighbour.get('doors', []):
+                raise ValueError(f'No reciprocal source door at {cell} via {ingress}')
+            if not any(mask & DOOR_BITS[ingress] for mask in matching):
+                raise ValueError(f'MAP{map_id} does not accept ingress from {ingress} at {cell}')
     placements = [p for p in dungeon['placements'] if p['cell'] == list(cell) and p['map'] == path
                   and not p.get('quest_maze')]
     if len(placements) != 1:
         raise ValueError(f'MAP{map_id} has no unique ordinary placement at {cell}')
     return placements[0]
+
+
+def first_source_placement(export: dict, cell: tuple[int, int], role: str, ingress: str | None) -> str:
+    dungeon = export['dungeon']
+    for path in cell_graph(export)[cell]['map_candidates']:
+        map_id = dungeon['rooms'][path]['map_id']
+        try:
+            return resolve_selected_room(export, cell, map_id, role, ingress=ingress)['id']
+        except ValueError:
+            continue
+    raise ValueError(f'No source {role} room at {cell} with ingress {ingress}')
 
 
 def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
@@ -210,6 +256,18 @@ def build(export: dict, start_cell=None, boss_cell=None) -> list[dict] | None:
     if best is None:
         return None
     start, boss, path = best
+    if export['dungeon'].get('path') in VERIFIED_MAP_GREED_DUNGEONS:
+        # Produce an offline fixed sample. The server rolls on first entry and
+        # retains all other connected cells, including the side branches.
+        rooms = []
+        ingress = None
+        for cell, door in path + [(boss, '')]:
+            role = 'start' if cell == start else 'boss' if cell == boss else 'normal'
+            placement = first_source_placement(export, cell, role, ingress)
+            rooms.append({'name': '', 'placement': placement, 'next': door})
+            ingress = OPPOSITE.get(door)
+        rooms[-1]['boss'] = True
+        return rooms
     fixed = normal_map_specifications(export['dungeon'])
     rooms = []
     for index, (cell, door) in enumerate(path):
@@ -392,7 +450,10 @@ def main() -> int:
                         help='只读校验已选原房间，输出既有地图放置记录')
     parser.add_argument('--room-role', choices=('start', 'normal', 'boss'), default='normal')
     parser.add_argument('--layered-map', action='store_true', help='校验原多层地图池')
+    parser.add_argument('--ingress', choices=DOOR_BITS, help='校验首次进入目标房间所用的原方向位')
     args = parser.parse_args()
+    if args.ingress is not None and args.selected_map is None:
+        parser.error('--ingress requires --selected-map')
     if args.selected_map is not None:
         if not args.export or args.write or args.status or args.apply_all or args.quest_mazes:
             parser.error('--selected-map requires --export and is read-only')
@@ -400,7 +461,8 @@ def main() -> int:
         x, y, map_id = args.selected_map
         try:
             export = json.loads(path.read_text(encoding='utf-8'))
-            placement = resolve_selected_room(export, (x, y), map_id, args.room_role, layered=args.layered_map)
+            placement = resolve_selected_room(export, (x, y), map_id, args.room_role,
+                                              layered=args.layered_map, ingress=args.ingress)
         except (OSError, ValueError) as error:
             parser.error(str(error))
         print(json.dumps(placement, ensure_ascii=False))

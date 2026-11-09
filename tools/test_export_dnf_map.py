@@ -36,6 +36,14 @@ class Rules(unittest.TestCase):
         self.assertIsNone(cells[(0, 0)]['mask'])
         self.assertEqual(diags[0]['code'], 'greed_code')
 
+    def test_map_greed_keeps_layout_and_ingress_paired(self):
+        room = {'path': 'map/example.map',
+                'raw': [{'tag': '[greed]', 'values': [[0, '', 'GG EE MM II']]}]}
+        self.assertEqual(m.source_map_greed_pairs(room), [[6, 4], [12, 8]])
+        room['raw'][0]['values'][0][2] = 'GG EE MM'
+        with self.assertRaisesRegex(ValueError, 'Invalid MAP'):
+            m.source_map_greed_pairs(room)
+
     def test_special_objects_are_variable_length(self):
         values = [221, 526, 239, 0, 2, '[trap]', 2500, 1, 1, 7, -1, '[item]', 1, -1, 1, -1, -1,
                   221, 325, 343, 0, 1, '[trap]', 2110, 1, 2, 4, -1]
@@ -54,6 +62,50 @@ class Rules(unittest.TestCase):
 
 
 class LibraryExport(unittest.TestCase):
+    def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
+        from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
+
+        lock = json.loads(LOCK.read_text(encoding='utf-8'))
+        library = cache_home() / lock['version'] / 'library_v1'
+        if not (library / 'pvf_config.sqlite').exists():
+            self.skipTest('full library not synced')
+        (ROOT / 'temp').mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / 'temp') as folder:
+            result = m.run(library, 'dungeon/act3/outerwall.dgn', Path(folder), [])
+        dungeon = result['dungeon']
+        self.assertEqual(dungeon['sha256'], '4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8')
+        self.assertFalse([d for d in result['diagnostics'] if d['level'] == 'error'])
+        rooms = dungeon['rooms']
+        self.assertEqual(rooms['map/outerwall/n3009.map']['greed_pairs'], [[12, 8]])
+        cells = cell_graph(result)
+        self.assertEqual(sum(bool(c['doors']) for c in cells.values()), 16)
+        self.assertEqual(sum(len(c['doors']) for c in cells.values()), 30)
+        self.assertNotIn('map/outerwall/n3006.map', cells[(5, 0)]['map_candidates'])
+        self.assertNotIn('map/outerwall/n3010.map', cells[(0, 0)]['map_candidates'])
+        for cell in [(0, 0), (0, 2)]:
+            for map_id in (3001, 3002):
+                self.assertEqual(rooms[resolve_selected_room(result, cell, map_id, 'start')['map']]['map_id'], map_id)
+        for cell, ingress, normal, boss in [((5, 0), 'left', 3020, 3024), ((5, 2), 'up', 3021, 3022)]:
+            self.assertEqual(rooms[resolve_selected_room(result, cell, normal, 'normal', ingress=ingress)['map']]['map_id'], normal)
+            self.assertEqual(rooms[resolve_selected_room(result, cell, boss, 'boss', ingress=ingress)['map']]['map_id'], boss)
+            with self.assertRaisesRegex(ValueError, 'not an eligible boss room'):
+                resolve_selected_room(result, cell, normal, 'boss', ingress=ingress)
+        with self.assertRaisesRegex(ValueError, 'outside source'):
+            resolve_selected_room(result, (5, 2), 3007, 'normal', ingress='up')
+        self.assertEqual(resolve_selected_room(result, (1, 0), 3013, 'normal', ingress='down')['id'], '1_0:n3009')
+        self.assertEqual(resolve_selected_room(result, (0, 2), 3002, 'normal', ingress='right')['id'], '0_2:s3002')
+        with self.assertRaisesRegex(ValueError, 'does not accept ingress'):
+            resolve_selected_room(result, (1, 0), 3013, 'normal', ingress='left')
+        rooms['map/outerwall/n3009.map'].pop('greed_pairs')
+        self.assertEqual(resolve_selected_room(result, (1, 0), 3013, 'normal', ingress='down')['id'], '1_0:n3009')
+        placements = {p['id']: rooms[p['map']]['map_id'] for p in dungeon['placements']}
+        self.assertEqual(len(placements), 47)
+        for start, second in [((0, 0), 3004), ((0, 2), 3003)]:
+            for boss, final in [((5, 0), [3015, 3024]), ((5, 2), [3004, 3022])]:
+                sample = build(result, start, boss)
+                self.assertEqual([placements[room['placement']] for room in sample],
+                                 [3001, second, 3008, 3009, 3010, 3011, *final])
+
     def test_gate_loop_refresh_matches_source_and_preserves_other_bytes(self):
         lock = json.loads(LOCK.read_text(encoding='utf-8'))
         library = cache_home() / lock['version'] / 'library_v1'

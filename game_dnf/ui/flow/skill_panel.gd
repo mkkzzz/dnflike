@@ -161,6 +161,14 @@ func _part(key: String) -> Texture2D:
 		return null
 	return _tex(String(entry.get("file", "")))
 
+func _skill_icon(skill: Dictionary, disabled := false) -> Texture2D:
+	var icon := _tex(String(skill.get("icon", "")))
+	# The old manifest calls the second SKL image "selected". The selection
+	# indicator is a separate frame. The second image is the disabled artwork.
+	if not disabled and icon != null:return icon
+	var disabled_icon := _tex(String(skill.get("icon_selected", "")))
+	return disabled_icon if disabled_icon != null else icon
+
 func _sp_branches() -> Array:
 	var value = trees.get("sp", [])
 	return value if value is Array else []
@@ -457,10 +465,9 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
 		hit.add_theme_stylebox_override(state, StyleBoxEmpty.new())
 	var base: TextureRect = skin.image(hit, _part("node_selected") if chosen else _part("node_slot"), Vector2.ZERO)
-	var icon := _tex(String(skill.get("icon_selected", "")) if chosen else String(skill.get("icon", "")))
-	if icon == null:
-		icon = _tex(String(skill.get("icon", "")))
+	var icon := _skill_icon(skill)
 	var icon_view: TextureRect = skin.image(hit, icon, Vector2(5, 5)) if icon != null else null
+	if icon_view != null:icon_view.name = "skill_tree_icon"
 	var rank_label: Label = skin.label(hit, "", Vector2(0, 37), 10)
 	rank_label.size = Vector2(NODE_SLOT, 15)
 	rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -473,13 +480,12 @@ func _tree_node(parent: Control, node: Dictionary, skill: Dictionary) -> void:
 	hit.mouse_exited.connect(func():
 		if is_instance_valid(base):
 			base.modulate = base.get_meta("rest_tint", Color.WHITE))
-	var drag_icon := icon
 	hit.set_drag_forwarding(func(_at: Vector2):
 		if not SkillSlots.can_bind(game.session.profile, local):
 			return null
-		if drag_icon != null:
+		if icon != null:
 			var preview := TextureRect.new()
-			preview.texture = drag_icon
+			preview.texture = icon
 			preview.size = Vector2(50, 50)
 			preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			preview.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -498,14 +504,12 @@ func _refresh_node(key: String) -> void:
 	base.modulate = Color.WHITE
 	var icon: TextureRect = view["icon"]
 	if icon != null:
-		var texture := _tex(String(skill.get("icon_selected", "")) if chosen else String(skill.get("icon", "")))
-		icon.texture = texture if texture != null else _tex(String(skill.get("icon", "")))
+		var below_base_level := int(game.session.profile["level"]) < _required_level(skill, 0)
+		icon.texture = _skill_icon(skill, below_base_level)
 		icon.modulate = Color.WHITE
 	if local == "" or not class_allowed(skill):
 		base.modulate = Color(0.58, 0.58, 0.58, 0.8)
 		if icon != null:icon.modulate = Color(0.48, 0.48, 0.48, 0.72)
-	elif not bool(_state(skill)["ok"]):
-		if icon != null:icon.modulate = Color(0.7, 0.7, 0.7, 0.9)
 	base.set_meta("rest_tint", base.modulate)
 	var rank := int(_effective_levels.get(local, 0))
 	var label: Label = view["rank"]
@@ -626,9 +630,7 @@ func _detail(root: Control) -> void:
 	var art := _part("detail_art")
 	if art != null:
 		skin.image(panel, art, Vector2(19, 33))
-	var icon := _tex(String(skill.get("icon_selected", "")))
-	if icon == null:
-		icon = _tex(String(skill.get("icon", "")))
+	var icon := _skill_icon(skill)
 	if icon != null:
 		var icon_view: TextureRect = skin.image(panel, icon, Vector2(88, 57))
 		icon_view.name = "skill_detail_icon"

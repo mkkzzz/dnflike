@@ -29,6 +29,9 @@ func run(game, host) -> void:
 	var scroll: VScrollBar = game.modal.find_child("skill_tree_scroll", true, false)
 	var guard: Button = game.modal.find_child("skill_node_1", true, false)
 	var upper: Button = game.modal.find_child("skill_node_46", true, false)
+	var upper_icon: TextureRect = upper.get_node("skill_tree_icon")
+	var upper_art: Texture2D = panel._tex(panel.by_id[46]["icon"])
+	var disabled_art: Texture2D = panel._tex(panel.by_id[46]["icon_selected"])
 	var peak_us := 0
 	for button: Button in [guard, upper, guard, upper]:
 		var start := Time.get_ticks_usec()
@@ -40,6 +43,10 @@ func run(game, host) -> void:
 		var skill: Dictionary = panel.by_key[panel.selected]
 		var title: Label = game.modal.find_child("skill_detail_title", true, false)
 		var rank: Label = game.modal.find_child("skill_detail_title_rank", true, false)
+		var detail_icon: TextureRect = game.modal.find_child("skill_detail_icon", true, false)
+		host.check(upper_art != disabled_art and upper_icon.texture == upper_art
+			and detail_icon.texture == panel._tex(skill["icon"]),
+			"skill selection changes the frame while the tree and Explain retain the original color artwork")
 		host.check(title.position == Vector2(0, 13) and title.text == skill["name"] and title.get_theme_color("font_color") == Color("f7d65a"),
 			"real skill clicks use the Explain title anchor and original active skill color")
 		host.check(rank.position == Vector2(title.size.x, title.position.y) and rank.text == " Lv%d" % int(panel._effective_levels.get(skill["local_id"], 0)),
@@ -63,6 +70,16 @@ func run(game, host) -> void:
 	host.check(scroll.value == offset and content.position.y == -offset, "changing detail keeps the tree scroll position")
 	var edge: Line2D = game.modal.find_child("skill_edge_1_3", true, false)
 	host.check(edge.default_color == Color("c39a54"), "prerequisite edge highlights update without rebuilding the tree")
+	var guard_skill: Dictionary = panel.by_id[1]
+	var guard_icon: TextureRect = guard.get_node("skill_tree_icon")
+	game.session.profile["level"] = int(guard_skill["required_level"]) - 1
+	panel._refresh_node(guard_skill["key"])
+	host.check(guard_icon.texture == panel._tex(guard_skill["icon_selected"]),
+		"original disabled art marks the tree node below its base level")
+	game.session.profile["level"] += 1
+	panel._refresh_node(guard_skill["key"])
+	host.check(guard_icon.texture == panel._tex(guard_skill["icon"]) and guard_icon.modulate == Color.WHITE,
+		"reaching the original base level restores the color tree art")
 	game.session.profile["growtype"] = original_job
 	game.session.profile["level"] = original_level
 	panel.selected = original_selected
