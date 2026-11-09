@@ -919,6 +919,8 @@ func check_weapon_combo() -> void:
 			step(gate-float(game.player["clock"])-1.0)
 			check(game.player["stage"]==index and stage["continue_at"]==float(gate) and game.player["mp"]==100.0-6.0*(index+1),
 				"Weapon Combo holds the stage one millisecond before its original chain frame")
+			# This fixture advances local action time directly instead of stepping global hitstop.
+			game.player["stuck_ms"] = 0.0
 			step(1)
 			check(game.player["stage"]==index+1,"Weapon Combo advances at its native chain frame")
 		check(cues("weapon_combo_%s_finish"%data[2]).size()==1,
@@ -1000,6 +1002,102 @@ func check_weapon_combo() -> void:
 		var front: String = "weapon_combo_light_finish" if phase==2 else "weapon_combo_light_%d_5"%(phase+1)
 		check(cues(front).size()==1 and cues("weapon_combo_light_%d_1"%(phase+1)).size()==1,
 			"Light Sword Weapon Combo selects the phase-specific layers and final extra effect")
+
+func check_weapon_combo_normal_cancel() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"weaponcombo","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["weaponcombo"]
+	for sample: Array in [["original_27000","shortsword",1.0,240,300],
+			["original_27601","katana",1.25,180,240]]:
+		start_room(sample[0],sample[1],1,spec)
+		game.clear_monsters()
+		var rate: float = sample[2]
+		game.numeric_player.values["attack_speed"] = rate
+		game.numeric_player.values["mp_cost_rate"] = 1.0
+		game.player["mp"] = 100.0
+		press(KEY_X)
+		step(0)
+		press(KEY_A)
+		step(250.0/rate-1.0)
+		check(game.player["action"]=="attack1" and game.player["mp"]==100.0,
+			"Normal attack one does not accept Weapon Combo before native frame five")
+		step(1)
+		check(game.player["action"]=="weaponcombo" and game.player["stage"]==0 and game.player["mp"]==94.0,
+			"Normal attack one cancels to Weapon Combo stage one at native frame five")
+		press(KEY_X)
+		step(float(sample[3])/rate-1.0)
+		check(game.player["action"]=="weaponcombo","Weapon Combo retains its current swing before the weapon-specific gate")
+		game.player["stuck_ms"] = 1.0
+		step(1)
+		check(game.player["action"]=="weaponcombo","Weapon Combo cannot cancel into X during hitstop")
+		game.player["stuck_ms"] = 0.0
+		step(0)
+		check(game.player["action"]=="attack2" and game.player["mp"]==94.0,
+			"Weapon Combo resumes the next normal stage once the input gate clears")
+		press(KEY_A)
+		step(200.0/rate-1.0)
+		check(game.player["action"]=="attack2" and game.player["mp"]==94.0,
+			"Normal attack two holds until native frame four")
+		step(1)
+		check(game.player["action"]=="weaponcombo" and game.player["stage"]==1 and game.player["mp"]==88.0,
+			"Returning to Weapon Combo advances its own stage and pays exactly once")
+		press(KEY_X)
+		step(float(sample[4])/rate)
+		check(game.player["action"]=="attack3" and game.player["mp"]==88.0,
+			"The second return to X chooses normal attack three without charging MP")
+		press(KEY_A)
+		step(550.0/rate-1.0)
+		check(game.player["action"]=="attack3","The final normal attack cannot early cancel into Weapon Combo")
+		step(1)
+		check(game.player["action"]=="weaponcombo" and game.player["stage"]==0 and game.player["mp"]==82.0,
+			"After the final normal recovery, the buffered skill begins a new attack chain")
+	start_room("original_27000","shortsword",1,spec)
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.0
+	press(KEY_A)
+	step(0)
+	session.submit_key(KEY_X,true)
+	step(240)
+	check(game.player["action"]=="attack1","A Weapon Combo opened from idle cancels to the first normal attack")
+	session.submit_key(KEY_X,false)
+	press(KEY_A)
+	step(250)
+	check(game.player["action"]=="weaponcombo" and game.player["stage"]==1,"A second skill request returns to the saved combo ordinal")
+	press(KEY_A)
+	step(300)
+	press(KEY_X)
+	step(539)
+	check(game.player["action"]=="weaponcombo" and game.player["stage"]==2,"Final Weapon Combo does not early cancel to X")
+	step(1)
+	press(KEY_X)
+	step(0)
+	check(game.player["action"]=="attack1","A new normal chain starts at the first attack after Weapon Combo finishes")
+	start_room("original_27000","shortsword",1,spec)
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.0
+	press(KEY_Z)
+	step(0)
+	press(KEY_A)
+	step(849)
+	check(game.player["action"]=="upper","Weapon Combo cannot use the generic Upper Slash hitbox cancel window")
+	step(1)
+	check(game.player["action"]=="weaponcombo" and game.player["stage"]==0,
+		"After Upper Slash recovery a buffered Weapon Combo starts from the first stage")
+	for opener: int in [KEY_X,KEY_A]:
+		start_room("original_27000","shortsword",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		press(opener)
+		step(0)
+		var balance: float = game.player["mp"]
+		press(KEY_A)
+		press(KEY_X)
+		step(250 if opener==KEY_X else 240)
+		check(game.player["action"]==("attack2" if opener==KEY_X else "attack1") and game.player["mp"]==balance,
+			"The original common input handles X before the Swordman skill request on the same frame")
 
 func check_heavy_weapon_combo() -> void:
 	var profile := ProfileSession.new()
@@ -1635,8 +1733,9 @@ func run() -> void:
 		step(50)
 		check(game.hit_count==2 and game.bus.events_of("combat.hit")[-1]["target"]==near["id"],
 			"B layer first hits the near actor at 200 ms and cannot hit the first actor twice")
+		game.player["stuck_ms"] = 0.0
 		press(KEY_X)
-		step(400)
+		step(50)
 		check(game.player["action"]=="attack2" and game.player["hits"].is_empty(),
 			"next ATK installation clears the target ledger")
 		move_target(ahead,POINT+Vector2(72*facing,0))
@@ -1645,8 +1744,9 @@ func run() -> void:
 		step(100)
 		check(game.hit_count==3 and game.bus.events_of("combat.hit")[-1]["target"]==ahead["id"],
 			"second attack can hit the same actor again")
+		game.player["stuck_ms"] = 0.0
 		press(KEY_X)
-		step(400)
+		step(100)
 		move_target(ahead,POINT+Vector2(72*facing,0))
 		move_target(near,POINT+Vector2(8*facing,0))
 		step(100)
@@ -1723,6 +1823,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_overdrive_attributes()
 	check_weapon_combo()
+	check_weapon_combo_normal_cancel()
 	check_heavy_weapon_combo()
 	check_overdrive_cast()
 	check_overdrive_particles()

@@ -656,7 +656,7 @@ func buffering(code: int) -> void:
 				player["queued_upper_followup"] = true
 			return
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
-	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
+	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","weaponcombo","frenzy1","frenzy2","frenzy3","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
 	elif skill_slot_index(code) >= 0:
 		var id := skill_request(code)
@@ -728,6 +728,7 @@ func leave_action() -> void:
 	player.erase("weapon_combo_cast")
 	player.erase("weapon_combo_charge")
 	player.erase("weapon_combo_release")
+	player.erase("weapon_combo_chain")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
@@ -1035,14 +1036,38 @@ func step_action(ms: float, move: Vector2) -> void:
 	var cancel_at := float(stage.get("cancel_at",duration))
 	if not native_phase.is_empty():cancel_at = duration
 	var pending := String(player["queued_skill"])
+	var input_ready := float(player["stuck_ms"]) <= 0.0
+	var ordinary_attack := name in Kernel.MoveTable.NORMAL_ATTACK_CHAIN
+	var combo_requested := bool(player["queued_combo"])
+	if stage.has("combo_at") or name == "weaponcombo":
+		# 85F8A7 waits for hitstop and accepts a held command or a buffered input.
+		combo_requested = input_ready and (combo_requested or bool(held.get(KEY_X,false)))
+	if combo_requested and clock < duration:
+		# CB09D1 runs the common X handler before the Swordman skill input check.
+		if name == "weaponcombo" and clock >= float(stage.get("continue_at",INF)):
+			var chain: Dictionary = player.get("weapon_combo_chain",{})
+			# CD4602 supplies the next ordinary attack ordinal to 85F98B.
+			var next_normal := int(chain.get("normal_stage",-1))+1
+			player["queued_combo"] = false
+			if next_normal < Kernel.MoveTable.NORMAL_ATTACK_CHAIN.size() \
+					and start_action(Kernel.MoveTable.NORMAL_ATTACK_CHAIN[next_normal],true):return
+		elif pending == "weaponcombo" and ordinary_attack and clock >= float(stage.get("combo_at",INF)):
+			player["queued_combo"] = false
+			if start_action(String(m["next"]),true):return
+	if pending == "weaponcombo" and name != pending:
+		# CBEB68 consults the current attack's frame gate, not the end of its hitboxes.
+		if ordinary_attack and input_ready and clock >= float(stage.get("combo_at",INF)) and clock < duration:
+			player["queued_skill"] = ""
+			if start_action(pending,true):return
+		elif clock >= duration:
+			player["queued_skill"] = ""
+			end_action()
+			start_action(pending)
+			return
 	if pending != "" and move_def(pending).has("normal_cancel_job") and not normal_attack_cancel_allowed(move_def(pending)):
 		# Keep a valid next cast buffered until recovery ends; lack of early
 		# cancel permission must not consume and silently lose the request.
 		cancel_at = duration
-	var combo_requested := bool(player["queued_combo"])
-	if stage.has("combo_at"):
-		# 85F8A7 waits for hitstop and accepts a held command or a buffered input.
-		combo_requested = float(player["stuck_ms"]) <= 0.0 and (combo_requested or bool(held.get(KEY_X,false)))
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
 		leave_action()
 		player["state"] = "jump"
@@ -1052,18 +1077,18 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["queued_jump"] = false
 		play_sound("jump")
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
-		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1:
+		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1 \
+		and (name != "weaponcombo" or (input_ready and clock < duration)):
 		player["queued_skill"] = ""
 		if name == "weaponcombo":
 			# CBEDC4 accepts the next stage only after the regular skill payment.
 			var cost := skill_mp_cost(m)
 			if float(player["mp"]) < cost:
 				reject_action(name,"mp")
-				if clock >= duration:end_action()
 				return
 			player["mp"] = float(player["mp"])-cost
 		start_stage(int(player["stage"])+1)
-	elif clock >= cancel_at and String(player["queued_skill"]) != "" and String(player["queued_skill"]) != name:
+	elif clock >= cancel_at and String(player["queued_skill"]) not in ["",name,"weaponcombo"]:
 		var requested: String = player["queued_skill"]
 		player["queued_skill"] = ""
 		start_action(requested,true)
@@ -1171,6 +1196,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.is_empty():return reject_action(name,"unknown")
 	if player["state"] == "hold":return reject_action(name,"state")
 	if name == "triple" and player.has("triple_cast"):return reject_action(name,"state")
+	if name == "weaponcombo" and player["state"] not in ["idle","move","action"]:return reject_action(name,"state")
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var required_effect := String(m.get("requires_effect",""))
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
@@ -1192,6 +1218,11 @@ func start_action(name: String, cancel := false) -> bool:
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
+	var normal_index := Kernel.MoveTable.NORMAL_ATTACK_CHAIN.find(name)
+	# Preserve both ordinals across a direct attack transition, then clear on recovery or interruption.
+	var combo_chain: Dictionary = player.get("weapon_combo_chain",{}) if cancel else {}
+	var opening_stage := int(combo_chain.get("skill_stage",-1))+1 if name == "weaponcombo" else 0
+	if name == "weaponcombo" and opening_stage >= m["stages"].size():return reject_action(name,"state")
 	if m.has("frenzy_disable_after_ms"):
 		var frenzy := active_effect("frenzy")
 		if not frenzy.is_empty():
@@ -1229,6 +1260,9 @@ func start_action(name: String, cancel := false) -> bool:
 		start_backstep()
 		return true
 	leave_action()
+	if normal_index >= 0 or name == "weaponcombo":
+		player["weapon_combo_chain"] = combo_chain
+		if normal_index >= 0:combo_chain["normal_stage"] = normal_index
 	if name == "air_attack":player["air_attack_used"] = true
 	player["state"] = "guard" if guard else "action"
 	player["action"] = "" if guard else name
@@ -1281,7 +1315,7 @@ func start_action(name: String, cancel := false) -> bool:
 		charge["warmup_ms"] = int(float(charge["release_clock"])/maxf(speed,0.001))
 		charge["elapsed_ms"] = 0.0
 		player["hardattack_charge"] = charge
-	start_stage(0)
+	start_stage(opening_stage)
 	match name:
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
 	return true
@@ -1362,6 +1396,7 @@ func step_frenzy_cast(ms: float) -> void:
 
 func start_stage(index: int, opening_clock := 0.0) -> void:
 	var name: String = player["action"]
+	if name == "weaponcombo":player["weapon_combo_chain"]["skill_stage"] = index
 	player["stage"] = index
 	player["clock"] = opening_clock
 	player["hits"] = {}

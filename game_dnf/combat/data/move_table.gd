@@ -19,6 +19,9 @@ const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
 const HEAVY_MASTERY_SKL := "skill/swordman/heavyswordmastery.skl"
+const NORMAL_ATTACK_CHAIN := ["attack1","attack2","attack3"]
+# CA5474 and CA548A append the two native normal-attack cancel frames.
+const NORMAL_CONTINUE_FRAMES := [5,4]
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
 const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
 	"upper":"upperslash","upper_followup":"upperslashafter",
@@ -423,6 +426,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move.merge(move["stages"][0],false)
 	else:
 		move.merge(_build_stage(spec,skill,weapon_hits),false)
+	var normal_index := NORMAL_ATTACK_CHAIN.find(name)
+	if normal_index >= 0 and normal_index < NORMAL_CONTINUE_FRAMES.size():
+		move["combo_at"] = float(move["timeline"][NORMAL_CONTINUE_FRAMES[normal_index]]["start_ms"])
 	if name == "upper":_append_upper_followup(move)
 	for stage: Dictionary in move.get("stages",[move]):
 		for hit: Dictionary in stage.get("hits",[]):
