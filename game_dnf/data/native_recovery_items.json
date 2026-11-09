@@ -1,0 +1,110 @@
+{
+ "schema": "dnf_native_recovery_items/1",
+ "items": {
+  "original_1089": {
+   "name": "突变草莓",
+   "kind": "consumable",
+   "rarity": 1,
+   "level": 45,
+   "weight": 0.001,
+   "price": 500,
+   "stack_limit": 1000,
+   "description": "恢复 HP 1930\n解除出血",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/consumption.img",
+    65
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    21
+   ],
+   "source": {
+    "id": 1089,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/strawberry_mutant.stk",
+    "sha256": "a809d926d556fd0ffb8f4c329ce293b510fa608e5df300bc84dff98ec70d84a6"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[active status recovery]": [
+     "bleeding",
+     -1,
+     "myself"
+    ]
+   }
+  },
+  "original_1090": {
+   "name": "突变苎麻花叶",
+   "kind": "consumable",
+   "rarity": 1,
+   "level": 45,
+   "weight": 0.001,
+   "price": 500,
+   "stack_limit": 1000,
+   "description": "恢复 MP 1420\n使用后， 有10%的机率使自身进入眩晕状态。",
+   "multiplier": 1.0,
+   "icon": [
+    "Item/stackable/consumption.img",
+    66
+   ],
+   "field_image": [
+    "Item/FieldImage.img",
+    32
+   ],
+   "source": {
+    "id": 1090,
+    "list": "stackable/stackable.lst",
+    "path": "stackable/lamihwa_mutant.stk",
+    "sha256": "99f3b2245a863ef77ee19a523f93e53292b61c012055b94d608a69cbc94f4604"
+   },
+   "purchasable": false,
+   "sellable": false,
+   "source_fields": {
+    "[my status]": [
+     "stun",
+     10,
+     5000,
+     50
+    ]
+   }
+  }
+ },
+ "consumables": {
+  "original_1089": {
+   "level": 45,
+   "cooldown_ms": 10000,
+   "group": "original_2",
+   "group_cooldown_ms": 10000,
+   "effect": {
+    "kind": "restore",
+    "hp": 1930,
+    "mp": 0,
+    "duration_ms": 1000,
+    "hp_percent": 0,
+    "mp_percent": 0,
+    "cure": "bleed"
+   }
+  },
+  "original_1090": {
+   "level": 45,
+   "cooldown_ms": 10000,
+   "group": "original_3",
+   "group_cooldown_ms": 10000,
+   "effect": {
+    "kind": "restore",
+    "hp": 0,
+    "mp": 1420,
+    "duration_ms": 1000,
+    "hp_percent": 0,
+    "mp_percent": 0,
+    "self_stun": {
+     "chance_percent": 10,
+     "duration_ms": 5000,
+     "status_level": 50
+    }
+   }
+  }
+ }
+}

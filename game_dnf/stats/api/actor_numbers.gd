@@ -71,6 +71,13 @@ func sleep_age() -> float:
 	var sleep: Dictionary = effects.active.get("sleep",{})
 	return -1.0 if sleep.is_empty() else float(sleep["definition"]["duration_ms"])-float(sleep["remaining_ms"])
 
+## Item self-stun has already passed its percent roll. Enum 3 shares the
+## native signed level-difference duration branch with freeze and sleep.
+func apply_item_stun(status_level: int, duration_ms: int) -> bool:
+	var level_delta := status_level-int(values.get("level",1))
+	var duration := int(native_scalar(duration_ms*native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE)))
+	return duration>0 and effects.add("stun",{"name":"眩晕","control":"stun","status_level":status_level,"duration_ms":duration})
+
 func apply_khazan_drive(source: Dictionary) -> bool:
 	var added := effects.add("khazan_drive",{"name":"卡赞冲波","duration_ms":source["duration_ms"],
 		"modifiers":[{"stat":"strength","op":"add","value":source["strength"]},

@@ -18,5 +18,10 @@ static func execute(args: PackedStringArray) -> Dictionary:
 		if row.is_empty():return {"ok":false,"message":"原ID不存在"}
 		var text: Dictionary = row.get("text",{})
 		var current: Dictionary=Native.quest_execution(int(args[1])) if args[0]=="quests" else row.get("execution",{})
+		if args[0]=="stackable":
+			var key: String="original_%d" % int(args[1])
+			var runtime := Native.runtime()
+			if runtime.get("consumables",{}).has(key) and runtime.get("items",{}).get(key,{}).get("source",{}).get("path")==row["path"]:
+				current={key:{"state":"compiled","reasons":[]}}
 		return {"ok":true,"message":"%s\n%s\n%s\n迁移状态：%s；当前编译状态：%s" % [text.get("[name]","源名称待修复"),row["path"],String(text.get("[condition message]",text.get("[explain]",""))).left(600),row.get("parse_status",""),JSON.stringify(current)]}
 	return {"ok":false,"message":"用法：native；native find equipment|stackable|quests 关键词；native equipment|stackable|quests 原ID"}

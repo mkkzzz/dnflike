@@ -32,7 +32,12 @@ static func index() -> Dictionary:
 static func runtime() -> Dictionary:
 	if _runtime.is_empty():
 		var value = JSON.parse_string(FileAccess.get_file_as_string("res://data/native_runtime.json"))
-		if value is Dictionary and value.get("schema") == "dnf_native_runtime/1":_runtime = value
+		if value is Dictionary and value.get("schema") == "dnf_native_runtime/1":
+			_runtime = value
+			var recovery = JSON.parse_string(FileAccess.get_file_as_string("res://data/native_recovery_items.json"))
+			if recovery is Dictionary and recovery.get("schema") == "dnf_native_recovery_items/1":
+				for group: String in ["items","consumables"]:
+					_runtime[group].merge(recovery[group],false)
 	return _runtime
 
 static func record(path: String) -> Dictionary:

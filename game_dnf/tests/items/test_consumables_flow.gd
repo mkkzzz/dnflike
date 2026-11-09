@@ -91,6 +91,80 @@ func after_death() -> void:
 	check(game.session.state=="town" and not is_instance_valid(game.battle) and game.session.profile.gold==1000 and game.session.profile.inventory.potion==5 and game.session.profile.resurrection_coins==death_coins-1,"return to town keeps the single paid coin and grants no clear reward")
 	var loaded=game.Session.new()
 	check(game.store.read_into(loaded) and loaded.profile==game.session.profile,"consumed item and single death penalty survive disk reload")
+	await check_original_awaken_food()
 	complete()
+
+func check_original_awaken_food() -> void:
+	const Strawberry := "original_1089"
+	const Castor := "original_1090"
+	const Rng = preload("res://core/det_rng.gd")
+	const Restoration = preload("res://combat/item_restoration.gd")
+	var fixture=game.Session.new()
+	fixture.profile.level=50
+	fixture.profile.town_location="elvengard"
+	fixture.profile.town_position=[1400.0,220.0]
+	fixture.profile.stat_modifiers=[{"stat":"mp_max","op":"add","value":2000}]
+	var supplied: bool=Items.give(fixture.profile,Strawberry,1).ok and Items.give(fixture.profile,Castor,2).ok
+	fixture.profile.quick_items[0]=Strawberry
+	fixture.profile.quick_items[1]=Castor
+	var storage=game.Store.new()
+	storage.path="res://../temp/recovery_tests/awaken_food.json"
+	game.show_character_selection()
+	var entered: bool=supplied and storage.write(fixture) and game.enter_character(storage.path)
+	check(entered,"original awakening rewards load with their two item shortcuts")
+	if not entered:return
+	for id in [Strawberry,Castor]:
+		var icon: Texture2D=game.windows.item_texture(id)
+		var field: Texture2D=game.windows.field_texture(id)
+		check(icon!=null and icon.get_size()==Vector2(28,28) and field!=null,"original inventory and ground graphics are ready for "+id)
+	game.selected_dungeon="lorien"
+	game.depart()
+	await ticks(3)
+	check(game.session.state=="battle","original food is used through the normal dungeon flow")
+	if game.session.state!="battle":return
+	var kernel=game.combat.game
+	var numbers=kernel.numeric_player
+	check(kernel.apply_effect({"kind":"effect","id":"bleed"}),"fixture applies bleeding through the live status API")
+	kernel.player.hp=kernel.max_hp
+	game.use_quick(0)
+	check(not numbers.effects.active.has("bleed") and Items.stock(game.session.profile,Strawberry)==0,
+		"strawberry clears bleeding at full health and commits exactly one unit")
+	var healing: Dictionary=kernel.item_restorations.back() if not kernel.item_restorations.is_empty() else {}
+	check(healing.get("hp")==1930 and healing.get("duration_ms")==1000,"original HP request queues 1930 over exactly 1000 ms")
+	var seed_hit:=0
+	var seed_miss:=0
+	for seed_value in range(1024):
+		var roll:=Rng.new(seed_value).range_int(0,0x7fffffff)%100
+		if roll==9:seed_hit=seed_value
+		elif roll==10:seed_miss=seed_value
+		if seed_hit!=0 and seed_miss!=0:break
+	check(seed_hit!=0 and seed_miss!=0,"deterministic rolls bracket the original ten percent boundary")
+	kernel.player.mp=1.0
+	kernel.rng.reseed(seed_miss)
+	game.store.path="res://data/recovery.json/cannot_write.json"
+	game.use_quick(1)
+	check(game.save_failed and Items.stock(game.session.profile,Castor)==2 and not numbers.effects.active.has("stun"),
+		"failed food save spends no item, effect or roll")
+	game.store.path=storage.path
+	game.use_quick(1)
+	check(Items.stock(game.session.profile,Castor)==1 and not numbers.effects.active.has("stun"),
+		"roll 10 fails the stun check while MP food uses its own cooldown group")
+	var restoration: Dictionary=kernel.item_restorations.back() if not kernel.item_restorations.is_empty() else {}
+	check(restoration.get("mp")==1420 and restoration.get("duration_ms")==1000,"original MP request queues 1420 over exactly 1000 ms")
+	Restoration.step(kernel,500)
+	check(is_equal_approx(float(kernel.player.mp),711.0),"recovery scheduler grants half the original MP after 500 ms")
+	Restoration.step(kernel,500)
+	check(is_equal_approx(float(kernel.player.mp),1421.0) and kernel.item_restorations.is_empty(),
+		"recovery scheduler completes the original MP amount once")
+	kernel.player.mp=1.0
+	kernel.elapsed_ms+=10000
+	kernel.rng.reseed(seed_hit)
+	game.use_quick(1)
+	var stun: Dictionary=numbers.effects.active.get("stun",{})
+	check(Items.stock(game.session.profile,Castor)==0 and stun.get("remaining_ms")==5000.0
+		and stun.get("definition",{}).get("status_level")==50,"roll 9 applies level-50 self stun for 5000 ms at equal level")
+	await tap(KEY_X)
+	check(String(kernel.player.action).is_empty() and numbers.effects.controlled(),"self stun suppresses actual attack input")
+
 func complete() -> void:
 	print("[LOOP_TEST] COMPLETE checks=%d failures=%d captures=%d" % [checks,failures,captured.size()]);get_tree().quit(1 if failures else 0)

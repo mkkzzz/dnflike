@@ -233,6 +233,10 @@ if ($Test) {
     if ($LASTEXITCODE -ne 0) {throw "Revival asset package is stale."}
     & python (Join-Path $PSScriptRoot "check_dnf_native_catalog.py")
     if ($LASTEXITCODE -ne 0) {throw "Complete native quest/item package is inconsistent."}
+    & python (Join-Path $PSScriptRoot "build_dnf_recovery_items.py") --check
+    if ($LASTEXITCODE -ne 0) {throw "Composite recovery items are stale."}
+    & python (Join-Path $PSScriptRoot "bake_dnf_progression_icons.py") --check --version items_original_v5
+    if ($LASTEXITCODE -ne 0) {throw "Composite recovery item graphics are stale."}
     & python (Join-Path $PSScriptRoot "build_dnf_quest_rules.py") --check
     if ($LASTEXITCODE -ne 0) {throw "Native quest rules/audit are stale."}
     $questRules=& $GodotPath --headless --path $gamePath --script res://tests/quests/test_native_quest_rules.gd 2>&1

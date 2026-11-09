@@ -4,6 +4,7 @@
   "game_dnf/data/quests.json": "783477461f124b85985ce1179c2a80e21e33f39e00f89c2f9ab0e42d15446ed9",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
+  "game_dnf/data/native_recovery_items.json": "53b8adb04d3580323ba62027b711cd2db749d417d728b1679fe05d1a1bd949da",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "bdee8e667b3ffe65dc318c760006a827639dd026d88618f3a6242e1c4fd60695",
   "game_dnf/data/dungeons.json": "bcab4b60b7821736e8e4f4530284dddb8da1ea9457db29fa2cd662fe767a52cc",
@@ -5886,5 +5887,5 @@
   ]
  },
  "status_file": "res://data/native_quest_status_v2.json.gz",
- "status_sha256": "8a5c627ab7d9cf870a42088560c6671ae7f11aaf09e4c40d2ef195da94613824"
+ "status_sha256": "d6b26da7c510cd8638a5e1f583472d8f507879a2c9d43c4a844546a986f2fcda"
 }

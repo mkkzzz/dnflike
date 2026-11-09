@@ -229,6 +229,7 @@
   "game_dnf/data/quests.json": "783477461f124b85985ce1179c2a80e21e33f39e00f89c2f9ab0e42d15446ed9",
   "game_dnf/data/native_runtime.json": "5d188709d45b658d74d0058563e82da509bf9a0e34b2a3c6cbb8dc4217b749bc",
   "game_dnf/data/runtime_items.json": "e0e3ce46d6b39aae805808a1bce7110c55aa9265606ce7f671534543690ae2ae",
+  "game_dnf/data/native_recovery_items.json": "53b8adb04d3580323ba62027b711cd2db749d417d728b1679fe05d1a1bd949da",
   "game_dnf/data/monster_catalog.json": "bc0689f1d377e47a66d439fdc2a99d998bc14d32fdfb7d38ce3276a090c7563c",
   "game_dnf/data/combat.json": "bdee8e667b3ffe65dc318c760006a827639dd026d88618f3a6242e1c4fd60695",
   "game_dnf/data/dungeons.json": "bcab4b60b7821736e8e4f4530284dddb8da1ea9457db29fa2cd662fe767a52cc",
@@ -340,8 +341,6 @@
   "field:[check count]": 48,
   "field:[collision quest]": 44,
   "character_target_unsupported": 41,
-  "reward_item_unavailable:original_1089": 37,
-  "reward_item_unavailable:original_1090": 36,
   "dungeon_unavailable:53": 33,
   "field:[grow number]": 33,
   "clear_map_unavailable:30030": 32,
@@ -3311,9 +3310,7 @@
     }
    ],
    "reasons": [
-    "dungeon_unavailable:50",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "dungeon_unavailable:50"
    ],
    "state": "blocked"
   },
@@ -3347,8 +3344,6 @@
    "reasons": [
     "dungeon_unavailable:50",
     "reward_item_unavailable:original_1022",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -3796,8 +3791,6 @@
    ],
    "reasons": [
     "dungeon_unavailable:51",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -3832,8 +3825,6 @@
    "reasons": [
     "dungeon_unavailable:51",
     "reward_item_unavailable:original_1022",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -6819,9 +6810,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -33391,9 +33380,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -33650,9 +33637,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -33878,9 +33863,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -34116,9 +34099,7 @@
     "monster_unavailable:50066",
     "monster_unavailable:50067",
     "monster_unavailable:50068",
-    "monster_unavailable:711",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "monster_unavailable:711"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -34384,9 +34365,7 @@
     "monster_unavailable:50066",
     "monster_unavailable:50067",
     "monster_unavailable:50068",
-    "monster_unavailable:711",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "monster_unavailable:711"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -34617,9 +34596,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -34874,9 +34851,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -35127,9 +35102,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -35396,9 +35369,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -35822,9 +35793,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -36282,9 +36251,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -36600,9 +36567,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -36894,9 +36859,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -37190,9 +37153,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -37484,9 +37445,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -71036,9 +70995,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -71228,9 +71185,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -72964,7 +72919,6 @@
    "reasons": [
     "field:[enemy reward item]",
     "npc_not_in_town",
-    "reward_item_unavailable:original_1089",
     "prerequisite_not_executable"
    ],
    "state": "blocked"
@@ -82569,9 +82523,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -82762,9 +82714,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -82955,9 +82905,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -83148,9 +83096,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -83341,9 +83287,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -83546,9 +83490,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -83746,9 +83688,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -83943,9 +83883,7 @@
    "reasons": [
     "dungeon_unavailable:112",
     "field:[job change quest]",
-    "monster_unavailable:61109",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "monster_unavailable:61109"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -86443,9 +86381,7 @@
    ],
    "reasons": [
     "field:[job change quest]",
-    "npc_not_in_town",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "npc_not_in_town"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -86637,9 +86573,7 @@
    ],
    "reasons": [
     "field:[job change quest]",
-    "npc_not_in_town",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "npc_not_in_town"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -100963,9 +100897,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -101156,9 +101088,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -101349,9 +101279,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [
@@ -101542,9 +101470,7 @@
     }
    ],
    "reasons": [
-    "field:[job change quest]",
-    "reward_item_unavailable:original_1089",
-    "reward_item_unavailable:original_1090"
+    "field:[job change quest]"
    ],
    "state": "blocked",
    "raw_job_change_quest": [

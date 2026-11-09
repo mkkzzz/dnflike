@@ -68,6 +68,10 @@ def build():
     previous=old['quests']+native['quests']
     existing={q['source']['id']:q['id'] for q in previous if q.get('source',{}).get('id') is not None}
     items={**native['items'],**load(DATA/'runtime_items.json')['items']}
+    recovery_path=DATA/'native_recovery_items.json'
+    recovery=load(recovery_path)
+    if recovery.get('schema')!='dnf_native_recovery_items/1':raise ValueError('Unknown composite recovery catalog')
+    for key,item in recovery['items'].items():items.setdefault(key,item)
     monster_rows=load(DATA/'monster_catalog.json')['monsters']
     registered={v['mob'] for v in load(DATA/'combat.json')['monsters'].values()}
     monsters={v['id']:v['path'] for v in monster_rows.values() if v['path'] in registered}
@@ -76,7 +80,7 @@ def build():
     npcs={i:key for i,key in NPCS.items()
           if key in old['npcs'] and (key in placed or key=='the_last_mehmet')}
     source=load(BASE/'manifest.json')['source'];map_targets=dict(campaign.get('map_targets',{}))
-    for path in [DATA/'quests.json',DATA/'native_runtime.json',DATA/'runtime_items.json',DATA/'monster_catalog.json',DATA/'combat.json',DATA/'dungeons.json',DATA/'towns.json',CAMPAIGN,BASE/'manifest.json']:
+    for path in [DATA/'quests.json',DATA/'native_runtime.json',DATA/'runtime_items.json',recovery_path,DATA/'monster_catalog.json',DATA/'combat.json',DATA/'dungeons.json',DATA/'towns.json',CAMPAIGN,BASE/'manifest.json']:
         inputs[path.relative_to(ROOT).as_posix()]=digest(path)
     for key,row in routes.items():
         if not row.get('map_export'):continue

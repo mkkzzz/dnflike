@@ -38,7 +38,10 @@ static func use(p: Dictionary, run: Dictionary, id: String, view: Dictionary, tx
 	if mp_amount>0 and (not finite(view.get("mp"),0,1000000000) or not finite(view.get("mp_max"),1,1000000000) or view["mp"]>view["mp_max"]):return Items.fail("魔法值快照无效")
 	var restored_hp:=minf(hp_amount,float(view["hp_max"])-float(view["hp"]))
 	var restored_mp:=minf(mp_amount,float(view.get("mp_max",0))-float(view.get("mp",0)))
-	if restored_hp<=0 and restored_mp<=0:return Items.fail("对应的生命值或魔法值已满")
+	var active_effects=view.get("effects",[])
+	var cures_bleeding: bool=effect.get("cure")=="bleed" and active_effects is Array and active_effects.any(
+		func(entry):return entry is Dictionary and entry.get("id")=="bleed")
+	if restored_hp<=0 and restored_mp<=0 and not cures_bleeding:return Items.fail("对应的生命值或魔法值已满")
 	var time_ms:=float(view["time_ms"])
 	var state: Dictionary=run.get("consumables",{"items":{},"groups":{},"transactions":{}})
 	if state["transactions"].has(tx):return Items.fail("这次使用已经提交")
