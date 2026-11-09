@@ -82,6 +82,27 @@ def swordman_half_height(src) -> int:
     return int(-(frame['pos'][1] + metadata['y']) / 2)
 
 
+def monster_number_height(src, mob: str) -> int | None:
+    """829EF8..829F6B measures the first source waiting frame, before IMG cropping."""
+    decoded = src.pack_records.get(mob, {}).get('decoded', {})
+    if not decoded:
+        return None
+    actions = decoded.get('waiting_actions') or []
+    if actions:
+        act = src.pack_records.get(actions[0], {}).get('decoded', {})
+        waiting = [act['base_ani']] if act.get('base_ani') else []
+    else:
+        waiting = decoded.get('waiting_motion') or []
+    if not waiting:
+        return None
+    try:
+        frame = src.animation(waiting[0])['frames'][0]
+        _, meta = src.frame(frame['img'], frame['img_frame'])
+    except (KeyError, IndexError, TypeError):
+        return None
+    return -(frame['pos'][1] + meta['y'])
+
+
 def native_particle_definitions(src, extra_pins=None):
     """Small runtime subset, decoded from the source; retain duplicate choices."""
     particles, effects = {}, {}
@@ -753,7 +774,11 @@ def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: lis
             if not src.lib.exists(equ):
                 unresolved.append({'kind': 'monster_equipment', 'monster': mob, 'path': equ,
                                    'note': 'equipment file absent; appearance drawn from body IMG only'})
-    return {'atlas': atlas.save(), 'clips': clips, 'mob': mob, 'body_image': body}
+    bank = {'atlas': atlas.save(), 'clips': clips, 'mob': mob, 'body_image': body}
+    height = monster_number_height(src, mob)
+    if height is not None:
+        bank['number_height'] = height
+    return bank
 
 
 def sound_files(src: Source, key: str) -> list[str]:

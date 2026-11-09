@@ -263,7 +263,9 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	revive_effects=revive_effects.filter(func(entry: Dictionary):return is_instance_valid(entry["node"]) and not entry["node"].is_queued_for_deletion())
 	for i in range(numbers.size()-1,-1,-1):
 		numbers[i]["ms"] = float(numbers[i]["ms"])+frame_ms
-		if float(numbers[i]["ms"])>650:numbers.remove_at(i)
+		var age := float(numbers[i]["ms"])
+		var expired := age >= float(numbers[i]["end_ms"]) if numbers[i].has("end_ms") else age > 650.0
+		if expired:numbers.remove_at(i)
 	var hud_state: Dictionary = s["hud"].duplicate()
 	hud_state["enemies"] = s["enemies"]
 	hud_state["numbers"] = numbers
@@ -634,6 +636,10 @@ func _spawn_ghost(event: Dictionary) -> void:
 func _on_damage(event: Dictionary) -> void:
 	if not event.get("show_number",true):return
 	var point: Vector3 = event["point"]
+	if event.get("id","") == "bloody_rave_thirst":
+		numbers.append({"pos":Vector2(point.x,point.y+Frame.MAP_DY-point.z),"value":int(event["amount"]),
+			"ms":0.0,"style":"thirst_damage","end_ms":1000.0})
+		return
 	var style := "damage_crit" if event.get("critical",false) else "damage"
 	if String(event.get("victim","monster")) == "player":
 		style = "damage_crit" if event.get("id","") == "poison" else "damage_taken"

@@ -2109,6 +2109,7 @@ func check_bloody_rave_thirst() -> void:
 		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
 		var front := POINT+Vector2(145,0)
 		var first: Dictionary = api.spawn_dummy(front)
+		if sample[1] == 2:first["z"] = 12.0
 		var limit_case: bool = sample[0] == 0 and sample[1] == 1 and sample[2] == 750
 		if limit_case:
 			first["hp"] = 5.0
@@ -2131,6 +2132,15 @@ func check_bloody_rave_thirst() -> void:
 		var count := 6 if limit_case else 1
 		check(numbers.size()==count and numbers.all(func(event):return event["amount"]==amount),
 			"Thirst uses the sourced amount and caps each pulse at six contacts: %s" % str(sample))
+		var anchor := Vector3(int(first["pos"].x),int(first["pos"].y)+1,int(first["z"])+83)
+		var first_number: Dictionary = game.view.numbers[0]
+		check(numbers[0]["point"]==anchor and first_number["pos"]==Vector2(anchor.x,anchor.y+Frame.MAP_DY-anchor.z),
+			"Thirst uses the original 68-pixel goblin height plus 15, including airborne Z and ground depth")
+		if sample[1] == 2:
+			game.view.present(game.view_snapshot(),999.0,0.0)
+			check(game.view.numbers.size()==1 and first_number["ms"]==999.0,"the native float remains until 1000 ms")
+			game.view.present(game.view_snapshot(),1.0,0.0)
+			check(game.view.numbers.is_empty(),"the native float expires at 1000 ms")
 		check(game.player["hp"]==minf(2000.0,float(sample[2]+amount*count))
 			and first["hp"]==(0.0 if limit_case else 5000.0-amount) and game.hit_count==0,
 			"direct HP transfer grants the nominal heal, caps at max HP and does not create an attack hit")

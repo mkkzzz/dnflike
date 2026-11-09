@@ -73,12 +73,12 @@ func text(point: Vector2,value: String,size := 12,color := Color(0.93,0.91,0.79)
 
 ## Original bitmap glyph from sprite/common/etc/combo.img (key e.g. "damage_7", "combo_label_0").
 ## Returns the glyph width so callers can lay out strings.
-func glyph(key: String, point: Vector2, alpha := 1.0) -> float:
+func glyph(key: String, point: Vector2, alpha := 1.0, scale_rate := 1.0) -> float:
 	var item: Dictionary = digits.get(key,{})
 	if item.is_empty() or digit_atlas == null:return 0.0
 	var r: Array = item["rect"]
 	var o: Array = item["offset"]
-	var dest := Rect2(point+Vector2(float(o[0]),float(o[1])),Vector2(float(r[2]),float(r[3])))
+	var dest := Rect2(point+Vector2(float(o[0]),float(o[1]))*scale_rate,Vector2(float(r[2]),float(r[3]))*scale_rate)
 	trace.append(["d",key,str(dest),snappedf(alpha,0.001)])
 	draw_texture_rect_region(digit_atlas,dest,Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),Color(1,1,1,alpha))
 	return float(r[2])
@@ -95,3 +95,12 @@ func number(style: String, value: int, point: Vector2, alpha := 1.0, align := 0)
 	var x := point.x-(width*0.5 if align == 0 else width if align > 0 else 0.0)
 	for c in text:x += glyph(style+"_"+c,Vector2(x,point.y),alpha)-2
 	return width
+
+func thirst_damage_number(value: int, point: Vector2, alpha: float) -> void:
+	var text := str(value)
+	var width := 0.0
+	for digit in text:width += glyph_width("damage_"+digit)-(5.0 if digit=="1" else 6.0)
+	var x := point.x-float(int(width/2.0))*1.2
+	for digit in text:
+		var advance := glyph("damage_"+digit,Vector2(x,point.y),alpha,1.2)-(5.0 if digit=="1" else 6.0)
+		x += advance*1.2

@@ -1582,8 +1582,11 @@ func step_bloody_rave_thirst(phase: Dictionary, clock: int) -> void:
 		var point := Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"]))
 		bus.emit("combat.damage",{"target":enemy["id"],"amount":before-int(enemy["hp"]),"critical":false,
 			"category":"physical","victim":"monster","reaction":"none","point":point,"show_number":false})
+		# CB5C36 adds the original standing height plus 15 to Z and adds 1 to depth.
+		var bank: Dictionary = table.assets["monsters"].get(enemy["def"]["bank"],{})
+		var number_point := Vector3(Vector3i(point))+Vector3(0,1,int(bank.get("number_height",50))+15)
 		bus.emit("combat.damage_number",{"target":enemy["id"],"amount":amount,"id":"bloody_rave_thirst",
-			"victim":"monster","point":point})
+			"victim":"monster","point":number_point})
 
 func bloody_rave_thirst_pulse() -> Dictionary:
 	var rank := int(skill_levels.get("sacrifice",0))
