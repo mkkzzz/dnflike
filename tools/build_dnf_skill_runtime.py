@@ -1077,19 +1077,16 @@ def draw_stagger_parameters(library) -> dict:
             "max_recovery": fields["[hit recovery max]"][0]}
 
 
-def draw_weapon_tracks(library) -> dict:
-    # Default C layers for family-only combat actors. Item-specific ANI wins at runtime.
-    folders = {"shortsword": "ssword/sswdc", "katana": "katana/katanac",
-               "greatsword": "hsword/lswdc", "club": "club/clubc", "beamsword": "beamsword/beamswdc"}
+def swordman_weapon_tracks(library, pose: str, folders: dict[str, str], active_frames: list[int]) -> dict:
     tracks = {}
     for family, folder in folders.items():
-        path = f"equipment/character/swordman/weapon/{folder}/momentaryslash.ani"
+        path = f"equipment/character/swordman/weapon/{folder}/{pose}.ani"
         source = library.animation(path)
         frames = [{"frame": frame["frame"], "delay_ms": frame["delay_ms"],
                    "boxes": [box for box in frame.get("boxes", []) if box["kind"] == "attack"]}
                   for frame in source["metadata"]["frames"]]
-        if [frame["frame"] for frame in frames if frame["boxes"]] != [2, 3, 4, 5]:
-            raise ValueError(f"unexpected native Draw Sword attack frames: {path}")
+        if [frame["frame"] for frame in frames if frame["boxes"]] != active_frames:
+            raise ValueError(f"unexpected native weapon attack frames: {path}")
         tracks[family] = {"source": path, "sha256": source["sha256"], "frames": frames}
     return tracks
 
@@ -1852,6 +1849,9 @@ def build_variant_moves(
                         effects,
                         percent_col=len(stages),
                     )
+                    if base_id == "charge_crash":
+                        # The downstroke effect is visual only. 81A6B0 uses the mounted weapon boxes.
+                        stage["hits"] = [{"attached_weapon": True}]
                     if stage.get("hits"):
                         stages.append(stage)
                         player_anims[stage["ani"]] = CHR_ANI + stage["ani"] + ".ani"
@@ -2054,7 +2054,14 @@ def main() -> int:
             raise ValueError("Unverified original lightning status table")
         shock_hit_ms, = next(field["values"] for field in shock_table["fields"]
                              if field["tag"] == "[lightning time per number]")
-        draw_tracks = draw_weapon_tracks(library)
+        # Default source tracks for actors currently using family-level equipment.
+        draw_tracks = swordman_weapon_tracks(library, "momentaryslash", {
+            "shortsword": "ssword/sswdc", "katana": "katana/katanac", "greatsword": "hsword/lswdc",
+            "club": "club/clubc", "beamsword": "beamsword/beamswdc",
+        }, [2, 3, 4, 5])
+        charge_finish_tracks = swordman_weapon_tracks(library, "chargecrashfinish", {
+            "greatsword": "hsword/lswdc", "club": "club/clubb",
+        }, [3, 4])
         draw_layer = draw_wave_layer(library)
         draw_slashes = draw_effect_slots(library)
         grab_hold = grab_hold_effect_slot(library)
@@ -2169,6 +2176,8 @@ def main() -> int:
         if move:
             if key in ("bloodblast", "grabblastblood", "chargecrash"):
                 move["fixed_attack_base"] = fixed_attack_base
+            if key == "chargecrash":
+                move["finish_weapon_tracks"] = charge_finish_tracks
             if key == "grabblastblood":
                 move["grab_bleed_base"] = bleed_attack_base
                 effect = add_fx(fx, effects, grab_hold["path"])

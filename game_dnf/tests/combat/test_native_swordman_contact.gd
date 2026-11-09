@@ -3218,8 +3218,20 @@ func check_charge_crash_mastery() -> void:
 		check(game.player_ani()==["chargecrashfinish",0.0] and charge_layer.size()==1 and charge_layer[0].frame["frame"]==1,
 			"the body stays frozen while the original charge effect advances")
 		var limit := 400.0/rate
+		var targets: Array[Dictionary] = []
+		var target_frame: Dictionary = {}
+		var original_boxes: Array = []
 		if not full:
+			game.numeric_player.values["hit"] = 1.0
+			for distance: int in [80,169,-70]:
+				var target: Dictionary = game.spawn_enemy(Vector2(game.player["pos"])+Vector2(distance*int(game.player["facing"]),0))
+				target["hp"] = 5000.0
+				targets.append(target)
+			target_frame = game.enemy_frame(targets[0])
+			original_boxes = target_frame["damage_boxes"]
+			target_frame["damage_boxes"] = [[0,0,0,1,1,1]]
 			step((200.0-33.0)/rate)
+			check(game.hit_count==0,"the frozen preparation pose has no downstroke hit")
 			session.submit_key(KEY_A,false)
 			step(0)
 		else:
@@ -3234,6 +3246,9 @@ func check_charge_crash_mastery() -> void:
 		var hit: Dictionary = game.action_def()["hits"][0]
 		var percent: int = (498 if full else 293) if heavy else (118 if full else 88)
 		check(hit["percent"]==percent,"downstroke reads the equipped mastery and actual hold time")
+		var segments: Array = hit["segments"]
+		check(hit["source"]=="attached_weapon" and segments.size()==1 and segments[0]["start"]==240.0
+			and segments[0]["end"]==400.0,"the downstroke uses the equipped family's boxes on body frames three and four")
 		var down_fx := "skillfx_down_slash_f79b50a7"
 		var down_layers: Array = game.view.effects.filter(func(fx):return fx.cue_key==down_fx)
 		check(down_layers.size()==1 and down_layers[0].follow_offset==Vector2(135 if heavy else -135,10)
@@ -3245,6 +3260,20 @@ func check_charge_crash_mastery() -> void:
 			"the downstroke requests the original room shake")
 		check(game.objects.size()==int(not heavy and full),"only a fully charged club downstroke spawns the shockwave")
 		if not heavy and full and game.objects.size()==1:check_charge_crash_wave(game.objects[0])
+		if not full:
+			check(targets[0]["hp"]<5000.0 and targets[1]["hp"]==5000.0 and targets[2]["hp"]==5000.0,
+				"the first downstroke frame hits in front without inheriting the effect's reach behind the actor")
+			var initial_hp: float = targets[0]["hp"]
+			step(79.0/rate)
+			check(targets[1]["hp"]==5000.0,"the greatsword's longer second box cannot land one frame early")
+			step(1.0/rate)
+			check((targets[1]["hp"]<5000.0)==heavy and targets[0]["hp"]==initial_hp,
+				"only the greatsword widens on the second frame and the current ATK cannot rehit a registered target")
+			step(79.0/rate)
+			move_target(targets[2],Vector2(game.player["pos"])+Vector2(80*int(game.player["facing"]),0))
+			step(1.0/rate)
+			check(targets[2]["hp"]==5000.0,"a new contact at the end of the weapon's second frame cannot land")
+			target_frame["damage_boxes"] = original_boxes
 
 func check_charge_crash_wave(wave: Dictionary) -> void:
 	var origin: Vector2 = Vector2(Vector2i(game.player["pos"]))-Vector2(135,0)

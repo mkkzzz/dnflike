@@ -478,6 +478,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var stage_hits := weapon_hits if move["stages"].is_empty() else []
 			if name in ["triple","weaponcombo"]:
 				stage_hits = _swordman_hits(String(stage["ani"]))
+			if name == "charge_crash" and stage["ani"] == "chargecrashfinish":
+				var track: Dictionary = skill_runtime["moves"][name]["finish_weapon_tracks"][weapon]
+				stage_hits = Timeline.attached_attack_segments(player_timeline("chargecrashfinish"),[Timeline.from_ani(track)])
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
 			if name == "charge_crash":

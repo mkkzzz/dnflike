@@ -1524,6 +1524,148 @@
    ]
   },
   "charge_crash": {
+   "finish_weapon_tracks": {
+    "club": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          114,
+          30,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 80,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 80,
+       "frame": 7
+      }
+     ],
+     "sha256": "9d74b0515a135a1bb436e936583b8c08120c201b65892c53fe5aaafbc3058752",
+     "source": "equipment/character/swordman/weapon/club/clubb/chargecrashfinish.ani"
+    },
+    "greatsword": {
+     "frames": [
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 0
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 1
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 2
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          136,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 3
+      },
+      {
+       "boxes": [
+        {
+         "box": [
+          30,
+          -15,
+          -11,
+          144,
+          33,
+          126
+         ],
+         "kind": "attack"
+        }
+       ],
+       "delay_ms": 100,
+       "frame": 4
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 5
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 6
+      },
+      {
+       "boxes": [],
+       "delay_ms": 100,
+       "frame": 7
+      }
+     ],
+     "sha256": "e91182100f43d7d5c72200961063af0cfb522b81b3e74192d664ff5d55ce5735",
+     "source": "equipment/character/swordman/weapon/hsword/lswdc/chargecrashfinish.ani"
+    }
+   },
    "fixed_attack_base": {
     "by_level": [
      63,
@@ -1722,14 +1864,7 @@
      ],
      "hits": [
       {
-       "atk": "character/swordman/attackinfo/chargecrashfinish.atk",
-       "derived": "skillfx_down_slash_f79b50a7",
-       "effects": [],
-       "percent_col": 2,
-       "window": [
-        0.0,
-        500.0
-       ]
+       "attached_weapon": true
       }
      ]
     }
