@@ -1723,6 +1723,7 @@
     {
      "ani": "frenzy1",
      "atk": "character/swordman/attackinfo/frenzy1.atk",
+     "combo_frame": 5,
      "fx": [
       {
        "action_clock": true,
@@ -1769,6 +1770,7 @@
     {
      "ani": "frenzy2",
      "atk": "character/swordman/attackinfo/frenzy2.atk",
+     "combo_frame": 3,
      "fx": [
       {
        "action_clock": true,
@@ -1815,6 +1817,7 @@
     {
      "ani": "frenzy3",
      "atk": "character/swordman/attackinfo/frenzy3.atk",
+     "combo_frame": 4,
      "fx": [
       {
        "action_clock": true,
@@ -1854,7 +1857,6 @@
   "frenzy4": {
    "form_normal": true,
    "name": "血之狂暴 · 双刀普攻",
-   "next": "frenzy1",
    "requires_effect": "frenzy",
    "skill": "skill/swordman/frenzy.skl",
    "stages": [

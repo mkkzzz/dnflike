@@ -1128,16 +1128,32 @@ func check_frenzy_normals() -> void:
 				and layers.any(func(fx):return fx.z_index>game.view.player_actor.z_index),
 				"native blood sword layers follow both sides of the body in "+name)
 			game.player["stuck_ms"] = 0.0
-			step(last-120.0)
-			check(game.hit_count==stage,"the contact ledger blocks repeat hits in "+name)
 			if stage < 4:
-				press(KEY_X)
-				step(0)
+				var gate: float = [300.0,180.0,240.0][stage-1]
+				if stage != 2:press(KEY_X)
+				step(gate-121.0)
+				check(game.player["action"]==name and game.hit_count==stage,"no early continuation or repeat hit in "+name)
+				if stage == 2:
+					session.submit_key(KEY_X,true)
+					step(0)
+					game.player["queued_combo"] = false
+				step(1)
+				if stage == 2:session.submit_key(KEY_X,false)
+				check(game.player["action"]=="frenzy%d" % (stage+1),"the next swing starts at the native frame boundary")
 				check(layers.all(func(fx):return fx.is_queued_for_deletion()),"transition removes the previous sword layers")
+			else:
+				press(KEY_X)
+				step(479)
+				check(game.player["action"]=="frenzy4" and game.hit_count==4,"the final swing recovers without wrapping into the first")
+				step(1)
+				check(game.player["state"]=="idle","the fourth swing finishes at the original body end")
+		press(KEY_X)
+		step(0)
+		check(game.player["action"]=="frenzy1","a fresh attack after recovery starts a new combo")
 		press(KEY_X)
 		game.player["hp"] = 3.0
 		game.step_numeric_actor(game.player,game.numeric_player,400)
-		step(360)
+		step(700)
 		check(game.player["state"]=="idle" and game.primary_normal_attack()=="attack1",
 			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
 

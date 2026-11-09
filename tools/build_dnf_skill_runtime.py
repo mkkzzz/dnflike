@@ -1583,15 +1583,19 @@ def build_frenzy_normals(
             "fx": [{"key": f"frenzy_sword{stage_number}_{layer}", "at": 0,
                     "action_clock": True, "depth_offset": depth[layer]} for layer in visible_layers],
         }
-        moves[ani] = {
+        move = {
             "skill": "skill/swordman/frenzy.skl",
             "name": "血之狂暴 · 双刀普攻",
             "form_normal": True,
             "requires_effect": "frenzy",
             "swing": 0,  # CD55ED plays the current weapon's first swing cue.
             "stages": [stage],
-            "next": names[(index + 1) % len(names)],
         }
+        # C9F449 caps the continuation index at 3. C9F4CC reads these body frames.
+        if index < 3:
+            move["next"] = names[index + 1]
+            stage["combo_frame"] = (5, 3, 4)[index]
+        moves[ani] = move
         player_anims[ani] = CHR_ANI + ani + ".ani"
 
 

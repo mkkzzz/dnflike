@@ -649,7 +649,7 @@ func buffering(code: int) -> void:
 				player["queued_upper_followup"] = true
 			return
 	if code in [KEY_C,KEY_SPACE] and held.get(KEY_DOWN,false) and backstep_allowed():player["queued_backstep"] = true
-	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","frenzy4","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
+	elif code == KEY_X and String(player["action"]) in ["attack1","attack2","attack3","frenzy1","frenzy2","frenzy3","ghoststep_attack1","ghoststep_attack2","kalla_attack1","kalla_attack2","kalla_attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]:player["queued_combo"] = true
 	elif code == KEY_Z:player["queued_skill"] = "upper"
 	elif skill_slot_index(code) >= 0:
 		var id := skill_request(code)
@@ -1021,6 +1021,10 @@ func step_action(ms: float, move: Vector2) -> void:
 		# Keep a valid next cast buffered until recovery ends; lack of early
 		# cancel permission must not consume and silently lose the request.
 		cancel_at = duration
+	var combo_requested := bool(player["queued_combo"])
+	if stage.has("combo_at"):
+		# 85F8A7 waits for hitstop and accepts a held command or a buffered input.
+		combo_requested = float(player["stuck_ms"]) <= 0.0 and (combo_requested or bool(held.get(KEY_X,false)))
 	if clock >= cancel_at and bool(player["queued_jump"]) and name == "upper":
 		leave_action()
 		player["state"] = "jump"
@@ -1037,7 +1041,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		var requested: String = player["queued_skill"]
 		player["queued_skill"] = ""
 		start_action(requested,true)
-	elif clock >= cancel_at and bool(player["queued_combo"]) and String(m.get("next","")) != "":
+	elif clock >= float(stage.get("combo_at",cancel_at)) and combo_requested and String(m.get("next","")) != "":
 		player["queued_combo"] = false
 		if not start_action(String(m["next"]),true) and clock >= duration:end_action()
 	elif clock >= duration:

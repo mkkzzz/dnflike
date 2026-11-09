@@ -383,6 +383,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if stage.has("combo_frame"):
+				built["combo_at"] = float(frames[int(stage["combo_frame"])]["start_ms"])
 			if name == "triple":
 				if frames.size() > TRIPLE_CONTINUE_FRAME:
 					built["continue_at"] = float(frames[TRIPLE_CONTINUE_FRAME]["start_ms"])
