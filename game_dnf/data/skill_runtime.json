@@ -5399,6 +5399,9 @@
   "blache": {
    "active": true,
    "cost": 200,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -5411,6 +5414,20 @@
    "move": "blache",
    "name": "第7鬼神 : 邪神之怖拉修",
    "path": "skill/swordman/blache.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 87,
    "source_path": "skill/swordman/blache.skl",
    "speed": "attack",
@@ -5463,6 +5480,9 @@
    "active": false,
    "cost": 45,
    "dynamic": "bleeding_stacks",
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -5475,6 +5495,20 @@
    "max_stacks": 5,
    "name": "鲜血之忆",
    "path": "skill/swordman/bleedingmastery.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 90,
    "source_path": "skill/swordman/bleedingmastery.skl",
    "speed": "attack",
@@ -5503,6 +5537,9 @@
   "bloodblastex": {
    "active": true,
    "cost": 70,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -5515,6 +5552,20 @@
    "move": "bloodblastex",
    "name": "血气爆发",
    "path": "skill/swordman/bloodblastex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 101,
    "source_path": "skill/swordman/bloodblastex.skl",
    "speed": "attack",
@@ -5771,6 +5822,9 @@
   "chargecrashex": {
    "active": true,
    "cost": 60,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -5783,6 +5837,20 @@
    "move": "chargecrashex",
    "name": "破军斩龙击",
    "path": "skill/swordman/chargecrashex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 98,
    "source_path": "skill/swordman/chargecrashex.skl",
    "speed": "attack",
@@ -5924,6 +5992,9 @@
     "radius_from_row": 0
    },
    "cost": 45,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -5935,6 +6006,20 @@
    "max_level": 50,
    "name": "恐惧光环",
    "path": "skill/swordman/darkaura.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 89,
    "source_path": "skill/swordman/darkaura.skl",
    "speed": "attack",
@@ -6035,6 +6120,9 @@
   "defensedownoncritical": {
    "active": false,
    "cost": 45,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -6051,6 +6139,20 @@
     "max_stacks": 10
    },
    "path": "skill/swordman/defensedownoncritical.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 91,
    "source_path": "skill/swordman/defensedownoncritical.skl",
    "speed": "attack",
@@ -6393,6 +6495,9 @@
   "firewaveex": {
    "active": true,
    "cost": 70,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -6405,6 +6510,20 @@
    "move": "firewaveex",
    "name": "极炎 · 裂波剑",
    "path": "skill/swordman/firewaveex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
    "source_id": 99,
    "source_path": "skill/swordman/firewaveex.skl",
    "speed": "attack",
@@ -6790,6 +6909,9 @@
   "grabblastbloodex": {
    "active": true,
    "cost": 60,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -6802,6 +6924,20 @@
    "move": "grabblastbloodex",
    "name": "灭魂之手",
    "path": "skill/swordman/grabblastbloodex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 102,
    "source_path": "skill/swordman/grabblastbloodex.skl",
    "speed": "attack",
@@ -7037,6 +7173,9 @@
   "hellbenter": {
    "active": true,
    "cost": 200,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -7049,6 +7188,20 @@
    "move": "hellbenter",
    "name": "魔狱血刹",
    "path": "skill/swordman/hellbenter.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 85,
    "source_path": "skill/swordman/hellbenter.skl",
    "speed": "cast",
@@ -7139,6 +7292,9 @@
   "hundredsword": {
    "active": true,
    "cost": 200,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -7151,6 +7307,20 @@
    "move": "hundredsword",
    "name": "极 · 鬼剑术 (暴风式)",
    "path": "skill/swordman/hundredsword.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 86,
    "source_path": "skill/swordman/hundredsword.skl",
    "speed": "attack",
@@ -7179,6 +7349,9 @@
   "icewaveex": {
    "active": true,
    "cost": 60,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -7191,6 +7364,20 @@
    "move": "icewaveex",
    "name": "极冰 · 裂波剑",
    "path": "skill/swordman/icewaveex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
    "source_id": 100,
    "source_path": "skill/swordman/icewaveex.skl",
    "speed": "attack",
@@ -7564,6 +7751,9 @@
   "momentaryslashex": {
    "active": true,
    "cost": 70,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -7576,6 +7766,20 @@
    "move": "momentaryslashex",
    "name": "破空拔刀斩",
    "path": "skill/swordman/momentaryslashex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 97,
    "source_path": "skill/swordman/momentaryslashex.skl",
    "speed": "attack",
@@ -8168,6 +8372,9 @@
   "sayaex": {
    "active": true,
    "cost": 60,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -8180,6 +8387,20 @@
    "move": "sayaex",
    "name": "冰晶之萨亚",
    "path": "skill/swordman/sayaex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 96,
    "source_path": "skill/swordman/sayaex.skl",
    "speed": "attack",
@@ -8371,6 +8592,9 @@
   "stuckuponcounter": {
    "active": false,
    "cost": 45,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -8383,6 +8607,20 @@
    "name": "心眼",
    "on_counter_evasion": 0.6,
    "path": "skill/swordman/stuckuponcounter.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
    "source_id": 92,
    "source_path": "skill/swordman/stuckuponcounter.skl",
    "speed": "attack",
@@ -8452,6 +8690,9 @@
   "tombstonerainex": {
    "active": true,
    "cost": 70,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -8464,6 +8705,20 @@
    "move": "tombstonerainex",
    "name": "墓碑三绝阵",
    "path": "skill/swordman/tombstonerainex.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
    "source_id": 95,
    "source_path": "skill/swordman/tombstonerainex.skl",
    "speed": "attack",
@@ -8657,6 +8912,9 @@
   "waveeye": {
    "active": true,
    "cost": 200,
+   "fitness_second_growtype": [
+    1
+   ],
    "growtype_max_level": [
     0,
     0,
@@ -8669,6 +8927,20 @@
    "move": "waveeye",
    "name": "暗天波动眼",
    "path": "skill/swordman/waveeye.skl",
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
    "source_id": 88,
    "source_path": "skill/swordman/waveeye.skl",
    "speed": "cast",

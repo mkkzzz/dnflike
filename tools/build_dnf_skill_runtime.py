@@ -912,6 +912,9 @@ def build_skill_definition(skill: dict, record: dict) -> dict:
         "cost": int(skill.get("purchase_cost") or 0),
         "growtype_max_level": skill.get("growtype_max_level", []),
     }
+    for field in ("second_growtype_max_level", "fitness_second_growtype"):
+        if field in skill:
+            definition[field] = skill[field]
     if active:
         definition["move"] = local_id(key)
     if key in PASSIVE_BUILDERS:

@@ -695,7 +695,9 @@ func check_saya_item_cost() -> void:
 	for rank in 3:fixture.command("numbers.skill",{"id":"bremen","delta":1,"force":true})
 	check(fixture.command("numbers.skill",{"id":"saya","delta":1})["ok"],"normal Saya learns through the real level, job, and prerequisite gate")
 	check(not fixture.command("numbers.skill",{"id":"sayaex","delta":1})["ok"],"normal Soulbringer cannot bypass EX's zero first-growth cap")
-	fixture.command("numbers.skill",{"id":"sayaex","delta":1,"force":true})
+	# Prepare the verified stage input until the original quest award is wired.
+	fixture.profile["awakening_stage"]=1
+	check(fixture.command("numbers.skill",{"id":"sayaex","delta":1})["ok"],"awakened Soulbringer can learn EX without bypassing skill gates")
 	for index in 2:
 		var skill := "saya" if index==0 else "sayaex"
 		fixture.command("slots.move",{"source":{"place":"skill_catalog","id":skill},"target":{"place":"skill","index":index}})

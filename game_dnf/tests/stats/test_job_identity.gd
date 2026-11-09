@@ -10,6 +10,43 @@ func check(ok: bool, label: String) -> void:
 	if not ok:
 		failures += 1
 		print("[JOB_IDENTITY] FAIL ",label)
+
+func check_awakening_learning() -> void:
+	var s=Session.new()
+	s.command("numbers.level",{"level":60})
+	s.command("numbers.growtype",{"growtype":"soulbringer"})
+	var learn: Dictionary={"id":"sayaex","delta":1}
+	var legacy: Dictionary=s.serialize()
+	legacy.profile.erase("awakening_stage")
+	check(s.restore(legacy) and s.profile.awakening_stage==0,"legacy save defaults to unawakened")
+	check(not s.command("numbers.skill",learn).ok,"unawakened Soulbringer cannot learn an awakening-only skill")
+	var awake: Dictionary=s.serialize()
+	awake.profile.awakening_stage=1
+	check(s.restore(JSON.parse_string(JSON.stringify(awake))) and s.profile.awakening_stage==1,"first awakening stage survives the ordinary save loader")
+	check(not s.command("numbers.skill",learn).ok,"the original parent skill still gates awakening-only learning")
+	for rank in 3:s.command("numbers.skill",{"id":"bremen","delta":1,"force":true})
+	check(s.command("numbers.skill",{"id":"saya","delta":1}).ok,"ordinary skill retains its first-growth learning cap after awakening")
+	s.command("numbers.level",{"level":59})
+	check(not s.command("numbers.skill",learn).ok,"awakened Soulbringer still needs level 60 for skill 96")
+	s.command("numbers.level",{"level":60})
+	var cfg:=Numbers.shared_config()
+	var before:=Numbers.Skills.available(s.profile,cfg)
+	check(s.command("numbers.skill",learn).ok and s.profile.skills.sayaex==1,"stage 1 and growth 2 select the original skill 96 cap")
+	check(before-Numbers.Skills.available(s.profile,cfg)==60,"awakening-only skill charges the original 60 SP")
+	var restored=Session.new()
+	check(restored.restore(JSON.parse_string(JSON.stringify(s.serialize()))) and restored.profile.skills.sayaex==1
+		and restored.profile.awakening_stage==1,"learned skill and stage round-trip independently")
+	var definition: Dictionary=cfg.skills.sayaex
+	for case in [["soulbringer",0,0],["soulbringer",1,30],["soulbringer",2,0],["asura",1,0]]:
+		var identity: Dictionary={"growtype":case[0],"awakening_stage":case[1]}
+		check(Numbers.Skills.learning_cap(identity,definition,Numbers.record("sayaex"),cfg)==case[2],"stage and growth column: "+str(case))
+	for invalid in [-1,3,1.5,"1",null]:
+		var damaged: Dictionary=s.serialize()
+		damaged.profile.awakening_stage=invalid
+		check(not restored.restore(damaged) and restored.profile.awakening_stage==1,"invalid awakening stage is rejected atomically")
+	check(restored.command("numbers.growtype",{"growtype":"asura","force":true}).ok and restored.profile.awakening_stage==0,
+		"changing branch in the debug entry resets its awakening stage")
+
 func run() -> void:
 	var battle = load("res://scenes/main.tscn").instantiate()
 	battle.external_mode = true
@@ -62,6 +99,7 @@ func run() -> void:
 		var candidate: Dictionary = s.profile.duplicate(true)
 		candidate["growtype"] = unknown
 		check(not Numbers.valid(candidate),"unregistered or malformed persistent identity rejected")
+	check_awakening_learning()
 	battle.queue_free()
 	await process_frame
 	print("[JOB_IDENTITY] COMPLETE checks=%d failures=%d" % [checks,failures])

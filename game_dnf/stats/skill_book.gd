@@ -38,6 +38,20 @@ static func effective_levels(base: Dictionary, config: Dictionary) -> Dictionary
 				result[id] = rank+int(row[column])
 	return result
 
+## Original 0x9043B0 chooses the second table only when the six first-growth
+## caps have no positive entry. 0x6D5F6D gates the second column by stage.
+static func learning_cap(profile: Dictionary, definition: Dictionary, record: Dictionary, config: Dictionary) -> int:
+	var first: Array=record.get("growtype_max_level",definition.get("growtype_max_level",[]))
+	var grow:=int(config["growtype_index"].get(profile["growtype"],0))
+	var maximum:=int(definition["max_level"])
+	var second: Array=definition.get("second_growtype_max_level",[])
+	if second.size()==12 and not first.any(func(cap):return int(cap)>0):
+		var stage:=int(profile.get("awakening_stage",0))
+		var fits: Array=definition.get("fitness_second_growtype",[])
+		if stage not in [1,2] or grow not in range(6) or not fits.any(func(value):return int(value)==stage):return 0
+		return mini(maximum,int(second[2*grow+stage-1]))
+	return mini(maximum,int(first[grow])) if grow in range(first.size()) else maximum
+
 ## force=true 跳过等级/职业/前置校验（调试入口），仍受技能上限与 SP 约束。
 static func change(profile: Dictionary, id: String, delta: int, config: Dictionary, record: Dictionary = {}, force := false) -> Dictionary:
 	if not config["skills"].has(id) or delta not in [-1,1]:return {"ok":false,"message":"技能或操作无效"}
@@ -50,11 +64,7 @@ static func change(profile: Dictionary, id: String, delta: int, config: Dictiona
 	else:
 		if rank >= int(definition["max_level"]):return {"ok":false,"message":"技能已达上限"}
 		if config["progression"]["enforce_skill_requirements"] and not force:
-			var caps: Array = record.get("growtype_max_level",[])
-			var grow_index := int(config.get("growtype_index",{}).get(profile["growtype"],0))
-			var cap := int(caps[grow_index]) if grow_index < caps.size() else int(definition["max_level"])
-			cap = mini(cap,int(definition["max_level"]))
-			if not caps.is_empty() and rank>=cap:return {"ok":false,"message":"该职业无法继续学习此技能"}
+			if rank>=learning_cap(profile,definition,record,config):return {"ok":false,"message":"当前职业或觉醒阶段无法继续学习此技能"}
 			var required := int(record.get("required_level",1))+rank*int(record.get("required_level_range",1))
 			if int(profile["level"]) < required:return {"ok":false,"message":"角色等级不足"}
 			if definition.has("growtypes") and profile["growtype"] not in definition["growtypes"]:return {"ok":false,"message":"职业不符合学习要求"}

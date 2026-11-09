@@ -81,6 +81,7 @@ static func normalize(profile: Dictionary) -> void:
 	var cfg := shared_config()
 	if not profile.has("numbers_revision"):
 		profile.merge({"numbers_revision":1,"growtype":"swordman","sp_bonus":0,"skills":cfg["skill_defaults"].duplicate(true),"skill_purchases":{},"xp_transactions":{},"gear":{},"next_gear":1,"equipment":{},"stat_modifiers":[],"attack_element":"none"},false)
+	if not profile.has("awakening_stage"):profile["awakening_stage"]=0
 	# Source aliases merge atomically before canonicalizing numeric JSON values.
 	if not SkillIdentity.migrate(profile,cfg):return
 	for id: String in cfg["skills"]:
@@ -95,6 +96,7 @@ static func normalize(profile: Dictionary) -> void:
 static func canonicalize(profile: Dictionary) -> void:
 	SkillIdentity.canonicalize_history(profile)
 	for key in ["numbers_revision","sp_bonus","next_gear"]:profile[key] = int(profile[key])
+	if whole(profile.get("awakening_stage"),0,2):profile["awakening_stage"]=int(profile["awakening_stage"])
 	for id: String in profile["skills"]:profile["skills"][id] = int(profile["skills"][id])
 	for purchases: Array in profile["skill_purchases"].values():
 		for index in purchases.size():purchases[index] = int(purchases[index])
@@ -224,6 +226,7 @@ static func command(profile: Dictionary, kind: String, payload: Dictionary) -> D
 				if int(profile["level"]) < int(cfg["progression"].get("job_change_level",18)):return fail("%d 级才能转职" % int(cfg["progression"].get("job_change_level",18)))
 				if String(profile["growtype"]) != "swordman":return fail("已经转职")
 				if target == "swordman":return fail("请选择转职职业")
+			if target!=profile["growtype"]:profile["awakening_stage"]=0
 			profile["growtype"] = target
 		"numbers.sp":
 			if not whole(payload.get("amount"),0,1000000):return fail("SP 数量无效")
@@ -283,6 +286,8 @@ static func valid(profile: Dictionary) -> bool:
 	var cfg := shared_config()
 	if not SkillIdentity.valid_history(profile.get("skill_alias_history",[]),cfg):return false
 	if not whole(profile.get("numbers_revision"),int(cfg["revision"]),int(cfg["revision"])) or not has_growtype(profile.get("growtype","")):return false
+	var stage=profile.get("awakening_stage")
+	if not whole(stage,0,2) or (stage!=0 and profile["growtype"]=="swordman"):return false
 	if profile.get("attack_element","none") not in ["none","fire","water","light","dark"]:return false
 	if not whole(profile.get("level"),1,int(cfg["progression"]["level_cap"])) or not whole(profile.get("xp"),0,1000000000) or not whole(profile.get("sp_bonus"),0,1000000) or not whole(profile.get("next_gear"),1,1000000000):return false
 	for key in ["skills","skill_purchases","xp_transactions","gear","equipment"]:
