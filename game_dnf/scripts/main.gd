@@ -1459,6 +1459,7 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 		var contact: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 		if contact.is_empty():continue
 		contacted[id] = now
+		phase["suction_seen"][id] = true
 		# The ATK status is resolved separately from the pull permission.
 		if enemy.has("numeric") and not phase["suction_bleed"].is_empty():
 			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
@@ -1546,6 +1547,7 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 		var whole := int(total)
 		phase["hold_hp_fraction"] = total-whole
 		if whole > 0:player["hp"] = float(maxi(1,int(player["hp"])-whole))
+	step_bloody_rave_thirst(phase,int(to))
 	var held_ms := int(to)-hold_start
 	# CBDEDE measures the SKL hold limits after frame nine, independently of ANI speed.
 	if int(player["hp"]) > 1 and held_ms < int(move["hold_max_ms"]) \
@@ -1561,6 +1563,42 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 		player["native_phase"]["fade_end_ms"] = int(first_frame/rate)
 		player["native_phase"]["typhoon_age_at_release"] = int(to)-int(float(move["suction_typhoon"]["at"])/float(phase["cast_stage_rate"]))
 		step_bloody_rave_end(move,0.0)
+
+func step_bloody_rave_thirst(phase: Dictionary, clock: int) -> void:
+	var pulse: Dictionary = phase.get("thirst_pulse",{})
+	if pulse.is_empty() or active_effect("thirst").is_empty() or clock < int(pulse["next"]):return
+	# CB5AB9 uses one pulse per update and schedules the next from this tick.
+	pulse["next"] = clock+int(pulse["interval"])
+	var remaining := int(pulse["limit"])
+	var amount := int(pulse["amount"])
+	for enemy: Dictionary in monsters:
+		if remaining <= 0:break
+		if not phase["suction_seen"].has(enemy["id"]) or not enemy_registered(enemy):continue
+		remaining -= 1
+		var before := int(enemy["hp"])
+		enemy["hp"] = float(maxi(0,before-amount))
+		# CB5C99 sends the full sampled amount to the caster even on an overkill.
+		player["hp"] = float(mini(int(max_hp),int(player["hp"])+amount))
+		var point := Vector3(enemy["pos"].x,enemy["pos"].y,float(enemy["z"]))
+		bus.emit("combat.damage",{"target":enemy["id"],"amount":before-int(enemy["hp"]),"critical":false,
+			"category":"physical","victim":"monster","reaction":"none","point":point,"show_number":false})
+		bus.emit("combat.damage_number",{"target":enemy["id"],"amount":amount,"id":"bloody_rave_thirst",
+			"victim":"monster","point":point})
+
+func bloody_rave_thirst_pulse() -> Dictionary:
+	var rank := int(skill_levels.get("sacrifice",0))
+	if rank <= 0:return {}
+	var source: Dictionary = Numbers.Skills.sample(Numbers.record("sacrifice"),rank)
+	var interval := int(source["static"][3])
+	var amount := int(source["level_row"][7])
+	if int(skill_levels.get("pinchpowerupex",0)) > 0 and not active_effect("thirst").is_empty():
+		# CCF235/CCF277 use integer HP against two truncated max-HP thresholds.
+		var pinch: Array = Numbers.Skills.sample(Numbers.record("pinchpowerupex"),1)["static"]
+		var hp := int(player["hp"])
+		if hp <= thirst_hp_cost(int(pinch[1])):amount = int(amount*int(pinch[2])/100.0)
+		if hp >= thirst_hp_cost(int(pinch[3])):amount = int(amount*int(pinch[4])/100.0)
+	if amount <= 0:return {}
+	return {"interval":interval,"next":0,"limit":int(source["static"][4]),"amount":amount}
 
 func step_bloody_rave_end(move: Dictionary, clock: float) -> void:
 	var phase: Dictionary = player["native_phase"]
@@ -1780,8 +1818,10 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var hold_start := int(float(stage["timeline"][9]["start_ms"])/rate) if index == 0 else 0
 		var end := hold_start+int(m["hold_max_ms"]) if index == 0 else int(float(stage["duration"])/rate)
 		player["native_phase"] = {"cast_stage_rate":rate,"hold_start_ms":hold_start,"hold_hp_fraction":0.0,
-			"end_ms":end,"suction_targets":{},"suction_contacted":{},"suction_poll_at":hold_start,"suction_bleed":{}}
+			"end_ms":end,"suction_targets":{},"suction_contacted":{},"suction_seen":{},
+			"suction_poll_at":hold_start,"suction_bleed":{}}
 		if index == 0 and numeric_player != null:
+			player["native_phase"]["thirst_pulse"] = bloody_rave_thirst_pulse()
 			var bleed: Dictionary = m["suction_bleed"].duplicate()
 			var passive_rank := int(skill_levels.get("bleedingmastery",0))
 			if passive_rank > 0:

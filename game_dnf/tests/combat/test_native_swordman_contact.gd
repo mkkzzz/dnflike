@@ -2088,6 +2088,66 @@ func check_bloody_rave_cancel() -> void:
 		"guard is outside Bloody Rave's native cast states")
 	session.submit_key(KEY_S,false)
 
+func check_bloody_rave_thirst() -> void:
+	for sample: Array in [[0,1,750,36],[0,2,750,47],[1,1,500,90],[1,1,501,36],
+			[1,1,1199,36],[1,1,1200,3],[0,1,1985,36]]:
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+		profile.command("numbers.skill_grant",{"id":"buff","level":1})
+		profile.command("numbers.skill_grant",{"id":"sacrifice","level":sample[1]})
+		if sample[0] > 0:profile.command("numbers.skill_grant",{"id":"pinchpowerupex","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["bloodyrave"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.apply_skill_effect("sacrifice","thirst")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.max_hp = 2000.0
+		game.player["hp"] = float(sample[2])
+		session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+		var front := POINT+Vector2(145,0)
+		var first: Dictionary = api.spawn_dummy(front)
+		var limit_case: bool = sample[0] == 0 and sample[1] == 1 and sample[2] == 750
+		if limit_case:
+			first["hp"] = 5.0
+			first["def"] = first["def"].duplicate()
+			first["def"]["rave_fixture"] = true
+			for index in 7:
+				var target: Dictionary = game.spawn_enemy(front)
+				target["hp"] = 5000.0
+		session.submit_key(KEY_A,true)
+		step(0)
+		step(500)
+		check(game.bus.events_of("combat.damage_number").is_empty(),"the first Thirst timer pulse can occur before any contact")
+		step(290)
+		if limit_case:move_target(first,POINT-Vector2(80,0))
+		step(209)
+		check(game.bus.events_of("combat.damage_number").is_empty(),"Thirst waits for the next cast-clock boundary")
+		step(1)
+		var numbers: Array = game.bus.events_of("combat.damage_number")
+		var amount := int(sample[3])
+		var count := 6 if limit_case else 1
+		check(numbers.size()==count and numbers.all(func(event):return event["amount"]==amount),
+			"Thirst uses the sourced amount and caps each pulse at six contacts: %s" % str(sample))
+		check(game.player["hp"]==minf(2000.0,float(sample[2]+amount*count))
+			and first["hp"]==(0.0 if limit_case else 5000.0-amount) and game.hit_count==0,
+			"direct HP transfer grants the nominal heal, caps at max HP and does not create an attack hit")
+		if limit_case:
+			check(game.monsters[5]["hp"]==4964.0 and game.monsters[6]["hp"]==5000.0,
+				"only six registered targets take the first pulse")
+			step(1100)
+			check(game.bus.events_of("combat.damage_number").size()==12,"a late update does not replay missed pulses")
+			game.numeric_player.remove_effect("thirst")
+			step(500)
+			check(game.bus.events_of("combat.damage_number").size()==12,"removing Thirst stops further HP transfer")
+		session.submit_key(KEY_A,false)
+		step(500)
+		var release_count: int = game.bus.events_of("combat.damage_number").size()
+		step(600)
+		check(game.bus.events_of("combat.damage_number").size()==release_count,"the release phase cannot pulse again")
+
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -3371,6 +3431,7 @@ func run() -> void:
 	check_bloody_rave_fade()
 	check_bloody_rave_contact_bleed()
 	check_bloody_rave_cancel()
+	check_bloody_rave_thirst()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()
