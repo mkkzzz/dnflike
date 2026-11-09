@@ -1139,16 +1139,21 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
     inhale_fx = []
     for first, frame in ((0, 3), (2, 6), (4, 8)):
         for index in (first, first + 1):
-            inhale_fx.append({"key": add_fx(fx, effects, slots[index]), "at": inhale[frame]["start_ms"],
-                              "action_clock": True, "loop": True, "offset_x": 55, "offset_y": -96,
-                              "depth_offset": (1, 2, 3, 4, 6, 7)[index]})
+            cue = {"key": add_fx(fx, effects, slots[index]), "at": inhale[frame]["start_ms"],
+                   "action_clock": True, "loop": True, "offset_x": 55, "offset_y": -96,
+                   "depth_offset": (1, 2, 3, 4, 6, 7)[index]}
+            if index in (4, 5):
+                # CAA2A3 restarts a finished line clip at its frame 5.
+                cue["repeat_from_ms"] = records[slots[index]]["decoded"]["timeline"][5]["start_ms"]
+            inhale_fx.append(cue)
     if any(frame.get("img") for frame in records[slots[9]]["decoded"]["timeline"]):
         raise ValueError("Bloody Rave's empty sword slot now contains images")
     sword_fx = [{"key": add_fx(fx, effects, slots[slot]), "at": 0, "action_clock": True,
                  "depth_offset": depth} for slot, depth in ((8, -2), (10, 1), (11, 2))]
     slash = add_object(objects, OBJ_ROOT + "bloodyrave.obj")
     rear = add_fx(fx, effects, OBJ_ROOT + "animation/bloodyravelayer.ani")
-    if not slash or not rear or not all(cue["key"] for cue in inhale_fx + sword_fx):
+    end_fx = add_fx(fx, effects, slots[7])
+    if not slash or not rear or not end_fx or not all(cue["key"] for cue in inhale_fx + sword_fx):
         raise ValueError("Missing original Bloody Rave presentation bank")
     if records[slash]["decoded"].get("add_object_effect") != ["Animation/BloodyRaveLayer.ani", -1]:
         raise ValueError("Unexpected Bloody Rave slash attachment")
@@ -1159,9 +1164,9 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
         raise ValueError("Unexpected Bloody Rave inhale attack")
     return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "bloody_rave",
             "requires_effect": "frenzy", "material_cost": fixed_cube_cost(skill, records),
-            "suction_bleed_base": bleed_attack_base,
+            "suction_bleed_base": bleed_attack_base, "suction_end_fx": end_fx,
             "fidelity_pending": ["special_target_permissions_and_weights", "contact_hit_presentation",
-                                 "effect_fade_and_end", "cancel_permission"],
+                                 "suction_typhoon_attachment", "cancel_permission"],
             "stages": [{"ani": "bloodyraveinhale", "fx": inhale_fx, "voice": "SM_BLOOD_RAVE_STORM"},
                        {"ani": "bloodyraveslash", "fx": sword_fx,
                         "hits": [{"object": slash, "at": release[3]["start_ms"], "percent_col": 0,

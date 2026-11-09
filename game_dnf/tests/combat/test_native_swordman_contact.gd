@@ -2016,6 +2016,56 @@ func check_bloody_rave_phases() -> void:
 	step(460)
 	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==3621.0,"eight or more normal targets use the original upper damage column")
 
+func check_bloody_rave_fade() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodyrave"]
+	start_room("original_27601","katana",-1,spec,"berserker")
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.0
+	session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+	var move: Dictionary = game.move_def("bloodyrave")
+	var end_key: String = move["suction_end_fx"]
+	var inhale: Array = move["stages"][0]["fx"]
+	var line_keys := [inhale[4]["key"],inhale[5]["key"]]
+	var loop_keys := [inhale[2]["key"],inhale[3]["key"]]
+	session.submit_key(KEY_A,true)
+	step(0)
+	step(1389)
+	var lines: Array = game.view.effects.filter(func(fx):return fx.cue_key in line_keys)
+	var loops: Array = game.view.effects.filter(func(fx):return fx.cue_key in loop_keys)
+	check(lines.size()==2 and loops.size()==2 and lines.all(func(fx):return int(fx.frame["frame"])==16),
+		"the original line clips play through their last frame during the hold")
+	if lines.size()!=2 or loops.size()!=2:return
+	step(1)
+	check(lines.all(func(fx):return int(fx.frame["frame"])==5),"the native line restart resumes at frame five")
+	var loop_clock: float = loops[0].clock_ms
+	session.submit_key(KEY_A,false)
+	step(0)
+	check(game.player["stage"]==1 and lines.all(func(fx):return int(fx.frame["frame"])==0 and fx.fade==1.0)
+		and loops[0].clock_ms==loop_clock,"release resets only the blood lines and carries the vortex clock")
+	step(150)
+	check(lines.all(func(fx):return int(fx.frame["frame"])==0 and is_equal_approx(fx.fade,127.0/255.0))
+		and loops[0].clock_ms==loop_clock+150.0 and loops[0].fade==1.0,
+		"the release fades the first line frames while both vortex layers keep playing at full opacity")
+	step(148)
+	check(cues(end_key).is_empty() and is_equal_approx(lines[1].fade,1.0/255.0),"at 298 ms the last alpha byte is still visible")
+	step(1)
+	var ending: Array = game.view.effects.filter(func(fx):return fx.cue_key==end_key)
+	check(ending.size()==1 and game.view.effects.all(func(fx):return not fx.cue_key in line_keys+loop_keys),
+		"the zero alpha byte removes only the inhale loops and lines and creates End.ani")
+	if ending.is_empty():return
+	check(ending[0].facing==-1 and ending[0].follow_offset==Vector2(-55,-96)
+		and ending[0].z_index==int(POINT.y)+1,"the end clip mirrors its native offset and uses its attached depth")
+	step(239)
+	check(int(ending[0].frame["frame"])==2 and not ending[0].is_queued_for_deletion(),"End.ani retains all three authored 80 ms frames")
+	step(1)
+	check(game.view.effects.all(func(fx):return fx.cue_key!=end_key),"End.ani leaves the view after 240 ms")
+
 func check_bloody_rave_contact_bleed() -> void:
 	var seeds := {}
 	for seed_value in 100000:
@@ -3142,6 +3192,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_draw_second_slash()
 	check_bloody_rave_phases()
+	check_bloody_rave_fade()
 	check_bloody_rave_contact_bleed()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()

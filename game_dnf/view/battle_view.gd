@@ -194,7 +194,9 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 				if fx.has_meta("depth_offset"):fx.z_index = int(Vector2(source["pos"]).y)+int(fx.get_meta("depth_offset"))
 			if fx.action_clock_at >= 0:
 				if int(source.get("action_instance",-1)) != fx.action_instance or source.get("state","") != "action":fx.queue_free()
-				else:fx.seek(maxf(0,float(source.get("fx_clock",source["clock"]))-fx.action_clock_at))
+				else:
+					var elapsed: float = float(source.get("fx_clock",source["clock"]))-fx.action_clock_at+fx.action_clock_carry
+					fx.seek(0.0 if fx.freeze_first_frame else maxf(0.0,elapsed))
 			elif fx.get_meta("particle_birth_pending",false):
 				# The cue was created during this simulation tick. Its ANI begins
 				# at zero, rather than consuming a tick before its first rendering.
@@ -469,7 +471,18 @@ func _on_cue(event: Dictionary) -> void:
 		"native_particle":_spawn_native_particle(event)
 		"fx_clear":
 			for fx in effects:
-				if is_instance_valid(fx) and fx.tag == String(event["tag"]):fx.queue_free()
+				if is_instance_valid(fx) and fx.tag == String(event["tag"]) \
+						and (not event.has("keys") or fx.cue_key in event["keys"]):fx.queue_free()
+		"fx_continue":
+			for fx in effects:
+				if is_instance_valid(fx) and fx.tag == String(event["tag"]):
+					fx.action_instance = int(event["action_instance"])
+					fx.action_clock_carry += float(event["elapsed"])
+		"fx_fade_first_frame":
+			for fx in effects:
+				if is_instance_valid(fx) and fx.tag == String(event["tag"]) and fx.cue_key in event["keys"]:
+					fx.fade = float(event["opacity"])
+					fx.freeze_first_frame = true
 		"ghost":_spawn_ghost(event)
 
 func _spawn_native_particle(event: Dictionary) -> void:
@@ -594,6 +607,8 @@ func _spawn_fx(event: Dictionary) -> void:
 	fx.uniform_frame_ms = float(event.get("uniform_frame_ms",-1.0))
 	fx.action_clock_at = float(event.get("action_clock_at",-1.0))
 	fx.action_instance = int(event.get("action_instance",-1))
+	fx.cue_key = key
+	fx.repeat_from_ms = float(event.get("repeat_from_ms",-1.0))
 	fx.loop = bool(event.get("loop",false)) and bool(_effects[key].get("loop",false))
 	if bool(event.get("fresh",false)):fx.set_meta("particle_birth_pending",true)
 	fx.setup(_effects[key],int(event["facing"]))

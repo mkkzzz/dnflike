@@ -1067,15 +1067,17 @@ func step_action(ms: float, move: Vector2) -> void:
 	var old_event_clock := action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
-	if m.get("native_state","") == "bloody_rave" and int(player["stage"]) == 0:
-		# CAA360..CAA3D5 starts slot 25 on zero-based inhale frame 8.
-		var loop_at := float(stage["timeline"][8]["start_ms"])
-		if old_event_clock < loop_at and event_clock >= loop_at:
-			player["bloody_rave_loop"] = true
-			bus.emit("combat.cue",{"kind":"sound","key":"BLOODYR_BLACKHOLE_LOOP","loop_id":BLOODY_RAVE_LOOP_ID})
-		step_bloody_rave_suction(m,stage,old_clock,clock)
-		step_bloody_rave_hold(m,old_clock,clock)
-		return
+	if m.get("native_state","") == "bloody_rave":
+		if int(player["stage"]) == 0:
+			# CAA360..CAA3D5 starts slot 25 on zero-based inhale frame 8.
+			var loop_at := float(stage["timeline"][8]["start_ms"])
+			if old_event_clock < loop_at and event_clock >= loop_at:
+				player["bloody_rave_loop"] = true
+				bus.emit("combat.cue",{"kind":"sound","key":"BLOODYR_BLACKHOLE_LOOP","loop_id":BLOODY_RAVE_LOOP_ID})
+			step_bloody_rave_suction(m,stage,old_clock,clock)
+			step_bloody_rave_hold(m,old_clock,clock)
+			return
+		step_bloody_rave_end(m,clock)
 	if m.get("native_state","") == "grab_blast":
 		if int(player["stage"]) == 0:
 			if try_grab_blast(stage,event_clock):return
@@ -1513,11 +1515,36 @@ func step_bloody_rave_hold(move: Dictionary, from: float, to: float) -> void:
 	# CBDEDE measures the SKL hold limits after frame nine, independently of ANI speed.
 	if int(player["hp"]) > 1 and held_ms < int(move["hold_max_ms"]) \
 			and (held_ms < int(move["hold_min_ms"]) or skill_input_held("bloodyrave")):return
-	end_action_fx()
-	player["fx_tag"] = "act:%d" % (action_seq+1)
+	var inhale_clock := action_event_clock(to)
+	bus.emit("combat.cue",{"kind":"fx_continue","tag":player["fx_tag"],"action_instance":action_seq+1,"elapsed":inhale_clock})
 	start_stage(1)
 	# CCF3C0 removes category 56 movement now, leaving category 55 for the slash score.
 	player["native_phase"]["suction_targets"] = phase["suction_targets"]
+	if inhale_clock >= float(move["stages"][0]["timeline"][8]["start_ms"]):
+		var first_frame := float(move["stages"][1]["timeline"][1]["start_ms"])
+		var rate := float(player["native_phase"]["cast_stage_rate"])
+		player["native_phase"]["fade_end_ms"] = int(first_frame/rate)
+		step_bloody_rave_end(move,0.0)
+
+func step_bloody_rave_end(move: Dictionary, clock: float) -> void:
+	var phase: Dictionary = player["native_phase"]
+	if not phase.has("fade_end_ms"):return
+	var fade_end: int = phase["fade_end_ms"]
+	var inhale: Array = move["stages"][0]["fx"]
+	if int(clock) < fade_end:
+		# CAA426 and CAA45C reset only the two lines and truncate their alpha to a byte.
+		var delta := ActorNumbers.native_scalar(-255.0*int(clock))
+		var alpha := int(ActorNumbers.native_scalar(255.0+ActorNumbers.native_scalar(delta/fade_end)))
+		if alpha > 0:
+			bus.emit("combat.cue",{"kind":"fx_fade_first_frame","tag":player["fx_tag"],
+				"keys":[inhale[4]["key"],inhale[5]["key"]],"opacity":alpha/255.0})
+			return
+	phase.erase("fade_end_ms")
+	bus.emit("combat.cue",{"kind":"fx_clear","tag":player["fx_tag"],
+		"keys":[inhale[2]["key"],inhale[3]["key"],inhale[4]["key"],inhale[5]["key"]]})
+	bus.emit("combat.cue",{"kind":"fx","key":move["suction_end_fx"],"tag":player["fx_tag"],"follow":PLAYER_ID,
+		"point":player["pos"],"height":player["z"],"facing":player["facing"],"offset_x":55,"offset_y":-96,
+		"depth_offset":1,"action_instance":action_seq,"action_clock_at":action_event_clock(clock)})
 
 func step_thirst_cast(ms: float) -> void:
 	var phase: Dictionary = player["native_phase"]
@@ -1890,7 +1917,8 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
 				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
 				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0)),
-				"depth_offset":int(fx.get("depth_offset",4)),"loop":bool(fx.get("loop",false))})
+				"depth_offset":int(fx.get("depth_offset",4)),"loop":bool(fx.get("loop",false)),
+				"repeat_from_ms":float(fx.get("repeat_from_ms",-1.0))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if at > old_t and at <= new_t:play_sound(String(s["key"]))

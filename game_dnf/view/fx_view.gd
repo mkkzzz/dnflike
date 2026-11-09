@@ -12,6 +12,8 @@ var frame: Dictionary = {}
 var hitstop_sensitive := true
 ## Looping banks (auras, passive objects) wrap instead of freeing at the end.
 var loop := false
+## A native restart command can repeat only the tail of a non-looping ANI.
+var repeat_from_ms := -1.0
 ## Native particle objects disable ANI-end deletion; motion owns their lifetime.
 var hold_last_frame := false
 ## Whole-effect scale from ATK/CHR hit info (1.0 = native pixels).
@@ -24,6 +26,9 @@ var uniform_frame_ms := -1.0
 ## Optional original actor-clock attachment; seek from snapshots, never wall time.
 var action_clock_at := -1.0
 var action_instance := -1
+var action_clock_carry := 0.0
+var freeze_first_frame := false
+var cue_key := ""
 ## Attached effects follow the casting entity every frame instead of staying where spawned.
 var follow := -1
 ## Native attachment offset, already mirrored when the action creates it.
@@ -49,11 +54,14 @@ func seek(t: float) -> void:
 		return
 	var frames: Array = data["frames"]
 	var duration := uniform_frame_ms*frames.size() if uniform_frame_ms>=0.0 else float(data["duration_ms"])
+	var repeat_tail := repeat_from_ms >= 0.0 and repeat_from_ms < duration
 	if clock_ms >= duration:
-		if (not loop or duration <= 0) and not hold_last_frame:
+		if (not loop or duration <= 0) and not hold_last_frame and not repeat_tail:
 			queue_free()
 			return
 	var local := fposmod(clock_ms,duration) if loop and duration > 0 else clock_ms
+	if repeat_tail and clock_ms >= duration:
+		local = repeat_from_ms+fposmod(clock_ms-duration,duration-repeat_from_ms)
 	var elapsed := 0.0
 	_next_items = {}
 	_frame_mix = 0.0

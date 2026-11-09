@@ -44,6 +44,7 @@
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
    "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
+   "skillfx_end_3fcb6599": "character/swordman/effect/animation/bloodyrave/end.ani",
    "skillfx_end_7120532f": "passiveobject/character/swordman/animation/sayaex/end.ani",
    "skillfx_epidemicrasaareaappear1_a9cc3101": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear1.ani",
    "skillfx_epidemicrasaareaappear2_c53c1d39": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear2.ani",
@@ -1198,7 +1199,7 @@
    "fidelity_pending": [
     "special_target_permissions_and_weights",
     "contact_hit_presentation",
-    "effect_fade_and_end",
+    "suction_typhoon_attachment",
     "cancel_permission"
    ],
    "material_cost": {
@@ -1256,7 +1257,8 @@
        "key": "skillfx_line1_e722e7d8",
        "loop": true,
        "offset_x": 55,
-       "offset_y": -96
+       "offset_y": -96,
+       "repeat_from_ms": 200
       },
       {
        "action_clock": true,
@@ -1265,7 +1267,8 @@
        "key": "skillfx_line2_3c639b26",
        "loop": true,
        "offset_x": 55,
-       "offset_y": -96
+       "offset_y": -96,
+       "repeat_from_ms": 200
       }
      ],
      "voice": "SM_BLOOD_RAVE_STORM"
@@ -1410,7 +1413,8 @@
     ],
     "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
     "source": "etc/etcparameter.etc"
-   }
+   },
+   "suction_end_fx": "skillfx_end_3fcb6599"
   },
   "bremen": {
    "fidelity_pending": [
