@@ -1881,6 +1881,84 @@ func check_draw_second_slash() -> void:
 		check(game.player["action"]=="" and cues("SWD_BAL_END").size()==2,
 			"the second slash sheathes and cannot loop to a third strike")
 
+func check_draw_greatsword_charge() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"draw","level":2})
+	for sample: Array in [[2,0,1192,1.0],[3,0,1193,1.0],[3,750,1490,1.25],[3,999,1786,1.0],[3,1000,1788,1.0]]:
+		var rank := int(sample[0])
+		var release := int(sample[1])
+		var rate := float(sample[3])
+		profile.command("numbers.skill_grant",{"id":"heavyswordmastery","level":rank})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["draw"]
+		start_room("","greatsword",1,spec)
+		var spent: Array = []
+		session.set_skill_material_spender(func(id: int, amount: int):
+			spent.append([id,amount])
+			return true)
+		game.numeric_player.values["attack_speed"] = rate
+		game.numeric_player.values["hit"] = 1.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(125,0))
+		if release > 0:session.submit_key(KEY_A,true)
+		else:press(KEY_A)
+		step(499)
+		var paid_mp: float = game.player["mp"]
+		var paid_cooldown: float = game.player["cooldowns"]["draw"]
+		if rank < 3:
+			check(not game.player.has("draw_charge") and game.player["clock"]==499.0 and draw_slash_views().is_empty(),
+				"Greatsword Draw Sword keeps its ordinary windup below mastery three")
+			step(26)
+		else:
+			check(game.player_ani()==["momentaryslash",0.0] and game.view.effects.is_empty() and target["hp"]==5000.0,
+				"greatsword charge freezes frame zero with no hits or effects through 499 ms")
+			step(1)
+			var layers: Array = game.view.effects.duplicate()
+			check(game.player.has("draw_charge") and layers.size()==2 and game.player_ani()==["momentaryslash",0.0],
+				"at 500 ms charge stays active and attaches both registered effects")
+			if layers.size()==2:
+				check(layers[0].data["source"].ends_with("/charge1.ani") and layers[1].data["source"].ends_with("/charge2.ani")
+					and layers[0].z_index==300 and layers[1].z_index==301 and layers[0].frame_scale()==Vector2(0.5,0.5),
+					"charge uses both source scales and native layer priorities")
+				if release==750:
+					step(55)
+					check(layers[0].frame["frame"]==0,"1.25 attack speed keeps charge FX on frame zero through 55 ms")
+					step(1)
+					check(layers[0].frame["frame"]==1 and layers[1].frame["frame"]==1 and game.player["clock"]==0.0,
+						"the charge FX advances on its own clock while the body is frozen")
+			if release==0:
+				step(1)
+			else:
+				step(mini(release,999)-float(game.player["draw_charge"]["elapsed_ms"]))
+				check(game.player.has("draw_charge") and target["hp"]==5000.0,"holding keeps charge active until release or 1000 ms")
+				if release==1000:step(1)
+				session.submit_key(KEY_A,false)
+				step(0)
+			check(not game.player.has("draw_charge") and game.view.effects.is_empty() and cues("SM_BAL_READY").size()==2
+				and game.view.player_actor.sample()["frame"]==1 and game.player["clock"]==500.0 and target["hp"]==5000.0,
+				"greatsword release clears the charge effects and seeks to original frame one")
+			step(25.0/rate-1.0)
+			check(target["hp"]==5000.0 and draw_slash_views().is_empty(),"released greatsword waits for the outstroke")
+			step(1)
+		check(game.action_def()["hits"][0]["percent"]==sample[2] and target["hp"]<5000.0
+			and game.hit_count==1 and spent==[[3037,1]] and game.player["mp"]==paid_mp
+			and game.player["cooldowns"]["draw"]==paid_cooldown,
+			"greatsword Draw Sword hits at the expected percentage and pays once for "+str(sample))
+		check_draw_slash_layers("blue",0)
+	var spec := profile.stats()
+	spec["skill_slots"] = ["draw"]
+	start_room("","greatsword",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	session.submit_key(KEY_A,true)
+	step(600)
+	var atk: Dictionary = game.table.atk("character/swordman/attackinfo/attack1.atk")
+	check(game.hurt_player(7,{"pos":POINT+Vector2(40,0)},atk,-1)=="stagger","a hit interrupts greatsword charge")
+	session.submit_key(KEY_A,false)
+	step(500)
+	check(not game.player.has("draw_charge") and cues("SM_BAL_SHOT").is_empty() and draw_slash_views().is_empty(),
+		"interruption clears charge without emitting a delayed slash")
+
 func check_draw_short_wave() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2431,6 +2509,7 @@ func run() -> void:
 	check_bloodblast()
 	check_draw_sword()
 	check_draw_second_slash()
+	check_draw_greatsword_charge()
 	check_draw_short_wave()
 	check_thirst()
 	check_hardattack()

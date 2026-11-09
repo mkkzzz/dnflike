@@ -31,7 +31,9 @@
    "skillfx_bremenareaappear2_3c6655df": "passiveobject/character/swordman/animation/bremenareaappear2.ani",
    "skillfx_bremenareadisappear_69a734b7": "passiveobject/character/swordman/animation/bremenareadisappear.ani",
    "skillfx_bremenareastay_65cedcf5": "passiveobject/character/swordman/animation/bremenareastay.ani",
+   "skillfx_charge1_28f02c73": "character/swordman/effect/animation/momentaryslash/charge1.ani",
    "skillfx_charge1_522d5c86": "character/swordman/effect/animation/standalonewave/charge1.ani",
+   "skillfx_charge2_31666c8e": "character/swordman/effect/animation/momentaryslash/charge2.ani",
    "skillfx_charge_623ff08a": "character/swordman/effect/animation/chargecrash/charge.ani",
    "skillfx_charge_b82745b0": "character/swordman/effect/animation/reflectguard/charge.ani",
    "skillfx_charge_dodge_48d97524": "character/swordman/effect/animation/flowmindpowerup/charge_dodge.ani",
@@ -1554,7 +1556,7 @@
     "followup_abnormal_status",
     "beamsword_equipped_appearance",
     "wave_wall_and_final_damage",
-    "greatsword_charge",
+    "temporary_hit_object_resolution",
     "original_command",
     "weapon_durability"
    ],
@@ -1592,7 +1594,9 @@
      "skillfx_momentaryslash_white_ldodge_under_624964ef",
      "skillfx_momentaryslash_white_ldodge_upper_25c26dc2",
      "skillfx_momentaryslash_red_ldodge_under_1aae7aa1",
-     "skillfx_momentaryslash_red_ldodge_upper_546d5d55"
+     "skillfx_momentaryslash_red_ldodge_upper_546d5d55",
+     "skillfx_charge1_28f02c73",
+     "skillfx_charge2_31666c8e"
     ],
     "source": "sqr/common.nut"
    },

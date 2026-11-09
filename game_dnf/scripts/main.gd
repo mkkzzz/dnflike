@@ -310,6 +310,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
+				if player.has("draw_cast"):leave_action()
 				body["state"] = "dead"
 				finished = true
 				victory = false
@@ -744,6 +745,7 @@ func leave_action() -> void:
 	player.erase("frenzy_cast")
 	player.erase("overdrive_cast")
 	player.erase("draw_cast")
+	player.erase("draw_charge")
 	player.erase("draw_contact_count")
 	end_action_fx()
 
@@ -977,6 +979,9 @@ func step_player(ms: float, move: Vector2) -> void:
 		player.erase("thirst_idle_origin_ms")
 
 func step_action(ms: float, move: Vector2) -> void:
+	if player.has("draw_charge"):
+		step_draw_charge(ms)
+		return
 	if player.has("weapon_combo_charge"):
 		step_weapon_combo_charge(ms)
 		return
@@ -1316,7 +1321,8 @@ func start_action(name: String, cancel := false) -> bool:
 	# A live profile refresh can rebuild the table between two stages.
 	if name == "triple":player["triple_cast"] = m
 	if name == "weaponcombo":player["weapon_combo_cast"] = m
-	if m.has("draw_second_slash_at"):player["draw_cast"] = m.duplicate(true)
+	if m.has("draw_second_slash_at") or m.has("draw_charge"):player["draw_cast"] = m.duplicate(true)
+	if m.has("draw_charge"):player["draw_charge"] = {"elapsed_ms":0.0,"fx_clock":0.0}
 	player["native_phase"] = {}
 	player["queued_combo"] = false
 	player["queued_skill"] = ""
@@ -1535,7 +1541,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
-	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw"] and index == 1) and not player.has("weapon_combo_release"):
+	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw"] and index == 1) \
+			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
@@ -1558,6 +1565,38 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	var event_clock := action_event_clock(opening_clock)
 	action_cues(stage,-1.0,event_clock)
 	apply_player_hits(stage,-1.0,event_clock)
+
+func step_draw_charge(ms: float) -> void:
+	var config: Dictionary = move_def("draw")["draw_charge"]
+	var charge: Dictionary = player["draw_charge"]
+	var minimum := int(config["minimum_ms"])
+	var maximum := int(config["maximum_ms"])
+	var old := float(charge["elapsed_ms"])
+	var elapsed := old+ms
+	charge["elapsed_ms"] = elapsed
+	var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+	charge["fx_clock"] += maxf(0.0,elapsed-maxf(old,minimum))*rate
+	if old < minimum and elapsed >= minimum:
+		# CB23A1/CB23B0 attach the two charge clips while the body remains frozen.
+		var layers: Array = config["effects"]
+		for depth in layers.size():
+			bus.emit("combat.cue",{"kind":"fx","key":layers[depth],"point":player["pos"],"height":float(player["z"]),
+				"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,"depth_offset":depth,
+				"action_clock_at":0.0,"action_instance":action_seq})
+	# CBA2A8 is strict for a released key. A held key waits for the maximum.
+	if int(elapsed) < maximum and (int(elapsed) <= minimum or skill_input_held("draw")):return
+	var hit: Dictionary = action_def()["hits"][0]
+	var base := float(hit["percent"])
+	var ratio := Kernel.NativeMotion.f32(float(config["peak_percent"])*Kernel.NativeMotion.f32(0.01))
+	var peak := int(base*ratio-100.0)
+	var spent := clampi(int(elapsed)-minimum,0,maximum-minimum)
+	# CC842D interpolates the two stored ATK bonuses in single precision.
+	hit["percent"] = int(Kernel.NativeMotion.ramp(base-100.0,peak,spent,maximum-minimum))+100
+	player.erase("draw_charge")
+	player["queued_skill"] = ""
+	end_action_fx()
+	player["fx_tag"] = "act:%d" % (action_seq+1)
+	start_stage(0,float(config["release_clock"]))
 
 func begin_weapon_combo_charge(config: Dictionary) -> void:
 	var charge := config.duplicate()
@@ -2648,7 +2687,8 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if was_action and int(skill_levels.get("stuckuponcounter",0)) > 0:
 		apply_effect({"kind":"effect","id":"counter_evasion","target":PLAYER_ID,"rank":int(skill_levels["stuckuponcounter"])})
 	if float(player["hp"])<=0:
-		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") or player.has("weapon_combo_cast"):leave_action()
+		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") \
+				or player.has("weapon_combo_cast") or player.has("draw_cast"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false
@@ -4025,6 +4065,7 @@ func view_snapshot() -> Dictionary:
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
+			"fx_clock":player.get("draw_charge",{}).get("fx_clock",ani[1]),
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,

@@ -447,6 +447,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				_append_draw_short_wave(built,spec["short_wave"],skill)
 			move["stages"].append(built)
 		if native_draw:_append_draw_second_slash(move,skill,spec["slash_layers"]["slots"])
+		if native_draw and job == "weaponmaster" and weapon == "greatsword":
+			var mastery := _skill_row(HEAVY_MASTERY_SKL)
+			var values: Array = mastery["static"]
+			# CC8268..CC82C8 freezes frame zero at the effective mastery gate.
+			if int(mastery.get("rank",0)) >= int(values[5]):
+				var opening: Dictionary = move["stages"][0]
+				move["draw_charge"] = {"minimum_ms":int(skill["static"][0]),"maximum_ms":int(values[8]),
+					"peak_percent":int(values[7]),"release_clock":float(opening["timeline"][1]["start_ms"]),
+					"effects":spec["slash_layers"]["slots"].slice(8,10)}
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
 		if spec.has("dash"):

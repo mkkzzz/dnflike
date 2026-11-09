@@ -194,7 +194,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 				if fx.has_meta("depth_offset"):fx.z_index = int(Vector2(source["pos"]).y)+int(fx.get_meta("depth_offset"))
 			if fx.action_clock_at >= 0:
 				if int(source.get("action_instance",-1)) != fx.action_instance or source.get("state","") != "action":fx.queue_free()
-				else:fx.seek(maxf(0,float(source["clock"])-fx.action_clock_at))
+				else:fx.seek(maxf(0,float(source.get("fx_clock",source["clock"]))-fx.action_clock_at))
 			elif fx.get_meta("particle_birth_pending",false):
 				# The cue was created during this simulation tick. Its ANI begins
 				# at zero, rather than consuming a tick before its first rendering.

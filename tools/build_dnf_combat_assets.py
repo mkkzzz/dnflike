@@ -1407,7 +1407,7 @@ def main() -> int:
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-draw', action='store_true',
-                        help='Add the original Draw Sword slash layers, short-sword wave and sounds')
+                        help='Add the original Draw Sword slash and charge layers, short-sword wave and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',

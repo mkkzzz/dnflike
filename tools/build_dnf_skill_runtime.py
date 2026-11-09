@@ -1104,7 +1104,7 @@ def draw_effect_slots(library) -> dict:
     if len(names) != 10 or not all(name.lower().startswith(b"effect/animation/momentaryslash/") for name in names):
         raise ValueError("unexpected Swordman Draw Sword effect slots")
     return {"source": DRAW_EFFECT_SCRIPT, "sha256": source[1],
-            "paths": ["character/swordman/" + name.decode("ascii").lower() for name in names[:8]]}
+            "paths": ["character/swordman/" + name.decode("ascii").lower() for name in names]}
 
 
 def draw_wave_layer(library) -> dict:
@@ -1151,7 +1151,7 @@ def build_move(
         atk = "character/swordman/attackinfo/momentaryslash.atk"
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "draw",
                 "material_cost": fixed_cube_cost(skill, records),
-                "fidelity_pending": ["followup_abnormal_status", "beamsword_equipped_appearance", "wave_wall_and_final_damage", "greatsword_charge",
+                "fidelity_pending": ["followup_abnormal_status", "beamsword_equipped_appearance", "wave_wall_and_final_damage", "temporary_hit_object_resolution",
                                      "original_command", "weapon_durability"],
                 "stages": [{"ani": "momentaryslash", "voice": "SM_BAL_READY",
                             "hits": [{"atk": atk, "percent_col": 0, "attached_weapon": True}]}]}
