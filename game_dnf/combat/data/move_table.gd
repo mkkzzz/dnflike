@@ -9,13 +9,16 @@ const Numbers = preload("res://stats/api/numbers.gd")
 const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const SKILL_RUNTIME := "res://data/skill_runtime.json"
 const SWORDMAN_WEAPON_POSES := {"attack1":"attack1","attack2":"attack2","attack3":"attack3",
-	"upper":"hitback","upper_followup":"upperslashafter"}
+	"upper":"hitback","upper_followup":"upperslashafter",
+	"tripleslash1":"tripleslash1","tripleslash2":"tripleslash2","tripleslash3":"tripleslash3"}
 const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const SHORT_MASTERY_ANI := "character/swordman/effect/animation/shortswordmastery/shortweapon"
 const SHORT_MASTERY_MOVES := {"attack1":"combo1","attack2":"combo2","attack3":"combo3",
 	"upper":"upperslash","upper_followup":"upperslashafter"}
 # swordman.sd [upper slash start frame], consumed at CBF0C8.
 const UPPER_FOLLOWUP_FRAME := 3
+# CB9EF6 compares the current body frame against the stage table at 16EB9D8.
+const TRIPLE_CONTINUE_FRAME := 3
 ## D2FC90 factory cases: Goblin/Thrower use CNMonster's +788 and
 ## +58C. These Haze IDs all dispatch to the generic CNAIMonster constructor.
 const NATIVE_TARGET_IDS := {
@@ -216,7 +219,7 @@ func bind_swordman_weapon(item: String, body_clips: Dictionary) -> void:
 		for layer: Dictionary in layers:
 			children.append(Timeline.from_ani(layer["clips"].get(pose,{})))
 		_swordman_weapon_hits[move] = Timeline.attached_attack_segments(body,children)
-		if _swordman_weapon_family == "shortsword":
+		if _swordman_weapon_family == "shortsword" and SHORT_MASTERY_MOVES.has(move):
 			# 108CE20 appends the extra boxes to the body before checking equipment.
 			children.push_front(timeline(SHORT_MASTERY_ANI+String(SHORT_MASTERY_MOVES[move])+".ani"))
 			_swordman_mastery_hits[move] = Timeline.attached_attack_segments(body,children)
@@ -318,7 +321,14 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if spec.has("stages"):
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:
-			move["stages"].append(_build_stage(stage,skill,weapon_hits if move["stages"].is_empty() else []))
+			var stage_hits := weapon_hits if move["stages"].is_empty() else []
+			if name == "triple":
+				stage_hits = _swordman_hits(String(stage["ani"]))
+			var built := _build_stage(stage,skill,stage_hits)
+			var frames: Array = built["timeline"]
+			if name == "triple" and frames.size() > TRIPLE_CONTINUE_FRAME:
+				built["continue_at"] = float(frames[TRIPLE_CONTINUE_FRAME]["start_ms"])
+			move["stages"].append(built)
 		# Static SKL columns are skill-specific. They are movement parameters only
 		# when an explicit adapter declares their meaning.
 		if spec.has("dash"):

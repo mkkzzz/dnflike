@@ -237,6 +237,57 @@ func check_followup() -> void:
 	check(game.player["stage"]==1 and game.hurt_player(7,{"pos":POINT+Vector2(40,0)},{},-1)=="stagger",
 		"state 30 no longer uses HitBack armor and can be interrupted")
 
+func check_triple_slash() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"triple","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","triple"]
+	for item: Array in [["original_27000","shortsword",32],["original_27601","katana",35]]:
+		start_room(item[0],item[1],1,spec)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var stages: Array = game.move_def("triple")["stages"]
+		for stage: Dictionary in stages:
+			var hit: Dictionary = stage["hits"][0]
+			var segment: Dictionary = hit["segments"][0]
+			check(hit["source"]=="attached_weapon" and segment["start"]==70.0 and segment["end"]==280.0,
+				"Triple Slash uses mounted weapon frames 1 to 3")
+			check(stage["continue_at"]==210.0 and stage["duration"]==580.0,
+				"Triple Slash continuation uses body frame 3 independently of contact")
+		check(stages[0]["hits"][0]["segments"][0]["frames"][2]["boxes"][0]==[-39.0,-25.0,27.0,125.0,float(item[2]),45.0],
+			"Triple Slash retains the equipped weapon's final attack box and depth")
+		press(KEY_S)
+		step(0)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(300,0))
+		step(278)
+		check(game.player["action"]=="triple" and game.hit_count==0,"S enters Triple Slash with no nearby target")
+		move_target(target,game.player["pos"]+Vector2(30,0))
+		step(1)
+		check(game.hit_count==1,"Triple Slash still hits a new target at 279 ms")
+		var expired_target: Dictionary = api.spawn_dummy(game.player["pos"]+Vector2(30,0))
+		step(1)
+		check(game.hit_count==1 and expired_target["hp"]==expired_target["max_hp"],
+			"Triple Slash weapon boxes expire at 280 ms")
+
+	start_room("original_27601","katana",1,spec)
+	game.numeric_player.values["attack_speed"] = 1.25
+	press(KEY_S)
+	step(0)
+	var mp: float = game.player["mp"]
+	for index: int in [0,1]:
+		press(KEY_S)
+		step(167)
+		check(game.player["stage"]==index,"Triple Slash cannot continue before body frame 3")
+		step(1)
+		check(game.player["stage"]==index+1 and game.player["clock"]==0.0 and game.player["mp"]==mp,
+			"Triple Slash advances at 210 action ms without another cast cost")
+	press(KEY_S)
+	step(168)
+	check(game.player["stage"]==2,"ordinary Triple Slash has no fourth stage")
+	step(296)
+	check(game.player["action"]!="triple","Triple Slash recovers at the end of the final body animation")
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
@@ -336,6 +387,7 @@ func run() -> void:
 	check_upper_body_armor()
 	check_upper_armor_visuals()
 	check_followup()
+	check_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)

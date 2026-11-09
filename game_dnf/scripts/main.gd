@@ -955,7 +955,7 @@ func step_action(ms: float, move: Vector2) -> void:
 		player["air_ms"] = 0.0
 		player["queued_jump"] = false
 		play_sound("jump")
-	elif clock >= cancel_at and String(player["queued_skill"]) == name and m.has("stages") \
+	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
 		and not m.has("upper_followup_at") and int(player["stage"]) < m["stages"].size()-1:
 		player["queued_skill"] = ""
 		start_stage(int(player["stage"])+1)

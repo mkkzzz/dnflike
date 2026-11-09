@@ -257,7 +257,7 @@
     "speed_static": 0,
     "accel_static": 1
    },
-   "source": "Slash bodies carry no attack boxes; boxes are the original slash effect extents. SKL static_data [600, -1000] read as slide start speed px/s and deceleration px/s² (E-INFER): each stage slides 180 px, easing to a stop at 600 ms."
+   "source": "Slash bodies carry no attack boxes. Equipped weapon ANI boxes use the parent frame clock. Slash effect extents remain the fallback for weapons without mounted source clips. Slide integration uses SKL static_data [600, -1000] as px/s and px/s² (E-INFER)."
   },
   "rage_slash": {
    "ani": "gorecross",
