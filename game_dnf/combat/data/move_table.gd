@@ -33,6 +33,8 @@ var job := "weaponmaster"
 var weapon := "katana"
 
 const CHR_ANI := "character/swordman/animation/"
+const HARDATTACK_WAVE_OBJ := "passiveobject/character/swordman/hardattackchargeafter.obj"
+const HARDATTACK_WAVE_PTL := "passiveobject/character/swordman/particle/hardattackchargemove.ptl"
 
 var db
 var rules: Dictionary
@@ -346,6 +348,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		# CC688E / CC689E install this motion on the X axis. The pose has no attack boxes.
 		followup["slide"] = {"speed":float(values[2]),"accel":float(values[3])}
 		followup["swing"] = -1
+		followup["waves"] = _hardattack_waves(charge["level_row"],int(values[5]))
 		move["hardattack_charge"] = {"duration_ms":int(values[1]),"bonus_percent":int(charge["level_row"][0]),"followup":followup}
 	if spec.get("native_state","") == "normalwave":
 		move["native_state"] = "normalwave"
@@ -550,6 +553,32 @@ func _level_effects(specs: Array, row: Array) -> Array:
 			if column>=0 and column<row.size():
 				effect[field] = float(row[column])*float(effect.get(field+"_scale",1.0))
 	return result
+
+## 20023 installs the lower ANI as the attacking motion and attaches the upper
+## ANI in slot 1. Its X motion is a per-object PTL, independent of attack speed.
+func _hardattack_waves(row: Array, speed: int) -> Dictionary:
+	var source: Dictionary = db.record(HARDATTACK_WAVE_OBJ)["decoded"]
+	var motion: Dictionary = db.record(HARDATTACK_WAVE_PTL)["decoded"].duplicate(true)
+	motion["axes"]["x"]["move_variable_1"] = [speed,speed]
+	var waves := {}
+	var ghosts := ["khazan","saya","bremen"]
+	for index in ghosts.size():
+		var ghost: String = ghosts[index]
+		var attack_path: String = source["etc_attack_infos"][index]
+		var decoded := atk(attack_path)
+		var wave_name := "hardattack_wave_"+ghost
+		var definition := {"path":HARDATTACK_WAVE_OBJ,"bank":wave_name+"_up",
+			"timeline":timeline(source["etc_motions"][2*index]),"add_fx":"","piercing":int(source["piercing_power"])}
+		var hit := {"kind":"object","object":HARDATTACK_WAVE_OBJ,"skill_id":"hardattackcharge","skill":true,
+			"atk_path":attack_path,"atk":decoded,"percent":float(row[1+index]),"damage_type":"magical",
+			"element":enum_value(decoded,"element").trim_prefix("[").trim_suffix(" element]"),
+			"rear_fx":wave_name+"_down","ptl_motion":motion}
+		if ghost == "saya":
+			# The packet's three words become ATK freeze percent, level and duration.
+			hit["effects"] = [{"id":"freeze","chance":float(row[7])*0.01,
+				"status_level":int(row[8]),"duration_ms":int(row[9])}]
+		waves[ghost] = {"definition":definition,"hit":hit,"voice":"GHOST_DRIVE_"+ghost.to_upper()}
+	return waves
 
 ## Passive object: motion timeline, attack info, particle motion and the render bank key.
 func object(path: String) -> Dictionary:

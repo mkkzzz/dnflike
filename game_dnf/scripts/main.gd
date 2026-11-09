@@ -376,6 +376,7 @@ func new_player() -> Dictionary:
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"upper_armor_fx_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
+		"hardattack_ghost":"khazan",
 		"recovery_code":-1,"recovery_buffer_ms":0.0,"air_attack_used":false,"air_move_speed":0.0}
 
 func emit_player_defeated() -> void:
@@ -1306,6 +1307,9 @@ func start_hardattack_followup(stage: Dictionary) -> void:
 	if direction != -facing:begin_action_slide(stage["slide"],1.0)
 	bus.emit("combat.cue",{"kind":"fx","key":"hardattack_dash_dust","point":Vector2(player["pos"]).round(),
 		"height":0.0,"facing":facing,"fresh":true})
+	var wave: Dictionary = stage["waves"][player["hardattack_ghost"]]
+	play_sound(wave["voice"])
+	spawn_object(wave["hit"],"player",player["pos"],float(player["z"]),facing,attack_power(),{},wave["definition"])
 
 func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 	if numeric_player != null:
@@ -2206,8 +2210,8 @@ func damage_player(amount: float, source: Vector2) -> void:
 
 # ---------------------------------------------------------------- passive objects
 
-func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing: int, power: float, source := {}) -> void:
-	var obj: Dictionary = table.object(String(hit["object"]))
+func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing: int, power: float, source := {}, definition := {}) -> void:
+	var obj: Dictionary = table.object(String(hit["object"])) if definition.is_empty() else definition
 	if obj.is_empty():return
 	var off: Vector3 = hit.get("offset",Vector3.ZERO)
 	var entity := {"id":_next_entity_id,"def":obj,"owner":owner,"source":source,"hit":hit,"power":power,
@@ -2219,6 +2223,8 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
 	if kind in GHOST_FIELD_KINDS:
+		if owner == "player" and kind != "rasa_field":
+			player["hardattack_ghost"] = kind.trim_suffix("_field")
 		var exit_ms := float(controller["disappear_ms"])
 		if kind in ["khazan_field","bremen_field"]:
 			for previous: Dictionary in objects:

@@ -720,6 +720,7 @@ func check_hardattack_followup() -> void:
 		if direction!=0:session.submit_key(direction,false)
 		if hold<250:
 			check(game.player_ani()[0]=="hardattack" and cues("hardattack_dash_dust").is_empty(),"a partial charge never enters the follow-up")
+			check(game.objects.is_empty(),"a partial charge does not create object 20023")
 			continue
 		check(game.player_ani()==["hardattackchargeafter",0.0] and game.player["stage"]==1,
 			"a full charge enters the original follow-up on frame 9")
@@ -729,13 +730,80 @@ func check_hardattack_followup() -> void:
 			"dust stays at the ground origin of the follow-up")
 		check(game.view.player_actor.equipment_layers.all(func(layer):return int(layer.frame.get("img_frame",-1))==10),
 			"the follow-up uses both original weapon pose clips")
+		check(game.objects.size()==1 and game.objects[0]["pos"]==POINT and game.objects[0]["clock"]==0.0,
+			"object 20023 starts at the caster's origin and age zero")
 		step(100)
+		check(game.hit_count==0,"the follow-up actor pose has no attack boxes")
+		game.step_objects(100)
 		var dx := 69.0*facing if direction!=KEY_LEFT or facing==-1 else 0.0
 		check(Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(dx,0)),
 			"follow-up X motion uses fixed rate, mirrored facing and the back-key veto")
-		check(game.hit_count==0,"the follow-up actor pose has no attack boxes")
+		check(game.objects[0]["pos"]==POINT+Vector2(30*facing,0),
+			"wave PTL movement ignores both attack speed and the back-key veto")
 		step(650)
 		check(game.player["action"]=="" and not game.player.has("action_slide"),"the follow-up returns to idle and clears motion")
+
+func check_hardattack_waves() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"soulbringer"})
+	for id: String in ["hardattackcharge","khazan","saya","bremen"]:
+		profile.command("numbers.skill_grant",{"id":id,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hardattack","khazan","saya","bremen"]
+	for variant: Array in [["khazan",567,[]],["saya",595,[KEY_S,KEY_F,KEY_D]],["bremen",638,[KEY_D,KEY_F]]]:
+		var ghost: String = variant[0]
+		start_room("original_27601","katana",1,spec,"soulbringer")
+		game.clear_monsters()
+		for key: int in variant[2]:
+			press(key)
+			step(0)
+			step(2000)
+		check(game.player["hardattack_ghost"]==ghost,"the last released ghost selects "+ghost)
+		# Expired fields do not reset the actor's selection.
+		game.step_objects(180000)
+		check(game.objects.is_empty(),"the selected ghost field is absent before the wave")
+		game.numeric_player.values["attack_speed"] = 1.0
+		session.submit_key(KEY_A,true)
+		step(250)
+		session.submit_key(KEY_A,false)
+		step(0)
+		step(350)
+		var wave: Dictionary = game.objects[0]
+		var wave_view = game.view.object_views.get(wave["id"])
+		check(wave_view!=null and wave_view.data["source"].ends_with(ghost+"-up.ani")
+			and wave_view.get_node("RearAnimation").data["source"].ends_with(ghost+"-down.ani"),
+			ghost+" wave uses both original ANI banks")
+		check(wave["hit"]["percent"]==variant[1] and wave["hit"]["atk_path"].ends_with(ghost+".atk")
+			and cues("GHOST_DRIVE_"+ghost.to_upper()).size()==1,
+			ghost+" wave installs the original attack record, rank column and voice")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+		var second: Dictionary = game.spawn_enemy(POINT+Vector2(65,0))
+		second["hp"] = 5000.0
+		if ghost == "saya":
+			target["numeric"].values["level"] = 35
+			target["numeric"].values["abnormal_resistance"] = 0
+			# After the damage rolls, the first status roll is 403/10000.
+			game.rng.reseed(70)
+		game.step_objects(0)
+		check(target["hp"]<5000.0 and second["hp"]<5000.0 and wave["hits"].size()==2 and game.objects.size()==1,
+			"frame zero pierces two targets and records each contact")
+		check(cues("GHOST_DRIVE_HIT").size()==2 and game.player["stuck_ms"]==0.0,
+			"wave contacts play the original hit cue and keep the caster's clock moving")
+		if ghost == "saya":
+			var freeze: Dictionary = target["numeric"].effects.active.get("freeze",{})
+			check(freeze.get("remaining_ms",0)==1300 and int(freeze.get("definition",{}).get("status_level",0))==35,
+				"Saya sends the original rank-one freeze to the hit target")
+		game.step_objects(339)
+		var late: Dictionary = game.spawn_enemy(POINT+Vector2(210,0))
+		late["hp"] = 5000.0
+		game.step_objects(1)
+		check(late["hp"]==5000.0 and game.objects.size()==1,"the last visible frame has no attack box")
+		game.step_objects(84)
+		check(game.objects.size()==1 and wave["hits"].size()==2 and wave["pos"]==POINT+Vector2(127,0),
+			"the original wave stays through 424 ms and each target is hit once")
+		game.step_objects(1)
+		check(game.objects.is_empty(),"the wave expires on the original 425 ms boundary")
 
 func check_triple_cooldown() -> void:
 	var profile := ProfileSession.new()
@@ -872,6 +940,7 @@ func run() -> void:
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()
+	check_hardattack_waves()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
 	quit(1 if failures else 0)

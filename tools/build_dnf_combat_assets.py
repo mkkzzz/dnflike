@@ -223,7 +223,14 @@ OUTERWALL_BODY_ETC_SLOTS = {
     'native_bossfather': (2,), 'native_bosspope': (2, 7), 'native_catapult': (),
     'native_lightspirit': (0, 1, 2),
 }
+HARDATTACK_WAVE_ROOT = 'passiveobject/character/swordman/animation/hardattackcharge/'
+HARDATTACK_WAVE_VARIANTS = ('khazan', 'saya', 'bremen')
+HARDATTACK_WAVE_FRONTS = {f'hardattack_wave_{kind}_up': HARDATTACK_WAVE_ROOT + kind + '-up.ani'
+                          for kind in HARDATTACK_WAVE_VARIANTS}
+HARDATTACK_WAVE_REARS = {f'hardattack_wave_{kind}_down': HARDATTACK_WAVE_ROOT + kind + '-down.ani'
+                         for kind in HARDATTACK_WAVE_VARIANTS}
 OBJECTS = {
+    **HARDATTACK_WAVE_FRONTS,
     'gorecross': 'passiveobject/character/swordman/animation/gorecross1.ani',
     'throwstone': 'passiveobject/monster/goblin/animation/throwstone.ani',
     'goblin_ice': 'passiveobject/common/animation/icemissile1.ani',
@@ -267,6 +274,7 @@ EFFECTS = {
     'hardattack_dash_dust': 'character/swordman/effect/animation/hardattackchargeafterdust.ani',
     'hardattack_dash_down': 'character/swordman/effect/animation/wave-down.ani',
     'hardattack_dash_up': 'character/swordman/effect/animation/wave-up.ani',
+    **HARDATTACK_WAVE_REARS,
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
     'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
@@ -374,6 +382,8 @@ HARDATTACK_CHARGE_AUDIO = {
     'GHOSTSLASH_CRY': 'sounds/effect/ghostslashcry.ogg',
 }
 # Original audio.xml RANDOM groups, in the same order as their source items.
+HARDATTACK_WAVE_AUDIO = {f'GHOST_DRIVE_{kind.upper()}': f'sounds/char/swordman/effect/ghost_drive_{kind}.ogg'
+                         for kind in (*HARDATTACK_WAVE_VARIANTS, 'hit')}
 SOURCE_AUDIO_WEIGHTS = {TRIPLE_SWING: (34, 33, 33), HARDATTACK_VOICE: (50, 50)}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
@@ -382,6 +392,7 @@ CUE_SOUNDS = {
     TRIPLE_SWING: TRIPLE_SWING_FILES,
     HARDATTACK_VOICE: HARDATTACK_VOICE_FILES,
     **{key: [path] for key, path in HARDATTACK_CHARGE_AUDIO.items()},
+    **{key: [path] for key, path in HARDATTACK_WAVE_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1250,7 +1261,7 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_
                 ani = src.object_animation(path) if section == 'objects' else path
                 bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
                 if section == 'objects':
-                    bank.update(clip=src.animation(ani), object=path)
+                    bank.update(clip=src.animation(ani), object=path if path.endswith('.obj') else '')
             if key in manifest[section] and manifest[section][key] != bank:
                 raise ValueError('Existing bank differs; needs a new version: '+key)
             manifest[section][key] = bank
@@ -1304,6 +1315,8 @@ def main() -> int:
                         help='Add Ghost Slash charge and full-charge cues')
     parser.add_argument('--extend-hardattack-dash', action='store_true',
                         help='Add the original full-charge Ghost Slash follow-up animation and effects')
+    parser.add_argument('--extend-hardattack-wave', action='store_true',
+                        help='Add original Ghost Drive wave banks and voices')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -1394,6 +1407,12 @@ def main() -> int:
     if args.extend_triple_cues:
         specs = [('effects', key, EFFECTS[key]) for key in ('triple4', 'triple5')]
         specs.append(('audio', TRIPLE_SWING, TRIPLE_SWING_FILES))
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_hardattack_wave:
+        specs = [('objects', key, path) for key, path in HARDATTACK_WAVE_FRONTS.items()]
+        specs.extend(('effects', key, path) for key, path in HARDATTACK_WAVE_REARS.items())
+        specs.extend(('audio', key, path) for key, path in HARDATTACK_WAVE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:
