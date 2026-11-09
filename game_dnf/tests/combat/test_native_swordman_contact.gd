@@ -1824,6 +1824,8 @@ func check_draw_target_deadlines() -> void:
 	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 	game.numeric_player.values["attack_speed"] = 1.0
 	game.numeric_player.values["hit"] = 1.0
+	game.numeric_player.values["physical_crit"] = 0.0
+	game.numeric_player.values["physical_back_crit"] = 1.0
 	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(1200,0))
 	var first: Dictionary = game.monsters[0]
 	var late: Dictionary = game.monsters[1]
@@ -1833,8 +1835,10 @@ func check_draw_target_deadlines() -> void:
 	step(525)
 	check(game.draw_pending_hits.size()==1 and game.draw_pending_hits[0]["remaining_ms"]==200.0,
 		"frame-two contact starts a 200 ms temporary hit without aging on birth")
-	move_target(first,POINT+Vector2(1200,0))
+	move_target(first,POINT-Vector2(1200,0))
+	first["facing"] = -1
 	move_target(late,POINT+Vector2(100,0))
+	late["facing"] = 1
 	step(65)
 	check(game.draw_pending_hits.size()==2 and game.draw_pending_hits[1]["remaining_ms"]==150.0,
 		"frame-four contact sums only frames four through six")
@@ -1845,6 +1849,8 @@ func check_draw_target_deadlines() -> void:
 	check(first["hp"]<5000.0 and late["hp"]==5000.0
 		and is_equal_approx(float(trace.get("percent_part",0.0)),float(trace.get("attack",-1.0))*14.60),
 		"the tracked first target still takes damage after moving away and uses the current two-target bonus")
+	check(game.last_damage["critical"],
+		"the temporary object hits the back of a target that crossed its stored X")
 	game.end_action()
 	step(14)
 	check(late["hp"]==5000.0,"the second target retains its own later deadline after interruption")
@@ -1853,6 +1859,8 @@ func check_draw_target_deadlines() -> void:
 	check(late["hp"]<5000.0 and game.draw_pending_hits.is_empty() and impacts.size()==2 and game.hit_count==2
 		and impacts[0]["point"]==Vector3(500,300,0),
 		"both temporary hits resolve once without replaying the two initial contacts")
+	check(game.last_damage["critical"],
+		"at the same integer X the temporary attack uses its original facing")
 	start_room("original_27601","katana",1,spec)
 	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 	game.numeric_player.values["attack_speed"] = 1.0416666966666668

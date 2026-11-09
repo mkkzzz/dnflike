@@ -2345,7 +2345,8 @@ func queue_draw_hit(target: Dictionary, facing: int, delay: int) -> void:
 	var position := Vector2i(target["pos"])
 	var point := Vector3(position.x,position.y,int(target["z"]))
 	draw_pending_hits.append({"id":_next_entity_id,"target":target,"point":point,"facing":facing,
-		"remaining_ms":float(delay),"targets":targets,"rates":draw["draw_hit_count_bonus"],"hit":draw["stages"][0]["hits"][0],
+		"remaining_ms":float(delay),"targets":targets,"rates":draw["draw_hit_count_bonus"],
+		"base_percent":int(draw["stages"][0]["hits"][0]["percent"]),
 		"instance":action_seq})
 	_next_entity_id += 1
 
@@ -2364,11 +2365,16 @@ func step_draw_hits(ms: float, first_new_id: int) -> void:
 		# current hurtboxes and body mode without repeating the overlap test.
 		var frame := enemy_frame(target)
 		if frame.get("damage_boxes",[]).is_empty() or int(frame.get("items",{}).get("13",0)) == 2:continue
-		var hit: Dictionary = entry["hit"].duplicate()
-		hit["percent"] = float(draw_count_adjusted_attack(int(hit["percent"]),entry["rates"],entry["targets"].size()))
-		hit["draw_impact"] = true
-		hit["draw_instance"] = entry["instance"]
-		land_hit(player,target,hit,entry["point"],int(entry["facing"]),attack_power())
+		# B2FE91 installs the object's own record. B2FEB0 updates its
+		# weapon damage bonus without importing the slash's ATK or status.
+		var hit := {"atk":{"weapon_damage_apply":1},"damage_type":"physical","skill":true,
+			"skill_id":"draw","percent":draw_count_adjusted_attack(int(entry["base_percent"]),entry["rates"],entry["targets"].size()),
+			"draw_impact":true,"draw_instance":entry["instance"]}
+		var point: Vector3 = entry["point"]
+		# 867485 compares integer X. On a tie, use the object's spawn facing.
+		var facing := signi(int(target["pos"].x)-int(point.x))
+		if facing == 0:facing = int(entry["facing"])
+		land_hit(player,target,hit,point,facing,attack_power())
 	draw_pending_hits = waiting
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
