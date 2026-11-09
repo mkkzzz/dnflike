@@ -2,7 +2,7 @@
 
 数据来源（只读原版库，不改原内容包）：
   assets_local/content/combat_content.json 的 swordman_skills 索引与 SKL 记录
-  clientonly/skilltree/swordman_sp.co      原版五分支节点坐标与 [next skill]
+  ClientOnly/SkillShopTree{Sp,Tp}Index.co  原版剑士技能树路径、分支节点和 [next skill]
   Interface2/UI/SkillShop/Skillshop.img    面板零件（标题条、技能格、按钮、说明框、暗化背景）
   Interface/WindowCommon.img               右侧说明板原版九宫格
   SKL 自带 icon 字段                       每个技能的 未选中/选中 两帧图标
@@ -34,6 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dnf_combat_assets as B
 from audit_dnf_reusable_data import TextResolver
 from build_dnf_progression_data import clean, simplify
+from dnf_pvf import resolve
 
 ROOT = Path(__file__).resolve().parent.parent
 GAME = ROOT / 'game_dnf'
@@ -45,9 +46,10 @@ RUNTIME = GAME / 'data/skill_runtime.json'
 PANEL_BANK = 'Interface2/UI/SkillShop/Skillshop.img'
 WINDOW_BANK = 'Interface/WindowCommon.img'
 SP_DIGIT_BANK = 'Common/digit/SP/SP.img'
-TREE_SP_PATH = 'clientonly/skilltree/swordman_sp.co'
-TREE_TP_PATH = 'clientonly/skilltree/swordman_tp.co'
-TREE_INDEX_PATH = 'clientonly/skillshoptreespindex.co'
+TREE_INDEX_PATHS = {
+    'sp': 'clientonly/skillshoptreespindex.co',
+    'tp': 'clientonly/skillshoptreetpindex.co',
+}
 SKILL_WINDOW_UI = 'ui/skill/skillshopwindow.ui'
 SKILL_SP_PAGE_UI = 'ui/skill/skillshopsppage.ui'
 SKILL_EXPLAIN_UI = 'ui/skill/skillshopexplain.ui'
@@ -355,9 +357,45 @@ def build_ui_revision(src: B.Source, parts: dict) -> dict:
     }
 
 
-def tree_source_info(src: B.Source) -> dict:
+def swordman_tree_path(library, index_path: str) -> str:
+    index = library.script(index_path)
+    if index is None:
+        raise FileNotFoundError('Required skill tree index missing: ' + index_path)
+    sections = [field['values'] for field in index['fields'] if field['tag'] == '[skill tree]']
+    if len(sections) != 1 or len(sections[0]) % 2:
+        raise ValueError('Invalid skill tree index: ' + index_path)
+    entries = sections[0]
+    matches = [path for job, path in zip(entries[::2], entries[1::2]) if job == '[swordman]']
+    if len(matches) != 1 or not isinstance(matches[0], str) or not matches[0].lower().endswith('.co'):
+        raise ValueError('Swordman skill tree entry missing or ambiguous: ' + index_path)
+    return resolve(index_path, matches[0])
+
+
+def second_growth_fields(library, path: str) -> dict:
+    # The panel pack predates these tags. Read the original source fields, keeping
+    # the exact order without mapping them to local job or awakening state.
+    fields = library.script(path, 'skl')['fields']
+    tags = {
+        '[second growtype maximum level]': 'second_growtype_max_level',
+        '[skill fitness second growtype]': 'fitness_second_growtype',
+    }
     result = {}
-    for path in [TREE_SP_PATH, TREE_TP_PATH, TREE_INDEX_PATH, SKILL_WINDOW_UI,
+    for field in fields:
+        key = tags.get(field['tag'])
+        if key is None:
+            continue
+        values = field['values']
+        if key in result or any(type(value) is not int for value in values):
+            raise ValueError(f'Invalid {field["tag"]} in {path}')
+        if key == 'second_growtype_max_level' and len(values) != 12:
+            raise ValueError(f'Expected six pairs of second-growth caps in {path}')
+        result[key] = values
+    return result
+
+
+def tree_source_info(src: B.Source, tree_paths: dict) -> dict:
+    result = {}
+    for path in [*tree_paths.values(), *TREE_INDEX_PATHS.values(), SKILL_WINDOW_UI,
                  SKILL_SP_PAGE_UI, SKILL_EXPLAIN_UI]:
         found = src.lib.raw(path)
         if found is None:
@@ -551,6 +589,9 @@ def main() -> int:
     })
 
     src = B.Source(args.library)
+    tree_paths = {page: swordman_tree_path(src.lib, index_path)
+                  for page, index_path in TREE_INDEX_PATHS.items()}
+    tree_sources = tree_source_info(src, tree_paths)
     resolver = TextResolver(src.lib)
     (OUT / 'icons').mkdir(parents=True, exist_ok=True)
     (OUT / 'parts').mkdir(parents=True, exist_ok=True)
@@ -610,6 +651,7 @@ def main() -> int:
             'required_level_range': decoded.get('required_level_range'),
             'growtype_max_level': decoded.get('growtype_max_level'),
             'fitness_growtype': decoded.get('fitness_growtype'),
+            **second_growth_fields(src.lib, path),
             'purchase_cost': (decoded.get('purchase_cost') or [None])[0],
             'pre_required_skill': pre,
             'icon': normal, 'icon_selected': selected,
@@ -621,24 +663,20 @@ def main() -> int:
             'localization': localization_refs,
         })
     skills_by_id = {skill['id']: skill for skill in skills}
-    sp_tree = src.lib.script(TREE_SP_PATH)
-    tp_tree = src.lib.script(TREE_TP_PATH)
-    if sp_tree is None or tp_tree is None:
-        raise FileNotFoundError('Required swordman skill tree script missing')
     trees = {
-        'sp': [parse_branch(section, skills_by_id) for section in sp_tree['fields']],
-        'tp': [parse_branch(section, skills_by_id) for section in tp_tree['fields']],
+        page: [parse_branch(section, skills_by_id) for section in src.lib.script(path)['fields']]
+        for page, path in tree_paths.items()
     }
     total = sum(len((pack['records'][p.lower()]['decoded'].get('level_info') or [])) for p in index.values()
                 if pack['records'].get(p.lower()))
     manifest = {
         'schema': 'dnf_skill_panel/2',
         'source': {'bank': PANEL_BANK, 'pack': 'assets_local/content/combat_content.json',
-                   'icon_field': 'SKL [icon]', 'tree': TREE_SP_PATH,
-                   'tree_sha256': src.lib.raw(TREE_SP_PATH)[1],
+                   'icon_field': 'SKL [icon]', 'tree': tree_paths['sp'],
+                   'tree_sha256': tree_sources[tree_paths['sp']],
                    'bank_sha256': src.sources.get('sprite/' + PANEL_BANK.lower()),
                    'window_bank_sha256': src.sources.get('sprite/' + WINDOW_BANK.lower()),
-                   'tree_sources': tree_source_info(src),
+                   'tree_sources': tree_sources,
                    'exporter': 'tools/build_dnf_skill_panel.py'},
         'parts': parts,
         'ui_layout': ui_layout,
@@ -651,7 +689,7 @@ def main() -> int:
     CATALOG.write_text(json.dumps({
         'schema': 'dnf_skill_catalog/3',
         'note': ('names/explains from SKL localization references; requirements and edges from SKL fields; '
-                 'node coordinates from SkillTree/Swordman_Sp.co'),
+                 'tree branches and node coordinates from the SP and TP index targets'),
         'trees': trees,
         'skills': skills,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')

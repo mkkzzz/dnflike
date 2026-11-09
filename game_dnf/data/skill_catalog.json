@@ -1,6 +1,6 @@
 {
  "schema": "dnf_skill_catalog/3",
- "note": "names/explains from SKL localization references; requirements and edges from SKL fields; node coordinates from SkillTree/Swordman_Sp.co",
+ "note": "names/explains from SKL localization references; requirements and edges from SKL fields; tree branches and node coordinates from the SP and TP index targets",
  "trees": {
   "sp": [
    {
@@ -5812,6 +5812,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 200,
    "pre_required_skill": [
     {
@@ -5877,6 +5894,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 200,
    "pre_required_skill": [],
    "icon": "icons/hundredsword.png",
@@ -5937,6 +5971,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 200,
    "pre_required_skill": [
     {
@@ -6002,6 +6053,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 200,
    "pre_required_skill": [
     {
@@ -6057,6 +6125,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 45,
    "pre_required_skill": [],
    "icon": "icons/darkaura.png",
@@ -6107,6 +6192,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 45,
    "pre_required_skill": [],
    "icon": "icons/bleedingmastery.png",
@@ -6157,6 +6259,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 45,
    "pre_required_skill": [],
    "icon": "icons/defensedownoncritical.png",
@@ -6207,6 +6326,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 45,
    "pre_required_skill": [],
    "icon": "icons/stuckuponcounter.png",
@@ -6371,6 +6507,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 70,
    "pre_required_skill": [
     {
@@ -6436,6 +6589,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 60,
    "pre_required_skill": [
     {
@@ -6501,6 +6671,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 70,
    "pre_required_skill": [
     {
@@ -6566,6 +6753,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 60,
    "pre_required_skill": [
     {
@@ -6631,6 +6835,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 70,
    "pre_required_skill": [
     {
@@ -6696,6 +6917,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 60,
    "pre_required_skill": [
     {
@@ -6761,6 +6999,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 70,
    "pre_required_skill": [
     {
@@ -6826,6 +7081,23 @@
     0
    ],
    "fitness_growtype": [],
+   "second_growtype_max_level": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "fitness_second_growtype": [
+    1
+   ],
    "purchase_cost": 60,
    "pre_required_skill": [
     {

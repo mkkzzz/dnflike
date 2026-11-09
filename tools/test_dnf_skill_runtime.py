@@ -4,6 +4,7 @@ import hashlib
 import unittest
 from unittest.mock import patch
 import build_dnf_skill_runtime as builder
+from build_dnf_skill_panel import second_growth_fields, swordman_tree_path
 from pathlib import Path
 
 
@@ -38,6 +39,34 @@ class SkillRuntimeTest(unittest.TestCase):
         self.assertEqual(self.runtime["passive_count"], 101)
         self.assertEqual(len(self.skills), 175)
         self.assertEqual(len({skill["source_id"] for skill in self.skills.values()}), 175)
+
+    def test_skill_tree_uses_the_swordman_entry_in_each_index(self):
+        class IndexFixture:
+            def script(self, path):
+                return {'fields': [{'tag': '[skill tree]', 'values': self.entries}]}
+
+        lib = IndexFixture()
+        lib.entries = ['[fighter]', 'other.co', '[swordman]', 'Alt/Tree.CO']
+        self.assertEqual(swordman_tree_path(lib, 'clientonly/tpindex.co'), 'clientonly/alt/tree.co')
+        lib.entries += ['[swordman]', 'duplicate.co']
+        with self.assertRaises(ValueError):
+            swordman_tree_path(lib, 'clientonly/tpindex.co')
+
+    def test_secondary_growth_fields_are_kept_without_inventing_tree_nodes(self):
+        catalog = json.loads((ROOT / 'game_dnf/data/skill_catalog.json').read_text(encoding='utf8'))
+        secondary = {row['id']: row for row in catalog['skills'] if 'second_growtype_max_level' in row}
+        self.assertEqual(len(secondary), 16)
+        self.assertEqual(secondary[96]['second_growtype_max_level'], [0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0])
+        self.assertEqual(secondary[96]['fitness_second_growtype'], [1])
+        for branches in catalog['trees'].values():
+            self.assertFalse(any(node['id'] == 96 for branch in branches for node in branch['nodes']))
+
+        class InvalidGrowthFixture:
+            def script(self, path, kind):
+                return {'fields': [{'tag': '[second growtype maximum level]', 'values': [0] * 11}]}
+
+        with self.assertRaises(ValueError):
+            second_growth_fields(InvalidGrowthFixture(), 'skill/swordman/sayaex.skl')
 
     def test_every_active_node_has_a_runtime_entry(self):
         for skill_id, skill in self.skills.items():
