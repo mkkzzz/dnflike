@@ -16,6 +16,8 @@ const CombatHud = preload("res://ui/combat/combat_hud.gd")
 const PropView = preload("res://scripts/native_prop.gd")
 const WeaponAppearance = preload("res://content/api/weapon_appearance.gd")
 const REVIVE_ASSETS := "res://assets_local/revive_v1/manifest.json"
+const STATUS_ASSETS := "res://assets_local/status_v1/manifest.json"
+const BLIND_LAYERS := {"BlindBack":"blind_back","BlindFront":"blind_front"}
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
 const GHOST_MS := 320.0
 const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
@@ -38,6 +40,7 @@ var numbers: Array = []
 var prop_views: Array = []
 var enemy_actors: Dictionary = {}
 var _companion_banks: Dictionary = {}
+var _status_assets: Dictionary = {}
 var object_views: Dictionary = {}
 var ghosts: Array = []
 var aura
@@ -70,6 +73,10 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 	_player_clips = player_clips
 	_effects = assets.get("effects",{}).duplicate()
 	_effects.merge(combat_assets.get("effects",{}),true)
+	if FileAccess.file_exists(STATUS_ASSETS):
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string(STATUS_ASSETS))
+		if parsed is Dictionary and parsed.get("schema") == "dnf_status_assets/1":
+			_status_assets = parsed
 	for bank: Dictionary in combat_assets.get("effects",{}).values():
 		if bank.has("source"):_particle_banks[String(bank.source).to_lower()] = bank
 	_warm_render_assets()
@@ -110,6 +117,8 @@ func _warm_render_assets() -> void:
 	for effect_info: Dictionary in _effects.values():
 		var atlas: Dictionary = effect_info.get("atlas",{})
 		if atlas.get("texture","") != "":paths[String(atlas["texture"])] = true
+	for bank: Dictionary in _status_assets.get("effects",{}).values():
+		paths[String(bank["atlas"]["texture"])] = true
 	for bank: Dictionary in _combat.get("objects",{}).values():
 		var atlas: Dictionary = bank.get("atlas",{})
 		if atlas.get("texture","") != "":paths[String(atlas["texture"])] = true
@@ -214,6 +223,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		actor.z_index = int(Vector2(e["pos"]).y)
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
+		if e.has("blind"):_present_blind(actor,e,sim_ms)
 	_present_objects(s.get("objects",[]))
 	for i in range(ghosts.size()-1,-1,-1):
 		var g: Dictionary = ghosts[i]
@@ -281,6 +291,35 @@ func _present_aura(key: String, p: Dictionary, sim_ms: float) -> void:
 	aura.position = _canvas(Vector2(p["pos"]), float(p["z"]))
 	aura.z_index = int(Vector2(p["pos"]).y)+1
 	aura.advance(sim_ms)
+
+func _present_blind(actor: ActorView, enemy: Dictionary, sim_ms: float) -> void:
+	var active := bool(enemy["blind"])
+	if not active and not actor.has_node("BlindFront"):return
+	var height: Dictionary = _status_assets.get("monster_heights",{}).get(enemy["mob"],{})
+	var banks: Dictionary = _status_assets.get("effects",{})
+	if height.is_empty() or not banks.has("blind_back") or not banks.has("blind_front"):return
+	for layer: String in BLIND_LAYERS:
+		var fx := actor.get_node_or_null(layer) as FxView
+		var elapsed := 0.0
+		if fx == null:
+			fx = FxView.new()
+			fx.name = layer
+			fx.show_behind_parent = layer == "BlindBack"
+			var bank: Dictionary = banks[BLIND_LAYERS[layer]]
+			fx.setup(bank,1)
+			fx.loop = bool(bank["loop"])
+			actor.add_child(fx)
+		else:
+			elapsed = fx.clock_ms + sim_ms
+		fx.visible = active
+		if active:
+			# Both original passes use the cached base ANI top, independent of the current pose.
+			fx.position.y = -roundf(float(enemy["z"])) - float(height["pixels"]) - 5.0
+			fx.seek(elapsed)
+		else:
+			# The status owns the ANI pair for the actor's lifetime. Expiry
+			# hides it and a later application does not rebuild the animation.
+			fx.clock_ms = elapsed
 
 func _present_objects(list: Array) -> void:
 	var live := {}

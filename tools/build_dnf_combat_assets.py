@@ -35,6 +35,7 @@ from dnf_asset_store import ROOT
 from dnf_pvf import open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
+from compile_dnf_content import NATIVE_ZEALOT_MONSTERS
 
 OUT = ROOT / 'game_dnf/assets_local/combat'
 ACTIVE_OUT = OUT
@@ -167,9 +168,15 @@ GHOST_FIELD_AUDIO = {
     'SM_RASA': 'sounds/char/swordman/sm_rasa.ogg',
 }
 
+ZEALOT_SOUNDS = {
+    'KNIFE_STICK': ['sounds/effect/knife_stick.ogg'],
+    'ZGM_SPRING': ['sounds/mon/act3/zgm_spring.ogg'],
+    'ZGM_ATK': ['sounds/mon/act3/zgm_atk.ogg'],
+}
 CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
+    **ZEALOT_SOUNDS,
     'DRGCANNON_SHOOT': ['sounds/mon/act3/drgcan_shoot.ogg'],
     'R_BOMB_HIT': ['sounds/effect/bomb_hit_01.ogg', 'sounds/effect/bomb_hit_02.ogg'],
     'swing1': ['sounds/char/swordman/sm_atk_01.ogg'], 'swing2': ['sounds/char/swordman/sm_atk_02.ogg'],
@@ -200,10 +207,10 @@ def safe_atlas_key(prefix: str, value: str) -> str:
 
 
 class Source:
-    def __init__(self, library: Path | None):
+    def __init__(self, library: Path | None, *, pack_path: Path | None = None):
         self.lib = open_library(library)
         self.root = self.lib.path
-        pack_path = ROOT / 'game_dnf/assets_local/content/combat_content.json'
+        pack_path = pack_path or ROOT / 'game_dnf/assets_local/content/combat_content.json'
         self.pack_records = json.loads(pack_path.read_text(encoding='utf-8'))['records'] if pack_path.is_file() else {}
         self.cat = sqlite3.connect(f'file:{self.root / "catalog.sqlite"}?mode=ro', uri=True)
         self.cat.row_factory = sqlite3.Row
@@ -498,7 +505,7 @@ def catalog_monster_specs() -> dict:
                 for monster in room.get('monsters') or []:
                     if monster.get('mob'):
                         needed.add(str(monster['mob']).lower())
-    builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()}
+    builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()} | set(NATIVE_ZEALOT_MONSTERS.values())
     out = {}
     for _key, mob in catalog.items():
         path = str(mob['path']).lower()
@@ -605,6 +612,43 @@ def breakable_particle_animations(src: Source) -> tuple[dict, dict]:
     return effects, mapping
 
 
+def native_zealot_monster_bank(src: Source, key: str, mob: str, unresolved: list) -> dict:
+    """Use the pinned content pack to include the exact native state animation clips."""
+    record = src.pack_records.get(mob, {})
+    decoded = record.get('decoded', {})
+    suicide = record.get('native_suicide', {})
+    jump = record.get('native_starfish_jump', {})
+    if not decoded or not (suicide or jump):
+        raise ValueError('Compile the native Zealot and StarFish content first: ' + mob)
+    motions = {}
+    for pose, field in (('stay', 'waiting_motion'), ('move', 'move_motion'), ('sit', 'sit_motion'),
+                        ('damage1', 'damage_motion_1'), ('damage2', 'damage_motion_2'),
+                        ('down', 'down_motion'), ('overturn', 'overturn_motion')):
+        paths = decoded.get(field) or []
+        if paths and paths[0]:
+            motions[pose] = paths[0]
+            motions[PurePosixPath(paths[0]).stem] = paths[0]
+    for slot, path in enumerate(decoded.get('attack_motions') or []):
+        if path:
+            motions[PurePosixPath(path).stem] = path
+            if slot == 0:
+                motions['attack'] = path
+    specials = (suicide['suicide_ani'],) if suicide else (decoded.get('etc_motions') or [])
+    for path in specials:
+        if path:
+            motions[PurePosixPath(path).stem] = path
+    for path in {mob, *motions.values()}:
+        found = src.lib.raw(path)
+        if not found or found[1] != src.pack_records.get(path, {}).get('source', {}).get('sha256'):
+            raise ValueError('Native monster source differs from compiled pack: ' + path)
+        src.sources[path] = found[1]
+    bank = monster_bank(src, key, mob, '', unresolved, motion_map=motions)
+    missing_clips = set(motions) - bank.get('clips', {}).keys()
+    if missing_clips:
+        raise ValueError(f'Native monster {mob} lacks source clips: {sorted(missing_clips)}')
+    return bank
+
+
 def monster_specifications() -> dict:
     """手写条目（旧 clip 目录约定）+ 总账自动补全条目。"""
     specs = {key: {'mob': mob, 'clip_dir': clip_dir, 'extra': extra} for key, (mob, clip_dir, extra) in MONSTERS.items()}
@@ -684,6 +728,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     for key, spec in monster_specifications().items():
         manifest['monsters'][key] = monster_bank(src, key, spec['mob'], spec.get('clip_dir', ''), unresolved,
                                                   spec.get('extra', ()), spec.get('motions'))
+    for key, path in NATIVE_ZEALOT_MONSTERS.items():
+        manifest['monsters'][key] = native_zealot_monster_bank(src, key, path, unresolved)
     for key, path in objects.items():
         try:
             animation_path = src.object_animation(path)
@@ -875,10 +921,10 @@ def extend_rasa(library: Path | None, output: Path = OUT) -> dict:
     return extend_skill_banks(library, output, specs)
 
 
-def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
+def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_path: Path | None = None) -> dict:
     """Add explicitly bound banks while retaining every existing asset byte."""
     global ACTIVE_OUT
-    src = Source(library)
+    src = Source(library, pack_path=pack_path)
     previous = ACTIVE_OUT
     (ROOT/'temp').mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix='dnf-skill-extend-', dir=ROOT/'temp'))
@@ -912,10 +958,13 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
                 manifest[section][key] = bank
                 additions.extend(clip['file'] for clip in bank)
                 continue
-            ani = src.object_animation(path) if section == 'objects' else path
-            bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
-            if section == 'objects':
-                bank.update(clip=src.animation(ani), object=path)
+            if section == 'monsters':
+                bank = native_zealot_monster_bank(src, key, path, unresolved)
+            else:
+                ani = src.object_animation(path) if section == 'objects' else path
+                bank = effect_bank(src, safe_atlas_key('obj', key) if section == 'objects' else key, ani, unresolved)
+                if section == 'objects':
+                    bank.update(clip=src.animation(ani), object=path)
             if key in manifest[section] and manifest[section][key] != bank:
                 raise ValueError('Existing bank differs; needs a new version: '+key)
             manifest[section][key] = bank
@@ -936,6 +985,8 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list) -> dict:
             summary = json.loads(summary_path.read_text(encoding='utf8'))
             summary.update(effects=len(manifest['effects']), objects=list(manifest['objects']),
                            audio_keys=len(manifest['audio']))
+            if any(section == 'monsters' for section, _, _ in specs):
+                summary['monsters'] = list(manifest['monsters'])
             summary_path.write_text(json.dumps(summary,ensure_ascii=False,indent=1),encoding='utf8')
         publish_tree(stage, output)
         return {'banks': additions}
@@ -969,7 +1020,18 @@ def main() -> int:
                         help='Add original ghost cast clip metadata to the existing player atlases')
     parser.add_argument('--extend-pope-thunderbolt', action='store_true',
                         help='Add the Pope contact attack object without changing existing banks')
+    parser.add_argument('--extend-raxy-starfish', action='store_true',
+                        help='Add the original Raxy and StarFish banks and state sounds')
+    parser.add_argument('--output', type=Path, help='Existing asset tree for --extend-raxy-starfish')
+    parser.add_argument('--pack', type=Path, help='Compiled source pack for --extend-raxy-starfish')
     args = parser.parse_args()
+    if (args.output or args.pack) and not args.extend_raxy_starfish:
+        parser.error('--output and --pack require --extend-raxy-starfish')
+    if args.extend_raxy_starfish:
+        specs = [('monsters', key, path) for key, path in NATIVE_ZEALOT_MONSTERS.items()]
+        specs.extend(('audio', key, paths) for key, paths in ZEALOT_SOUNDS.items())
+        print(json.dumps(extend_skill_banks(args.library, args.output or OUT, specs, pack_path=args.pack)))
+        return 0
     if args.extend_pope_thunderbolt:
         specs = [('objects', 'native_pope_thunderbolt', OBJECTS['native_pope_thunderbolt'])]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))

@@ -689,7 +689,9 @@ func step_game(ms: float) -> void:
 		Kernel.Reaction.step_body(player,ms,float(rules["player"]["gravity"]),rules["reaction"],move_in_world)
 	else:
 		step_player(ms,move)
-	for enemy: Dictionary in monsters:update_enemy(enemy,ms)
+	# A creature admitted by another monster participates in clear checks now,
+	# and receives its first movement update on the following battle tick.
+	for index in monsters.size():update_enemy(monsters[index],ms)
 	for companion: Dictionary in companions:update_companion(companion,ms)
 	step_objects(ms,first_new_object_id)
 	if _aura_pulse_ms <= 0:
@@ -1361,6 +1363,11 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	if float(enemy["hp"])<=0:
 		enemy["state"] = "dead"
 		enemy["death_ms"] = float(enemy["death_ms"])+ms
+	elif state == "native_suicide":
+		step_native_suicide(enemy,m["native_suicide"],ms)
+	elif state == "native_summon_jump":
+		step_native_summon_jump(enemy,dt)
+		return
 	elif state == "attack":
 		enemy_attack(enemy,advance)
 	elif state in ["idle","move"] and enemy.get("ai",true):
@@ -1382,6 +1389,8 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy["hits"] = {}
 			enemy["thrown"] = false
 			enemy["move_index"] = int(intent.get("move_index", -1))
+		elif state == "idle" and m.has("native_suicide") and start_native_suicide(enemy,m["native_suicide"]):
+			return
 		elif Vector2(intent["move"]).length_squared() > 0:
 			var dir: Vector2 = intent["move"]
 			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt*(float(enemy["numeric"].values["move_speed"]) if enemy.has("numeric") else 1.0))
@@ -1390,6 +1399,64 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		else:
 			enemy["state"] = "idle"
 	Kernel.Reaction.step_body(enemy,ms,float(rules["reaction"]["monster_gravity"]),rules["reaction"],move_in_world)
+
+func start_native_suicide(enemy: Dictionary, suicide: Dictionary) -> bool:
+	for path: String in suicide["spawn"]["mobs"]:
+		if table.monster_by_mob(path) == "":return false
+	var chance: Array = suicide["chance"]
+	if rng.range_int(0,0x7fffffff)%int(chance[1]) >= int(chance[0]):return false
+	enemy["state"] = "native_suicide"
+	enemy["clock"] = 0.0
+	return true
+
+func step_native_suicide(enemy: Dictionary, suicide: Dictionary, ms: float) -> void:
+	var age := float(enemy["clock"])
+	var sound_at := float(suicide["sound_at"])
+	if age-ms < sound_at and age >= sound_at:play_sound(suicide["sound"])
+	if age < float(suicide["end_at"]):return
+	enemy["hp"] = 0.0
+	enemy["state"] = "dead"
+	enemy["death_ms"] = 0.0
+	var spec: Dictionary = suicide["spawn"]
+	var count := int(spec["count_min"])+rng.range_int(0,0x7fffffff)%int(spec["count_span"])
+	var origin := Vector2(Vector2i(enemy["pos"]))
+	var height := float(int(enemy["z"])+int(spec["offset_z"]))
+	for _index in count:
+		# 2689630 sends these independent draws in packet order, Y before X.
+		var vx := native_spawn_roll(spec["launch_x"])
+		var vy := native_spawn_roll(spec["launch_y"])
+		var x_sign := 1 if rng.range_int(0,0x7fffffff)%2 == 0 else -1
+		var y_sign := 1 if rng.range_int(0,0x7fffffff)%2 == 0 else -1
+		var rise := native_spawn_roll(spec["launch_height"])
+		var offset_y := native_spawn_roll(spec["offset_y"])
+		var offset_x := native_spawn_roll(spec["offset_x"])
+		var path := String(spec["mobs"][rng.range_int(0,0x7fffffff)%spec["mobs"].size()])
+		var child := spawn_enemy(origin+Vector2(offset_x,offset_y),false,table.monster_by_mob(path))
+		var gravity := float(spec["ground_gravity"])
+		child["z"] = height
+		child["vz"] = sqrt(absf(2.0*gravity*rise))
+		child["facing"] = x_sign
+		child["state"] = "native_summon_jump"
+		child["native_jump_velocity"] = Vector2(vx*x_sign,vy*y_sign)
+		child["native_jump_gravity"] = gravity
+		play_sound(spec["sound"])
+
+func native_spawn_roll(bounds: Array) -> int:
+	return int(bounds[0])+rng.range_int(0,0x7fffffff)%(int(bounds[1])-int(bounds[0])+1)
+
+func step_native_summon_jump(enemy: Dictionary, dt: float) -> void:
+	var velocity: Vector2 = enemy["native_jump_velocity"]
+	var gravity := float(enemy["native_jump_gravity"])
+	var vz := float(enemy["vz"])
+	enemy["pos"] = move_in_world(enemy["pos"],velocity*dt)
+	enemy["z"] = maxf(0.0,float(enemy["z"])+(vz+0.5*gravity*dt)*dt)
+	enemy["vz"] = vz+gravity*dt
+	if float(enemy["z"]) == 0.0 and float(enemy["vz"]) <= 0.0:
+		enemy["state"] = "idle"
+		enemy["clock"] = 0.0
+		enemy["vz"] = 0.0
+		enemy.erase("native_jump_velocity")
+		enemy.erase("native_jump_gravity")
 
 func poll_native_enemy_attack(enemy: Dictionary, policy: Dictionary) -> int:
 	var width: Array = table.player["width"]
@@ -2516,6 +2583,7 @@ func enemy_ani(enemy: Dictionary) -> Array:
 	var rp: Dictionary = rules["reaction"]
 	match String(enemy["state"]):
 		"move":return ["move",float(enemy["clock"])]
+		"native_suicide":return [m["native_suicide"]["pose"],float(enemy["clock"])]
 		"attack":
 			# BOSS 多招：播放这一刀选中的招式 ANI（stem 来自 .mob 的 [attack motion]）。
 			var moves: Array = m.get("moves", [])
@@ -2567,7 +2635,8 @@ func view_snapshot() -> Dictionary:
 		if is_alive:alive += 1
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"z":float(enemy["z"]),"facing":int(enemy["facing"]),
 			"ani":String(enemy["def"]["motions"].get(e_ani[0],e_ani[0])),"clock":e_ani[1],"flash":float(enemy["flash_ms"])>0,"alive":is_alive,
-			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"]})
+			"death_ms":float(enemy["death_ms"]),"hp_ratio":float(enemy["hp"])/float(enemy["max_hp"]),"chief":enemy["chief"],
+			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind")})
 	var friendly: Array = []
 	for companion: Dictionary in companions:
 		var current := companion_ani(companion)

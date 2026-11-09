@@ -139,9 +139,13 @@ if ($Test) {
         $ErrorActionPreference="Continue"
         $popeCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_pope_combat.gd 2>&1
         $popeExit=$LASTEXITCODE
+        $raxyCombat=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_native_raxy_combat.gd 2>&1
+        $raxyExit=$LASTEXITCODE
     } finally {$ErrorActionPreference=$popePreference}
     $popeCombat | Write-Output
     if ($popeExit -ne 0 -or ($popeCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($popeCombat -match '\[NATIVE_POPE\] COMPLETE checks=\d+ failures=0')) {throw "Native Pope contact regression failed."}
+    $raxyCombat | Write-Output
+    if ($raxyExit -ne 0 -or ($raxyCombat -match 'SCRIPT ERROR|ERROR:') -or -not ($raxyCombat -match '\[NATIVE_RAXY\] COMPLETE checks=\d+ failures=0')) {throw "Native Raxy summons regression failed."}
     $skillEffectPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

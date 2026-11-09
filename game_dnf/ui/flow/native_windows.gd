@@ -550,7 +550,8 @@ func dungeon() -> void:
 		button.name = "difficulty_previous" if entry[0] == -1 else "difficulty_next"
 	var enter: TextureButton = skin.sprite_button(node, "select", [164, 165, 166], Vector2(621, 446), game.depart, "进入地下城 Space")
 	enter.set_meta("action_label", "进入地下城")
-	skin.button(node, "返回城镇", Vector2(631, 528), func(): game.show_overlay(""))
+	var back_position := Vector2(699, 541) if has_native_layout else Vector2(631, 528)
+	skin.button(node, "返回城镇", back_position, func(): game.show_overlay("")).name = "dungeon_return_town"
 	skin.label(node, "%d / %d 页 · 共 %d 个地下城" % [game.dungeon_page + 1, pages, choices.size()], Vector2(34, 569), 11)
 	if pages > 1:
 		var previous: TextureButton = skin.sprite_button(node, "select", [3, 4, 5], Vector2(34, 540), func(): game.dungeon_page = maxi(0, game.dungeon_page - 1); game.show_overlay("dungeon"), "", "page")

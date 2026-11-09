@@ -85,7 +85,10 @@
   "newmonsters_haze_enjosipho_enjosipho",
   "newmonsters_haze_enjosipho_enjosipho_quest",
   "soceress_vinoshu_quest",
-  "newmonsters_haze_death_squad_death_squad"
+  "newmonsters_haze_death_squad_death_squad",
+  "native_raxy",
+  "native_starfish",
+  "native_starfish_rukuku"
  ],
  "objects": [
   "gorecross",
@@ -126,7 +129,7 @@
  ],
  "effects": 194,
  "digits": 61,
- "audio_keys": 207,
+ "audio_keys": 210,
  "unresolved": 32,
  "unresolved_items": [
   {

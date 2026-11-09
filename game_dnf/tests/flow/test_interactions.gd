@@ -126,6 +126,9 @@ func check_sky_selector() -> void:
 
 func check_sky_selector_open() -> void:
 	var backdrop: TextureRect = game.modal.find_child("dungeon_region_background", true, false)
+	var back: Button = game.modal.find_child("dungeon_return_town", true, false)
+	host.check(back != null and back.position == Vector2(699, 541) and back.size == Vector2(97, 23),
+		"the return button uses the original common selector anchor and size")
 	var locked := dungeon_button("draconiantower")
 	var locked_card: TextureRect = game.modal.find_child("dungeon_card_draconiantower", true, false)
 	host.check(backdrop != null and backdrop.texture.get_size() == Vector2(800, 600) and

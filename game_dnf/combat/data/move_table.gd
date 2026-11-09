@@ -495,6 +495,25 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"keep_distance":float(spec.get("keep_distance",mob.get("keep_distance",0))),
 		"motions":motions, "ani_paths":ani_paths}
 	if record.has("native_attack_selection"):m["native_attack_selection"] = record["native_attack_selection"]
+	if record.has("native_suicide"):
+		var suicide: Dictionary = record["native_suicide"].duplicate(true)
+		var source_ani := String(suicide["suicide_ani"])
+		var source_timeline := timeline(source_ani)
+		var sound_frame := int(suicide["sound_frame"])
+		if sound_frame >= source_timeline.size():
+			problems.append("suicide sound frame missing for "+path)
+		else:
+			var pose := source_ani.get_file().get_basename()
+			ani_paths[pose] = source_ani
+			suicide["pose"] = pose
+			suicide["sound_at"] = float(source_timeline[sound_frame]["start_ms"])
+			suicide["end_at"] = Timeline.duration(source_timeline)
+			var original_ids: Dictionary = db.index("monsters_goblin")
+			var children: Array[String] = []
+			for child_id in suicide["spawn"]["monster_ids"]:
+				children.append(String(original_ids[str(int(child_id))]))
+			suicide["spawn"]["mobs"] = children
+			m["native_suicide"] = suicide
 	var attack_infos: Array = mob.get("attack_infos", [])
 	var cooltimes: Array = mob.get("cooltimes", mob.get("cooltime", []))
 	var moves: Array = []

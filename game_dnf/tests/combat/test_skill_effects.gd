@@ -25,6 +25,11 @@ func run() -> void:
 	game.set_process(false)
 	game.set_physics_process(false)
 	check(not game.missing_assets,"internal combat scene loads existing skill resources")
+	game.restart()
+	var ordinary: Dictionary = game.spawn_enemy(Vector2(400,250))
+	var ordinary_snapshot: Array = game.view_snapshot()["enemies"].filter(func(enemy):return enemy["id"]==ordinary["id"])
+	check(not ordinary.has("numeric") and ordinary_snapshot.size()==1 and not ordinary_snapshot[0]["blind"],
+		"the standalone nonnumeric monster keeps its regular view snapshot")
 	var session = Session.new()
 	session.command("numbers.level",{"level":60})
 	for rank in [1,10]:
@@ -574,6 +579,29 @@ func check_rasa_blind(game, session) -> void:
 	game.step_objects(1.0)
 	var blind: Dictionary = actor.effects.active.get("blind",{})
 	check(blind.get("remaining_ms",0)==6500.0,"a native blind draw at child age 2600 applies the equal-level status")
+	game.view.present(game.view_snapshot(),0,0)
+	var enemy_view = game.view.enemy_actors[enemy["id"]]
+	var rear = enemy_view.get_node_or_null("BlindBack")
+	var front = enemy_view.get_node_or_null("BlindFront")
+	check(rear != null and front != null and rear.visible and front.visible
+		and rear.atlas != null and front.atlas != null,"real Rasa blind shows both original monster status layers")
+	if rear != null and front != null:
+		check(rear.show_behind_parent and not front.show_behind_parent
+			and rear.position==Vector2(0,-73) and front.position==rear.position,
+			"blind uses separate actor passes and original Goblin frame-zero height plus five pixels")
+		check(rear.frame["sprite"]=="0" and front.frame["sprite"]=="0"
+			and rear.frame_color()==Color.WHITE and front.frame_color()==Color.WHITE,
+			"both blind layers start at source frame zero with native sprite alpha")
+		game.view.present(game.view_snapshot(),60,60)
+		var elevated: Dictionary = game.view_snapshot()
+		elevated["enemies"][0]["facing"] = -1
+		elevated["enemies"][0]["ani"] = "attack1"
+		elevated["enemies"][0]["z"] = 17.0
+		game.view.present(elevated,120,0)
+		check(rear.frame["sprite"]=="1" and front.frame["sprite"]=="1"
+			and rear.position==Vector2(0,-90) and front.position==rear.position
+			and rear.facing==1 and front.facing==1,
+			"blind follows elevation, uses fixed native orientation and holds its clock during pause")
 	var events: Array = game.bus.events_of("combat.status").filter(func(e):return e.get("id","")=="blind")
 	check(events.size()==1,"equal child blind draws cannot stack or refresh the status")
 	check(not late_child.has("rasa_next_status_ms"),"the grab completion tick does not draw even when the child timer is due")
@@ -590,7 +618,25 @@ func check_rasa_blind(game, session) -> void:
 	actor.step(6467.0)
 	game.update_enemy(enemy,1.0)
 	check(not actor.effects.active.has("blind") and enemy["state"]=="move","status expiry restores the Goblin's ordinary target acquisition")
+	if rear != null and front != null:
+		game.view.present(game.view_snapshot(),0,0)
+		check(not rear.visible and not front.visible,"blind status expiry hides both layers immediately")
 	game.step_objects(5200.0)
 	check(late_child.get("rasa_next_status_ms",0)==7800.0,"after a long update each child advances the previous deadline only once")
 	game.step_objects(0.0)
 	check(late_child.get("rasa_next_status_ms",0)==10400.0,"a subsequent update consumes the next overdue interval")
+	if rear != null and front != null:
+		actor.effects.active.erase("blind")
+		check(actor.apply_source_blind(row,0),"blind visual refresh fixture reapplies the source status")
+		game.view.present(game.view_snapshot(),300,300)
+		check(rear.frame["sprite"]=="0" and front.frame["sprite"]=="0"
+			and rear.clock_ms==360.0 and front.clock_ms==360.0,
+			"the retained source pair loops every six 60-ms frames")
+		check(actor.apply_source_blind(stronger,0),"the source blind accepts a stronger replacement")
+		game.view.present(game.view_snapshot(),60,60)
+		check(rear.visible and front.visible and rear.frame["sprite"]=="1" and front.frame["sprite"]=="1"
+			and rear.clock_ms==420.0 and front.clock_ms==420.0,
+			"stronger blind refresh keeps the original presentation clock")
+		enemy["hp"] = 0
+		game.view.present(game.view_snapshot(),0,0)
+		check(not rear.visible and not front.visible,"dead monsters stop rendering the blind pair")

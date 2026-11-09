@@ -103,6 +103,41 @@ NATIVE_ATTACK_CONTACTS = {
     },
 }
 
+NATIVE_ZEALOT_MONSTERS = {
+    'native_raxy': 'monster/zealot/raxy-a.mob',
+    'native_starfish': 'monster/starfish/starfish.mob',
+    'native_starfish_rukuku': 'monster/starfish/starfishrukuku.mob',
+}
+NATIVE_ZEALOT_SOURCE_SHA = '187ad34ab6bfff040d9b12bb145bdda0bba29f82aaa41183280b0ae42e914b84'
+NATIVE_RAXY_SOURCE = {
+    'monster/zealot/raxy-a.mob': '5a6e4599e577eff2668d7cbe14faefe7a577dff0f89b45fb9d1f3f5beb39e7b7',
+    'monster/zealot/raxy-aani/suicide.ani': 'a8e439f2004b1228e927179931e6d2d332d87c8c73b7a0ec49259bf0731e16b0',
+}
+NATIVE_STARFISH_JUMPS = {
+    'monster/starfish/starfish.mob': {
+        'mob_id': 250,
+        'sha256': {
+            'monster/starfish/starfish.mob': 'b74c5dd76b58b1d653df13974fde343f91b667cda8947fc5899d6588d461490b',
+            'monster/starfish/tentacleanimation/jumpattackstart.ani': 'b93424ba86001c7ebebfdd89ad16d6e7a0b9c9f2c02941c58f7e85f3a1e626fe',
+            'monster/starfish/tentacleanimation/jumpattackrolling.ani': 'd381e6e7b58b1178c5614254b1c4469e3b4f6a22f9c5ff4d830dd9dd2aa1519c',
+            'monster/starfish/tentacleanimation/jumpattackend.ani': '5ccb59b2d40f721fd17ea094b8f341912cfa78d22e0589d0cce98a2e3bad6716',
+        },
+    },
+    'monster/starfish/starfishrukuku.mob': {
+        'mob_id': 252,
+        'sha256': {
+            'monster/starfish/starfishrukuku.mob': 'f300a2345a0a3ef9ccd101b90236bf91f63073ac3e69477ef3123cbc975312c2',
+            'monster/starfish/rukanimation/jumpattackstart.ani': '93791bd7de8df17ac88fae890221f2495e1db686c19399e5235dfa624eec4eec',
+            'monster/starfish/rukanimation/jumpattackrolling.ani': 'acc7262c9a04bc338aa261d83f60b8f4fdd0e59cc52493e7dc151353b858e92d',
+            'monster/starfish/rukanimation/jumpattackend.ani': '2d679c0fbc58d960911a4b591fc8ffe0809a051d60621932ee393956a4a4b03d',
+        },
+    },
+}
+NATIVE_STARFISH_ATTACKS = {
+    'monster/starfish/attackinfo/jumpattack.atk': '4a38742299a6e80ce01892c824c67560de893952f26f73e6590718b07da6d373',
+    'monster/starfish/attackinfo/rolling.atk': 'd486fda9ae49937caaeba5d39da9676a4ab30e345377b6cf0d624d5ea4845735',
+}
+
 # Decoders: canonical tag -> (decoded key, shape, evidence, note). Shapes:
 #   int|float|str = first value; list = all values; enum = canonical enum tag(s); flag = presence.
 ATK_FIELDS = {
@@ -693,6 +728,75 @@ def compile_native_attack_contact(mob: dict, mob_id: int, spec: dict, passive_in
             'chance_percent': spec['chance_percent'], 'source': spec['source']}
 
 
+def checked_zealot_source(record: dict | None, path: str, hashes: dict) -> dict:
+    if not record or record['source']['sha256'] != hashes.get(path):
+        raise ValueError(f'Native Zealot or StarFish binding needs exact source {path}')
+    return record['decoded']
+
+
+def compile_native_raxy_suicide(mob: dict, mob_id: int, monster_index: dict, add) -> dict:
+    path = mob['id']
+    decoded = checked_zealot_source(mob, path, NATIVE_RAXY_SOURCE)
+    if mob_id != 260 or not decoded.get('etc_motions'):
+        raise ValueError('Native Raxy binding needs original MOB260 and [etc motion] 0')
+    suicide_ani = decoded['etc_motions'][0]
+    clip = checked_zealot_source(add(suicide_ani, 'ani', path), suicide_ani, NATIVE_RAXY_SOURCE)
+    timeline = clip['timeline']
+    if not any(frame['frame'] == 2 for frame in timeline) or any(frame['attack_boxes'] for frame in timeline):
+        raise ValueError('Native Raxy suicide must have its original sound frame and no attack boxes')
+    for monster_path, spec in NATIVE_STARFISH_JUMPS.items():
+        actual = monster_index.get(spec['mob_id'], '')
+        if ('monster/' + actual).lower() != monster_path:
+            raise ValueError(f'Native Raxy summon index differs for MOB{spec["mob_id"]}')
+        checked_zealot_source(add(monster_path, 'mob', path), monster_path, spec['sha256'])
+    return {
+        'chance': [5, 300], 'state': 18, 'etc_motion_index': 0, 'suicide_ani': suicide_ani,
+        'sound_frame': 2, 'sound': 'KNIFE_STICK',
+        'spawn': {
+            'monster_ids': [250, 252], 'count_min': 2, 'count_span': 2,
+            'offset_x': [-20, 19], 'offset_y': [-10, 9], 'offset_z': 20,
+            'launch_x': [100, 299], 'launch_y': [50, 149], 'launch_height': [40, 99],
+            'launch_state': 10, 'gravity_mode': 2, 'ground_gravity': -1500, 'sound': 'ZGM_SPRING',
+            'launch_x_direction_codes': [0, 1], 'launch_y_direction_codes': [2, 3],
+        },
+        'source': {
+            'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'selection': '0xDBA980', 'animation': '0x269CAFE',
+            'finish': '0xDBCFA0', 'spawn': '0xDBC180 → 0x2688815 → 0x86E090',
+            'receive': '0xE5BA9D → 0x87B690', 'launch': '0x876A20', 'room_gate': '0x8A06B0',
+        },
+    }
+
+
+def compile_native_starfish_jump(mob: dict, mob_id: int, spec: dict, add) -> dict:
+    path = mob['id']
+    hashes = spec['sha256'] | NATIVE_STARFISH_ATTACKS
+    decoded = checked_zealot_source(mob, path, hashes)
+    motions = decoded.get('attack_motions', [])
+    attacks = decoded.get('attack_infos', [])
+    etc_motions = decoded.get('etc_motions', [])
+    etc_atk_nodes = find(mob['raw'], '[etc attack info]')
+    if mob_id != spec['mob_id'] or min(len(motions), len(attacks)) < 2 or len(etc_motions) < 4 or len(etc_atk_nodes) != 1:
+        raise ValueError(f'Native StarFish {path} lacks original slot 1 or ETC bindings')
+    etc_attacks = decode_value(etc_atk_nodes[0], 'paths', path)
+    if len(etc_attacks) < 2:
+        raise ValueError(f'Native StarFish {path} lacks ETC attack index 1')
+    start_ani, rolling_ani, end_ani = motions[1], etc_motions[2], etc_motions[3]
+    for dependency in (start_ani, rolling_ani, end_ani):
+        checked_zealot_source(add(dependency, 'ani', path), dependency, hashes)
+    for dependency in (attacks[1], etc_attacks[1]):
+        checked_zealot_source(add(dependency, 'atk', path), dependency, hashes)
+    for dependency in etc_attacks:
+        if dependency:
+            add(dependency, 'atk', path)
+    return {
+        'slot': 1, 'state': 8, 'start_ani': start_ani, 'rolling_ani': rolling_ani, 'end_ani': end_ani,
+        'rolling_atk': etc_attacks[1], 'rolling_etc_motion_index': 2, 'end_etc_motion_index': 3,
+        'rolling_etc_attack_index': 1, 'launch_frame': 1, 'forward_speed': 80,
+        'jump_height': 150, 'roll_above_z': 130, 'end_below_z': 15, 'gravity': -1500, 'sound': 'ZGM_ATK',
+        'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'entry': '0xDB75D0', 'update': '0xDB5270'},
+    }
+
+
 def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dict:
     records: dict[str, dict] = {}
     missing: list[dict] = []
@@ -765,7 +869,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     # 编译范围：哥布林家族 + 早期手写四只 + **副本实际引用到的全部 mob**。
     # 只认硬编码范围会让天空之城/桑德兰那批怪在内容包里查不到，运行时整只怪被跳过。
     extra = {path.lower() for path in extra_mob_paths}
-    required = extra | NATIVE_ATTACK_CONTACTS.keys()
+    required = extra | NATIVE_ATTACK_CONTACTS.keys() | set(NATIVE_ZEALOT_MONSTERS.values())
     needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     for index, rel in sorted(monsters.items()):
@@ -833,6 +937,10 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
             contact = compile_native_attack_contact(mob, index, NATIVE_ATTACK_CONTACTS[p], passive_objects, add)
             mob['native_attack_contacts'] = [contact]
             object_index[str(contact['object_id'])] = contact['object_path']
+        if p == NATIVE_ZEALOT_MONSTERS['native_raxy']:
+            mob['native_suicide'] = compile_native_raxy_suicide(mob, index, monsters, add)
+        if p in NATIVE_STARFISH_JUMPS:
+            mob['native_starfish_jump'] = compile_native_starfish_jump(mob, index, NATIVE_STARFISH_JUMPS[p], add)
     unresolved_mobs = required - set(monster_index.values())
     if unresolved_mobs:
         raise ValueError('Required MOB paths missing from the original index or archive: ' + ', '.join(sorted(unresolved_mobs)))

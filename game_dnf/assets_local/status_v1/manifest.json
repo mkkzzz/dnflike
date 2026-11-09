@@ -1,0 +1,1040 @@
+{
+  "effects": {
+    "blind_back": {
+      "atlas": {
+        "items": {
+          "0": {
+            "offset": [
+              -12,
+              -19
+            ],
+            "rect": [
+              2,
+              2,
+              18,
+              9
+            ]
+          },
+          "1": {
+            "offset": [
+              -26,
+              -19
+            ],
+            "rect": [
+              24,
+              2,
+              37,
+              20
+            ]
+          },
+          "2": {
+            "offset": [
+              -25,
+              -19
+            ],
+            "rect": [
+              65,
+              2,
+              41,
+              17
+            ]
+          },
+          "3": {
+            "offset": [
+              -24,
+              -18
+            ],
+            "rect": [
+              110,
+              2,
+              44,
+              13
+            ]
+          },
+          "4": {
+            "offset": [
+              -20,
+              -18
+            ],
+            "rect": [
+              158,
+              2,
+              44,
+              11
+            ]
+          },
+          "5": {
+            "offset": [
+              -16,
+              -19
+            ],
+            "rect": [
+              206,
+              2,
+              44,
+              15
+            ]
+          }
+        },
+        "texture": "res://assets_local/status_v1/fx_blind_back.png"
+      },
+      "duration_ms": 360,
+      "frames": [
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 0,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 0,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "0"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 1,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 1,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "1"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 2,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 2,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "2"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 3,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 3,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "3"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 4,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 4,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "4"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 5,
+          "img": "Common/ActiveStatus/Blind2.img",
+          "img_frame": 5,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "5"
+        }
+      ],
+      "global_items": {
+        "0": 1,
+        "1": 0
+      },
+      "loop": true,
+      "pixel_box": [
+        -26,
+        -15,
+        -1,
+        54,
+        30,
+        20
+      ],
+      "source": "common/activestatus/animation/blind1.ani"
+    },
+    "blind_front": {
+      "atlas": {
+        "items": {
+          "0": {
+            "offset": [
+              -26,
+              -15
+            ],
+            "rect": [
+              2,
+              2,
+              55,
+              23
+            ]
+          },
+          "1": {
+            "offset": [
+              -8,
+              -12
+            ],
+            "rect": [
+              61,
+              2,
+              37,
+              20
+            ]
+          },
+          "2": {
+            "offset": [
+              -13,
+              -9
+            ],
+            "rect": [
+              102,
+              2,
+              41,
+              17
+            ]
+          },
+          "3": {
+            "offset": [
+              -17,
+              -6
+            ],
+            "rect": [
+              147,
+              2,
+              44,
+              13
+            ]
+          },
+          "4": {
+            "offset": [
+              -21,
+              -4
+            ],
+            "rect": [
+              195,
+              2,
+              44,
+              11
+            ]
+          },
+          "5": {
+            "offset": [
+              -25,
+              -7
+            ],
+            "rect": [
+              243,
+              2,
+              44,
+              15
+            ]
+          }
+        },
+        "texture": "res://assets_local/status_v1/fx_blind_front.png"
+      },
+      "duration_ms": 360,
+      "frames": [
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 0,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 0,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "0"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 1,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 1,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "1"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 2,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 2,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "2"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 3,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 3,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "3"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 4,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 4,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "4"
+        },
+        {
+          "boxes": [],
+          "delay_ms": 60,
+          "frame": 5,
+          "img": "Common/ActiveStatus/Blind3.img",
+          "img_frame": 5,
+          "items": {
+            "12": 60
+          },
+          "pos": [
+            -137,
+            -127
+          ],
+          "sprite": "5"
+        }
+      ],
+      "global_items": {
+        "0": 1,
+        "1": 0
+      },
+      "loop": true,
+      "pixel_box": [
+        -26,
+        -15,
+        -8,
+        55,
+        30,
+        23
+      ],
+      "source": "common/activestatus/animation/blind2.ani"
+    }
+  },
+  "monster_heights": {
+    "monster/characterstatue/fighterstatue.mob": {
+      "ani": "monster/characterstatue/fighteranimation/stay.ani",
+      "pixels": 107
+    },
+    "monster/characterstatue/gunnerstatue.mob": {
+      "ani": "monster/characterstatue/gunneranimation/stay.ani",
+      "pixels": 131
+    },
+    "monster/characterstatue/magicianstatue.mob": {
+      "ani": "monster/characterstatue/magiciananimation/stay.ani",
+      "pixels": 90
+    },
+    "monster/characterstatue/prieststatue.mob": {
+      "ani": "monster/characterstatue/priestanimation/stay.ani",
+      "pixels": 137
+    },
+    "monster/characterstatue/swordmanstatue.mob": {
+      "ani": "monster/characterstatue/swordmananimation/stay.ani",
+      "pixels": 115
+    },
+    "monster/dollmaster/claymaster.mob": {
+      "ani": "monster/dollmaster/clayanimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/dollmaster/golemmaster.mob": {
+      "ani": "monster/dollmaster/golemmasteranimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/dollmaster/icedoll_sharedo.mob": {
+      "ani": "monster/dollmaster/sharedoanimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/dollmaster/masterdogri.mob": {
+      "ani": "monster/dollmaster/dogrianimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/dollmaster/steelmaster.mob": {
+      "ani": "monster/dollmaster/steelanimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/dollmaster/stonemaster.mob": {
+      "ani": "monster/dollmaster/stoneanimation/stay.ani",
+      "pixels": 78
+    },
+    "monster/draconian/aurahunter_sius.mob": {
+      "ani": "monster/draconian/siusani/stay.ani",
+      "pixels": 115
+    },
+    "monster/draconian/lakius.mob": {
+      "ani": "monster/draconian/dlani/stay.ani",
+      "pixels": 115
+    },
+    "monster/draconian/minius.mob": {
+      "ani": "monster/draconian/miniusani/stay.ani",
+      "pixels": 83
+    },
+    "monster/draconian/mirkius.mob": {
+      "ani": "monster/draconian/dmani/stay.ani",
+      "pixels": 115
+    },
+    "monster/evileye/levileye.mob": {
+      "ani": "monster/evileye/evileyeani/stay.ani",
+      "pixels": 207
+    },
+    "monster/evileye/revileye.mob": {
+      "ani": "monster/evileye/evileyeani/stay.ani",
+      "pixels": 207
+    },
+    "monster/flydragon/harseseri.mob": {
+      "ani": "monster/flydragon/harseserianimation/moveyz.ani",
+      "pixels": 48
+    },
+    "monster/flydragon/looseseri.mob": {
+      "ani": "monster/flydragon/looseserianimation/moveyz.ani",
+      "pixels": 48
+    },
+    "monster/flydragon/selion.mob": {
+      "ani": "monster/flydragon/selionanimation/move.ani",
+      "pixels": 48
+    },
+    "monster/flydragon/summon_serimalion.mob": {
+      "ani": "monster/flydragon/serimalionanimation/moveyz.ani",
+      "pixels": 48
+    },
+    "monster/goblin/bombkagel.mob": {
+      "ani": "monster/goblin/animation_bombkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/bombkagelland.mob": {
+      "ani": "monster/goblin/animation_bombkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/bullseye.mob": {
+      "ani": "monster/goblin/animation_bullseye/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/bunkerworker.mob": {
+      "ani": "monster/goblin/animation_bunkerworker/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/cowardgoblin.mob": {
+      "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/flaghillgab.mob": {
+      "ani": "monster/goblin/animation_mountaingoblin2/stay.ani",
+      "pixels": 71
+    },
+    "monster/goblin/flagseagab.mob": {
+      "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
+      "pixels": 71
+    },
+    "monster/goblin/goblin.mob": {
+      "ani": "monster/goblin/animation_goblin2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinhodor.mob": {
+      "ani": "monster/goblin/animation_hodor/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinhodor_quest.mob": {
+      "ani": "monster/goblin/animation_hodor/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinkrazyivan.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinkrazyivancaptain.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblintaskmaster.mob": {
+      "ani": "monster/goblin/animation_kinol2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinthrower.mob": {
+      "ani": "monster/goblin/animation_thrower/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinthrower_global_bosstower.mob": {
+      "ani": "monster/goblin/animation_thrower/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/goblinthrowertaskmaster.mob": {
+      "ani": "monster/goblin/animation_gero/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/hillgab.mob": {
+      "ani": "monster/goblin/animation_mountaingoblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/kinol.mob": {
+      "ani": "monster/goblin/animation_lightningkinol2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/kinol_global_bosstower.mob": {
+      "ani": "monster/goblin/animation_lightningkinol2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/magegoblin.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/nightvisionkagel.mob": {
+      "ani": "monster/goblin/animation_nigntvisionkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/prag.mob": {
+      "ani": "monster/goblin/animation_prag/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/rudolfgoblin.mob": {
+      "ani": "monster/goblin/animation_rudolf/stay.ani",
+      "pixels": 88
+    },
+    "monster/goblin/santagoblin.mob": {
+      "ani": "monster/goblin/animation_santa/stay.ani",
+      "pixels": 71
+    },
+    "monster/goblin/seagab.mob": {
+      "ani": "monster/goblin/animation_islandgoblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/snowmangoblin.mob": {
+      "ani": "monster/goblin/animation_snowman/stay.ani",
+      "pixels": 83
+    },
+    "monster/goblin/snowmountain_flagseagab.mob": {
+      "ani": "monster/goblin/animation_islandgoblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/soceressgoblin.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/summon_goblinkrazyivan.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/surikenkagel.mob": {
+      "ani": "monster/goblin/animation_surikenkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/surikenkagelland.mob": {
+      "ani": "monster/goblin/animation_surikenkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/tower_goblin.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/tower_goblinthrower.mob": {
+      "ani": "monster/goblin/animation_thrower/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/tower_kinol.mob": {
+      "ani": "monster/goblin/animation_lightningkinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/transformgoblintaskmaster.mob": {
+      "ani": "monster/goblin/animation_kinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/tutorial_goblin.mob": {
+      "ani": "monster/goblin/animation_goblin2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/tutorial_goblin_item.mob": {
+      "ani": "monster/goblin/animation_goblin2/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_boss_goblinkrazyivancaptain.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_boss_kinggalok.mob": {
+      "ani": "monster/goblin/animation_kinggalok/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_boss_kinol.mob": {
+      "ani": "monster/goblin/animation_lightningkinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_champion_goblintaskmaster.mob": {
+      "ani": "monster/goblin/animation_kinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_champion_goblinthrowertaskmaster.mob": {
+      "ani": "monster/goblin/animation_gero/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_champion_soceressgoblin.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_fastbombkagel.mob": {
+      "ani": "monster/goblin/animation_bombkagel/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_goblintaskmaster.mob": {
+      "ani": "monster/goblin/animation_kinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_goblinthrowertaskmaster.mob": {
+      "ani": "monster/goblin/animation_gero/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_soceressgoblin.mob": {
+      "ani": "monster/goblin/animation_goblin/stay.ani",
+      "pixels": 68
+    },
+    "monster/goblin/warroom_super_champion_elitegoblin.mob": {
+      "ani": "monster/goblin/animation_kinol/stay.ani",
+      "pixels": 68
+    },
+    "monster/lordoflight/lordoflight.mob": {
+      "ani": "monster/lordoflight/lol/stay.ani",
+      "pixels": 157
+    },
+    "monster/lugaru/gardener_ral.mob": {
+      "ani": "monster/lugaru/animation_ral/stay.ani",
+      "pixels": 67
+    },
+    "monster/lugaru/kurogaru.mob": {
+      "ani": "monster/lugaru/animation_blacklugaru/stay_2.ani",
+      "pixels": 69
+    },
+    "monster/lugaru/lugaru.mob": {
+      "ani": "monster/lugaru/animation_lugaru/stay_2.ani",
+      "pixels": 69
+    },
+    "monster/lugaru/penril.mob": {
+      "ani": "monster/lugaru/animation_penril/stay_2.ani",
+      "pixels": 69
+    },
+    "monster/lugaru/sirogaru.mob": {
+      "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
+      "pixels": 69
+    },
+    "monster/new_golem/biggolem.mob": {
+      "ani": "monster/new_golem/animation_biggolem/stay.ani",
+      "pixels": 380
+    },
+    "monster/new_golem/bronzegolem.mob": {
+      "ani": "monster/new_golem/animation_bronzegolem/stay.ani",
+      "pixels": 132
+    },
+    "monster/new_golem/claygolem.mob": {
+      "ani": "monster/new_golem/animation_claygolem/stay.ani",
+      "pixels": 132
+    },
+    "monster/new_golem/greatgoleml.mob": {
+      "ani": "monster/new_golem/animation_greatgolem/staymove.ani",
+      "pixels": 243
+    },
+    "monster/new_golem/greatgolemr.mob": {
+      "ani": "monster/new_golem/animation_greatgolem/staymove.ani",
+      "pixels": 243
+    },
+    "monster/new_golem/platany.mob": {
+      "ani": "monster/new_golem/animation_platany/stay.ani",
+      "pixels": 157
+    },
+    "monster/new_golem/spiritofgolem.mob": {
+      "ani": "monster/new_golem/animation_spiritofgolem/stay.ani",
+      "pixels": 166
+    },
+    "monster/new_golem/stoneblade_razor.mob": {
+      "ani": "monster/new_golem/animation_razor/stay.ani",
+      "pixels": 132
+    },
+    "monster/soceress/flamesoceress.mob": {
+      "ani": "monster/soceress/animation_vinoshu/stay.ani",
+      "pixels": 103
+    },
+    "monster/soceress/icesoceress.mob": {
+      "ani": "monster/soceress/animation_keraha/stay.ani",
+      "pixels": 103
+    },
+    "monster/soceress/keraha.mob": {
+      "ani": "monster/soceress/animation_keraha/stay.ani",
+      "pixels": 103
+    },
+    "monster/soceress/vinoshu.mob": {
+      "ani": "monster/soceress/animation_vinoshu/stay.ani",
+      "pixels": 103
+    },
+    "monster/soceress/vinoshu_quest.mob": {
+      "ani": "monster/soceress/animation_vinoshu/stay.ani",
+      "pixels": 103
+    },
+    "monster/soldier/axeexpeller.mob": {
+      "ani": "monster/soldier/animationaxeexpeller/stay.ani",
+      "pixels": 105
+    },
+    "monster/soldier/axionexpeller.mob": {
+      "ani": "monster/soldier/animationaxionexpeller/stay.ani",
+      "pixels": 126
+    },
+    "monster/soldier/expeller.mob": {
+      "ani": "monster/soldier/animationexpeller/stay.ani",
+      "pixels": 105
+    },
+    "monster/soldier/heavenexpeller.mob": {
+      "ani": "monster/soldier/animationheavenexpeller/stay.ani",
+      "pixels": 105
+    },
+    "monster/soldier/legionexpeller.mob": {
+      "ani": "monster/soldier/animationlegionexpeller/stay.ani",
+      "pixels": 105
+    },
+    "monster/soldier/tinswordmanexpeller.mob": {
+      "ani": "monster/soldier/animationtsmexpeller/stay.ani",
+      "pixels": 105
+    },
+    "monster/spirit/firespirit.mob": {
+      "ani": "monster/spirit/fireanimation/stay.ani",
+      "pixels": 56
+    },
+    "monster/spirit/waterspirit.mob": {
+      "ani": "monster/spirit/wateranimation/stay.ani",
+      "pixels": 54
+    },
+    "monster/starfish/starfish.mob": {
+      "ani": "monster/starfish/tentacleanimation/stay.ani",
+      "pixels": 36
+    },
+    "monster/starfish/starfishrukuku.mob": {
+      "ani": "monster/starfish/rukanimation/stay.ani",
+      "pixels": 18
+    },
+    "monster/tau/shauta.mob": {
+      "ani": "monster/tau/tangasanimation/stay.ani",
+      "pixels": 154
+    },
+    "monster/tau/tauarmy.mob": {
+      "ani": "monster/tau/armyanimation/stay.ani",
+      "pixels": 154
+    },
+    "monster/tau/tauassaulter.mob": {
+      "ani": "monster/tau/assaulteranimation/stay.ani",
+      "pixels": 154
+    },
+    "monster/tau/taubeast.mob": {
+      "ani": "monster/tau/beastanimation/stay.ani",
+      "pixels": 154
+    },
+    "monster/tau/tauguard.mob": {
+      "ani": "monster/tau/guardanimation/stay.ani",
+      "pixels": 154
+    },
+    "monster/zealot/bosspope.mob": {
+      "ani": "monster/zealot/popeani/stay.ani",
+      "pixels": 97
+    },
+    "monster/zealot/raxy-a.mob": {
+      "ani": "monster/zealot/raxy-aani/stay.ani",
+      "pixels": 97
+    },
+    "monster/zombie/kalkazak.mob": {
+      "ani": "monster/zombie/kalkazakanimation/stay.ani",
+      "pixels": 105
+    },
+    "monster/zombie/zombieghoulgwish.mob": {
+      "ani": "monster/zombie/zganimation/stay.ani",
+      "pixels": 96
+    },
+    "monster/zombie/zombieholloweye.mob": {
+      "ani": "monster/zombie/zhanimation/stay.ani",
+      "pixels": 96
+    },
+    "monster/zombie/zombiezombie.mob": {
+      "ani": "monster/zombie/zzanimation/stay.ani",
+      "pixels": 96
+    }
+  },
+  "schema": "dnf_status_assets/1",
+  "sources": {
+    "common/activestatus/animation/blind1.ani": "6c3587611d8d49a1e01c78d9f21e4f66d30b7ba8101570745ee60600e5ed2c07",
+    "common/activestatus/animation/blind2.ani": "d8f570000ec240f46294d638a2b6f60e6d9b25072e8159363efc94c24555064c",
+    "monster/characterstatue/fighteranimation/stay.ani": "6facd50a1a6c2f38f218165d6d87236c2de9276fe15aacc17f2138ee008e5c05",
+    "monster/characterstatue/gunneranimation/stay.ani": "64443ce07a0a8af97131d5b6075e3647b457fa5c415084a0f57694355c8ab5d7",
+    "monster/characterstatue/magiciananimation/stay.ani": "41bd8a99e0f080e6a7f344da5cd081d70c85aec84acc760bfe7f5e4f8b0edcc4",
+    "monster/characterstatue/priestanimation/stay.ani": "0adcb2c7e4c2a3fda80297f5067abbbc791bec3aecb1502ac76dc641ba6f8bf9",
+    "monster/characterstatue/swordmananimation/stay.ani": "d3bf345149aea5a0bbc5f6e80e2f36f763ea7f72c6b125bb0235291166513012",
+    "monster/dollmaster/clayanimation/stay.ani": "b9dd3ed1e8ad97fe709384a5917ce0fc9bf16d3a991d24cff12f3772cfdd975e",
+    "monster/dollmaster/dogrianimation/stay.ani": "c4133875240620379ca17f630ed3549ae76a64eb52c8857db7aff3732fc78a1f",
+    "monster/dollmaster/golemmasteranimation/stay.ani": "c29561a9e5bc24be5d518ce114bf742c007c2f835f0153f20796736535b091be",
+    "monster/dollmaster/sharedoanimation/stay.ani": "28d2d60523f0de6c9414d696a0f3fc5ca24dc8871e44afbd3364dfe99330bb66",
+    "monster/dollmaster/steelanimation/stay.ani": "ec4520a7f2f61bc7368c56314f56b1cb139f61063f31f2bb24cc0e8466d1c30f",
+    "monster/dollmaster/stoneanimation/stay.ani": "57ec573ed01c10d8deaf9b7fc4eab65a1212e6d96b24520ef16d058abf33ba4b",
+    "monster/draconian/dlani/stay.ani": "114a66a7cdc820fef2e4181bfaad28fa5214d7c4aa1a5a51ed52fcb7fabe6255",
+    "monster/draconian/dmani/stay.ani": "4b082885cc39f7c1d1030da786198b130b51a87722a87844afe30a865290f8bc",
+    "monster/draconian/miniusani/stay.ani": "3090cd84e55f003712b8950b7395afa259b4b9f66838b898b48d7695f979339e",
+    "monster/draconian/siusani/stay.ani": "76497cee0c20635c2a05aa13e02878aee9cb59d0bb6615569eabdd097fd0b982",
+    "monster/evileye/evileyeani/stay.ani": "557f6b6a0b49311a6f7f79264e0250c732767584d47735df74d1ee10bfe46423",
+    "monster/flydragon/harseserianimation/moveyz.ani": "3e6df60ea9bab835bcea90e3094ce27414affa3f692ddfe8798e1dc5c30f4bb5",
+    "monster/flydragon/looseserianimation/moveyz.ani": "f6068caa238852eb919c2a714a7f46bc327c0e5090181cb19b54ade6a37c62ad",
+    "monster/flydragon/selionanimation/move.ani": "97c25b9bf59147eee08301485d79a225fedf2c419ced9ae969a4811f82fc5738",
+    "monster/flydragon/serimalionanimation/moveyz.ani": "c230a11170b21d82cd7fbd79f2ecec5d944b9e168cc4a18c3afec6e8060e6684",
+    "monster/goblin/animation_bombkagel/stay.ani": "47dbf26d662ecc806fcd58c51e684a414b95c7a2c9c0dd97e010849ba2ebccea",
+    "monster/goblin/animation_bullseye/stay.ani": "5c7585be37946063c3083ae2c062f05df17201017267fdf7fc78c6d3ec2d5e27",
+    "monster/goblin/animation_bunkerworker/stay.ani": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
+    "monster/goblin/animation_cowardgoblin2/stay.ani": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
+    "monster/goblin/animation_gero/stay.ani": "a4169956175c27fcb78e032bf5edece2426d6b48e19f349304a77da3c2c61279",
+    "monster/goblin/animation_goblin/stay.ani": "00580c205a975ed8d0734a4ec53ad19633785636d9ec2a29e330f36c31ed0ba7",
+    "monster/goblin/animation_goblin2/stay.ani": "f1cdc68a8db5ffe8ea6232a475f0ff86188d396e0330747b53fda0aa7e8e7799",
+    "monster/goblin/animation_hodor/stay.ani": "55ec12115e9dd2377b1829df841e930bd8248f55743898112d9e10d00487fb7e",
+    "monster/goblin/animation_islandgoblin/stay.ani": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
+    "monster/goblin/animation_islandgoblin2/stay.ani": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
+    "monster/goblin/animation_kinggalok/stay.ani": "d9e04a78cf276d58aa15e4e9878f89231208ff2fa1730ab0c43c227e9609407c",
+    "monster/goblin/animation_kinol/stay.ani": "99fd0b2ad8b70c73f488018051233656f727924a086691e840d7181cc72a4775",
+    "monster/goblin/animation_kinol2/stay.ani": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
+    "monster/goblin/animation_lightningkinol/stay.ani": "93f0707bc766d63a81dba030d6af7e656f44ce5cf8d04168cee6cb240f1b8eed",
+    "monster/goblin/animation_lightningkinol2/stay.ani": "6f3db037d3c5e5124d2f032f4b65d13aae869a4e0342f04d4c477026efe50188",
+    "monster/goblin/animation_mountaingoblin/stay.ani": "33bd4220cf654ee67dbe2ded6bfda79281298e7797599f2569819667c3b74e82",
+    "monster/goblin/animation_mountaingoblin2/stay.ani": "5d4ef6dd71944b31ac3dd953014cb7cf405927e69be8f4e5a346795858c6490e",
+    "monster/goblin/animation_nigntvisionkagel/stay.ani": "40cc2a751c216194fe02b417c901ff636580754bb9888d5af9fa69fcb47b8cdb",
+    "monster/goblin/animation_prag/stay.ani": "035df2a53d56d3a13548f1b6ac27853a60ee1aba35692e7aee247d6104c2ea2b",
+    "monster/goblin/animation_rudolf/stay.ani": "7918bb5fea44628051846869a25fa9c750621c358dcf1c3be0769eeb6da67407",
+    "monster/goblin/animation_santa/stay.ani": "b21285efc13ce020b279342ad779f7cc6fd5b78b903375598a52590281163743",
+    "monster/goblin/animation_snowman/stay.ani": "b66bd69ae57a3368aa4195f96180419a7834246eac6edc6310b0161d034517d8",
+    "monster/goblin/animation_surikenkagel/stay.ani": "f7a75f3860db695777069f9a6dea66aec01cc1c84e82b2a680f774022822e0c2",
+    "monster/goblin/animation_thrower/stay.ani": "d99348de752da670261b66a765b7e0bb507a3463c31bc934c78aea94733e9680",
+    "monster/lordoflight/lol/stay.ani": "cb0da98aa87d754cfa59501212e8ba082099dcceab440a2765fb5949dd01f5e9",
+    "monster/lugaru/animation_blacklugaru/stay_2.ani": "7f2f647c6fe656f8541d3b6a6da11739a3932019b1fc5dee7d52b3c797b9d47f",
+    "monster/lugaru/animation_lugaru/stay_2.ani": "0495bb7b7676a187eee22877b1e213164e5b3f11df98cf2a91a7ea37187bdd4c",
+    "monster/lugaru/animation_penril/stay_2.ani": "ebb8f67f35edb42c419cff1985588e6cbca1dcaacf01f3f7a0f8b18a5a69650d",
+    "monster/lugaru/animation_ral/stay.ani": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
+    "monster/lugaru/animation_whitelugaru/stay_2.ani": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
+    "monster/new_golem/animation_biggolem/stay.ani": "2cba152994d0200091ae77f0db763ccc08a397dc27d5c8f1efdb1feca1c4a6b2",
+    "monster/new_golem/animation_bronzegolem/stay.ani": "dd2aed0ff8bb5ff1b67440261df3deccac0690bc2512e7910838fae21bbdd740",
+    "monster/new_golem/animation_claygolem/stay.ani": "80a580af88c8b9925f57ce20ecf7af1f39a9eee9237420535567cbd4a5ba91c7",
+    "monster/new_golem/animation_greatgolem/staymove.ani": "1ea667887c7f0598b863c7ddfe22a01f92537c440d8b3acc7ee066a77700c98c",
+    "monster/new_golem/animation_platany/stay.ani": "e38d141e841d7d42bea44162d244b5f5dd68f82e0cd10235e5bbc2536a57d985",
+    "monster/new_golem/animation_razor/stay.ani": "a6025e9ab58c786edb0e84a408760a105940c4e05d64bc3e370d2f7c6361ba6f",
+    "monster/new_golem/animation_spiritofgolem/stay.ani": "c41814ae8db18178939455d0e4b1dbf4179ff488fef97b4642cd052aad84c1db",
+    "monster/newmonsters/haze/axeoutlaw/animation/stay.ani": "96651a41c7fb5726831764af8a2ed5806ece26ee8d75d9b6088ba9d7e25f8eb3",
+    "monster/newmonsters/haze/chainbiker/animation/stay.ani": "29d6a953c0af17ed271063f647c06bdd8478e47e8617e86b19c72fd6f5d35730",
+    "monster/newmonsters/haze/chainbiker2/animation/motorcycle/stay.ani": "d4b204bff9fd73e23f242575731c0356359431350439be154b132e67c51e95a6",
+    "monster/newmonsters/haze/death_squad/animation/stay.ani": "b2e8fb8966438753094909e022dd42fae52149d5a1c5ab419e940c74bf02e162",
+    "monster/newmonsters/haze/enjosipho/animation/stay.ani": "1fa38b7aef4cf34793a2a3a6463e88911a63fde6df304d3e47a313ba1c6450be",
+    "monster/newmonsters/haze/hass/animation/stay.ani": "7a0115dea0f632b87e2b771a402c7f566f987a92717db40a4b064df214f92faf",
+    "monster/newmonsters/haze/humanhunter/animation/stay.ani": "5de6c37692dd1e7121a004a835af7fda53620bd562af524d74df5b06e38ef9dd",
+    "monster/newmonsters/haze/outlaw/animation/stay.ani": "5b35ba048afa266a4bfd0e77ca58e82c525e40f0df1890b95b9b95644d5965b6",
+    "monster/newmonsters/haze/poena/animation/stay.ani": "b9db68a6ecb8a2f14783b1f495a4bddc386f2f3e13018c4189159a86ca198cf2",
+    "monster/newmonsters/haze/tretri/animation/stay.ani": "3ece616637f0a3edf4469f22e3c59bc9984da3697dade869842bf176d19c1c44",
+    "monster/soceress/animation_keraha/stay.ani": "77838e42b96ae39fc5c3a512fb1cd5da757e297fc936da1eab648643cc508447",
+    "monster/soceress/animation_vinoshu/stay.ani": "2ca8a28eea091d59b5b07c44ad03c49d263da112e6f6428daa20f0dedd01698b",
+    "monster/soldier/animationaxeexpeller/stay.ani": "2eb5eba74f37ff26a7cd4b8599d04a881a87c4d780808f0ecb7c4f996cabbb49",
+    "monster/soldier/animationaxionexpeller/stay.ani": "4f38ce37b7ff0ecc9f14c9411e78ed4a7d77086dfc7d137ef7092573bdb2f055",
+    "monster/soldier/animationexpeller/stay.ani": "4a5bc8cc6e89816f1d07110bb977242fd86d15fa6a8ee43a495ed5f2a1edc1d6",
+    "monster/soldier/animationheavenexpeller/stay.ani": "5f60fd8b672addcc63faf8b973a1fd9bfebdb7b977d8fb788161452bc86a2b6c",
+    "monster/soldier/animationlegionexpeller/stay.ani": "bf3054e4462ec202738dbcf44950e6e35879fae07f604fe6ac7aa854058eed5b",
+    "monster/soldier/animationtsmexpeller/stay.ani": "c1123f3c67310d05732cc061c3bd6e681c9e94e94dfc9ce835b88a49155ae2d7",
+    "monster/spirit/fireanimation/stay.ani": "49ee278c293fff1521706ec3ee22ebc6cb6abef0b4b920f00553f6adac1062e4",
+    "monster/spirit/wateranimation/stay.ani": "962b1146434028ff41146b6b20775255cb7ecd83facccea8f90dbd32a78a32d8",
+    "monster/starfish/rukanimation/stay.ani": "867b493614fd588453491edbf39eca2f6ce60babe85833b7327d5910c6bc40d2",
+    "monster/starfish/tentacleanimation/stay.ani": "8516083865f907f7e95ecbb51e91c69d24e784e7962a4ca521234e0cae97acba",
+    "monster/tau/armyanimation/stay.ani": "cfcf90ba81d85ef609e1d5d6754c515b605de0e129489ce9c802ed3f1b785e94",
+    "monster/tau/assaulteranimation/stay.ani": "486c7f443995202e7b2a24c6db5b0a34c021e7a334a2b44b9111de0e360ef5fa",
+    "monster/tau/beastanimation/stay.ani": "e0a8544feae8d2b12df788084d9ce12067026d608b7e41bb0878566d56e961ac",
+    "monster/tau/guardanimation/stay.ani": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
+    "monster/tau/tangasanimation/stay.ani": "8d997d5d1a56a484a32d63029a26ebfab91246c7810c021ee5abe7d380fe0ec0",
+    "monster/zealot/popeani/stay.ani": "e859e16ec498d78cd3d4bab8b4d64d256cc3581ad9bb995de1ec105d11c71e5a",
+    "monster/zealot/raxy-aani/stay.ani": "31c087ad0f7939b40a3361497954f9ecbbe4069055774c910fca70c04b9c6bf9",
+    "monster/zombie/kalkazakanimation/stay.ani": "3e648d4548eb962efea3c8754c9d5d190810b18d2acee4e522738d4dd833d2e3",
+    "monster/zombie/zganimation/stay.ani": "2784f7260fe995bfe4f65eb69aa29153b12bdc7d76e1fb4ac608d407595210fb",
+    "monster/zombie/zhanimation/stay.ani": "258e9ba6ee9186b08cf2bddde3eb8f2fc9dc9eba6d539917501a89023fdbafc7",
+    "monster/zombie/zzanimation/stay.ani": "c3147ac32ac2a011200f19c2c8ffc9072cd6630600785dd66dd352dbd3f13034",
+    "sprite/common/activestatus/blind2.img": "ad4572793a9f2bd5c536ded4b32b77cdb13271d815e7d4be200e1c323ce2d1fc",
+    "sprite/common/activestatus/blind3.img": "56150d370ae123bd81f5231fe68b0ec447b9c50b4394ccb7db061d208adab7a6",
+    "sprite/monster/characterstatue/fighterstatue.img": "bb9d28640904ce3ef1c40d65840416e0e4a9ea13041275b296855e218d405ad9",
+    "sprite/monster/characterstatue/gunnerstatue.img": "995b40a11c643db75e290687f9343badcdc136ebefef0ff8e4b3b86c1d97a7bb",
+    "sprite/monster/characterstatue/magicianstatue.img": "796b741226caf6ea198fa6b539819fe798feea55218605d2a7bfd8486cbcc31f",
+    "sprite/monster/characterstatue/prieststatue.img": "1c86a7c3a4303f7811f45f7a552e9ad44e3739dd46824968f01f24a64d33b5e4",
+    "sprite/monster/characterstatue/swordmanstatue.img": "e86f09f232473b4a4a3b518bcc01126f9f0f014c8cb8e390f8408a612126cc2e",
+    "sprite/monster/dollmaster/claymaster.img": "66d82b920c1a665e6c52aa06f57bb1418424f485cdaba9f58b306d54ea9cd3ed",
+    "sprite/monster/dollmaster/golemmaster.img": "f77c8b0a7ce1488d5f375e2c05c13494ba85a0ad1c95fe66ae08286dca6a48ca",
+    "sprite/monster/dollmaster/masterdogri.img": "96b7f7b85e6cab841f6f3df3eaecf537cb0417cd1bf71bd20381365ec2cfcf3b",
+    "sprite/monster/dollmaster/steelmaster.img": "d03f4616cb9384ef0decc38f6ab4277df5333572d60daf63d68e91ed963b758c",
+    "sprite/monster/dollmaster/stonemaster.img": "978d144a47b3dc083f869651a14738dfe8a4750ccff0d2d00eb067a417b040c7",
+    "sprite/monster/draconian/draco_lakius.img": "0cd40ced7c7818a7b8dd79ccfc3bcba4de7355f34eff3c4a8821ae1432854a26",
+    "sprite/monster/draconian/draco_mirkius.img": "554951310048482854a9d4647f5e2069ce1b92f1f1d4e87a62c6a89d57ba6cf9",
+    "sprite/monster/evileye/evileye.img": "4b9410ddd0703d7ba40e78e253ce8064692ca8c794ad96a05acdb9a6cef3e21c",
+    "sprite/monster/flydragon/harseseri.img": "b78f0a18edf2641c288850c26cb949717200d496775ffb731cb31b7263564e75",
+    "sprite/monster/flydragon/looseseri.img": "818983f6cae5d5269eeccd2b5baf4b725f8d5c06caadc9a350f6a411c95846d5",
+    "sprite/monster/flydragon/selion.img": "1a024881f47f85df89d8c66b1cf8ee9b85b841f25a2e930f6c40b68dbf3f8336",
+    "sprite/monster/flydragon/serimalion.img": "95e3d0b726de76069958d9225a7840cd138bb714281a0f303a306361c51546b2",
+    "sprite/monster/goblin/body0.img": "294c70b816ccdb49e0bd2fa6a323c218887ca3a50927bd2f4b6dd082cbe6d10d",
+    "sprite/monster/goblin/body1.img": "86e5a9ef0b36e1fd21d4ea0577487db7563e944aa1124c61d91f4550c64b1bbd",
+    "sprite/monster/goblin/body3.img": "bee0f0342307f7cfac7b9b038ce2d072d49bfc7a5fd2b5cc2adef68d248ff462",
+    "sprite/monster/goblin/body4.img": "7f9b757458240bf752b7219501c4a9f603483e5454346b71f51959cb5ded1758",
+    "sprite/monster/goblin/body6.img": "ba93651a71024e410bdbe6979af0c59be12ccbad7605c8ef8b0335476c4921a7",
+    "sprite/monster/goblin/body7.img": "0469c7967fa157a010b4dbe7e35d167783fcfeb6b6432cdda23791aa9b37b197",
+    "sprite/monster/goblin/body8.img": "65035a20dedc4443495927719ee9f1650c16a54d53939cd97f9b37072363d7e8",
+    "sprite/monster/goblin/body9.img": "4041939f5a5166f9a8d1c031bc4f3664fe16f1f94ed4e0809a530c43dabe3ef3",
+    "sprite/monster/goblin/event/cowardgoblin.img": "3fb1d7bbf55e57371ad7f14998bf27b3cdd8a956c00181426ee299a501251fac",
+    "sprite/monster/goblin/event/flaghillgab.img": "99b7ecec69fa56dc7b8435267d82a96fcb7d366d3ddd625eeeaea66cdbb544ca",
+    "sprite/monster/goblin/event/flagseagab.img": "60b8659ebdd2ed8c67ecf67a30529b063d06451a2237ee19f3cb9076cbb8d35e",
+    "sprite/monster/goblin/event/goblin.img": "287a78514a5913e3f3c630cad9d6d94fef9167ccce56e8cccb6f2fe2a83a60a9",
+    "sprite/monster/goblin/event/goblintaskmaster.img": "51c2000d380708e3375068ca1d556183d9584f3dfb2905e55bcb4c2775330167",
+    "sprite/monster/goblin/event/kinol.img": "fbfab02c44dfed77cce3df3427aa83c26f66d92e48dbb424dcab78b4b4d517f7",
+    "sprite/monster/goblin/event/rudolf_gob.img": "fb167794160d6473096f74d4f936f31140dc845cc35b4826f23cf98e32ba27b8",
+    "sprite/monster/goblin/event/santa_gob.img": "925222a34b5d47f6de51e759fe3cfb03541d68ee9d0f092593fa94a899079088",
+    "sprite/monster/goblin/event/snow_gob.img": "20a7d57506b6499e83a98160b25100cc3e1d198bb474d1e8d38597e60ea78a46",
+    "sprite/monster/goblin/skycastle/bombkagelbody.img": "89d304b646a17bfb80d59be0f7f7dffd56444315097fc58da5e1bb2cda283107",
+    "sprite/monster/goblin/skycastle/bullseyebody.img": "3b4453799bd8ebd5be9fada04b00a84ea4e3773889e2b6d5118c3064a37d4e12",
+    "sprite/monster/goblin/skycastle/nightvisionbody.img": "4d352596757e29bcecd22bd3064b47dc968c580a907c72ae3f09f5192c9801a6",
+    "sprite/monster/goblin/skycastle/surikenkagelbody.img": "f14c6efe4b5741d0fb6d26cdcadeeb59cc58423afd19b5d6f66a9f4a1190775c",
+    "sprite/monster/golem/biggolem.img": "9afd2b0cfd8eccbd9e0b9b8d5cfdc3256e3f72ba33f924dc1c64273df6840e6d",
+    "sprite/monster/golem/bronzegolem.img": "5191f801b1bf414d4b58308eb2679f454f31f0ae6b29685890877ba77e7c36df",
+    "sprite/monster/golem/claygolem.img": "9ef19a18feb4aca32835f07bc4f70751cd1a68510a4876720cea8100f01015c1",
+    "sprite/monster/golem/greatgolem_body.img": "1c5cdcda42b16d2fef04d9f51728ab4233ef7ca40605dc536493c2ce439c12ea",
+    "sprite/monster/golem/platany.img": "deb3648f5499802adbd3854b3c4c2f3ca57df8bccaeed0cc05a8d555d1c95273",
+    "sprite/monster/golem/razor.img": "4fc9ce01b3b313ed7f91dfa04e2f0ea16a5046d990def342983e6802d59bc831",
+    "sprite/monster/golem/spiritofgolem.img": "96ffb71d9b0654e7f8121b1834d64195a7b737c85dc4fcb9ef2c62ee4e24c172",
+    "sprite/monster/lordoflight/lol-body.img": "53f98d9dd83cf0f19b05d6015dda738abee0cbf39f44f654e58392950b01be18",
+    "sprite/monster/lugaru/blacklugaru.img": "a7d6b505cd90ff9871839aa8997431ed9a16a1b7a7307a58e5d35a378e99751e",
+    "sprite/monster/lugaru/lugaru.img": "c34e9dce355c8e911218b5ce18f90f5ed2716ab721081095f89effc6fbeae6b0",
+    "sprite/monster/lugaru/penril.img": "53d9172343876b5fdfef9a7b22027022792281b9b7151eeae2974a9404d3219e",
+    "sprite/monster/lugaru/whitelugaru.img": "057f4faf5526b6df6a6f52056a98759e3eac7f15d9295fa8caddaa8e6191bb9c",
+    "sprite/monster/soceress/keraha.img": "f1ea1e8a461117ab94eabb56d0ced19365c439efa2baa5155f0d138a3eb653ee",
+    "sprite/monster/soceress/vinoshu.img": "048ccc2471a2a4124777bbd69754ee0f230b79b091cd8ec4090e77929f3df5de",
+    "sprite/monster/soldier/axeexpellerchest.img": "713ee2e55f6517361a17d450707fef10d8d1e3a13f088ea575c52f591558e7d1",
+    "sprite/monster/soldier/axionexpellerchest.img": "dbbb2b7e8b01aeef256d66081f71b93a578b7f20d76ceed78ea9697d9edfeb86",
+    "sprite/monster/soldier/expellerchest.img": "a78a4b62482166f534c71832dcdad728e6ed47ecb5b451423adea82635294ce6",
+    "sprite/monster/soldier/heavenexpellerchest.img": "67217ca512c7b3f613ab5f01b2b176384149272dde5593fb05dcbe2a07fa95ab",
+    "sprite/monster/soldier/legionexpellerchest.img": "e00132099279e4af6ec3f5fe55fde0b38eabf57e5a21c7901b37c0147d565b37",
+    "sprite/monster/soldier/tsmexpellerchest.img": "3ecbf5eec5636d1a3838f03c32e73ed933204a369134725c781fa61bba33486d",
+    "sprite/monster/spirit/ador.img": "e706bae8d19595e43aca3df344961d5e6e878edb5b5844547451397c840cdf89",
+    "sprite/monster/spirit/naias.img": "97955d705a92265d5643d927ee2691e1ab7a890c8dcf3e4431cc9fe323f64c6f",
+    "sprite/monster/starfish/rukuku.img": "35d6a4fa549920ff3f8110e32694d2cbf4b2cb177100a33916cd5d5413e57ba8",
+    "sprite/monster/starfish/tentacle.img": "939d5895fa455cc1fc8560b1cae094d025c3be135cd1ab5198afa04e1b4d1fa7",
+    "sprite/monster/tau/body01.img": "ba05cce3ebcf0340540a698b49f91f02dbddf6e191b203b4f0681eca304db2a7",
+    "sprite/monster/tau/body02.img": "12858763ad9a91dcaa517daf369050f72003e7c6c0c087be14291cfd6f4c5e44",
+    "sprite/monster/tau/body03.img": "8dc2f54aa59c832919272b9b141a8ab206a6f1df7c41c57712cbf894c085d9ee",
+    "sprite/monster/tau/body04.img": "01bd1e9f456aaf3ff3e074200473eda246402139e972dbbef0ec9652aa7a203b",
+    "sprite/monster/tau/body05.img": "ac5097a5aeae336b0982d9565af84a389660fede5e9a98864f52cd397b6a09dc",
+    "sprite/monster/zealot/pope.img": "1f4abc769a5a98e22b9f028e4a4514c3f9361d630c1772c784488355ed6c963e",
+    "sprite/monster/zealot/raxy-a.img": "c8fa1ffb6374d959b70edaa7b71cf060fa8e72e660a68ad6447b0f535389a43b",
+    "sprite/monster/zombie/ghoulgwish.img": "2ddc86d6a38816fb800f855bdd542253b13c5bff4f3ebb328d50020196f1cac4",
+    "sprite/monster/zombie/holloweye.img": "c288ee413ef67b0f9412c31f4fae179509d397f74c96d93ce5b4d3d9528e8664",
+    "sprite/monster/zombie/zombie.img": "94ef9603eed4a68930859973dff4de56eacb5336bb7df4829d86d1dfb8b2627b"
+  },
+  "unresolved_monster_heights": [
+    {
+      "ani": "monster/newmonsters/haze/axeoutlaw/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/axeoutlaw/axeoutlaw.mob",
+      "reason": "'Monster/haze/axeoutlaw.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/chainbiker/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/chainbiker/chainbiker.mob",
+      "reason": "'Monster/haze/biker2.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/chainbiker2/animation/motorcycle/stay.ani",
+      "mob": "monster/newmonsters/haze/chainbiker2/chainbiker2.mob",
+      "reason": "'Monster/haze/biker2_bike.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/death_squad/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/death_squad/death_squad.mob",
+      "reason": "'Monster/haze/death_squad.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/enjosipho/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/enjosipho/enjosipho.mob",
+      "reason": "'Monster/haze/enjo.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/enjosipho/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob",
+      "reason": "'Monster/haze/enjo.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/hass/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/hass/hass.mob",
+      "reason": "'Monster/haze/hass.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/humanhunter/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/humanhunter/humanhunter.mob",
+      "reason": "'Monster/haze/humanhunter.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/outlaw/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/outlaw/outlaw.mob",
+      "reason": "'Monster/haze/outlaw.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/poena/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/poena/poena.mob",
+      "reason": "'Monster/haze/poena.img'"
+    },
+    {
+      "ani": "monster/newmonsters/haze/tretri/animation/stay.ani",
+      "mob": "monster/newmonsters/haze/tretri/tretri.mob",
+      "reason": "'Monster/haze/tretri.img'"
+    }
+  ]
+}
