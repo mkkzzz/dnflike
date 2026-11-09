@@ -1883,18 +1883,19 @@ func check_grab_blast_startup() -> void:
 	var spec := profile.stats()
 	spec["skill_slots"] = ["grabblastblood"]
 	var denied := ["whiff","invulnerable","freeze","stone","source_disabled","no_down","body_immune"]
-	for outcome: String in denied+["hit","bleed_frenzy","interrupted","interrupted_left","body_armor"]:
+	for outcome: String in denied+["hit","bleed_frenzy","early_bleed","late_bleed","interrupted","interrupted_left","body_armor"]:
 		var facing := -1 if outcome in ["body_armor","interrupted_left"] else 1
 		start_room("original_27601","katana",facing,spec,"berserker")
 		var empowered := outcome == "bleed_frenzy"
 		if empowered:game.apply_skill_effect("buff","frenzy")
+		var strength: float = game.numeric_player.values["strength"]
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
 		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2((200 if outcome == "whiff" else 50)*facing,0))
 		target["hp"] = 50000.0
 		target["numeric"].values["hp_max"] = 50000.0
-		if empowered:target["numeric"].effects.add_source_bleed(0,3000,38)
+		if empowered or outcome == "early_bleed":target["numeric"].effects.add_source_bleed(0,3000,38)
 		if outcome == "invulnerable":target["invuln_ms"] = 2000.0
 		if outcome in ["freeze","stone"]:
 			target["numeric"].effects.add(outcome,{"duration_ms":2000.0})
@@ -1924,7 +1925,8 @@ func check_grab_blast_startup() -> void:
 		if outcome in denied:
 			check(game.player["stage"]==0,"Bloodlust never enters the spray phase for "+outcome)
 			step(360)
-			check(game.player["action"]=="" and game.objects.is_empty(),"Bloodlust recovers without a spray for "+outcome)
+			check(game.player["action"]=="" and game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty(),
+				"Bloodlust recovers without a spray or strength grant for "+outcome)
 			continue
 		check(game.player.get("grab_blast_target",-1)==target["id"] and game.view.player_actor.sample()["frame"]==16,
 			"Bloodlust captures one target and holds the terminal pose at frame seven contact")
@@ -1946,7 +1948,7 @@ func check_grab_blast_startup() -> void:
 			check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose")
 				and target["state"]=="grab_blast_down" and game.objects.is_empty()
 				and target["facing"]==-facing and float(target["native_jump_velocity"].x)*facing>=633.0
-				and float(target["native_jump_velocity"].x)*facing<=950.0,
+				and float(target["native_jump_velocity"].x)*facing<=950.0 and game.active_effect("bloodlust_strength").is_empty(),
 				"interruption releases the held target into the native knockdown in either direction")
 			continue
 		step(99)
@@ -1956,8 +1958,11 @@ func check_grab_blast_startup() -> void:
 		check(target["hp"]<50000.0 and direct.get("percent_part")==0.0
 			and is_equal_approx(float(direct.get("fixed_part",0)),1300.5 if empowered else 1275.0),
 			"Bloodlust's directed strike reads level column zero and the native Frenzy multiplier")
+		if outcome == "early_bleed":target["numeric"].effects.remove("bleed")
+		if outcome == "late_bleed":target["numeric"].effects.add_source_bleed(0,3000,38)
 		step(649)
-		check(game.objects.is_empty(),"Bloodlust waits through 749 ms after capture")
+		check(game.objects.is_empty() and game.active_effect("bloodlust_strength").is_empty()
+			and game.numeric_player.values["strength"]==strength,"Bloodlust waits through 749 ms before spray and strength")
 		if empowered:move_target(target,POINT+Vector2(320,0))
 		var bystander: Dictionary = game.spawn_enemy(POINT+Vector2(100,0))
 		var distant: Dictionary = game.spawn_enemy(POINT+Vector2(330,0))
@@ -1967,9 +1972,15 @@ func check_grab_blast_startup() -> void:
 			and game.objects[0]["pos"]==POINT+Vector2(43,1) and game.objects[0]["z"]==90.0,
 			"Bloodlust creates one spray at the original hand offset after 750 ms")
 		var spray: Dictionary = game.objects[0]["hit"]
-		var source := "grabblastbloodbig.obj" if empowered else "grabblastblood.obj"
-		check(spray["object"].ends_with(source) and spray["percent"]==0.0 and spray["fixed_amount"]==(3419.0 if empowered else 1821.0),
+		var large := empowered or outcome == "late_bleed"
+		var source := "grabblastbloodbig.obj" if large else "grabblastblood.obj"
+		var amount := 3419.0 if empowered else (3352.0 if large else 1821.0)
+		check(spray["object"].ends_with(source) and spray["percent"]==0.0 and spray["fixed_amount"]==amount,
 			"Bloodlust selects the source spray and truncates each fixed damage component in order")
+		var duration := 20000.0 if empowered or outcome=="early_bleed" else 10000.0
+		check(game.active_effect("bloodlust_strength").get("remaining_ms",0)==duration
+			and game.numeric_player.values["strength"]==strength+46.0,
+			"Bloodlust grants row-three strength and uses the earlier bleed observation for duration")
 		check(target["hp"]<before_spray and game.objects[0]["hits"].has(target["id"]) and game.objects[0]["hits"].size()==1,
 			"Bloodlust directs its first spray hit to the held target even outside the ANI boxes")
 		check(target["state"]=="grab_blast_down" and game.enemy_ani(target)==["down",0.0]
@@ -1993,6 +2004,24 @@ func check_grab_blast_startup() -> void:
 				"the DOWN launch ends on the ground without the shared bounce")
 		step(450)
 		check(game.player["action"]=="","Bloodlust completes the 1200 ms capture branch")
+		if outcome == "hit":
+			game.step_numeric_actor(game.player,game.numeric_player,6000.0)
+			game.player["cooldowns"].erase("grabblastblood")
+			move_target(target,POINT+Vector2(50,0))
+			press(KEY_A)
+			step(160)
+			step(750)
+			check(game.active_effect("bloodlust_strength").get("stacks",0)==2
+				and game.numeric_player.values["strength"]==strength+92.0,"overlapping Bloodlust casts add two strength grants")
+			game.step_numeric_actor(game.player,game.numeric_player,4000.0)
+			check(game.active_effect("bloodlust_strength").get("remaining_ms",0)==6000.0
+				and game.numeric_player.values["strength"]==strength+46.0,"the first Bloodlust grant expires on its own timer")
+			duration = 6000.0
+		game.step_numeric_actor(game.player,game.numeric_player,duration-1.0)
+		check(game.numeric_player.values["strength"]==strength+46.0,"Bloodlust grants strength through its last millisecond")
+		game.step_numeric_actor(game.player,game.numeric_player,1.0)
+		check(game.active_effect("bloodlust_strength").is_empty() and game.numeric_player.values["strength"]==strength,
+			"Bloodlust restores the caster's strength at expiry")
 	var floor_x := 0
 	while floor_x<int(POINT.x) and not game.walkable(Vector2(floor_x,POINT.y)):floor_x += 1
 	var saved := Vector3i(int(POINT.x),int(POINT.y),5)

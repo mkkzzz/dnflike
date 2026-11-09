@@ -99,6 +99,14 @@ func apply_khazan_drive(source: Dictionary) -> bool:
 	if added:recalculate()
 	return added
 
+func apply_bloodlust_strength(rank: int, saw_bleed: bool) -> bool:
+	var row: Array = Numbers.Skills.sample(Numbers.record("grabblastblood"),rank)["level_row"]
+	if rank <= 0 or row.size() < 6:return false
+	# CB6FAD and CB6FD6 select duration, CB6FF6 reads the strength grant.
+	var added := effects.add_bloodlust_strength(int(row[3]),int(row[5 if saw_bleed else 2]))
+	if added:recalculate()
+	return added
+
 ## Blind uses its own resistance index and scales both payloads before storage.
 ## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.
 func apply_source_blind(source: Dictionary, roll: int) -> bool:
@@ -214,7 +222,7 @@ func remove_effect(id: String) -> bool:
 func step(ms: float, sleep_on_ground := true) -> Array:
 	var events: Array = effects.step(ms,sleep_on_ground)
 	for event: Dictionary in events:
-		if event["type"] == "removed":
+		if event["type"] in ["removed","modifier_changed"]:
 			recalculate()
 			break
 	return events

@@ -281,6 +281,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		body["attack"] = float(actor.values["physical_attack"])
 	body["hp"] = minf(float(body["hp"]),float(actor.values["hp_max"]))
 	for event: Dictionary in events:
+		if event["type"]=="modifier_changed":continue
 		if event["type"]=="removed":
 			if body["id"]==PLAYER_ID and event["id"]=="thirst":stop_thirst_loop()
 			if event["id"]=="sleep" and body["state"]=="down":
@@ -1849,11 +1850,12 @@ func grab_blast_release_position(at: Vector3i, saved: Vector3i) -> Vector3i:
 	return saved
 
 func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float) -> void:
-	var strike_due := from < 100.0 and to >= 100.0 and active_effect("thirst").is_empty()
+	var strike_window := from < 100.0
+	var strike_due := strike_window and to >= 100.0 and active_effect("thirst").is_empty()
 	var sprays: Array = stage["hits"]
 	var at := float(sprays[0]["at"])
 	var spray_due := from < at and to >= at
-	if not strike_due and not spray_due:return
+	if not strike_window and not spray_due:return
 	var target := grab_blast_victim()
 	var facing := int(player["facing"])
 	var position := Vector2i(player["pos"])
@@ -1862,9 +1864,12 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 	if strike_due and not target.is_empty() and float(target["hp"]) > 0.0:
 		land_hit(player,target,player["native_phase"]["grab_strike"],point,facing,attack_power())
 		if float(target["hp"]) > 0.0:anchor_grab_blast_victim(target)
-	if not spray_due:return
 	var bleeding: bool = not target.is_empty() and float(target["hp"]) > 0.0 and target.has("numeric") \
 		and target["numeric"].effects.active.has("bleed")
+	# CB6AFC samples until the ordinary strike advances the state. The spray
+	# has a separate live bleed check when it selects its object and damage.
+	if strike_window and bleeding:player["native_phase"]["grab_bleed_seen"] = true
+	if not spray_due:return
 	var spray: Dictionary = sprays[1 if bleeding else 0]
 	var base := native_fixed_attack_base(move["fixed_attack_base"])
 	var amount := int(native_fixed_attack_product(float(spray["fixed"]),base))
@@ -1878,6 +1883,11 @@ func step_grab_blast(move: Dictionary, stage: Dictionary, from: float, to: float
 		# CNGrabBlastBlood dispatches the held hit before CB7102 sends DOWN.
 		object["hits"][target["id"]] = true
 		land_hit(player,target,spray_hit,point,facing,float(object["power"]))
+	if player["action"] == "grabblastblood" and numeric_player != null:
+		var rank := int(skill_levels.get("grabblastblood",1))
+		var saw_bleed := bool(player["native_phase"].get("grab_bleed_seen",false))
+		if numeric_player.apply_bloodlust_strength(rank,saw_bleed):
+			bus.emit("combat.status",{"target":PLAYER_ID,"id":"bloodlust_strength","change":"added"})
 	release_grab_blast_victim(target)
 
 func grab_frenzy_percent() -> int:
