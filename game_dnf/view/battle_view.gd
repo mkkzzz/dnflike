@@ -37,6 +37,7 @@ var particle_bursts = ParticleBursts.new()
 var _particle_banks: Dictionary = {}
 var _particle_emitters: Array[Dictionary] = []
 var _poison_emitters: Dictionary = {}
+var _overdrive_emitter: Dictionary = {}
 var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
@@ -183,6 +184,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_player_z = float(p["z"])
 	_advance_native_emitters(sim_ms)
 	_advance_poison_emitters([p]+s["enemies"]+companions,sim_ms)
+	_advance_overdrive_emitter(p)
 	var poison_overlay := _poison_overlay(float(s.get("status_clock_ms",0.0)))
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
@@ -418,6 +420,7 @@ func _on_room_loaded(event: Dictionary) -> void:
 	effects.clear()
 	_particle_emitters.clear()
 	_poison_emitters.clear()
+	_overdrive_emitter.clear()
 	for v in object_views.values():
 		if is_instance_valid(v):v.queue_free()
 	object_views.clear()
@@ -534,7 +537,28 @@ func _poison_overlay(clock_ms: float) -> Color:
 	var alpha := int(float(tint["alpha_base_default"])+float(tint["alpha_amplitude"])*sin(phase))
 	return Color8((rgb>>16)&255,(rgb>>8)&255,rgb&255,alpha)
 
-func _append_native_particles(path: String, scale_value: float, result: Dictionary) -> bool:
+func _advance_overdrive_emitter(actor: Dictionary) -> void:
+	var age := int(actor.get("overdrive_age_ms",-1.0))
+	if age < 0:
+		if not _overdrive_emitter.is_empty():
+			for fx in effects:
+				if is_instance_valid(fx) and fx.tag=="overdrive_status":fx.queue_free()
+			_overdrive_emitter.clear()
+		return
+	var path := String(_combat.get("native_status_visuals",{}).get("overdrive",{}).get("particle",""))
+	if path.is_empty():return
+	var template: Dictionary = _combat["particles"][path]
+	var point: Vector2 = actor["pos"]
+	# 97EB5D follows XYZ and places the emitter half a standing body above the owner.
+	var origin := Vector3i(int(point.x),int(point.y),int(actor["z"])+int(template["z_offset"]))
+	if _overdrive_emitter.is_empty() or age < int(_overdrive_emitter["age"]):
+		_overdrive_emitter = {"emitter":particle_bursts.create_emitter(template["decoded"],origin),"start":age}
+	_overdrive_emitter["age"] = age
+	var emitter: RefCounted = _overdrive_emitter["emitter"]
+	emitter.origin = origin
+	_append_native_particles(path,1.0,particle_bursts.emit_at(emitter,age-int(_overdrive_emitter["start"])),"overdrive_status")
+
+func _append_native_particles(path: String, scale_value: float, result: Dictionary, tag := "") -> bool:
 	if not result.ok:
 		push_error(str(result.problems))
 		return false
@@ -542,6 +566,7 @@ func _append_native_particles(path: String, scale_value: float, result: Dictiona
 		var particle = NativeParticleView.new()
 		world.add_child(particle)
 		particle.base_scale = scale_value
+		particle.tag = tag
 		particle.set_meta("source_ptl",path)
 		particle.set_meta("particle_birth_pending",true)
 		if not particle.setup_particle(emission,_particle_banks.get(String(emission.entry.path).to_lower(),{})):

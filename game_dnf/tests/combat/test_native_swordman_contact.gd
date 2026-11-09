@@ -972,6 +972,52 @@ func check_overdrive_cast() -> void:
 	check(not game.player.has("overdrive_cast") and game.active_effect("overdrive").is_empty()
 		and cues("BUFF_OVERDRIVE").is_empty(),"Incoming damage interrupts Overdrive without attaching the buff")
 
+func overdrive_particles() -> Array:
+	return game.view.effects.filter(func(fx):return fx.tag=="overdrive_status")
+
+func check_overdrive_particles() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"overdrive","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["overdrive"]
+	start_room("original_27601","katana",1,spec)
+	game.player["mp"] = 5000.0
+	game.numeric_player.values["cast_speed"] = 1.0
+	press(KEY_A)
+	step(0)
+	step(499)
+	check(overdrive_particles().is_empty(),"Overdrive emits no active-buff particles while casting")
+	step(1)
+	var particles := overdrive_particles()
+	check(particles.size()==1 and particles[0].data["source"]=="common/commoneffect/animation/status_effect/pattack.ani",
+		"Overdrive starts with one native physical-attack particle at successful cast exit")
+	if particles.is_empty():return
+	var first: Node2D = particles[0]
+	var emitter: RefCounted = game.view._overdrive_emitter["emitter"]
+	check(emitter.origin==Vector3i(400,300,50) and emitter.config["life_time"]==700,
+		"Overdrive's source emitter starts at caster XYZ plus half the standing body height")
+	game.step_numeric_actor(game.player,game.numeric_player,249)
+	game.view.present(game.view_snapshot(),249.0,249.0)
+	game.view.present(game.view_snapshot(),200.0,0.0)
+	check(overdrive_particles().size()==1,"Overdrive accumulates emission on simulation time and stays at one particle through 249 ms")
+	game.player["pos"] = POINT+Vector2(180,20)
+	game.player["z"] = 12.0
+	game.step_numeric_actor(game.player,game.numeric_player,1)
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	particles = overdrive_particles()
+	check(particles.size()==2 and emitter.origin==Vector3i(580,320,62) and absf(first.position.x-400.0)<40.0
+		and absf(particles[1].position.x-580.0)<40.0,
+		"Overdrive emits again at 250 ms from the current caster position and leaves existing particles in world space")
+	game.step_numeric_actor(game.player,game.numeric_player,119749)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(not overdrive_particles().is_empty(),"Overdrive retains the particle emitter through the last active millisecond")
+	game.step_numeric_actor(game.player,game.numeric_player,1)
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(overdrive_particles().is_empty() and game.view._overdrive_emitter.is_empty(),
+		"Overdrive expiry discards the owned emitter and its remaining particles")
+
 func check_frenzy_drain() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 	var profile := ProfileSession.new()
@@ -1480,6 +1526,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_overdrive_attributes()
 	check_overdrive_cast()
+	check_overdrive_particles()
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()

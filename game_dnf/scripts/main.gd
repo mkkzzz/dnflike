@@ -3669,12 +3669,17 @@ func view_snapshot() -> Dictionary:
 		stage_info["resolved_placement"] = native_room["placement"]
 		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
 	var buff_active: bool = float(player["buff_ms"])>0 or (numeric_player != null and numeric_player.effects.active.has("frenzy"))
+	var overdrive := active_effect("overdrive")
+	var overdrive_age_ms := -1.0
+	if not overdrive.is_empty() and float(player["hp"]) > 0.0:
+		overdrive_age_ms = float(overdrive["definition"]["duration_ms"])-float(overdrive["remaining_ms"])
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
+			"overdrive_age_ms":overdrive_age_ms,
 			"aura":String(move_def("buff").get("aura_fx","")) if buff_active else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":stage_info,

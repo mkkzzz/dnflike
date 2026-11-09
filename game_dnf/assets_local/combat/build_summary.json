@@ -137,7 +137,7 @@
   "passiveobject/character/swordman/sayaex.obj",
   "passiveobject/character/swordman/sayaexice.obj"
  ],
- "effects": 279,
+ "effects": 280,
  "digits": 61,
  "audio_keys": 249,
  "unresolved": 32,
@@ -306,5 +306,5 @@
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
   }
  ],
- "particle_templates": 13
+ "particle_templates": 14
 }

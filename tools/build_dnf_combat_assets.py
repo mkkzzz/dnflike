@@ -58,9 +58,14 @@ ARMOR_DAMAGE_SOURCES = {
     'common/commoneffect/animation/superarmor_damage_particle02.ani': '6b8add08c180862e3c7de28a7e6eb6477547808dfcafce1b83e646a495fdb122',
     'common/commoneffect/animation/superarmor_damage_particle03.ani': 'bf47d08c2b70aa2f1c001cfb114e3a9bdf6f9f5b0a921f89c941311fbf12aa30',
 }
+PATTACK_PARTICLE = 'common/commoneffect/particle/status_effect/pattack.ptl'
+PATTACK_SOURCES = {
+    PATTACK_PARTICLE: 'dd92ee249cb7b856b1cdbcf411485aa7ab51d643f46b1fa5e26ff1731817f9d7',
+    'common/commoneffect/animation/status_effect/pattack.ani': '6e4247ee0318a29636209d00953962babef8ddd6e32384b5f695d77ee38eac0b',
+}
 
 
-def swordman_armor_particle_height(src) -> int:
+def swordman_half_height(src) -> int:
     chr_path = 'character/swordman/swordman.chr'
     fields = src.lib.script(chr_path)['fields']
     src.sources[chr_path] = src.lib.raw(chr_path)[1]
@@ -96,6 +101,7 @@ def native_particle_definitions(src, extra_pins=None):
         pinned[path] = hashes
     pinned.update(extra_pins or {})
     pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
+    pinned[PATTACK_PARTICLE] = PATTACK_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:
         doc = src.lib.script(path)
         if not doc:
@@ -111,7 +117,9 @@ def native_particle_definitions(src, extra_pins=None):
         src.sources[path] = entry['sha256']
         for animation in entry['animations']:
             effects['native_'+PurePosixPath(animation).stem] = animation
-    particles[ARMOR_DAMAGE_PARTICLE]['z_offset'] = swordman_armor_particle_height(src)
+    half_height = swordman_half_height(src)
+    particles[ARMOR_DAMAGE_PARTICLE]['z_offset'] = half_height
+    particles[PATTACK_PARTICLE]['z_offset'] = half_height
     return particles, effects
 
 
@@ -120,7 +128,8 @@ def native_status_visuals(src):
     if (poison.get('particle') != NATIVE_POISON_PARTICLE
             or poison.get('source', {}).get('source_hashes') != NATIVE_POISON_VISUAL_SHA):
         raise ValueError('Compile the original poison status visual before baking')
-    return {'poison': dict(poison, apply_sound='CONDITION_POSION', loop_sound='G_POISON_LOOP',
+    return {'overdrive': {'particle': PATTACK_PARTICLE},
+            'poison': dict(poison, apply_sound='CONDITION_POSION', loop_sound='G_POISON_LOOP',
                            loop_items=[
                                {'sound': 'CONDITION_POSION_DROP', 'start_delay_ms': 0, 'loop_delay_ms': 3000},
                                {'sound': 'CONDITION_POISON_POP', 'start_delay_ms': 0, 'loop_delay_ms': 1000},
@@ -1161,7 +1170,8 @@ def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_pa
                 raise ValueError('Existing original jar trap contract differs')
         manifest['native_jar_traps'] = traps
         status_visuals = native_status_visuals(src)
-        if 'native_status_visuals' in manifest and manifest['native_status_visuals'] != status_visuals:
+        if any(status_visuals.get(key) != value
+               for key, value in manifest.get('native_status_visuals', {}).items()):
             raise ValueError('Existing original status visual contract differs')
         manifest['native_status_visuals'] = status_visuals
         particle_pins = {**trap_pins, NATIVE_POISON_PARTICLE: NATIVE_POISON_VISUAL_SHA}
