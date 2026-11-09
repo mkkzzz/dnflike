@@ -371,6 +371,7 @@ func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
 		"guard_hold_ms":0.0,"guard_recoil_ms":0.0,
+		"guard_recoil_speed":0.0,"guard_recoil_accel":0.0,
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"invuln_ms":0.0,"flash_ms":0.0,"upper_armor_fx_ms":0.0,"landing_ms":0.0,"buff_ms":0.0,"cooldowns":{},"hits":{},
 		"queued_combo":false,"queued_skill":"","queued_jump":false,"queued_backstep":false,"fx_tag":"",
@@ -809,7 +810,16 @@ func step_player(ms: float, move: Vector2) -> void:
 	player["motion_clock"] = float(player["motion_clock"])+ms
 	if player["state"] == "guard":
 		player["guard_hold_ms"] = maxf(0.0,float(player["guard_hold_ms"])-ms)
-		player["guard_recoil_ms"] = maxf(0.0,float(player["guard_recoil_ms"])-ms)
+		var recoil_ms := float(player["guard_recoil_ms"])
+		if recoil_ms > 0.0:
+			var active_ms := minf(recoil_ms,ms)
+			var seconds := active_ms/1000.0
+			var speed := float(player["guard_recoil_speed"])
+			var next_speed := maxf(0.0,speed+float(player["guard_recoil_accel"])*seconds)
+			# 8280E0 applies the opposite horizontal direction and keeps depth still.
+			move_guard_recoil(-int(player["facing"])*(speed+next_speed)*0.5*seconds)
+			player["guard_recoil_speed"] = next_speed
+			player["guard_recoil_ms"] = recoil_ms-active_ms
 		# CB8AF2 only checks the held command after the current phase's gate.
 		if maxf(float(player["guard_hold_ms"]),float(player["guard_recoil_ms"])) <= 0.0 and not guard_input_held():
 			player["state"] = "idle"
@@ -1986,10 +1996,14 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int) 
 		var attack_type := Kernel.MoveTable.enum_value(atk,"attack_type","[physic]")
 		taken *= float(Numbers.Skills.guard_taken_percent(row,attack_type))/100.0
 		if amount > 0 and row.size() > 1:
-			# CC6135 clears the initial hold gate on re-entry. CC5E98
-			# sets the separate recoil clock from the active guard rank.
+			# CC6135 clears the initial hold gate on re-entry.
 			player["guard_hold_ms"] = 0.0
-			player["guard_recoil_ms"] = float(row[1])
+			var recovery_ms := float(row[1])
+			var recoil_speed := float(row[0])
+			# CC5EEE uses rank speed, then IDIV truncates the deceleration.
+			player["guard_recoil_ms"] = recovery_ms
+			player["guard_recoil_speed"] = recoil_speed
+			player["guard_recoil_accel"] = int(-recoil_speed*1000.0/recovery_ms) if recovery_ms > 0.0 else 0
 	elif numeric_player == null and float(player["buff_ms"])>0:taken *= float(rules["buff"]["damage_taken"])
 	var keiga: Dictionary = active_effect("keiga")
 	if taken > 0 and not keiga.is_empty() and int(keiga.get("absorb_remaining",0)) > 0:
@@ -2703,6 +2717,20 @@ func move_in_world(from: Vector2,delta: Vector2) -> Vector2:
 
 func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta)
+
+func move_guard_recoil(dx: float) -> void:
+	var pos: Vector2 = player["pos"]
+	var x := roundi(pos.x)
+	var target_x := roundi(pos.x+dx)
+	var direction := signi(target_x-x)
+	var row := roundi(pos.y)
+	# 8A8C20 tests each rounded pixel and 8A8D63 restores the last clear one.
+	while x != target_x:
+		if not walkable(Vector2(x+direction,row)):
+			player["pos"] = Vector2(x,pos.y)
+			return
+		x += direction
+	player["pos"] = Vector2(pos.x+dx,pos.y)
 
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()

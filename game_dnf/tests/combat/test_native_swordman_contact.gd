@@ -285,6 +285,77 @@ func check_guard_release() -> void:
 	step(0)
 	check(game.player["state"]=="idle","flow pause clears the guard hold with its input ownership")
 
+func check_guard_recoil_motion() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.skill_grant",{"id":"autoguard","level":20})
+	for sample: Array in [
+		[2,1,180.0,-1388,16.8786,22.5144],
+		[4,-1,140.0,-2500,18.375,24.5],
+	]:
+		profile.command("numbers.skill_grant",{"id":"guard","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["","","guard"]
+		var facing: int = sample[1]
+		var duration: float = sample[2]
+		start_room("original_27601","katana",facing,spec)
+		game.numeric_player.values["attack_speed"] = 1.5
+		session.submit_key(KEY_D,true)
+		step(0)
+		var reaction: String = game.hurt_player(10,{"pos":POINT+Vector2(40*facing,0)},{},-facing)
+		check(reaction=="guard" and game.player["guard_recoil_accel"]==sample[3],
+			"guard recoil uses signed integer division for the rank's acceleration")
+		game.player["stuck_ms"] = 20.0
+		game.step_game(20.0)
+		check(game.player["pos"]==POINT and game.player["guard_recoil_ms"]==duration,
+			"guard recoil stays on the local combat clock during hitstop")
+		step(duration*0.5)
+		check(Vector2(game.player["pos"]).is_equal_approx(POINT-Vector2(float(sample[4])*facing,0)),
+			"guard decelerates opposite to facing and ignores attack speed")
+		step(duration)
+		check(game.player["state"]=="guard" and Vector2(game.player["pos"]).is_equal_approx(POINT-Vector2(float(sample[5])*facing,0)),
+			"guard returns to its held frame and caps motion at recovery end")
+		var stopped: Vector2 = game.player["pos"]
+		step(100.0)
+		check(game.player["pos"]==stopped,"held guard has no residual recoil")
+
+	start_room("original_27601","katana",1,profile.stats())
+	check(game.apply_effect({"kind":"effect","id":"autoguard","rank":20}),"source automatic guard fixture is active")
+	var automatic: String = game.hurt_player(10,{"pos":POINT-Vector2(40,0)},{},1)
+	step(140.0)
+	check(automatic=="guard" and game.player["state"]=="idle" and game.player["facing"]==-1
+		and Vector2(game.player["pos"]).is_equal_approx(POINT+Vector2(24.5,0)),
+		"automatic guard turns toward a rear hit and recoils away from it")
+
+	var spec := profile.stats()
+	spec["skill_slots"] = ["","","guard"]
+	start_room("original_27601","katana",1,spec)
+	var grid: Dictionary = game.map_loader.constants()
+	var cell_width := int(grid["cell_width"])
+	var col := floori(POINT.x/cell_width)
+	var row := floori(POINT.y/float(grid["cell_height"]))
+	var edge := Vector2(col*cell_width,POINT.y)
+	game.room_map = game.room_map.duplicate(true)
+	game.room_map["walk_grid"][row][col] = 0
+	game.room_map["walk_grid"][row][col-1] = 1
+	game.player["pos"] = edge+Vector2(8,0)
+	session.submit_key(KEY_D,true)
+	step(0)
+	var blocked: String = game.hurt_player(10,{"pos":edge+Vector2(48,0)},{},-1)
+	step(140.0)
+	check(blocked=="guard" and game.player["pos"]==edge,
+		"guard recoil moves to the last walkable pixel before a blocked cell")
+
+	start_room("original_27601","katana",1,spec)
+	game.skill_levels["guard"] = 11
+	session.submit_key(KEY_D,true)
+	step(0)
+	var zero_recoil: String = game.hurt_player(10,{"pos":POINT+Vector2(40,0)},{},-1)
+	session.submit_key(KEY_D,false)
+	step(16.0)
+	check(zero_recoil=="guard" and game.player["state"]=="idle" and game.player["pos"]==POINT,
+		"zero recovery from a boosted rank cannot divide by zero or slide")
+
 func check_triple_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -436,6 +507,7 @@ func run() -> void:
 	check_upper_armor_visuals()
 	check_followup()
 	check_guard_release()
+	check_guard_recoil_motion()
 	check_triple_slash()
 	session.stop()
 	print("[SWORDMAN_CONTACT] COMPLETE checks=",checks," failures=",failures)
