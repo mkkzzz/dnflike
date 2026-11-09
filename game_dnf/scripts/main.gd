@@ -1259,7 +1259,12 @@ func reject_action(name: String, reason: String) -> bool:
 
 ## Starts a move. MP and cooldown come from the original SKL [dungeon] section (level 1).
 func normal_attack_cancel_allowed(move: Dictionary) -> bool:
-	return move.has("normal_cancel_job") and String(player["state"]) == "action" and job == String(move["normal_cancel_job"]) and String(player["action"]) in ["attack1","attack2","attack3","waveeye_attack1","waveeye_attack2","waveeye_attack3"]
+	if player["state"] != "action" or not move.has("normal_cancel_job") or job != move["normal_cancel_job"]:return false
+	var action: String = player["action"]
+	if action in Kernel.MoveTable.NORMAL_ATTACK_CHAIN:return true
+	# CBDB67 accepts the original attack state, which also runs the four Frenzy swings.
+	if move.get("native_state","") == "bloody_rave":return action in ["frenzy1","frenzy2","frenzy3","frenzy4"]
+	return action in ["waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
 	var duration := (float(move["cool_ms"])-frenzy_cooldown_reduction_ms(name))/1000.0
@@ -1279,6 +1284,8 @@ func start_action(name: String, cancel := false) -> bool:
 	if numeric_player != null and (numeric_player.effects.controlled() or skill_levels.has(name) and int(skill_levels[name])<=0):return reject_action(name,"unavailable")
 	var required_effect := String(m.get("requires_effect",""))
 	if required_effect != "" and (numeric_player == null or not numeric_player.effects.active.has(required_effect)):return reject_action(name,"effect")
+	# CBDC03 checks current integer HP before dispatching the skill payment.
+	if m.get("native_state","") == "bloody_rave" and int(player["hp"]) <= 1:return reject_action(name,"hp")
 	var airborne := float(player["z"])>0 or float(player["vz"])>0
 	if airborne != bool(m.get("air",false)):return reject_action(name,"state")
 	var guard := name == "guard"
@@ -1292,8 +1299,8 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.has("normal_cancel_job"):
 		var state := String(player["state"])
 		if state not in ["idle","move","guard","action"]:return reject_action(name,"state")
+		if state == "guard" and m.get("native_state","") == "bloody_rave":return reject_action(name,"state")
 		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
-			# Original SKL: only Asura may interrupt a normal attack with this skill.
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")

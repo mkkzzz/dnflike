@@ -1882,21 +1882,31 @@ func check_bloody_rave_phases() -> void:
 	profile.command("numbers.skill_grant",{"id":"buff","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["bloodyrave"]
-	for scenario: String in ["no_cube","tap","fast_tap","hold","one_hp","interrupt","interrupt_release"]:
+	for scenario: String in ["no_frenzy","one_hp","no_cube","tap","fast_tap","hold","low_hp_hold","interrupt","interrupt_release"]:
 		start_room("original_27601","katana",1,spec,"berserker")
 		if scenario == "tap":game.view.audio.muted = false
-		game.apply_skill_effect("buff","frenzy")
+		if scenario != "no_frenzy":game.apply_skill_effect("buff","frenzy")
 		var rate := 2.0 if scenario=="fast_tap" else 1.0
 		game.numeric_player.values["attack_speed"] = rate
-		game.player["hp"] = 1.0 if scenario=="one_hp" else 1000.0
+		game.player["hp"] = 1000.0
+		if scenario == "one_hp":game.player["hp"] = 1.99
+		if scenario == "low_hp_hold":game.player["hp"] = 2.0
 		var payments: Array = []
 		session.set_skill_material_spender(func(id: int, amount: int):
 			payments.append([id,amount])
 			return scenario!="no_cube")
 		var before_mp: float = game.player["mp"]
-		if scenario == "hold":session.submit_key(KEY_A,true)
+		if scenario in ["hold","low_hp_hold"]:session.submit_key(KEY_A,true)
 		else:press(KEY_A)
 		step(0)
+		if scenario in ["no_frenzy","one_hp"]:
+			var rejections: Array = game.bus.events_of("combat.action_rejected")
+			var reason := "effect" if scenario == "no_frenzy" else "hp"
+			check(rejections.size()==1 and rejections[0]["reason"]==reason and payments.is_empty()
+				and game.player["action"]=="" and game.player["mp"]==before_mp
+				and not game.player["cooldowns"].has("bloodyrave") and cues("SM_BLOOD_RAVE_STORM").is_empty(),
+				"the native cast gates reject before payment and cues: "+reason)
+			continue
 		check(payments==[[3037,1]],"Bloody Rave asks for one original cube through the combat session")
 		if scenario == "no_cube":
 			check(game.player["action"]=="" and game.player["mp"]==before_mp and not game.player["cooldowns"].has("bloodyrave"),
@@ -1907,8 +1917,14 @@ func check_bloody_rave_phases() -> void:
 		var hold_start := 790.0/rate
 		var move: Dictionary = game.move_def("bloodyrave")
 		var first_fx: String = move["stages"][0]["fx"][0]["key"]
-		if scenario == "one_hp":
-			check(game.player["stage"]==1 and game.player["hp"]==1.0,"Bloody Rave releases immediately at the one-HP gate")
+		if scenario == "low_hp_hold":
+			step(1224)
+			check(game.player["stage"]==0 and game.player["hp"]==2.0,
+				"two HP permits the cast, and the original drain has not reached one whole HP")
+			step(1)
+			check(game.player["stage"]==1 and game.player["hp"]==1.0,
+				"reaching one HP after startup overrides the held key and minimum hold")
+			session.submit_key(KEY_A,false)
 			continue
 		check(game.view.player_actor.pose=="bloodyraveinhale" and game.player["stage"]==0,"Bloody Rave starts its original inhale pose")
 		step(309.0/rate)
@@ -2017,6 +2033,60 @@ func check_bloody_rave_phases() -> void:
 	step(500)
 	step(460)
 	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==3621.0,"eight or more normal targets use the original upper damage column")
+
+func check_bloody_rave_cancel() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodyrave","level":1})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	profile.command("numbers.skill_grant",{"id":"guard","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodyrave","guard"]
+	for swing in range(1,5):
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int, amount: int):
+			payments.append([id,amount])
+			return true)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(0,180))
+		press(KEY_X)
+		step(0)
+		for prior in range(swing-1):
+			press(KEY_X)
+			step([300.0,180.0,240.0][prior])
+		move_target(target,Vector2(game.player["pos"])+Vector2(60,0))
+		step(119)
+		var hits: int = game.hit_count
+		check(game.player["action"]=="frenzy%d" % swing and game.player["clock"]==119.0,
+			"Frenzy swing %d is one millisecond before its first hit" % swing)
+		press(KEY_A)
+		step(1)
+		check(game.player["action"]=="bloodyrave" and game.player["clock"]==0.0
+			and game.hit_count==hits and payments==[[3037,1]],
+			"Bloody Rave cancels the native attack state before its next hit")
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.apply_skill_effect("buff","frenzy")
+	session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+	press(KEY_Z)
+	step(0)
+	press(KEY_A)
+	step(119)
+	check(game.player["action"]=="upper" and not game.player["cooldowns"].has("bloodyrave"),
+		"the attack-state permission does not cancel a different active skill")
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.apply_skill_effect("buff","frenzy")
+	session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+	session.submit_key(KEY_S,true)
+	step(0)
+	check(game.player["state"]=="guard","the fixture enters held guard through the shortcut")
+	press(KEY_A)
+	step(0)
+	check(game.player["state"]=="guard" and not game.player["cooldowns"].has("bloodyrave"),
+		"guard is outside Bloody Rave's native cast states")
+	session.submit_key(KEY_S,false)
 
 func check_bloody_rave_special_targets() -> void:
 	var profile := ProfileSession.new()
@@ -3300,6 +3370,7 @@ func run() -> void:
 	check_bloody_rave_phases()
 	check_bloody_rave_fade()
 	check_bloody_rave_contact_bleed()
+	check_bloody_rave_cancel()
 	check_bloody_rave_special_targets()
 	check_grab_blast_startup()
 	check_grab_blast_non_weapon_speed()

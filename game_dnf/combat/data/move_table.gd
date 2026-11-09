@@ -414,6 +414,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["grab_bleed_bonus"] = float(row[4])
 	if spec.get("native_state","") == "bloody_rave":
 		move["native_state"] = "bloody_rave"
+		move["normal_cancel_job"] = "berserker"
 		move["hold_min_ms"] = int(skill["static"][0])
 		move["hold_max_ms"] = int(skill["static"][1])
 		move["hold_hp_per_second"] = NativeMotion.f32(float(skill["level_row"][6])*0.10000000149011612)
