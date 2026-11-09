@@ -1749,8 +1749,12 @@
        "attached_weapon": true,
        "effects": [
         {
-         "chance": 1.0,
-         "id": "bleed"
+         "chance_col": 5,
+         "chance_scale": 0.001,
+         "duration_ms_col": 7,
+         "id": "bleed",
+         "native_frenzy": true,
+         "status_level_col": 6
         }
        ],
        "percent_scale_col": 2
@@ -1796,8 +1800,12 @@
        "attached_weapon": true,
        "effects": [
         {
-         "chance": 1.0,
-         "id": "bleed"
+         "chance_col": 5,
+         "chance_scale": 0.001,
+         "duration_ms_col": 7,
+         "id": "bleed",
+         "native_frenzy": true,
+         "status_level_col": 6
         }
        ],
        "percent_scale_col": 2
@@ -1843,8 +1851,12 @@
        "attached_weapon": true,
        "effects": [
         {
-         "chance": 1.0,
-         "id": "bleed"
+         "chance_col": 5,
+         "chance_scale": 0.001,
+         "duration_ms_col": 7,
+         "id": "bleed",
+         "native_frenzy": true,
+         "status_level_col": 6
         }
        ],
        "percent_scale_col": 2
@@ -1888,8 +1900,12 @@
        "attached_weapon": true,
        "effects": [
         {
-         "chance": 1.0,
-         "id": "bleed"
+         "chance_col": 5,
+         "chance_scale": 0.001,
+         "duration_ms_col": 7,
+         "id": "bleed",
+         "native_frenzy": true,
+         "status_level_col": 6
         }
        ],
        "percent_scale_col": 2

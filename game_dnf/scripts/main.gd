@@ -260,6 +260,7 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 	stats["blind_resistance"] = int(m["blind_resistance"])
 	stats["sleep_resistance"] = int(m["sleep_resistance"])
 	stats["poison_resistance"] = int(m["poison_resistance"])
+	stats["bleeding_resistance"] = int(m.get("bleeding_resistance",0))
 	if m.has("native_attack_rate"):stats["attack_speed"] = m["native_attack_rate"]
 	if m.has("native_spirit_summon"):stats["cast_speed"] = m["native_spirit_summon"]["cast_rate"]
 	actor.configure({"numbers":stats})
@@ -1615,6 +1616,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if hit_skill_id == "hopsmash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				effect_list.append({"id":"bleed","chance":0.4})
 		for effect: Dictionary in effect_list:
+			if effect.get("native_frenzy",false):
+				if target["numeric"].apply_frenzy_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+					bus.emit("combat.status",{"target":target["id"],"id":"bleed","change":"added"})
+				continue
 			var chance := float(effect.get("chance",1))
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)

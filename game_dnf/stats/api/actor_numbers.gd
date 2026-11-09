@@ -56,6 +56,17 @@ func source_freeze_duration(chance: float, status_level: int, duration_ms: int, 
 	if not source_status_lands(chance,level_delta,int(values.get("abnormal_resistance",0)),roll):return 0
 	return maxi(0,int(native_scalar(duration_ms*native_level_rate(level_delta,STATUS_LEVEL_DURATION_RATE))))
 
+## Enum 11 uses the target's bleeding resistance and keeps the submitted duration.
+func apply_frenzy_bleed(source: Dictionary, roll: int) -> bool:
+	var level := int(source["status_level"])
+	var delta := level-int(values.get("level",1))
+	var resistance := int(values.get("bleeding_resistance",0))+int(values.get("abnormal_resistance",0))
+	if level <= 0 or not source_status_lands(float(source["chance"]),delta,resistance,roll):return false
+	var bleed: Dictionary = config["effects"]["bleed"].duplicate(true)
+	bleed["duration_ms"] = int(source["duration_ms"])
+	bleed["status_level"] = level
+	return effects.add("bleed",bleed)
+
 ## Enum 8 shares the original level-duration branch with freeze, but reads
 ## its own resistance slot and refuses a second application while active.
 func apply_source_sleep(source: Dictionary, roll: int) -> bool:

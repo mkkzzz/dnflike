@@ -1579,7 +1579,9 @@ def build_frenzy_normals(
             "ani": ani,
             "atk": attack,
             "hits": [{"attached_weapon": True, "percent_scale_col": 2,
-                      "effects": [{"id": "bleed", "chance": 1.0}]}],
+                      "effects": [{"id": "bleed", "native_frenzy": True,
+                                   "chance_col": 5, "chance_scale": 0.001,
+                                   "status_level_col": 6, "duration_ms_col": 7}]}],
             "fx": [{"key": f"frenzy_sword{stage_number}_{layer}", "at": 0,
                     "action_clock": True, "depth_offset": depth[layer]} for layer in visible_layers],
         }

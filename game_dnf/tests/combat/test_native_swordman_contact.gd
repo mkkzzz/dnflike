@@ -1157,6 +1157,59 @@ func check_frenzy_normals() -> void:
 		check(game.player["state"]=="idle" and game.primary_normal_attack()=="attack1",
 			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
 
+func check_frenzy_bleed() -> void:
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
+	var seeds := {}
+	for seed_value in 100000:
+		game.rng.reseed(seed_value)
+		game.rng.next_float()
+		game.rng.next_float()
+		# The first katana ATK uses the CHR's small cut and blood cue variants.
+		game.rng.range_int(1,3)
+		game.rng.range_int(1,3)
+		var roll: int = game.rng.range_int(0,9999)
+		if roll in [599,600] and not seeds.has(roll):seeds[roll] = seed_value
+		if seeds.size()==2:break
+	check(seeds.size()==2,"fixed seeds reach both sides of the Frenzy bleed roll")
+	if seeds.size()!=2:return
+	for rank in [1,2]:
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"buff","level":rank})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["buff"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.player["hp"] = 1000.0
+		press(KEY_A)
+		step(0)
+		step(float(game.player["frenzy_cast"]["duration_ms"]))
+		step(float(game.player["frenzy_cast"]["duration_ms"]))
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var status_level := 36 if rank==1 else 38
+		for scenario: Array in [[599,0,0,true],[600,0,0,rank==2],[599,25,0,false],[600,0,-1,true],[599,0,3,false]]:
+			var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+			target["numeric"].values["level"] = status_level+int(scenario[2])
+			target["numeric"].values["bleeding_resistance"] = scenario[1]
+			game.rng.reseed(seeds[scenario[0]])
+			press(KEY_X)
+			step(0)
+			step(120)
+			var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
+			check((not bleed.is_empty())==scenario[3],"Frenzy bleed roll %d at rank %d with %d resistance and level gap %d" % [scenario[0],rank,scenario[1],scenario[2]])
+			if not bleed.is_empty():
+				check(bleed["definition"]["status_level"]==status_level and bleed["remaining_ms"]==3000.0,
+					"Frenzy keeps the sourced status level and unscaled 3000 ms duration")
+				if scenario[0]==599 and scenario[1]==0:
+					target["numeric"].step(2999)
+					check(target["numeric"].effects.active.has("bleed"),"Frenzy bleed remains through 2999 ms")
+					target["numeric"].step(1)
+					check(not target["numeric"].effects.active.has("bleed"),"Frenzy bleed expires at 3000 ms")
+			game.monsters.erase(target)
+			game.player["stuck_ms"] = 0.0
+			game.end_action()
+
 func check_frenzy_toggle() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -1304,6 +1357,7 @@ func run() -> void:
 	check_frenzy_attributes()
 	check_frenzy_cast()
 	check_frenzy_normals()
+	check_frenzy_bleed()
 	check_frenzy_toggle()
 	check_hardattack()
 	check_hardattack_charge()
