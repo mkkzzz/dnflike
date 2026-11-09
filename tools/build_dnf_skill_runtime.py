@@ -191,6 +191,8 @@ DIRECT_OBJECTS = {
 # Source bindings in CNSwordman state 24 and the ghost object's motion vector.
 # Keep other blank-frame clips out of the legacy filename heuristic.
 NATIVE_ANIMATION_BINDINGS = {
+    CHR_FX + "giveblood/givebloodstay.ani",
+    CHR_FX + "giveblood/givebloodshoot.ani",
     OBJ_ROOT + "animation/blastbloodpresub_back.ani",
     OBJ_ROOT + "animation/blastbloodpresub_front.ani",
     OBJ_ROOT + "animation/blastbloodfloor2.ani",
@@ -275,6 +277,17 @@ AREA_REPEATS = {
 }
 
 ROOT_EFFECTS = {
+    "thirst": {
+        "name": "嗜血",
+        "source_skill": "sacrifice",
+        "duration_level_row": 0,
+        "stacking": "refresh",
+        "max_stacks": 1,
+        "modifiers": [
+            {"stat": "strength", "op": "add", "level_row": 12},
+            {"stat": "physical_attack", "op": "add", "level_row": 13},
+        ],
+    },
     "mindflash": {
         "name": "挫折意志",
         "duration_ms": 23000,
@@ -1087,6 +1100,16 @@ def build_move(
                 "stages": [{"ani": "throw1"}, {"ani": "throw2"}], "effect_id": "frenzy",
                 "cast_fx": "frenzy_cast", "release_fx": "frenzy_blast", "aura_fx": "frenzy_buff",
                 "hp_cost_row": 0, "material_cost": fixed_cube_cost(skill, records)}
+    if key == "sacrifice":
+        cast_fx = add_fx(fx, effects, CHR_FX + "giveblood/givebloodstay.ani")
+        release_fx = add_fx(fx, effects, CHR_FX + "giveblood/givebloodshoot.ani")
+        if not cast_fx or not release_fx:
+            raise ValueError("missing Thirst cast or release animation")
+        return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "native_state": "thirst", "effect_id": "thirst", "cast_fx": cast_fx, "release_fx": release_fx,
+                "fidelity_pending": ["full_charge_object", "loop_sound", "original_command", "other_skill_bonuses"],
+                "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_SACRIFICE_CAST",
+                    "fx": [{"key": release_fx, "at": 0, "action_clock": True}]}]}
     if source_key == "bloodblast" and native_bloodblast:
         skill_path = str(skill["path"])
         static = records[skill_path]["decoded"]["dungeon"]["static_data"]
@@ -1144,7 +1167,7 @@ def build_move(
                 "native_state": "bloodblast", "native_recovery_col": 3,
                 "material_cost": fixed_cube_cost(skill, records),
                 "fidelity_pending": ["target_reaction_rules", "fixed_attack_modifiers",
-                                     "fixed_attack_normalization", "final_damage", "thirst_bleeding_bonus",
+                                     "fixed_attack_normalization", "final_damage", "thirst_special_target_bonus",
                                      "etc_layer_order", "hit_fx_nested_lifetime", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key in BUFF_SKILLS:

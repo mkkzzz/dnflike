@@ -394,6 +394,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["cast_ms"] = float(skill["level_row"][1])
 		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
+	if spec.get("native_state","") == "thirst":
+		var values: Array = skill["static"]
+		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
+			"native_recovery_ms":int(values[2]),"tier_hp_percent":int(values[5])})
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
 	var weapon_hits := _swordman_hits(name)
 	if spec.has("stages"):

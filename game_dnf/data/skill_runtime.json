@@ -51,6 +51,8 @@
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
    "skillfx_floor_over_73b0876a": "passiveobject/character/swordman/animation/blastblood/floor_over.ani",
+   "skillfx_givebloodshoot_7c29a18a": "character/swordman/effect/animation/giveblood/givebloodshoot.ani",
+   "skillfx_givebloodstay_2f68bbdd": "character/swordman/effect/animation/giveblood/givebloodstay.ani",
    "skillfx_grab_3189b870": "passiveobject/character/swordman/animation/epidemicrasa/grab.ani",
    "skillfx_grab_ldodge_5188bbe5": "passiveobject/character/swordman/animation/epidemicrasa/grab_ldodge.ani",
    "skillfx_grab_stay_741ff61f": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay.ani",
@@ -635,6 +637,25 @@
    "stacking": "refresh",
    "super_armor": true
   },
+  "thirst": {
+   "duration_level_row": 0,
+   "max_stacks": 1,
+   "modifiers": [
+    {
+     "level_row": 12,
+     "op": "add",
+     "stat": "strength"
+    },
+    {
+     "level_row": 13,
+     "op": "add",
+     "stat": "physical_attack"
+    }
+   ],
+   "name": "嗜血",
+   "source_skill": "sacrifice",
+   "stacking": "refresh"
+  },
   "waveeye": {
    "duration_ms": 40000,
    "form": "wave_eye",
@@ -849,7 +870,7 @@
     "fixed_attack_modifiers",
     "fixed_attack_normalization",
     "final_damage",
-    "thirst_bleeding_bonus",
+    "thirst_special_target_bonus",
     "etc_layer_order",
     "hit_fx_nested_lifetime",
     "non_weapon_attack_speed"
@@ -3978,30 +3999,32 @@
    ]
   },
   "sacrifice": {
+   "cast_fx": "skillfx_givebloodstay_2f68bbdd",
+   "effect_id": "thirst",
+   "fidelity_pending": [
+    "full_charge_object",
+    "loop_sound",
+    "original_command",
+    "other_skill_bonuses"
+   ],
    "name": "嗜血",
+   "native_state": "thirst",
+   "release_fx": "skillfx_givebloodshoot_7c29a18a",
    "skill": "skill/swordman/sacrifice.skl",
    "stages": [
     {
+     "ani": "summon1"
+    },
+    {
      "ani": "summon2",
-     "atk": "",
      "fx": [
       {
+       "action_clock": true,
        "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
+       "key": "skillfx_givebloodshoot_7c29a18a"
       }
      ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      }
-     ]
+     "voice": "SM_SACRIFICE_CAST"
     }
    ]
   },

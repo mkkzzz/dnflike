@@ -1713,6 +1713,97 @@ func check_frenzy_toggle() -> void:
 	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
 		"deactivation takes no HP, MP, or additional cube")
 
+func check_thirst() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"sacrifice","level":2})
+	profile.command("numbers.skill_grant",{"id":"bloodblast","level":2})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["sacrifice","bloodblast"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	var max_hp := int(game.max_hp)
+	var initial := int(max_hp*12/100.0)
+	var tier_cost := int(max_hp*5/100.0)
+	var mp := float(game.player["mp"])
+	game.player["hp"] = initial
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["hp"]==initial
+		and not game.player["cooldowns"].has("sacrifice"),"Thirst rejects HP equal to the 12 percent entry cost")
+	game.player["hp"] = max_hp
+	session.submit_key(KEY_A,true)
+	step(0)
+	var move: Dictionary = game.move_def("sacrifice")
+	var release_key: String = move["stages"][1]["fx"][0]["key"]
+	check(game.player["hp"]==max_hp-initial and game.player["mp"]==mp
+		and game.view.player_actor.pose=="summon1" and cues(move["cast_fx"]).size()==1,
+		"Thirst uses Summon1, original charging effect and HP only")
+	for index in 6:step(50)
+	step(49)
+	check(game.player["hp"]==max_hp-initial,"Thirst cannot pay the first tier before 350 ms")
+	step(1)
+	step(1)
+	check(game.player["hp"]==max_hp-initial-tier_cost,"holding the first tier pays once")
+	session.submit_key(KEY_A,false)
+	step(48)
+	check(game.player["stage"]==0 and game.active_effect("thirst").is_empty(),"early release waits until 400 ms")
+	step(1)
+	var thirst: Dictionary = game.active_effect("thirst")
+	var mods: Array = thirst.get("definition",{}).get("modifiers",[])
+	check(game.view.player_actor.pose=="summon2" and cues(release_key).size()==1
+		and cues("SM_SACRIFICE_CAST").size()==1 and cues("SACRI").size()==1,
+		"Thirst releases into Summon2 with its authored effect and sounds")
+	check(thirst.get("remaining_ms")==30000 and mods.map(func(mod):return mod["value"])==[10.0,2.0],
+		"rank two at tier one installs the original 30 second strength and attack modifiers")
+	step(499)
+	check(game.player["action"]=="sacrifice","Thirst holds the recovery state until 500 ms")
+	step(1)
+	check(game.player["action"]=="" and not game.active_effect("thirst").is_empty(),
+		"the cast visual ends while the Thirst appendage remains")
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["independent_attack"] = float(Numbers.shared_config()["base"]["independent_attack"])+1.0
+	press(KEY_S)
+	step(495)
+	check(game.objects.size()==3,"Blood Blast releases normally while Thirst is active")
+	if game.objects.size()!=3:return
+	var ground: Dictionary = game.objects[2]
+	check(ground["hit"]["fixed_amount"]==1388 and ground["hit"].get("fixed_amount_bleeding")==1466,
+		"rank two Thirst packs a second fixed amount at release before integer truncation")
+	game.numeric_player.remove_effect("thirst")
+	var target: Dictionary = game.monsters[0]
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(400,0))
+	move_target(target,POINT)
+	game.apply_effect({"kind":"effect","id":"bleed","target":target["id"]})
+	game.step_objects(100)
+	check(game.last_damage["trace"]["fixed_part"]==1466.0,
+		"a target that starts bleeding after release receives the packed Thirst bonus")
+	ground["hits"].clear()
+	target["hp"] = 10000.0
+	target["numeric"].remove_effect("bleed")
+	move_target(target,POINT)
+	game.step_objects(0.0)
+	check(game.last_damage["trace"]["fixed_part"]==1388.0,"the same payload uses ordinary damage when the target stops bleeding")
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.player["hp"] = initial+tier_cost
+	session.submit_key(KEY_A,true)
+	for index in 6:step(50)
+	step(49)
+	step(1)
+	check(game.player["stage"]==1 and game.player["hp"]==tier_cost,
+		"an unaffordable tier forces release while preserving the remaining HP")
+	session.submit_key(KEY_A,false)
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.numeric_player.values["cast_speed"] = 1.25
+	session.submit_key(KEY_A,true)
+	for index in 199:step(10)
+	check(game.player["stage"]==0 and game.player["hp"]==max_hp-initial-4*tier_cost,
+		"full hold pays four tiers and does not shorten the wall timer at faster cast speed")
+	step(10)
+	session.submit_key(KEY_A,false)
+	check(game.player["stage"]==1 and game.action_duration("sacrifice")==400.0,
+		"full hold releases at 2000 ms and applies cast speed only to recovery")
+
 func check_bloodblast() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -2001,6 +2092,7 @@ func run() -> void:
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()
+	check_thirst()
 	check_hardattack()
 	check_hardattack_charge()
 	check_hardattack_followup()

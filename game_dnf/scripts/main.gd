@@ -639,6 +639,8 @@ func action_duration(action: String) -> float:
 
 func action_ani_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("thirst_loop_ms"):
+		return float(phase["body_clock"])
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
@@ -971,6 +973,9 @@ func step_action(ms: float, move: Vector2) -> void:
 	if player.has("overdrive_cast"):
 		step_overdrive_cast(ms)
 		return
+	if player["action"] == "sacrifice" and int(player["stage"]) == 0:
+		step_thirst_cast(ms)
+		return
 	var name: String = player["action"]
 	var queued := String(player["queued_skill"])
 	if queued != "" and queued != name and normal_attack_cancel_allowed(move_def(queued)):
@@ -1240,7 +1245,12 @@ func start_action(name: String, cancel := false) -> bool:
 		var row: Array = sample.get("level_row",[])
 		var column := int(m["hp_cost_row"])
 		if column >= 0 and column < row.size():hp_cost = float(row[column])
-	if name == "buff":
+	if m.get("native_state","") == "thirst":
+		if player["state"] not in ["idle","move"]:return reject_action(name,"state")
+		# CBA626..CBA6C3 rejects HP equal to the initial charge cost.
+		hp_cost = thirst_hp_cost(int(m["hp_percent"]))
+		if int(player["hp"]) <= int(hp_cost):return reject_action(name,"hp")
+	elif name == "buff":
 		# CC0F72 compares integer HP against the rank cost plus one.
 		if int(player["hp"]) <= int(hp_cost)+1:return reject_action(name,"hp")
 	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
@@ -1258,7 +1268,9 @@ func start_action(name: String, cancel := false) -> bool:
 		player["hp"] = float(player["hp"])-mp_cost
 	else:
 		player["mp"] = float(player["mp"])-mp_cost
-	if hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
+	if m.get("native_state","") == "thirst":
+		player["hp"] = int(player["hp"])-int(hp_cost)
+	elif hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if name != "triple":begin_skill_cooldown(name,m)
 	if backward_hop:
 		start_backstep()
@@ -1286,7 +1298,7 @@ func start_action(name: String, cancel := false) -> bool:
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
 		return true
-	if String(m.get("effect_id","")) != "":
+	if String(m.get("effect_id","")) != "" and m.get("native_state","") != "thirst":
 		player["stage"] = 0
 		player["clock"] = 0.0
 		player["hits"] = {}
@@ -1329,6 +1341,37 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":player["z"],
 		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,
 		"action_clock_at":0.0,"action_instance":action_seq,"uniform_frame_ms":delay})
+
+func thirst_hp_cost(percent: int) -> int:
+	return int(int(max_hp)*percent/100.0)
+
+func step_thirst_cast(ms: float) -> void:
+	var phase: Dictionary = player["native_phase"]
+	var elapsed := float(player["clock"])+ms
+	player["clock"] = elapsed
+	var body_clock := float(phase["body_clock"])+ms*float(phase["cast_stage_rate"])
+	var first_frame := float(phase["frame_one_ms"])
+	var failed_payment := false
+	var held_skill := skill_input_held("sacrifice")
+	if body_clock >= first_frame and held_skill:
+		# CB2BE5 checks the current tier before resetting the ended body ANI.
+		var tier := clampi(int((elapsed+200.0-first_frame)/500.0),0,int(phase["max_tier"]))
+		phase["tier"] = tier
+		var bit := 1 << tier
+		if tier > 0 and (int(phase["paid_mask"]) & bit) == 0:
+			phase["paid_mask"] = int(phase["paid_mask"]) | bit
+			var hp_cost := thirst_hp_cost(int(move_def("sacrifice")["tier_hp_percent"]))
+			failed_payment = int(player["hp"]) <= hp_cost
+			if not failed_payment:player["hp"] = int(player["hp"])-hp_cost
+	if failed_payment or elapsed >= float(phase["end_ms"]) or (not held_skill and body_clock >= first_frame and elapsed >= 400.0):
+		end_action_fx()
+		player["fx_tag"] = "act:%d" % (action_seq+1)
+		start_stage(1)
+		if apply_effect({"kind":"effect","id":move_def("sacrifice")["effect_id"],"rank":int(skill_levels.get("sacrifice",1)),
+				"charge_tier":phase["tier"]}):
+			play_sound("SACRI")
+		return
+	phase["body_clock"] = 0.0 if body_clock >= float(phase["thirst_loop_ms"]) else body_clock
 
 func start_overdrive_cast(move: Dictionary) -> void:
 	var authored_ms := float(action_def()["duration"])
@@ -1427,6 +1470,19 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var speed := maxi(1,roundi(rate*1000.0))
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
+	elif m.get("native_state","") == "thirst":
+		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
+		var speed := maxi(1,int(rate*1000.0))
+		if index == 0:
+			# 858F6D keeps the charge timer unscaled for skill 23.
+			var stage := action_def()
+			player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":float(m["cast_ms"]),
+				"thirst_loop_ms":float(stage["duration"]),"body_clock":0.0,
+				"frame_one_ms":float(stage["timeline"][1]["start_ms"]),
+				"max_tier":mini(10,int(float(m["cast_ms"])/500.0)),"tier":0,"paid_mask":0}
+		else:
+			player["native_phase"] = {"cast_stage_rate":speed/1000.0,
+				"end_ms":int(float(m["native_recovery_ms"])*1000.0/speed)}
 	if name == "triple":
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		if numeric_player == null and float(player["buff_ms"]) > 0.0:
@@ -1434,10 +1490,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 requests attack speed for Triple Slash movement.
 		begin_action_slide(m["dash"],attack_rate)
 	# Multi-stage slides can pick their own side. Upper's native follow-up inherits facing.
-	if m.has("stages") and not (name in ["upper","bloodblast"] and index == 1) and not player.has("weapon_combo_release"):
+	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice"] and index == 1) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
+	if name == "sacrifice" and index == 0:
+		bus.emit("combat.cue",{"kind":"fx","key":m["cast_fx"],"point":player["pos"],"height":player["z"],
+			"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,"loop":true})
 	if player.has("hardattack_charge"):
 		bus.emit("combat.cue",{"kind":"sound","key":"SM_GUE_CHARGE","voice_tag":"hardattack_charge"})
 		return
@@ -1652,17 +1711,28 @@ func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
 	var ratio := ActorNumbers.native_scalar(float(template["fixed"])-100.0)
 	ratio = ActorNumbers.native_scalar(ratio*ActorNumbers.NATIVE_PERCENT)
 	ratio = ActorNumbers.native_scalar(1.0+ratio)
-	var amount := int(ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base)))
+	var product := ActorNumbers.native_scalar(ratio*ActorNumbers.native_scalar(base))
+	var amount := int(product)
+	var bleeding_amount := amount
+	var thirst_active := not active_effect("thirst").is_empty()
+	if thirst_active:
+		# CD80C1/CD82CB multiply the float before the first integer conversion.
+		var rank := int(skill_levels.get("sacrifice",1))
+		var row: Array = Numbers.Skills.sample(Numbers.record("sacrifice"),rank)["level_row"]
+		var bonus := ActorNumbers.native_scalar(float(row[4])*ActorNumbers.native_scalar(0.001))
+		bleeding_amount = int(ActorNumbers.native_scalar(product*ActorNumbers.native_scalar(1.0+bonus)))
 	if not active_effect("frenzy").is_empty():
 		# CD80D3/CD82D9 apply C9D200 to the integer returned by 90A950.
 		var rank := int(skill_levels.get("buff",1))
 		var row: Array = Numbers.Skills.sample(Numbers.record("buff"),rank)["level_row"]
 		amount = int(float(amount*(100+int(row[11])))/100.0)
+		bleeding_amount = int(float(bleeding_amount*(100+int(row[11])))/100.0)
 	var hit := template.duplicate()
 	var atk: Dictionary = template["atk"].duplicate()
 	atk["absolute_damage"] = amount
 	hit["atk"] = atk
 	hit["fixed_amount"] = amount
+	if thirst_active:hit["fixed_amount_bleeding"] = bleeding_amount
 	return hit
 
 func native_attack_has_damage(atk: Dictionary) -> bool:
@@ -1743,6 +1813,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			target_stats["magical_defense"] = float(target_stats["magical_defense"])*NativeZealotSummons.CAST_DEFENSE_FACTOR
 		var context := hit.duplicate(true)
 		context["percent"] = percent
+		if context.has("fixed_amount_bleeding") and target["numeric"].effects.active.has("bleed"):
+			context["fixed_amount"] = context["fixed_amount_bleeding"]
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
 		context["counter"] = String(target["state"]) in ["attack","action"]
 		context["back"] = int(target["facing"])==facing

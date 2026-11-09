@@ -138,9 +138,9 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/blastbloodpresuborigin.obj"
  ],
- "effects": 318,
+ "effects": 320,
  "digits": 61,
- "audio_keys": 252,
+ "audio_keys": 254,
  "unresolved": 32,
  "unresolved_items": [
   {

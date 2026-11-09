@@ -147,6 +147,10 @@ func add_effect(id: String, rank := 1, parameters: Dictionary = {}) -> bool:
 	if not config["effects"].has(id):return false
 	var definition: Dictionary = config["effects"][id].duplicate(true)
 	if definition.has("source_skill") and not sample_source_effect(definition,rank):return false
+	if id == "thirst":
+		var tier := clampi(int(parameters.get("charge_tier",0)),0,10)
+		for mod: Dictionary in definition["modifiers"]:
+			mod["value"] *= tier
 	# Per-hit source values belong to this application, never the shared template.
 	for field: String in ["duration_ms","status_level"]:
 		if parameters.has(field):definition[field] = parameters[field]

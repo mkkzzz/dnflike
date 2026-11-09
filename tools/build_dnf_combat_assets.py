@@ -348,6 +348,10 @@ BLOODBLAST_AUDIO = {
     'FIRE_PILLAR_UP': 'sounds/effect/magic/fire_pillar.ogg',
     'FIRE_PILLAR_HIT': 'sounds/effect/magic/fire_pillarhit.ogg',
 }
+THIRST_AUDIO = {
+    'SM_SACRIFICE_CAST': 'sounds/char/swordman/sm_sacri.ogg',
+    'SACRI': 'sounds/char/swordman/effect/sacri.ogg',
+}
 FRENZY_RECOVERY_EFFECTS = {
     'frenzy_create_ball': 'character/swordman/effect/animation/frenzy/createball.ani',
     'frenzy_ball': 'character/swordman/effect/animation/frenzy/ball.ani',
@@ -459,6 +463,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in WAVE_CAST_AUDIO.items()},
     **{key: [path] for key, path in FRENZY_AUDIO.items()},
     **{key: [path] for key, path in BLOODBLAST_AUDIO.items()},
+    **{key: [path] for key, path in THIRST_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
@@ -1392,6 +1397,8 @@ def main() -> int:
                         help='Add the original Frenzy release animation and cast sounds')
     parser.add_argument('--extend-bloodblast', action='store_true',
                         help='Add the ordinary Blood Blast layers and sounds')
+    parser.add_argument('--extend-thirst', action='store_true',
+                        help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
@@ -1507,6 +1514,15 @@ def main() -> int:
     if args.extend_overdrive:
         specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]
         specs.extend(('audio', key, path) for key, path in OVERDRIVE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_thirst:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        assets = runtime['assets']
+        move = runtime['moves']['sacrifice']
+        specs = [('player_clips', name, assets['player_anims'][name]) for name in ('summon1', 'summon2')]
+        specs.extend(('effects', key, assets['effect_anims'][key]) for key in (move['cast_fx'], move['release_fx']))
+        specs.extend(('audio', key, path) for key, path in THIRST_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_weapon_combo:
