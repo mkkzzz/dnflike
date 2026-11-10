@@ -3553,14 +3553,17 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 		# The native cut uses [hit down]. 7E6947 picks slash variant 1 for that flag.
 		_:fx = "hit_cut_%s%d" % [size_key,1 if native_common_hit else rng.range_int(1,3)]
 	var ground := Vector2(point.x,point.y)
-	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,"scale":1.5 if show_counter else scale})
+	# 7E62B5 attaches the new ANI at the hit effect object's current time.
+	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,
+		"scale":1.5 if show_counter else scale,"fresh":native_common_hit})
 	if show_counter:
 		# 7E6A75 appends Counter+.ani before the unscaled blood layer.
 		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
 	if blood == "[blood]":
 		# 7E6B97 selects small blood variant 3 for [hit down].
 		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(3 if native_common_hit else rng.range_int(1,3))
-		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,"scale":scale})
+		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,
+			"scale":scale,"fresh":native_common_hit})
 	var wav := String(atk.get("hit_wav",""))
 	if wav == "" and by_player:
 		var w: Array = table.weapon_wav(weapon)

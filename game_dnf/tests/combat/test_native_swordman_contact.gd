@@ -6611,9 +6611,17 @@ func check_bloodblast() -> void:
 	check(target["stuck_ms"]==1.0 and target["clock"]==0.0,"the ground-burst target stays paused through 49 ms")
 	game.update_enemy(target,1.0)
 	check(target["stuck_ms"]==0.0,"the ground-burst target resumes at 50 ms")
-	game.view.present(game.view_snapshot(),0.0,0.0)
+	game.view.present(game.view_snapshot(),16.0,16.0)
 	check(game.view.object_views.has(ground["id"]) and game.view.object_views.has("%s:layer:0" % ground["id"]),
 		"the original ground burst exposes both its back and front layers")
+	var knock_views: Array = game.view.effects.filter(func(fx):return fx.cue_key in ["hit_blow_l","hit_blow_s"])
+	check(knock_views.size()==1 and knock_views[0].clock_ms==0.0,
+		"the ground burst presents its Knock effect from zero on the collision tick")
+	if knock_views.size()==1:
+		game.view.present(game.view_snapshot(),79.0,79.0)
+		check(knock_views[0].frame["frame"]==0,"the original Knock first frame lasts through 79 ms")
+		game.view.present(game.view_snapshot(),1.0,1.0)
+		check(knock_views[0].frame["frame"]==1,"the original Knock second frame starts at 80 ms")
 	move_target(target,POINT+Vector2(400,0))
 	game.step_objects(300)
 	check(not game.objects.has(ground),"ground contact ends with its 400 ms main animation")
@@ -6734,6 +6742,17 @@ func check_bloodblast() -> void:
 	game.view.present(game.view_snapshot(),70.0,70.0)
 	check(first.frame.has("sprite") and second.frame.has("sprite") and first.position==anchor and second.position==anchor,
 		"Hit1 starts at 470 ms and both effects stay at the grounded contact point")
+	game.view.present(game.view_snapshot(),139.0,139.0)
+	check(first.frame["frame"]==3 and not first.is_queued_for_deletion(),"Hit1 still draws its final frame at 609 ms")
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(first.is_queued_for_deletion() and not second.is_queued_for_deletion(),
+		"the ground draw object retires at 610 ms independently of Hit2")
+	game.view.present(game.view_snapshot(),330.0,330.0)
+	check(game.view.effects.has(second) and not game.view.effects.has(first)
+		and game.view.effects.filter(func(fx):return fx.cue_key in contact_keys).size()==1,
+		"only the independent Hit2 remains visible at the ALS child's theoretical 940 ms")
+	game.view.present(game.view_snapshot(),20.0,20.0)
+	check(second.is_queued_for_deletion(),"the independent Hit2 retires at 960 ms")
 	start_room("original_27601","katana",1,spec,"berserker")
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 	game.apply_skill_effect("buff","frenzy")
