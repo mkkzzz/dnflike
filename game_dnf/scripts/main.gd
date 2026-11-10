@@ -2881,6 +2881,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's rounded ground coordinates.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
+				elif hit.get("native_controller",{}).get("kind","") == "bloodblast":
+					# 86DE33 reads rounded XYZ before applying the eruption's offsets.
+					spawn_object(hit,"player",Vector2(player["pos"]).round(),roundf(player["z"]),facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
 					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
 					var shake: Array = hit["native_controller"]["shake"]
@@ -3357,10 +3360,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 				and effect_form("dual_wield") and not active_effect("hellbenter").is_empty():
 			HellbenterBlood.mark_frenzy_contact(target,int(attacker["id"]),table._skill_row(move_def("hellbenter")["skill"]))
 		var ground_hit_fx: Array = hit.get("native_controller",{}).get("ground_hit_fx",[])
-		if not ground_hit_fx.is_empty() and not contact_only and int(target["z"]) == 0:
+		if not ground_hit_fx.is_empty() and not contact_only and roundi(target["z"]) == 0:
 			# A61738 checks the target height before the local reaction changes it.
 			# A6191F/A619EE place both draw-only objects at the original ground point.
-			var ground := Vector2(Vector2i(target["pos"]))
+			var ground := Vector2(target["pos"]).round()
 			for index in ground_hit_fx.size():
 				bus.emit("combat.cue",{"kind":"fx","key":ground_hit_fx[index],
 					"point":ground,"height":0.0,"facing":1,"fresh":true,
@@ -4570,8 +4573,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						var delta_x := int(target["pos"].x)-int(o["pos"].x)
 						hit_facing = -hit_facing if delta_x == 0 else -signi(delta_x)
 					elif kind == "bloodblast":
-						# 867485 compares integer X for stationary eruption objects.
-						var delta_x := int(target["pos"].x)-int(o["pos"].x)
+						# 867485 compares rounded world X for stationary eruption objects.
+						var delta_x := roundi(target["pos"].x)-roundi(o["pos"].x)
 						if delta_x != 0:hit_facing = signi(delta_x)
 					elif outrage_impact or kind == "draw_short_wave":
 						# 867370 uses the target's side for stationary objects.

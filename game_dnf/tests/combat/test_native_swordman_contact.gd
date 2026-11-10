@@ -6508,10 +6508,14 @@ func check_bloodblast_speed_refresh() -> void:
 	step(290)
 	step(164)
 	check(game.player["stage"]==0 and game.objects.is_empty(),"mid-cast acceleration does not release Blood Blast early")
+	game.player["pos"] = POINT+Vector2(0.75,-0.25)
 	step(1)
 	check(game.player["stage"]==1 and game.action_duration("bloodblast")==350.0
 		and game.objects.size()==3 and game.action_ani_clock(0.0)==0.0,
 		"Blood Blast releases once at 495 ms and samples a new speed for recovery")
+	var origin := POINT+Vector2.RIGHT
+	check(game.objects.map(func(object):return object["pos"])==[origin,origin+Vector2(0,50),origin],
+		"all three Blood Blast objects round the caster coordinates before applying depth offsets")
 	game.numeric_player.values["attack_speed"] = 1.25
 	step(135)
 	check(game.player["native_phase"]["bloodblast_ani_ms"]==270.0 and game.action_duration("bloodblast")==350.0,
@@ -6644,7 +6648,7 @@ func check_bloodblast() -> void:
 	var views: Dictionary = game.view.object_views
 	check(ids.all(func(id):return views.has(id) and not views[id].frame.has("sprite")),
 		"all ten ALS tracks are attached at their original layer positions and remain blank at 1099 ms")
-	move_target(target,POINT+Vector2(100.75,-12.25))
+	move_target(target,POINT+Vector2(100.75,-12.25),0.49)
 	target["def"] = target["def"].merged({"weight":300000},true)
 	target["vz"] = 0.0
 	target["stuck_ms"] = 0.0
@@ -6682,10 +6686,10 @@ func check_bloodblast() -> void:
 		var impact: Dictionary = impact_cues[-1]
 		check(impact["point"]==Vector2(int(overlap.x),roundi(target["pos"].y)) and impact["height"]==int(overlap.z),
 			"the centered spray's knock effect uses overlap X/Z and the target's rounded depth")
-	var contact_origin := Vector2(Vector2i(target["pos"]))
+	var contact_origin := POINT+Vector2(101,-12)
 	check(contact_keys.all(func(key):return (cues(key).size()==1 and cues(key)[0]["point"]==contact_origin
 		and cues(key)[0]["height"]==0.0 and cues(key)[0]["facing"]==1)),
-		"the grounded hit creates both draw objects at target XYZ before lift, facing the native default direction")
+		"the hit below half a pixel creates both draw objects at rounded target XYZ before lift")
 	game.monsters.clear()
 	game.step_objects(60)
 	check(sub["hits"].is_empty() and sub["hit_resets_left"]==2 and cues("FIRE_PILLAR_UP").size()==1,
@@ -6757,7 +6761,7 @@ func check_bloodblast() -> void:
 			continue
 		var eruption: Dictionary = game.objects[int(sample[0])]
 		game.objects.assign([eruption])
-		var victim: Dictionary = api.spawn_dummy(POINT+Vector2(0.75,0))
+		var victim: Dictionary = api.spawn_dummy(POINT+Vector2(0.49,0))
 		victim["facing"] = facing
 		victim["clock"] = 19.0
 		var frame: Dictionary = game.enemy_frame(victim)
@@ -6781,15 +6785,20 @@ func check_bloodblast() -> void:
 			"Blood Blast still damages armored targets without replacing their pose or launching them: "+str(sample))
 		check(game.last_damage["critical"],"equal integer X uses the eruption's facing: "+str(sample))
 		for side: int in [-1,1]:
-			var flank: Dictionary = game.spawn_enemy(POINT+Vector2(side*12,0))
+			var flank: Dictionary = game.spawn_enemy(POINT+Vector2(0.5 if side==1 else -12,0))
 			flank["hp"] = 5000.0
 			flank["numeric"].values["hp_max"] = flank["hp"]
 			flank["facing"] = 1
 			flank["def"] = flank["def"].merged({"weight":300000},true)
+			if side == -1:flank["z"] = 0.5
+			var ground_cues_before: Array = effects.map(func(key):return cues(key).size())
 			game.step_objects(0.0)
 			check(eruption["hits"].has(flank["id"]) and flank["hp"]<5000.0
 				and game.last_damage["critical"]==(side==1),
 				"Blood Blast back attacks are relative to the eruption center: "+str([sample,side]))
+			if int(sample[0]) == 0 and side == -1:
+				check(effects.map(func(key):return cues(key).size())==ground_cues_before,
+					"the centered spray still hits at half a pixel but omits the grounded draw objects")
 			if int(sample[0]) == 0 and side == 1:
 				var rebounded := false
 				for _tick in 100:
