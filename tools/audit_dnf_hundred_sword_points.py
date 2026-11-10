@@ -1,16 +1,18 @@
-"""Replay the original Hundred Sword waypoint and field hit direction readers.
+"""Replay original Hundred Sword position and field hit direction routines.
 
 The readers run in the bounded Python interpreter with position and facing
 getter fixtures. This replay does not create swords, simulate their motion,
 or run the original client.
 """
 import argparse
+from math import cos, sin
 from pathlib import Path
 from struct import unpack
 import sys
 
 from audit_dnf_ice_shatter import signed
 from audit_dnf_firewave import extra_step
+from audit_dnf_chr_numbers import extension, fbits, real
 
 ENTRY = 0x24DE6DC
 ORDER_TABLE = 0x16EBBD8
@@ -101,6 +103,66 @@ def replay_field_direction(source, origin_x, target_x, facing):
     raise ValueError('Field direction instruction budget exhausted')
 
 
+def replay_finish_head(source, track, origin, facing, elapsed):
+    """Capture the original position call with actor and trig table fixtures."""
+    from dnf_native_vm_probe import CPU
+
+    cpu = CPU(source)
+    cpu.reg.update(esi=OWNER, ebp=STACK, esp=STACK-0x60,
+                   edi=0x16EBCC8+track*8, ebx=0x16EBB5C+track*4)
+    cpu.write(OWNER, 4, VTABLE)
+    for slot, getter in zip((0xA4, 0xA8, 0xAC, 0xF8), range(GETTERS, GETTERS+4)):
+        cpu.write(VTABLE+slot, 4, getter)
+    cpu.write(STACK-0x10, 4, OUT)
+    cpu.write(OUT, 4, OWNER)
+    cpu.write(VTABLE+0xC, 4, RETURN)
+    cpu.write(STACK-0x20, 4, elapsed)
+    cpu.write(STACK-0x18, 4, fbits(150+2*elapsed))
+    radians, = unpack('<d', source.source_bytes(0x157B6A0, 8))
+    xmm = {f'xmm{i}': 0 for i in range(8)}
+    fp = []
+    cpu.pc = 0xCA0CF3
+    for _ in range(150):
+        if cpu.pc == RETURN:
+            return tuple(signed(cpu.read(cpu.reg['esp']+offset, 4)) for offset in (4, 8, 12, 16))
+        if GETTERS <= cpu.pc < GETTERS+4:
+            cpu.reg['eax'] = (*origin, facing)[cpu.pc-GETTERS] & 0xFFFFFFFF
+            cpu.pc = cpu.pop()
+            continue
+        if cpu.pc in (0x11D9900, 0x11D9940):
+            angle = cpu.read(cpu.reg['esp']+4, 4)*radians
+            trig = cos if cpu.pc == 0x11D9900 else sin
+            fp.append(real(fbits(trig(angle))))
+            cpu.pc = cpu.pop()
+            continue
+        ins = next(source.decoder.disasm(source.source_bytes(cpu.pc, 15), cpu.pc, count=1))
+        if ins.mnemonic == 'call':
+            target = cpu.get(ins, ins.operands[0])
+            cpu.push(cpu.pc+ins.size)
+            cpu.pc = target
+            continue
+        if ins.mnemonic in ('fild', 'fiadd', 'fmul', 'fsubr', 'fadd'):
+            value = cpu.get(ins, ins.operands[0])
+            if ins.mnemonic == 'fild':
+                fp.append(signed(value))
+            elif ins.mnemonic == 'fiadd':
+                fp[-1] += signed(value)
+            elif ins.mnemonic == 'fmul':
+                fp[-1] *= real(value)
+            elif ins.mnemonic == 'fsubr':
+                fp[-1] = real(value)-fp[-1]
+            else:
+                fp[-1] += real(value)
+            cpu.pc += ins.size
+            continue
+        result = cpu.run(cpu.pc, 1)
+        if result[0] == 'unsupported':
+            extension(cpu, xmm, fp, ins)
+        elif result[0] != 'budget':
+            raise ValueError(f'Finish position probe stopped: {result}')
+    raise ValueError('Finish position instruction budget exhausted')
+
+
 def audit(source):
     from build_dnf_skill_runtime import (HUNDRED_SWORD_FINISH_TRAILS, HUNDRED_SWORD_ORDER,
                                          HUNDRED_SWORD_POSES, HUNDRED_SWORD_STYLES,
@@ -122,6 +184,12 @@ def audit(source):
     angles = unpack('<7i', source.source_bytes(0x16EBB5C, 28))
     if tuple(zip(anchors[::2], anchors[1::2], angles)) != HUNDRED_SWORD_FINISH_TRAILS:
         raise ValueError('Finish trail anchors differ from the original')
+    if replay_finish_head(source, 1, (2000, 300, 0), 1, 9) != (2338, 300, 187, 9):
+        raise ValueError('Wrong right-facing finish position at the f32 boundary')
+    left_heads = ((-35, 378), (-31, 388), (-55, 349), (-89, 338), (-50, 333), (-42, 267), (-66, 162))
+    for track, (x, z) in enumerate(left_heads):
+        if replay_finish_head(source, track, (400, 300, 0), 0, 120) != (x, 300, z, 120):
+            raise ValueError(f'Wrong left-facing finish position at {track=}')
     positions = [(263+i*17, 333-i*12, i*7-31) for i in range(24)]
     for ground_slots in ((), range(24)):
         for ordinal, slot in enumerate(order):
@@ -154,6 +222,7 @@ def main():
     order = audit(AxisEvaluator(args.client.read_bytes()))
     print(f'[HUNDRED_SWORD] 50 waypoint cases verified. Sword slots: {order}')
     print('[HUNDRED_SWORD] 6 inward hit directions verified')
+    print('[HUNDRED_SWORD] 8 finish trail positions verified')
 
 
 if __name__ == '__main__':

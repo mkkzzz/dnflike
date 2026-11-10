@@ -62,19 +62,23 @@ func advance(ms: float, owner_ready_ms: float) -> bool:
 	return was_waiting and _age >= _entry_ms
 
 func advance_finish(origin: Vector2, height: float, elapsed: int) -> void:
-	var reach := 150.0+2.0*elapsed
+	var reach := Motion.f32(150+2*elapsed)
+	var ground := Vector2i(origin)
 	for index in _finish_anchors.size():
 		var anchor: Array = _finish_anchors[index]
 		var x := int(anchor[0])
 		var z := int(height)+int(anchor[1])
 		if index >= _finish_history.size():
 			# CB82F1..CB8362 seeds all seven tracks at the impact point.
-			_finish_history.append([Vector4i(int(origin.x)+x*_facing,int(origin.y),z,0)])
+			_finish_history.append([Vector4i(ground.x+x*_facing,ground.y,z,0)])
 			_finish_heads.append(Vector4i.ZERO)
 		# CA0CC2..CA0DD0 projects a line at a fixed angle from each seed.
 		var angle := deg_to_rad(float(anchor[2]))
-		var head := Vector4i(int(origin.x+(x+Motion.f32(sin(angle))*reach)*_facing),
-			int(origin.y),int(Motion.f32(z+Motion.f32(Motion.f32(cos(angle))*reach))),elapsed)
+		var span := x+Motion.f32(sin(angle))*reach
+		# The right-facing branch stores the span before adding the integer X.
+		var head_x := int(Motion.f32(ground.x-span if _facing < 0 else ground.x+Motion.f32(span)))
+		var head_z := int(Motion.f32(z+Motion.f32(Motion.f32(cos(angle))*reach)))
+		var head := Vector4i(head_x,ground.y,head_z,elapsed)
 		_finish_heads[index] = head
 		_record_trail_sample(_finish_history[index],head)
 

@@ -3411,7 +3411,10 @@ func check_hundred_sword_automatic() -> void:
 	step(2760.0)
 	check(game.player["pos"]==POINT and game.player["z"]==0.0 and game.player["stage"]==0,
 		"the approach starts at ready frame twenty-two from the saved ground origin")
-	step(120.0)
+	step(0.9)
+	check(game.player["pos"]==POINT and game.player["z"]==0.0,
+		"fractional simulation time stays at the original integer-millisecond approach origin")
+	step(119.1)
 	check(game.player["pos"]==Vector2(428,266) and game.player["z"]==54.0,
 		"the ready approach interpolates XYZ toward the first live sword with a 50-pixel height offset")
 	step(120.0)
@@ -3493,7 +3496,14 @@ func check_hundred_sword_automatic() -> void:
 	check(actor.body_rotation==0.0 and actor.equipment_layers.all(func(layer):return layer.visible)
 		and actor.get_meta("native_cast_layers",{}).values().all(func(layer):return not layer.visible),
 		"the finish clears travel tilt and sword layers and restores the equipped weapon")
-	step(1270.0)
+	# Use the large room coordinate that crosses an integer only after the native f32 stores.
+	game.player["pos"] = Vector2(2000,POINT.y)
+	step(560.0)
+	step(9.0)
+	var precision_tip = game.view.object_views.get("hundred_sword:finish_tail:1:0:-1")
+	check(precision_tip!=null and precision_tip.position.x==2338.0,
+		"the right-facing finish trail rounds X to native f32 before converting to pixels")
+	step(701.0)
 	check(game.player["action"]=="" and not game.player.has("hundred_sword_cast"),
 		"one press completes the full Hundred Sword state sequence and clears the cast")
 

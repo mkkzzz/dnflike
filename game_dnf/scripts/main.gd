@@ -1302,12 +1302,12 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 
 func step_hundred_sword_approach(cast: Dictionary, move_defn: Dictionary, phase: Dictionary, clock: float) -> void:
 	var origin: Vector2 = cast["origin"]
-	var from_ms := float(phase["hundred_sword_ready_timeline"][22]["start_ms"])
-	var duration := float(phase["end_ms"])-from_ms
-	var elapsed := clampf(clock-from_ms,0.0,duration)
+	var from_ms := int(phase["hundred_sword_ready_timeline"][22]["start_ms"])
+	var duration := int(phase["end_ms"])-from_ms
+	var elapsed := clampi(int(clock)-from_ms,0,duration)
 	player["pos"] = origin
 	player["z"] = 0.0
-	if elapsed <= 0.0:return
+	if elapsed == 0:return
 	var target: Vector3i = cast["formation"].waypoint(int(move_defn["formation"]["order"][0]))
 	# CB80B1/CC/E5 interpolate integer XYZ from the saved origin to sword 0.
 	var x := int(Kernel.NativeMotion.ramp(origin.x,target.x,elapsed,duration))
