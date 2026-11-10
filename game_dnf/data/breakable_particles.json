@@ -90,6 +90,13 @@
    "ptl_stoneparticle7",
    "ptl_stoneparticle8"
   ],
+  "passiveobject/actionobject/breakableobject/trashcan.obj": [
+   "ptl_trashcanparticle1",
+   "ptl_trashcanparticle2",
+   "ptl_trashcanparticle3",
+   "ptl_trashcanparticle4",
+   "ptl_trashcanparticle5"
+  ],
   "passiveobject/actionobject/breakableobject/waterway.obj": [
    "ptl_waterparticle1",
    "ptl_waterparticle2",

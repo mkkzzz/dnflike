@@ -30,6 +30,11 @@ GAME = ROOT / 'game_dnf'
 GODOT = TOOLS / 'godot/Godot_v4.7.2-stable_win64_console.exe'
 
 
+def console_safe(text: str) -> str:
+    encoding = getattr(sys.stdout, 'encoding', None) or 'utf-8'
+    return text.encode(encoding, 'replace').decode(encoding)
+
+
 def run_command(label: str, command: list[str], required: bool = True) -> bool:
     """跑一个外部命令；required=False 时失败只提示不中断（用于可选步骤）。"""
     started = time.time()
@@ -47,7 +52,7 @@ def run_command(label: str, command: list[str], required: bool = True) -> bool:
         print(' FAIL %.0fs' % cost)
         tail = ((done.stdout or '') + (done.stderr or '')).strip().splitlines()[-6:]
         for line in tail:
-            print('       ' + line[:160])
+            print('       ' + console_safe(line[:160]))
         if required:
             raise SystemExit('[PIPE] 中断：%s 失败' % label)
         return False
@@ -98,7 +103,7 @@ def verify() -> int:
         if done.returncode != 0:
             failed.append(label)
             for line in ((done.stdout or '') + (done.stderr or '')).strip().splitlines()[-8:]:
-                print('         ' + line[:160])
+                print('         ' + console_safe(line[:160]))
     if failed:
         print('[VERIFY] 失败：%s' % '、'.join(failed))
         return 1

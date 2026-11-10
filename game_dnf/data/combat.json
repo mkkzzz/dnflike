@@ -1730,6 +1730,46 @@
    "mob": "monster/newmonsters/cartel/westcoast/tree_thrower/tree_thrower.mob",
    "bank": "newmonsters_cartel_westcoast_tree_thrower_tree_thrower",
    "name": "tree_thrower"
+  },
+  "newmonsters_cartel_rocketman_rocketman": {
+   "mob": "monster/newmonsters/cartel/rocketman/rocketman.mob",
+   "bank": "newmonsters_cartel_rocketman_rocketman",
+   "name": "rocketman"
+  },
+  "newmonsters_cartel_westcoast_bunkertank_bunkertank": {
+   "mob": "monster/newmonsters/cartel/westcoast/bunkertank/bunkertank.mob",
+   "bank": "newmonsters_cartel_westcoast_bunkertank_bunkertank",
+   "name": "bunkertank"
+  },
+  "newmonsters_cartel_westcoast_junk_thrower_junk_thrower": {
+   "mob": "monster/newmonsters/cartel/westcoast/junk_thrower/junk_thrower.mob",
+   "bank": "newmonsters_cartel_westcoast_junk_thrower_junk_thrower",
+   "name": "junk_thrower"
+  },
+  "newmonsters_cartel_westcoast_launcher_launcher": {
+   "mob": "monster/newmonsters/cartel/westcoast/launcher/launcher.mob",
+   "bank": "newmonsters_cartel_westcoast_launcher_launcher",
+   "name": "launcher"
+  },
+  "newmonsters_cartel_westcoast_macgee_macgee": {
+   "mob": "monster/newmonsters/cartel/westcoast/macgee/macgee.mob",
+   "bank": "newmonsters_cartel_westcoast_macgee_macgee",
+   "name": "macgee"
+  },
+  "newmonsters_cartel_westcoast_rod_aradman_rod_aradman": {
+   "mob": "monster/newmonsters/cartel/westcoast/rod_aradman/rod_aradman.mob",
+   "bank": "newmonsters_cartel_westcoast_rod_aradman_rod_aradman",
+   "name": "rod_aradman"
+  },
+  "newmonsters_cartel_westcoast_rod_boss_rod_boss": {
+   "mob": "monster/newmonsters/cartel/westcoast/rod_boss/rod_boss.mob",
+   "bank": "newmonsters_cartel_westcoast_rod_boss_rod_boss",
+   "name": "rod_boss"
+  },
+  "newmonsters_cartel_westcoast_special_rod_aradman_special_rod_aradman": {
+   "mob": "monster/newmonsters/cartel/westcoast/special_rod_aradman/special_rod_aradman.mob",
+   "bank": "newmonsters_cartel_westcoast_special_rod_aradman_special_rod_aradman",
+   "name": "special_rod_aradman"
   }
  },
  "boss_hp_lines": 3,

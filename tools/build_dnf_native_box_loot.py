@@ -75,6 +75,10 @@ SOURCES = {
         'dungeon/act6/astraythief.dgn',
         '72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8',
     ),
+    'odesa': (
+        'dungeon/village/cartelarad/odesa.dgn',
+        '1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b',
+    ),
 }
 
 

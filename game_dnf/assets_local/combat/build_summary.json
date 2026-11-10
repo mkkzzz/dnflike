@@ -171,7 +171,9 @@
   "newmonsters_gbl_acidra_acidra",
   "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed",
   "newmonsters_gbl_cocoon_cocoon",
+  "newmonsters_cartel_westcoast_macgee_macgee",
   "newmonsters_cartel_cypher_darkcrow_darkcrow",
+  "newmonsters_cartel_westcoast_rod_boss_rod_boss",
   "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
   "newmonsters_snowman_louis_louis",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
@@ -211,7 +213,12 @@
   "newmonsters_haze_chainbiker2_chainbiker2",
   "newmonsters_haze_enjosipho_enjosipho",
   "newmonsters_haze_enjosipho_enjosipho_quest",
+  "newmonsters_cartel_westcoast_rod_aradman_rod_aradman",
+  "newmonsters_cartel_westcoast_special_rod_aradman_special_rod_aradman",
+  "newmonsters_cartel_westcoast_junk_thrower_junk_thrower",
   "newmonsters_cartel_westcoast_tree_thrower_tree_thrower",
+  "newmonsters_cartel_westcoast_bunkertank_bunkertank",
+  "newmonsters_cartel_westcoast_launcher_launcher",
   "newmonsters_cartel_westcoast_trashcan_thrower_trashcan_thrower",
   "newmonsters_cartel_cypher_scarecrow_scarecrow",
   "newmonsters_cartel_cypher_aircrow_aircrow",
@@ -240,6 +247,7 @@
   "newmonsters_queen_rosi_queen_rosi",
   "newmonsters_golem_ricu_ricu",
   "newmonsters_snowman_sasquatch_sasquatch",
+  "newmonsters_cartel_rocketman_rocketman",
   "newmonsters_aganzo_pubman_gang3",
   "newmonsters_gbl_combinetentacle_combinetentacle",
   "newmonsters_bwanga_bwanga",
@@ -307,10 +315,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 691,
+ "effects": 696,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 56,
+ "unresolved": 59,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -402,6 +410,14 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/cartel/westcoast/rod_boss/rod_boss.mob",
+   "images": [
+    "Monster/Cartel/Mafia/1st.img",
+    "monster/Cartel/Mafia/1st.img"
+   ]
   },
   {
    "kind": "monster_layers",
@@ -541,6 +557,23 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/cartel/westcoast/bunkertank/bunkertank.mob",
+   "images": [
+    "Character/Gunner/Effect/NapalmBombExplosionNormal.img",
+    "Map/Village/Cartel/WestCoast/Bunker.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/cartel/westcoast/launcher/launcher.mob",
+   "images": [
+    "Character/Gunner/Effect/NapalmBombExplosionNormal.img",
+    "Monster/Cartel/Launcher/Body.img",
+    "Monster/Cartel/Launcher/Damaged.img"
+   ]
   },
   {
    "kind": "monster_layers",

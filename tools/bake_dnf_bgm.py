@@ -113,8 +113,9 @@ def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str]
 
 
 def source_native_dungeon_tracks(export: dict, music: dict[str, str],
-                                 random_music: dict[str, set[str]]) -> dict[str, str]:
+                                 random_music: dict[str, set[str]]) -> tuple[dict[str, str], dict]:
     tracks = {'normal': Counter(), 'boss': Counter()}
+    gaps = {}
     dungeon = export['dungeon']
     if len(dungeon.get('maze_blocks') or []) > 1:
         selected = dungeon['maze_blocks'][dungeon['maze_block_index']]
@@ -154,7 +155,11 @@ def source_native_dungeon_tracks(export: dict, music: dict[str, str],
             raise ValueError(f'{map_path}: native MAP has no normal/boss role')
         candidates = music_candidates(room.get('sound', []), music, random_music)
         if not candidates:
-            raise ValueError(f'{map_path}: no audio.xml music cue, found {room.get("sound", [])}')
+            gaps[map_path] = {
+                'reason': 'audio.xml has no MUSIC/RANDOM entry for any MAP sound key',
+                'sound': list(room.get('sound', [])),
+            }
+            continue
         tracks['boss' if role == '[boss]' else 'normal'].update(candidates)
     result = {}
     for role, counts in tracks.items():
@@ -162,14 +167,14 @@ def source_native_dungeon_tracks(export: dict, music: dict[str, str],
         if not ranked or (len(ranked) > 1 and ranked[0][1] == ranked[1][1]):
             raise ValueError(f'{export["dungeon"]["path"]}: ambiguous {role} track, found {ranked}')
         result[role] = ranked[0][0]
-    return result
+    return result, gaps
 
 
-def dungeon_music_sources(cat, library: Path) -> dict:
+def dungeon_music_sources(cat, library: Path) -> tuple[dict, dict]:
     routes = json.loads((GAME / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
     missing = sorted(routes.keys() - DUNGEONS.keys())
     if not missing:
-        return DUNGEONS
+        return DUNGEONS, {}
     row = cat.execute("select local_path, sha256 from assets where lower(original_path)='audio.xml'").fetchone()
     if row is None:
         raise ValueError('Original audio.xml required to resolve dungeon music')
@@ -187,15 +192,18 @@ def dungeon_music_sources(cat, library: Path) -> dict:
         for node in ET.fromstring(raw).findall('RANDOM')
     }
     result = DUNGEONS.copy()
+    source_gaps = {}
     for key in missing:
         route = routes[key]
         export_path = route['map_export'].removeprefix('res://')
         export = json.loads((GAME / export_path).read_text(encoding='utf-8'))
         if route.get('mode') == 'native_maze':
-            result[key] = source_native_dungeon_tracks(export, music, random_music)
+            result[key], source_gaps[key] = source_native_dungeon_tracks(export, music, random_music)
+            if not source_gaps[key]:
+                source_gaps.pop(key)
         else:
             result[key] = source_dungeon_tracks(export, route['rooms'], music, random_music)
-    return result
+    return result, source_gaps
 
 
 def main() -> int:
@@ -227,7 +235,7 @@ def main() -> int:
         return key
 
     try:
-        dungeon_sources = dungeon_music_sources(cat, lib.path)
+        dungeon_sources, source_gaps = dungeon_music_sources(cat, lib.path)
         screens = {name: take(source) for name, source in SCREENS.items()}
         scenes = {name: take(source) for name, source in TOWNS.items()}
         dungeons = {name: {slot: take(source) for slot, source in slots.items()} for name, slots in dungeon_sources.items()}
@@ -241,7 +249,8 @@ def main() -> int:
     MAP.write_text(json.dumps({
         'schema': 'dnf_bgm/2',
         'evidence': '原版 Music/*.ogg 与 sounds/amb/*.ogg 原字节（E-PARSE）；boss 代用为 E-ADAPT',
-        'screens': screens, 'scenes': scenes, 'dungeons': dungeons, 'ambience': ambience, 'tracks': tracks,
+        'screens': screens, 'scenes': scenes, 'dungeons': dungeons, 'ambience': ambience,
+        'source_gaps': source_gaps, 'tracks': tracks,
     }, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print('[BGM] tracks=%d screens=%d towns=%d dungeons=%d amb=%d bytes=%d'
           % (len(tracks), len(screens), len(scenes), len(dungeons), sum(len(v) for v in ambience.values()),

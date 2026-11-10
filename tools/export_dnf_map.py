@@ -58,6 +58,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act6/astraythief.dgn',
     'dungeon/village/moonlightpub/aganzo.dgn',
     'dungeon/village/cartelarad/grozni.dgn',
+    'dungeon/village/cartelarad/odesa.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
     'dungeon/village/gbl/gbl_hatchery.dgn',
     'dungeon/village/gbl/gbl_laboratory.dgn',
@@ -653,6 +654,21 @@ def split_maze_blocks(spans: list[dict]) -> list[dict]:
     return blocks
 
 
+def select_maze_block(maze_blocks: list[dict]) -> tuple[dict, list[dict], list[dict], str]:
+    """Choose the playable base layout without consuming a quest-only variant."""
+    ordinary = [block for block in maze_blocks
+                if not block['quest_connection'] and not block['escape_hell']
+                and not block['hell_dungeon']]
+    if ordinary:
+        return ordinary[0], ordinary, [], 'ordinary'
+    hell_base = [block for block in maze_blocks
+                 if not block['quest_connection'] and not block['escape_hell']
+                 and block['hell_dungeon']]
+    if hell_base:
+        return hell_base[0], ordinary, hell_base, 'hell_base'
+    return maze_blocks[0], ordinary, hell_base, 'fallback'
+
+
 def export_maze_blocks(spans: list[dict], dungeon_path: str, diags: list) -> list[dict]:
     result = []
     for block in split_maze_blocks(spans):
@@ -700,17 +716,16 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
     maze_blocks = export_maze_blocks(spans, dungeon_path, lib.diags)
     if not maze_blocks:
         raise ValueError(f'Dungeon has no maze blocks: {dungeon_path}')
-    ordinary_blocks = [block for block in maze_blocks
-                       if not block['quest_connection'] and not block['escape_hell']
-                       and not block['hell_dungeon']]
-    selected_block = ordinary_blocks[0] if ordinary_blocks else maze_blocks[0]
+    selected_block, ordinary_blocks, hell_blocks, selection_rule = select_maze_block(maze_blocks)
     selected_index = int(selected_block['index'])
     for block in maze_blocks:
         block['selected'] = int(block['index']) == selected_index
     if len(maze_blocks) > 1:
         lib.diags.append(diag('info', 'maze_block_selected', dungeon_path,
                               f'selected maze block {selected_index} of {len(maze_blocks)}; '
-                              f'ordinary candidates={[block["index"] for block in ordinary_blocks]}'))
+                              f'ordinary candidates={[block["index"] for block in ordinary_blocks]}; '
+                              f'hell-base candidates={[block["index"] for block in hell_blocks]}; '
+                              f'rule={selection_rule}'))
     size = selected_block['size']
     greed = selected_block['greed']
     cells = parse_greed(greed, size[0], size[1], dungeon_path, lib.diags)
@@ -765,7 +780,8 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
     return {'path': dungeon_path, 'sha256': script['sha256'], 'crc_ok': script['crc_ok'], 'index': dungeon_index,
             'raw': raw_spans(script), 'size': size,
             'cells': [cells[k] for k in sorted(cells, key=lambda c: (c[1], c[0]))],
-            'maze_block_index': selected_index, 'maze_blocks': maze_blocks,
+            'maze_block_index': selected_index, 'maze_block_selection': selection_rule,
+            'maze_blocks': maze_blocks,
             'start_map_raw': start_raw, 'boss_map_raw': boss_raw,
             'start_boss_interpretation': 'E-INFER: value pairs are candidate cells (x,y); random choice unverified',
             'background_pos_raw': span_values(spans, '[background pos]'), 'pathgate_slots': slots,

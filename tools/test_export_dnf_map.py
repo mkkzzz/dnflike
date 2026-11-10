@@ -99,6 +99,32 @@ class Rules(unittest.TestCase):
             self.assertEqual(m.monster_records(normal + broken, 'p', diags), [(normal, None)])
             self.assertEqual(diags[0]['code'], 'monster_layout')
 
+    def test_maze_block_selection_prefers_ordinary_then_hell_base(self):
+        def block(index, quest=None, escape=None, hell=None):
+            return {'index': index, 'quest_connection': quest or [],
+                    'escape_hell': escape or [], 'hell_dungeon': hell or []}
+
+        quest = block(0, quest=[1, 3901, -1], escape=[1])
+        ordinary = block(1)
+        hell = block(2, hell=[1])
+        selected, ordinary_rows, hell_rows, rule = m.select_maze_block([quest, ordinary, hell])
+        self.assertEqual(selected['index'], 1)
+        self.assertEqual([row['index'] for row in ordinary_rows], [1])
+        self.assertEqual(hell_rows, [])
+        self.assertEqual(rule, 'ordinary')
+
+        selected, ordinary_rows, hell_rows, rule = m.select_maze_block([quest, hell])
+        self.assertEqual(selected['index'], 2)
+        self.assertEqual(ordinary_rows, [])
+        self.assertEqual([row['index'] for row in hell_rows], [2])
+        self.assertEqual(rule, 'hell_base')
+
+        selected, ordinary_rows, hell_rows, rule = m.select_maze_block([quest])
+        self.assertEqual(selected['index'], 0)
+        self.assertEqual(ordinary_rows, [])
+        self.assertEqual(hell_rows, [])
+        self.assertEqual(rule, 'fallback')
+
 
 class LibraryExport(unittest.TestCase):
     def test_moonlight_rooms_keep_the_boss_npc_link_and_original_stand_animations(self):
@@ -480,6 +506,89 @@ class LibraryExport(unittest.TestCase):
         selected_diag = [row for row in diagnostics if row['code'] == 'maze_block_selected']
         self.assertEqual(len(selected_diag), 1)
         self.assertIn('selected maze block 8 of 10', selected_diag[0]['detail'])
+
+    def test_odesa_export_selects_non_quest_hell_base_block_four(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/odesa_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 60)
+        self.assertEqual(dungeon['maze_block_index'], 4)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(dungeon['size'], [7, 4])
+        self.assertEqual(dungeon['start_map_raw'], [0, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 3])
+        self.assertEqual(len(dungeon['rooms']), 26)
+        self.assertEqual(len(dungeon['placements']), 47)
+        self.assertEqual(len(export['images']), 69)
+        self.assertEqual([block['size'] for block in dungeon['maze_blocks']], [
+            [4, 2], [5, 2], [7, 3], [6, 4], [7, 4],
+        ])
+        self.assertEqual([block['quest_connection'] for block in dungeon['maze_blocks']], [
+            [0, 3901, -1], [0, 3903, -1], [0, 3904, 1], [0, 3906, 1], None,
+        ])
+        self.assertEqual([block['index'] for block in dungeon['maze_blocks']
+                          if block['selected']], [4])
+        ordinary = [block['index'] for block in dungeon['maze_blocks']
+                    if not block['quest_connection'] and not block['escape_hell']
+                    and not block['hell_dungeon']]
+        hell_base = [block['index'] for block in dungeon['maze_blocks']
+                     if not block['quest_connection'] and not block['escape_hell']
+                     and block['hell_dungeon']]
+        self.assertEqual(ordinary, [])
+        self.assertEqual(hell_base, [4])
+        selected = dungeon['maze_blocks'][4]
+        self.assertEqual(len(selected['map_specifications']), 16)
+        self.assertEqual(selected['boss_map_specifications'], [[5, 3, 11123]])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(sum(bool(cell['doors']) for cell in dungeon['cells']), 13)
+        self.assertEqual(sum(cell['code'] == 'AA' for cell in dungeon['cells']), 15)
+        self.assertEqual(cells[(0, 0)]['map_candidates'], [
+            'map/odesa2/odesa01.map',
+            'map/odesa2/odesa17.map',
+        ])
+        self.assertEqual(cells[(5, 3)]['map_candidates'], [
+            'map/odesa2/odesa08.map',
+            'map/odesa2/odesa14-1.map',
+            'map/odesa2/odesa14.map',
+            'map/odesa2/odesa19.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/odesa2/odesa01.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/odesa2/odesa19.map']['role_hint'], 'boss')
+        diagnostics = export['diagnostics']
+        errors = [row for row in diagnostics if row['level'] == 'error']
+        self.assertEqual(errors, [
+            {
+                'level': 'error', 'code': 'image_missing',
+                'path': 'passiveobject/mapobject/pathgate/town/cartelarad/ca_leftwall.obj',
+                'detail': 'sprite/map/pathgate/town/cartelarad/ca_exitup010.img has no validated IMG in catalog',
+            },
+            {
+                'level': 'error', 'code': 'image_missing',
+                'path': 'passiveobject/mapobject/pathgate/town/cartelarad/ca_leftwall.obj',
+                'detail': 'sprite/map/pathgate/town/cartelarad/ca_exitup010.img has no validated IMG in catalog',
+            },
+            {
+                'level': 'error', 'code': 'image_missing',
+                'path': 'passiveobject/mapobject/pathgate/town/cartelarad/ca_rightwall.obj',
+                'detail': 'sprite/map/pathgate/town/cartelarad/ca_exitup08.img has no validated IMG in catalog',
+            },
+            {
+                'level': 'error', 'code': 'image_missing',
+                'path': 'passiveobject/mapobject/pathgate/town/cartelarad/ca_rightwall.obj',
+                'detail': 'sprite/map/pathgate/town/cartelarad/ca_exitup08.img has no validated IMG in catalog',
+            },
+        ])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 15)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 67)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'scroll_absent']), 78)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 26)
+        selected_diag = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected_diag), 1)
+        self.assertIn('selected maze block 4 of 5', selected_diag[0]['detail'])
+        self.assertIn('hell-base candidates=[4]', selected_diag[0]['detail'])
 
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(

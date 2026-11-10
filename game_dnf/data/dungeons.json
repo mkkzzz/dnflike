@@ -413,6 +413,20 @@
     "sha256": "6573a9ef1a05fb400c903b97b2ae89543504fb5cdf804d778c1bc26a289b5970"
    }
   },
+  "odesa": {
+   "name": "热血八番街",
+   "region": "westcoast",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/odesa_v1/map_export.json",
+   "min_level": 52,
+   "monster_level": 55,
+   "source": {
+    "path": "dungeon/village/cartelarad/odesa.dgn",
+    "sha256": "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

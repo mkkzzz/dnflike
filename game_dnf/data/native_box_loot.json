@@ -504,6 +504,24 @@
       "group_levels": {
         "0": -1
       }
+    },
+    "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b": {
+      "id": "odesa",
+      "source": {
+        "path": "dungeon/village/cartelarad/odesa.dgn",
+        "sha256": "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_3230",
+            1700
+          ]
+        ]
+      },
+      "group_levels": {
+        "0": -1
+      }
     }
   },
   "items": {
@@ -1171,6 +1189,38 @@
         "sha256": "d50f29f96e823c5715332cbfd1529364744a8981020152d6a3f39d9c80fcaf45",
         "name_table": "stackable/stackable.kor.str",
         "name_key": "name_3217"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[material]",
+          1
+        ]
+      }
+    },
+    "original_3230": {
+      "name": "垃圾桶盖",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 5000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/quest.img",
+        74
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        23
+      ],
+      "source": {
+        "id": 3230,
+        "path": "stackable/material/cover_trashcan.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "f9bf2b77f10333b3dc104d8d0ce52b37f46c5f6f9c76e7a2d9ab8ebcb7aa2e64",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_3230"
       },
       "source_fields": {
         "[stackable type]": [

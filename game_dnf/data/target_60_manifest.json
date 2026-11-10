@@ -1107,9 +1107,9 @@
     "id": 60,
     "min_level": 52,
     "path": "dungeon/village/cartelarad/odesa.dgn",
-    "runtime_id": "",
+    "runtime_id": "odesa",
     "sha256": "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 56,
@@ -5431,8 +5431,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/westcoast/launcher/launcher.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_launcher_launcher",
+    "state": "runtime"
    },
    {
     "id": 61237,
@@ -5463,8 +5463,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/westcoast/rod_aradman/rod_aradman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_rod_aradman_rod_aradman",
+    "state": "runtime"
    },
    {
     "id": 61469,
@@ -5479,8 +5479,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/westcoast/rod_boss/rod_boss.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_rod_boss_rod_boss",
+    "state": "runtime"
    },
    {
     "id": 56434,
@@ -5495,8 +5495,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/westcoast/special_rod_aradman/special_rod_aradman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_special_rod_aradman_special_rod_aradman",
+    "state": "runtime"
    },
    {
     "id": 61470,
@@ -7911,16 +7911,16 @@
     "level_max": 50,
     "level_min": 40,
     "path": "monster/newmonsters/cartel/westcoast/bunkertank/bunkertank.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_bunkertank_bunkertank",
+    "state": "runtime"
    },
    {
     "id": 61303,
     "level_max": 50,
     "level_min": 40,
     "path": "monster/newmonsters/cartel/westcoast/junk_thrower/junk_thrower.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_junk_thrower_junk_thrower",
+    "state": "runtime"
    },
    {
     "id": 61472,
@@ -9919,16 +9919,16 @@
     "level_max": 59,
     "level_min": 54,
     "path": "monster/newmonsters/cartel/rocketman/rocketman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_rocketman_rocketman",
+    "state": "runtime"
    },
    {
     "id": 56301,
     "level_max": 59,
     "level_min": 54,
     "path": "monster/newmonsters/cartel/westcoast/macgee/macgee.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_macgee_macgee",
+    "state": "runtime"
    },
    {
     "id": 61147,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 43,
+   "runtime": 44,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 245,
+   "runtime": 253,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,
