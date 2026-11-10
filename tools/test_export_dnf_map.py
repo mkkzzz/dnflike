@@ -630,6 +630,62 @@ class LibraryExport(unittest.TestCase):
         self.assertFalse([row for row in diagnostics if row['code'] == 'maze_block_selected'])
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 15)
 
+    def test_scasalair_export_keeps_two_start_cells_and_mask_pools(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/scasalair_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '33d86d36e372ad3d17ed062ce82a80710ec54395b19785c784a9419e760cb536')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 45)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(dungeon['size'], [3, 4])
+        self.assertEqual(dungeon['start_map_raw'], [1, 3, 0, 3])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+        self.assertEqual(len(dungeon['rooms']), 16)
+        self.assertEqual(len(dungeon['placements']), 21)
+        self.assertEqual(len(export['images']), 74)
+        self.assertEqual(len(dungeon['maze_blocks']), 2)
+        base = dungeon['maze_blocks'][0]
+        self.assertEqual(base['map_specifications'], [])
+        self.assertEqual(base['boss_map_specifications'], [[0, 0, 9310]])
+        self.assertEqual(base['quest_connection'], None)
+        self.assertEqual(base['hell_dungeon'], [1])
+        quest = dungeon['maze_blocks'][1]
+        self.assertEqual(quest['quest_connection'], [0, 4571, 2])
+        self.assertEqual(quest['escape_hell'], [1])
+        self.assertEqual(sum(bool(cell['doors']) for cell in dungeon['cells']), 10)
+        self.assertEqual(sum(cell['code'] == 'AA' for cell in dungeon['cells']), 2)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(0, 3)]['map_candidates'], [
+            'map/scasalair/e1(2,3).map',
+            'map/scasalair/e2(start).map',
+            'map/scasalair/start1(0,3).map',
+            'map/scasalair/start2(1,3).map',
+        ])
+        self.assertEqual(cells[(1, 0)]['map_candidates'], [
+            'map/scasalair/h2(1,0).map',
+            'map/scasalair/qn2(1,2).map',
+        ])
+        self.assertEqual(cells[(0, 0)]['map_candidates'], [
+            'map/scasalair/boss(0,0).map',
+            'map/scasalair/qs1(0,2).map',
+        ])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 97)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 374)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 2)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 2)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 37)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'empty_tile']), 72)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 16)
+        selected = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected), 1)
+        self.assertIn('selected maze block 0 of 2', selected[0]['detail'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

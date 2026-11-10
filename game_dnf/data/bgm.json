@@ -184,6 +184,10 @@
    "normal": "riku_cave",
    "boss": "riku_boss"
   },
+  "scasalair": {
+   "normal": "skasa",
+   "boss": "skasa_boss"
+  },
   "secondbackbone": {
    "normal": "2nd_spine",
    "boss": "2nd_spine_boss"
@@ -633,6 +637,18 @@
    "source": "music/riku_boss.ogg",
    "sha256": "63ee53c1e701a1c9d610ba385f4863c0b51395a125dece272e52da4b7d933514",
    "bytes": 1091097
+  },
+  "skasa": {
+   "file": "audio/bgm/skasa.ogg",
+   "source": "music/skasa.ogg",
+   "sha256": "d4477ead025c7e946e11beaf699212d0e6ab7196716b47b1f0957446e69540b5",
+   "bytes": 1462684
+  },
+  "skasa_boss": {
+   "file": "audio/bgm/skasa_boss.ogg",
+   "source": "music/skasa_boss.ogg",
+   "sha256": "fcda3658aa3e029f0a798db65b108dbfa089cd3350b4226f567cc44129f21dab",
+   "bytes": 929345
   },
   "2nd_spine": {
    "file": "audio/bgm/2nd_spine.ogg",

@@ -1133,9 +1133,9 @@
     "id": 45,
     "min_level": 54,
     "path": "dungeon/act5/scasalair.dgn",
-    "runtime_id": "",
+    "runtime_id": "scasalair",
     "sha256": "33d86d36e372ad3d17ed062ce82a80710ec54395b19785c784a9419e760cb536",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 58,
@@ -5839,8 +5839,8 @@
     "level_max": 35,
     "level_min": 30,
     "path": "monster/newmonsters/scasababy/scasababy.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_scasababy_scasababy",
+    "state": "runtime"
    },
    {
     "id": 62103,
@@ -5903,8 +5903,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/spider/slotor/slotor.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_spider_slotor_slotor",
+    "state": "runtime"
    },
    {
     "id": 62102,
@@ -9575,8 +9575,8 @@
     "level_max": 60,
     "level_min": 50,
     "path": "monster/newmonsters/spider/slotor1/slotor1.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_spider_slotor1_slotor1",
+    "state": "runtime"
    },
    {
     "id": 50066,
@@ -10263,16 +10263,16 @@
     "level_max": 61,
     "level_min": 56,
     "path": "monster/newmonsters/bantu/elitebuffalowoman/elitebuffalowoman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_elitebuffalowoman_elitebuffalowoman",
+    "state": "runtime"
    },
    {
     "id": 61456,
     "level_max": 61,
     "level_min": 56,
     "path": "monster/newmonsters/dragon/scasa/scasa.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_dragon_scasa_scasa",
+    "state": "runtime"
    },
    {
     "id": 62677,
@@ -10287,8 +10287,8 @@
     "level_max": 57,
     "level_min": 57,
     "path": "monster/newmonsters/bantu/elitebuffaloman/elitebuffaloman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_elitebuffaloman_elitebuffaloman",
+    "state": "runtime"
    },
    {
     "id": 61709,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 45,
+   "runtime": 46,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 260,
+   "runtime": 266,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

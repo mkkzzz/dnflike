@@ -604,6 +604,24 @@
    "ptl_stoneimage_destroy4",
    "ptl_stoneimage_destroy5"
   ],
+  "passiveobject/mapobject/breakableobject/stonetomb.obj": [
+   "ptl_stonetombparticle01",
+   "ptl_stonetombparticle02",
+   "ptl_stonetombparticle03",
+   "ptl_stonetombparticle04",
+   "ptl_stonetombparticle05",
+   "ptl_stonetombparticle06",
+   "ptl_stonetombparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/stonetomb2.obj": [
+   "ptl_stonetombparticle01",
+   "ptl_stonetombparticle02",
+   "ptl_stonetombparticle03",
+   "ptl_stonetombparticle04",
+   "ptl_stonetombparticle05",
+   "ptl_stonetombparticle06",
+   "ptl_stonetombparticle07"
+  ],
   "passiveobject/mapobject/breakableobject/treasurepot.obj": [
    "ptl_treasurepotparticle1",
    "ptl_treasurepotparticle2",

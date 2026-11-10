@@ -287,6 +287,20 @@
     "sha256": "172e5364d6e341d5eb23da3fe53ffa2291863930744548990bf541fd80122349"
    }
   },
+  "scasalair": {
+   "name": "斯卡萨之巢",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/scasalair_v1/map_export.json",
+   "min_level": 54,
+   "monster_level": 57,
+   "source": {
+    "path": "dungeon/act5/scasalair.dgn",
+    "sha256": "33d86d36e372ad3d17ed062ce82a80710ec54395b19785c784a9419e760cb536"
+   }
+  },
   "theboywithcoldheart": {
    "name": "冰心少年",
    "region": "snowmt",

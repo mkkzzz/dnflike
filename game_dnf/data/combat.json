@@ -1805,6 +1805,36 @@
    "mob": "monster/skeleton/skeleton_headless.mob",
    "bank": "skeleton_skeleton_headless",
    "name": "skeleton_headless"
+  },
+  "newmonsters_bantu_elitebuffaloman_elitebuffaloman": {
+   "mob": "monster/newmonsters/bantu/elitebuffaloman/elitebuffaloman.mob",
+   "bank": "newmonsters_bantu_elitebuffaloman_elitebuffaloman",
+   "name": "elitebuffaloman"
+  },
+  "newmonsters_bantu_elitebuffalowoman_elitebuffalowoman": {
+   "mob": "monster/newmonsters/bantu/elitebuffalowoman/elitebuffalowoman.mob",
+   "bank": "newmonsters_bantu_elitebuffalowoman_elitebuffalowoman",
+   "name": "elitebuffalowoman"
+  },
+  "newmonsters_dragon_scasa_scasa": {
+   "mob": "monster/newmonsters/dragon/scasa/scasa.mob",
+   "bank": "newmonsters_dragon_scasa_scasa",
+   "name": "scasa"
+  },
+  "newmonsters_scasababy_scasababy": {
+   "mob": "monster/newmonsters/scasababy/scasababy.mob",
+   "bank": "newmonsters_scasababy_scasababy",
+   "name": "scasababy"
+  },
+  "newmonsters_spider_slotor_slotor": {
+   "mob": "monster/newmonsters/spider/slotor/slotor.mob",
+   "bank": "newmonsters_spider_slotor_slotor",
+   "name": "slotor"
+  },
+  "newmonsters_spider_slotor1_slotor1": {
+   "mob": "monster/newmonsters/spider/slotor1/slotor1.mob",
+   "bank": "newmonsters_spider_slotor1_slotor1",
+   "name": "slotor1"
   }
  },
  "boss_hp_lines": 3,

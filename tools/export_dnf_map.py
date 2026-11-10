@@ -51,6 +51,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act4/underfoot.dgn',
     'dungeon/act4/kingsruins.dgn',
     'dungeon/act5/charnakridge.dgn',
+    'dungeon/act5/scasalair.dgn',
     'dungeon/act5/theboywithcoldheart.dgn',
     'dungeon/act5/ricuceiling.dgn',
     'dungeon/act5/whiteland.dgn',
