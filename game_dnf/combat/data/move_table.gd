@@ -978,6 +978,7 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 				hit["native_controller"] = controller
 				if controller.get("kind","") == "bloodblast":
 					hit["starts_at_zero"] = true
+				if controller.get("kind","") in ["bloodblast","outrage_floor","outrage_magma"]:
 					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
 			hit["rear_fx"] = String(h.get("rear_fx",""))
 			if h.get("starts_at_zero",false):hit["starts_at_zero"] = true

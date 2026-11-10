@@ -3101,12 +3101,12 @@ func apply_hundred_sword_reaction(target: Dictionary, atk: Dictionary, facing: i
 		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true,int(atk["ignore_weight"])!=0)
 	return apply_native_ground_stagger(target,atk,facing,recovery,delay_factor)
 
-func apply_bloodblast_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
+func apply_native_down_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
 	var effects: Dictionary = target["numeric"].effects.active if target.has("numeric") else {}
 	if effects.has("freeze") or effects.has("stone"):return "none"
 	# 8186EB checks the DOWN motion or action. Overturn alone is insufficient.
 	if target["def"]["motions"].get("down","") != "":
-		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true)
+		return apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
 	return apply_native_ground_stagger(target,atk,facing,recovery,1.0)
 
 func apply_native_ground_stagger(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor: float) -> String:
@@ -3343,29 +3343,26 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		var outrage_impact := native_kind in OUTRAGE_IMPACTS
+		var native_down := native_kind == "bloodblast" or native_kind in OUTRAGE_IMPACTS
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
-		var armor_blocks_reaction := (outrage_impact or native_kind in ["bloodblast","draw_short_wave","hundred_sword_field","hellbenter_column"]) \
+		var armor_blocks_reaction := (native_down or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_native_stagger_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
 		elif native_kind == "hundred_sword_field" and not armor_blocks_reaction:
 			reaction = apply_hundred_sword_reaction(target,atk,facing,recovery,float(hit["stagger_factor"]))
-		elif native_kind == "bloodblast" and not armor_blocks_reaction:
-			reaction = apply_bloodblast_reaction(target,atk,facing,recovery)
+		elif native_down and not armor_blocks_reaction:
+			reaction = apply_native_down_reaction(target,atk,facing,recovery)
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif outrage_impact and not armor_blocks_reaction:
-			# 81F1F0 dispatches state 4 with the object's ATK push and lift.
-			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
 		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
 			# 无伤接触仍应打断正在进行的狂热者施法。
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			if reaction != "none":
 				target.erase("native_down_phase")
 				target.erase("native_down_peak")
-		if not armor_blocks_reaction and (native_kind not in ["hundred_sword_field","bloodblast"] or reaction != "none"):
+		if not armor_blocks_reaction and (reaction != "none" or (not native_down and native_kind != "hundred_sword_field")):
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player and not draw_impact:

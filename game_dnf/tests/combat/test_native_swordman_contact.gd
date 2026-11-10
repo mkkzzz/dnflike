@@ -3530,6 +3530,64 @@ func check_outrage_break_eruption() -> void:
 		"the second landing enters grounded down without another bounce (state=%s, z=%s, vz=%s, phase=%s, hp=%s)" % [
 			falling["state"],falling["z"],falling["vz"],falling.get("native_down_phase"),falling["hp"]])
 
+func check_outrage_break_special_targets() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)
+	game.clear_monsters()
+	game.apply_skill_effect("buff","frenzy")
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	game.player["hp"] = 1000.0
+	press(KEY_A)
+	step(0.0)
+	step(560.0)
+	step(600.0)
+	for sample: Array in [["outrage_floor",50.0],["outrage_magma",20.0]]:
+		var impacts: Array = game.objects.filter(func(o):return o["hit"]["native_controller"]["kind"]==sample[0])
+		check(impacts.size()==1,"the cast creates one "+sample[0])
+		if impacts.size()!=1:return
+		var impact: Dictionary = impacts[0]
+		var position: Vector2 = impact["pos"]+Vector2(0,45)
+		for target_case: Array in [["goblin","launch"],["dendroid_dendroid","stagger"],
+				["new_golem_platany","stagger"],["dendroid_dendroid","no_poses"],
+				["goblin","freeze"],["goblin","stone"]]:
+			var victim: Dictionary = game.spawn_enemy(position,false,target_case[0])
+			victim["clock"] = 19.0
+			victim["hp"] = 50000.0
+			if target_case[1] == "no_poses":
+				var motions: Dictionary = victim["def"]["motions"].merged({"damage1":"","damage2":""},true)
+				victim["def"] = victim["def"].merged({"motions":motions},true)
+			elif target_case[1] in ["freeze","stone"]:
+				victim["numeric"].effects.add(target_case[1],{"duration_ms":2000.0})
+			game.step_objects(0.0)
+			var label := str([sample[0],target_case[0],target_case[1]])
+			check(impact["hits"].has(victim["id"]) and victim["hp"]<50000.0 and victim["stuck_ms"]==sample[1]
+				and game.player["stuck_ms"]==0.0,"the original hitstop freezes only the struck target: "+label)
+			match target_case[1]:
+				"launch":
+					check(victim["state"]=="native_down_flight" and victim["vz"]>0.0,"down animation allows launch: "+label)
+					game.update_enemy(victim,sample[1]-1.0)
+					check(victim["stuck_ms"]==1.0 and victim["z"]==0.0,"launch stays paused until the final millisecond: "+label)
+					game.update_enemy(victim,1.0)
+					check(victim["stuck_ms"]==0.0,"target pause expires at the original boundary: "+label)
+				"stagger":
+					check(victim["state"]=="hurt" and victim["hit_motion"] in ["damage1","damage2"]
+						and victim["vz"]==0.0 and not victim.has("native_down_phase"),"no down action falls back to stagger: "+label)
+				_:
+					check(victim["state"]=="idle" and victim["clock"]==19.0 and victim["vz"]==0.0,
+						"a denied reaction preserves the current pose and clock: "+label)
+		if sample[0] == "outrage_floor":
+			game.clear_monsters()
+			game.step_objects(1040.0)
+			game.objects.erase(impact)
+
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 
@@ -6762,6 +6820,7 @@ func run() -> void:
 	check_outrage_break_speed_refresh()
 	check_outrage_break_impact_layers()
 	check_outrage_break_eruption()
+	check_outrage_break_special_targets()
 	check_outrage_break_armor()
 	check_outrage_break_camera()
 	check_bloody_rave_special_targets()
