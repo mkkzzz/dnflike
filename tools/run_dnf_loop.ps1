@@ -263,6 +263,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$worldCollisionsPreference}
     $worldCollisions | Write-Output
     if ($worldCollisionsExit -ne 0 -or ($worldCollisions -match 'SCRIPT ERROR|ERROR:') -or -not ($worldCollisions -match '\[WS1_WORLD_COLLISIONS\] COMPLETE checks=\d+ failures=0')) {throw "Visible dungeon collision contract failed."}
+    $worldRoutesPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $worldRoutes=& $GodotPath --headless --path $gamePath --quit-after 12000 --script res://tests/combat/test_ws1_world_routes.gd 2>&1
+        $worldRoutesExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$worldRoutesPreference}
+    $worldRoutes | Write-Output
+    if ($worldRoutesExit -ne 0 -or ($worldRoutes -match 'SCRIPT ERROR|ERROR:') -or -not ($worldRoutes -match '\[WS1_WORLD_ROUTES\] COMPLETE checks=\d+ failures=0')) {throw "Visible dungeon full-route contract failed."}
     $bossContactsPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"
