@@ -602,7 +602,7 @@ CUE_SOUNDS = {
     'goblin_die': ['sounds/mon/act1/gbn_die_01.ogg', 'sounds/mon/act1/gbn_die_02.ogg'],
 }
 SOUND_KEYS = ['STAFF_HIT', 'R_STICK_HIT', 'R_DRAWING_SWORD_HIT', 'R_SLESSSWDA_HIT', 'R_SQUARESWDC_HIT',
-              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'UPPER_SLASH_01']
+              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'UPPER_SLASH_01', 'W_WEAPON_DRIVE']
 MONSTER_HP_IMG = 'sprite/interface/newstyle/windows/monster_hp/monster_hp.img'
 
 
@@ -1533,8 +1533,8 @@ def main() -> int:
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
                         help='Append the original Illusion Slash objects, voices and sword-wave hit cue')
-    parser.add_argument('--extend-hundred-sword-ready', action='store_true',
-                        help='Add the original Hundred Sword ready overlay')
+    parser.add_argument('--extend-hundred-sword-ready', '--extend-hundred-sword', action='store_true',
+                        help='Add the original Hundred Sword ready overlay, field and entry sound')
     parser.add_argument('--extend-rapid-move-slash', action='store_true',
                         help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
@@ -1728,9 +1728,13 @@ def main() -> int:
         return 0
     if args.extend_hundred_sword_ready:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
-        ready, = runtime['moves']['hundredsword']['stages'][0]['fx']
-        key = ready['key']
-        specs = [('effects', key, runtime['assets']['effect_anims'][key])]
+        stage = runtime['moves']['hundredsword']['stages'][0]
+        field, = stage['hits']
+        controller = field['native_controller']
+        keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'])
+        specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+        specs.append(('objects', field['object'], field['object']))
+        specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:

@@ -3153,8 +3153,8 @@ func check_hundred_sword_ready() -> void:
 	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["hundredsword"]
-	start_room("","katana",1,spec)
-	game.clear_monsters()
+	start_room("","katana",-1,spec)
+	for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(1200,0))
 	game.numeric_player.values["mp_cost_rate"] = 1.0
 	game.numeric_player.values["cooldown_rate"] = 1.0
 	game.numeric_player.values["attack_speed"] = 1.25
@@ -3188,6 +3188,64 @@ func check_hundred_sword_ready() -> void:
 	check(finish["hits"].size()==1 and finish["hits"][0]["percent"]==2501.0
 		and finish["hits"][0]["atk_path"].ends_with("/hundredswordfinish.atk"),
 		"the finish uses original ATK 62 and rank column two without an unrelated object")
+	game.player["pos"] = POINT+Vector2(17,7)
+	game.player["facing"] = 1
+	step(1959.0)
+	check(game.objects.is_empty(),"the field waits until ready frame eighteen")
+	var fresh: int = game._next_entity_id
+	step(1.0)
+	game.step_objects(1.0,fresh)
+	check(game.objects.size()==1,"ready frame eighteen creates exactly one field")
+	if game.objects.size()!=1:return
+	var field: Dictionary = game.objects[0]
+	var center := POINT-Vector2(150,0)
+	check(field["pos"]==center and field["facing"]==-1 and field["z"]==0.0 and field["clock"]==0.0
+		and field["hit"]["percent"]==626.0 and field["hit"]["atk_path"].ends_with("/hundredswordhit.atk"),
+		"the new field starts at age zero at the saved cast origin and uses original rank column zero")
+	game.numeric_player.values["hit"] = 1.0
+	var first: Dictionary = game.monsters[0]
+	var late: Dictionary = game.monsters[1]
+	first["hp"] = 5000.0
+	late["hp"] = 5000.0
+	move_target(first,center+Vector2(80,0))
+	game.step_objects(99.0)
+	check(first["hp"]==5000.0 and cues("W_WEAPON_DRIVE").is_empty(),"the field neither hits nor plays its entry cue at age 99")
+	game.step_objects(1.0)
+	check(first["hp"]<5000.0 and cues("W_WEAPON_DRIVE").size()==1
+		and game.view.audio.variants["W_WEAPON_DRIVE"][0] is AudioStreamOggVorbis,
+		"the original three-box contact and its archived cue open at age 100")
+	var after_contact: float = first["hp"]
+	move_target(first,center+Vector2(80,0))
+	move_target(late,center-Vector2(80,0))
+	game.step_objects(49.0)
+	check(first["hp"]==after_contact and late["hp"]<5000.0,
+		"a fresh target can be hit at 149 while the initial ledger blocks a duplicate")
+	field["hits"].erase(late["id"])
+	late["hp"] = 5000.0
+	move_target(late,center-Vector2(80,0))
+	game.step_objects(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var visible = game.view.object_views.get(field["id"])
+	var overlay = game.view.object_views.get("%s:overlay"%field["id"])
+	check(late["hp"]==5000.0 and visible!=null and overlay!=null and visible.hold_last_frame and overlay.hold_last_frame,
+		"the initial attack closes at 150 while both field layers hold their final frames")
+	game.start_stage(game.move_def("hundredsword")["stages"].size()-1)
+	var exit_clock: float = game.action_def()["timeline"][2]["start_ms"]
+	game.player["clock"] = exit_clock-1.0
+	game.step_objects(0.0)
+	check(not field.has("exit_at_ms"),"the field survives until the finish reaches frame two")
+	game.player["clock"] = exit_clock
+	game.step_objects(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var exit_main = game.view.object_views.get("%s:exit"%field["id"])
+	var exit_overlay = game.view.object_views.get("%s:exit_overlay"%field["id"])
+	check(exit_main!=null and exit_overlay!=null and exit_main.data["source"].ends_with("disappear1.ani")
+		and exit_overlay.data["source"].ends_with("disappear2.ani"),
+		"finish frame two switches both field layers to their original exit animations")
+	game.step_objects(299.0)
+	check(game.objects.size()==1,"both exit layers remain through age 299")
+	game.step_objects(1.0)
+	check(game.objects.is_empty(),"the field is deleted at the original exit end")
 
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]

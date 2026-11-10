@@ -1515,6 +1515,27 @@ def build_move(
             raise ValueError("Missing original Hundred Sword ready effect")
         # CD1F81..CD1FD6 attaches Ready.ani to the state 47 body.
         stages[0]["fx"] = [{"key": ready, "at": 0, "action_clock": True, "depth_offset": 1}]
+        field = add_object(objects, OBJ_ROOT + "hundredswordhit.obj")
+        if not field:
+            raise ValueError("Missing original Hundred Sword field object")
+        definition = records[field]["decoded"]
+        main, = definition["basic_motion"]
+        overlay, exit_main, exit_overlay = definition["etc_motions"]
+        layers = [add_fx(fx, effects, path) for path in (overlay, exit_main, exit_overlay)]
+        frames = records[main]["decoded"]["timeline"]
+        if not all(layers) or len(frames) != 2 or not frames[1]["attack_boxes"]:
+            raise ValueError("Incomplete original Hundred Sword field")
+        field_at = records[CHR_ANI + "hundredswordready.ani"]["decoded"]["timeline"][18]["start_ms"]
+        distance = records[skill["path"]]["decoded"]["dungeon"]["static_data"][0]
+        # CB7EB9 creates object 20051 once. A6C960 holds the last frame and
+        # disables the initial hit 50 ms after the first frame ends.
+        stages[0]["hits"].append({
+            "object": field, "at": field_at, "offset": [distance, 0, 0],
+            "percent_col": 0, "starts_at_zero": True,
+            "native_controller": {"kind": "hundred_sword_field", "overlay": layers[0],
+                                  "exit_layers": layers[1:], "exit_ms": duration_ms(records[exit_main]),
+                                  "open_ms": frames[1]["start_ms"], "close_ms": frames[1]["start_ms"] + 50},
+        })
         # CD27C3 selects ETC ATK 62, then CD27ED reads zero-based rank column 2.
         stages[-1]["hits"][0]["percent_col"] = 2
     if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS and not (
@@ -1568,7 +1589,7 @@ def build_move(
     result = {"skill": str(skill["path"]), "name": str(skill["name"]), "stages": stages}
     if key == "hundredsword":
         result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
-                      fidelity_pending=["sword_formation_and_contacts", "automatic_travel_sequence",
+                      fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "automatic_travel_sequence",
                                         "finish_effects", "rank_bonuses", "original_command"])
     if key == "normalwave":
         # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),
@@ -2168,6 +2189,10 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "grabblastblood.obj")
         object_candidates.add(OBJ_ROOT + "bloodyrave.obj")
         object_candidates.add(OBJ_ROOT + "outragebreakfloor.obj")
+        hundred_sword_field = OBJ_ROOT + "hundredswordhit.obj"
+        object_candidates.add(hundred_sword_field)
+        SAFE_EFFECTS.update(path for path in records[hundred_sword_field]["decoded"]["etc_motions"]
+                            if safe_animation(library, path))
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         object_candidates.update(OBJ_ROOT + f"illusionslashmelee{index}.obj" for index in range(1, 5))
         object_candidates.add(OBJ_ROOT + "illusionslashsub.obj")

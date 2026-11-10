@@ -2077,6 +2077,10 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
+	if name == "hundredsword" and index == 0:
+		# CD1E09..CD1E9A takes the cast origin before the object exists.
+		player["native_phase"]["field_origin"] = Vector2(Vector2i(player["pos"]))
+		player["native_phase"]["field_facing"] = player["facing"]
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	if name == "sacrifice" and index == 0:
 		bus.emit("combat.cue",{"kind":"fx","key":m["cast_fx"],"point":player["pos"],"height":player["z"],
@@ -2521,7 +2525,10 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
 				elif hit.get("skill_id","") == "illusionslash" and hit.get("object","").ends_with("/illusionslashwave.obj"):
 					hit = prepare_illusion_wave(hit)
-				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
+				if hit.get("native_controller",{}).get("kind","") == "hundred_sword_field":
+					var phase: Dictionary = player["native_phase"]
+					spawn_object(hit,"player",phase["field_origin"],0.0,int(phase["field_facing"]),attack_power())
+				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
@@ -3882,6 +3889,20 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		if kind == "sayaex_ice":
 			if not step_saya_crystal(o,controller):objects.remove_at(i)
 			continue
+		if kind == "hundred_sword_field":
+			# A6C960 switches both layers when the owner leaves 47/48
+			# or when the state 49 body reaches frame two.
+			var exiting: bool = player["state"] != "action" or player["action"] != "hundredsword"
+			if not exiting and action_def()["ani"] == "hundredswordfinish":
+				var clock := action_event_clock(float(player["clock"]))
+				exiting = int(Kernel.Timeline.frame_at(action_def()["timeline"],clock)["frame"]) >= 2
+			if exiting and not o.has("exit_at_ms"):o["exit_at_ms"] = t
+			if o.has("exit_at_ms"):
+				if t-float(o["exit_at_ms"]) >= float(controller["exit_ms"]):objects.remove_at(i)
+				continue
+			var opens := float(controller["open_ms"])
+			if old_t < opens and t >= opens:play_sound("W_WEAPON_DRIVE")
+			if t < opens or t >= float(controller["close_ms"]):continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
 		var life := float(o["life_ms"])
@@ -3977,6 +3998,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						if not friendly:break
 				if native_maze != null and o["owner"] == "player":
 					apply_native_prop_hits(world,hit,float(o["power"]),o["hits"],"prop:")
+		if kind == "hundred_sword_field":continue
 		if life > 0 and t >= life:done = true
 		elif life <= 0 and t >= Kernel.Timeline.duration(tl) and (active < 0 or t >= active):done = true
 		if active >= 0 and t >= active and life <= 0 and Kernel.Timeline.duration(tl) > 2000:done = true
@@ -5134,6 +5156,23 @@ func view_snapshot() -> Dictionary:
 			floor["effect"] = controller["attached"]
 			objs.append(floor)
 			objs.append(item)
+		elif controller.get("kind","") == "hundred_sword_field":
+			item["depth_offset"] = -2
+			item["hold_last_frame"] = true
+			var overlay := item.duplicate()
+			overlay["id"] = "%s:overlay"%o["id"]
+			overlay["effect"] = controller["overlay"]
+			overlay["depth_offset"] = -1
+			if o.has("exit_at_ms"):
+				var age := float(o["clock"])-float(o["exit_at_ms"])
+				item["id"] = "%s:exit"%o["id"]
+				overlay["id"] = "%s:exit_overlay"%o["id"]
+				item["effect"] = controller["exit_layers"][0]
+				item["clock"] = age
+				overlay["effect"] = controller["exit_layers"][1]
+				overlay["clock"] = age
+			objs.append(item)
+			objs.append(overlay)
 		elif controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
 		elif controller.get("kind","") == "sayaex_ice":

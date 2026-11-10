@@ -77,6 +77,9 @@
    "skillfx_grab_stay_ldodge_19279fcb": "passiveobject/character/swordman/animation/epidemicrasa/grab_stay_ldodge.ani",
    "skillfx_grabblastblood_9dd6d17c": "character/swordman/effect/animation/grabblastblood.ani",
    "skillfx_hit_bc6d8512": "character/swordman/effect/animation/bloodyrave/hit.ani",
+   "skillfx_hundredswordhitdisappear1_db11d5b7": "passiveobject/character/swordman/animation/hundredswordhitdisappear1.ani",
+   "skillfx_hundredswordhitdisappear2_eb725e54": "passiveobject/character/swordman/animation/hundredswordhitdisappear2.ani",
+   "skillfx_hundredswordhitlayer_b13b5322": "passiveobject/character/swordman/animation/hundredswordhitlayer.ani",
    "skillfx_icewave_ca30731c": "character/swordman/effect/animation/icewave.ani",
    "skillfx_jumpchainattackslash1_katana_under_0e0a4d92": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash1_katana_under.ani",
    "skillfx_jumpchainattackslash2_katana_under_3fe65613": "character/swordman/effect/animation/jumpattackmulti/jumpchainattackslash2_katana_under.ani",
@@ -163,6 +166,7 @@
    "passiveobject/character/swordman/guardwave.obj": "passiveobject/character/swordman/guardwave.obj",
    "passiveobject/character/swordman/hardattackchargeafter.obj": "passiveobject/character/swordman/hardattackchargeafter.obj",
    "passiveobject/character/swordman/hopsmashsub.obj": "passiveobject/character/swordman/hopsmashsub.obj",
+   "passiveobject/character/swordman/hundredswordhit.obj": "passiveobject/character/swordman/hundredswordhit.obj",
    "passiveobject/character/swordman/icewave1.obj": "passiveobject/character/swordman/icewave1.obj",
    "passiveobject/character/swordman/icewave2.obj": "passiveobject/character/swordman/icewave2.obj",
    "passiveobject/character/swordman/icewave3.obj": "passiveobject/character/swordman/icewave3.obj",
@@ -5413,7 +5417,7 @@
   },
   "hundredsword": {
    "fidelity_pending": [
-    "sword_formation_and_contacts",
+    "sword_formation_pulls_and_repeat_contacts",
     "automatic_travel_sequence",
     "finish_effects",
     "rank_bonuses",
@@ -5438,7 +5442,30 @@
        "key": "skillfx_ready_528bce0e"
       }
      ],
-     "hits": []
+     "hits": [
+      {
+       "at": 2200,
+       "native_controller": {
+        "close_ms": 150,
+        "exit_layers": [
+         "skillfx_hundredswordhitdisappear1_db11d5b7",
+         "skillfx_hundredswordhitdisappear2_eb725e54"
+        ],
+        "exit_ms": 300.0,
+        "kind": "hundred_sword_field",
+        "open_ms": 100,
+        "overlay": "skillfx_hundredswordhitlayer_b13b5322"
+       },
+       "object": "passiveobject/character/swordman/hundredswordhit.obj",
+       "offset": [
+        150,
+        0,
+        0
+       ],
+       "percent_col": 0,
+       "starts_at_zero": true
+      }
+     ]
     },
     {
      "ani": "hundredswordmoveslash1",

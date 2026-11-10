@@ -423,6 +423,7 @@ func _present_objects(list: Array) -> void:
 				rear.setup(rear_bank,int(o["facing"]))
 			object_views[o["id"]] = v
 		v.loop = bool(o.get("loop",false))
+		v.hold_last_frame = bool(o.get("hold_last_frame",false))
 		v.facing = int(o["facing"])
 		v.position = _canvas(Vector2(o["pos"]), float(o["z"]))
 		v.z_index = int(Vector2(o["pos"]).y)+int(o.get("depth_offset",2))
