@@ -183,7 +183,6 @@ DIRECT_OBJECTS = {
     "illusionslash": (OBJ_ROOT + "illusionslashwave.obj", 900, 520.0, 1600),
     "wavespinarea": (OBJ_ROOT + "wavespinarea.obj", 420, 0.0, 5000),
     "hellbenter": (OBJ_ROOT + "hellbenterfinish.obj", 760, 0.0, 1800),
-    "hundredsword": (OBJ_ROOT + "hundredswordhit.obj", 780, 0.0, 3000),
     "blache": (OBJ_ROOT + "blache.obj", 760, 0.0, 3600),
     "waveeye": (OBJ_ROOT + "waveeye.obj", 850, 0.0, 5000),
 }
@@ -191,6 +190,7 @@ DIRECT_OBJECTS = {
 # Source bindings in CNSwordman state 24 and the ghost object's motion vector.
 # Keep other blank-frame clips out of the legacy filename heuristic.
 NATIVE_ANIMATION_BINDINGS = {
+    CHR_FX + "hundredsword/ready.ani",
     *(OBJ_ROOT + f"animation/illusionslashmelee{index}.ani" for index in range(1, 5)),
     OBJ_ROOT + "animation/momentaryslash/start.ani",
     CHR_FX + "giveblood/givebloodstay.ani",
@@ -1509,6 +1509,14 @@ def build_move(
                 statuses=statuses,
             )
         )
+    if key == "hundredsword":
+        ready = add_fx(fx, effects, CHR_FX + "hundredsword/ready.ani")
+        if not ready:
+            raise ValueError("Missing original Hundred Sword ready effect")
+        # CD1F81..CD1FD6 attaches Ready.ani to the state 47 body.
+        stages[0]["fx"] = [{"key": ready, "at": 0, "action_clock": True, "depth_offset": 1}]
+        # CD27C3 selects ETC ATK 62, then CD27ED reads zero-based rank column 2.
+        stages[-1]["hits"][0]["percent_col"] = 2
     if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS and not (
         key in ("khazan", "bremen")
         or key in CAST_OBJECTS and CAST_OBJECTS[key][0] in SAFE_OBJECTS
@@ -1558,6 +1566,10 @@ def build_move(
                     }
                 )
     result = {"skill": str(skill["path"]), "name": str(skill["name"]), "stages": stages}
+    if key == "hundredsword":
+        result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
+                      fidelity_pending=["sword_formation_and_contacts", "automatic_travel_sequence",
+                                        "finish_effects", "rank_bonuses", "original_command"])
     if key == "normalwave":
         # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),
         # size percent <- (-1,1,1). The generic column-zero attack loses both

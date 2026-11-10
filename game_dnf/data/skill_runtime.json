@@ -106,6 +106,7 @@
    "skillfx_normalwaveslash_0f16bb7b": "character/swordman/effect/animation/normalwaveslash.ani",
    "skillfx_rasa_be541dd4": "passiveobject/character/swordman/animation/epidemicrasa/rasa.ani",
    "skillfx_rasa_ldodge_91e196e9": "passiveobject/character/swordman/animation/epidemicrasa/rasa_ldodge.ani",
+   "skillfx_ready_528bce0e": "character/swordman/effect/animation/hundredsword/ready.ani",
    "skillfx_saya2_078bfa10": "passiveobject/character/swordman/animation/saya2.ani",
    "skillfx_saya2_abfdbd8c": "passiveobject/character/swordman/animation/sayaex/saya2.ani",
    "skillfx_saya_down_ced86275": "passiveobject/character/swordman/animation/hardattackcharge/saya-down.ani",
@@ -162,7 +163,6 @@
    "passiveobject/character/swordman/guardwave.obj": "passiveobject/character/swordman/guardwave.obj",
    "passiveobject/character/swordman/hardattackchargeafter.obj": "passiveobject/character/swordman/hardattackchargeafter.obj",
    "passiveobject/character/swordman/hopsmashsub.obj": "passiveobject/character/swordman/hopsmashsub.obj",
-   "passiveobject/character/swordman/hundredswordhit.obj": "passiveobject/character/swordman/hundredswordhit.obj",
    "passiveobject/character/swordman/icewave1.obj": "passiveobject/character/swordman/icewave1.obj",
    "passiveobject/character/swordman/icewave2.obj": "passiveobject/character/swordman/icewave2.obj",
    "passiveobject/character/swordman/icewave3.obj": "passiveobject/character/swordman/icewave3.obj",
@@ -5412,12 +5412,32 @@
    ]
   },
   "hundredsword": {
+   "fidelity_pending": [
+    "sword_formation_and_contacts",
+    "automatic_travel_sequence",
+    "finish_effects",
+    "rank_bonuses",
+    "original_command"
+   ],
+   "material_cost": {
+    "amount": 5,
+    "source_id": 3037
+   },
    "name": "极 · 鬼剑术 (暴风式)",
+   "native_state": "hundred_sword",
    "skill": "skill/swordman/hundredsword.skl",
    "stages": [
     {
      "ani": "hundredswordready",
      "atk": "",
+     "fx": [
+      {
+       "action_clock": true,
+       "at": 0,
+       "depth_offset": 1,
+       "key": "skillfx_ready_528bce0e"
+      }
+     ],
      "hits": []
     },
     {
@@ -5459,14 +5479,7 @@
        "atk": "character/swordman/attackinfo/hundredswordfinish.atk",
        "body": true,
        "effects": [],
-       "percent_col": 6
-      },
-      {
-       "at": 780,
-       "life_ms": 3000,
-       "object": "passiveobject/character/swordman/hundredswordhit.obj",
-       "percent_col": 0,
-       "speed": 0.0
+       "percent_col": 2
       }
      ]
     }

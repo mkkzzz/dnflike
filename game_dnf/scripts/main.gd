@@ -669,6 +669,8 @@ func action_ani_clock(elapsed: float) -> float:
 		return float(phase["body_clock"])
 	if phase.has("outrage_timeline"):
 		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
+	if phase.has("hundred_sword_ready_timeline"):
+		return _source_animation_clock(elapsed,phase["hundred_sword_ready_timeline"],action_def()["timeline"])
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
@@ -1427,7 +1429,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.has("normal_cancel_job"):
 		var state := String(player["state"])
 		if state not in ["idle","move","guard","action"]:return reject_action(name,"state")
-		if state == "guard" and m.get("native_state","") in ["bloody_rave","outrage_break"]:return reject_action(name,"state")
+		if state == "guard" and m.get("native_state","") in ["bloody_rave","outrage_break","hundred_sword"]:return reject_action(name,"state")
 		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
@@ -2026,6 +2028,11 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			phase["outrage_impact_at"] = float(stage["timeline"][m["impact_frame"]]["start_ms"])
 		retime_outrage_phase(phase,stage,attack_animation_percent(0))
 		player["native_phase"] = phase
+	elif m.get("native_state","") == "hundred_sword" and index == 0:
+		# CD1DB8 selects mode 3, which excludes the equipped weapon's speed.
+		var rate: float = numeric_player.native_non_weapon_attack_rate() if numeric_player != null else 1.0
+		var timeline := native_timed_frames(action_def()["timeline"],_native_animation_percent(rate))
+		player["native_phase"] = {"hundred_sword_ready_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -2595,6 +2602,10 @@ func attack_animation_percent(bonus: int, previous := 100.0) -> float:
 	var native_base := int(_native_float32(_native_float32(base)*1000.0))
 	var multiplier := _native_float32(1.0+_native_float32(float(bonus)*0.0010000000474974513))
 	var per_mille := maxi(1,int(_native_float32(native_base*multiplier)))
+	return _native_animation_percent(per_mille/1000.0,previous)
+
+func _native_animation_percent(multiplier: float, previous := 100.0) -> float:
+	var per_mille := maxi(1,roundi(multiplier*1000.0))
 	var rate := _native_float32(_native_float32(per_mille*100.0)*0.0010000000474974513)
 	# 1091ECF preserves the current ANI speed within one relative epsilon.
 	return previous if absf(_native_float32(rate-previous)) <= absf(rate)*0.00000011920928955078125 else rate
@@ -3581,7 +3592,7 @@ func attack_body_armor() -> bool:
 	# Charge Crash uses the authored dash, uppercut and frozen preparation pose.
 	if not upper and player["action"] != "charge_crash" \
 			and stage.get("ani","") not in ["weaponcomboheavy2","outragebreakslash", \
-				"rapidmoveslashmove1","rapidmoveslashmove2","illusionslashfinal"]:return false
+				"rapidmoveslashmove1","rapidmoveslashmove2","illusionslashfinal","hundredswordready"]:return false
 	# CD42F3 installs an override for the first two frames. After CB0E2E
 	# clears it, 7F13F0 still reads the current ANI's own body state.
 	var frame := Kernel.Timeline.frame_at(stage["timeline"],action_ani_clock(float(player["clock"])))

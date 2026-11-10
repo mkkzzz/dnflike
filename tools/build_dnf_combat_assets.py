@@ -1533,6 +1533,8 @@ def main() -> int:
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
                         help='Append the original Illusion Slash objects, voices and sword-wave hit cue')
+    parser.add_argument('--extend-hundred-sword-ready', action='store_true',
+                        help='Add the original Hundred Sword ready overlay')
     parser.add_argument('--extend-rapid-move-slash', action='store_true',
                         help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
@@ -1722,6 +1724,13 @@ def main() -> int:
         specs.append(('objects', ground_wave['object'], ground_wave['object']))
         specs.extend(('objects', path, path) for path in
                      (f'passiveobject/character/swordman/illusionslashmelee{index}.obj' for index in range(1, 5)))
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_hundred_sword_ready:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        ready, = runtime['moves']['hundredsword']['stages'][0]['fx']
+        key = ready['key']
+        specs = [('effects', key, runtime['assets']['effect_anims'][key])]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:

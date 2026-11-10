@@ -3146,6 +3146,49 @@ func check_grab_blast_thirst() -> void:
 func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
+func check_hundred_sword_ready() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hundredsword"]
+	start_room("","katana",1,spec)
+	game.clear_monsters()
+	game.numeric_player.values["mp_cost_rate"] = 1.0
+	game.numeric_player.values["cooldown_rate"] = 1.0
+	game.numeric_player.values["attack_speed"] = 1.25
+	game.numeric_player.weapon_attack_speed_per_mille = 250
+	game.player["mp"] = 1500.0
+	var payments: Array = []
+	session.set_skill_material_spender(func(id: int, amount: int):
+		payments.append([id,amount])
+		return payments.size() > 1)
+	press(KEY_A)
+	step(0.0)
+	check(game.player["action"]=="" and game.player["mp"]==1500.0
+		and not game.player["cooldowns"].has("hundredsword") and payments==[[3037,5]],
+		"Hundred Sword rejects a failed five-cube payment before committing MP or cooldown")
+	press(KEY_X)
+	step(0.0)
+	press(KEY_A)
+	step(0.0)
+	var layers: Array = game.view.effects.filter(func(fx):return String(fx.data["source"]).ends_with("/hundredsword/ready.ani"))
+	check(game.player["action"]=="hundredsword" and game.view.player_actor.pose=="hundredswordready"
+		and game.player["mp"]==520.0 and game.player["cooldowns"].get("hundredsword",0)==145.0 and payments==[[3037,5],[3037,5]],
+		"the normal-attack entry commits the original rank-one MP, cooldown and five cubes once")
+	check(layers.size()==1 and layers[0].follow==game.player["id"] and game.attack_body_armor()
+		and game.action_duration("hundredsword")==3000.0,
+		"the original ready overlay follows the armored body and excludes weapon speed")
+	step(239.0)
+	check(cues("SM_BOONGSAN").is_empty() and game.objects.is_empty(),"the ready state has no early voice or generic attack object")
+	step(1.0)
+	check(cues("SM_BOONGSAN").size()==1,"the first authored ready voice plays at frame three")
+	var finish: Dictionary = game.move_def("hundredsword")["stages"][-1]
+	check(finish["hits"].size()==1 and finish["hits"][0]["percent"]==2501.0
+		and finish["hits"][0]["atk_path"].ends_with("/hundredswordfinish.atk"),
+		"the finish uses original ATK 62 and rank column two without an unrelated object")
+
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]
 	check(game.view.audio.variants["HOANYOUNG_HIT"][0] is AudioStreamOggVorbis
@@ -4787,6 +4830,7 @@ func run() -> void:
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
 	check_illusion_finish()
+	check_hundred_sword_ready()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
 	check_rapid_move_slash_depth()
