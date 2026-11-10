@@ -3048,7 +3048,8 @@ func step_draw_hits(ms: float, first_new_id: int) -> void:
 		land_hit(player,target,hit,point,facing,attack_power())
 	draw_pending_hits = waiting
 
-func apply_draw_impact_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
+func apply_native_stagger_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float,
+		delay_factor := 1.0) -> String:
 	# 8185EB suppresses the reaction for body armor, while HP is resolved separately.
 	if int(enemy_frame(target).get("items",{}).get("13",0)) == 1:return "none"
 	var motions: Dictionary = target["def"]["motions"]
@@ -3069,10 +3070,9 @@ func apply_draw_impact_reaction(target: Dictionary, atk: Dictionary, facing: int
 		var timing: Dictionary = move_def("draw")["draw_stagger"]
 		var limit := int(timing["max_recovery"])
 		var minimum := int(timing["min_ms"])
-		# 8292EF uses signed integer division and floors the delta at zero.
-		# The temporary ATK's default hit-delay factor resolves to 1.
+		# 8292EF truncates the recovery interpolation before applying ATK +0x10C.
 		var delta := int(float((int(timing["max_ms"])-minimum)*(limit-int(recovery)))/float(maxi(1,limit)))
-		target["stun_ms"] = float(minimum+maxi(0,delta))
+		target["stun_ms"] = float(int(_native_float32((minimum+maxi(0,delta))*delay_factor)))
 	return reaction
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
@@ -3295,8 +3295,12 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var armor_blocks_reaction := (outrage_impact or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
-			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
+			reaction = apply_native_stagger_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
+		elif hit.has("stagger_factor") and not armor_blocks_reaction and target["state"] not in ["down","native_down_flight"] \
+				and float(target["z"]) <= 0.0 and float(target["vz"]) <= 0.0:
+			reaction = apply_native_stagger_reaction(target,atk,facing,recovery,float(hit["stagger_factor"]))
+			if reaction == "stagger":Kernel.Reaction.start_native_stagger_slide(target,facing)
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
 		elif outrage_impact and not armor_blocks_reaction:

@@ -16,6 +16,7 @@ static func apply(body: Dictionary, atk: Dictionary, attacker_facing: int, rp: D
 	var downed := String(body["state"]) == "down"
 	if reaction == "[none]" and not airborne:return "none"
 	if push > 0:
+		body.erase("push_accel")
 		body["push_v"] = attacker_facing*push*float(rp["push_speed_per_unit"])
 		body["push_ms"] = float(rp["push_decay_ms"])
 	# Original motion pair: [hit down] uses damage motion 1, horizontal hits damage motion 2 (E-INFER).
@@ -40,17 +41,40 @@ static func apply(body: Dictionary, atk: Dictionary, attacker_facing: int, rp: D
 	body["stun_ms"] = float(rp["stun_base_ms"])*float(rp["stun_reference_recovery"])/maxf(1.0,recovery)
 	return "stagger"
 
+static func start_native_stagger_slide(body: Dictionary, facing: int) -> void:
+	# 8291ED/82935F starts at 400 px/s and truncates the signed acceleration.
+	var duration := mini(150,int(body["stun_ms"]))
+	body["push_ms"] = float(duration)
+	if duration > 0:
+		body["push_v"] = float(400*facing)
+		body["push_accel"] = float(-int(400000.0/duration)*facing)
+	else:
+		body["push_v"] = 0.0
+		body.erase("push_accel")
+
 ## Advances knockback slide, gravity, landing/bounce and the down/get-up hold.
 ## `move` is a Callable(from: Vector2, delta: Vector2) -> Vector2 that applies world collision.
 ## Returns "landed" on the frame a launched body comes to rest on the ground, else "".
 static func step_body(body: Dictionary, ms: float, gravity: float, rp: Dictionary, move: Callable, hold_down := false) -> String:
 	var dt := ms/1000.0
 	var result := ""
-	if float(body.get("push_ms",0)) > 0:
+	var push_left := float(body.get("push_ms",0))
+	if push_left > 0 and body.has("push_accel"):
+		var active_ms := minf(push_left,ms)
+		var seconds := active_ms/1000.0
+		var speed := float(body["push_v"])
+		var acceleration := float(body["push_accel"])
+		body["pos"] = move.call(Vector2(body["pos"]),Vector2((speed+acceleration*0.5*seconds)*seconds,0))
+		body["push_ms"] = push_left-active_ms
+		body["push_v"] = speed+acceleration*seconds
+		if body["push_ms"] <= 0.0:
+			body["push_v"] = 0.0
+			body.erase("push_accel")
+	elif push_left > 0:
 		var decay := float(rp["push_decay_ms"])
-		var v := float(body["push_v"])*float(body["push_ms"])/decay
+		var v := float(body["push_v"])*push_left/decay
 		body["pos"] = move.call(Vector2(body["pos"]),Vector2(v*dt,0))
-		body["push_ms"] = maxf(0,float(body["push_ms"])-ms)
+		body["push_ms"] = maxf(0,push_left-ms)
 	var state := String(body["state"])
 	if float(body["z"]) > 0 or float(body["vz"]) > 0:
 		body["z"] = maxf(0,float(body["z"])+float(body["vz"])*dt)

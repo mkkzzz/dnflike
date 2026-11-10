@@ -593,6 +593,13 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				# Object 20051 leaves its ATK pause at -1. The finish installs its explicit 50 ms.
 				for hit: Dictionary in built["hits"]:
 					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
+					if hit.get("native_controller",{}).get("kind") == "hundred_sword_field":
+						# The two empty effect names leave decoded hit_info null. Read the original float.
+						for field: Dictionary in db.record(hit["atk_path"]).get("raw",[]):
+							if field["tag"] == "[hit info]" and field["values"].size() == 4:
+								hit["stagger_factor"] = float(field["values"][3])
+								break
+						if not hit.has("stagger_factor"):problems.append("Missing Hundred Sword field hit delay")
 			if name == "charge_crash":
 				# CD0279/CD0561/CD07E8 use the ordinary weapon ATK installer.
 				for hit: Dictionary in built["hits"]:

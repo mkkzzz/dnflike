@@ -4263,6 +4263,10 @@ func check_hundred_sword_ready() -> void:
 	first["hp"] = 5000.0
 	late["hp"] = 5000.0
 	centered["hp"] = 5000.0
+	first["numeric"].values["hp_max"] = 5000.0
+	first["numeric"].values["hit_recovery"] = 500.0
+	late["numeric"].values["hit_recovery"] = 1990.0
+	centered["numeric"].values["hit_recovery"] = 501.0
 	move_target(first,center+Vector2(80,0))
 	game.step_objects(99.0)
 	check(first["hp"]==5000.0 and cues("W_WEAPON_DRIVE").is_empty() and cues("hundred_sword_contact").is_empty(),
@@ -4275,6 +4279,11 @@ func check_hundred_sword_ready() -> void:
 		"the field pulls from the right and uses reverse cast facing for a victim on the same integer X")
 	check(first["stuck_ms"]==0.0 and centered["stuck_ms"]==0.0 and game.player["stuck_ms"]==0.0,
 		"the field's -1 hit-info pause keeps both victims and caster moving on the opening hit")
+	check(first["state"]=="hurt" and first["stun_ms"]==1875.0 and centered["stun_ms"]==1870.0
+		and first["facing"]==1 and centered["facing"]==-1,
+		"the field truncates the recovery curve before multiplying by five and turns victims away from the center")
+	check(first["push_v"]==-400.0 and centered["push_v"]==400.0 and first["push_ms"]==150.0,
+		"the field starts the native inward ground slide independently of the long stagger")
 	var hits: Array = game.bus.events_of("combat.hit").filter(func(event):
 		return String(event.get("atk","")).ends_with("/hundredswordhit.atk"))
 	var flashes := cues("hundred_sword_contact")
@@ -4293,6 +4302,17 @@ func check_hundred_sword_ready() -> void:
 		return (fx.data["source"]=="common/hiteffect/animation/slashlarge2.ani"
 			and fx.frame_scale().is_equal_approx(Vector2(1.2,1.2)) and fx.data["duration_ms"]==200.0)),
 		"the field contact draws the original 200-ms SlashLarge2 at its authored scale")
+	var start_x := float(first["pos"].x)
+	game.update_enemy(first,75.0)
+	check(is_equal_approx(float(first["pos"].x),start_x-22.501875) and first["stun_ms"]==1800.0,
+		"the first half of the ground slide integrates the signed native deceleration")
+	game.update_enemy(first,75.0)
+	check(is_equal_approx(float(first["pos"].x),start_x-30.0075) and first["push_ms"]==0.0 and first["stun_ms"]==1725.0,
+		"the ground slide ends while the victim remains staggered")
+	game.update_enemy(first,1724.0)
+	check(first["state"]=="hurt" and first["stun_ms"]==1.0,"the field victim remains staggered through 1874 ms")
+	game.update_enemy(first,1.0)
+	check(first["state"]=="idle" and first["stun_ms"]==0.0,"the field victim can act again at 1875 ms")
 	var after_contact: float = first["hp"]
 	move_target(first,center+Vector2(80,0))
 	move_target(late,center-Vector2(80,0))
@@ -4300,6 +4320,8 @@ func check_hundred_sword_ready() -> void:
 	check(first["hp"]==after_contact and late["hp"]<5000.0 and late["push_v"]>0.0
 		and cues("hundred_sword_contact").size()==3,
 		"a fresh target is pulled in from the left at 149 while the ledger blocks a duplicate")
+	check(late["stun_ms"]==10.0 and late["push_ms"]==10.0 and late["push_accel"]==-40000.0,
+		"strong recovery shortens the slide and increases its deceleration to stop on the same boundary")
 	field["hits"].erase(late["id"])
 	late["hp"] = 5000.0
 	move_target(late,center-Vector2(80,0))
@@ -4336,6 +4358,8 @@ func check_hundred_sword_ready() -> void:
 		"the first field update hits the same target with the outgoing slash visual and inward ATK direction")
 	check(first["stuck_ms"]==0.0 and game.player["stuck_ms"]==0.0,
 		"the repeated field attack also leaves both clocks free of hitstop")
+	check(first["stun_ms"]==1875.0 and first["push_ms"]==150.0,
+		"reopening the field uses the same source stagger and slide as the opening hit")
 	after_contact = first["hp"]
 	move_target(first,center+Vector2(80,0))
 	move_target(late,center-Vector2(80,0))
