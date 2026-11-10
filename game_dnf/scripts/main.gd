@@ -5280,6 +5280,20 @@ func append_hellbenter_view(out: Array) -> void:
 			fade = int(alpha)/255.0
 			break
 		lower = band[0]
+	if effect.has("blood_complete_at"):
+		var complete_age := maxi(0,int(duration-float(effect["remaining_ms"])-float(effect["blood_complete_at"])))
+		var complete: Array = config["complete_sword"]
+		layer["clock"] = complete_age
+		out.append(layer.merged({"id":"hellbenter:complete_base","effect":complete[0],"hold_last_frame":true,"fade":fade}))
+		out.append(layer.merged({"id":"hellbenter:complete_entry","effect":complete[1],"hold_last_frame":true}))
+		# 99BC9D first updates CompleteSword3 when CompleteSword2 reaches frame four.
+		var loop_age := complete_age-int(config["complete_loop_at"])
+		if loop_age >= 0:
+			out.append(layer.merged({"id":"hellbenter:complete_glow","effect":complete[2],"loop":true,"clock":loop_age},true))
+		if complete_age < int(config["complete_flash_end"]):
+			for key: String in config["complete_flash"]:
+				out.append(layer.merged({"id":"hellbenter:"+key,"effect":key}))
+		return
 	var sword: Array = config["sword"]
 	out.append(layer.merged({"id":"hellbenter:sword_base","effect":sword[0],"hold_last_frame":true,"fade":fade}))
 	out.append(layer.merged({"id":"hellbenter:sword_glow","effect":sword[1],"hold_last_frame":true}))

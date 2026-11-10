@@ -62,6 +62,11 @@
    "skillfx_charge_b82745b0": "character/swordman/effect/animation/reflectguard/charge.ani",
    "skillfx_charge_dodge_48d97524": "character/swordman/effect/animation/flowmindpowerup/charge_dodge.ani",
    "skillfx_circle_c83df7ec": "character/swordman/effect/animation/wavespinarea/circle.ani",
+   "skillfx_completeflash1_37d7a585": "character/swordman/effect/animation/hellbenter/completeflash1.ani",
+   "skillfx_completeflash2_cc9c5ef2": "character/swordman/effect/animation/hellbenter/completeflash2.ani",
+   "skillfx_completesword1_4316e128": "character/swordman/effect/animation/hellbenter/completesword1.ani",
+   "skillfx_completesword2_d512be88": "character/swordman/effect/animation/hellbenter/completesword2.ani",
+   "skillfx_completesword3_68d74b89": "character/swordman/effect/animation/hellbenter/completesword3.ani",
    "skillfx_dash_e40d6dac": "character/swordman/effect/animation/chargecrash/dash.ani",
    "skillfx_dashattackmultihit1_308d28ca": "character/swordman/effect/animation/dashattackmultihit1.ani",
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
@@ -5361,6 +5366,18 @@
      "skillfx_cast2_d59b9126"
     ],
     "cast_end": 500,
+    "complete_flash": [
+     "skillfx_completeflash1_37d7a585",
+     "skillfx_completeflash2_cc9c5ef2"
+    ],
+    "complete_flash_end": 300,
+    "complete_loop_at": 400,
+    "complete_sound": "W_SPIRITS_FLASH",
+    "complete_sword": [
+     "skillfx_completesword1_4316e128",
+     "skillfx_completesword2_d512be88",
+     "skillfx_completesword3_68d74b89"
+    ],
     "mark": [
      "skillfx_buffmark1_c6787153",
      "skillfx_buffmark2_8bd1ecb7",
@@ -5398,7 +5415,6 @@
    "effect_id": "hellbenter",
    "fidelity_pending": [
     "special_bleed",
-    "full_sword",
     "finish",
     "original_command"
    ],

@@ -44,7 +44,7 @@ func step(game, ms: float) -> void:
 		return
 	var age := float(effect["definition"]["duration_ms"])-float(effect["remaining_ms"])
 	if arrivals > 0:
-		_absorb(game,effect,arrivals,int(config["capacity"]),age,float(move["appearance"]["absorb_end"]))
+		_absorb(game,effect,arrivals,int(config["capacity"]),age,move["appearance"])
 	var scan := age >= float(effect.get("next_blood_scan",0.0))
 	if scan:effect["next_blood_scan"] = age+float(config["scan_ms"])
 	for enemy: Dictionary in game.monsters:
@@ -102,12 +102,18 @@ static func _orb_axis(start: int, bend: int, destination: int, age: int, turn: i
 	var offset := time*(initial_speed+acceleration*0.5*time)
 	return int(origin+offset*signi(bend-origin))
 
-func _absorb(game, effect: Dictionary, arrivals: int, capacity: int, age: float, flash_duration: float) -> void:
+func _absorb(game, effect: Dictionary, arrivals: int, capacity: int, age: float, appearance: Dictionary) -> void:
 	var previous := int(effect.get("blood_count",0))
 	var count := mini(capacity,previous+arrivals)
 	if count == previous:return
 	effect["blood_count"] = count
-	if age-float(effect.get("blood_absorb_at",-INF)) >= flash_duration:effect["blood_absorb_at"] = age
+	if count == capacity:
+		# CompleteSword2 starts updating on the first full-charge draw and has
+		# a sound on frame zero. Subsequent arrivals cannot restart it.
+		effect["blood_complete_at"] = age
+		game.play_sound(appearance["complete_sound"])
+	elif age-float(effect.get("blood_absorb_at",-INF)) >= float(appearance["absorb_end"]):
+		effect["blood_absorb_at"] = age
 	var row: Array = Numbers.Skills.sample(Numbers.record("hellbenter"),int(effect["rank"]))["level_row"]
 	# CA1FD0 writes the interpolated integer per-mille bonus into the two
 	# existing modifier records. The cast's saved rank determines the endpoints.

@@ -226,6 +226,8 @@ HELLBENTER_APPEARANCE = {
     "target_bleeding": ("bleeding1", "bleeding2"),
     "ball": ("ballhead", "balltail1", "balltail2", "balltail3", "balltail4"),
     "absorb": ("absorb",),
+    "complete_sword": ("completesword1", "completesword2", "completesword3"),
+    "complete_flash": ("completeflash1", "completeflash2"),
 }
 IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
@@ -1510,6 +1512,11 @@ def build_move(
         static = records[skill["path"]]["decoded"]["dungeon"]["static_data"]
         target_mark = records[CHR_FX + "hellbenter/targetmark1.ani"]["decoded"]
         absorb = records[CHR_FX + "hellbenter/absorb.ani"]["decoded"]
+        complete_glow, complete_flash = (
+            records[CHR_FX + f"hellbenter/{stem}.ani"]["decoded"]
+            for stem in ("completesword2", "completeflash1")
+        )
+        complete_sound, = complete_glow["sound_events"]
         # 829F4A/1086316 use the standing body frame's top. For the default
         # Swordman skin, Stay frame 0 uses IMG frame 90 at -333 + 233.
         appearance.update(visible_at=cast["timeline"][4]["start_ms"],
@@ -1517,6 +1524,9 @@ def build_move(
                           mark_end=mark["timeline"][-1]["end_ms"],
                           target_mark_end=target_mark["timeline"][-1]["end_ms"],
                           absorb_end=absorb["timeline"][-1]["end_ms"],
+                          complete_flash_end=complete_flash["duration_ms"],
+                          complete_loop_at=complete_glow["timeline"][4]["start_ms"],
+                          complete_sound=complete_sound["sound"],
                           body_height=100,
                           sound={"key": sound["sound"], "at": glow["timeline"][sound["frame"]]["start_ms"]})
         # CC057E..CC062C sends static columns 0 and 1 and throw slot 1 to state 13.
@@ -1526,7 +1536,7 @@ def build_move(
                 "appearance": appearance,
                 "blood": {"capacity": static[3], "scan_ms": 250, "pulse_ms": static[10],
                           "range": static[11], "flight_ms": 600},
-                "fidelity_pending": ["special_bleed", "full_sword", "finish", "original_command"]}
+                "fidelity_pending": ["special_bleed", "finish", "original_command"]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)

@@ -144,9 +144,9 @@
   "passiveobject/character/swordman/illusionslashmelee4.obj",
   "passiveobject/character/swordman/illusionslashsub.obj"
  ],
- "effects": 480,
+ "effects": 485,
  "digits": 61,
- "audio_keys": 289,
+ "audio_keys": 290,
  "unresolved": 32,
  "unresolved_items": [
   {

@@ -2395,6 +2395,54 @@ func check_hellbenter_first_cast() -> void:
 	game.step_game(500.0)
 	check(blood.orbs.is_empty() and effect.get("blood_count",0)==1,
 		"neither the distant target nor the cured target can add another charge")
+	# Position the fixture one orb from full to exercise the transition via
+	# the live pulse and travel paths, including another orb arriving at cap.
+	effect["blood_count"] = 79
+	near["numeric"].effects.add_source_bleed(0,10000,60)
+	game.step_game(250.0)
+	game.step_game(500.0)
+	game.step_game(599.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(effect["blood_count"]==79 and cues("W_SPIRITS_FLASH").is_empty()
+		and layers.call("completesword").is_empty() and layers.call("blade").size()==5,
+		"the ordinary five-layer sword persists until the last charge arrives")
+	game.step_game(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var complete_base = game.view.object_views.get("hellbenter:complete_base")
+	var complete_entry = game.view.object_views.get("hellbenter:complete_entry")
+	check(effect["blood_count"]==80 and is_equal_approx(effect["definition"]["modifiers"][0]["value"],0.191)
+		and is_equal_approx(effect["definition"]["modifiers"][1]["value"],0.191),
+		"the final orb reaches the source charge cap and both exact speed endpoints")
+	check(layers.call("blade").is_empty() and complete_base!=null and complete_entry!=null
+		and complete_base.frame["img_frame"]==2 and complete_entry.frame["img_frame"]==4
+		and layers.call("completeflash").size()==2
+		and game.view.audio.variants["W_SPIRITS_FLASH"][0] is AudioStreamOggVorbis
+		and cues("W_SPIRITS_FLASH").size()==1,"full charge switches both sword layers, starts both flashes and sounds once")
+	game.step_game(299.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(layers.call("completeflash").size()==2 and layers.call("completesword3").is_empty(),
+		"both full-charge flashes are still drawn at 299 ms")
+	game.step_game(100.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(layers.call("completeflash").is_empty() and layers.call("completesword3").is_empty()
+		and complete_entry!=null and complete_entry.frame["img_frame"]==7,
+		"the flashes are gone at 399 ms and the glow is still on the fourth entry frame")
+	game.step_game(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var complete_glow = game.view.object_views.get("hellbenter:complete_glow")
+	check(complete_glow!=null and complete_glow.clock_ms==0.0
+		and complete_entry!=null and complete_entry.frame["img_frame"]==8,
+		"the independent sword glow starts at zero when the entry animation reaches frame five")
+	game.step_game(1200.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(effect["blood_count"]==80 and cues("W_SPIRITS_FLASH").size()==1
+		and complete_entry!=null and complete_entry.frame["img_frame"]==8 and is_instance_valid(complete_glow)
+		and complete_glow.loop,"the glow keeps looping at the cap without replaying sound or the entry")
+	effect["remaining_ms"] = 1.0
+	game.step_game(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(hellbenter.call().is_empty() and layers.call("completesword").is_empty(),
+		"appendage expiry clears the completed sword layers")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()
