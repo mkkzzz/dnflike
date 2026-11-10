@@ -1567,6 +1567,78 @@ func check_frenzy_normals() -> void:
 		check(game.player["state"]=="idle" and game.primary_normal_attack()=="attack1",
 			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
 
+func check_hopsmash_bleed() -> void:
+	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:
+		var rank: int = scenario[0]
+		var enabled: bool = scenario[1]
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"hopsmash","level":rank})
+		if enabled:profile.command("numbers.skill_grant",{"id":"bloody_vigorous","level":1})
+		if int(scenario[2]) > 0:profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":scenario[2]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["hopsmash"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		var body_target: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
+		body_target["numeric"].values["bleeding_resistance"] = -500
+		if rank==1:
+			press(KEY_A)
+			step(0)
+		else:
+			session.submit_key(KEY_A,true)
+			step(0)
+			step(199.0)
+			check(game.player["stage"]==0 and game.objects.is_empty(),"Holding Hop Smash waits through 199 ms")
+			step(1.0)
+			session.submit_key(KEY_A,false)
+		check(game.player["action"]=="hopsmash" and game.player["stage"]==1,
+			"Hop Smash starts its strike on tap or full charge without a second press")
+		var rate: float = game.player["native_phase"]["hop_ani_rate"]
+		check(is_equal_approx(rate,2.5 if rank==1 else 3.81),"Hop Smash applies the sourced strike speed")
+		step(440.0/rate)
+		check(float(body_target["hp"])<5000.0 and not body_target["numeric"].effects.active.has("bleed"),
+			"Hop Smash's body contact never applies the shockwave status")
+		step(159.0/rate)
+		check(game.objects.is_empty(),"Hop Smash does not spawn its shockwave before body frame four")
+		step(2.0/rate)
+		var waves: Array = game.objects.filter(func(object):return object["hit"].get("skill_id")=="hopsmash")
+		check(waves.size()==int(enabled),"Bloody Vigorous enables one Hop Smash landing shockwave")
+		if waves.size()!=1:continue
+		var wave: Dictionary = waves[0]
+		var point: Vector2 = wave["pos"]
+		var target: Dictionary = api.spawn_dummy(point+Vector2(10,0))
+		var resistant: Dictionary = game.spawn_enemy(point-Vector2(10,0))
+		resistant["ai"] = false
+		var level := int(scenario[3])
+		target["numeric"].values["level"] = level
+		target["numeric"].values["bleeding_resistance"] = -500
+		resistant["numeric"].values["level"] = level
+		resistant["numeric"].values["bleeding_resistance"] = 100
+		game.step_objects(1.0)
+		check(wave["hits"].has(target["id"]) and wave["hits"].has(resistant["id"])
+			and not resistant["numeric"].effects.active.has("bleed"),"Hop Smash's shockwave respects the target's bleed resistance")
+		var statuses: Array = wave["hit"]["effects"]
+		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
+		check(not bleed.is_empty() and statuses.size()==1,"The shockwave applies one native bleed entry")
+		if bleed.is_empty():continue
+		var expected_chance := 0.2 if rank==1 else 0.232
+		var amount := int(scenario[4])/20
+		var applications: Array = bleed["source_bleed"]["applications"]
+		check(is_equal_approx(float(statuses[0]["chance"]),expected_chance) and statuses[0]["source_bleed_total"]==scenario[4]
+			and applications==[{"remaining_ms":10000.0,"amount":amount,"status_level":level,"from_player":true}],
+			"Hop Smash uses the SKL probability, Blood Memory level, duration, and per-tick damage")
+		var hp: float = target["hp"]
+		target["numeric"].values["hp_max"] = 5000.0
+		game.step_numeric_actor(target,target["numeric"],0.0)
+		check(float(target["hp"])==hp-amount,"The shockwave bleed deals its first native tick at zero")
+		game.step_objects(478.0)
+		check(game.objects.has(wave),"The landing shockwave remains through 479 ms")
+		game.step_objects(1.0)
+		check(not game.objects.has(wave),"The landing shockwave retires at its original ANI end")
+
 func check_frenzy_bleed() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
 	var seeds := {}
@@ -7762,6 +7834,7 @@ func run() -> void:
 	check_frenzy_cast()
 	check_frenzy_normals()
 	check_frenzy_bleed()
+	check_hopsmash_bleed()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()

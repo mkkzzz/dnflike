@@ -743,6 +743,28 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if normal_index >= 0 and normal_index < NORMAL_CONTINUE_FRAMES.size():
 		move["combo_at"] = float(move["timeline"][NORMAL_CONTINUE_FRAMES[normal_index]]["start_ms"])
 	if name == "upper":_append_upper_followup(move)
+	if name == "hopsmash":
+		var row: Array = skill["level_row"]
+		var static_data: Array = skill["static"]
+		move["hop_charge_ms"] = [int(static_data[0]),int(static_data[1])]
+		move["hop_ani_rates"] = [NativeMotion.f32(float(row[6])*NativeMotion.f32(0.01)),
+			NativeMotion.f32(float(row[7])*NativeMotion.f32(0.01))]
+		var strike: Dictionary = move["stages"][1]
+		if int(skill_levels.get("bloody_vigorous",0)) <= 0:
+			# CB4CF3..CB4D03 skips the 20050 spawn without Bloody Vigorous.
+			strike["hits"] = strike["hits"].filter(func(hit):return hit["kind"] != "object")
+		else:
+			for hit: Dictionary in strike["hits"]:
+				if hit["kind"] != "object":continue
+				# CB4A49..CB4AF9 compares against the start of body frame 4.
+				hit["at"] = float(strike["timeline"][4]["start_ms"])
+				hit["life_ms"] = -1.0
+				hit["starts_at_zero"] = true
+			# CB4D52..CB4E74 packages the status separately from the body's ATK.
+			var percent := NativeMotion.f32(float(row[2])*NativeMotion.f32(0.1))
+			move["hop_bleed"] = {"id":"bleed","chance":percent/100.0,
+				"status_level":int(row[3]),"duration_ms":int(row[4]),"damage_percent":float(row[5])}
+			move["hop_bleed_base"] = move_specs["hopsmash"]["hop_bleed_base"]["by_level"]
 	for stage: Dictionary in move.get("stages",[move]):
 		for hit: Dictionary in stage.get("hits",[]):
 			hit["skill_id"] = name

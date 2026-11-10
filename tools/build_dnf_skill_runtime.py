@@ -2516,6 +2516,8 @@ def main() -> int:
                 if not effect:
                     raise ValueError("Missing original Bloodlust hold effect")
                 move["grab_hold_fx"] = {**grab_hold, "effect": effect}
+            if key == "hopsmash":
+                move["hop_bleed_base"] = bleed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base

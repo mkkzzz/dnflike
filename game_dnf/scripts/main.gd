@@ -744,6 +744,7 @@ func action_ani_clock(elapsed: float) -> float:
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
 		return elapsed*float(phase["charge_rate"]) if elapsed < release_at else elapsed-release_at
+	if phase.has("hop_ani_rate"):return elapsed
 	return Kernel.NativeWave.ani_clock(phase,elapsed) if not phase.is_empty() else elapsed
 
 func action_event_clock(elapsed: float) -> float:
@@ -1154,6 +1155,20 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		# not wait for the generic late combo/cancel window or emit its next hit.
 		if start_action(queued,true):return
 	var m := move_def(name)
+	if name == "hopsmash" and int(player["stage"]) == 0:
+		# CBD1D8..CBD21B releases on key-up or the maximum charge time.
+		var old_clock := float(player["clock"])
+		var elapsed := old_clock+ms
+		var charge: Array = m["hop_charge_ms"]
+		if skill_input_held(name) and int(elapsed) < int(charge[1]):
+			player["clock"] = elapsed
+			action_cues(action_def(),old_clock,elapsed)
+			return
+		var power := _native_interpolate(0,100,int(elapsed)-int(charge[0]),int(charge[1])-int(charge[0]))
+		var rates: Array = m["hop_ani_rates"]
+		start_stage(1)
+		player["native_phase"]["hop_ani_rate"] = ActorNumbers.native_scalar(lerpf(rates[0],rates[1],power/100.0))
+		return
 	if m.has("upper_followup_at") and int(player["stage"]) == 0 and player.get("queued_upper_followup",false):
 		end_action_fx()
 		player["fx_tag"] = "act:%d" % (action_seq+1)
@@ -1174,7 +1189,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	var bloodblast := native_phase.has("bloodblast_timeline")
 	var old_native_event_clock := action_event_clock(old_clock) if native_timed_ani or bloodblast else 0.0
 	var previous_ani_end := float(native_phase.get("end_ms",0.0))
-	if not native_phase.is_empty():clock = old_clock+ms
+	if not native_phase.is_empty():clock = old_clock+ms*float(native_phase.get("hop_ani_rate",1.0))
 	if native_timed_ani:
 		var old_rate := float(native_phase["native_ani_rate"])
 		var rate := attack_animation_percent(0,old_rate) if refresh_ani_rate else old_rate
@@ -3535,8 +3550,6 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
 			effect_list.append_array(Numbers.shared_config()["skills"].get(hit_skill_id,{}).get("on_hit",[]))
-			if hit_skill_id == "hopsmash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
-				effect_list.append({"id":"bleed","chance":0.4})
 		for effect: Dictionary in effect_list:
 			if effect.has("source_shock_amount"):
 				if target["numeric"].apply_source_shock(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
@@ -3554,7 +3567,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					announce_source_bleed(int(target["id"]))
 				continue
 			var chance := float(effect.get("chance",1))
-			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
+			if effect.get("id","") == "bleed" and hit_skill_id == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
 				chance = minf(1.0,chance+0.4)
 			var duration_ms := float(effect.get("duration_ms",0))
 			if effect.get("id","") == "sleep":
@@ -4404,6 +4417,13 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
+	if owner == "player" and numeric_player != null and hit.get("skill_id","") == "hopsmash":
+		var move := move_def("hopsmash")
+		if move.has("hop_bleed"):
+			var bleed: Dictionary = move["hop_bleed"].duplicate()
+			bleed["status_level"] += blood_memory_bleed_level_bonus()
+			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["hop_bleed_base"])
+			entity["hit"] = hit.merged({"effects":hit["effects"]+[bleed]},true)
 	if owner == "player" and numeric_player != null and kind in ["illusion_wave","illusion_club_wave"]:
 		# 7F7D60 binds the owner's attack fields. Only the melee callback refreshes them at contact.
 		entity["hit"] = hit.merged({"source_physical_attack":numeric_player.values["physical_attack"]},true)
