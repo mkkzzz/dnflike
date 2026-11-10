@@ -3516,9 +3516,9 @@ func complete_native_prop_break(prop: Dictionary) -> void:
 	if not String(source["destroy_sound"]).is_empty():play_sound(String(source["destroy_sound"]))
 	bus.emit("combat.prop_broken",{"node":prop["node"]})
 
-## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
+## Resolve one contact. The return value includes misses that reach the hit callbacks.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float,
-		first_counter_target := false, object_facing := 0) -> void:
+		first_counter_target := false, object_facing := 0) -> bool:
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
@@ -3533,8 +3533,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
 	var victim := victim_kind(target)
-	if victim != "monster" and (by_player or by_companion):return
-	if victim == "player" and native_jar_traps.player_protected:return
+	if victim != "monster" and (by_player or by_companion):return false
+	if victim == "player" and native_jar_traps.player_protected:return false
 	var hit_skill_id := String(hit.get("skill_id",player["action"]))
 	var percent := float(hit["percent"])*(1.0 if by_companion else skill_damage_multiplier(hit_skill_id))
 	var contact_only := bool(hit.get("contact_only",false))
@@ -3570,7 +3570,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		amount = int(resolved["amount"])
 		if amount <= 0 and (not starfish_grab or bool(resolved["missed"]) or bool(target_stats.get("immune",false))):
 			bus.emit("combat.damage",{"target":target["id"],"amount":0,"critical":false,"category":resolved["category"],"missed":resolved["missed"],"victim":victim,"reaction":"none","point":point})
-			return
+			return bool(resolved["missed"])
 	elif by_companion:
 		amount = maxi(1,roundi(amount*float(attacker["numeric"].values["damage_rate"])))
 	if draw_contact:queue_draw_hit(target,facing,int(hit["draw_delay_ms"]))
@@ -3580,12 +3580,12 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		bus.emit("combat.hit",{"attacker":attacker.get("id",-1),"target":target["id"],"instance":int(attacker.get("action_instance",action_seq)),"point":point,"guarded":false,"atk":String(hit.get("atk_path",""))})
 	if starfish_grab:
 		start_starfish_capture(attacker)
-		return
+		return true
 	var reaction := "none"
 	if target_is_player:
 		var before_hp := float(player["hp"])
 		reaction = hurt_player(amount,attacker,atk,facing,point.z)
-		if reaction == "blocked":return
+		if reaction == "blocked":return false
 		amount = roundi(before_hp-float(player["hp"]))
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
@@ -3753,6 +3753,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.cue", {"kind":"fx", "key":"hit_blow_l", "point":Vector2(target["pos"]),
 				"height":float(target["z"]), "facing":int(target["facing"]), "scale":1.0})
 			report_defeat(target)
+	return true
 
 func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 	if not target.has("numeric"):return
@@ -4886,11 +4887,10 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						var delta_x := roundi(target["pos"].x)-source_x
 						if delta_x != 0 and (stationary_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
-					var contact_count := hit_count
-					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target,
+					var resolved_contact := land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target,
 						int(o["facing"]) if illusion_travel else 0)
-					if hit.has("cross_second_impact") and hit_count > contact_count:
-						# 9FBB40 replaces the object ATK once, then requests contact on the same target directly.
+					if resolved_contact and hit.has("cross_second_impact"):
+						# E59DE0 calls 9FBB40 on misses too. It replaces the ATK and requests one direct rehit.
 						hit = hit["cross_second_impact"]
 						o["hit"] = hit
 						if float(target["hp"]) > 0.0:

@@ -1646,6 +1646,7 @@ func check_gorecross_wave() -> void:
 
 func check_gorecross_followup() -> void:
 	for sample: Array in [[349,KEY_X,"berserker",false],[350,KEY_X,"berserker",true],
+			[450,KEY_X,"berserker",true,"miss"],
 			[499,KEY_D,"berserker",true],[500,KEY_A,"berserker",false],[350,KEY_X,"weaponmaster",false]]:
 		var profile := ProfileSession.new()
 		profile.command("numbers.level",{"level":60})
@@ -1704,7 +1705,14 @@ func check_gorecross_followup() -> void:
 			check(game.view.object_views.has("%s:%s"%[wave["id"],layer]),"Gore Cross draws the original "+layer)
 		var origin: Vector2 = wave["pos"]
 		var contact := origin+Vector2(22*facing,0)
+		var first_miss: bool = sample.size()>4 and sample[4]=="miss"
 		var target: Dictionary = api.spawn_dummy(contact)
+		var protected_id := -1
+		if first_miss:
+			target["invuln_ms"] = 1000.0
+			protected_id = int(target["id"])
+			target = game.spawn_enemy(contact)
+			target["numeric"].values["evasion"] = 10.0
 		var other: Dictionary = game.spawn_enemy(contact)
 		other["hp"] = 5000.0
 		game.numeric_player.values["hit"] = 1.0
@@ -1726,6 +1734,11 @@ func check_gorecross_followup() -> void:
 		var count: int = game.hit_count
 		game.step_objects(1.0)
 		check(wave["pos"]==contact,"Gore Cross's follow-up travels 22 pixels by the first attack frame")
+		if first_miss:
+			var misses: Array = game.bus.events_of("combat.damage").filter(func(event):
+				return event["target"]==target["id"] and event["missed"])
+			check(not wave["hits"].has(protected_id) and wave["hits"].has(target["id"]) and misses.size()==2,
+				"Gore Cross skips invulnerability, then sends its one repeat even when the first contact misses")
 		if ground_only:
 			game.bus.unsubscribe("combat.damage",observe_damage)
 			check(slides.size()==2 and slides[0].slice(0,3)==[-800.0,333.0,333.0]
@@ -1733,10 +1746,12 @@ func check_gorecross_followup() -> void:
 				"Gore Cross falls back to fixed knockback on first contact and ordinary knockback on the repeat: %s"%[slides])
 			check(slides.size()==2 and slides[0][3]<1.0 and slides[0][3]==slides[1][3],
 				"Both contacts keep the same physical defense calculation")
-		var reaction := "hurt" if ground_only else "native_down_flight"
-		check(wave["hits"].has(target["id"]) and target["state"]==reaction,
-			"Gore Cross uses the original follow-up launch reaction (%s, %s)"%[target["state"],wave["hits"]])
-		check(wave["hits"].has(other["id"]) and game.hit_count==count+3,
+		if not first_miss:
+			var reaction := "hurt" if ground_only else "native_down_flight"
+			check(wave["hits"].has(target["id"]) and target["state"]==reaction,
+				"Gore Cross uses the original follow-up launch reaction (%s, %s)"%[target["state"],wave["hits"]])
+		var expected_hits := 1 if first_miss else 3
+		check(wave["hits"].has(other["id"]) and game.hit_count==count+expected_hits,
 			"Gore Cross repeats contact once on the first target and only once on later targets (%s, %s)"%[game.hit_count-count,wave["hits"]])
 		check(wave["hit"]["percent"]==167.0 and wave["hit"]["fixed_amount"]==145.0 and wave["hit"]["effects"].size()==1,
 			"Gore Cross installs columns 10 and 11 and restores bleed for the second ATK")
