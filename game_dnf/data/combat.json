@@ -1295,6 +1295,36 @@
    "mob": "monster/spirit/waterspiritshisuke.mob",
    "bank": "spirit_waterspiritshisuke",
    "name": "waterspiritshisuke"
+  },
+  "coldboy_coldboy": {
+   "mob": "monster/coldboy/coldboy.mob",
+   "bank": "coldboy_coldboy",
+   "name": "coldboy"
+  },
+  "coldheart_coldheart": {
+   "mob": "monster/coldheart/coldheart.mob",
+   "bank": "coldheart_coldheart",
+   "name": "coldheart"
+  },
+  "toy_hiddena": {
+   "mob": "monster/toy/hiddena.mob",
+   "bank": "toy_hiddena",
+   "name": "hiddena"
+  },
+  "toy_hiddenb": {
+   "mob": "monster/toy/hiddenb.mob",
+   "bank": "toy_hiddenb",
+   "name": "hiddenb"
+  },
+  "toy_hiddenc": {
+   "mob": "monster/toy/hiddenc.mob",
+   "bank": "toy_hiddenc",
+   "name": "hiddenc"
+  },
+  "toy_hiddend": {
+   "mob": "monster/toy/hiddend.mob",
+   "bank": "toy_hiddend",
+   "name": "hiddend"
   }
  },
  "boss_hp_lines": 3,

@@ -889,9 +889,9 @@
     "id": 41,
     "min_level": 43,
     "path": "dungeon/act5/theboywithcoldheart.dgn",
-    "runtime_id": "",
+    "runtime_id": "theboywithcoldheart",
     "sha256": "dcf7202c45f573b15c34dcd576872ffca34370ed7ec049464543229b4b562a03",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 46,
@@ -1399,8 +1399,8 @@
     "level_max": 99,
     "level_min": 1,
     "path": "monster/coldheart/coldheart.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "coldheart_coldheart",
+    "state": "runtime"
    },
    {
     "id": 61425,
@@ -3967,8 +3967,8 @@
     "level_max": 33,
     "level_min": 18,
     "path": "monster/coldboy/coldboy.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "coldboy_coldboy",
+    "state": "runtime"
    },
    {
     "id": 50094,
@@ -10191,32 +10191,32 @@
     "level_max": 55,
     "level_min": 55,
     "path": "monster/toy/hiddena.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "toy_hiddena",
+    "state": "runtime"
    },
    {
     "id": 50081,
     "level_max": 55,
     "level_min": 55,
     "path": "monster/toy/hiddenb.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "toy_hiddenb",
+    "state": "runtime"
    },
    {
     "id": 50082,
     "level_max": 55,
     "level_min": 55,
     "path": "monster/toy/hiddenc.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "toy_hiddenc",
+    "state": "runtime"
    },
    {
     "id": 50083,
     "level_max": 55,
     "level_min": 55,
     "path": "monster/toy/hiddend.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "toy_hiddend",
+    "state": "runtime"
    },
    {
     "id": 55005,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 31,
+   "runtime": 32,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 158,
+   "runtime": 164,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

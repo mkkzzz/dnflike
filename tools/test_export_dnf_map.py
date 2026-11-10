@@ -148,6 +148,24 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len(dungeon['placements']), 52)
         self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 36)
 
+    def test_cold_heart_boy_export_keeps_identical_boss_map_variants(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/theboywithcoldheart_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'dcf7202c45f573b15c34dcd576872ffca34370ed7ec049464543229b4b562a03')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['rooms']['map/coldboy/s5801.map']['greed_pairs'], [[4, 4]])
+        self.assertEqual(dungeon['rooms']['map/coldboy/b5802.map']['greed_pairs'], [[1, 1]])
+        self.assertEqual(dungeon['rooms']['map/coldboy/b5803.map']['greed_pairs'], [[1, 1]])
+        self.assertEqual(dungeon['rooms']['map/coldboy/b5802.map']['sha256'],
+                         dungeon['rooms']['map/coldboy/b5803.map']['sha256'])
+        self.assertEqual([(p['cell'], p['map']) for p in dungeon['placements']], [
+            ([0, 0], 'map/coldboy/b5802.map'),
+            ([0, 0], 'map/coldboy/b5803.map'),
+            ([1, 0], 'map/coldboy/s5801.map'),
+        ])
+        self.assertEqual(len(export['images']), 46)
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

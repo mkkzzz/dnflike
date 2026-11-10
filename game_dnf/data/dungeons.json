@@ -273,6 +273,20 @@
     "sha256": "172e5364d6e341d5eb23da3fe53ffa2291863930744548990bf541fd80122349"
    }
   },
+  "theboywithcoldheart": {
+   "name": "冰心少年",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/theboywithcoldheart_v1/map_export.json",
+   "min_level": 43,
+   "monster_level": 46,
+   "source": {
+    "path": "dungeon/act5/theboywithcoldheart.dgn",
+    "sha256": "dcf7202c45f573b15c34dcd576872ffca34370ed7ec049464543229b4b562a03"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

@@ -148,6 +148,10 @@
    "normal": "underfoot",
    "boss": "shallow_keep_b01"
   },
+  "theboywithcoldheart": {
+   "normal": "cold_boy",
+   "boss": "cold_boy"
+  },
   "whitenight": {
    "normal": "whitenight",
    "boss": "whitenight_boss"
@@ -476,6 +480,12 @@
    "source": "music/shallow_keep_b01.ogg",
    "sha256": "48d480580bd6ef89149b0d8a828be452a12975423236ae26c6efe3eb82250a13",
    "bytes": 2283990
+  },
+  "cold_boy": {
+   "file": "audio/bgm/cold_boy.ogg",
+   "source": "music/cold_boy.ogg",
+   "sha256": "bb9bf3247a52aac9629c8fdbc4f69a7c079d2776ac34b8b4d4a46f6b1a6e8e47",
+   "bytes": 2251132
   },
   "whitenight": {
    "file": "audio/bgm/whitenight.ogg",

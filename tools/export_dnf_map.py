@@ -49,6 +49,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act4/darkelfcemetary.dgn',
     'dungeon/act4/magmacave.dgn',
     'dungeon/act5/charnakridge.dgn',
+    'dungeon/act5/theboywithcoldheart.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
