@@ -3255,12 +3255,14 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
+		# 8184DF..818640 keeps the current pose when the wave hits ordinary super armor.
+		var wave_armored := native_kind == "draw_short_wave" and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif not contact_only or target["state"] == NativeZealotSummons.CAST_STATE:
+		elif not wave_armored and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
 			# 无伤接触仍应打断正在进行的狂热者施法。
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			target["clock"] = 0.0
@@ -4365,6 +4367,9 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
+					if kind == "draw_short_wave":
+						# 869DDB and 81E746 reject damage in body mode 2.
+						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
 					o["hits"][target["id"]] = true
 					var hit_facing := int(o["facing"])
 					if inward:

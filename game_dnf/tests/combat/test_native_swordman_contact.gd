@@ -5695,6 +5695,38 @@ func check_draw_short_wave() -> void:
 				and game.last_damage["critical"]==sample[2],
 				"the short sword wave uses the native back attack direction for "+str([facing,sample]))
 
+	for sample in [[1,false],[1,true],[2,false],[0,false]]:
+		start_room("original_27000","shortsword",1,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		press(KEY_A)
+		step(675)
+		if game.objects.size()!=1:
+			check(false,"the body mode fixture launches one short sword wave")
+			continue
+		var victim: Dictionary = api.spawn_dummy(POINT+Vector2(100,0))
+		var mode := int(sample[0])
+		var initial_state := "air" if sample[1] else "idle"
+		victim["state"] = initial_state
+		victim["clock"] = 19.0
+		victim["z"] = 20.0 if sample[1] else 0.0
+		victim["vz"] = 35.0 if sample[1] else 0.0
+		# Mode zero here isolates the separate runtime invulnerability timer.
+		if mode == 0:victim["invuln_ms"] = 20.0
+		var frame: Dictionary = game.enemy_frame(victim)
+		var frame_items: Dictionary = frame.get("items",{})
+		frame["items"] = frame_items.merged({"13":mode},true)
+		game.step_objects(0)
+		frame["items"] = frame_items
+		check(victim["state"]==initial_state and victim["clock"]==19.0
+			and victim["vz"]==(35.0 if sample[1] else 0.0),
+			"the short sword wave preserves the protected target's pose and movement "+str(sample))
+		check((victim["hp"]<5000.0)==(mode==1)
+			and game.bus.events_of("combat.damage").size()==int(mode==1),
+			"only super armor permits wave damage during the protected contact "+str(sample))
+
 func check_thirst() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
