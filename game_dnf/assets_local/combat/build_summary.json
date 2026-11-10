@@ -81,6 +81,7 @@
   "spirit_firespirit",
   "spirit_waterhigherspirit",
   "spirit_firehigherspirit",
+  "spirit_lighthigherspirit",
   "soldier_expeller",
   "soldier_axeexpeller",
   "soldier_heavenexpeller",
@@ -152,9 +153,14 @@
   "newmonsters_snowman_louis_louis",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
   "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
+  "newmonsters_bantu_ratree_ratree",
+  "newmonsters_bantu_sati_sati",
+  "newmonsters_bantu_mohini_mohini",
+  "newmonsters_bantu_emeldir_emeldir",
   "newmonsters_goblin_throwgoblin_goblinthrower",
   "newmonsters_golem_stormgolem_stormgolem",
   "newmonsters_bantu_wolfpatriarch_turmanbash",
+  "newmonsters_bantu_isil_isil",
   "newmonsters_golem_icewavegolem_icewavegolem",
   "newmonsters_haze_poena_poena",
   "newmonsters_haze_hass_hass",
@@ -169,6 +175,7 @@
   "newmonsters_haze_enjosipho_enjosipho",
   "newmonsters_haze_enjosipho_enjosipho_quest",
   "newmonsters_spider_slotorblind_slotorblind",
+  "newmonsters_rosiclock_rosiclock",
   "newmonsters_bantu_rabbitman_rabbitman",
   "newmonsters_bantu_rabbitwoman_rabbitwoman",
   "newmonsters_snowman_snowman_snowman",
@@ -181,6 +188,7 @@
   "newmonsters_gbl_breeding_woody_plant_woody_plant",
   "newmonsters_bantu_buffalowoman_buffalowoman",
   "newmonsters_golem_icegolem_icegolem",
+  "newmonsters_queen_rosi_queen_rosi",
   "newmonsters_golem_ricu_ricu",
   "newmonsters_snowman_sasquatch_sasquatch",
   "newmonsters_bwanga_bwanga",
@@ -248,10 +256,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 634,
+ "effects": 650,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 45,
+ "unresolved": 46,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -335,6 +343,14 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/bantu/ratree/ratree.mob",
+   "images": [
+    "Monster/Bantu/Ratree.img",
+    "Monster/Bantu/ratree.img"
+   ]
   },
   {
    "kind": "monster_image",

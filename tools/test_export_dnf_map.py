@@ -209,6 +209,27 @@ class LibraryExport(unittest.TestCase):
             self.assertEqual(len(boss_rows), 1)
         self.assertEqual(dungeon['rooms']['map/whiteland/normal1(0,1).map']['greed_pairs'], [[12, 12]])
 
+    def test_ice_palace_export_keeps_shared_f_layout_and_fixed_specs(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/icepalace_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '13c7ece1b64c949af4870f9413334459c723812fea0d56ee6bf0347143e7dd16')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [3, 3])
+        self.assertEqual(dungeon['start_map_raw'], [0, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [1, 1])
+        self.assertEqual(len(dungeon['rooms']), 9)
+        self.assertEqual(len(dungeon['placements']), 11)
+        self.assertEqual(len(export['images']), 72)
+        self.assertEqual(dungeon['rooms']['map/icepalace/(2,1)icepalacestart.map']['map_id'], 9100)
+        self.assertEqual(dungeon['rooms']['map/icepalace/(2,1)icepalacestart.map']['greed_pairs'], [[10, 10]])
+        self.assertEqual(dungeon['rooms']['map/icepalace/(1,1)icepalaceboss.map']['greed_pairs'], [[1, 1]])
+        for path in ('map/icepalace/l2(1,0)icepalace.map', 'map/icepalace/l6(1,2)icepalace.map'):
+            self.assertEqual(dungeon['rooms'][path]['greed_pairs'], [[5, 5]])
+        specifications = [span['values'][2][2] for span in dungeon['raw']
+                          if span['tag'] == '[map specification]']
+        self.assertEqual(specifications, [9103, 9105, 9102, 9106, 9101, 9104, 9107])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

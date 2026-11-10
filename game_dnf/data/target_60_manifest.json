@@ -941,9 +941,9 @@
     "id": 44,
     "min_level": 46,
     "path": "dungeon/act5/icepalace.dgn",
-    "runtime_id": "",
+    "runtime_id": "icepalace",
     "sha256": "13c7ece1b64c949af4870f9413334459c723812fea0d56ee6bf0347143e7dd16",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 49,
@@ -5239,8 +5239,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/bantu/mohini/mohini.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_mohini_mohini",
+    "state": "runtime"
    },
    {
     "id": 61242,
@@ -5279,16 +5279,16 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/bantu/ratree/ratree.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_ratree_ratree",
+    "state": "runtime"
    },
    {
     "id": 56702,
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/bantu/sati/sati.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_sati_sati",
+    "state": "runtime"
    },
    {
     "id": 56707,
@@ -6015,8 +6015,8 @@
     "level_max": 45,
     "level_min": 30,
     "path": "monster/spirit/lighthigherspirit.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spirit_lighthigherspirit",
+    "state": "runtime"
    },
    {
     "id": 61254,
@@ -9183,16 +9183,16 @@
     "level_max": 54,
     "level_min": 49,
     "path": "monster/newmonsters/bantu/emeldir/emeldir.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_emeldir_emeldir",
+    "state": "runtime"
    },
    {
     "id": 56708,
     "level_max": 54,
     "level_min": 49,
     "path": "monster/newmonsters/bantu/isil/isil.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_isil_isil",
+    "state": "runtime"
    },
    {
     "id": 56105,
@@ -9215,8 +9215,8 @@
     "level_max": 54,
     "level_min": 49,
     "path": "monster/newmonsters/queen_rosi/queen_rosi.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_queen_rosi_queen_rosi",
+    "state": "runtime"
    },
    {
     "id": 43016,
@@ -9559,8 +9559,8 @@
     "level_max": 50,
     "level_min": 50,
     "path": "monster/newmonsters/rosiclock/rosiclock.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_rosiclock_rosiclock",
+    "state": "runtime"
    },
    {
     "id": 62011,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 35,
+   "runtime": 36,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 186,
+   "runtime": 194,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

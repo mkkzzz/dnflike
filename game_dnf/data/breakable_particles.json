@@ -18,6 +18,34 @@
    "ptl_totem_pltcle4",
    "ptl_totem_pltcle5"
   ],
+  "passiveobject/actionobject/breakableobject/ice.obj": [
+   "ptl_ice_particle0",
+   "ptl_ice_particle1",
+   "ptl_ice_particle2",
+   "ptl_ice_particle3"
+  ],
+  "passiveobject/actionobject/breakableobject/icecolumn.obj": [
+   "ptl_icecolumnparticle1",
+   "ptl_icecolumnparticle2",
+   "ptl_icecolumnparticle3",
+   "ptl_icecolumnparticle4",
+   "ptl_icecolumnparticle5",
+   "ptl_icecolumnparticle6"
+  ],
+  "passiveobject/actionobject/breakableobject/iceflower.obj": [
+   "ptl_iceflowerparticle1",
+   "ptl_iceflowerparticle2",
+   "ptl_iceflowerparticle3",
+   "ptl_iceflowerparticle4",
+   "ptl_iceflowerparticle5",
+   "ptl_iceflowerparticle6"
+  ],
+  "passiveobject/actionobject/breakableobject/iceshisuke.obj": [
+   "ptl_ice_particle0",
+   "ptl_ice_particle1",
+   "ptl_ice_particle2",
+   "ptl_ice_particle3"
+  ],
   "passiveobject/mapobject/breakableobject/1stbackbonelongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",

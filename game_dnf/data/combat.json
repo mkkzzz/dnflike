@@ -1435,6 +1435,46 @@
    "mob": "monster/spirit/waterhigherspirit.mob",
    "bank": "spirit_waterhigherspirit",
    "name": "waterhigherspirit"
+  },
+  "newmonsters_bantu_emeldir_emeldir": {
+   "mob": "monster/newmonsters/bantu/emeldir/emeldir.mob",
+   "bank": "newmonsters_bantu_emeldir_emeldir",
+   "name": "emeldir"
+  },
+  "newmonsters_bantu_isil_isil": {
+   "mob": "monster/newmonsters/bantu/isil/isil.mob",
+   "bank": "newmonsters_bantu_isil_isil",
+   "name": "isil"
+  },
+  "newmonsters_bantu_mohini_mohini": {
+   "mob": "monster/newmonsters/bantu/mohini/mohini.mob",
+   "bank": "newmonsters_bantu_mohini_mohini",
+   "name": "mohini"
+  },
+  "newmonsters_bantu_ratree_ratree": {
+   "mob": "monster/newmonsters/bantu/ratree/ratree.mob",
+   "bank": "newmonsters_bantu_ratree_ratree",
+   "name": "ratree"
+  },
+  "newmonsters_bantu_sati_sati": {
+   "mob": "monster/newmonsters/bantu/sati/sati.mob",
+   "bank": "newmonsters_bantu_sati_sati",
+   "name": "sati"
+  },
+  "newmonsters_queen_rosi_queen_rosi": {
+   "mob": "monster/newmonsters/queen_rosi/queen_rosi.mob",
+   "bank": "newmonsters_queen_rosi_queen_rosi",
+   "name": "queen_rosi"
+  },
+  "newmonsters_rosiclock_rosiclock": {
+   "mob": "monster/newmonsters/rosiclock/rosiclock.mob",
+   "bank": "newmonsters_rosiclock_rosiclock",
+   "name": "rosiclock"
+  },
+  "spirit_lighthigherspirit": {
+   "mob": "monster/spirit/lighthigherspirit.mob",
+   "bank": "spirit_lighthigherspirit",
+   "name": "lighthigherspirit"
   }
  },
  "boss_hp_lines": 3,

@@ -132,6 +132,10 @@
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
   },
+  "icepalace": {
+   "normal": "icepalace",
+   "boss": "icepalace_boss"
+  },
   "jungle": {
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
@@ -444,6 +448,18 @@
    "source": "music/goddess_temple_boss.ogg",
    "sha256": "713ab5624a30154c458854fe8548632e8f8fbd63e5b4ee5fd130379328b2dade",
    "bytes": 943834
+  },
+  "icepalace": {
+   "file": "audio/bgm/icepalace.ogg",
+   "source": "music/icepalace.ogg",
+   "sha256": "d36091eb6db7510c58509c2e951d88cbb5662aef83b841db904f63efcbf147b8",
+   "bytes": 1293459
+  },
+  "icepalace_boss": {
+   "file": "audio/bgm/icepalace_boss.ogg",
+   "source": "music/icepalace_boss.ogg",
+   "sha256": "68b2c283e6db20ee90e066d8497e2df69080429aeb21771572c07b3a5200b1e0",
+   "bytes": 1157374
   },
   "dendroid": {
    "file": "audio/bgm/dendroid.ogg",

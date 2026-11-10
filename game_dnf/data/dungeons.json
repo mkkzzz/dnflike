@@ -329,6 +329,20 @@
     "sha256": "87a37cd9a924747b4a7ab422e4ac4788a26c9443716c5acafad572f96cac6021"
    }
   },
+  "icepalace": {
+   "name": "冰雪宫殿",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/icepalace_v1/map_export.json",
+   "min_level": 46,
+   "monster_level": 49,
+   "source": {
+    "path": "dungeon/act5/icepalace.dgn",
+    "sha256": "13c7ece1b64c949af4870f9413334459c723812fea0d56ee6bf0347143e7dd16"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],
