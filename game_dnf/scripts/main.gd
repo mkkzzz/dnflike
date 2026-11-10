@@ -4084,13 +4084,20 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				if attacker.is_empty():attacker = {"id":-1,"pos":o["pos"],"stuck_ms":0.0}
 				var friendly: bool = o["owner"] in ["player","companion"]
 				var targets := monsters if friendly else friendly_targets()
+				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
 					o["hits"][target["id"]] = true
-					land_hit(attacker,target,hit,c["point"],int(o["facing"]),float(o["power"]))
+					var hit_facing := int(o["facing"])
+					if inward:
+						# 867518 compares integer field and victim X. Its return
+						# is the victim's facing, opposite the push direction.
+						var delta_x := int(target["pos"].x)-int(o["pos"].x)
+						hit_facing = -hit_facing if delta_x == 0 else -signi(delta_x)
+					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]))
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break

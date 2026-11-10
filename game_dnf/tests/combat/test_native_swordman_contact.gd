@@ -3264,8 +3264,10 @@ func check_hundred_sword_ready() -> void:
 	game.numeric_player.values["hit"] = 1.0
 	var first: Dictionary = game.monsters[0]
 	var late: Dictionary = game.monsters[1]
+	var centered: Dictionary = game.spawn_enemy(center+Vector2(0.75,0))
 	first["hp"] = 5000.0
 	late["hp"] = 5000.0
+	centered["hp"] = 5000.0
 	move_target(first,center+Vector2(80,0))
 	game.step_objects(99.0)
 	check(first["hp"]==5000.0 and cues("W_WEAPON_DRIVE").is_empty(),"the field neither hits nor plays its entry cue at age 99")
@@ -3273,12 +3275,14 @@ func check_hundred_sword_ready() -> void:
 	check(first["hp"]<5000.0 and cues("W_WEAPON_DRIVE").size()==1
 		and game.view.audio.variants["W_WEAPON_DRIVE"][0] is AudioStreamOggVorbis,
 		"the original three-box contact and its archived cue open at age 100")
+	check(first["push_v"]<0.0 and centered["hp"]<5000.0 and centered["push_v"]>0.0,
+		"the field pulls from the right and uses reverse cast facing for a victim on the same integer X")
 	var after_contact: float = first["hp"]
 	move_target(first,center+Vector2(80,0))
 	move_target(late,center-Vector2(80,0))
 	game.step_objects(49.0)
-	check(first["hp"]==after_contact and late["hp"]<5000.0,
-		"a fresh target can be hit at 149 while the initial ledger blocks a duplicate")
+	check(first["hp"]==after_contact and late["hp"]<5000.0 and late["push_v"]>0.0,
+		"a fresh target is pulled in from the left at 149 while the ledger blocks a duplicate")
 	field["hits"].erase(late["id"])
 	late["hp"] = 5000.0
 	move_target(late,center-Vector2(80,0))

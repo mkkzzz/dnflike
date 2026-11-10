@@ -1,8 +1,8 @@
-"""Replay the original Hundred Sword waypoint reader with synthetic sword positions.
+"""Replay the original Hundred Sword waypoint and field hit direction readers.
 
-The protected function and its register and stack dispatch run in the bounded
-Python interpreter. Only the sword XYZ getter calls are fixtures. This replay
-does not create swords, simulate their motion, or run the original client.
+The readers run in the bounded Python interpreter with position and facing
+getter fixtures. This replay does not create swords, simulate their motion,
+or run the original client.
 """
 import argparse
 from pathlib import Path
@@ -16,6 +16,7 @@ ENTRY = 0x24DE6DC
 ORDER_TABLE = 0x16EBBD8
 OWNER, OUT, VTABLE, GETTERS, SWORDS = range(0x60000000, 0x60500000, 0x100000)
 STACK, RETURN = 0x70000000, 0xDEADBEEF
+FIELD_VTABLE = 0x162CF04
 
 
 def replay(source, ordinal, origin, positions, ground_slots=()):
@@ -66,6 +67,40 @@ def replay(source, ordinal, origin, positions, ground_slots=()):
     raise ValueError('Waypoint instruction budget exhausted')
 
 
+def replay_field_direction(source, origin_x, target_x, facing):
+    from dnf_native_vm_probe import CPU
+
+    cpu = CPU(source)
+    for actor in (OWNER, SWORDS):
+        cpu.write(actor, 4, FIELD_VTABLE)
+    cpu.write(OWNER+0x3F0, 4, 4)  # ATK [inner]
+    cpu.write(STACK, 4, RETURN)
+    cpu.write(STACK+4, 4, SWORDS)
+    cpu.reg.update(ecx=OWNER, esp=STACK)
+    entry = cpu.read(FIELD_VTABLE+0x3E4, 4)
+    if entry != 0x867370:
+        raise ValueError('Unexpected Hundred Sword field hit direction entry')
+    cpu.pc = entry
+    for _ in range(100):
+        if cpu.pc == RETURN:
+            return cpu.reg['eax']
+        if cpu.pc in (0x406480, 0x7EF760):
+            x = origin_x if cpu.reg['ecx'] == OWNER else target_x
+            cpu.reg['eax'] = (x & 0xFFFFFFFF) if cpu.pc == 0x406480 else facing
+            cpu.pc = cpu.pop()
+            continue
+        instruction = next(source.decoder.disasm(source.source_bytes(cpu.pc, 15), cpu.pc, count=1))
+        if instruction.mnemonic == 'call':
+            target = cpu.get(instruction, instruction.operands[0])
+            cpu.push(cpu.pc+instruction.size)
+            cpu.pc = target
+            continue
+        result = cpu.run(cpu.pc, 1)
+        if result[0] != 'budget':
+            raise ValueError(f'Field direction probe stopped: {result}')
+    raise ValueError('Field direction instruction budget exhausted')
+
+
 def audit(source):
     from build_dnf_skill_runtime import (HUNDRED_SWORD_ORDER, HUNDRED_SWORD_POSES, HUNDRED_SWORD_STYLES,
                                          HUNDRED_SWORD_WEAPON_DRAW_ORDER)
@@ -94,6 +129,11 @@ def audit(source):
         raise ValueError('Terminal waypoint must return to the saved cast XY')
     if replay(source, 0, origin, [None]*24) != (181, -71, 29):
         raise ValueError('Missing sword must leave output storage unchanged')
+    for facing in (0, 1):
+        for target_x in (-485, -405, -325):
+            expected = facing if target_x == origin[0] else int(target_x > origin[0])
+            if replay_field_direction(source, origin[0], target_x, facing) != expected:
+                raise ValueError(f'Wrong field hit direction at {target_x=} {facing=}')
     return order
 
 
@@ -108,6 +148,7 @@ def main():
 
     order = audit(AxisEvaluator(args.client.read_bytes()))
     print(f'[HUNDRED_SWORD] 50 waypoint cases verified. Sword slots: {order}')
+    print('[HUNDRED_SWORD] 6 inward hit directions verified')
 
 
 if __name__ == '__main__':
