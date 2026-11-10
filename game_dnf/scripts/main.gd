@@ -4372,6 +4372,13 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# is the victim's facing, opposite the push direction.
 						var delta_x := int(target["pos"].x)-int(o["pos"].x)
 						hit_facing = -hit_facing if delta_x == 0 else -signi(delta_x)
+					elif kind == "draw_short_wave":
+						# 867370 uses the signed movement inside 150 px. Before
+						# the first integer displacement, use the target's side.
+						var wave_x := int(o["pos"].x)
+						var delta_x := roundi(target["pos"].x)-wave_x
+						if delta_x != 0 and (absi(delta_x) >= 150 or wave_x == o["ptl_motion"].origin.x):
+							hit_facing = signi(delta_x)
 					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]))
 					if int(obj["piercing"]) <= 0:
 						done = true

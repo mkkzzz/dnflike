@@ -5670,6 +5670,31 @@ func check_draw_short_wave() -> void:
 	game.step_objects(1)
 	check(not game.objects.has(wave),"the late wave retires at the end of its own tail")
 
+	for facing in [1,-1]:
+		for sample in [[0,-8.0,false],[1,-8.0,false],[2,-8.0,true],[0,-0.49,true],[0,8.0,true]]:
+			start_room("original_27000","shortsword",facing,spec)
+			session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+			game.clear_monsters()
+			game.numeric_player.values["attack_speed"] = 1.0
+			game.numeric_player.values["hit"] = 1.0
+			game.numeric_player.values["physical_crit"] = 0.0
+			game.numeric_player.values["physical_back_crit"] = 1.0
+			press(KEY_A)
+			step(675)
+			if game.objects.size()!=1:
+				check(false,"the direction fixture launches one short sword wave")
+				continue
+			var flight: Dictionary = game.objects[0]
+			game.step_objects(0)
+			var age := int(sample[0])
+			var x_offset := floorf(age*0.5)+float(sample[1])
+			var victim: Dictionary = api.spawn_dummy(POINT+Vector2(x_offset*facing,0))
+			victim["facing"] = facing
+			game.step_objects(age)
+			check(flight["hits"].has(victim["id"]) and victim["hp"]<5000.0
+				and game.last_damage["critical"]==sample[2],
+				"the short sword wave uses the native back attack direction for "+str([facing,sample]))
+
 func check_thirst() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
