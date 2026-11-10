@@ -231,8 +231,8 @@ func remove_effect(id: String) -> bool:
 	if removed:recalculate()
 	return removed
 
-func step(ms: float, sleep_on_ground := true) -> Array:
-	var events: Array = effects.step(ms,sleep_on_ground)
+func step(ms: float, sleep_on_ground := true, active_bleed_pose := false) -> Array:
+	var events: Array = effects.step(ms,sleep_on_ground,active_bleed_pose)
 	for event: Dictionary in events:
 		if event["type"] in ["removed","modifier_changed"]:
 			recalculate()

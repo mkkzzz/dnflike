@@ -6979,6 +6979,7 @@ func check_thirst() -> void:
 		and not game.view.object_views.has("player:thirst"),
 		"natural expiry restores ordinary idle and stops both active presentations")
 	check_source_bleed_particle_poses()
+	check_source_bleed_pose_damage()
 
 func check_thirst_burst() -> void:
 	check(game.objects.size()==1,"full-charge release creates exactly one passive object")
@@ -7106,6 +7107,14 @@ func check_thirst_burst() -> void:
 	last_number = game.bus.events_of("combat.damage_number").back()
 	check(last_number["amount"]==25 and last_number["digits"]=="damage",
 		"the surviving external application returns to white after owned bleed expires")
+	for local_amount: int in [20,25]:
+		effects.remove("bleed")
+		effects.add_source_bleed(25,500,40)
+		effects.add_source_bleed(local_amount,500,40,true)
+		game.step_numeric_actor(second,second["numeric"],0)
+		last_number = game.bus.events_of("combat.damage_number").back()
+		check(last_number["amount"]==25+local_amount and last_number["digits"]=="damage",
+			"an owned contribution that loses or ties the external contribution still draws white")
 
 func check_source_bleed_particle_poses() -> void:
 	var blood_path := "monster/common/particle/monsterdieblood.ptl"
@@ -7172,6 +7181,30 @@ func check_source_bleed_particle_poses() -> void:
 			and layer._status_overlay.material.get_shader_parameter("mono_rgb")==Vector3(1,0,1)))
 	check(purple_layers.size()==2,
 		"native poison uses the same weapon pass with its own purple color")
+
+func check_source_bleed_pose_damage() -> void:
+	var actor = game.numeric_player
+	actor.effects.remove("poison")
+	var hp := float(game.player["hp"])
+	actor.effects.add_source_bleed(6,1000,40,true)
+	actor.effects.add_source_bleed(6,1000,40)
+	game.player["state"] = "idle"
+	game.step_numeric_actor(game.player,actor,0)
+	var number: Dictionary = game.bus.events_of("combat.damage_number").back()
+	check(game.player["hp"]==hp-6 and number["amount"]==6 and number["digits"]=="damage_crit",
+		"two equal source stacks on an idle player tick for six and draw native player-victim digits")
+	game.player["state"] = "move"
+	game.step_numeric_actor(game.player,actor,499)
+	check(game.player["hp"]==hp-6,"changing pose leaves the 500 ms damage deadline intact")
+	game.step_numeric_actor(game.player,actor,1)
+	number = game.bus.events_of("combat.damage_number").back()
+	check(game.player["hp"]==hp-14 and number["amount"]==8 and number["digits"]=="damage_crit",
+		"movement scales both odd stacks before truncation, taking eight instead of nine")
+	game.player["state"] = "down"
+	game.step_numeric_actor(game.player,actor,500)
+	number = game.bus.events_of("combat.damage_number").back()
+	check(game.player["hp"]==hp-20 and number["amount"]==6 and actor.effects.source_bleed_age()<0.0,
+		"the down ANI restores the base rate on the final due tick")
 
 func check_bloodblast_speed_refresh() -> void:
 	var profile := ProfileSession.new()

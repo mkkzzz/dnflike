@@ -47,7 +47,8 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int, from_play
 	return true
 
 func source_bleed_age() -> float:
-	return float(active.get("bleed",{}).get("source_bleed",{}).get("visual_age_ms",-1.0))
+	var source: Dictionary = active.get("bleed",{}).get("source_bleed",{})
+	return -1.0 if source.is_empty() else float(source.get("visual_age_ms",0.0))
 
 func add_source_shock(amount: int, duration_ms: int, hit_ms: int) -> bool:
 	if duration_ms <= 0 or hit_ms <= 0:return false
@@ -125,7 +126,7 @@ func flag(key: String) -> bool:
 func controlled() -> bool:
 	return flag("control")
 
-func step(ms: float, sleep_on_ground := true) -> Array:
+func step(ms: float, sleep_on_ground := true, active_bleed_pose := false) -> Array:
 	var events: Array = []
 	for id: String in active.keys():
 		if id == "sleep" and not sleep_on_ground:continue
@@ -133,7 +134,7 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 		if effect.has("strength_grants"):
 			step_bloodlust_strength(effect,ms,events)
 			continue
-		if effect.has("source_bleed"):step_source_bleed(effect,ms,events)
+		if effect.has("source_bleed"):step_source_bleed(effect,ms,events,active_bleed_pose)
 		if effect.has("source_shock"):
 			var entries: Array = effect["source_shock"]
 			var remaining := 0.0
@@ -191,7 +192,7 @@ func step_bloodlust_strength(effect: Dictionary, ms: float, events: Array) -> vo
 	elif grants.size() < old_count:
 		events.append({"type":"modifier_changed","id":"bloodlust_strength"})
 
-func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
+func step_source_bleed(effect: Dictionary, ms: float, events: Array, active_pose: bool) -> void:
 	var source: Dictionary = effect["source_bleed"]
 	var applications: Array = source["applications"]
 	source["visual_age_ms"] = float(source.get("visual_age_ms",0.0))+ms
@@ -201,13 +202,24 @@ func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
 	if float(source["next_tick_ms"]) <= 0.0:
 		source["next_tick_ms"] = 500.0
 		var amount := 0
-		var player_amount := 0
+		var player_margin := 0
+		var rate := 1.5 if active_pose else 1.0
+		var single := PackedFloat32Array([0.0,0.0])
 		for application: Dictionary in applications:
-			var tick := int(application["amount"])
-			amount += tick
-			if application.get("from_player",false):player_amount += tick
+			# 8B2A14..8B2A2D scales each application in float32, then
+			# adds it to the running integer total before truncation.
+			single[0] = float(application["amount"])
+			single[0] *= rate
+			var scaled := single[0]
+			single[1] = float(amount)
+			single[1] += scaled
+			amount = int(single[1])
+			# 8B2B65 / 8B2C5F keep a signed local-versus-external balance.
+			single[1] = float(player_margin)
+			single[1] += scaled if application.get("from_player",false) else -scaled
+			player_margin = int(single[1])
 		events.append({"type":"bleed_tick","id":"bleed","damage":amount,"damage_type":"physical",
-			"native_number":true,"player_bleed":player_amount>0})
+			"native_number":true,"player_bleed":player_margin>0,"active_pose":active_pose})
 	for index in range(applications.size()-1,-1,-1):
 		applications[index]["remaining_ms"] -= ms
 		if float(applications[index]["remaining_ms"]) <= 0.0:applications.remove_at(index)
