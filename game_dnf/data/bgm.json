@@ -152,6 +152,10 @@
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
   },
+  "grozni": {
+   "normal": "shallow_keep",
+   "boss": "grozny_boss_new"
+  },
   "icepalace": {
    "normal": "icepalace",
    "boss": "icepalace_boss"
@@ -526,6 +530,18 @@
    "source": "music/goddess_temple_boss.ogg",
    "sha256": "713ab5624a30154c458854fe8548632e8f8fbd63e5b4ee5fd130379328b2dade",
    "bytes": 943834
+  },
+  "shallow_keep": {
+   "file": "audio/bgm/shallow_keep.ogg",
+   "source": "music/shallow_keep.ogg",
+   "sha256": "0345da024d7a826cbe8eec60dcbdf823fedb13abd1a4a38443326706bf94718d",
+   "bytes": 2629182
+  },
+  "grozny_boss_new": {
+   "file": "audio/bgm/grozny_boss_new.ogg",
+   "source": "music/grozny_boss_new.ogg",
+   "sha256": "3acffad57a16059196b5212aeaa23c84505bc07c7198467b55939723d73a133c",
+   "bytes": 1034953
   },
   "icepalace": {
    "file": "audio/bgm/icepalace.ogg",

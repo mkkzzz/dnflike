@@ -1120,9 +1120,9 @@
     "id": 61,
     "min_level": 53,
     "path": "dungeon/village/cartelarad/grozni.dgn",
-    "runtime_id": "",
+    "runtime_id": "grozni",
     "sha256": "6573a9ef1a05fb400c903b97b2ae89543504fb5cdf804d778c1bc26a289b5970",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 57,
@@ -5351,8 +5351,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/cypher/aircrow/aircrow.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_aircrow_aircrow",
+    "state": "runtime"
    },
    {
     "id": 61473,
@@ -5383,8 +5383,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/cypher/darkcrow/darkcrow.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_darkcrow_darkcrow",
+    "state": "runtime"
    },
    {
     "id": 56429,
@@ -5399,24 +5399,24 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/cypher/poltergeistchair/poltergeistchair.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_poltergeistchair_poltergeistchair",
+    "state": "runtime"
    },
    {
     "id": 61323,
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/cypher/poltergeistobject/poltergeistobject.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_poltergeistobject_poltergeistobject",
+    "state": "runtime"
    },
    {
     "id": 61320,
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/cartel/cypher/scarecrow/scarecrow.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_scarecrow_scarecrow",
+    "state": "runtime"
    },
    {
     "id": 61478,
@@ -7935,16 +7935,16 @@
     "level_max": 50,
     "level_min": 40,
     "path": "monster/newmonsters/cartel/westcoast/trashcan_thrower/trashcan_thrower.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_trashcan_thrower_trashcan_thrower",
+    "state": "runtime"
    },
    {
     "id": 61304,
     "level_max": 50,
     "level_min": 40,
     "path": "monster/newmonsters/cartel/westcoast/tree_thrower/tree_thrower.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_westcoast_tree_thrower_tree_thrower",
+    "state": "runtime"
    },
    {
     "id": 61457,
@@ -8607,8 +8607,8 @@
     "level_max": 45,
     "level_min": 45,
     "path": "monster/newmonsters/cartel/cypher/stoneswarm/stoneswarm.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_stoneswarm_stoneswarm",
+    "state": "runtime"
    },
    {
     "id": 61474,
@@ -10095,8 +10095,8 @@
     "level_max": 60,
     "level_min": 55,
     "path": "monster/newmonsters/cartel/cypher/cypher/cypher.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_cypher_cypher",
+    "state": "runtime"
    },
    {
     "id": 64568,
@@ -10111,8 +10111,8 @@
     "level_max": 60,
     "level_min": 55,
     "path": "monster/newmonsters/cartel/cypher/poltergeistbookshelf/poltergeistbookshelf.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_cartel_cypher_poltergeistbookshelf_poltergeistbookshelf",
+    "state": "runtime"
    },
    {
     "id": 56408,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 42,
+   "runtime": 43,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 235,
+   "runtime": 245,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

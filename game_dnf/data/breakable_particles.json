@@ -35,6 +35,10 @@
    "ptl_totem_pltcle4",
    "ptl_totem_pltcle5"
   ],
+  "passiveobject/actionobject/breakableobject/cover.obj": [
+   "ptl_coverparticle1",
+   "ptl_coverparticle2"
+  ],
   "passiveobject/actionobject/breakableobject/halfbookcase.obj": [
    "ptl_bookcaseparticle1",
    "ptl_bookcaseparticle2",
@@ -71,6 +75,20 @@
    "ptl_ice_particle1",
    "ptl_ice_particle2",
    "ptl_ice_particle3"
+  ],
+  "passiveobject/actionobject/breakableobject/odesabox.obj": [
+   "ptl_odesaboxdebris0",
+   "ptl_odesaboxdebris1"
+  ],
+  "passiveobject/actionobject/breakableobject/stone.obj": [
+   "ptl_stoneparticle1",
+   "ptl_stoneparticle2",
+   "ptl_stoneparticle3",
+   "ptl_stoneparticle4",
+   "ptl_stoneparticle5",
+   "ptl_stoneparticle6",
+   "ptl_stoneparticle7",
+   "ptl_stoneparticle8"
   ],
   "passiveobject/actionobject/breakableobject/waterway.obj": [
    "ptl_waterparticle1",

@@ -399,6 +399,20 @@
     "sha256": "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346"
    }
   },
+  "grozni": {
+   "name": "绿都格罗兹尼",
+   "region": "westcoast",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/grozni_v1/map_export.json",
+   "min_level": 53,
+   "monster_level": 56,
+   "source": {
+    "path": "dungeon/village/cartelarad/grozni.dgn",
+    "sha256": "6573a9ef1a05fb400c903b97b2ae89543504fb5cdf804d778c1bc26a289b5970"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

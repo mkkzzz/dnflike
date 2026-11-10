@@ -57,6 +57,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/icepalace.dgn',
     'dungeon/act6/astraythief.dgn',
     'dungeon/village/moonlightpub/aganzo.dgn',
+    'dungeon/village/cartelarad/grozni.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
     'dungeon/village/gbl/gbl_hatchery.dgn',
     'dungeon/village/gbl/gbl_laboratory.dgn',

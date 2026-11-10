@@ -1680,6 +1680,56 @@
    "mob": "monster/soldier/hammerking.mob",
    "bank": "soldier_hammerking",
    "name": "hammerking"
+  },
+  "newmonsters_cartel_cypher_aircrow_aircrow": {
+   "mob": "monster/newmonsters/cartel/cypher/aircrow/aircrow.mob",
+   "bank": "newmonsters_cartel_cypher_aircrow_aircrow",
+   "name": "aircrow"
+  },
+  "newmonsters_cartel_cypher_cypher_cypher": {
+   "mob": "monster/newmonsters/cartel/cypher/cypher/cypher.mob",
+   "bank": "newmonsters_cartel_cypher_cypher_cypher",
+   "name": "cypher"
+  },
+  "newmonsters_cartel_cypher_darkcrow_darkcrow": {
+   "mob": "monster/newmonsters/cartel/cypher/darkcrow/darkcrow.mob",
+   "bank": "newmonsters_cartel_cypher_darkcrow_darkcrow",
+   "name": "darkcrow"
+  },
+  "newmonsters_cartel_cypher_poltergeistbookshelf_poltergeistbookshelf": {
+   "mob": "monster/newmonsters/cartel/cypher/poltergeistbookshelf/poltergeistbookshelf.mob",
+   "bank": "newmonsters_cartel_cypher_poltergeistbookshelf_poltergeistbookshelf",
+   "name": "poltergeistbookshelf"
+  },
+  "newmonsters_cartel_cypher_poltergeistchair_poltergeistchair": {
+   "mob": "monster/newmonsters/cartel/cypher/poltergeistchair/poltergeistchair.mob",
+   "bank": "newmonsters_cartel_cypher_poltergeistchair_poltergeistchair",
+   "name": "poltergeistchair"
+  },
+  "newmonsters_cartel_cypher_poltergeistobject_poltergeistobject": {
+   "mob": "monster/newmonsters/cartel/cypher/poltergeistobject/poltergeistobject.mob",
+   "bank": "newmonsters_cartel_cypher_poltergeistobject_poltergeistobject",
+   "name": "poltergeistobject"
+  },
+  "newmonsters_cartel_cypher_scarecrow_scarecrow": {
+   "mob": "monster/newmonsters/cartel/cypher/scarecrow/scarecrow.mob",
+   "bank": "newmonsters_cartel_cypher_scarecrow_scarecrow",
+   "name": "scarecrow"
+  },
+  "newmonsters_cartel_cypher_stoneswarm_stoneswarm": {
+   "mob": "monster/newmonsters/cartel/cypher/stoneswarm/stoneswarm.mob",
+   "bank": "newmonsters_cartel_cypher_stoneswarm_stoneswarm",
+   "name": "stoneswarm"
+  },
+  "newmonsters_cartel_westcoast_trashcan_thrower_trashcan_thrower": {
+   "mob": "monster/newmonsters/cartel/westcoast/trashcan_thrower/trashcan_thrower.mob",
+   "bank": "newmonsters_cartel_westcoast_trashcan_thrower_trashcan_thrower",
+   "name": "trashcan_thrower"
+  },
+  "newmonsters_cartel_westcoast_tree_thrower_tree_thrower": {
+   "mob": "monster/newmonsters/cartel/westcoast/tree_thrower/tree_thrower.mob",
+   "bank": "newmonsters_cartel_westcoast_tree_thrower_tree_thrower",
+   "name": "tree_thrower"
   }
  },
  "boss_hp_lines": 3,

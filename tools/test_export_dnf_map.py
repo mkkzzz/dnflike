@@ -423,6 +423,64 @@ class LibraryExport(unittest.TestCase):
                           if span['tag'] == '[boss map specification]'])
         self.assertFalse([row for row in export['diagnostics'] if row['level'] in ('error', 'warning')])
 
+    def test_grozni_export_selects_ordinary_block_eight(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/grozni_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '6573a9ef1a05fb400c903b97b2ae89543504fb5cdf804d778c1bc26a289b5970')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['maze_block_index'], 8)
+        self.assertEqual(dungeon['size'], [8, 3])
+        self.assertEqual(dungeon['start_map_raw'], [7, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 1])
+        self.assertEqual(len(dungeon['rooms']), 32)
+        self.assertEqual(len(dungeon['placements']), 69)
+        self.assertEqual(len(export['images']), 87)
+        self.assertEqual([block['size'] for block in dungeon['maze_blocks']], [
+            [3, 3], [4, 2], [5, 2], [7, 3], [8, 3],
+            [8, 3], [8, 3], [8, 3], [8, 3], [8, 3],
+        ])
+        self.assertEqual([block['index'] for block in dungeon['maze_blocks']
+                          if block['selected']], [8])
+        ordinary = [block['index'] for block in dungeon['maze_blocks']
+                    if not block['quest_connection'] and not block['escape_hell']
+                    and not block['hell_dungeon']]
+        self.assertEqual(ordinary, [8])
+        selected = dungeon['maze_blocks'][8]
+        self.assertEqual([row[2] for row in selected['map_specifications']], [
+            11202, 11221, 11212, 11209, 11204, 11202, 11215,
+            11222, 11213, 11208, 11218, 11220, 11220, 11220,
+        ])
+        self.assertEqual(selected['boss_map_specifications'], [[0, 1, 11217]])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(sum(bool(cell['doors']) for cell in dungeon['cells']), 15)
+        self.assertEqual(sum(cell['code'] == 'AA' for cell in dungeon['cells']), 9)
+        self.assertEqual(cells[(7, 0)]['map_candidates'], [
+            'map/groznyoutside/grozny01.map',
+            'map/groznyoutside/grozny06.map',
+        ])
+        self.assertEqual(cells[(0, 1)]['map_candidates'], [
+            'map/groznyinside/grozny13-1.map',
+            'map/groznyinside/grozny13.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/groznyoutside/grozny01.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/groznyinside/grozny13.map']['role_hint'], 'boss')
+        diagnostics = export['diagnostics']
+        errors = [row for row in diagnostics if row['level'] == 'error']
+        self.assertEqual([row['detail'] for row in errors], [
+            'sprite/map/pathgate/town/cartelarad/ca_exitup010.img has no validated IMG in catalog',
+            'sprite/map/pathgate/town/cartelarad/ca_exitup010.img has no validated IMG in catalog',
+            'sprite/map/pathgate/town/cartelarad/ca_exitup08.img has no validated IMG in catalog',
+            'sprite/map/pathgate/town/cartelarad/ca_exitup08.img has no validated IMG in catalog',
+        ])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 9)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 61)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'scroll_absent']), 96)
+        selected_diag = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected_diag), 1)
+        self.assertIn('selected maze block 8 of 10', selected_diag[0]['detail'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))
