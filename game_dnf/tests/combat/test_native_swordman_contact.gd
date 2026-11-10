@@ -6319,6 +6319,7 @@ func check_bloodblast() -> void:
 	step(395)
 	check(game.view.player_actor.pose=="summon1" and game.objects.is_empty() and cues("SM_BLOOD_CAST").is_empty(),
 		"rank two Blood Blast charges for 396 ms at 1.25 attack speed, independently of cast speed")
+	check(cues("BLOOD_CIRCLE_CREATE").is_empty(),"the pillar entry sound waits for the object to exist")
 	game.numeric_player.values["independent_attack"] = 126.0
 	step(1)
 	check(game.view.player_actor.pose=="summon2" and game.player["clock"]==0.0
@@ -6326,6 +6327,11 @@ func check_bloodblast() -> void:
 		"Blood Blast releases from frame zero after one successful payment and plays the original voice")
 	check(game.objects.size()==3,"ordinary Blood Blast creates all three passive objects at release")
 	if game.objects.size()!=3:return
+	check(cues("BLOOD_CIRCLE_CREATE").is_empty(),"the caster update leaves the entry cue to the pillar")
+	game.step_objects(0.0)
+	check(cues("BLOOD_CIRCLE_CREATE").size()==1
+		and game.view.audio.variants["BLOOD_CIRCLE_CREATE"][0] is AudioStreamOggVorbis,
+		"only the main pillar plays its original Ogg on the first object update")
 	var sub: Dictionary = game.objects[0]
 	var pillar: Dictionary = game.objects[1]
 	var ground: Dictionary = game.objects[2]
@@ -6350,6 +6356,7 @@ func check_bloodblast() -> void:
 	move_target(target,POINT)
 	game.step_objects(99)
 	check(ground["hits"].is_empty(),"the opening blank frame cannot hit")
+	check(cues("BLOOD_CIRCLE_CREATE").size()==1,"later pillar updates do not replay the entry sound")
 	game.step_objects(1)
 	check(ground["hits"].has(target["id"]) and sub["hits"].is_empty() and pillar["hits"].is_empty(),
 		"at 100 ms only the ground burst registers contact with the centered target")

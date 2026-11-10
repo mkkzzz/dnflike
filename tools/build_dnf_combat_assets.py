@@ -477,6 +477,7 @@ FRENZY_AUDIO = {
 }
 BLOODBLAST_AUDIO = {
     'SM_BLOOD_CAST': 'sounds/char/swordman/sm_blood.ogg',
+    'BLOOD_CIRCLE_CREATE': 'sounds/effect/magic/bloodCircle.ogg',
     'FIRE_PILLAR_UP': 'sounds/effect/magic/fire_pillar.ogg',
     'FIRE_PILLAR_HIT': 'sounds/effect/magic/fire_pillarhit.ogg',
 }

@@ -4443,8 +4443,12 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				o["hits"].clear()
 				o["hit_resets_left"] -= 1
 				o["next_hit_reset"] += float(controller["reset_ms"])
-			if kind == "bloodblast":
-				var sound_at := float(controller.get("sound_at_ms",INF))
+			if kind == "bloodblast" and controller.has("sound_at_ms"):
+				# A607FC installs the normal pillar's entry cue, played by 7F9F22.
+				if not o.get("entry_sound_played",false):
+					o["entry_sound_played"] = true
+					play_sound("BLOOD_CIRCLE_CREATE")
+				var sound_at := float(controller["sound_at_ms"])
 				if old_t < sound_at and t >= sound_at:play_sound("FIRE_PILLAR_UP")
 		if controller.get("kind","") == "firewave_chain" and t >= Kernel.Timeline.duration(tl):
 			# Native ANI+1EC bit 8: create 20025 at +/-360, then delete 20024.
