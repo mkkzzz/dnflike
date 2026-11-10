@@ -5122,15 +5122,21 @@ func check_illusion_finish() -> void:
 		if direct.size()==2:
 			check(direct[1]["percent"]==sample[3] and direct[1]["atk_path"].ends_with("/illusionslashsmash.atk")
 				and direct[1]["atk"]["lift_up"]==50,"the smash installs its own attack record and mastery scale")
+		game.bus.clear_history()
 		var near: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
 		var far: Dictionary = game.spawn_enemy(POINT+Vector2(118,0))
 		near["hp"] = 50000.0
 		far["hp"] = 50000.0
+		near["numeric"].values["hit_recovery"] = 0.0
+		far["numeric"].values["hit_recovery"] = 0.0
 		step(frame_ms*2.0-1.0)
 		check(game.hit_count==0 and game.attack_body_armor(),"the armored first two frames do not borrow a visual rectangle")
 		step(1)
 		check(game.hit_count==1 and game.player["stuck_ms"]==40.0 and far["hp"]==50000.0,
 			"frame two hits with the narrow uppercut weapon box and original hitstop")
+		check(near["state"]=="hurt" and near["vz"]==0.0 and near["stun_ms"]==1500.0
+			and (cues("hit_cut_s3")+cues("hit_cut_l3")).size()==1,
+			"the uppercut uses state-three stagger and the original upward contact art on a standing target")
 		game.player["stuck_ms"] = 0.0
 		move_target(near,POINT+Vector2(55,0))
 		near["invuln_ms"] = 0.0
@@ -5145,6 +5151,10 @@ func check_illusion_finish() -> void:
 			and cues("skillfx_smash_c789bbe3").filter(func(cue):return cue["action_clock_at"]==300.0).size()==1
 			and cues("SM_HOANYOUNG_FIN").size()==1 and spent==[[3037,2]],
 			"frame six switches attack records and attaches the second original effect")
+		if family != "club":
+			check(far["state"]=="hurt" and far["stun_ms"]==1500.0
+				and (cues("hit_cut_s1")+cues("hit_cut_l1")).size()==2,
+				"the grounded smash uses the original 3.0 stagger multiplier and downward contact art")
 		check(game.objects.size()==1 and game.objects[0]["def"]["path"].ends_with("/illusionslashwave.obj"),
 			"frame six dispatches exactly one sword wave")
 		check(game.objects[0]["pos"]==POINT+Vector2(65,0) and game.objects[0]["hit"]["percent"]==421.0,
@@ -5355,7 +5365,7 @@ func check_rapid_impact_cues(target: Dictionary, variant: int) -> void:
 	var blood: Array = events.filter(func(event):return String(event.get("key","")).begins_with("hit_blood_"))
 	var large := String(cut[-1]["key"]).begins_with("hit_cut_l") if not cut.is_empty() else false
 	var cut_key := "hit_cut_%s%d" % ["l" if large else "s",variant]
-	var blood_key := "hit_blood_l_young" if large else "hit_blood_s%d_young" % (4-variant)
+	var blood_key := "hit_blood_l" if large else "hit_blood_s%d" % (4-variant)
 	check(not cut.is_empty() and not blood.is_empty() and cut[-1]["key"]==cut_key and blood[-1]["key"]==blood_key,
 		"Rapid Move Slash uses the ATK direction and a shared impact size for slash variant %d" % variant)
 	if cut.is_empty() or blood.is_empty():return
@@ -5493,7 +5503,7 @@ func check_rapid_move_slash_counter() -> void:
 			and game.last_damage["trace"]["situation_factor"]==1.25,
 			"both Rapid Move Slash targets take counter damage regardless of the cue interval")
 		var cuts := cues("hit_cut_s1")+cues("hit_cut_l1")
-		var blood := cues("hit_blood_s3_young")+cues("hit_blood_l_young")
+		var blood := cues("hit_blood_s3")+cues("hit_blood_l")
 		check(cues("hit_counter").size()==int(eligible) and cuts.size()==2 and blood.size()==2
 			and cuts.filter(func(cue):return cue["scale"]==1.5).size()==int(eligible)
 			and blood.all(func(cue):return cue["scale"]==1.0)
@@ -5528,12 +5538,10 @@ func check_rapid_move_slash_blood() -> void:
 	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rapidmoveslash"]
-	for sample: Array in [[0,"goblin",1],[1,"goblin",-1],[2,"goblin",1],[1,"new_golem_platany",1]]:
-		var mode: int = sample[0]
-		var kind: String = sample[1]
-		var facing: int = sample[2]
+	for sample: Array in [["goblin",1],["goblin",-1],["new_golem_platany",1]]:
+		var kind: String = sample[0]
+		var facing: int = sample[1]
 		start_room("original_27601","katana",facing,spec)
-		if mode != 0:game.native_hit_age_mode = mode
 		game.clear_monsters()
 		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 		game.numeric_player.values["attack_speed"] = 1.0
@@ -5544,20 +5552,19 @@ func check_rapid_move_slash_blood() -> void:
 		target["ai"] = false
 		press(KEY_A)
 		step(160)
-		var expected := kind=="goblin" and mode!=2
+		var expected := kind=="goblin"
 		var blood: Array = game.bus.events_of("combat.cue").filter(
 			func(event):return String(event.get("key","")).begins_with("hit_blood_"))
-		var deposit := "native_contact_blood_young" if mode==0 else "native_contact_blood"
-		var deposits: Array = cues("native_contact_blood_young")+cues("native_contact_blood")
+		var deposits := cues("native_contact_blood")
 		check(game.hit_count==1 and target["hp"]<50000.0 and cues("JAKYEOL_HIT").size()==1
 			and blood.size()==int(expected) and deposits.size()==int(expected),
-			"Rapid Move Slash separates blood permission from damage and sound for %s at mode %d" % [kind,mode])
+			"Rapid Move Slash separates blood permission from damage and sound for "+kind)
 		if not expected or blood.is_empty() or deposits.is_empty():continue
-		check(deposits[0]["key"]==deposit and String(blood[0]["key"]).ends_with("_young")==(mode==0)
+		check(blood[0]["key"] in ["hit_blood_s3","hit_blood_l"]
 			and deposits[0]["point"]==blood[0]["point"]-Vector2(10*facing,0)
 			and deposits[0]["height"]==blood[0]["height"] and deposits[0]["facing"]==facing,
 			"the independent blood ANI keeps contact depth and height and offsets by ten pixels")
-		var views: Array = game.view.effects.filter(func(fx):return fx.cue_key==deposit)
+		var views: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_contact_blood")
 		check(views.size()==1 and views[0].clock_ms==0.0 and views[0].frame_color().a==0.0,
 			"the independent blood object starts on the transparent interpolation frame")
 		if views.is_empty():continue

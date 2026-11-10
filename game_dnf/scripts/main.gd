@@ -106,7 +106,6 @@ var _next_entity_id := 1
 var toast := ""
 var toast_ms := 0.0
 var elapsed_ms := 0.0
-var native_hit_age_mode := 0
 var damage_taken := 0
 var hit_count := 0
 var combo_count := 0
@@ -374,7 +373,6 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	native_maze = maze
 	native_room = maze.current_room() if maze != null else {}
 	native_route_name = String(spec.get("route",{}).get("name","神殿周边"))
-	native_hit_age_mode = clampi(int(spec.get("native_hit_age_mode",0)),0,2)
 	var snapshot: Dictionary = spec.get("player",{})
 	numeric_player = null
 	skill_levels = {}
@@ -2935,7 +2933,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
-		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash"]
+		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash","illusion_finish"]
 		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
@@ -3333,7 +3331,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
 	var native_down := native_outrage or native_kind == "bloodblast"
 	var rapid_slash := native_kind == "rapid_slash"
-	var native_reaction := native_down or rapid_slash or native_kind == "hundred_sword_field"
+	var native_cut := rapid_slash or native_kind == "illusion_finish"
+	var native_reaction := native_down or native_cut or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3348,7 +3347,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var grab_strike := bool(hit.get("grab_strike",false))
 	var target_state := String(target["state"])
 	# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
-	var counter := target_state in ["attack","action"] or ((native_outrage or rapid_slash) \
+	var counter := target_state in ["attack","action"] or ((native_outrage or native_cut) \
 		and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
@@ -3482,16 +3481,15 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		play_sound(String(atk["hit_wav"]))
 	if not draw_impact and native_kind != "hundred_sword_field":
 		var effect_point := point
-		var native_common_hit := native_down or rapid_slash
+		var native_common_hit := native_down or native_cut
 		# 87055B uses overlap X/Z and the target's integer depth for the common effect.
 		if native_common_hit:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
 		# 867720 uses a strict interval on the struck actor. Keep the full-effect option (2).
 		var show_counter := first_counter_target and counter \
 			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > NATIVE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
-		var blood_mode := -1
-		if rapid_slash:blood_mode = native_hit_age_mode if target["def"].get("hit_blood_allowed",true) else 2
-		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_mode)
+		var blood_allowed: bool = not native_cut or target["def"].get("hit_blood_allowed",true)
+		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_allowed,native_cut)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3566,7 +3564,7 @@ func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
 func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_common_hit: bool,
-		show_counter: bool, blood_mode: int) -> void:
+		show_counter: bool, blood_allowed: bool, blood_deposit: bool) -> void:
 	var kind := Kernel.MoveTable.enum_value(atk,"hit_info","")
 	var blood := ""
 	var size := 100.0
@@ -3606,15 +3604,13 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 	if show_counter:
 		# 7E6A75 appends Counter+.ani before the unscaled blood layer.
 		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
-	if blood == "[blood]" and blood_mode != 2:
+	if blood == "[blood]" and blood_allowed:
 		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(4-slash_variant if native_common_hit else rng.range_int(1,3))
-		if blood_mode == 0:bfx += "_young"
 		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,
 			"scale":scale,"fresh":native_common_hit})
-		if blood_mode >= 0:
-			# 7E6BD8 selects the independent ANI; 7E6CEF offsets it against the swing.
-			var deposit := "native_contact_blood_young" if blood_mode == 0 else "native_contact_blood"
-			bus.emit("combat.cue",{"kind":"fx","key":deposit,"point":ground-Vector2(10*facing,0),
+		if blood_deposit:
+			# 7E6320 creates the adult ANI; 7E6CEF offsets it against the swing.
+			bus.emit("combat.cue",{"kind":"fx","key":"native_contact_blood","point":ground-Vector2(10*facing,0),
 				"height":point.z,"facing":facing,"fresh":true})
 	var wav := String(atk.get("hit_wav",""))
 	if wav == "" and by_player:

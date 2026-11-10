@@ -767,6 +767,8 @@ func _append_illusion_finish_hits(stage: Dictionary, skill: Dictionary, tracks: 
 		if boxes.is_empty():continue
 		var path := "character/swordman/attackinfo/illusionslash"+suffix+".atk"
 		var hit: Dictionary = _build_stage({"atk":path,"hits":[{"attached_weapon":true,"percent_col":0}]},skill,boxes)["hits"][0]
+		hit["native_controller"] = {"kind":"illusion_finish"}
+		hit["stagger_factor"] = float(enum_args(hit["atk"],"hit_info",1)[1])
 		var stat: Array = skill["static"]
 		var blade := weapon == "katana"
 		if job == "weaponmaster" and (blade or (weapon == "beamsword" and suffix == "smash")):

@@ -401,16 +401,8 @@ DERIVED_DEPTH = (-15, 30)
 BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
-HIT_BLOOD_AGE_EFFECTS = {
-    **{f'hit_blood_s{i}_young': f'common/hiteffect/animation/splashbloodsmall{i}young.ani'
-       for i in range(1, 4)},
-    'hit_blood_l_young': 'common/hiteffect/animation/splashbloodlargeyoung.ani',
-    'native_contact_blood': 'monster/common/animation/monsterdieblood.ani',
-    'native_contact_blood_young': 'monster/common/animation/monsterdiebloodyoung.ani',
-}
-
 EFFECTS = {
-    **HIT_BLOOD_AGE_EFFECTS,
+    'native_contact_blood': 'monster/common/animation/monsterdieblood.ani',
     'native_flash_screen': NATIVE_FLASH_SCREEN,
     **HUNDRED_SWORD_TRAVEL_EFFECTS,
     **HELLBENTER_WOUND_EFFECTS,
@@ -2008,7 +2000,7 @@ def main() -> int:
         return 0
     if args.extend_rapid_move_slash:
         specs = [('effects', 'rapid_move_slash_dust', RAPID_SLASH_DUST)]
-        specs.extend(('effects', key, path) for key, path in HIT_BLOOD_AGE_EFFECTS.items())
+        specs.append(('effects', 'native_contact_blood', EFFECTS['native_contact_blood']))
         specs.extend(('audio', key, path) for key, path in RAPID_SLASH_AUDIO.items())
         runtime = json.loads(SKILL_RUNTIME.read_text(encoding='utf-8'))
         effect_paths = runtime['assets']['effect_anims']
