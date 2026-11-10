@@ -741,6 +741,11 @@ func _spawn_fx(event: Dictionary) -> void:
 	if depth_offset != 4:fx.set_meta("depth_offset",depth_offset)
 	fx.base_scale = float(event.get("scale",1.0))
 	fx.base_rotation = float(event.get("angle",0.0))
+	if key == "illusion_wave_hit":
+		# A709F5 draws from the global cosmetic RNG. 11AE8D0 maps 0..99 to both endpoints.
+		var roll: int = particle_bursts.draw_global()%100
+		var limit := 0.800000011920929
+		fx.base_rotation = PackedFloat32Array([-limit+2.0*limit*roll/99.0])[0]
 	fx.tag = String(event.get("tag",""))
 	fx.follow = int(event.get("follow",-1))
 	fx.max_ms = float(event.get("max_ms",-1.0))

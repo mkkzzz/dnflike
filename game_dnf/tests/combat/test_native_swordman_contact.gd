@@ -5186,7 +5186,20 @@ func check_illusion_finish() -> void:
 			func(event):return String(event.get("key","")).begins_with("hit_cut_")).size()
 		var deposits_before := cues("native_contact_blood").size()
 		game.player["stuck_ms"] = 0.0
+		var previous_clock: Callable = game.view.particle_bursts.clock
+		game.view.particle_bursts.clock = func():return 111 if rear_contact else 232
+		game.view.particle_bursts.random.state = 0
+		var draws_before: int = game.view.particle_bursts.random.draws
+		var gameplay_rng := DetRng.new()
+		gameplay_rng._rng.state = game.rng._rng.state
+		gameplay_rng.next_float()
+		gameplay_rng.next_float()
+		var motions: Dictionary = wave_target["def"]["motions"]
+		if motions.get("damage1","") != "" and motions.get("damage2","") != "":
+			gameplay_rng.range_int(0,1)
+		gameplay_rng.range_int(0,1)
 		game.step_objects(50.0,wave_id)
+		game.view.particle_bursts.clock = previous_clock
 		check(game.objects.size()==1 and game.objects[0]["clock"]==0.0,
 			"the wave begins at animation time zero on its creation update")
 		check(game.objects.size()==1 and game.objects[0]["hits"].has(wave_target["id"])
@@ -5204,8 +5217,13 @@ func check_illusion_finish() -> void:
 			and cues("native_contact_blood").size()==deposits_before+1,
 			"the ETC sword wave emits its own impact and adult blood without a common weapon slash")
 		var hit_fx: Array = cues("illusion_wave_hit")
-		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and absf(float(hit_fx[0]["angle"]))<=0.801,
-			"the wave creates its own angled impact animation at the target's ground depth")
+		var impact_views: Array = game.view.effects.filter(func(fx):return fx.cue_key=="illusion_wave_hit")
+		var expected_angle := -0.800000011920929 if rear_contact else 0.800000011920929
+		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and impact_views.size()==1
+			and impact_views[0].facing==1 and impact_views[0].base_rotation==expected_angle,
+			"the wave impact keeps the source facing and uses the original angle endpoints at the target depth")
+		check(game.view.particle_bursts.random.draws==draws_before+1 and game.rng._rng.state==gameplay_rng._rng.state,
+			"the wave impact consumes one shared cosmetic roll without advancing the combat RNG")
 		if rear_contact:
 			var wave: Dictionary = game.objects[0]
 			check(cues("native_contact_blood").back()["facing"]==-1,
@@ -5298,8 +5316,16 @@ func check_illusion_finish() -> void:
 			var target: Dictionary = api.spawn_dummy(wave["pos"])
 			target["hp"] = 50000.0
 			game.numeric_player.values["hit"] = 1.0
+			var previous_clock: Callable = game.view.particle_bursts.clock
+			game.view.particle_bursts.clock = func():return 8
+			game.view.particle_bursts.random.state = 0
 			game.step_objects(0.0)
+			game.view.particle_bursts.clock = previous_clock
 			check(cues("HOANYOUNG_HIT").size()==1,"the mastered short-sword wave hits on frame zero")
+			var impact_views: Array = game.view.effects.filter(func(fx):return fx.cue_key=="illusion_wave_hit")
+			var expected_angle := PackedByteArray([0x5e,0x65,0x04,0x3c]).decode_float(0)
+			check(impact_views.size()==1 and impact_views[0].facing==-1 and impact_views[0].base_rotation==expected_angle,
+				"the mirrored wave preserves the native angle for an interior roll")
 			for index in range(1,10):
 				move_target(target,Vector2(wave["pos"])+Vector2(facing*26,-4))
 				game.step_objects(59.0)

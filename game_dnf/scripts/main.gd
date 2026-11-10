@@ -3479,11 +3479,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
 	if native_kind == "illusion_wave":
-		# A709EF..A70A66 uses the overlap center X/Z and the victim's ground Y.
-		var roll := rng.range_int(0,99)
-		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
+		# A709B6 copies the wave's direction. A70A3C uses the overlap X/Z and victim Y.
 		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),roundi(target["pos"].y)),
-			"height":int(point.z),"facing":object_facing if object_facing != 0 else facing,"angle":angle,"fresh":true})
+			"height":int(point.z),"facing":object_facing if object_facing != 0 else facing,"fresh":true})
 	elif native_kind == "hundred_sword_field":
 		# A6BF20 initializes the neutral direction and 1.57-radian angle.
 		# A6E1EB..A6E242 places SlashLarge2 at the overlap X/Z and target Y.
