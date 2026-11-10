@@ -4452,6 +4452,7 @@ func check_hundred_sword_automatic() -> void:
 				"the disappearance uses the original projected anchor and discrete rotation at stage %d"%ordinal)
 		check(game.action_duration("hundredsword")==durations[ordinal],
 			"stage %d applies its original rate to each body frame"%ordinal)
+		var no_starting_hurtbox: bool = game.player_damage_boxes().is_empty() and not game.attack_body_armor()
 		var elapsed := 0.0
 		if ordinal == 0 and is_instance_valid(disappear):
 			var start_angle: float = disappear.base_rotation
@@ -4465,6 +4466,8 @@ func check_hundred_sword_automatic() -> void:
 		step(float(durations[ordinal])-1.0-elapsed)
 		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal,
 			"stage %d holds through its last millisecond"%ordinal)
+		check(no_starting_hurtbox and game.player_damage_boxes().is_empty() and not game.attack_body_armor(),
+			"both movement frames of stage %d have no hurtbox and no super armor flag"%ordinal)
 		var visible: Array = actor.get_meta("native_cast_layers",{}).values().filter(func(layer):return layer.visible)
 		check(visible.size()==(4 if poses[ordinal]==5 else 2)
 			and visible.all(func(layer):return layer.frame.get("img_frame",-1)==1),
@@ -4516,6 +4519,20 @@ func check_hundred_sword_automatic() -> void:
 	check(ending_layers.all(func(fx):return fx.is_queued_for_deletion()),
 		"both clips retire on their independent 210 ms clock")
 	check_hundred_sword_finish_flash(true,POINT+Vector2(150,0))
+	for frame: Dictionary in game.action_def()["timeline"]:
+		game.player["clock"] = float(frame["start_ms"])
+		check(game.attack_body_armor() and not game.player_damage_boxes().is_empty(),
+			"finish frame %d exposes its original hurtbox with super armor"%int(frame["frame"]))
+	game.player["clock"] = 0.0
+	var attacker: Dictionary = game.spawn_enemy(POINT)
+	attacker["numeric"].values["hit"] = 1.0
+	var attack := {"atk":game.table.atk("character/swordman/attackinfo/attack1.atk"),"percent":100.0,"hitstop_ms":0.0}
+	var segments := [{"frames":[{"start":0,"end":1,"boxes":[[-50,-12,0,50,12,100]]}]}]
+	var before_hp: float = game.player["hp"]
+	game.resolve_enemy_melee(attacker,segments,attack,-1.0,0.0)
+	check(game.player["hp"]<before_hp and game.player["action"]=="hundredsword"
+		and game.player["clock"]==0.0 and cues("upper_armor_light").size()==1,
+		"a melee contact damages the finish windup and leaves the cast and its clock active")
 	# Use the large room coordinate that crosses an integer only after the native f32 stores.
 	game.player["pos"] = Vector2(2000,POINT.y)
 	step(560.0)
