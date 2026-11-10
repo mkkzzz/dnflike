@@ -5087,6 +5087,9 @@ func build_props(room: Dictionary) -> Array:
 				var count := int(raw[4]) if raw.size() >= 5 else -1
 				native_object_gaps[path] = ["opaque_special_object" if raw.size() != 5+6*count
 					else "native_special_object"]
+			elif (path.contains("/actionobject/") and item.get("sprite") == null
+					and array_of(item.get("parts")).is_empty()):
+				native_object_gaps[path] = ["native_action_object_visual"]
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")
@@ -5141,6 +5144,7 @@ func build_props(room: Dictionary) -> Array:
 	return out
 
 func prepare_native_box_loot(dungeon: Dictionary) -> bool:
+	if not NativeBoxLoot.required(dungeon):return true
 	return NativeBoxLoot.ready(dungeon)
 
 func breakable_stage_count(data: Array) -> int:

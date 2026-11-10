@@ -15,6 +15,20 @@ static func data() -> Dictionary:
 static func items() -> Dictionary:
 	return data().get("items",{})
 
+static func required(dungeon: Dictionary) -> bool:
+	for room: Dictionary in dungeon.get("rooms",{}).values():
+		for item: Dictionary in room.get("objects",[]):
+			var raw: Array = item.get("raw",[])
+			if item.get("source_tag") != "[special passive object]" or raw.size() < 11:continue
+			var count := int(raw[4])
+			if raw.size() != 5+6*count:continue
+			for at in range(5,raw.size(),6):
+				if raw[at] != "[item]":continue
+				var draws := int(raw[at+2])
+				if draws < 0 and at+3 < raw.size():draws = int(raw[at+3])
+				if draws > 0:return true
+	return false
+
 static func ready(dungeon: Dictionary) -> bool:
 	_active = data().get("dungeons",{}).get(String(dungeon.get("sha256","")),{})
 	if _active.is_empty() or _active.get("source",{}).get("path") != dungeon.get("path") or items().is_empty():

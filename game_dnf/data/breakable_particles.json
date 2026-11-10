@@ -2,6 +2,14 @@
  "schema": "dnf_breakable_particles/1",
  "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
  "objects": {
+  "passiveobject/mapobject/breakableobject/1stbackbonelongpot.obj": [
+   "ptl_longpotparticle1",
+   "ptl_longpotparticle2",
+   "ptl_longpotparticle3",
+   "ptl_longpotparticle4",
+   "ptl_longpotparticle5",
+   "ptl_longpotparticle6"
+  ],
   "passiveobject/mapobject/breakableobject/act6box_peter.obj": [
    "ptl_act6boxparticle01",
    "ptl_act6boxparticle02",
@@ -98,6 +106,16 @@
    "ptl_deadcoralparticle5",
    "ptl_deadcoralparticle6",
    "ptl_deadcoralparticle7"
+  ],
+  "passiveobject/mapobject/breakableobject/dtdeco_longpot.obj": [
+   "ptl_dtpotparticle1",
+   "ptl_dtpotparticle2",
+   "ptl_dtpotparticle3"
+  ],
+  "passiveobject/mapobject/breakableobject/dtdeco_shortpot.obj": [
+   "ptl_dtpotparticle1",
+   "ptl_dtpotparticle2",
+   "ptl_dtpotparticle3"
   ],
   "passiveobject/mapobject/breakableobject/epicquestrescuelorianquestcage.obj": [
    "ptl_questcagedest01",

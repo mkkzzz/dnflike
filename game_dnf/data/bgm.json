@@ -108,6 +108,10 @@
    "normal": "purgatory",
    "boss": "purgatory_boss"
   },
+  "goddesstemple": {
+   "normal": "goddess_temple",
+   "boss": "goddess_temple_boss"
+  },
   "jungle": {
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
@@ -326,6 +330,18 @@
    "source": "music/purgatory_boss.ogg",
    "sha256": "014020fad65aed4d6f1c367982d037d3cbbc40576680875f972725f7da89858c",
    "bytes": 1415007
+  },
+  "goddess_temple": {
+   "file": "audio/bgm/goddess_temple.ogg",
+   "source": "music/goddess_temple.ogg",
+   "sha256": "13a44b58077b260a07ca89780da592bbe208b1e7b1c174258b98ed452f4a0f4c",
+   "bytes": 1818541
+  },
+  "goddess_temple_boss": {
+   "file": "audio/bgm/goddess_temple_boss.ogg",
+   "source": "music/goddess_temple_boss.ogg",
+   "sha256": "713ab5624a30154c458854fe8548632e8f8fbd63e5b4ee5fd130379328b2dade",
+   "bytes": 943834
   },
   "dendroid": {
    "file": "audio/bgm/dendroid.ogg",

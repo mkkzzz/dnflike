@@ -147,6 +147,20 @@
     "sha256": "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57"
    }
   },
+  "goddesstemple": {
+   "name": "GBL女神殿",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/goddesstemple_v1/map_export.json",
+   "min_level": 33,
+   "monster_level": 36,
+   "source": {
+    "path": "dungeon/act3/goddesstemple.dgn",
+    "sha256": "88aa7ce4c942f1981c2df755691480e3991ac539ef60e9850822e5c33f375a04"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

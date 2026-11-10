@@ -746,9 +746,9 @@
     "id": 91,
     "min_level": 33,
     "path": "dungeon/act3/goddesstemple.dgn",
-    "runtime_id": "",
+    "runtime_id": "goddesstemple",
     "sha256": "88aa7ce4c942f1981c2df755691480e3991ac539ef60e9850822e5c33f375a04",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 37,
@@ -7247,40 +7247,40 @@
     "level_max": 70,
     "level_min": 36,
     "path": "monster/newmonsters/gbl_goddess_temple/astray_alsor/astray_alsor.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_goddess_temple_astray_alsor_astray_alsor",
+    "state": "runtime"
    },
    {
     "id": 63022,
     "level_max": 70,
     "level_min": 36,
     "path": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_goddess_temple_astray_gbl_devotee_astray_gbl_devotee",
+    "state": "runtime"
    },
    {
     "id": 59019,
     "level_max": 70,
     "level_min": 36,
     "path": "monster/newmonsters/gbl_goddess_temple/astray_gbl_pope/astray_gbl_pope.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope",
+    "state": "runtime"
    },
    {
     "id": 63023,
     "level_max": 70,
     "level_min": 36,
     "path": "monster/newmonsters/gbl_goddess_temple/astray_gbl_w_devotee/astray_gbl_w_devotee.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_goddess_temple_astray_gbl_w_devotee_astray_gbl_w_devotee",
+    "state": "runtime"
    },
    {
     "id": 59018,
     "level_max": 70,
     "level_min": 36,
     "path": "monster/newmonsters/gbl_goddess_temple/zookeeper/zookeeper.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
+    "state": "runtime"
    },
    {
     "id": 273,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 22,
+   "runtime": 23,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 103,
+   "runtime": 108,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

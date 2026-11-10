@@ -1020,6 +1020,31 @@
    "mob": "monster/zealotrebirth/rebirthsister.mob",
    "bank": "zealotrebirth_rebirthsister",
    "name": "rebirthsister"
+  },
+  "newmonsters_gbl_goddess_temple_astray_alsor_astray_alsor": {
+   "mob": "monster/newmonsters/gbl_goddess_temple/astray_alsor/astray_alsor.mob",
+   "bank": "newmonsters_gbl_goddess_temple_astray_alsor_astray_alsor",
+   "name": "astray_alsor"
+  },
+  "newmonsters_gbl_goddess_temple_astray_gbl_devotee_astray_gbl_devotee": {
+   "mob": "monster/newmonsters/gbl_goddess_temple/astray_gbl_devotee/astray_gbl_devotee.mob",
+   "bank": "newmonsters_gbl_goddess_temple_astray_gbl_devotee_astray_gbl_devotee",
+   "name": "astray_gbl_devotee"
+  },
+  "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope": {
+   "mob": "monster/newmonsters/gbl_goddess_temple/astray_gbl_pope/astray_gbl_pope.mob",
+   "bank": "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope",
+   "name": "astray_gbl_pope"
+  },
+  "newmonsters_gbl_goddess_temple_astray_gbl_w_devotee_astray_gbl_w_devotee": {
+   "mob": "monster/newmonsters/gbl_goddess_temple/astray_gbl_w_devotee/astray_gbl_w_devotee.mob",
+   "bank": "newmonsters_gbl_goddess_temple_astray_gbl_w_devotee_astray_gbl_w_devotee",
+   "name": "astray_gbl_w_devotee"
+  },
+  "newmonsters_gbl_goddess_temple_zookeeper_zookeeper": {
+   "mob": "monster/newmonsters/gbl_goddess_temple/zookeeper/zookeeper.mob",
+   "bank": "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
+   "name": "zookeeper"
   }
  },
  "boss_hp_lines": 3,
