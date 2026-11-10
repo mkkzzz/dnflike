@@ -6553,6 +6553,38 @@ func check_bloodblast() -> void:
 					"the next spray contact relaunches a grounded heavy target at a quarter of its initial height: %s" % [
 						[eruption["hits"],flank["state"],flank.get("native_down_phase"),rise,flank["hp"],game.enemy_damage_boxes(flank)]])
 
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	press(KEY_A)
+	step(495)
+	if game.objects.size()!=3:
+		check(false,"the Blood Blast reaction fixture releases all three objects")
+		return
+	ground = game.objects[2]
+	for sample: Array in [["dendroid_dendroid","stagger"],["new_golem_platany","stagger"],
+			["dendroid_dendroid","no_poses"],["goblin","freeze"],["goblin","stone"]]:
+		var victim: Dictionary = game.spawn_enemy(POINT,false,sample[0])
+		victim["clock"] = 19.0
+		victim["hp"] = 5000.0
+		if sample[1] == "no_poses":
+			var motions: Dictionary = victim["def"]["motions"].merged({"damage1":"","damage2":""},true)
+			victim["def"] = victim["def"].merged({"motions":motions},true)
+		elif sample[1] in ["freeze","stone"]:
+			victim["numeric"].effects.add(sample[1],{"duration_ms":2000.0})
+		game.step_objects(100.0 if float(ground["clock"])==0.0 else 0.0)
+		check(ground["hits"].has(victim["id"]) and victim["hp"]<5000.0 and victim["stuck_ms"]==50.0,
+			"the opening eruption still applies damage and hitstop when the reaction changes: "+str(sample))
+		if sample[1] == "stagger":
+			check(victim["state"]=="hurt" and victim["hit_motion"] in ["damage1","damage2"]
+				and victim["vz"]==0.0 and not victim.has("native_down_phase") and victim["push_v"]==400.0,
+				"a source MOB without a down action uses its damage pose and ground slide: "+str(sample))
+		else:
+			check(victim["state"]=="idle" and victim["clock"]==19.0 and victim["vz"]==0.0,
+				"Blood Blast preserves the target's pose and clock when state 3 and 4 are denied: "+str(sample))
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)

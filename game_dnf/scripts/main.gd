@@ -3096,11 +3096,22 @@ func apply_hundred_sword_reaction(target: Dictionary, atk: Dictionary, facing: i
 	var in_down_state: bool = target["state"] in ["air","down","native_down_flight"]
 	if (airborne or in_down_state) and (motions.get("down","") != "" or motions.get("overturn","") != ""):
 		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true,int(atk["ignore_weight"])!=0)
+	return apply_native_ground_stagger(target,atk,facing,recovery,delay_factor)
+
+func apply_bloodblast_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
+	var effects: Dictionary = target["numeric"].effects.active if target.has("numeric") else {}
+	if effects.has("freeze") or effects.has("stone"):return "none"
+	# 8186EB checks the DOWN motion or action. Overturn alone is insufficient.
+	if target["def"]["motions"].get("down","") != "":
+		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true)
+	return apply_native_ground_stagger(target,atk,facing,recovery,1.0)
+
+func apply_native_ground_stagger(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor: float) -> String:
 	var reaction := apply_native_stagger_reaction(target,atk,facing,recovery,delay_factor,true)
 	if reaction == "stagger":
 		# 82C1EF clears vertical motion when state 3 starts its ground slide.
 		target["vz"] = 0.0
-		if not airborne:target["z"] = 0.0
+		if roundi(float(target["z"])) <= 0:target["z"] = 0.0
 		target.erase("native_jump_velocity")
 		target.erase("native_jump_gravity")
 		target.erase("native_down_phase")
@@ -3338,9 +3349,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if reaction != "none":target["clock"] = 0.0
 		elif native_kind == "hundred_sword_field" and not armor_blocks_reaction:
 			reaction = apply_hundred_sword_reaction(target,atk,facing,recovery,float(hit["stagger_factor"]))
+		elif native_kind == "bloodblast" and not armor_blocks_reaction:
+			reaction = apply_bloodblast_reaction(target,atk,facing,recovery)
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif (outrage_impact or native_kind == "bloodblast") and not armor_blocks_reaction:
+		elif outrage_impact and not armor_blocks_reaction:
 			# 81F1F0 dispatches state 4 with the object's ATK push and lift.
 			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
 		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
@@ -3349,7 +3362,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if reaction != "none":
 				target.erase("native_down_phase")
 				target.erase("native_down_peak")
-		if not armor_blocks_reaction and (native_kind != "hundred_sword_field" or reaction != "none"):
+		if not armor_blocks_reaction and (native_kind not in ["hundred_sword_field","bloodblast"] or reaction != "none"):
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player and not draw_impact:
