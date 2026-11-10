@@ -311,6 +311,9 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 				body["down_ms"] = float(rules["reaction"]["down_hold_ms"])
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
+		if event["type"]=="sound":
+			play_sound(event["key"])
+			continue
 		if int(body["id"])==PLAYER_ID and god_mode:continue
 		if event["type"]=="frenzy_drain":
 			# The appendage writes HP directly and removes itself at the HP floor.
@@ -1906,7 +1909,7 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 		# The ATK status is resolved separately from the pull permission.
 		if enemy.has("numeric") and not phase["suction_bleed"].is_empty():
 			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),true):
-				bus.emit("combat.status",{"target":id,"id":"bleed","change":"added"})
+				announce_source_bleed(id)
 		bloody_rave_contact_cue(move,enemy,contact["point"])
 		# 869DDB rejects body mode 2. This contact uses a different gate from Bloodlust.
 		if not targets.has(id) and int(enemy_frame(enemy).get("items",{}).get("13",0)) != 2:
@@ -3526,7 +3529,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
 				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player):
-					bus.emit("combat.status",{"target":target["id"],"id":"bleed","change":"added"})
+					announce_source_bleed(int(target["id"]))
 				continue
 			var chance := float(effect.get("chance",1))
 			if effect.get("id","") == "bleed" and hit_skill_id in ["rage_slash","hopsmash"] and int(skill_levels.get("bloody_vigorous",0)) > 0:
@@ -6220,6 +6223,11 @@ func view_snapshot() -> Dictionary:
 ## Presentation cue; the view's audio router plays it.
 func play_sound(key: String) -> void:
 	bus.emit("combat.cue",{"kind":"sound","key":key})
+
+func announce_source_bleed(target_id: int) -> void:
+	bus.emit("combat.status",{"target":target_id,"id":"bleed","change":"added"})
+	# 8B56B1 plays this cue after a successful application or reapplication.
+	play_sound("CONDITION_BLOODING")
 
 func capture_frame(name: String) -> void:
 	await RenderingServer.frame_post_draw

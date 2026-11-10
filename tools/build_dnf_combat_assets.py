@@ -680,6 +680,8 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in HARDATTACK_CHARGE_AUDIO.items()},
     **{key: [path] for key, path in HARDATTACK_WAVE_AUDIO.items()},
     'CONDITION_SLEEP': ['sounds/effect/c_sleep.ogg'],
+    'CONDITION_BLOODING': ['sounds/effect/c_blooding.ogg'],
+    'BLOOD_DROP_LOOP': ['sounds/effect/blood_drop.ogg'],
     **{key: [path] for key, path in GHOST_FIELD_AUDIO.items()},
     **ZEALOT_SOUNDS,
     **OUTERWALL_SOUNDS,
@@ -1789,6 +1791,8 @@ def main() -> int:
                         help='Add original Ghost Drive wave banks and voices')
     parser.add_argument('--extend-sleep-status', action='store_true',
                         help='Add the original sleep status ANI and sound')
+    parser.add_argument('--extend-bleed-status-audio', action='store_true',
+                        help='Add the original bleed application and tick sounds')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -2059,6 +2063,10 @@ def main() -> int:
     if args.extend_sleep_status:
         specs = [('effects', 'native_sleep', EFFECTS['native_sleep']),
                  ('audio', 'CONDITION_SLEEP', CUE_SOUNDS['CONDITION_SLEEP'])]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_bleed_status_audio:
+        specs = [('audio', key, CUE_SOUNDS[key]) for key in ('CONDITION_BLOODING', 'BLOOD_DROP_LOOP')]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:

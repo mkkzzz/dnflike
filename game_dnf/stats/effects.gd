@@ -205,6 +205,8 @@ func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
 		if amount > 0:
 			events.append({"type":"direct_damage","id":"bleed","damage":amount,"damage_type":"physical",
 				"native_number":true,"player_bleed":player_amount>0})
+		# 8B30CD requests the drop sound once after each shared tick.
+		events.append({"type":"sound","key":"BLOOD_DROP_LOOP"})
 	for index in range(applications.size()-1,-1,-1):
 		applications[index]["remaining_ms"] -= ms
 		if float(applications[index]["remaining_ms"]) <= 0.0:applications.remove_at(index)

@@ -5560,7 +5560,8 @@ func check_illusion_blade_bleed() -> void:
 		game.step_objects(100.0)
 		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
 		var expected := [{"remaining_ms":3000.0,"amount":104,"status_level":24,"from_player":true}] if rank==3 else []
-		check(game.hit_count==1 and bleed.get("source_bleed",{}).get("applications",[])==expected,
+		check(game.hit_count==1 and bleed.get("source_bleed",{}).get("applications",[])==expected
+			and cues("CONDITION_BLOODING").size()==(1 if rank==3 else 0),
 			"Illusion Slash melee uses the original katana mastery threshold and bleed payload")
 		game.clear_monsters()
 		step(100)
@@ -5572,14 +5573,22 @@ func check_illusion_blade_bleed() -> void:
 		target["numeric"].values["level"] = 24
 		game.rng.reseed(seeds[3320])
 		game.step_objects(0.0)
-		check(wave["hits"].has(target["id"]) and not target["numeric"].effects.active.has("bleed"),
+		check(wave["hits"].has(target["id"]) and not target["numeric"].effects.active.has("bleed")
+			and cues("CONDITION_BLOODING").size()==(1 if rank==3 else 0),
 			"the sword wave's equal-level roll of 3320 misses the bleed")
 		move_target(target,Vector2(wave["pos"])+Vector2(70,0))
 		game.rng.reseed(seeds[3319])
 		game.step_objects(125.0)
 		bleed = target["numeric"].effects.active.get("bleed",{})
-		check(game.hit_count==3 and bleed.get("source_bleed",{}).get("applications",[])==expected,
+		check(game.hit_count==3 and bleed.get("source_bleed",{}).get("applications",[])==expected
+			and cues("CONDITION_BLOODING").size()==(2 if rank==3 else 0),
 			"the reopened sword-wave ledger independently rolls the original bleed")
+		if rank==3:
+			move_target(target,Vector2(wave["pos"])+Vector2(70,0))
+			game.rng.reseed(seeds[3319])
+			game.step_objects(125.0)
+			check(bleed["source_bleed"]["applications"].size()==2 and cues("CONDITION_BLOODING").size()==3,
+				"a successful reapplication plays the condition sound again before the next shared tick")
 
 func check_rapid_impact_cues(target: Dictionary, variant: int) -> void:
 	var events: Array = game.bus.events_of("combat.cue")
@@ -7013,6 +7022,10 @@ func check_thirst_burst() -> void:
 	first["z"] = 30.0
 	game.step_numeric_actor(first,first["numeric"],0)
 	check(first["hp"]==hp-78,"first native tick floors 1096 / floor(7000 / 500)")
+	check(cues("CONDITION_BLOODING").size()==2 and cues("BLOOD_DROP_LOOP").size()==1
+		and game.view.audio.variants["CONDITION_BLOODING"][0] is AudioStreamOggVorbis
+		and game.view.audio.variants["BLOOD_DROP_LOOP"][0] is AudioStreamOggVorbis,
+		"native bleed applies its condition sound per target and its drop sound on the first tick")
 	var numbers: Array = game.bus.events_of("combat.damage_number").filter(
 		func(event):return event["id"]=="bleed" and event["target"]==first["id"])
 	var bank: Dictionary = game.table.assets["monsters"][first["def"]["bank"]]
@@ -7022,10 +7035,11 @@ func check_thirst_burst() -> void:
 		"owned bleed draws the native gold digits at the victim's standing height plus airborne Z and 15 pixels")
 	first["z"] = 0.0
 	game.step_numeric_actor(first,first["numeric"],499)
-	check(first["hp"]==hp-78,"native bleed does not tick again before 500 ms")
+	check(first["hp"]==hp-78 and cues("BLOOD_DROP_LOOP").size()==1,"native bleed does not tick again before 500 ms")
 	first["state"] = "move"
 	game.step_numeric_actor(first,first["numeric"],1)
-	check(first["hp"]==hp-156,"an ordinary moving monster takes the same 500 ms bleed tick without a second defense pass")
+	check(first["hp"]==hp-156 and cues("BLOOD_DROP_LOOP").size()==2,
+		"an ordinary moving monster takes the same 500 ms bleed tick and plays the same drop sound")
 	game.step_objects(259)
 	check(game.objects.has(burst) and cues("FIRE_PILLAR_HIT").size()==2,"object keeps one hit per target through age 359")
 	game.step_objects(1)
