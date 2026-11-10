@@ -3363,11 +3363,28 @@ func check_hundred_sword_automatic() -> void:
 			and game.view.player_actor.pose=="hundredswordmoveready%d"%poses[ordinal] and game.player["pos"]==expected
 			and expected_height and game.player["facing"]==(1 if expected.x<next_x else -1),
 			"automatic Hundred Sword stage %d uses the original sword point, body pose and next facing"%ordinal)
-		check(game.view.object_views.has("hundred_sword:%d:disappear:1"%slot),
+		var disappear_id := "hundred_sword:%d:disappear:1"%slot
+		var disappear = game.view.object_views.get(disappear_id)
+		check(is_instance_valid(disappear),
 			"the selected sword enters its original disappearance state at stage %d"%ordinal)
+		if is_instance_valid(disappear):
+			var angle_index := float(disappear.base_rotation)*99.0/6.28
+			check(angle_index >= 0.0 and angle_index <= 99.001 and absf(angle_index-roundf(angle_index)) < 0.001
+				and disappear.position == expected+Vector2(0,1+Frame.MAP_DY-float(game.player["z"])),
+				"the disappearance uses the original projected anchor and discrete rotation at stage %d"%ordinal)
 		check(game.action_duration("hundredsword")==durations[ordinal],
 			"stage %d applies its original rate to each body frame"%ordinal)
-		step(float(durations[ordinal])-1.0)
+		var elapsed := 0.0
+		if ordinal == 0 and is_instance_valid(disappear):
+			var start_angle: float = disappear.base_rotation
+			step(299.0)
+			check(game.view.object_views.has(disappear_id) and disappear.base_rotation==start_angle
+				and disappear.frame.get("frame",-1)==4,
+				"the fifth disappearance frame keeps the sword's sampled angle through 299 ms")
+			step(1.0)
+			check(not game.view.object_views.has(disappear_id),"the disappearance ends at the authored 300 ms boundary")
+			elapsed = 300.0
+		step(float(durations[ordinal])-1.0-elapsed)
 		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal,
 			"stage %d holds through its last millisecond"%ordinal)
 		var visible: Array = actor.get_meta("native_cast_layers",{}).values().filter(func(layer):return layer.visible)

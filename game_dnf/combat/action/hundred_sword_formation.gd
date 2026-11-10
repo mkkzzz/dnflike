@@ -20,6 +20,7 @@ var _spread_ms: int
 var _settle_ms: int
 var _land_ms: int
 var _age := 0.0
+var _art_rng: DetRng
 
 func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, cosmetic_seed: int) -> void:
 	_center = origin+Vector2(int(config["distance"])*facing,0)
@@ -29,10 +30,10 @@ func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, co
 	_disappear_ms = float(config["disappear_ms"])
 	# The source draws an independent mirror bit for each sword. Keep these
 	# cosmetic draws off the combat hit and critical RNG.
-	var art_rng := DetRng.new(cosmetic_seed)
+	_art_rng = DetRng.new(cosmetic_seed)
 	for slot in _styles.size():
-		_art_facing.append(2*art_rng.range_int(0,1)-1)
-		_disappear_fx.append(_effects["sworddisappear%d"%art_rng.range_int(1,2)])
+		_art_facing.append(2*_art_rng.range_int(0,1)-1)
+		_disappear_fx.append(_effects["sworddisappear%d"%_art_rng.range_int(1,2)])
 	_entry_ms = int(timeline[4]["start_ms"])
 	_spread_ms = int(timeline[11]["start_ms"])
 	_settle_ms = int(timeline[16]["start_ms"])
@@ -52,7 +53,9 @@ func waypoint(slot: int) -> Vector3i:
 func consume(slot: int) -> Vector3i:
 	var point := waypoint(slot)
 	# CD22CD selects CNHundredSword state 4 before CD2305 reads its point.
-	_spent[slot] = {"point":point,"at_ms":_age}
+	# A6D256..A6D2E4 assigns one sampled rotation to every frame of ETC 12.
+	var rotation := Motion.f32(Motion.f32(6.28)*_art_rng.range_int(0,99)/99.0)
+	_spent[slot] = {"point":point,"at_ms":_age,"rotation":rotation}
 	return point
 
 func append_view(out: Array) -> void:
@@ -80,7 +83,12 @@ func append_view(out: Array) -> void:
 			var age := _age-float(_spent[slot]["at_ms"])
 			if age < _disappear_ms:
 				var point: Vector3i = _spent[slot]["point"]
-				_layer(out,slot,id+":disappear",_disappear_fx[slot],Vector2(point.x,point.y),point.z,age,1,false)
+				# A6D202 keeps the object's height and offsets the ground attachment in screen Y.
+				var ground := slot%2 == 0
+				var view := _layer(out,slot,id+":disappear",_disappear_fx[slot],Vector2(point.x,point.y),
+					0.0 if ground else float(point.z),age,1,false)
+				view["screen_offset"] = Vector2(0,-40) if ground else Vector2.ZERO
+				view["rotation"] = _spent[slot]["rotation"]
 			continue
 		var ground := slot%2 == 0
 		var point := _blade_point(slot,angle,radius)
@@ -115,9 +123,11 @@ func _air_height(slot: int, now: int) -> int:
 	return HEIGHT+int(Motion.ramp(0.0,10.0,wave,1500))
 
 func _layer(out: Array, slot: int, id: String, bank: String, pos: Vector2, z: float, clock: float, depth: int,
-		hold: bool, loop := false) -> void:
-	out.append({"id":"%s:%d"%[id,depth],"effect":bank,"pos":pos,"z":z,"facing":_art_facing[slot],
-		"clock":clock,"depth_offset":depth,"hold_last_frame":hold,"loop":loop})
+		hold: bool, loop := false) -> Dictionary:
+	var view := {"id":"%s:%d"%[id,depth],"effect":bank,"pos":pos,"z":z,"facing":_art_facing[slot],
+		"clock":clock,"depth_offset":depth,"hold_last_frame":hold,"loop":loop}
+	out.append(view)
+	return view
 
 static func _orbit_radius(from: int, to: int, elapsed: int, duration: int) -> int:
 	# A6DF19/A6DF90 call the integer wrapper of 11AEFE0, with reverse easing.
