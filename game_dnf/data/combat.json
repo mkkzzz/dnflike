@@ -1045,6 +1045,46 @@
    "mob": "monster/newmonsters/gbl_goddess_temple/zookeeper/zookeeper.mob",
    "bank": "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
    "name": "zookeeper"
+  },
+  "dendroid_dendroid_breeding": {
+   "mob": "monster/dendroid/dendroid_breeding.mob",
+   "bank": "dendroid_dendroid_breeding",
+   "name": "dendroid_breeding"
+  },
+  "newmonsters_gbl_breeding_dendroid_disguise_dendroid_disguise": {
+   "mob": "monster/newmonsters/gbl_breeding/dendroid_disguise/dendroid_disguise.mob",
+   "bank": "newmonsters_gbl_breeding_dendroid_disguise_dendroid_disguise",
+   "name": "dendroid_disguise"
+  },
+  "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder": {
+   "mob": "monster/newmonsters/gbl_breeding/dendroid_elder/dendroid_elder.mob",
+   "bank": "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
+   "name": "dendroid_elder"
+  },
+  "newmonsters_gbl_breeding_flare_spawn_flare_spawn": {
+   "mob": "monster/newmonsters/gbl_breeding/flare_spawn/flare_spawn.mob",
+   "bank": "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
+   "name": "flare_spawn"
+  },
+  "newmonsters_gbl_breeding_flare_worm_flare_worm": {
+   "mob": "monster/newmonsters/gbl_breeding/flare_worm/flare_worm.mob",
+   "bank": "newmonsters_gbl_breeding_flare_worm_flare_worm",
+   "name": "flare_worm"
+  },
+  "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal": {
+   "mob": "monster/newmonsters/gbl_breeding/new_gbl_nomal/new_gbl_nomal.mob",
+   "bank": "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
+   "name": "new_gbl_nomal"
+  },
+  "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman": {
+   "mob": "monster/newmonsters/gbl_breeding/new_gbl_woman/new_gbl_woman.mob",
+   "bank": "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
+   "name": "new_gbl_woman"
+  },
+  "newmonsters_gbl_breeding_woody_plant_woody_plant": {
+   "mob": "monster/newmonsters/gbl_breeding/woody_plant/woody_plant.mob",
+   "bank": "newmonsters_gbl_breeding_woody_plant_woody_plant",
+   "name": "woody_plant"
   }
  },
  "boss_hp_lines": 3,

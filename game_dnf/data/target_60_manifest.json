@@ -772,9 +772,9 @@
     "id": 90,
     "min_level": 35,
     "path": "dungeon/act3/breeding.dgn",
-    "runtime_id": "",
+    "runtime_id": "breeding",
     "sha256": "5ca157ff900f7f3522614e9f186e1712ec1d2470726daac32da6f6f40f23c8a5",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 39,
@@ -4999,8 +4999,8 @@
     "level_max": 35,
     "level_min": 30,
     "path": "monster/dendroid/dendroid_breeding.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dendroid_dendroid_breeding",
+    "state": "runtime"
    },
    {
     "id": 502,
@@ -7455,56 +7455,56 @@
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/dendroid_disguise/dendroid_disguise.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_dendroid_disguise_dendroid_disguise",
+    "state": "runtime"
    },
    {
     "id": 56457,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/dendroid_elder/dendroid_elder.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
+    "state": "runtime"
    },
    {
     "id": 56456,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/flare_spawn/flare_spawn.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
+    "state": "runtime"
    },
    {
     "id": 61601,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/flare_worm/flare_worm.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_flare_worm_flare_worm",
+    "state": "runtime"
    },
    {
     "id": 61602,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/new_gbl_nomal/new_gbl_nomal.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
+    "state": "runtime"
    },
    {
     "id": 61600,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/new_gbl_woman/new_gbl_woman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
+    "state": "runtime"
    },
    {
     "id": 61605,
     "level_max": 70,
     "level_min": 38,
     "path": "monster/newmonsters/gbl_breeding/woody_plant/woody_plant.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_breeding_woody_plant_woody_plant",
+    "state": "runtime"
    },
    {
     "id": 2021409,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 23,
+   "runtime": 24,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 108,
+   "runtime": 116,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

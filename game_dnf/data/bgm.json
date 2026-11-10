@@ -104,6 +104,10 @@
    "normal": "bloodhell",
    "boss": "bloodhell_boss"
   },
+  "breeding": {
+   "normal": "breeding_place",
+   "boss": "breeding_place_boss"
+  },
   "darkhell": {
    "normal": "purgatory",
    "boss": "purgatory_boss"
@@ -318,6 +322,18 @@
    "source": "music/bloodhell_boss.ogg",
    "sha256": "107ae0b2e0ba88a97511601d38fa4fce2a4ee616bc623844a077bf791df9c7e6",
    "bytes": 1069590
+  },
+  "breeding_place": {
+   "file": "audio/bgm/breeding_place.ogg",
+   "source": "music/breeding_place.ogg",
+   "sha256": "f4172e1310e0caba44dbc648b02d0cb3788ab15b3d40c05351f0b33670dffccc",
+   "bytes": 1428818
+  },
+  "breeding_place_boss": {
+   "file": "audio/bgm/breeding_place_boss.ogg",
+   "source": "music/breeding_place_boss.ogg",
+   "sha256": "526b3bd60008522019a7489caf583c184c7160b0a8b2d3bb1c3f59ea754c04cb",
+   "bytes": 1151526
   },
   "purgatory": {
    "file": "audio/bgm/purgatory.ogg",

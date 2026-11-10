@@ -161,6 +161,20 @@
     "sha256": "88aa7ce4c942f1981c2df755691480e3991ac539ef60e9850822e5c33f375a04"
    }
   },
+  "breeding": {
+   "name": "树精繁殖地",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/breeding_v1/map_export.json",
+   "min_level": 35,
+   "monster_level": 38,
+   "source": {
+    "path": "dungeon/act3/breeding.dgn",
+    "sha256": "5ca157ff900f7f3522614e9f186e1712ec1d2470726daac32da6f6f40f23c8a5"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

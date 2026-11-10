@@ -242,8 +242,8 @@ func run() -> void:
 			"unsupported 2211 trap rows are recorded without execution: " + str(unknown_ids))
 		check(trigger_paths.is_empty(), "goddess temple has no standalone trap path objects")
 		var helipad := "passiveobject/actionobject/common/gblhelipad.obj"
-		check(all_gaps.get(helipad, []) == ["native_action_object_visual"],
-			"motionless GBL helipad remains an explicit runtime visual gap")
+		check(all_gaps.get(helipad, []) == ["native_action_object_behavior", "native_action_object_visual"],
+			"motionless GBL helipad remains explicit runtime behaviour and visual gaps")
 	session.stop()
 	await process_frame
 	print("[NATIVE_MAZE_GODDESSTEMPLE] COMPLETE checks=%d failures=%d" % [checks, failures])

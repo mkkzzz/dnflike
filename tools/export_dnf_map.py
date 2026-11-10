@@ -41,6 +41,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/darkhell.dgn',
     'dungeon/act3/whitenight.dgn',
     'dungeon/act3/goddesstemple.dgn',
+    'dungeon/act3/breeding.dgn',
     'dungeon/act3/bloodhell.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']

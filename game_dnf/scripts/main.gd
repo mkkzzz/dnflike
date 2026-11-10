@@ -5048,6 +5048,13 @@ func array_of(source: Variant) -> Array:
 var breakable_particles: Dictionary = {}
 var breakable_particles_loaded := false
 
+func add_native_object_gaps(path: String, gaps: Array) -> void:
+	if gaps.is_empty():return
+	if not native_object_gaps.has(path):native_object_gaps[path] = []
+	var current: Array = native_object_gaps[path]
+	for gap in gaps:
+		if gap not in current:current.append(gap)
+
 func breakable_particle_keys(path: String) -> Array:
 	if not breakable_particles_loaded:
 		breakable_particles_loaded = true
@@ -5085,20 +5092,29 @@ func build_props(room: Dictionary) -> Array:
 				var unresolved_traps := NativeJarTraps.unresolved_ids(item)
 				if not unresolved_traps.is_empty():
 					prop["unresolved_trap_ids"] = unresolved_traps
-					native_object_gaps[path] = unresolved_traps
+					add_native_object_gaps(path, unresolved_traps)
 				out.append(prop)
 			elif path.contains("/trap/"):
 				# Trigger OBJ files can carry an ATK used as a behaviour signal rather
 				# than a contact damage packet (GravityChanger has only [stuck]).
-				native_object_gaps[path] = ["native_object_trigger"]
+				add_native_object_gaps(path, ["native_object_trigger"])
 			elif item.get("source_tag") == "[special passive object]":
 				var raw: Array = array_of(item.get("raw"))
 				var count := int(raw[4]) if raw.size() >= 5 else -1
-				native_object_gaps[path] = ["opaque_special_object" if raw.size() != 5+6*count
+				var special_gaps: Array = ["opaque_special_object" if raw.size() != 5+6*count
 					else "native_special_object"]
-			elif (path.contains("/actionobject/") and item.get("sprite") == null
-					and array_of(item.get("parts")).is_empty()):
-				native_object_gaps[path] = ["native_action_object_visual"]
+				special_gaps.append_array(NativeJarTraps.unresolved_ids(item))
+				if path.contains("/actionobject/"):
+					special_gaps.append("native_action_object_behavior")
+					if item.get("sprite") == null:special_gaps.append("native_action_object_visual")
+				add_native_object_gaps(path, special_gaps)
+			elif path.contains("/actionobject/"):
+				var action_gaps: Array[String] = []
+				if not path.contains("/actionobject/obstacle/"):
+					action_gaps.append("native_action_object_behavior")
+				if item.get("sprite") == null and array_of(item.get("parts")).is_empty():
+					action_gaps.append("native_action_object_visual")
+				add_native_object_gaps(path, action_gaps)
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")
