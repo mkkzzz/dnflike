@@ -553,6 +553,10 @@ OVERDRIVE_AUDIO = {
     'SM_OVERDRIVE': 'sounds/char/swordman/sm_overdrive.ogg',
     'BUFF_OVERDRIVE': 'sounds/effect/magic/buff_odrive.ogg',
 }
+RECKLESS_AUDIO = {
+    'SM_CONGESTION': 'sounds/char/swordman/sm_congestion.ogg',
+    'BUFF_CONGESTION': 'sounds/effect/magic/buff_congestion.ogg',
+}
 EFFECTS.update(SELF_BUFF_EFFECTS)
 
 WEAPON_COMBO_FINISH_EFFECTS = {
@@ -694,6 +698,7 @@ CUE_SOUNDS = {
     **{key: [path] for key, path in BLOODY_RAVE_CONTACT_AUDIO.items()},
     **{key: [path] for key, path in DRAW_AUDIO.items()},
     **{key: [path] for key, path in OVERDRIVE_AUDIO.items()},
+    **{key: [path] for key, path in RECKLESS_AUDIO.items()},
     **{key: [path] for key, path in UPPER_FOLLOWUP_AUDIO.items()},
     **{key: [path] for key, path in GUARD_AUDIO.items()},
     TRIPLE_SWING: TRIPLE_SWING_FILES,
@@ -1792,6 +1797,8 @@ def main() -> int:
                         help='Add the original Draw Sword slash and charge layers, short-sword wave and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
                         help='Add the original state 17 cast animations and Overdrive sounds')
+    parser.add_argument('--extend-reckless', action='store_true',
+                        help='Add the original Reckless cast and completion sounds')
     parser.add_argument('--extend-weapon-combo', action='store_true',
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
@@ -1957,6 +1964,10 @@ def main() -> int:
     if args.extend_overdrive:
         specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]
         specs.extend(('audio', key, path) for key, path in OVERDRIVE_AUDIO.items())
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_reckless:
+        specs = [('audio', key, path) for key, path in RECKLESS_AUDIO.items()]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_hellbenter:

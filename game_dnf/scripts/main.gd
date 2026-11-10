@@ -869,7 +869,7 @@ func leave_action() -> void:
 	player.erase("charge_crash_release")
 	player.erase("action_slide")
 	player.erase("frenzy_cast")
-	player.erase("overdrive_cast")
+	player.erase("self_buff_cast")
 	player.erase("draw_cast")
 	player.erase("draw_charge")
 	player.erase("draw_targets")
@@ -1150,8 +1150,8 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	if player.has("frenzy_cast"):
 		step_frenzy_cast(ms)
 		return
-	if player.has("overdrive_cast"):
-		step_overdrive_cast(ms)
+	if player.has("self_buff_cast"):
+		step_self_buff_cast(ms)
 		return
 	if player["action"] == "sacrifice" and int(player["stage"]) == 0:
 		step_thirst_cast(ms)
@@ -1782,8 +1782,8 @@ func start_action(name: String, cancel := false) -> bool:
 			attach_frenzy_fx(cast_fx,delay)
 			play_sound("SM_FLENSE")
 			play_sound("FLENSE_GET")
-		elif name == "overdrive":
-			start_overdrive_cast(m)
+		elif name in ["overdrive","reckless"]:
+			start_self_buff_cast(m,"SM_OVERDRIVE" if name == "overdrive" else "SM_CONGESTION")
 		else:
 			if cast_fx != "":spawn_effect(cast_fx,player["pos"],int(player["facing"]),float(player["z"]))
 			apply_skill_effect(name,String(m["effect_id"]))
@@ -2255,7 +2255,7 @@ func stop_thirst_loop() -> void:
 	if player.erase("thirst_loop"):
 		bus.emit("combat.cue",{"kind":"sound","stop":true,"loop_id":PLAYER_ID})
 
-func start_overdrive_cast(move: Dictionary) -> void:
+func start_self_buff_cast(move: Dictionary, voice: String) -> void:
 	var authored_ms := float(action_def()["duration"])
 	var cast_speed := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 	# State 17 sets the body speed using the authored animation length and the SKL cast time.
@@ -2263,26 +2263,26 @@ func start_overdrive_cast(move: Dictionary) -> void:
 	var speed := maxi(1,int(ActorNumbers.native_scalar(int(cast_speed*1000.0)*ratio)))
 	var rate := ActorNumbers.native_scalar(speed*100.0*ActorNumbers.native_scalar(0.001))
 	var start_fx: Dictionary = combat_assets["effects"]["self_buff_start"]
-	player["overdrive_cast"] = {"elapsed_ms":0.0,"rate":rate,
-		"end_ms":overdrive_ani_end(authored_ms,rate),
-		"loop_ms":overdrive_ani_end(float(start_fx["duration_ms"]),rate)}
-	attach_overdrive_cast_fx("self_buff_start",0.0,false)
+	player["self_buff_cast"] = {"elapsed_ms":0.0,"rate":rate,
+		"end_ms":self_buff_ani_end(authored_ms,rate),
+		"loop_ms":self_buff_ani_end(float(start_fx["duration_ms"]),rate)}
+	attach_self_buff_cast_fx("self_buff_start",0.0,false)
 	play_sound("MOON_CURTAIN_LIGHT")
-	play_sound("SM_OVERDRIVE")
+	play_sound(voice)
 
-func overdrive_ani_end(duration: float, percent: float) -> int:
+func self_buff_ani_end(duration: float, percent: float) -> int:
 	# 108E4A0 truncates the scaled animation length; 108E515 requires elapsed > length.
 	return int(ActorNumbers.native_scalar(duration*100.0/percent))+1
 
-func attach_overdrive_cast_fx(key: String, clock_at: float, loop: bool) -> void:
+func attach_self_buff_cast_fx(key: String, clock_at: float, loop: bool) -> void:
 	player["fx_tag"] = "act:%d" % action_seq
 	# State 17 attaches above the standing body height (100 for the source base skin), plus 30.
 	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":player["z"],
 		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,"offset_y":-130,
 		"action_clock_at":clock_at,"action_instance":action_seq,"loop":loop})
 
-func step_overdrive_cast(ms: float) -> void:
-	var cast: Dictionary = player["overdrive_cast"]
+func step_self_buff_cast(ms: float) -> void:
+	var cast: Dictionary = player["self_buff_cast"]
 	var previous := float(cast["elapsed_ms"])
 	var elapsed := previous+ms
 	cast["elapsed_ms"] = elapsed
@@ -2290,15 +2290,16 @@ func step_overdrive_cast(ms: float) -> void:
 	player["clock"] = elapsed*rate
 	if elapsed >= float(cast["end_ms"]):
 		# State 17 calls the skill attachment only on its successful exit to idle.
+		var skill := String(player["action"])
 		var pending := String(player["queued_skill"])
 		end_action()
-		if apply_effect({"kind":"effect","id":"overdrive","rank":int(skill_levels.get("overdrive",1))}):
-			notice(String(move_def("overdrive").get("label","")))
-			play_sound("BUFF_OVERDRIVE")
-		if pending != "" and pending != "overdrive":start_action(pending)
+		if apply_effect({"kind":"effect","id":skill,"rank":int(skill_levels.get(skill,1))}):
+			notice(String(move_def(skill).get("label","")))
+			play_sound("BUFF_OVERDRIVE" if skill == "overdrive" else "BUFF_CONGESTION")
+		if pending != "" and pending != skill:start_action(pending)
 	elif previous < float(cast["loop_ms"]) and elapsed >= float(cast["loop_ms"]):
 		end_action_fx()
-		attach_overdrive_cast_fx("self_buff_loop",float(cast["loop_ms"])*rate,true)
+		attach_self_buff_cast_fx("self_buff_loop",float(cast["loop_ms"])*rate,true)
 
 func step_frenzy_cast(ms: float) -> void:
 	var cast: Dictionary = player["frenzy_cast"]

@@ -1249,6 +1249,7 @@ func check_reckless_attributes() -> void:
 		var base: Dictionary = game.numeric_player.values.duplicate()
 		press(KEY_A)
 		step(0)
+		step(500)
 		var effect: Dictionary = game.numeric_player.effects.active.get("reckless",{})
 		var active: Dictionary = game.numeric_player.values
 		check(effect.get("rank")==sample[0] and effect.get("remaining_ms")==40080.0,
@@ -1294,6 +1295,7 @@ func check_reckless_hit_strength() -> void:
 		game.player["invuln_ms"] = 0.0
 		press(KEY_A)
 		step(0)
+		step(500)
 		var cast_strength := int(actor.values["strength"])
 		game.god_mode = true
 		game.land_hit(source,game.player,hit,point,-1,10.0)
@@ -1323,39 +1325,41 @@ func check_reckless_hit_strength() -> void:
 		check(not actor.effects.active.has("reckless_hit_strength") and int(actor.values["strength"])==base_strength,
 			"the last hit stack restores original strength when its own timer expires")
 
-func check_overdrive_cast() -> void:
+func check_self_buff_cast(skill: String, job: String, voice: String, finish_sound: String) -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
-	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
-	profile.command("numbers.skill_grant",{"id":"overdrive","level":1})
+	profile.command("numbers.growtype",{"growtype":job})
+	profile.command("numbers.skill_grant",{"id":skill,"level":1})
 	var spec := profile.stats()
-	spec["skill_slots"] = ["overdrive"]
+	spec["skill_slots"] = [skill]
 	for sample: Array in [[1.0,334,500],[1.25,267,401]]:
-		start_room("original_27601","katana",1,spec)
+		start_room("original_27601","katana",1,spec,job)
 		game.player["mp"] = 5000.0
 		game.numeric_player.values["cast_speed"] = sample[0]
 		press(KEY_A)
 		step(0)
 		check(game.player_ani()[0]=="summon2" and cues("self_buff_start").size()==1
-			and cues("MOON_CURTAIN_LIGHT").size()==1 and cues("SM_OVERDRIVE").size()==1,
-			"Overdrive opens with the original CHR buff pose, common effect and two cast sounds")
+			and cues("MOON_CURTAIN_LIGHT").size()==1 and cues(voice).size()==1,
+			skill+" opens with the original CHR buff pose, common effect and two cast sounds")
+		check(game.view.audio.variants.has(voice) and game.view.audio.variants.has(finish_sound),
+			skill+" loads the original cast and finish sound banks")
 		var start_cues := cues("self_buff_start")
 		check(not start_cues.is_empty() and start_cues[0]["follow"]==0 and start_cues[0]["offset_y"]==-130,
-			"Overdrive attaches the cast effect above the caster")
+			skill+" attaches the cast effect above the caster")
 		step(sample[1]-1)
-		check(cues("self_buff_loop").is_empty() and game.active_effect("overdrive").is_empty(),
-			"Overdrive's start effect and cast persist before the original loop handoff")
+		check(cues("self_buff_loop").is_empty() and game.active_effect(skill).is_empty(),
+			skill+" keeps its start effect before the original loop handoff")
 		step(1)
-		check(cues("self_buff_loop").size()==1 and game.active_effect("overdrive").is_empty(),
-			"Overdrive hands off to the looping effect at the speed-scaled start ANI boundary")
+		check(cues("self_buff_loop").size()==1 and game.active_effect(skill).is_empty(),
+			skill+" hands off to the looping effect at the speed-scaled start ANI boundary")
 		step(sample[2]-sample[1]-1)
-		check(game.active_effect("overdrive").is_empty() and cues("BUFF_OVERDRIVE").is_empty(),
-			"Overdrive applies no stats or finish sound before the scaled buff ANI ends")
+		check(game.active_effect(skill).is_empty() and cues(finish_sound).is_empty(),
+			skill+" applies no stats or finish sound before the scaled buff ANI ends")
 		step(1)
-		check(not game.active_effect("overdrive").is_empty() and game.player["action"]==""
-			and cues("BUFF_OVERDRIVE").size()==1 and game.view_snapshot()["player"]["aura"]=="",
-			"Overdrive applies the buff on normal exit and plays its own finish sound")
-	start_room("original_27601","katana",1,spec)
+		check(not game.active_effect(skill).is_empty() and game.player["action"]==""
+			and cues(finish_sound).size()==1 and game.view_snapshot()["player"]["aura"]=="",
+			skill+" applies the buff on normal exit and plays its own finish sound")
+	start_room("original_27601","katana",1,spec,job)
 	game.player["mp"] = 5000.0
 	game.numeric_player.values["cast_speed"] = 1.0
 	press(KEY_A)
@@ -1363,8 +1367,8 @@ func check_overdrive_cast() -> void:
 	step(400)
 	game.damage_player(7,POINT+Vector2(60,0))
 	step(100)
-	check(not game.player.has("overdrive_cast") and game.active_effect("overdrive").is_empty()
-		and cues("BUFF_OVERDRIVE").is_empty(),"Incoming damage interrupts Overdrive without attaching the buff")
+	check(not game.player.has("self_buff_cast") and game.active_effect(skill).is_empty()
+		and cues(finish_sound).is_empty(),"Incoming damage interrupts "+skill+" without attaching the buff")
 
 func overdrive_particles() -> Array:
 	return game.view.effects.filter(func(fx):return fx.tag=="overdrive_status")
@@ -8496,7 +8500,8 @@ func run() -> void:
 	check_weapon_combo()
 	check_weapon_combo_normal_cancel()
 	check_heavy_weapon_combo()
-	check_overdrive_cast()
+	check_self_buff_cast("overdrive","weaponmaster","SM_OVERDRIVE","BUFF_OVERDRIVE")
+	check_self_buff_cast("reckless","berserker","SM_CONGESTION","BUFF_CONGESTION")
 	check_overdrive_particles()
 	check_frenzy_drain()
 	check_frenzy_attributes()
