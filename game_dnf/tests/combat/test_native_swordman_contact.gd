@@ -3391,6 +3391,13 @@ func check_hundred_sword_automatic() -> void:
 		"the ready approach interpolates XYZ toward the first live sword with a 50-pixel height offset")
 	step(120.0)
 	var actor = game.view.player_actor
+	var travel_cues := func():
+		return game.bus.events_of("combat.cue").filter(func(event):
+			return String(event.get("key","")) in ["R_SM_HOANYOUNG","R_W_MOVING_ATK"])
+	check(travel_cues.call().is_empty(),"the first sword pose starts without a movement voice or swing")
+	var swings: Array = game.view.audio.variants.get("R_W_MOVING_ATK",[])
+	check(swings.size()==2 and swings.all(func(stream):return stream is AudioStreamOggVorbis),
+		"both original sword travel swings load as Ogg streams")
 	var layers: Dictionary = actor.get_meta("native_cast_layers",{})
 	var first_angle := atan2(-176.0,341.0)
 	check(is_equal_approx(actor.body_rotation,first_angle)
@@ -3449,7 +3456,13 @@ func check_hundred_sword_automatic() -> void:
 		check(visible.size()==(4 if poses[ordinal]==5 else 2)
 			and visible.all(func(layer):return layer.frame.get("img_frame",-1)==1),
 			"stage %d renders only its current sword layers on the second body frame"%ordinal)
+		check(travel_cues.call().size()==ordinal*2,
+			"stage %d has no extra travel cue before the next transition"%ordinal)
 		step(1.0)
+		var sounds: Array = travel_cues.call()
+		check(sounds.size()==(ordinal+1)*2 and sounds[-2]["key"]=="R_SM_HOANYOUNG"
+			and sounds[-1]["key"]=="R_W_MOVING_ATK",
+			"leaving stage %d requests exactly one original voice then one swing"%ordinal)
 	check(game.view.player_actor.pose=="hundredswordfinish" and game.player["pos"]==POINT
 		and game.player["z"]==0.0 and game.player["facing"]==1,"stage 24 goes directly into the original grounded finish")
 	check(actor.body_rotation==0.0 and actor.equipment_layers.all(func(layer):return layer.visible)

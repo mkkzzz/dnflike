@@ -1321,6 +1321,10 @@ func advance_hundred_sword(move_defn: Dictionary) -> void:
 	var config: Dictionary = move_defn["formation"]
 	var ordinal := int(cast["ordinal"])+1
 	var order: Array = config["order"]
+	# CD2347 skips ordinal zero. CD287E uses the same cue sequence on the return.
+	if ordinal > 0:
+		play_sound("R_SM_HOANYOUNG")
+		play_sound("R_W_MOVING_ATK")
 	if ordinal >= order.size():
 		start_stage(move_defn["stages"].size()-1)
 		return

@@ -554,6 +554,9 @@ ILLUSION_WAVE_LAYERS = {
 ILLUSION_WAVE_LAYERS['illusion_wave_hit'] = 'passiveobject/character/swordman/animation/illusionslashwavehit.ani'
 EFFECTS.update(ILLUSION_WAVE_LAYERS)
 SOURCE_AUDIO_WEIGHTS['R_SM_HOANYOUNG'] = (25, 25, 25, 25)
+# audio.xml maps W_MOVING_ATK_01/02 to W_atk_01/02 without the MOVING infix.
+HUNDRED_SWORD_SWINGS = [f'sounds/char/swordman/effect/W_atk_{index:02}.ogg' for index in (1, 2)]
+SOURCE_AUDIO_WEIGHTS['R_W_MOVING_ATK'] = (50, 50)
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
@@ -561,6 +564,7 @@ CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
     **{key: [path] for key, path in ILLUSION_SLASH_AUDIO.items()},
     'R_SM_HOANYOUNG': ILLUSION_SLASH_REPEAT_VOICES,
+    'R_W_MOVING_ATK': HUNDRED_SWORD_SWINGS,
     **{key: paths if isinstance(paths, list) else [paths] for key, paths in RAPID_SLASH_AUDIO.items()},
     'SM_CHARGE_CRASH': ['sounds/char/swordman/sm_chargecrash.ogg'],
     'CCRASH_MOVING': ['sounds/char/swordman/effect/ccrash_moving.ogg'],
@@ -1756,6 +1760,7 @@ def main() -> int:
         specs.append(('objects', field['object'], field['object']))
         specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))
         specs.append(('audio', 'W_GET_SPIRITS', 'sounds/char/swordman/effect/W_get_spirits.ogg'))
+        specs.append(('audio', 'R_W_MOVING_ATK', HUNDRED_SWORD_SWINGS))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:
