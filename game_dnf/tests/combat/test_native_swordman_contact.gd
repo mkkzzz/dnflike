@@ -6342,6 +6342,9 @@ func check_bloodblast() -> void:
 		"release packs the three original truncated amounts using level 60 base 580 and addend 26")
 	game.numeric_player.values["independent_attack"] = 500.0
 	var target: Dictionary = game.monsters[0]
+	target["def"] = target["def"].merged({"weight":45000},true)
+	target["hp"] = 10000.0
+	target["numeric"].values["hp_max"] = target["hp"]
 	for enemy: Dictionary in game.monsters:
 		move_target(enemy,POINT+Vector2(400,0))
 	move_target(target,POINT)
@@ -6352,6 +6355,11 @@ func check_bloodblast() -> void:
 		"at 100 ms only the ground burst registers contact with the centered target")
 	check(game.last_damage["trace"]["fixed_part"]==1448.0,
 		"the damage pipeline uses the released integer even after independent attack changes")
+	var rise := roundi(pow(float(target["vz"]),2.0)/3000.0)
+	check(target["state"]=="native_down_flight" and target["native_jump_velocity"]==Vector2.ZERO
+		and target["native_down_phase"]==0 and rise>=119 and rise<=146,
+		"the ground burst uses its own weighted 400 lift and no horizontal push: %s" % [
+			[ground["hit"]["lift"],ground["hit"]["atk"].get("lift_up"),target["state"],target.get("native_jump_velocity"),rise]])
 	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
 		"the ground burst applies its original 50 ms pause to the target")
 	game.update_enemy(target,49.0)
@@ -6374,10 +6382,11 @@ func check_bloodblast() -> void:
 	game.step_objects(39)
 	check(pillar["hits"].is_empty(),"the main pillar has no contact before 1000 ms")
 	game.step_objects(1)
-	var lift: float = game.rules["reaction"]["lift_speed_per_unit"]
-	check(pillar["hits"].has(target["id"]) and target["state"]=="air"
-		and is_equal_approx(float(target["vz"]),450.0*lift) and sub["hit"]["lift"]==450.0,
-		"the pillar launches at 1000 ms with the authored static lift, also configured on the spray")
+	rise = roundi(pow(float(target["vz"]),2.0)/3000.0)
+	check(pillar["hits"].has(target["id"]) and target["state"]=="native_down_flight"
+		and target["native_jump_velocity"]==Vector2.ZERO and rise>=152 and rise<=185
+		and pillar["hit"]["atk"]["lift_up"]==450 and sub["hit"]["atk"]["lift_up"]==450,
+		"the pillar launches at 1000 ms with the weighted 450 lift stored in both eruption ATKs")
 	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
 		"the main pillar applies its original 50 ms pause to the target")
 	game.monsters.clear()
@@ -6394,6 +6403,7 @@ func check_bloodblast() -> void:
 	check(ids.all(func(id):return views.has(id) and not views[id].frame.has("sprite")),
 		"all ten ALS tracks are attached at their original layer positions and remain blank at 1099 ms")
 	move_target(target,POINT+Vector2(100.75,-12.25))
+	target["def"] = target["def"].merged({"weight":300000},true)
 	target["vz"] = 0.0
 	target["stuck_ms"] = 0.0
 	game.monsters.append(target)
@@ -6414,9 +6424,10 @@ func check_bloodblast() -> void:
 	check(contact_keys.all(func(key):return cues(key).is_empty()),
 		"neither the ground burst nor the main pillar creates the centered spray hit effects")
 	game.step_objects(1)
-	check(sub["hits"].has(target["id"]) and target["state"]=="air"
-		and is_equal_approx(float(target["vz"]),450.0*lift),
-		"the centered spray launches at 1120 ms with its own static lift")
+	rise = roundi(pow(float(target["vz"]),2.0)/3000.0)
+	check(sub["hits"].has(target["id"]) and target["state"]=="native_down_flight"
+		and target["native_jump_velocity"]==Vector2.ZERO and rise>=30 and rise<=37,
+		"the centered spray launches the heavy target at 1120 ms using the same 450 lift")
 	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
 		"the centered spray applies its original 50 ms pause to the target")
 	var contact_origin := Vector2(Vector2i(target["pos"]))
@@ -6428,12 +6439,16 @@ func check_bloodblast() -> void:
 	check(sub["hits"].is_empty() and sub["hit_resets_left"]==2 and cues("FIRE_PILLAR_UP").size()==1,
 		"the spray first resets at 1180 ms and the pillar cue stays one-shot")
 	move_target(target,contact_origin,30.0)
+	target["state"] = "native_down_flight"
 	target["vz"] = 0.0
 	target["stuck_ms"] = 70.0
 	game.monsters.append(target)
 	game.step_objects(0.0)
 	check(sub["hits"].has(target["id"]) and contact_keys.all(func(key):return cues(key).size()==1),
 		"the same spray still hits an airborne target, without creating the ground effects")
+	rise = roundi(pow(float(target["vz"]),2.0)/3000.0)
+	check(target["z"]==30.0 and target["native_down_phase"]==0 and rise>=30 and rise<=37,
+		"another spray before the first landing adds the full weighted height to the current Z")
 	check(target["stuck_ms"]==70.0,"the centered spray preserves the airborne target's longer pause")
 	game.monsters.clear()
 	step(559)
@@ -6516,11 +6531,27 @@ func check_bloodblast() -> void:
 		for side: int in [-1,1]:
 			var flank: Dictionary = game.spawn_enemy(POINT+Vector2(side*12,0))
 			flank["hp"] = 5000.0
+			flank["numeric"].values["hp_max"] = flank["hp"]
 			flank["facing"] = 1
+			flank["def"] = flank["def"].merged({"weight":300000},true)
 			game.step_objects(0.0)
 			check(eruption["hits"].has(flank["id"]) and flank["hp"]<5000.0
 				and game.last_damage["critical"]==(side==1),
 				"Blood Blast back attacks are relative to the eruption center: "+str([sample,side]))
+			if int(sample[0]) == 0 and side == 1:
+				var rebounded := false
+				for _tick in 100:
+					game.update_enemy(flank,16.0)
+					rebounded = rebounded or flank.get("native_down_phase")==1
+					if flank["state"]=="down":break
+				check(rebounded and flank["state"]=="down" and flank.get("native_down_phase")==2 and flank["z"]==0.0,
+					"the spray's first landing bounces and the second stays grounded")
+				game.step_objects(60.0)
+				rise = roundi(pow(float(flank["vz"]),2.0)/3000.0)
+				check(eruption["hits"].has(flank["id"]) and flank["state"]=="native_down_flight"
+					and flank.get("native_down_phase")==1 and rise>=7 and rise<=8,
+					"the next spray contact relaunches a grounded heavy target at a quarter of its initial height: %s" % [
+						[eruption["hits"],flank["state"],flank.get("native_down_phase"),rise,flank["hp"],game.enemy_damage_boxes(flank)]])
 
 func run() -> void:
 	game = session.mount(root)

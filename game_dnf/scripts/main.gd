@@ -3184,6 +3184,8 @@ func prepare_bloodblast_damage(template: Dictionary) -> Dictionary:
 	var hit := template.duplicate()
 	var atk: Dictionary = template["atk"].duplicate()
 	atk["absolute_damage"] = amount
+	# A60751 and A611BD write the pillar and spray's SKL lift to ATK +0x5C.
+	if int(hit["lift"]) >= 0:atk["lift_up"] = int(hit["lift"])
 	hit["atk"] = atk
 	hit["fixed_amount"] = amount
 	if thirst_active:hit["fixed_amount_bleeding"] = bleeding_amount
@@ -3338,7 +3340,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			reaction = apply_hundred_sword_reaction(target,atk,facing,recovery,float(hit["stagger_factor"]))
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif outrage_impact and not armor_blocks_reaction:
+		elif (outrage_impact or native_kind == "bloodblast") and not armor_blocks_reaction:
 			# 81F1F0 dispatches state 4 with the object's ATK push and lift.
 			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
 		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
