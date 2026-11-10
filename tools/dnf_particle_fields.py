@@ -13,6 +13,7 @@ from copy import deepcopy
 from dnf_pvf import resolve
 
 AXES = {"[x axis]": "x", "[y axis]": "y", "[z axis]": "z"}
+MOVE_TYPES = {"[stop]", "[straight line]", "[sin]", "[cos]"}
 AXIS_FIELDS = {
     "[move type]": ("move_type", 1, str),
     "[move variable 1]": ("move_variable_1", 2, int),
@@ -49,7 +50,7 @@ def decode_particle_fields(fields: list, path: str) -> tuple[dict, dict, list]:
 
     Scalar writes and repeated [object] blocks replace previous values, as in
     the native reader; every original occurrence remains in the caller's raw.
-    Unsupported or malformed fields remain explicit diagnostics, never defaults.
+    Unsupported field shapes remain diagnostics. Native no-op tokens stay in raw.
     """
     decoded, evidence, unsupported = {"axes": {}}, {}, []
     axis = "x"  # 0x1310D67 initializes the selector to zero.
@@ -85,6 +86,10 @@ def decode_particle_fields(fields: list, path: str) -> tuple[dict, dict, list]:
             unsupported.append({"tag": tag, "offset": node.get("offset"), "reason": "unexpected particle field shape; inspect raw"})
             continue
         value = values[0] if arity == 1 else deepcopy(values)
+        if tag == "[move type]" and value not in MOVE_TYPES:
+            # 0x131185F continues parsing without touching the selected axis
+            # if all four string comparisons fail. The token stays in raw.
+            continue
         if tag in AXIS_FIELDS:
             decoded["axes"].setdefault(axis, {})[key] = value
             evidence["axes/"+axis+"/"+key] = "E-PARSE"

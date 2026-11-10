@@ -35,7 +35,7 @@ from dnf_asset_store import ROOT
 from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from build_dnf_skill_runtime import OUTRAGE_PARTICLES, WEAPON_COMBO_LIGHT_DEPTHS
+from build_dnf_skill_runtime import HUNDRED_SWORD_FINISH_PARTICLE, OUTRAGE_PARTICLES, WEAPON_COMBO_LIGHT_DEPTHS
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
@@ -51,7 +51,7 @@ SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
 NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
     for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar', 'illusionslash', 'illusionslashsub')
-]
+] + [HUNDRED_SWORD_FINISH_PARTICLE]
 OUTRAGE_PARTICLE_SOURCES = {
     OUTRAGE_PARTICLES['stone']: {
         OUTRAGE_PARTICLES['stone']: '917e7ec061ee2a42b90fdf938c5f71823612bfcce306d52d79d8f4b147bf44b3',
@@ -1534,7 +1534,7 @@ def main() -> int:
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
                         help='Append the original Illusion Slash objects, voices and sword-wave hit cue')
     parser.add_argument('--extend-hundred-sword-ready', '--extend-hundred-sword', action='store_true',
-                        help='Add the original Hundred Sword ready overlay, field and entry sound')
+                        help='Add the original Hundred Sword ready, field and finish effects and entry sound')
     parser.add_argument('--extend-rapid-move-slash', action='store_true',
                         help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
@@ -1728,10 +1728,12 @@ def main() -> int:
         return 0
     if args.extend_hundred_sword_ready:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
-        stage = runtime['moves']['hundredsword']['stages'][0]
+        stages = runtime['moves']['hundredsword']['stages']
+        stage = stages[0]
         field, = stage['hits']
         controller = field['native_controller']
-        keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'])
+        keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'],
+                *(layer['key'] for layer in stages[-1]['fx']))
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
         specs.append(('objects', field['object'], field['object']))
         specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))

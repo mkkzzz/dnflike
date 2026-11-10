@@ -671,6 +671,7 @@ func action_ani_clock(elapsed: float) -> float:
 		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
 	if phase.has("hundred_sword_ready_timeline"):
 		return _source_animation_clock(elapsed,phase["hundred_sword_ready_timeline"],action_def()["timeline"])
+	if phase.get("hundred_sword_finish",false):return elapsed
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
@@ -788,6 +789,7 @@ func leave_action() -> void:
 	player.erase("draw_cast")
 	player.erase("draw_charge")
 	player.erase("draw_targets")
+	player.erase("hundred_sword_facing")
 	release_grab_blast_victim(grab_blast_victim())
 	end_action_fx()
 
@@ -1163,6 +1165,10 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
+	if native_phase.get("hundred_sword_finish",false):
+		# CC0896..CC08B9 waits for the finish ANI to end before requesting idle.
+		if clock >= duration:end_action()
+		return
 	if name == "illusionslash" and int(player["stage"]) < 4:
 		step_illusion_chain(m["illusion_chain"],stage,event_clock)
 		return
@@ -2028,11 +2034,17 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			phase["outrage_impact_at"] = float(stage["timeline"][m["impact_frame"]]["start_ms"])
 		retime_outrage_phase(phase,stage,attack_animation_percent(0))
 		player["native_phase"] = phase
-	elif m.get("native_state","") == "hundred_sword" and index == 0:
-		# CD1DB8 selects mode 3, which excludes the equipped weapon's speed.
-		var rate: float = numeric_player.native_non_weapon_attack_rate() if numeric_player != null else 1.0
-		var timeline := native_timed_frames(action_def()["timeline"],_native_animation_percent(rate))
-		player["native_phase"] = {"hundred_sword_ready_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
+	elif m.get("native_state","") == "hundred_sword":
+		if index == 0:
+			# CD1DB8 selects mode 3, which excludes the equipped weapon's speed.
+			var rate: float = numeric_player.native_non_weapon_attack_rate() if numeric_player != null else 1.0
+			var timeline := native_timed_frames(action_def()["timeline"],_native_animation_percent(rate))
+			player["native_phase"] = {"hundred_sword_ready_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
+		elif index == m["stages"].size()-1:
+			# CD2795 selects mode 0 at 1000 per mille. CD288B restores the cast direction.
+			player["native_phase"] = {"hundred_sword_finish":true}
+			end_action_fx()
+			player["fx_tag"] = "act:%d"%action_seq
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -2081,6 +2093,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CD1E09..CD1E9A takes the cast origin before the object exists.
 		player["native_phase"]["field_origin"] = Vector2(Vector2i(player["pos"]))
 		player["native_phase"]["field_facing"] = player["facing"]
+		player["hundred_sword_facing"] = player["facing"]
+	elif player["native_phase"].get("hundred_sword_finish",false):
+		player["facing"] = player.get("hundred_sword_facing",player["facing"])
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	if name == "sacrifice" and index == 0:
 		bus.emit("combat.cue",{"kind":"fx","key":m["cast_fx"],"point":player["pos"],"height":player["z"],
@@ -2332,6 +2347,12 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
 		if action_timed_crossed(at,old_t,new_t):play_sound(String(s["key"]))
+	if player["native_phase"].get("hundred_sword_finish",false):
+		var move := move_def("hundredsword")
+		if action_timed_crossed(float(move["finish_impact_ms"]),old_t,new_t):
+			# CB820A..CB829D starts the burst at integer X ± 180, Y, Z 20.
+			var point := Vector2(Vector2i(player["pos"]))+Vector2(180*int(player["facing"]),0)
+			bus.emit("combat.cue",{"kind":"native_particle","path":move["finish_particle"],"point":point,"height":20.0})
 	var rec: Dictionary = content.record(Kernel.MoveTable.CHR_ANI+String(stage.get("ani",""))+".ani")
 	if rec.is_empty():return
 	var events: Array = rec["decoded"].get("sound_events",[])

@@ -3246,6 +3246,33 @@ func check_hundred_sword_ready() -> void:
 	check(game.objects.size()==1,"both exit layers remain through age 299")
 	game.step_objects(1.0)
 	check(game.objects.is_empty(),"the field is deleted at the original exit end")
+	game.numeric_player.values["attack_speed"] = 1.75
+	game.start_stage(game.move_def("hundredsword")["stages"].size()-1)
+	game.player["pos"] = POINT+Vector2(0.8,0.6)
+	game.bus.clear_history()
+	var finish_layers := func():
+		return game.view.effects.filter(func(fx):return fx.follow==game.player["id"]).map(
+			func(fx):return String(fx.data["source"]).get_file())
+	step(559.0)
+	check(finish_layers.call().is_empty() and game.player["facing"]==-1 and game.player["clock"]==559.0,
+		"the finish windup restores cast facing and holds its fixed clock without an early flash")
+	step(1.0)
+	check(finish_layers.call()==["finishslash.ani","finishflash.ani","finishfloor.ani","finishcircle1.ani",
+		"finishcircle2.ani","finishcircle3.ani","finishcircle4.ani"] and cues("SM_BLOOD_RAVE_ATK").size()==1,
+		"frame two starts the original slash, flash, floor, four staggered circles and body sound")
+	var particles: Array = game.bus.events_of("combat.cue").filter(func(event):
+		return event.get("path","").ends_with("/hundredswordfinish.ptl"))
+	check(particles.size()==1 and particles[0]["point"]==POINT-Vector2(180,0) and particles[0]["height"]==20.0,
+		"the original finish particle burst starts once at the integer forward point and absolute height twenty")
+	var drawn: Array = game.view.effects.filter(func(fx):
+		return String(fx.get_meta("source_ptl","")).ends_with("/hundredswordfinish.ptl"))
+	check(not drawn.is_empty() and drawn.all(func(fx):return String(fx.data["source"]).get_file() in [
+		"finishparticle1.ani","finishparticle2.ani"]),
+		"the finish burst renders instances of the two authored particle animations")
+	step(709.0)
+	check(game.player["action"]=="hundredsword","the fixed finish recovery stays active through 1269 ms")
+	step(1.0)
+	check(game.player["action"]=="" and finish_layers.call().is_empty(),"the finish ends at 1270 ms and clears attached layers")
 
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]

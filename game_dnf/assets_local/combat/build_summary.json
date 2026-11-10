@@ -144,7 +144,7 @@
   "passiveobject/character/swordman/illusionslashmelee4.obj",
   "passiveobject/character/swordman/illusionslashsub.obj"
  ],
- "effects": 394,
+ "effects": 402,
  "digits": 61,
  "audio_keys": 286,
  "unresolved": 32,
@@ -313,5 +313,5 @@
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
   }
  ],
- "particle_templates": 19
+ "particle_templates": 20
 }

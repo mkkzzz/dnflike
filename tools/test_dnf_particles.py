@@ -165,6 +165,17 @@ class ParticleFields(unittest.TestCase):
         self.assertEqual([e["path"].rsplit("/",1)[-1] for e in entries],
                          ["icewaveparticle1.ani","icewaveparticle2.ani","icewaveparticle3.ani"]+["icewaveparticle4.ani"]*4)
 
+    def test_finish_unknown_movement_token_keeps_previous_axis_enum(self):
+        path = "character/swordman/effect/particle/hundredswordfinish.ptl"
+        record = self.pack["records"][path]
+        decoded, _, unsupported = decode_particle_fields(record["raw"], path)
+        self.assertEqual(decoded["axes"]["z"], {
+            "move_type": "[straight line]", "move_variable_1": [100, 200],
+        })
+        self.assertEqual(decoded, record["decoded"])
+        self.assertIn(["[keep changing]"], [node["values"] for node in record["raw"] if node["tag"] == "[move type]"])
+        self.assertFalse(unsupported)
+
     def test_second_object_block_replaces_vector_as_native_reader_does(self):
         d,_,u = decode_particle_fields([field("[object]","first.ani",-1),field("[object]","../last.ani",7)],"a/b/c.ptl")
         self.assertEqual(d["object_entries"],[{"path":"a/last.ani","parameter":7}])

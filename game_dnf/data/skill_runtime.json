@@ -61,7 +61,13 @@
    "skillfx_epidemicrasaareadisappear_d8f553de": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareadisappear.ani",
    "skillfx_epidemicrasaareastay_04c48edd": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareastay.ani",
    "skillfx_exp1_99b066d8": "character/swordman/effect/animation/kalla/exp1.ani",
+   "skillfx_finishcircle1_65e2cc55": "character/swordman/effect/animation/hundredsword/finishcircle1.ani",
+   "skillfx_finishcircle2_1089a4e7": "character/swordman/effect/animation/hundredsword/finishcircle2.ani",
+   "skillfx_finishcircle3_ef3231cb": "character/swordman/effect/animation/hundredsword/finishcircle3.ani",
+   "skillfx_finishcircle4_443f9b87": "character/swordman/effect/animation/hundredsword/finishcircle4.ani",
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
+   "skillfx_finishfloor_d80f99af": "character/swordman/effect/animation/hundredsword/finishfloor.ani",
+   "skillfx_finishslash_c1fd1cc2": "character/swordman/effect/animation/hundredsword/finishslash.ani",
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
    "skillfx_floor_blood_e2d7d673": "passiveobject/character/swordman/animation/outragebreak/floor_blood.ani",
@@ -5419,10 +5425,12 @@
    "fidelity_pending": [
     "sword_formation_pulls_and_repeat_contacts",
     "automatic_travel_sequence",
-    "finish_effects",
+    "finish_trails_and_camera",
     "rank_bonuses",
     "original_command"
    ],
+   "finish_impact_ms": 560,
+   "finish_particle": "character/swordman/effect/particle/hundredswordfinish.ptl",
    "material_cost": {
     "amount": 5,
     "source_id": 3037
@@ -5490,15 +5498,70 @@
     {
      "ani": "hundredswordmoveslash5",
      "atk": "",
-     "hits": []
+     "fx": [
+      {
+       "at": 0,
+       "key": "skillfx_finishcircle4_443f9b87"
+      }
+     ],
+     "hits": [
+      {
+       "atk": "",
+       "derived": "skillfx_finishcircle4_443f9b87",
+       "effects": [],
+       "percent_col": 5,
+       "window": [
+        0.0,
+        400.0
+       ]
+      }
+     ]
     },
     {
      "ani": "hundredswordfinish",
      "atk": "character/swordman/attackinfo/hundredswordfinish.atk",
      "fx": [
       {
-       "at": 0,
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 1,
+       "key": "skillfx_finishslash_c1fd1cc2"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 2,
        "key": "skillfx_finishflash_7520151b"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": -1,
+       "key": "skillfx_finishfloor_d80f99af"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 2,
+       "key": "skillfx_finishcircle1_65e2cc55"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 3,
+       "key": "skillfx_finishcircle2_1089a4e7"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 4,
+       "key": "skillfx_finishcircle3_ef3231cb"
+      },
+      {
+       "action_clock": true,
+       "at": 560,
+       "depth_offset": 5,
+       "key": "skillfx_finishcircle4_443f9b87"
       }
      ],
      "hits": [

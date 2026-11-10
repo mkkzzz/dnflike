@@ -1258,6 +1258,10 @@ def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objec
 
 
 OUTRAGE_OBJECT_ANIM = OBJ_ROOT + "animation/outragebreak/"
+HUNDRED_SWORD_FINISH_PARTICLE = "character/swordman/effect/particle/hundredswordfinish.ptl"
+HUNDRED_SWORD_FINISH_LAYERS = (("finishslash", 1), ("finishflash", 2), ("finishfloor", -1),
+                             *((f"finishcircle{i}", i + 1) for i in range(1, 5)))
+
 OUTRAGE_PARTICLES = {
     "stone": "character/swordman/effect/particle/outragebreak_stone_part.ptl",
     "light": OBJ_ROOT + "particle/outragebreak_light_part.ptl",
@@ -1536,8 +1540,17 @@ def build_move(
                                   "exit_layers": layers[1:], "exit_ms": duration_ms(records[exit_main]),
                                   "open_ms": frames[1]["start_ms"], "close_ms": frames[1]["start_ms"] + 50},
         })
+        finish = stages[-1]
+        impact = records[CHR_ANI + "hundredswordfinish.ani"]["decoded"]["timeline"][2]["start_ms"]
+        # CB812D..CB8208 attaches all seven motions together, after the windup.
+        finish["fx"] = []
+        for stem, depth in HUNDRED_SWORD_FINISH_LAYERS:
+            effect = add_fx(fx, effects, CHR_FX + f"hundredsword/{stem}.ani")
+            if not effect:
+                raise ValueError(f"Missing original Hundred Sword effect: {stem}")
+            finish["fx"].append({"key": effect, "at": impact, "depth_offset": depth, "action_clock": True})
         # CD27C3 selects ETC ATK 62, then CD27ED reads zero-based rank column 2.
-        stages[-1]["hits"][0]["percent_col"] = 2
+        finish["hits"][0]["percent_col"] = 2
     if stages and not any(stage.get("hits") for stage in stages) and key not in BUFF_SKILLS and not (
         key in ("khazan", "bremen")
         or key in CAST_OBJECTS and CAST_OBJECTS[key][0] in SAFE_OBJECTS
@@ -1589,8 +1602,9 @@ def build_move(
     result = {"skill": str(skill["path"]), "name": str(skill["name"]), "stages": stages}
     if key == "hundredsword":
         result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
+                      finish_impact_ms=impact, finish_particle=HUNDRED_SWORD_FINISH_PARTICLE,
                       fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "automatic_travel_sequence",
-                                        "finish_effects", "rank_bonuses", "original_command"])
+                                        "finish_trails_and_camera", "rank_bonuses", "original_command"])
     if key == "normalwave":
         # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),
         # size percent <- (-1,1,1). The generic column-zero attack loses both
@@ -2193,6 +2207,8 @@ def main() -> int:
         object_candidates.add(hundred_sword_field)
         SAFE_EFFECTS.update(path for path in records[hundred_sword_field]["decoded"]["etc_motions"]
                             if safe_animation(library, path))
+        SAFE_EFFECTS.update(path for stem, _ in HUNDRED_SWORD_FINISH_LAYERS
+                            if safe_animation(library, path := CHR_FX + f"hundredsword/{stem}.ani"))
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         object_candidates.update(OBJ_ROOT + f"illusionslashmelee{index}.obj" for index in range(1, 5))
         object_candidates.add(OBJ_ROOT + "illusionslashsub.obj")
