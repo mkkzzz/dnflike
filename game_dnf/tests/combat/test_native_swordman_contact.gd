@@ -3058,16 +3058,21 @@ func check_outrage_break_eruption() -> void:
 		"the shockwave uses packed Thirst column 5 when the target is bleeding at contact")
 	move_target(target,point+Vector2(0,45),110.0)
 	game.step_objects(1039)
-	check(game.objects.size()==1 and cues("OUTRAGE_CRASH").is_empty() and native_particle_cues(light).is_empty(),
+	check(game.objects.size()==1 and cues("OUTRAGE_CRASH").is_empty()
+		and native_particle_cues(drops).is_empty() and native_particle_cues(light).is_empty(),
 		"the ground-blood clip still holds frame three at 1039 ms")
 	game.step_objects(1)
 	check(game.objects.size()==2 and cues("OUTRAGE_CRASH").size()==1,
 		"ground-blood frame four creates one magma and plays the original eruption sound")
 	if game.objects.size()!=2:return
 	var magma: Dictionary = game.objects[1]
-	var light_cues := native_particle_cues(light)
-	check(light_cues.size()==1 and light_cues[0]["point"]==point and light_cues[0]["mirrored"]
-		and native_particle_cues(drops).is_empty(),"eruption starts only the original rising sparks")
+	var drops_cues := native_particle_cues(drops)
+	check(drops_cues.size()==1 and drops_cues[0]["point"]==point and drops_cues[0]["mirrored"]
+		and drops_cues[0]["object_emitter"]==floor["id"] and native_particle_cues(light).is_empty(),
+		"the original frame-four eruption starts only the floor-owned embers")
+	var drawn_particles := func(path: String):
+		return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==path)
+	check(drawn_particles.call(drops).size()==1,"the ember emitter draws its first particle on entry")
 	var hit: Dictionary = magma["hit"]
 	var glow: String = hit["native_controller"]["layers"][4]
 	check(magma["pos"]==point and magma["clock"]==0.0 and hit["fixed_amount"]==4094.0
@@ -3079,7 +3084,11 @@ func check_outrage_break_eruption() -> void:
 		"the invisible attack ANI hits the bleeding target at its own frame zero")
 	check(cues(glow).size()==1 and cues(glow)[0]["point"]==point+Vector2(22,-12),
 		"magma glow starts at the first absolute point even for a left-facing caster")
-	game.step_objects(49)
+	game.step_objects(33)
+	check(drawn_particles.call(drops).size()==1,"the 30 Hz embers wait through 33 ms to draw again")
+	game.step_objects(1)
+	check(drawn_particles.call(drops).size()==2,"the original ember template draws again at 34 ms")
+	game.step_objects(15)
 	check(cues(glow).size()==1 and game.hit_count==before+1,"neither timer is due at 49 ms")
 	game.step_objects(1)
 	check(cues(glow).size()==2 and cues(glow)[1]["point"]==point+Vector2(-117,15)
@@ -3100,16 +3109,34 @@ func check_outrage_break_eruption() -> void:
 	check(not game.objects.has(magma) and game.objects.has(floor) and cues("OUTRAGE_CRASH").size()==1,
 		"the 760 ms damage object retires separately from its parent")
 	game.step_objects(1499)
-	check(game.objects.has(floor) and native_particle_cues(drops).is_empty(),
-		"the end-of-floor emitter stays dormant at 3299 ms")
+	check(game.objects.has(floor) and native_particle_cues(light).is_empty(),
+		"the rising sparks stay dormant at 3299 ms")
 	game.step_objects(1)
-	var drop_cues := native_particle_cues(drops)
-	check(not game.objects.has(floor) and drop_cues.size()==1 and drop_cues[0]["point"]==point,
-		"at 3300 ms the visible ground retires and starts the original ember emitter")
+	var light_cues := native_particle_cues(light)
+	check(game.objects.has(floor) and light_cues.size()==1 and light_cues[0]["point"]==point
+		and light_cues[0]["emitter_channel"]==1 and drawn_particles.call(light).size()==1,
+		"main ANI completion starts the rising spark emitter with its own age-zero particle")
 	game.view.present(game.view_snapshot(),0.0,0.0)
-	game.view.present(game.view_snapshot(),499.0,499.0)
-	check(game.view._particle_emitters.is_empty() and game.view.effects.any(func(fx):return fx.get_meta("source_ptl","")==drops),
-		"embers use their own 499 ms emission window and live beyond it")
+	check(not game.view.object_views.has(floor["id"])
+		and not game.view.object_views.has("%s:floor:0"%floor["id"]),
+		"the floor and its ETC overlays retire while the particle owner stays")
+	game.step_objects(9)
+	check(drawn_particles.call(light).size()==1,"the 100 Hz rising sparks wait through 9 ms to draw again")
+	game.step_objects(1)
+	check(drawn_particles.call(light).size()==2,"the original rising spark template draws again at 10 ms")
+	game.step_objects(279)
+	check(game.objects.has(floor) and not floor["outrage_light_final_sample"],
+		"the rising spark emitter stays open through 289 ms")
+	game.step_objects(1)
+	check(game.objects.has(floor) and floor["outrage_light_final_sample"],
+		"the 290 ms update submits the final rising spark sample")
+	game.step_objects(1)
+	check(game.objects.has(floor) and floor["outrage_light_finished"],
+		"the next floor update observes emitter completion")
+	game.step_objects(1)
+	check(not game.objects.has(floor) and not game.view._object_particle_emitters.has(floor["id"])
+		and not drawn_particles.call(light).is_empty(),
+		"the invisible floor releases both channels while spawned sparks remain independent")
 
 	start_room("original_27601","katana",1,spec,"berserker")
 	session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)

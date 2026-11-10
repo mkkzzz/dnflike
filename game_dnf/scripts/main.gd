@@ -12,6 +12,7 @@ const BattleView = preload("res://view/battle_view.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const NativeMaze = preload("res://combat/data/native_maze.gd")
 const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
+const NativeEmitter = preload("res://combat/particles/native_emitter.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
@@ -4196,16 +4197,30 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			o["swing_played"] = true
 			play_sound("HOANYOUNG_WAVE")
 		if kind == "outrage_floor":
-			if old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
-				# A72AC8 uses the same strength and a longer independent window.
-				bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":500})
-				play_sound("OUTRAGE_CRASH")
-				spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
-				emit_outrage_floor_particle(o,controller["light_particle"])
+			if t >= float(controller["eruption_at_ms"]):
+				if old_t < float(controller["eruption_at_ms"]):
+					# A72AC8 uses the same strength and a longer independent window.
+					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":500})
+					play_sound("OUTRAGE_CRASH")
+					spawn_object(controller["child"],String(o["owner"]),o["pos"],float(o["z"]),int(o["facing"]),float(o["power"]),o["source"])
+				# A72D9F samples +DD0, the drops emitter, from ETC frame four.
+				emit_outrage_floor_particle(o,controller["drops_particle"],0)
 			if t >= Kernel.Timeline.duration(tl):
-				# A72E35 waits for the main ANI end before sampling the drops.
-				emit_outrage_floor_particle(o,controller["drops_particle"])
-				objects.remove_at(i)
+				# A72E35 starts +DCC after ANI end, observes completion on the
+				# following update, then deletes the invisible owner one update later.
+				if o.get("outrage_light_finished",false):
+					bus.emit("combat.cue",{"kind":"native_particle","stop":true,"object_emitter":o["id"]})
+					objects.remove_at(i)
+				elif o.get("outrage_light_final_sample",false):
+					o["outrage_light_finished"] = true
+				else:
+					var path: String = controller["light_particle"]
+					if not o.has("outrage_light_end_ms"):
+						var decoded: Dictionary = combat_assets["particles"][path]["decoded"]
+						var emitter := NativeEmitter.new(decoded,func():return 0)
+						o["outrage_light_end_ms"] = int(t)+emitter.end_time(float(decoded["creation_frequency"]))
+					emit_outrage_floor_particle(o,path,1)
+					o["outrage_light_final_sample"] = int(t)>=int(o["outrage_light_end_ms"])
 				continue
 		if kind == "outrage_magma":
 			if t*float(controller["rate"]) >= Kernel.Timeline.duration(tl):
@@ -4321,9 +4336,10 @@ func step_outrage_magma(magma: Dictionary, controller: Dictionary) -> void:
 		magma["hit_resets_left"] -= 1
 		magma["next_hit_reset"] += float(controller["reset_ms"])
 
-func emit_outrage_floor_particle(floor: Dictionary, path: String) -> void:
+func emit_outrage_floor_particle(floor: Dictionary, path: String, channel: int) -> void:
 	bus.emit("combat.cue",{"kind":"native_particle","path":path,"point":floor["pos"],"height":floor["z"],
-		"mirrored":int(floor["facing"])<0})
+		"mirrored":int(floor["facing"])<0,"object_emitter":floor["id"],"emitter_channel":channel,
+		"elapsed_ms":int(floor["clock"])})
 
 func ghost_field_pulse(field: Dictionary) -> bool:
 	var age := float(field["clock"])
@@ -5564,6 +5580,7 @@ func view_snapshot() -> Dictionary:
 		elif controller.get("kind","") == "rasa_child":
 			objs.append_array(_rasa_child_layers(item,o,controller))
 		elif controller.get("kind","") == "outrage_floor":
+			if o.has("outrage_light_end_ms"):continue
 			item["depth_offset"] = -1
 			objs.append(item)
 			for index in 2:
