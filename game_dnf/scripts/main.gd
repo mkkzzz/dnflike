@@ -94,6 +94,7 @@ var requests: Array = []
 var last_direction_tap: Dictionary = {}
 var last_direction_release: Dictionary = {}
 var last_depth_key: int = KEY_UP
+var last_horizontal_key: int = KEY_LEFT
 var run_direction := 0
 var bar_target := -1
 var max_hp := 0.0
@@ -485,8 +486,9 @@ func _input(event: InputEvent) -> void:
 	var code := int(key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode)
 	if external_mode and code in FLOW_OWNED_KEYS:return
 	if key_event.echo:return
-	if key_event.pressed and code in [KEY_UP,KEY_DOWN] and not held.get(code,false):
-		last_depth_key = code
+	if key_event.pressed and not held.get(code,false):
+		if code in [KEY_UP,KEY_DOWN]:last_depth_key = code
+		elif code in [KEY_LEFT,KEY_RIGHT]:last_horizontal_key = code
 	held[code] = key_event.pressed
 	if code in [KEY_LEFT,KEY_RIGHT]:
 		var direction := -1 if code == KEY_LEFT else 1
@@ -1267,12 +1269,15 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		if index % 2 == 0 and clock >= duration:
 			start_stage(index+1)
 			return
-		if request and index % 2 == 1 and index+1 < m["stages"].size() and clock < duration \
+		# CBD682 queues the next ready at priority 1 before CBD6B6 can queue idle at 0.
+		if request and index % 2 == 1 and index+1 < m["stages"].size() \
 				and event_clock >= float(stage["timeline"][2]["start_ms"]):
 			# CBD622 uses skill 72 with the MP flag set and the material flag clear.
 			var cost := skill_mp_cost(m)
 			if float(player["mp"]) >= cost:
 				player["mp"] = float(player["mp"])-cost
+				var direction := native_skill_horizontal()
+				if direction != 0:player["facing"] = direction
 				start_stage(index+1)
 				return
 			reject_action(name,"mp")
@@ -2345,7 +2350,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	if m.has("stages") and not (name in ["upper","bloodblast","hellbenter","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
 			and not (name == "illusionslash" and int(player["illusion_cast"]["slash"]) > 0) \
-			and not (name == "rapidmoveslash" and index % 2 == 1) \
+			and not (name == "rapidmoveslash" and index > 0) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -4251,6 +4256,15 @@ func damage_player(amount: float, source: Vector2) -> void:
 	hurt_player(int(amount),{"pos":source},{},facing)
 
 # ---------------------------------------------------------------- passive objects
+
+func native_skill_horizontal() -> int:
+	# 917CD1 queries axis zero through the same direction table as the depth axis.
+	var direction := 0
+	if held.get(KEY_RIGHT,false):
+		direction = -1 if last_horizontal_key == KEY_LEFT and held.get(KEY_LEFT,false) else 1
+	elif held.get(KEY_LEFT,false):
+		direction = -1
+	return -direction if not active_effect("confuse").is_empty() else direction
 
 func native_skill_depth() -> int:
 	# 113CBE0 scans registered held inputs from newest to oldest.

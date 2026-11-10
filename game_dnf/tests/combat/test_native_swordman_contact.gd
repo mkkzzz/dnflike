@@ -5545,6 +5545,49 @@ func check_rapid_move_slash_fee_failure() -> void:
 			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
 			"interruption or natural exit starts the cooldown without another payment")
 
+func check_rapid_move_slash_repeat_direction() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for sample: Array in [[false,false,-1],[true,false,1],[false,true,1]]:
+		start_room("original_27601","katana",1,spec)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["mp_cost_rate"] = 1.0
+		game.player["mp"] = 100.0
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		press(KEY_A)
+		step(160)
+		var duration: float = game.action_duration("rapidmoveslash")
+		step(duration-1.0)
+		check(game.player["stage"]==1 and game.player["mp"]==75.0,
+			"the first Rapid Move Slash remains active one millisecond before completion")
+		session.submit_key(KEY_RIGHT,true)
+		session.submit_key(KEY_LEFT,true)
+		if sample[0]:session.submit_key(KEY_LEFT,false)
+		if sample[1]:game.numeric_player.effects.add("confuse",{"duration_ms":1.0})
+		press(KEY_A)
+		step(1.0)
+		check(game.player["stage"]==2 and game.player["mp"]==50.0
+			and not game.player["cooldowns"].has("rapidmoveslash"),
+			"Rapid Move Slash accepts the repeat before idle on the completion update")
+		check(game.player["facing"]==sample[2],
+			"Rapid Move Slash latches the newest held horizontal key after confusion: "+str(sample))
+		session.submit_key(KEY_LEFT,false)
+		session.submit_key(KEY_RIGHT,false)
+		session.submit_key(KEY_RIGHT if int(sample[2])<0 else KEY_LEFT,true)
+		step(160)
+		check(game.player["stage"]==3 and game.player["facing"]==sample[2],
+			"changing horizontal input during preparation keeps the accepted direction: "+str(sample))
+		game.player["pos"] = POINT
+		step(20)
+		check(is_equal_approx(float(game.player["pos"].x),POINT.x+39.0*int(sample[2])),
+			"the next Rapid Move Slash moves along its accepted facing: "+str(sample))
+		session.submit_key(KEY_RIGHT if int(sample[2])<0 else KEY_LEFT,false)
+
 func check_rapid_move_slash_depth() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -6999,6 +7042,7 @@ func run() -> void:
 	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
+	check_rapid_move_slash_repeat_direction()
 	check_rapid_move_slash_depth()
 	check_charge_crash_body_armor()
 	check_charge_crash_mastery()
