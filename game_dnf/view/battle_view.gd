@@ -433,10 +433,27 @@ func _present_objects(list: Array) -> void:
 		if is_instance_valid(rear) and not rear.is_queued_for_deletion():
 			rear.base_scale = v.base_scale
 			rear.seek(float(o["clock"]))
+		if o.has("particle_trail"):advance_object_particle(v,o)
 	for id in object_views.keys():
 		if not live.has(id):
 			if is_instance_valid(object_views[id]):object_views[id].queue_free()
 			object_views.erase(id)
+
+func advance_object_particle(view: Node2D, item: Dictionary) -> void:
+	var trail: Dictionary = item["particle_trail"]
+	var path := String(trail["path"])
+	var point: Vector2 = item["pos"]+trail["offset"]
+	var origin := Vector3i(int(point.x),int(point.y),int(item["z"]))
+	var emitter: RefCounted = view.get_meta("particle_trail") if view.has_meta("particle_trail") else null
+	if emitter == null:
+		var template: Dictionary = _combat.get("particles",{}).get(path,{})
+		if template.is_empty():
+			push_error("Missing original particle template: "+path)
+			return
+		emitter = particle_bursts.create_emitter(template["decoded"],origin,int(item["facing"]) < 0)
+		view.set_meta("particle_trail",emitter)
+	emitter.origin = origin
+	_append_native_particles(path,1.0,particle_bursts.emit_at(emitter,int(item["clock"])))
 
 func _on_room_loaded(event: Dictionary) -> void:
 	stage.invalidate_room()

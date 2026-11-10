@@ -6413,15 +6413,12 @@
      "hits": [
       {
        "at": 300,
-       "life_ms": 1600,
        "object": "passiveobject/character/swordman/illusionslashwave.obj",
        "offset": [
         65,
         0,
         0
        ],
-       "percent_col": 0,
-       "speed": 520.0,
        "starts_at_zero": true
       }
      ],

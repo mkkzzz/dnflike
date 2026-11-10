@@ -50,7 +50,7 @@ BUILD_VERSION = 7
 SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
 NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
-    for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar')
+    for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar', 'illusionslash')
 ]
 OUTRAGE_PARTICLE_SOURCES = {
     OUTRAGE_PARTICLES['stone']: {
@@ -544,6 +544,12 @@ ILLUSION_SLASH_AUDIO = {
     'HOANYOUNG_HIT': 'sounds/char/swordman/effect/hoanyoung_hit.ogg',
 }
 ILLUSION_SLASH_REPEAT_VOICES = [f'sounds/char/swordman/sm_hoanyoung_{index:02}.ogg' for index in range(1, 5)]
+ILLUSION_WAVE_LAYERS = {
+    f'illusion_wave_bottom{index}': f'passiveobject/character/swordman/animation/illusionslashwavebottom{index}.ani'
+    for index in (1, 2)
+}
+ILLUSION_WAVE_LAYERS['illusion_wave_hit'] = 'passiveobject/character/swordman/animation/illusionslashwavehit.ani'
+EFFECTS.update(ILLUSION_WAVE_LAYERS)
 SOURCE_AUDIO_WEIGHTS['R_SM_HOANYOUNG'] = (25, 25, 25, 25)
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
@@ -1706,6 +1712,7 @@ def main() -> int:
     if args.extend_illusion_slash_audio:
         specs = [('audio', key, path) for key, path in ILLUSION_SLASH_AUDIO.items()]
         specs.append(('audio', 'R_SM_HOANYOUNG', ILLUSION_SLASH_REPEAT_VOICES))
+        specs.extend(('effects', key, path) for key, path in ILLUSION_WAVE_LAYERS.items())
         specs.extend(('objects', path, path) for path in
                      (f'passiveobject/character/swordman/illusionslashmelee{index}.obj' for index in range(1, 5)))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))

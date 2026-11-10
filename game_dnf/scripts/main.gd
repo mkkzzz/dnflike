@@ -2446,10 +2446,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					# CB460B starts the room shake on the landing update.
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
 				elif hit.get("skill_id","") == "illusionslash" and int(player["stage"]) == 4:
-					var cast: Dictionary = player["illusion_cast"]
-					var damage: Array = cast["move"]["illusion_chain"]["wave_damage"]
-					hit = hit.duplicate()
-					hit["percent"] = 100+_native_interpolate(int(damage[0])-100,int(damage[1])-100,int(cast["wave_ratio"]),100)
+					hit = prepare_illusion_wave(hit)
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -2837,6 +2834,12 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
+	if hit.get("native_controller",{}).get("kind","") == "illusion_wave":
+		# A709EF..A70A66 uses the overlap center X/Z and the victim's ground Y.
+		var roll := rng.range_int(0,99)
+		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
+		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),int(target["pos"].y)),
+			"height":int(point.z),"facing":facing,"angle":angle,"fresh":true})
 	if not draw_impact:hit_cues(atk,point,facing,by_player)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
@@ -3593,6 +3596,30 @@ func damage_player(amount: float, source: Vector2) -> void:
 
 # ---------------------------------------------------------------- passive objects
 
+func prepare_illusion_wave(template: Dictionary) -> Dictionary:
+	var cast: Dictionary = player["illusion_cast"]
+	var config: Dictionary = cast["move"]["illusion_wave"]
+	var ratio: int = cast["wave_ratio"]
+	var life := _native_interpolate(int(config["life"][0]),int(config["life"][1]),ratio,100)
+	var contacts := _native_interpolate(int(config["contacts"][0]),int(config["contacts"][1]),ratio,100)
+	var depth := int(bool(held.get(KEY_DOWN,false)))-int(bool(held.get(KEY_UP,false)))
+	var motion: Dictionary = config["motion"].duplicate()
+	# CB539F/CB53C4 write PTL lifetime and the first rotation angle.
+	motion["life_time"] = life
+	motion["rotation_angle"] = [depth*int(config["turn"]),0,0]
+	var damage: Array = config["damage"]
+	var hit := template.duplicate()
+	hit["percent"] = 100+_native_interpolate(int(damage[0])-100,int(damage[1])-100,ratio,100)
+	hit["life_ms"] = life
+	hit["ptl_motion"] = motion
+	@warning_ignore("integer_division")
+	var interval := life/contacts
+	# A707B2 sets one ledger reset per interval, with contacts-1 resets total.
+	hit["native_controller"] = {"kind":"illusion_wave","reset_ms":interval,"reset_count":contacts-1,
+		"front_fx":"illusion_wave_bottom2" if depth < 0 else "illusion_wave_bottom1",
+		"trail_x":70 if depth < 0 else (20 if depth > 0 else 50)}
+	return hit
+
 func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing: int, power: float, source := {}, definition := {}) -> Dictionary:
 	var obj: Dictionary = table.object(String(hit["object"])) if definition.is_empty() else definition
 	if obj.is_empty():return {}
@@ -3616,8 +3643,8 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 			timeline[index]["start_ms"] = float(timeline[index]["start_ms"])+shift
 			timeline[index]["end_ms"] = float(timeline[index]["end_ms"])+shift
 		entity["timeline"] = timeline
-	if kind == "bloodblast" and controller.has("reset_ms"):
-		var first := float(obj["segments"][0]["start"])
+	if kind in ["bloodblast","illusion_wave"] and controller.has("reset_ms"):
+		var first := float(obj["segments"][0]["start"]) if kind == "bloodblast" else 0.0
 		entity["next_hit_reset"] = first+float(controller["reset_ms"])
 		entity["hit_resets_left"] = int(controller["reset_count"])
 	if kind == "outrage_floor":
@@ -3750,13 +3777,14 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				objects.remove_at(i)
 				continue
 			step_outrage_magma(o,controller)
-		if kind == "bloodblast":
+		if kind in ["bloodblast","illusion_wave"]:
 			if int(o.get("hit_resets_left",0)) > 0 and t >= float(o["next_hit_reset"]):
 				o["hits"].clear()
 				o["hit_resets_left"] -= 1
 				o["next_hit_reset"] += float(controller["reset_ms"])
-			var sound_at := float(controller.get("sound_at_ms",INF))
-			if old_t < sound_at and t >= sound_at:play_sound("FIRE_PILLAR_UP")
+			if kind == "bloodblast":
+				var sound_at := float(controller.get("sound_at_ms",INF))
+				if old_t < sound_at and t >= sound_at:play_sound("FIRE_PILLAR_UP")
 		if controller.get("kind","") == "firewave_chain" and t >= Kernel.Timeline.duration(tl):
 			# Native ANI+1EC bit 8: create 20025 at +/-360, then delete 20024.
 			# The successor starts at age zero, independently of the actor clock.
@@ -4953,6 +4981,15 @@ func view_snapshot() -> Dictionary:
 			if float(item["clock"]) < float(combat_assets["effects"][effect]["duration_ms"]):
 				item["effect"] = effect
 				objs.append(item)
+		elif controller.get("kind","") == "illusion_wave":
+			var front := item.duplicate()
+			front["id"] = "%s:bottom"%o["id"]
+			front["effect"] = controller["front_fx"]
+			front["depth_offset"] = 3
+			item["particle_trail"] = {"path":"passiveobject/character/swordman/particle/illusionslash.ptl",
+				"offset":Vector2(int(controller["trail_x"])*int(o["facing"]),-1)}
+			objs.append(item)
+			objs.append(front)
 		elif controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
 		elif controller.get("kind","") == "sayaex_ice":

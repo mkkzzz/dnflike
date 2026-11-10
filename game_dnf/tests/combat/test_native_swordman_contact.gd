@@ -3067,6 +3067,10 @@ func grab_direct_hits() -> Array:
 	return game.bus.events_of("combat.hit").filter(func(event):return event.get("atk","").ends_with("/grabblastblood.atk"))
 
 func check_illusion_finish() -> void:
+	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]
+	check(game.view.audio.variants["HOANYOUNG_HIT"][0] is AudioStreamOggVorbis and voices.size()==4
+		and voices.all(func(voice):return voice is AudioStreamOggVorbis),
+		"the original hit cue and all four repeat voices load as audio streams")
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
@@ -3161,6 +3165,27 @@ func check_illusion_finish() -> void:
 		check(game.objects.size()==1 and game.objects[0]["hits"].has(wave_target["id"])
 			and cues("HOANYOUNG_HIT").size()==1 and game.table.assets["audio"].has("HOANYOUNG_HIT"),
 			"a sword-wave contact plays the hit cue from its original attack record")
+		var hit_fx: Array = cues("illusion_wave_hit")
+		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and absf(float(hit_fx[0]["angle"]))<=0.801,
+			"the wave creates its own angled impact animation at the target's ground depth")
+		if family == "katana" and int(sample[1]) == 6:
+			var wave: Dictionary = game.objects[0]
+			for count: int in range(1,4):
+				move_target(wave_target,Vector2(wave["pos"])+Vector2(70,0))
+				wave_target["invuln_ms"] = 0.0
+				game.step_objects(124.0)
+				check(cues("HOANYOUNG_HIT").size()==count,"the ledger holds until the original interval expires")
+				game.step_objects(1.0)
+				check(cues("HOANYOUNG_HIT").size()==count+1,"each elapsed interval allows one new contact")
+			game.step_objects(124.0)
+			check(game.objects.size()==1 and wave["pos"]==POINT+Vector2(314,0)
+				and cues("HOANYOUNG_HIT").size()==4,"the neutral wave moves at 500 units per second and has four contacts")
+			game.view.present(game.view_snapshot(),0.0,0.0)
+			var trails: Array = game.view.effects.filter(func(effect):return effect.has_meta("source_ptl") \
+				and String(effect.get_meta("source_ptl")).ends_with("/illusionslash.ptl"))
+			check(not trails.is_empty(),"the object view emits the original wave trail")
+			game.step_objects(1.0)
+			check(game.objects.is_empty(),"the wave expires at its original 500 ms lifetime")
 	spec["skills"]["blademastery"] = 7
 	start_room("","katana",1,spec)
 	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
@@ -3180,8 +3205,37 @@ func check_illusion_finish() -> void:
 		"rapid attack and shortcut inputs reach the original katana mastery limit and full wave charge")
 	game.step_objects(1000.0)
 	step(300.0)
-	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==506.0,
-		"the fully charged wave uses the higher original damage column")
+	check(game.objects.size()==1 and game.objects[0]["hit"]["percent"]==506.0
+		and game.objects[0]["life_ms"]==800 and game.objects[0]["next_hit_reset"]==160.0
+		and game.objects[0]["hit_resets_left"]==4,
+		"the fully charged wave uses the upper damage, lifetime and contact limits")
+	for sample: Array in [[6,1,KEY_DOWN,500,125,3,"illusion_wave_bottom1",20],
+			[7,-1,KEY_UP,600,60,9,"illusion_wave_bottom2",70]]:
+		spec["skills"]["shortswordmastery"] = sample[0]
+		var facing: int = sample[1]
+		start_room("","shortsword",facing,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.player["mp"] = 1000.0
+		press(KEY_A)
+		step(100)
+		for slash: int in 9:step(150)
+		check(game.player["stage"]==4,"the short sword automatically reaches the finisher")
+		game.step_objects(1000.0)
+		session.submit_key(int(sample[2]),true)
+		step(300.0)
+		session.submit_key(int(sample[2]),false)
+		var wave: Dictionary = game.objects[0]
+		var visible: Array = game.view_snapshot()["objects"]
+		check(wave["life_ms"]==sample[3] and wave["next_hit_reset"]==sample[4]
+			and wave["hit_resets_left"]==sample[5],
+			"only rank seven short sword mastery replaces wave lifetime and contact columns")
+		check(visible[1]["effect"]==sample[6] and visible[0]["particle_trail"]["offset"]==Vector2(facing*int(sample[7]),-1),
+			"the direction selects the original lower layer and moving trail anchor")
+		game.step_objects(200.0)
+		check(wave["pos"]==POINT+Vector2(facing*151,facing*14),
+			"the original angle and 29 percent depth projection turn the wave without mirroring depth")
 
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()

@@ -473,10 +473,21 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			and int(_skill_row(BLADE_MASTERY_SKL if blade else LIGHT_MASTERY_SKL).get("rank",0)) >= int(values[19 if blade else 22])
 		if upgraded:column = 25 if blade else 27
 		move["illusion_chain"] = {"order":spec["slash_order"],"min":int(values[column]),"max":int(values[column+1]),
-			"max_rate":int(values[0])*1000,"wave_damage":skill["level_row"].slice(1,3),
+			"max_rate":int(values[0])*1000,
 			"first_frame_rate":int(values[18]),
 			"melee_damage_rate":NativeMotion.f32(1.0+NativeMotion.f32(float(values[21 if blade else 24])*0.0010000000474974513)) if upgraded else 1.0,
 			"melee_motion":db.record("character/swordman/particle/illusionslashmelee.ptl").get("decoded",{})}
+		var wave_life := values.slice(13,15)
+		var wave_contacts := values.slice(16,18)
+		if job == "weaponmaster" and weapon == "shortsword":
+			var mastery := _skill_row(SHORT_MASTERY_SKL)
+			var short_values: Array = mastery["static"]
+			if int(mastery.get("rank",0)) >= int(short_values[6]):
+				wave_life = short_values.slice(10,12)
+				wave_contacts = short_values.slice(8,10)
+		move["illusion_wave"] = {"damage":skill["level_row"].slice(1,3),"life":wave_life,
+			"contacts":wave_contacts,"turn":int(values[15]),
+			"motion":db.record("character/swordman/particle/illusionslash.ptl")["decoded"]}
 	var weapon_hits := _swordman_hits(name)
 	var native_draw: bool = spec.get("native_state","") == "draw"
 	if native_draw:

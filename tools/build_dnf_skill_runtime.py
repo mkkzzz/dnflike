@@ -178,8 +178,9 @@ DIRECT_OBJECTS = {
     "gorecross": (OBJ_ROOT + "gorecross.obj", 900, 0.0, 1400),
     "hopsmash": (OBJ_ROOT + "hopsmashsub.obj", 260, 0.0, 1300),
     "chargecrash": (OBJ_ROOT + "chargecrashsub.obj", 700, 0.0, 1200),
-    "wavespinarea": (OBJ_ROOT + "wavespinarea.obj", 420, 0.0, 5000),
+    # The EX adapter still consumes this legacy binding.
     "illusionslash": (OBJ_ROOT + "illusionslashwave.obj", 900, 520.0, 1600),
+    "wavespinarea": (OBJ_ROOT + "wavespinarea.obj", 420, 0.0, 5000),
     "hellbenter": (OBJ_ROOT + "hellbenterfinish.obj", 760, 0.0, 1800),
     "hundredsword": (OBJ_ROOT + "hundredswordhit.obj", 780, 0.0, 3000),
     "blache": (OBJ_ROOT + "blache.obj", 760, 0.0, 3600),
@@ -2230,14 +2231,14 @@ def main() -> int:
                     stage["fx"] = []
                 move["stages"][0]["voice"] = "SM_HOANYOUNG_START"
                 final = move["stages"][-1]
-                final["hits"] = [hit for hit in final["hits"] if "object" in hit]
                 finish_frames = records[CHR_ANI + final["ani"] + ".ani"]["decoded"]["timeline"]
                 upper_at = finish_frames[2]["start_ms"]
                 smash_at = finish_frames[6]["start_ms"]
                 # CB5145 gates both the smash record and the sword-wave dispatch on frame 6.
-                final["hits"][0]["at"] = smash_at
-                final["hits"][0]["offset"] = [65, 0, 0]
-                final["hits"][0]["starts_at_zero"] = True
+                wave = add_object(objects, OBJ_ROOT + "illusionslashwave.obj")
+                if not wave:
+                    raise ValueError("missing original Illusion Slash sword wave")
+                final["hits"] = [{"object": wave, "at": smash_at, "offset": [65, 0, 0], "starts_at_zero": True}]
                 upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
                 smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")
                 if not upper or not smash:
