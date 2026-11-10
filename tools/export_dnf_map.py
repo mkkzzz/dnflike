@@ -38,6 +38,7 @@ GATE_SLOTS = [('left', 'normal'), ('left', 'boss'), ('left', 'wall'), ('right', 
 VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/outerwall.dgn',
     'dungeon/act3/jungle.dgn',
+    'dungeon/act3/darkhell.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
 DEFAULT_OUTPUT = ROOT / 'game_dnf/assets_local/native_maps'

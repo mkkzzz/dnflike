@@ -73,6 +73,42 @@
         "1": -1,
         "2": 32
       }
+    },
+    "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974": {
+      "id": "darkhell",
+      "source": {
+        "path": "dungeon/act3/darkhell.dgn",
+        "sha256": "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1068",
+            1000
+          ],
+          [
+            "original_1069",
+            1500
+          ],
+          [
+            "original_1070",
+            500
+          ],
+          [
+            "original_1071",
+            500
+          ],
+          [
+            "original_1072",
+            3000
+          ]
+        ],
+        "1": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1
+      }
     }
   },
   "items": {

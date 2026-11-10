@@ -707,9 +707,9 @@
     "id": 23,
     "min_level": 29,
     "path": "dungeon/act3/darkhell.dgn",
-    "runtime_id": "",
+    "runtime_id": "darkhell",
     "sha256": "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 33,
@@ -4135,8 +4135,8 @@
     "level_max": 33,
     "level_min": 18,
     "path": "monster/zombie/summon_zombieholloweye.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zombie_summon_zombieholloweye",
+    "state": "runtime"
    },
    {
     "id": 65001,
@@ -6687,8 +6687,8 @@
     "level_max": 34,
     "level_min": 33,
     "path": "monster/hunter/master.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "hunter_master",
+    "state": "runtime"
    },
    {
     "id": 50033,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 19,
+   "runtime": 20,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 89,
+   "runtime": 91,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

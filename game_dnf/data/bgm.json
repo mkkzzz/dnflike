@@ -100,6 +100,10 @@
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
   },
+  "darkhell": {
+   "normal": "purgatory",
+   "boss": "purgatory_boss"
+  },
   "jungle": {
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
@@ -290,6 +294,18 @@
    "source": "music/behemoth_b01_1.ogg",
    "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
    "bytes": 1101176
+  },
+  "purgatory": {
+   "file": "audio/bgm/purgatory.ogg",
+   "source": "music/purgatory.ogg",
+   "sha256": "9a15349d08486a3aaaffd625c78e02ade6522a4a81a3239a3b168a0bb925173c",
+   "bytes": 1872344
+  },
+  "purgatory_boss": {
+   "file": "audio/bgm/purgatory_boss.ogg",
+   "source": "music/purgatory_boss.ogg",
+   "sha256": "014020fad65aed4d6f1c367982d037d3cbbc40576680875f972725f7da89858c",
+   "bytes": 1415007
   },
   "dendroid": {
    "file": "audio/bgm/dendroid.ogg",

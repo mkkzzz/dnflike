@@ -4982,6 +4982,10 @@ func build_props(room: Dictionary) -> Array:
 					prop["unresolved_trap_ids"] = unresolved_traps
 					native_object_gaps[path] = unresolved_traps
 				out.append(prop)
+			elif path.contains("/trap/"):
+				# Trigger OBJ files can carry an ATK used as a behaviour signal rather
+				# than a contact damage packet (GravityChanger has only [stuck]).
+				native_object_gaps[path] = ["native_object_trigger"]
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")

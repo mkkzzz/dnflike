@@ -105,6 +105,20 @@
     "sha256": "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291"
    }
   },
+  "darkhell": {
+   "name": "炼狱",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/darkhell_v1/map_export.json",
+   "min_level": 29,
+   "monster_level": 32,
+   "source": {
+    "path": "dungeon/act3/darkhell.dgn",
+    "sha256": "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

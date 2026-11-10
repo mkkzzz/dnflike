@@ -950,6 +950,16 @@
    "mob": "monster/hunter/rollinghunter.mob",
    "bank": "hunter_rollinghunter",
    "name": "rollinghunter"
+  },
+  "hunter_master": {
+   "mob": "monster/hunter/master.mob",
+   "bank": "hunter_master",
+   "name": "master"
+  },
+  "zombie_summon_zombieholloweye": {
+   "mob": "monster/zombie/summon_zombieholloweye.mob",
+   "bank": "zombie_summon_zombieholloweye",
+   "name": "summon_zombieholloweye"
   }
  },
  "boss_hp_lines": 3,

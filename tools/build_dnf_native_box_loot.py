@@ -23,6 +23,10 @@ SOURCES = {
         'dungeon/act3/jungle.dgn',
         'aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291',
     ),
+    'darkhell': (
+        'dungeon/act3/darkhell.dgn',
+        'fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974',
+    ),
 }
 
 
