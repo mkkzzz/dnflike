@@ -2347,9 +2347,13 @@ func check_hellbenter_first_cast() -> void:
 	advance.call(99350.0)
 	check(sword!=null and is_equal_approx(sword.fade,202.0/255.0) and cues("B_START").size()==1,
 		"the normal sword enters the original last-band alpha pulse without replaying the cast sound")
+	var mp_at_deadline: float = game.player["mp"]
 	advance.call(50.0)
-	check(hellbenter.call().is_empty() and not game.view.object_views.has("hellbenter:sword_base")
-		and layers.call("buffmark").is_empty(),"the existing expiry removes the appendage and all held layers")
+	check(game.player.has("hellbenter_finish") and hellbenter.call()["remaining_ms"]==0.0
+		and not game.view.object_views.has("hellbenter:sword_base") and layers.call("buffmark").size()==2
+		and requests.size()==2 and game.player["mp"]==mp_at_deadline,
+		"the deadline starts the finisher automatically, hides the sword and preserves the mark without payment")
+	game.end_action()
 	check(game.numeric_player.add_effect("hellbenter",6) and hellbenter.call()["remaining_ms"]==130130.0,
 		"rank six uses the extended duration from the original level table")
 	var near: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(100,0))
@@ -2439,10 +2443,22 @@ func check_hellbenter_first_cast() -> void:
 		and complete_entry!=null and complete_entry.frame["img_frame"]==8 and is_instance_valid(complete_glow)
 		and complete_glow.loop,"the glow keeps looping at the cap without replaying sound or the entry")
 	effect["remaining_ms"] = 1.0
+	game.player["state"] = "air"
+	game.player["z"] = 50.0
 	game.step_game(1.0)
+	game.step_game(17.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
-	check(hellbenter.call().is_empty() and layers.call("completesword").is_empty(),
-		"appendage expiry clears the completed sword layers")
+	check(not game.player.has("hellbenter_finish") and effect["remaining_ms"]==-17.0
+		and layers.call("completesword").size()==3 and is_equal_approx(complete_base.fade,150.0/255.0),
+		"the timer continues while airborne, keeping the charged sword with minimum alpha")
+	game.player["state"] = "idle"
+	game.player["z"] = 0.0
+	game.player["vz"] = 0.0
+	step(0.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.player.has("hellbenter_finish") and not hellbenter.call().is_empty()
+		and game.player["hellbenter_finish"]["blood_count"]==80 and layers.call("completesword").is_empty(),
+		"the first eligible poll starts the fully charged finisher and clears the held sword layers")
 
 func check_hellbenter_manual_finish() -> void:
 	var profile := ProfileSession.new()
@@ -2519,8 +2535,8 @@ func check_hellbenter_manual_finish() -> void:
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
 		"repeated input cannot restart the finisher and the appendage remains until state exit")
 	step(1.0)
-	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
-		and cues("SM_MUSSANG_START").size()==1,"finisher exit removes the original appendage and does not retrigger")
+	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty()
+		and game.player_ani()[1]==3040.0,"the finished body animation waits on the linked column")
 	if game.objects.size()==1 and game.objects[0].has("column"):
 		check_hellbenter_column(game.objects[0],target,outside,base)
 	check(game.numeric_player.add_effect("hellbenter",1),"a fresh sword can be installed after leaving the finisher")
@@ -2572,7 +2588,16 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(column["phase"]==2 and layers.call("disappear").size()==2 and game.hit_count==start+21
 		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues,
 		"the final explosion has independent damage, two original layers and its own sound")
-	game.step_objects(399.0)
+	game.step_objects(199.0)
+	step(0.0)
+	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
+		"the owner waits through the first 199 ms of the column's final animation")
+	game.step_objects(1.0)
+	step(0.0)
+	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
+		and game.objects.has(object) and cues("SM_MUSSANG_START").size()==1,
+		"the owner returns to idle at 200 ms, removing the appendage while the column remains")
+	game.step_objects(199.0)
 	check(game.objects.has(object) and game.hit_count==start+21,"the final contact does not repeat during the tail")
 	game.step_objects(1.0)
 	check(not game.objects.has(object),"the source Disappear2 lifetime removes the object at 400 ms")

@@ -972,6 +972,14 @@ func step_player(ms: float, move: Vector2) -> void:
 		if backstep_allowed():start_action("backstep",true)
 	var state: String = player["state"]
 	var grounded := float(player["z"])==0 and float(player["vz"])<=0
+	# CC040A..CC04C9 polls the appendage's own deadline from stand, run or normal attack.
+	var blood_sword := active_effect("hellbenter")
+	if grounded and not blood_sword.is_empty() and float(blood_sword["remaining_ms"]) <= 0.0:
+		var move_data := move_def("hellbenter")
+		if state == "idle" or (state == "move" and run_direction != 0) or normal_attack_cancel_allowed(move_data):
+			requests.clear()
+			start_hellbenter_finish(move_data,blood_sword)
+			return
 	if state in ["hurt","air","down"]:
 		for code: int in requests:buffer_recovery_input(code)
 		requests.clear()
@@ -1704,9 +1712,13 @@ func step_hellbenter_finish(ms: float, refresh_ani_rate: bool) -> void:
 	var current := action_ani_clock(float(player["clock"]))
 	action_cues(stage,previous_ani,current)
 	if action_timed_crossed(float(stage["timeline"][3]["start_ms"]),previous_ani,current):
-		HellbenterColumn.spawn(self,move_def("hellbenter"),int(stage["blood_count"]))
+		phase["hellbenter_column"] = HellbenterColumn.spawn(self,move_def("hellbenter"),int(stage["blood_count"]))
 	apply_player_hits(stage,previous_ani,current)
-	if next >= float(phase["end_ms"]):end_action()
+	var column: Dictionary = phase.get("hellbenter_column",{})
+	# CC0656..CC06C4 waits for 200 ms of the object's final phase.
+	if not column.is_empty() and objects.has(column) and not column.get("retired",false):
+		if HellbenterColumn.owner_can_exit(column):end_action()
+	elif next >= float(phase["end_ms"]):end_action()
 
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
@@ -5328,7 +5340,7 @@ func append_hellbenter_view(out: Array) -> void:
 	var config: Dictionary = move_def("hellbenter")["appearance"]
 	var duration := int(effect["definition"]["duration_ms"])
 	var age := int(duration-float(effect["remaining_ms"]))
-	var remaining := duration-age
+	var remaining := maxi(0,duration-age)
 	var origin: Vector2 = player["pos"]
 	var facing := int(player["facing"])
 	var layer := {"pos":origin,"z":player["z"],"facing":facing,"clock":age}

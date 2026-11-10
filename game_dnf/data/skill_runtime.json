@@ -553,6 +553,7 @@
    "stacking": "refresh"
   },
   "hellbenter": {
+   "action_managed_expiry": true,
    "duration_level_row": 11,
    "form": "hellbenter",
    "max_stacks": 1,
@@ -5519,7 +5520,6 @@
    "effect_id": "hellbenter",
    "fidelity_pending": [
     "special_bleed",
-    "expiry_finish",
     "original_command",
     "finish_particles",
     "finish_special_reaction"

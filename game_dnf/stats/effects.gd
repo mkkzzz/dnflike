@@ -149,6 +149,9 @@ func step(ms: float, sleep_on_ground := true) -> Array:
 		if definition.has("hp_drain_per_second"):
 			step_frenzy_drain(effect,ms,events)
 			continue
+		if definition.get("action_managed_expiry",false):
+			effect["remaining_ms"] = float(effect["remaining_ms"])-ms
+			continue
 		var duration := maxf(0,minf(ms,float(effect["remaining_ms"])))
 		effect["remaining_ms"] = maxf(0,float(effect["remaining_ms"])-ms)
 		var interval := float(definition.get("interval_ms",0))

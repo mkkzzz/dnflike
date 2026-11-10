@@ -494,6 +494,7 @@ BUFF_EFFECTS = {
         "name": "魔狱血刹",
         "source_skill": "hellbenter",
         "duration_level_row": 11,
+        "action_managed_expiry": True,
         "stacking": "refresh",
         "max_stacks": 1,
         "form": "hellbenter",
@@ -1580,7 +1581,7 @@ def build_move(
                 "appearance": appearance, "finish": finish,
                 "blood": {"capacity": static[3], "scan_ms": 250, "pulse_ms": static[10],
                           "range": static[11], "flight_ms": 600},
-                "fidelity_pending": ["special_bleed", "finish_object", "expiry_finish", "original_command"]}
+                "fidelity_pending": ["special_bleed", "finish_object", "original_command"]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)

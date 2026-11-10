@@ -4,7 +4,7 @@ const Timeline = preload("res://combat/action/timeline.gd")
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Motion = preload("res://combat/particles/native_motion.gd")
 
-static func spawn(game, move: Dictionary, charges: int) -> void:
+static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var config: Dictionary = move["column"]
 	var skill: Dictionary = game.table._skill_row(move["skill"])
 	var row: Array = skill["level_row"]
@@ -39,6 +39,11 @@ static func spawn(game, move: Dictionary, charges: int) -> void:
 	game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":100})
 	game.bus.emit("combat.cue",{"kind":"fx","key":config["wave"],"point":object["pos"],
 		"height":object["z"],"facing":object["facing"],"offset_y":1,"scale":scale,"depth_offset":2,"fresh":true})
+	return object
+
+static func owner_can_exit(object: Dictionary) -> bool:
+	var column: Dictionary = object["column"]
+	return column["phase"] == 2 and float(object["clock"])-float(column["phase_at"]) >= 200.0
 
 static func step(game, object: Dictionary) -> bool:
 	var column: Dictionary = object["column"]
