@@ -3133,7 +3133,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		amount = roundi(before_hp-float(player["hp"]))
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
-		if native_kind == "hellbenter_column":HellbenterColumn.mark_target(target)
+		if native_kind == "hellbenter_column":HellbenterColumn.mark_target(target,int(hit.get("hellbenter_hold_mode",-1)))
 		var ground_hit_fx: Array = hit.get("native_controller",{}).get("ground_hit_fx",[])
 		if not ground_hit_fx.is_empty() and not contact_only and int(target["z"]) == 0:
 			# A61738 checks the target height before the local reaction changes it.
@@ -3373,7 +3373,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		enemy["native_attack_elapsed_ms"] = float(enemy.get("native_attack_elapsed_ms",0))+ms
 	if enemy.has("numeric") and float(enemy["hp"])>0:
 		step_numeric_actor(enemy,enemy["numeric"],ms)
-		if not held_by_grab and enemy["numeric"].effects.controlled():
+		if not held_by_grab and enemy["state"] != HellbenterColumn.HOLD_STATE and enemy["numeric"].effects.controlled():
 			if enemy.has("starfish_capture"):
 				release_starfish_victim(enemy)
 				enemy.erase("starfish_bite_phase")
@@ -3417,6 +3417,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			enemy.erase("rasa_previous_attack_rate")
 			remaining = ENEMY_ATTACK_RATE_REFRESH_MS
 		enemy["attack_rate_refresh_ms"] = remaining
+	if state == HellbenterColumn.HOLD_STATE and float(enemy["hp"]) > 0.0:return
 	enemy["clock"] = float(enemy["clock"])+advance
 	if float(enemy["hp"])<=0:
 		enemy["state"] = "dead"
@@ -5324,6 +5325,8 @@ func enemy_ani(enemy: Dictionary) -> Array:
 			if pick >= 0 and pick < moves.size():return [String(moves[pick]["stem"]).to_lower(), float(enemy["clock"])]
 			return ["attack",float(enemy["clock"])]
 		"hurt":return [String(enemy["hit_motion"]),0.0]
+		HellbenterColumn.HOLD_STATE:
+			return ["damage1",0.0] if not table.monster_timeline(m,"damage1").is_empty() else ["stay",0.0]
 		"native_down_flight":return ["down",float(enemy["clock"])]
 		"air":return ["overturn",0.0]
 		"down":return ["down",Kernel.Reaction.down_clock(enemy,rp,table.monster_timeline(m,"down"))]

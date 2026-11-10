@@ -2574,8 +2574,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	var column: Dictionary = object["column"]
 	var center := Vector3(object["pos"].x,object["pos"].y,0)
 	var edge := AABB(center+Vector3(130,0,80),Vector3(10,10,10))
-	check(column["down_radius"]==130 and HellbenterColumn.can_force_down(game,object,target,edge,130)
-		and not HellbenterColumn.can_force_down(game,object,target,AABB(edge.position+Vector3(1,0,0),edge.size),130),
+	check(column["down_radius"]==130 and HellbenterColumn.within_reaction_radius(game,object,edge,130)
+		and not HellbenterColumn.within_reaction_radius(game,object,AABB(edge.position+Vector3(1,0,0),edge.size),130),
 		"the scaled state-four gate uses the nearest overlap point and accepts the exact 130-pixel boundary")
 	var loop_path := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
 	var loop_particles := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==loop_path)
@@ -2712,6 +2712,56 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(not target.has("hellbenter_column_mark") and not marked_actor._status_overlay.visible,
 		"the original mark expires at the refreshed deadline")
+
+func check_hellbenter_column_hold() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"hellbenter","level":1})
+	start_room("original_27601","katana",1,profile.stats(),"berserker")
+	game.numeric_player.values["hit"] = 1.0
+	var object := HellbenterColumn.spawn(game,game.move_def("hellbenter"),40)
+	var center: Vector2 = object["pos"]
+	var final_target: Dictionary = api.spawn_dummy(center+Vector2(25,0))
+	var expiry_target: Dictionary = game.spawn_enemy(center-Vector2(25,0))
+	for target: Dictionary in [final_target,expiry_target]:
+		target["def"] = target["def"].merged({"grab_motions":false},true)
+		target["hp"] = 500000.0
+		target["max_hp"] = target["hp"]
+		target["numeric"].values["hp_max"] = target["hp"]
+		target["ai"] = false
+	game.step_objects(1680.0)
+	check([final_target,expiry_target].all(func(target):
+		return target.get("hellbenter_column_mark",{}).get("hold",false) and target["state"]!=HellbenterColumn.HOLD_STATE),
+		"a normal overlap arms hold only for damageable targets that fail the down-motion gate")
+	for target: Dictionary in [final_target,expiry_target]:
+		var position: Vector2 = target["pos"]
+		var height: float = target["z"]
+		game.update_enemy(target,50.0)
+		check(target["state"]==HellbenterColumn.HOLD_STATE and target["pos"]==position and target["z"]==height,
+			"the target update enters hold without relocating the target to the column")
+	expiry_target["pos"] = center+Vector2(-400,0)
+	game.step_objects(100.0)
+	game.step_objects(55.0)
+	check(final_target["hellbenter_column_mark"]["expires_at"]==650
+		and expiry_target["hellbenter_column_mark"]["expires_at"]==600,
+		"the loop contact extends the in-range hold independently of the departed target")
+	game.update_enemy(expiry_target,549.0)
+	check(expiry_target["state"]==HellbenterColumn.HOLD_STATE,"a departed target stays held through age 599")
+	game.update_enemy(expiry_target,1.0)
+	check(expiry_target["state"]=="idle" and not expiry_target.has("hellbenter_column_mark"),
+		"expiration releases only the column's own hold at age 600")
+	game.step_objects(2945.0)
+	var final_mark: Dictionary = final_target.get("hellbenter_column_mark",{})
+	check(object["column"]["phase"]==2 and not final_mark.get("hold",true)
+		and final_mark.get("expires_at")==650 and final_target["state"]!=HellbenterColumn.HOLD_STATE,
+		"an eligible final contact clears hold and refreshes the separate visual mark")
+	game.update_enemy(final_target,0.0)
+	check(final_target["state"]!=HellbenterColumn.HOLD_STATE,"the final mark cannot reapply hold")
+	final_target["state"] = "hold"
+	game.update_enemy(final_target,600.0)
+	check(final_target["state"]=="hold" and not final_target.has("hellbenter_column_mark"),
+		"mark expiry leaves another skill's hold state intact")
 
 func check_hellbenter_screen_flash(object: Dictionary) -> void:
 	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")
@@ -5639,6 +5689,7 @@ func run() -> void:
 	check_outrage_break_impact()
 	check_hellbenter_first_cast()
 	check_hellbenter_manual_finish()
+	check_hellbenter_column_hold()
 	check_outrage_break_speed_refresh()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()

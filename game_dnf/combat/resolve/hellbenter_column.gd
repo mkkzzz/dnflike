@@ -7,6 +7,7 @@ const DISAPPEAR_PARTICLE := "passiveobject/character/swordman/particle/hellbente
 const LOOP_PARTICLE := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
 const EXPLOSION_PARTICLE := "passiveobject/common/particle/noneexplosionparticle%d.ptl"
 const EXPLOSION_OFFSETS := [Vector2i(-159,60),Vector2i(-106,136),Vector2i(7,18),Vector2i(120,114),Vector2i(162,43)]
+const HOLD_STATE := "hellbenter_hold"
 
 static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var config: Dictionary = move["column"]
@@ -50,16 +51,35 @@ static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 		"height":object["z"],"facing":object["facing"],"offset_y":1,"scale":scale,"depth_offset":2,"fresh":true})
 	return object
 
-static func mark_target(target: Dictionary) -> void:
+static func mark_target(target: Dictionary, hold_mode: int) -> void:
 	# A6AAB2 refreshes the duration relative to the appendage's existing clock.
 	var mark: Dictionary = target.get_or_add("hellbenter_column_mark",{"age":0.0})
 	mark["expires_at"] = int(mark["age"])+600
+	if hold_mode < 0:return
+	mark["hold"] = hold_mode == 1
+	if hold_mode == 0:release_target(target)
 
 static func step_target_mark(target: Dictionary, ms: float) -> void:
 	if not target.has("hellbenter_column_mark"):return
 	var mark: Dictionary = target["hellbenter_column_mark"]
 	mark["age"] += ms
-	if int(mark["age"]) >= int(mark["expires_at"]):target.erase("hellbenter_column_mark")
+	if int(mark["age"]) >= int(mark["expires_at"]):
+		release_target(target)
+		target.erase("hellbenter_column_mark")
+		return
+	# 99BD50 requests STATE_HOLD on the target's update after contact.
+	if mark.get("hold",false) and float(target["hp"]) > 0.0 and target["state"] not in [HOLD_STATE,"hold","dead"]:
+		target["state"] = HOLD_STATE
+		target["clock"] = 0.0
+		target["vz"] = 0.0
+		target["push_ms"] = 0.0
+		target.erase("native_jump_velocity")
+		target.erase("native_jump_gravity")
+
+static func release_target(target: Dictionary) -> void:
+	if target["state"] != HOLD_STATE:return
+	target["state"] = "idle"
+	target["clock"] = 0.0
 
 static func target_mark_alpha(target: Dictionary) -> int:
 	var mark: Dictionary = target.get("hellbenter_column_mark",{})
@@ -135,24 +155,31 @@ static func step(game, object: Dictionary) -> bool:
 		if contact.is_empty():continue
 		object["hits"][id] = true
 		var reaction_hit := hit
-		if can_force_down(game,object,enemy,contact["overlap"],int(column["down_radius"])):
-			var center_x := int(object["pos"].x)
-			var target_x := int(enemy["pos"].x)
-			var toward := -facing if center_x == target_x else (1 if center_x > target_x else -1)
-			reaction_hit = hit.merged({"native_down_facing":toward})
+		if within_reaction_radius(game,object,contact["overlap"],int(column["down_radius"])):
+			var target_frame: Dictionary = game.enemy_frame(enemy)
+			var body_mode := int(target_frame.get("items",{}).get("13",0))
+			if can_force_down(enemy,body_mode):
+				var center_x := int(object["pos"].x)
+				var target_x := int(enemy["pos"].x)
+				var toward := -facing if center_x == target_x else (1 if center_x > target_x else -1)
+				reaction_hit = hit.merged({"native_down_facing":toward})
+			elif body_mode != 2:
+				# A6B06A uses +384 after +380 fails. Contact already has a current hurt box.
+				reaction_hit = hit.merged({"hellbenter_hold_mode":int(phase < 2)})
 		game.land_hit(game.player,enemy,reaction_hit,contact["point"],facing,float(object["power"]))
 	if game.native_maze != null:
 		game.apply_native_prop_hits(world,hit,float(object["power"]),object["hits"],"prop:")
 	return true
 
-static func can_force_down(game, object: Dictionary, enemy: Dictionary, overlap: AABB, radius: int) -> bool:
+static func within_reaction_radius(game, object: Dictionary, overlap: AABB, radius: int) -> bool:
 	# A6AD23..A6AF74 clamps the column's center to the contact box, ignoring height.
 	var center := Vector2(Vector2i(object["pos"]))
 	var nearest := center.clamp(Vector2(overlap.position.x,overlap.position.y),Vector2(overlap.end.x,overlap.end.y))
-	if game.native_ground_distance(center,nearest) > radius:return false
+	return game.native_ground_distance(center,nearest) <= radius
+
+static func can_force_down(enemy: Dictionary, body_mode: int) -> bool:
 	# A6AF8D passes zero to 814390, ignoring the MOB's grabable flag.
-	var frame: Dictionary = game.enemy_frame(enemy)
-	if int(frame.get("items",{}).get("13",0)) not in [0,1] or not enemy["def"].get("grab_motions",true):return false
+	if body_mode not in [0,1] or not enemy["def"].get("grab_motions",true):return false
 	var effects: Dictionary = enemy["numeric"].effects.active
 	return not effects.has("freeze") and not effects.has("stone")
 
