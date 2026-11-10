@@ -120,6 +120,10 @@
   "dog_dog",
   "headlessknight_headlessknight",
   "statue_statue",
+  "nugol_nugol",
+  "nugol_kingnugol",
+  "crimebuffalo_crimebuffalogeneral",
+  "crimebuffalo_crimebuffalonormal",
   "cityhallgate_cityhallgate",
   "skeleton_skeleton_headless",
   "darkelf_darkelf_guard",
@@ -186,6 +190,12 @@
   "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed",
   "newmonsters_gbl_cocoon_cocoon",
   "newmonsters_heaven_vulcherspecialforce_vulcherspecialforce",
+  "newmonsters_screamingcave_bloodystormhardy_bloodystormhardy",
+  "newmonsters_screamingcave_eviledge1_eviledge1",
+  "newmonsters_screamingcave_eviledge2_eviledge2",
+  "newmonsters_screamingcave_graverobberking_graverobberking",
+  "newmonsters_screamingcave_highspectresslene_highspectresslene",
+  "newmonsters_screamingcave_skullkane_skullkane",
   "newmonsters_leshphon_duke_juris_duke_juris",
   "newmonsters_leshphon_hyungteo_hyungteo",
   "newmonsters_leshphon_isangoma_nazaloh_isangoma_nazaloh",
@@ -238,6 +248,8 @@
   "newmonsters_heaven_specialforce_specialforce",
   "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
   "newmonsters_gbl_isadora_isadora2",
+  "newmonsters_screamingcave_kingnugol_kingnugol",
+  "newmonsters_screamingcave_babynugol_babynugol",
   "newmonsters_cartel_cypher_poltergeistchair_poltergeistchair",
   "newmonsters_haze_axeoutlaw_axeoutlaw",
   "newmonsters_haze_outlaw_outlaw",
@@ -366,7 +378,7 @@
  "effects": 738,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 66,
+ "unresolved": 69,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -430,6 +442,22 @@
     "Monster/Spider/SpiderBoss.img",
     "Monster/Spider/SpiderBossBurrow.img",
     "monster/Spider/SpiderBoss.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/nugol/nugol.mob",
+   "images": [
+    "Monster/Nugol/bugboss.img",
+    "Monster/Nugol/underground.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/nugol/kingnugol.mob",
+   "images": [
+    "Monster/Nugol/kingbug.img",
+    "Monster/Nugol/underground.img"
    ]
   },
   {
@@ -539,6 +567,14 @@
    "images": [
     "Monster/Arad/GBLRebirthAradman.img",
     "monster/Arad/GBLRebirthAradman.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/screamingcave/kingnugol/kingnugol.mob",
+   "images": [
+    "Monster/Nugol/kingbug2.img",
+    "Monster/Nugol/underground.img"
    ]
   },
   {

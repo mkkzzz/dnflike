@@ -1211,9 +1211,9 @@
     "id": 1501,
     "min_level": 59,
     "path": "dungeon/ancient/screamingcave.dgn",
-    "runtime_id": "",
+    "runtime_id": "screamingcave",
     "sha256": "af64830f63d7142e1ba7794dcc5f0b5b8731f79fbda68d881b8778797306c05a",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 55,
@@ -9239,8 +9239,8 @@
     "level_max": 60,
     "level_min": 50,
     "path": "monster/crimebuffalo/crimebuffalonormal.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "crimebuffalo_crimebuffalonormal",
+    "state": "runtime"
    },
    {
     "id": 55013,
@@ -9815,8 +9815,8 @@
     "level_max": 58,
     "level_min": 53,
     "path": "monster/newmonsters/screamingcave/eviledge1/eviledge1.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_eviledge1_eviledge1",
+    "state": "runtime"
    },
    {
     "id": 56436,
@@ -9839,8 +9839,8 @@
     "level_max": 58,
     "level_min": 53,
     "path": "monster/nugol/kingnugol.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "nugol_kingnugol",
+    "state": "runtime"
    },
    {
     "id": 2021413,
@@ -9871,8 +9871,8 @@
     "level_max": 58,
     "level_min": 54,
     "path": "monster/crimebuffalo/crimebuffalogeneral.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "crimebuffalo_crimebuffalogeneral",
+    "state": "runtime"
    },
    {
     "id": 1089,
@@ -9935,8 +9935,8 @@
     "level_max": 58,
     "level_min": 54,
     "path": "monster/newmonsters/screamingcave/babynugol/babynugol.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_babynugol_babynugol",
+    "state": "runtime"
    },
    {
     "id": 61149,
@@ -9951,8 +9951,8 @@
     "level_max": 58,
     "level_min": 54,
     "path": "monster/newmonsters/screamingcave/kingnugol/kingnugol.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_kingnugol_kingnugol",
+    "state": "runtime"
    },
    {
     "id": 61146,
@@ -9975,8 +9975,8 @@
     "level_max": 58,
     "level_min": 54,
     "path": "monster/nugol/nugol.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "nugol_nugol",
+    "state": "runtime"
    },
    {
     "id": 1092,
@@ -12343,8 +12343,8 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/screamingcave/bloodystormhardy/bloodystormhardy.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_bloodystormhardy_bloodystormhardy",
+    "state": "runtime"
    },
    {
     "id": 61145,
@@ -12367,16 +12367,16 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/screamingcave/eviledge2/eviledge2.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_eviledge2_eviledge2",
+    "state": "runtime"
    },
    {
     "id": 56115,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/screamingcave/graverobberking/graverobberking.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_graverobberking_graverobberking",
+    "state": "runtime"
    },
    {
     "id": 61148,
@@ -12391,16 +12391,16 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/screamingcave/highspectresslene/highspectresslene.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_highspectresslene_highspectresslene",
+    "state": "runtime"
    },
    {
     "id": 56117,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/screamingcave/skullkane/skullkane.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_screamingcave_skullkane_skullkane",
+    "state": "runtime"
    },
    {
     "id": 56128,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 51,
+   "runtime": 52,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 294,
+   "runtime": 306,
    "runtime_post_60": 18,
    "source": 1937,
    "target": 1429,

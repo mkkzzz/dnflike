@@ -2010,6 +2010,66 @@
    "mob": "monster/newmonsters/militiaman/militiamanboss/militiamanboss.mob",
    "bank": "newmonsters_militiaman_militiamanboss_militiamanboss",
    "name": "militiamanboss"
+  },
+  "crimebuffalo_crimebuffalogeneral": {
+   "mob": "monster/crimebuffalo/crimebuffalogeneral.mob",
+   "bank": "crimebuffalo_crimebuffalogeneral",
+   "name": "crimebuffalogeneral"
+  },
+  "crimebuffalo_crimebuffalonormal": {
+   "mob": "monster/crimebuffalo/crimebuffalonormal.mob",
+   "bank": "crimebuffalo_crimebuffalonormal",
+   "name": "crimebuffalonormal"
+  },
+  "newmonsters_screamingcave_babynugol_babynugol": {
+   "mob": "monster/newmonsters/screamingcave/babynugol/babynugol.mob",
+   "bank": "newmonsters_screamingcave_babynugol_babynugol",
+   "name": "babynugol"
+  },
+  "newmonsters_screamingcave_bloodystormhardy_bloodystormhardy": {
+   "mob": "monster/newmonsters/screamingcave/bloodystormhardy/bloodystormhardy.mob",
+   "bank": "newmonsters_screamingcave_bloodystormhardy_bloodystormhardy",
+   "name": "bloodystormhardy"
+  },
+  "newmonsters_screamingcave_eviledge1_eviledge1": {
+   "mob": "monster/newmonsters/screamingcave/eviledge1/eviledge1.mob",
+   "bank": "newmonsters_screamingcave_eviledge1_eviledge1",
+   "name": "eviledge1"
+  },
+  "newmonsters_screamingcave_eviledge2_eviledge2": {
+   "mob": "monster/newmonsters/screamingcave/eviledge2/eviledge2.mob",
+   "bank": "newmonsters_screamingcave_eviledge2_eviledge2",
+   "name": "eviledge2"
+  },
+  "newmonsters_screamingcave_graverobberking_graverobberking": {
+   "mob": "monster/newmonsters/screamingcave/graverobberking/graverobberking.mob",
+   "bank": "newmonsters_screamingcave_graverobberking_graverobberking",
+   "name": "graverobberking"
+  },
+  "newmonsters_screamingcave_highspectresslene_highspectresslene": {
+   "mob": "monster/newmonsters/screamingcave/highspectresslene/highspectresslene.mob",
+   "bank": "newmonsters_screamingcave_highspectresslene_highspectresslene",
+   "name": "highspectresslene"
+  },
+  "newmonsters_screamingcave_kingnugol_kingnugol": {
+   "mob": "monster/newmonsters/screamingcave/kingnugol/kingnugol.mob",
+   "bank": "newmonsters_screamingcave_kingnugol_kingnugol",
+   "name": "kingnugol"
+  },
+  "newmonsters_screamingcave_skullkane_skullkane": {
+   "mob": "monster/newmonsters/screamingcave/skullkane/skullkane.mob",
+   "bank": "newmonsters_screamingcave_skullkane_skullkane",
+   "name": "skullkane"
+  },
+  "nugol_kingnugol": {
+   "mob": "monster/nugol/kingnugol.mob",
+   "bank": "nugol_kingnugol",
+   "name": "kingnugol"
+  },
+  "nugol_nugol": {
+   "mob": "monster/nugol/nugol.mob",
+   "bank": "nugol_nugol",
+   "name": "nugol"
   }
  },
  "boss_hp_lines": 3,

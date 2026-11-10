@@ -525,6 +525,23 @@
     "sha256": "123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f"
    }
   },
+  "screamingcave": {
+   "name": "悲鸣洞穴",
+   "region": "elvengard",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/screamingcave_v1/map_export.json",
+   "min_level": 59,
+   "monster_level": 60,
+   "source": {
+    "path": "dungeon/ancient/screamingcave.dgn",
+    "sha256": "af64830f63d7142e1ba7794dcc5f0b5b8731f79fbda68d881b8778797306c05a",
+    "source_min_level": 59,
+    "source_basis_level": 61,
+    "level_adaptation": "cap_target_60"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

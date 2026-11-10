@@ -904,6 +904,60 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 3)
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 7)
 
+    def test_screamingcave_export_selects_hell_base_and_keeps_quest_blocks(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/screamingcave_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'af64830f63d7142e1ba7794dcc5f0b5b8731f79fbda68d881b8778797306c05a')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 1501)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(len(dungeon['maze_blocks']), 3)
+        self.assertEqual(dungeon['size'], [6, 1])
+        self.assertEqual(dungeon['start_map_raw'], [5, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+        self.assertEqual(len(dungeon['rooms']), 9)
+        self.assertEqual(len(dungeon['placements']), 18)
+        self.assertEqual(len(export['images']), 102)
+        self.assertEqual(len(dungeon['cells']), 6)
+        self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 10)
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual([row[2] for row in selected['map_specifications']],
+                         [6805, 6804, 6803, 6802])
+        self.assertEqual(selected['boss_map_specifications'], [])
+        self.assertEqual(selected['hell_dungeon'], [1])
+        self.assertEqual(selected['seal_door_map_index'], [60037])
+        self.assertEqual(selected['seal_door_pos'], [1, 0])
+        self.assertEqual(selected['seal_door_appear_rate'], [10])
+        self.assertEqual(dungeon['maze_blocks'][1]['quest_connection'], [0, 4358, 2])
+        self.assertEqual(dungeon['maze_blocks'][1]['escape_hell'], [1])
+        self.assertEqual(dungeon['maze_blocks'][2]['quest_connection'], [0, 4378, 2])
+        self.assertEqual(dungeon['maze_blocks'][2]['escape_hell'], [1])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(5, 0)]['map_candidates'], ['map/screamingcave/s6801.map'])
+        self.assertEqual(cells[(0, 0)]['map_candidates'], ['map/screamingcave/b6806.map'])
+        self.assertEqual(len(cells[(1, 0)]['map_candidates']), 4)
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 80)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 45)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 2)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual({item['source_tag'] for item in objects},
+                         {'[passive object]', '[special passive object]'})
+        self.assertEqual(sum(item['sprite'] is None for item in objects), 12)
+        special = next(span for span in dungeon['raw']
+                       if span['tag'] == '[special passive object item]')
+        self.assertEqual([row[2] for row in special['values']], [0, -1, 1, 3222, 10000])
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 12)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 9)
+        selected_rows = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected_rows), 1)
+        self.assertIn('selected maze block 0 of 3', selected_rows[0]['detail'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

@@ -204,6 +204,10 @@
    "normal": "skasa",
    "boss": "skasa_boss"
   },
+  "screamingcave": {
+   "normal": "screaming_cave",
+   "boss": "screaming_cave_boss"
+  },
   "secondbackbone": {
    "normal": "2nd_spine",
    "boss": "2nd_spine_boss"
@@ -717,6 +721,18 @@
    "source": "music/skasa_boss.ogg",
    "sha256": "fcda3658aa3e029f0a798db65b108dbfa089cd3350b4226f567cc44129f21dab",
    "bytes": 929345
+  },
+  "screaming_cave": {
+   "file": "audio/bgm/screaming_cave.ogg",
+   "source": "music/screaming_cave.ogg",
+   "sha256": "94551b7e970008336f19e758ab38945e22d8c77e51f79558d97dc875c98a4bcb",
+   "bytes": 1774803
+  },
+  "screaming_cave_boss": {
+   "file": "audio/bgm/screaming_cave_boss.ogg",
+   "source": "music/screaming_cave_boss.ogg",
+   "sha256": "72b90c6ed962017d7f1a2ac525ffdd8e97f624a362e76fa91814c031438c25fc",
+   "bytes": 924143
   },
   "2nd_spine": {
    "file": "audio/bgm/2nd_spine.ogg",

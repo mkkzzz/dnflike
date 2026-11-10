@@ -82,9 +82,29 @@ def audit() -> dict:
             errors.append(
                 f"{dungeon_id}: min_level={dungeon.get('min_level')} source={minimum}"
             )
-        if not future_scope and dungeon.get("monster_level") != basis:
+        expected_monster_level = basis
+        level_adaptation = recorded_source.get("level_adaptation")
+        if level_adaptation is not None:
+            if level_adaptation != "cap_target_60":
+                errors.append(f"{dungeon_id}: unsupported level_adaptation={level_adaptation}")
+            elif basis <= 60:
+                errors.append(f"{dungeon_id}: cap_target_60 requires source basis above 60")
+            else:
+                expected_monster_level = 60
+                if recorded_source.get("source_min_level") != minimum:
+                    errors.append(
+                        f"{dungeon_id}: source_min_level="
+                        f"{recorded_source.get('source_min_level')} source={minimum}"
+                    )
+                if recorded_source.get("source_basis_level") != basis:
+                    errors.append(
+                        f"{dungeon_id}: source_basis_level="
+                        f"{recorded_source.get('source_basis_level')} source={basis}"
+                    )
+        if not future_scope and dungeon.get("monster_level") != expected_monster_level:
             errors.append(
-                f"{dungeon_id}: monster_level={dungeon.get('monster_level')} source basis={basis}"
+                f"{dungeon_id}: monster_level={dungeon.get('monster_level')} "
+                f"expected={expected_monster_level} source basis={basis}"
             )
         if recorded_source.get("path") != source_path:
             errors.append(f"{dungeon_id}: source.path does not match {source_path}")
@@ -125,6 +145,7 @@ def audit() -> dict:
                     "basis_level": basis,
                     "runtime_min_level": dungeon.get("min_level"),
                     "runtime_monster_level": dungeon.get("monster_level"),
+                    "level_adaptation": level_adaptation,
                     "mode": "native_maze",
                     "rooms": len(source_rooms),
                     "placements": len(placements),
@@ -182,6 +203,7 @@ def audit() -> dict:
                 "basis_level": basis,
                 "runtime_min_level": dungeon.get("min_level"),
                 "runtime_monster_level": dungeon.get("monster_level"),
+                "level_adaptation": level_adaptation,
                 "mode": "fixed",
                 "rooms": len(rooms),
                 "monsters": monster_count,
