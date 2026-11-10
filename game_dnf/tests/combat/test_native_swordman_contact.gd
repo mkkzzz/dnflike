@@ -3505,30 +3505,30 @@ func check_outrage_break_eruption() -> void:
 	var hit_total: int = game.hit_count
 	game.step_objects(126)
 	var full_rise := roundi(pow(float(falling["vz"]),2.0)/3000.0)
-	check(game.hit_count>hit_total and falling.get("outrage_down_phase")==0 and full_rise>=29 and full_rise<=36,
+	check(game.hit_count>hit_total and falling.get("native_down_phase")==0 and full_rise>=29 and full_rise<=36,
 		"another magma hit before first landing uses the full height range")
 	var peak := roundi(falling["z"])
 	for _tick in 80:
 		game.update_enemy(falling,16)
 		peak = maxi(peak,roundi(falling["z"]))
-		if falling.get("outrage_down_phase")==1:break
+		if falling.get("native_down_phase")==1:break
 	var bounce_height := roundi(pow(float(falling["vz"]),2.0)/3000.0)
 	var bounce_base := int(float(peak)/5.0)
-	check(falling["state"]=="native_down_flight" and falling["z"]==0.0 and falling.get("outrage_down_phase")==1
+	check(falling["state"]=="native_down_flight" and falling["z"]==0.0 and falling.get("native_down_phase")==1
 		and bounce_height>=int(bounce_base*0.9) and bounce_height<=int(bounce_base*1.1),
 		"the first landing starts a bounce using one fifth of the tracked peak")
 	hit_total = game.hit_count
 	game.step_objects(126)
 	var repeat_rise := roundi(pow(float(falling["vz"]),2.0)/3000.0)
-	check(game.hit_count>hit_total and falling.get("outrage_down_phase")==1 and repeat_rise>=7 and repeat_rise<=8,
+	check(game.hit_count>hit_total and falling.get("native_down_phase")==1 and repeat_rise>=7 and repeat_rise<=8,
 		"a magma hit during the bounce quarters the weighted height before sampling")
 	for _tick in 80:
 		game.update_enemy(falling,16)
 		if falling["state"]=="down":break
 	check(falling["state"]=="down" and falling["z"]==0.0 and falling["vz"]==0.0
-		and falling.get("outrage_down_phase")==2,
+		and falling.get("native_down_phase")==2,
 		"the second landing enters grounded down without another bounce (state=%s, z=%s, vz=%s, phase=%s, hp=%s)" % [
-			falling["state"],falling["z"],falling["vz"],falling.get("outrage_down_phase"),falling["hp"]])
+			falling["state"],falling["z"],falling["vz"],falling.get("native_down_phase"),falling["hp"]])
 
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
@@ -4515,6 +4515,76 @@ func check_hundred_sword_field_body_modes() -> void:
 			and target["state"]==state and target["clock"]==19.0 and target["push_v"]==0.0
 			and target["vz"]==(35.0 if repeated else 0.0),
 			"the sword field damages super armor without replacing its movement or pose (repeat=%s)"%repeated)
+
+func check_hundred_sword_field_air_reaction() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hundredsword"]
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.player["mp"] = 1500.0
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	press(KEY_A)
+	step(0.0)
+	step(2200.0)
+	check(game.objects.size()==1,"the air reaction fixture creates the original sword field")
+	if game.objects.size()!=1:return
+	var field: Dictionary = game.objects[0]
+	var center: Vector2 = field["pos"]
+	var airborne: Dictionary = api.spawn_dummy(center+Vector2(80,0))
+	airborne["def"] = airborne["def"].merged({"weight":300000},true)
+	airborne["state"] = "air"
+	airborne["z"] = 20.0
+	airborne["vz"] = 750.0
+	var grounded: Dictionary = game.spawn_enemy(center-Vector2(80,0))
+	grounded["state"] = "down"
+	grounded["down_ms"] = 50.0
+	grounded["facing"] = 1
+	for target: Dictionary in [airborne,grounded]:
+		target["hp"] = 500000.0
+		target["numeric"].values["hp_max"] = 500000.0
+	game.step_objects(100.0)
+	var prone_rise := roundi(float(grounded["vz"])*float(grounded["vz"])/3000.0)
+	check(grounded["hp"]<500000.0 and grounded["state"]=="native_down_flight" and grounded["z"]==0.0
+		and grounded.get("native_down_phase")==1 and prone_rise>=22 and prone_rise<=27 and grounded["facing"]==1,
+		"a grounded downed target relaunches at a quarter of the base rise and keeps its facing")
+	if not airborne.has("native_down_phase"):
+		check(false,"the airborne target enters native state four")
+		return
+	var rise := roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
+	var speed := -float(airborne["native_jump_velocity"].x)
+	check(airborne["hp"]<500000.0 and airborne["state"]=="native_down_flight" and airborne["z"]==20.0
+		and airborne["native_down_phase"]==0 and rise>=90 and rise<=110 and speed>=12 and speed<=18,
+		"the first sword-field hit overwrites air velocity with an unweighted 90–110 px rise and inward drift")
+	step(800.0)
+	step(game.action_duration("hundredsword"))
+	var before: float = airborne["hp"]
+	game.step_objects(0.0)
+	rise = roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
+	check(airborne["hp"]<before and airborne["native_down_phase"]==0 and rise>=90 and rise<=110,
+		"a second sword-field hit before first landing still uses the full height")
+	for index in 120:
+		game.update_enemy(airborne,10.0)
+		if airborne.get("native_down_phase")==1:break
+	if airborne.get("native_down_phase")!=1:
+		check(false,"the first landing starts the native bounce")
+		return
+	var bounce_height := roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
+	var base_height := int(float(airborne["native_down_peak"])/5.0)
+	check(airborne["z"]==0.0 and bounce_height>=int(base_height*0.9) and bounce_height<=int(base_height*1.1)
+		and airborne["native_jump_velocity"].x<0.0,
+		"the first landing bounces from a fifth of the sampled peak and keeps inward drift")
+	game.update_enemy(airborne,10.0)
+	step(game.action_duration("hundredsword"))
+	before = airborne["hp"]
+	game.step_objects(0.0)
+	rise = roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
+	check(airborne["hp"]<before and airborne["native_down_phase"]==1 and rise>=22 and rise<=27,
+		"a sword-field hit during the bounce quarters the 100 px base rise before sampling")
 
 func check_hundred_sword_automatic() -> void:
 	var profile := ProfileSession.new()
@@ -6484,6 +6554,7 @@ func run() -> void:
 	check_illusion_finish()
 	check_hundred_sword_ready()
 	check_hundred_sword_field_body_modes()
+	check_hundred_sword_field_air_reaction()
 	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
