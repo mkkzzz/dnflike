@@ -1644,6 +1644,44 @@ func check_gorecross_wave() -> void:
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 
+func check_gorecross_cost() -> void:
+	for sample: Array in [[1,0,17],[1,1,8],[2,1,12]]:
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"rage_slash","level":sample[0]})
+		var hp_payment: bool = sample[1]>0
+		if hp_payment:profile.command("numbers.skill_grant",{"id":"bloody_vigorous","level":sample[1]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["rage_slash"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["mp_cost_rate"] = 0.5 if hp_payment else 1.0
+		var cost: int = sample[2]
+		game.player["hp"] = cost+0.75 if hp_payment else 1.0
+		game.player["mp"] = 0.0 if hp_payment else cost-1
+		var hp: float = game.player["hp"]
+		var mp: float = game.player["mp"]
+		press(KEY_A)
+		step(0)
+		var refused: Array = game.bus.events_of("combat.action_rejected")
+		check(refused.size()==1 and refused[0]["reason"]==("hp" if hp_payment else "mp")
+			and game.player["hp"]==hp and game.player["mp"]==mp and not game.player["cooldowns"].has("rage_slash"),
+			"Gore Cross rejects insufficient resources before payment or cooldown: %s"%[sample])
+		game.player["hp"] = cost+1.75 if hp_payment else 1.0
+		game.player["mp"] = 0.0 if hp_payment else cost
+		press(KEY_A)
+		step(0)
+		check(game.player["action"]=="rage_slash" and game.player["hp"]==1.0 and game.player["mp"]==0.0,
+			"Gore Cross charges its rank HP or ordinary MP exactly once: %s"%[sample])
+		if game.player["action"]!="rage_slash":continue
+		var cooldown: float = game.player["cooldowns"]["rage_slash"]
+		step(350)
+		press(KEY_X)
+		step(0)
+		check(game.player["stage"]==1 and game.player["hp"]==1.0 and game.player["mp"]==0.0
+			and game.player["cooldowns"]["rage_slash"]==cooldown,"The Gore Cross follow-up makes no further payment")
+
 func check_gorecross_wave_direction() -> void:
 	for sample: Array in [[1,[],40,14,-1],[-1,[],40,14,1],
 			[1,[0],40,14,1],[-1,[0],40,14,-1],[1,[0,99,1,99,1],40,54,1]]:
@@ -8172,6 +8210,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
 	check_gorecross_wave()
+	check_gorecross_cost()
 	check_gorecross_wave_direction()
 	check_gorecross_followup()
 	check_frenzy_recovery()

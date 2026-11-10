@@ -1691,7 +1691,8 @@ func start_action(name: String, cancel := false) -> bool:
 			if int(frenzy.get("drain_elapsed_ms",0.0)) < int(m["frenzy_disable_after_ms"]):
 				return reject_action(name,"frenzy_minimum_duration")
 			return apply_effect({"kind":"remove_effect","id":"frenzy","target":PLAYER_ID})
-	var hp_cost := 0.0
+	var cross_hp_payment := m.has("cross_hp_cost")
+	var hp_cost := float(m.get("cross_hp_cost",0))
 	if m.has("hp_cost_row"):
 		var sample: Dictionary = table._skill_row(String(m.get("skill","")))
 		var row: Array = sample.get("level_row",[])
@@ -1705,24 +1706,19 @@ func start_action(name: String, cancel := false) -> bool:
 	elif name == "buff":
 		# CC0F72 compares integer HP against the rank cost plus one.
 		if int(player["hp"]) <= int(hp_cost)+1:return reject_action(name,"hp")
-	elif m.get("native_state","") == "outrage_break":
+	elif m.get("native_state","") == "outrage_break" or cross_hp_payment:
+		# CBCFA1 rejects HP equal to the cost before entering the skill.
 		if int(player["hp"]) <= int(hp_cost):return reject_action(name,"hp")
 	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
-	var mp_cost := skill_mp_cost(m)
-	var pay_mp_with_hp := name == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0
-	if pay_mp_with_hp:
-		if float(player["hp"]) <= mp_cost:return reject_action(name,"hp")
-	elif float(player["mp"]) < mp_cost:return reject_action(name,"mp")
+	var mp_cost := 0.0 if cross_hp_payment else skill_mp_cost(m)
+	if float(player["mp"]) < mp_cost:return reject_action(name,"mp")
 	if m.has("material_cost"):
 		var cost: Dictionary = m["material_cost"]
 		# CBBD13 -> 863552/8635C1 handles the item before requesting state 13.
 		if not skill_material_spender.is_valid() or not skill_material_spender.call(int(cost["source_id"]),int(cost["amount"])):
 			return reject_action(name,"material")
-	if pay_mp_with_hp:
-		player["hp"] = float(player["hp"])-mp_cost
-	else:
-		player["mp"] = float(player["mp"])-mp_cost
-	if m.get("native_state","") in ["thirst","outrage_break"]:
+	player["mp"] = float(player["mp"])-mp_cost
+	if m.get("native_state","") in ["thirst","outrage_break"] or cross_hp_payment:
 		player["hp"] = int(player["hp"])-int(hp_cost)
 	elif hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
 	if name not in ["triple","rapidmoveslash"]:begin_skill_cooldown(name,m)

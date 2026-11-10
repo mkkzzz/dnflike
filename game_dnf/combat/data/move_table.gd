@@ -770,6 +770,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			cross_stage["cancel_at"] = cross_stage["duration"]
 		var bleed_percent := NativeMotion.f32(float(row[2])*NativeMotion.f32(0.1))
 		if int(skill_levels.get("bloody_vigorous",0)) > 0:
+			# CBCF47 reads dungeon level column 6 for HP, independently of the SKL MP cost.
+			move["cross_hp_cost"] = int(row[6])
 			var vigor := _skill_row("skill/swordman/bloodyvigorous.skl")
 			bleed_percent = NativeMotion.f32(bleed_percent+NativeMotion.f32(float(vigor["static"][0])*NativeMotion.f32(0.1)))
 		move["cross_bleed"] = {"id":"bleed","chance":bleed_percent/100.0,
