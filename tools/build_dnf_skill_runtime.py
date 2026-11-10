@@ -2461,6 +2461,7 @@ def main() -> int:
                 # CC367B's eight ETC slots; 251F810 creates the matching melee object.
                 move["slash_order"] = [0, 2, 1, 3, 2, 0, 3, 1]
                 move["finish_weapon_tracks"] = illusion_tracks
+                move["bleed_base"] = bleed_attack_base
                 move["material_cost"] = fixed_cube_cost(skill, records)
                 for index, stage in enumerate(move["stages"][:-1], 1):
                     melee = add_object(objects, OBJ_ROOT + f"illusionslashmelee{index}.obj")

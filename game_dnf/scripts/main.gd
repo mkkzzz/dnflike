@@ -4375,6 +4375,13 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	if owner == "player" and numeric_player != null and kind in ["illusion_wave","illusion_club_wave"]:
 		# 7F7D60 binds the owner's attack fields. Only the melee callback refreshes them at contact.
 		entity["hit"] = hit.merged({"source_physical_attack":numeric_player.values["physical_attack"]},true)
+	if owner == "player" and numeric_player != null and kind in ["illusion_melee","illusion_wave"]:
+		# A70659 and A707F6 apply the mastery to the object ATK at creation.
+		var move: Dictionary = table.moves["illusionslash"]
+		if move.has("illusion_blade_bleed"):
+			var bleed: Dictionary = move["illusion_blade_bleed"].duplicate()
+			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["illusion_bleed_base"])
+			entity["hit"] = entity["hit"].merged({"effects":hit["effects"]+[bleed]},true)
 	if kind == "illusion_melee":
 		# 25218B4 copies the current body rate into the payload. A70624 applies it to the new ANI.
 		entity["timeline"] = native_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))

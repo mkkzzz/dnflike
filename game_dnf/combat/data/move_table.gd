@@ -540,6 +540,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["illusion_wave"] = {"damage":skill["level_row"].slice(1,3),"life":wave_life,
 			"contacts":wave_contacts,"turn":int(values[15]),
 			"motion":db.record("character/swordman/particle/illusionslash.ptl")["decoded"]}
+		if job == "weaponmaster" and blade and int(skill_levels.get("blademastery",0)) > 0:
+			var mastery := _skill_row(BLADE_MASTERY_SKL)
+			# CAAD20 checks static column 5 and writes the bleed from rank columns 10–13.
+			if int(mastery["rank"]) >= int(mastery["static"][5]):
+				var row: Array = mastery["level_row"]
+				var chance_percent := NativeMotion.f32(float(row[10])*0.10000000149011612)
+				move["illusion_blade_bleed"] = {"id":"bleed","chance":chance_percent/100.0,
+					"status_level":int(row[11]),"duration_ms":int(row[12]),"damage_percent":int(row[13])}
+				move["illusion_bleed_base"] = spec["bleed_base"]["by_level"]
 	var weapon_hits := _swordman_hits(name)
 	var native_draw: bool = spec.get("native_state","") == "draw"
 	if native_draw:

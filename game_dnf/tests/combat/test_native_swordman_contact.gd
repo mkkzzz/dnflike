@@ -5168,11 +5168,13 @@ func check_illusion_finish() -> void:
 		var wave_id: int = game._next_entity_id
 		var rear_contact := family == "beamsword" and int(sample[1]) == 6
 		var wave_attack: float = game.numeric_player.values["physical_attack"]
+		var wave_crit: float = game.numeric_player.values["physical_crit"]
 		if rear_contact:
 			check(game.apply_effect({"kind":"effect","id":"overdrive","rank":2}),
 				"Overdrive is active as the wave is created")
 			game.numeric_player.values["hit"] = 1.0
 			wave_attack = game.numeric_player.values["physical_attack"]
+			wave_crit = game.numeric_player.values["physical_crit"]
 		step(frame_ms)
 		check(game.hit_count==(2 if family == "club" else 3)
 			and cues("skillfx_upper_4c1c9ad1").filter(func(cue):return cue["action_clock_at"]==100.0).size()==1
@@ -5207,13 +5209,23 @@ func check_illusion_finish() -> void:
 		game.view.particle_bursts.random.state = 0
 		var draws_before: int = game.view.particle_bursts.random.draws
 		var gameplay_rng := DetRng.new()
+		if rear_contact:
+			game.numeric_player.values["physical_back_crit"] = 0.0
+			for seed_value in 1000:
+				gameplay_rng.reseed(seed_value)
+				if gameplay_rng.next_float() >= 0.9:continue
+				var crit_roll := gameplay_rng.next_float()
+				if float(game.numeric_player.values["physical_crit"]) <= crit_roll and crit_roll < wave_crit:
+					game.rng.reseed(seed_value)
+					break
 		gameplay_rng._rng.state = game.rng._rng.state
 		gameplay_rng.next_float()
-		gameplay_rng.next_float()
+		var crit_roll := gameplay_rng.next_float()
 		var motions: Dictionary = wave_target["def"]["motions"]
 		if motions.get("damage1","") != "" and motions.get("damage2","") != "":
 			gameplay_rng.range_int(0,1)
 		gameplay_rng.range_int(0,1)
+		if family == "katana":gameplay_rng.range_int(0,9999)
 		game.step_objects(50.0,wave_id)
 		game.view.particle_bursts.clock = previous_clock
 		check(game.objects.size()==1 and game.objects[0]["clock"]==0.0,
@@ -5223,6 +5235,10 @@ func check_illusion_finish() -> void:
 			"a sword-wave contact plays the hit cue from its original attack record")
 		check(game.last_damage["trace"]["attack"]==wave_attack,
 			"the sword wave resolves contact with the physical attack captured at creation")
+		if rear_contact:
+			check(float(game.numeric_player.values["physical_crit"]) <= crit_roll and crit_roll < wave_crit
+				and not game.last_damage["critical"],
+				"the same wave uses the expired buff's current physical critical chance")
 		check(wave_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
 			"the sword wave applies its 40 ms ATK pause only to the target")
 		check(wave_target["state"]=="hurt" and wave_target["stun_ms"]==166.0 and wave_target["push_ms"]==166.0
@@ -5504,6 +5520,65 @@ func check_illusion_finish() -> void:
 			check(game.objects==[released_wave],"the next object update keeps only the independent wave")
 		check(is_equal_approx(float(game.player["cooldowns"].get("illusionslash",0)),35.9),
 			"neither normal exit nor interruption resets the running cooldown")
+
+func check_illusion_blade_bleed() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"illusionslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["illusionslash"]
+	var seeds := {}
+	var probe := DetRng.new()
+	for rank in [2,3]:
+		spec["skills"]["blademastery"] = rank
+		start_room("","katana",1,spec)
+		session.set_skill_material_spender(func(_id: int,_count: int):return true)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 1000.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(95,0))
+		target["numeric"].values["level"] = 24
+		if seeds.is_empty():
+			var motions: Dictionary = target["def"]["motions"]
+			for seed_value in 100000:
+				probe.reseed(seed_value)
+				if probe.next_float() >= 0.9:continue
+				probe.next_float()
+				if motions.get("damage1","") != "" and motions.get("damage2","") != "":
+					probe.range_int(0,1)
+				probe.range_int(0,1)
+				var roll := probe.range_int(0,9999)
+				if roll in [3319,3320]:seeds[roll] = seed_value
+				if seeds.size()==2:break
+			check(seeds.size()==2,"the fixture reaches both sides of the 33.2 percent bleed boundary")
+			if seeds.size()!=2:return
+		press(KEY_A)
+		step(0)
+		game.rng.reseed(seeds[3319])
+		game.step_objects(100.0)
+		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
+		var expected := [{"remaining_ms":3000.0,"amount":104,"status_level":24}] if rank==3 else []
+		check(game.hit_count==1 and bleed.get("source_bleed",{}).get("applications",[])==expected,
+			"Illusion Slash melee uses the original katana mastery threshold and bleed payload")
+		game.clear_monsters()
+		step(100)
+		for slash in 9:step(150)
+		game.step_objects(1000.0)
+		step(300.0)
+		var wave: Dictionary = game.objects[0]
+		target = api.spawn_dummy(Vector2(wave["pos"])+Vector2(20,0))
+		target["numeric"].values["level"] = 24
+		game.rng.reseed(seeds[3320])
+		game.step_objects(0.0)
+		check(wave["hits"].has(target["id"]) and not target["numeric"].effects.active.has("bleed"),
+			"the sword wave's equal-level roll of 3320 misses the bleed")
+		move_target(target,Vector2(wave["pos"])+Vector2(70,0))
+		game.rng.reseed(seeds[3319])
+		game.step_objects(125.0)
+		bleed = target["numeric"].effects.active.get("bleed",{})
+		check(game.hit_count==3 and bleed.get("source_bleed",{}).get("applications",[])==expected,
+			"the reopened sword-wave ledger independently rolls the original bleed")
 
 func check_rapid_impact_cues(target: Dictionary, variant: int) -> void:
 	var events: Array = game.bus.events_of("combat.cue")
@@ -7473,6 +7548,7 @@ func run() -> void:
 	check_rapid_move_slash_blood()
 	check_rapid_move_slash_body_modes()
 	check_illusion_finish()
+	check_illusion_blade_bleed()
 	check_hundred_sword_ready()
 	check_hundred_sword_field_body_modes()
 	check_hundred_sword_field_air_reaction()
