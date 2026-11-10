@@ -3984,9 +3984,11 @@ func check_hundred_sword_ready() -> void:
 		return game.view.object_views.keys().filter(func(id):return String(id).begins_with("hundred_sword:finish_tail:"))
 	step(559.0)
 	check(finish_layers.call().is_empty() and finish_trails.call().is_empty()
-		and game.player["facing"]==-1 and game.player["clock"]==559.0,
-		"the finish windup restores cast facing and holds its fixed clock without an early flash")
+		and game.player["facing"]==-1 and game.player["clock"]==559.0
+		and game.bus.events_of("combat.cue").all(func(event):return event["kind"]!="screen_flash"),
+		"the finish windup holds its fixed clock without an early impact flash")
 	step(1.0)
+	check_hundred_sword_finish_flash(false,POINT-Vector2(150,0))
 	check(first["hp"]<5000.0 and late["hp"]==5000.0,
 		"the finish hits in front of the cast origin and misses the target beside the last sword")
 	check(finish_layers.call()==["finishslash.ani","finishflash.ani","finishfloor.ani","finishcircle1.ani",
@@ -4057,7 +4059,8 @@ func check_hundred_sword_automatic() -> void:
 		return game.bus.events_of("combat.cue").filter(func(event):
 			return String(event.get("key","")) in ["R_SM_HOANYOUNG","R_W_MOVING_ATK"])
 	var travel_flashes := func() -> Array:
-		return game.bus.events_of("combat.cue").filter(func(event):return event["kind"]=="screen_flash")
+		return game.bus.events_of("combat.cue").filter(func(event):
+			return event["kind"]=="screen_flash" and event["trigger_size"]==Vector2i(500,300))
 	var dash_key := "hundred_sword_travel_dash"
 	var slash_key := "hundred_sword_travel_slash"
 	check(travel_cues.call().is_empty(),"the first sword pose starts without a movement voice or swing")
@@ -4170,6 +4173,7 @@ func check_hundred_sword_automatic() -> void:
 	game.view.present(game.view_snapshot(),1.0,1.0)
 	check(ending_layers.all(func(fx):return fx.is_queued_for_deletion()),
 		"both clips retire on their independent 210 ms clock")
+	check_hundred_sword_finish_flash(true,POINT+Vector2(150,0))
 	# Use the large room coordinate that crosses an integer only after the native f32 stores.
 	game.player["pos"] = Vector2(2000,POINT.y)
 	step(560.0)
@@ -4180,6 +4184,40 @@ func check_hundred_sword_automatic() -> void:
 	step(701.0)
 	check(game.player["action"]=="" and not game.player.has("hundred_sword_cast"),
 		"one press completes the full Hundred Sword state sequence and clears the cast")
+
+func check_hundred_sword_finish_flash(windup: bool, center: Vector2) -> void:
+	var timings := [560,0,710] if windup else [90,0,50]
+	var duration: int = timings[0]+timings[2]
+	var peak := 128 if windup else 150
+	var events: Array = game.bus.events_of("combat.cue").filter(func(event):
+		return event["kind"]=="screen_flash" and event["peak_alpha"]==peak)
+	check(events.size()==1 and events[0]["point"]==center and events[0]["height"]==0.0
+		and events[0]["trigger_size"]==Vector2i(320,100) and events[0]["durations"]==timings,
+		"the finish submits one native overlay at the saved field center with the correct timing")
+	var flashes: Array = game.view.effects.filter(func(fx):
+		return fx.cue_key=="native_flash_screen" and fx.data["duration_ms"]==duration)
+	check(flashes.size()==1,"the original finish overlay is admitted")
+	if flashes.size()!=1:return
+	var flash = flashes[0]
+	flash.seek(0.0)
+	check(flash.get_parent()==game.view and flash.position==Vector2.ZERO and flash.frame_color().a==0.0,
+		"the finish overlay starts transparent at screen origin")
+	flash.seek(float(timings[0])*0.5)
+	var rgb := 0.0 if windup else 1.0
+	check(flash.frame_color().is_equal_approx(Color(rgb,rgb,rgb,float(peak)/510.0)),
+		"the finish overlay interpolates its authored RGB and alpha")
+	flash.seek(float(timings[0]))
+	var blend := CanvasItemMaterial.BLEND_MODE_MIX if windup else CanvasItemMaterial.BLEND_MODE_ADD
+	var back_depth: int = game.view.stage.loader.z_for("closeback",0.0)
+	var actor_depth: int = game.view.player_actor.z_index
+	check(flash.frame["frame"]==2 and is_equal_approx(flash.frame_color().a,float(peak)/255.0)
+		and flash.material.blend_mode==blend
+		and (flash.z_index>back_depth and flash.z_index<actor_depth if windup else flash.z_index==4095),
+		"the finish reaches its native peak and blends at the correct scene depth")
+	flash.seek(float(timings[0])+float(timings[2])*0.5)
+	check(is_equal_approx(flash.frame_color().a,float(peak)/510.0),"the finish overlay fades from its native peak")
+	flash.seek(float(duration))
+	check(flash.is_queued_for_deletion(),"the finish overlay retires at the end of its independent clock")
 
 func check_hundred_sword_travel_flash(cue: Dictionary) -> void:
 	check(cue["point"]==POINT+Vector2(150,0) and cue["height"]==75 and cue["trigger_size"]==Vector2i(500,300)

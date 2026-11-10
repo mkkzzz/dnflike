@@ -575,12 +575,18 @@ func _spawn_screen_flash(event: Dictionary) -> void:
 	for index in durations.size():
 		frames[index]["delay_ms"] = durations[index]
 	bank["duration_ms"] = durations[0]+durations[1]+durations[2]
-	for index in [1,2]:
-		frames[index]["items"]["9"] = [255,255,255,int(event["peak_alpha"])]
+	var rgb: Vector3i = event.get("rgb",Vector3i(255,255,255))
+	var blend := int(event.get("blend",2))
+	var peak := int(event["peak_alpha"])
+	for index in frames.size():
+		var items: Dictionary = frames[index]["items"]
+		items["9"] = [rgb.x,rgb.y,rgb.z,peak if index in [1,2] else 0]
+		items["11"] = {"type":blend}
 	var flash := FxView.new()
-	# Scene layer six draws above the world and below the HUD's separate CanvasLayer.
 	add_child(flash)
+	# Native layer 2 draws between the backgrounds and normal scene. Layer 6 draws above the world.
 	flash.z_index = 4095
+	if event.get("layer",6) == 2:flash.z_index = stage.loader.z_for("closeback",0.0)+1
 	flash.cue_key = "native_flash_screen"
 	flash.set_meta("particle_birth_pending",true)
 	flash.setup(bank,1)

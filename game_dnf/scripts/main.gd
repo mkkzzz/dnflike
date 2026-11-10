@@ -2302,6 +2302,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		player["facing"] = cast["facing"]
 		player["z"] = 0.0
 		player["vz"] = 0.0
+		var impact := int(m["finish_impact_ms"])
+		var duration := int(Kernel.Timeline.duration(action_def()["timeline"]))
+		cast["formation"].emit_finish_flash(bus,0.0,[impact,0,duration-impact],true)
 	elif player["native_phase"].has("hundred_sword_move_timeline"):
 		var cast: Dictionary = player["hundred_sword_cast"]
 		var order: Array = m["formation"]["order"]
@@ -2577,6 +2580,8 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			# CB820A..CB829D starts the burst at integer X ± 180, Y, Z 20.
 			var point := Vector2(Vector2i(player["pos"]))+Vector2(180*int(player["facing"]),0)
 			bus.emit("combat.cue",{"kind":"native_particle","path":move["finish_particle"],"point":point,"height":20.0})
+			var cast: Dictionary = player["hundred_sword_cast"]
+			cast["formation"].emit_finish_flash(bus,int(player["z"]),[90,0,50],false)
 	var rec: Dictionary = content.record(Kernel.MoveTable.CHR_ANI+String(stage.get("ani",""))+".ani")
 	if rec.is_empty():return
 	var events: Array = rec["decoded"].get("sound_events",[])

@@ -111,6 +111,14 @@ func emit_travel_effects(bus, destination: Vector3i, angle: float, facing: int) 
 		"point":_center,"height":75,"facing":facing,"angle":Motion.f32(angle+jitter),
 		"depth_offset":depth-int(_center.y),"fresh":true})
 
+func emit_finish_flash(bus, height: float, durations: Array, windup: bool) -> void:
+	# CD2C92 darkens the background. CB82A2 adds a separate foreground flash.
+	var cue := {"kind":"screen_flash","point":_center,"height":height,
+		"trigger_size":Vector2i(320,100),"durations":durations,"peak_alpha":150}
+	if windup:
+		cue.merge({"rgb":Vector3i.ZERO,"blend":0,"layer":2,"peak_alpha":128},true)
+	bus.emit("combat.cue",cue)
+
 func append_view(out: Array) -> void:
 	var now := int(_age)
 	if now < _entry_ms:return
