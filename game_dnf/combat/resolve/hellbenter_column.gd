@@ -36,14 +36,36 @@ static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	# A69E08 reads the only attack frame's delay from Appear5.
 	@warning_ignore("integer_division")
 	var interval := (loop_ms+int(appear["duration"])-int(config["impact"]))/hit_count
+	var final: Dictionary = game.native_fixed_hit(config["final_attack_hit"],amounts[1])
+	final["native_controller"] = attack["native_controller"]
 	object["column"] = {"config":config,"phase":0,"phase_at":0.0,"loop_ms":loop_ms,
 		"hit_interval":interval,"next_reset":int(config["impact"])+interval,"resets":hit_count-1,
-		"final":game.native_fixed_hit(config["final_attack_hit"],amounts[1]),"erupted":false}
+		"final":final,"erupted":false}
 	game.play_sound("B_FIRE_EXPLOSION_READY")
 	game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":100})
 	game.bus.emit("combat.cue",{"kind":"fx","key":config["wave"],"point":object["pos"],
 		"height":object["z"],"facing":object["facing"],"offset_y":1,"scale":scale,"depth_offset":2,"fresh":true})
 	return object
+
+static func mark_target(target: Dictionary) -> void:
+	# A6AAB2 refreshes the duration relative to the appendage's existing clock.
+	var mark: Dictionary = target.get_or_add("hellbenter_column_mark",{"age":0.0})
+	mark["expires_at"] = int(mark["age"])+600
+
+static func step_target_mark(target: Dictionary, ms: float) -> void:
+	if not target.has("hellbenter_column_mark"):return
+	var mark: Dictionary = target["hellbenter_column_mark"]
+	mark["age"] += ms
+	if int(mark["age"]) >= int(mark["expires_at"]):target.erase("hellbenter_column_mark")
+
+static func target_mark_alpha(target: Dictionary) -> int:
+	var mark: Dictionary = target.get("hellbenter_column_mark",{})
+	if mark.is_empty():return 0
+	# 99C018..99C08F ramps from zero, holds at 120 and fades on the last 100 ms.
+	var age := int(mark["age"])
+	if age <= 100:return int(Motion.ramp(0,120,age,100))
+	var remaining := int(mark["expires_at"])-age
+	return int(Motion.ramp(120,0,100-remaining,100)) if remaining < 100 else 120
 
 static func final_phase_elapsed(object: Dictionary) -> float:
 	var column: Dictionary = object["column"]

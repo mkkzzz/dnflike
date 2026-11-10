@@ -241,7 +241,10 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		actor.z_index = int(Vector2(e["pos"]).y)
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
-		actor.present_status_overlay(poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT)
+		var overlay := poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT
+		var hellbenter_alpha := int(e.get("hellbenter_tint",0))
+		if hellbenter_alpha > 0:overlay = Color(1,1,1,alpha*hellbenter_alpha/255.0)
+		actor.present_status_overlay(overlay)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
 		_present_sleep(actor,float(e.get("sleep_ms",-1)))
 		_present_cast_layers(actor,e)

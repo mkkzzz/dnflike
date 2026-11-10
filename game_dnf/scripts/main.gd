@@ -3128,6 +3128,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		amount = roundi(before_hp-float(player["hp"]))
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
+		if native_kind == "hellbenter_column":HellbenterColumn.mark_target(target)
 		var ground_hit_fx: Array = hit.get("native_controller",{}).get("ground_hit_fx",[])
 		if not ground_hit_fx.is_empty() and not contact_only and int(target["z"]) == 0:
 			# A61738 checks the target height before the local reaction changes it.
@@ -3354,6 +3355,7 @@ func friendly_damage_boxes(target: Dictionary) -> Array:
 
 func update_enemy(enemy: Dictionary, ms: float) -> void:
 	var m: Dictionary = enemy["def"]
+	HellbenterColumn.step_target_mark(enemy,ms)
 	var fresh_hitstop := enemy.erase("hitstop_fresh")
 	var held_by_grab := int(player.get("grab_blast_target",-1)) == int(enemy["id"])
 	var summon_poll: bool = m.has("native_spirit_summon") and NativeZealotSummons.poll_due(enemy,ms)
@@ -5441,6 +5443,7 @@ func view_snapshot() -> Dictionary:
 			"mob":enemy["mob"],"blind":is_alive and enemy.has("numeric") and enemy["numeric"].effects.active.has("blind"),
 			"sleep_ms":enemy["numeric"].sleep_age() if is_alive and enemy.has("numeric") and enemy["state"]=="down" else -1.0,
 			"cast_layers":enemy["def"]["native_spirit_summon"]["cast_layers"] if casting else [],
+			"hellbenter_tint":HellbenterColumn.target_mark_alpha(enemy),
 			"poison":enemy["numeric"].effects.poison_visual() if is_alive and enemy.has("numeric") else 0})
 	var friendly: Array = []
 	for companion: Dictionary in companions:

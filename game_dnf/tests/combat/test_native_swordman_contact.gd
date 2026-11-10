@@ -2559,6 +2559,7 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	move_target(target,object["pos"])
 	target["hp"] = 500000.0
 	target["max_hp"] = target["hp"]
+	target["numeric"].values["hp_max"] = target["hp"]
 	game.numeric_player.values["hit"] = 1.0
 	var start := int(game.hit_count)
 	var normal_amount := int((int(base*1.55)+int(base*4.63))*0.5)
@@ -2583,6 +2584,17 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(1.0)
 	check(game.hit_count==start+1 and game.last_damage["trace"]["fixed_part"]==normal_amount
 		and cues("B_FIRE_EXPLOSION").size()==1,"Appear5 starts the first contact exactly at 1680 ms")
+	var mark: Dictionary = target.get("hellbenter_column_mark",{})
+	check(mark.get("expires_at")==600 and not outside.has("hellbenter_column_mark")
+		and not target["numeric"].effects.active.has("bleed"),
+		"the first column contact installs its 600 ms mark only on the target and leaves ordinary bleed alone")
+	game.update_enemy(target,50.0)
+	move_target(target,object["pos"])
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var marked_actor = game.view.enemy_actors[target["id"]]
+	check(is_instance_valid(marked_actor._status_overlay) and marked_actor._status_overlay.visible
+		and is_equal_approx(marked_actor._status_overlay.self_modulate.a,60.0/255.0),
+		"the mark reaches alpha 60 in 50 ms on the original monster sprite")
 	game.step_objects(100.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(column["phase"]==1 and layers.call("loop").size()==3 and cues("B_FIRE_COLUMN_LOOP").size()==1
@@ -2609,7 +2621,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(10.0)
 	check(game.hit_count==start+1,"the ledger is still closed at 1834 ms")
 	game.step_objects(1.0)
-	check(game.hit_count==start+2,"the normal ledger first refreshes at 1835 ms")
+	check(game.hit_count==start+2 and mark.get("age")==50.0 and mark.get("expires_at")==650,
+		"the normal ledger refresh at 1835 ms extends the mark without restarting its fade")
 	for i in 18:game.step_objects(155.0)
 	check(game.hit_count==start+20 and outside["hp"]==outside["max_hp"],"the original twenty contacts stay inside the column")
 	var fire_cues := cues("ASTORM_HIT_FIRE").size()
@@ -2670,6 +2683,18 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(not game.objects.has(object) and embers.call().size()==12 and explosions.call().size()==120
 		and not game.view._object_particle_emitters.has(object["id"]),
 		"the source Disappear2 lifetime removes the object and emitters at 400 ms, leaving the independent particles")
+	game.update_enemy(target,500.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(is_equal_approx(marked_actor._status_overlay.self_modulate.a,120.0/255.0),
+		"the mark holds peak alpha until its last 100 ms and survives the column")
+	game.update_enemy(target,50.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(is_equal_approx(marked_actor._status_overlay.self_modulate.a,60.0/255.0),
+		"the last 100 ms fades from alpha 120")
+	game.update_enemy(target,50.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(not target.has("hellbenter_column_mark") and not marked_actor._status_overlay.visible,
+		"the original mark expires at the refreshed deadline")
 
 func check_hellbenter_screen_flash(object: Dictionary) -> void:
 	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")
