@@ -153,6 +153,8 @@
   "newmonsters_gbl_stickcle_stickcle",
   "newmonsters_gbl_gblcolossus_gblcolossus",
   "newmonsters_gbl_acidra_acidra",
+  "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed",
+  "newmonsters_gbl_cocoon_cocoon",
   "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
   "newmonsters_snowman_louis_louis",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
@@ -171,6 +173,7 @@
   "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
   "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope",
   "zombie_summon_zombieholloweye",
+  "newmonsters_gbl_thrower_thrower",
   "newmonsters_gbl_gbltentacle_gbltentacle",
   "newmonsters_gbl_blacktentacle_blacktentacle",
   "newmonsters_gbl_isadora_isadora",
@@ -178,6 +181,9 @@
   "newmonsters_gbl_webcannon_webcannon",
   "newmonsters_gbl_invader_invader",
   "newmonsters_gbl_hydracle_hydracle",
+  "newmonsters_gbl_vangelis_vangelis",
+  "newmonsters_goblin_tentaclerider_tentaclerider",
+  "newmonsters_aradman_gblrebirtharadman_gblrebirtharadman",
   "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
   "newmonsters_gbl_isadora_isadora2",
   "newmonsters_haze_axeoutlaw_axeoutlaw",
@@ -205,6 +211,7 @@
   "newmonsters_queen_rosi_queen_rosi",
   "newmonsters_golem_ricu_ricu",
   "newmonsters_snowman_sasquatch_sasquatch",
+  "newmonsters_gbl_combinetentacle_combinetentacle",
   "newmonsters_bwanga_bwanga",
   "soceress_vinoshu_quest",
   "newmonsters_haze_death_squad_death_squad",
@@ -273,7 +280,7 @@
  "effects": 666,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 48,
+ "unresolved": 50,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -391,6 +398,22 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/hass/hass.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/goblin/tentaclerider/tentaclerider.mob",
+   "images": [
+    "Monster/StarFish/Tentacle.img",
+    "monster/goblin/SkyCastle/TentacleRider.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/aradman/gblrebirtharadman/gblrebirtharadman.mob",
+   "images": [
+    "Monster/Arad/GBLRebirthAradman.img",
+    "monster/Arad/GBLRebirthAradman.img"
+   ]
   },
   {
    "kind": "monster_image",

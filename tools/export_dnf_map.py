@@ -55,6 +55,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/bwanga.dgn',
     'dungeon/act5/icepalace.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
+    'dungeon/village/gbl/gbl_hatchery.dgn',
     'dungeon/village/gbl/gbl_laboratory.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
@@ -395,6 +396,18 @@ def source_map_greed_pairs(room: dict) -> list[list[int]]:
     return [masks[index:index + 2] for index in range(0, len(masks), 2)]
 
 
+def map_role_hint(path: str) -> str:
+    stem = PurePosixPath(path).stem.lower()
+    marker = stem[stem.rfind('(') + 1:stem.rfind(')')] if '(' in stem and ')' in stem else ''
+    if marker == 's' or stem.startswith('s'):
+        return 'start'
+    if marker == 'bn' or stem.startswith('bn'):
+        return 'boss_near_or_unknown'
+    if marker == 'b' or stem.startswith('b'):
+        return 'boss'
+    return 'normal'
+
+
 def layer_name(token, path: str, diags: list) -> str:
     name = token.strip('[]') if isinstance(token, str) else None
     if name not in LAYERS:
@@ -647,9 +660,7 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         room['map_id'] = candidates[path]['map_id']
         if verified_greed:
             room['greed_pairs'] = source_map_greed_pairs(room)
-        stem = PurePosixPath(path).stem
-        room['role_hint'] = ('start' if stem.startswith('s') else 'boss_near_or_unknown' if stem.startswith('bn')
-                             else 'boss' if stem.startswith('b') else 'normal')
+        room['role_hint'] = map_role_hint(path)
 
     gate_objects = {str(i): export_gate_object(lib, i, ids['objects']) for i in sorted(set(slots.values()))}
     placements = []

@@ -63,6 +63,10 @@ SOURCES = {
         'dungeon/village/gbl/gbl_laboratory.dgn',
         'ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379',
     ),
+    'gbl_hatchery': (
+        'dungeon/village/gbl/gbl_hatchery.dgn',
+        '266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce',
+    ),
 }
 
 
@@ -122,8 +126,10 @@ def compile_source(lib) -> dict:
             groups[str(int(group_id))] = entries
             group_levels[str(int(group_id))] = level
         used = referenced_groups(routes[dungeon_id])
-        if not used or not used.issubset(groups):
+        if not used.issubset(groups):
             raise ValueError(f'{path}: referenced box groups are not fully compiled')
+        if not used:
+            continue
         dungeons[expected_sha] = {
             'id': dungeon_id,
             'source': {'path': path, 'sha256': expected_sha},

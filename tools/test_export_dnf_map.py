@@ -276,6 +276,37 @@ class LibraryExport(unittest.TestCase):
         self.assertFalse([span for span in dungeon['raw']
                           if span['tag'] == '[boss map specification]'])
 
+    def test_gbl_hatchery_export_keeps_ring_maze_and_reused_boss_cell(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/gbl_hatchery_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [4, 4])
+        self.assertEqual(dungeon['start_map_raw'], [3, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [2, 2])
+        self.assertEqual(len(dungeon['rooms']), 13)
+        self.assertEqual(len(dungeon['placements']), 19)
+        self.assertEqual(len(export['images']), 46)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(3, 0)]['map_candidates'], ['map/gbl3/g3(s)001.map'])
+        self.assertEqual(cells[(2, 2)]['map_candidates'], [
+            'map/gbl3/g3(b)001.map',
+            'map/gbl3/g3(n)002.map',
+            'map/gbl3/g3(n)010.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/gbl3/g3(s)001.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/gbl3/g3(b)001.map']['role_hint'], 'boss')
+        specifications = [span['values'][2][2] for span in dungeon['raw']
+                          if span['tag'] == '[map specification]']
+        self.assertEqual(specifications, [
+            13031, 13028, 13027, 13030, 13029, 13032,
+            13037, 13034, 13033, 13035, 13036,
+        ])
+        self.assertFalse([span for span in dungeon['raw']
+                          if span['tag'] == '[boss map specification]'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

@@ -5386,7 +5386,7 @@ func build_props(room: Dictionary) -> Array:
 		if native_maze != null:
 			# Source routes only enable the exact payloads supported by the adapter.
 			if NativeBreakable.supports(item):
-				var trap := NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
+				var trap := NativeJarTraps.prepare_candidate(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
 				var source: Dictionary = content.record(path).get("native_breakable",{})
 				if source.is_empty():
 					var missing_gaps: Array = ["native_breakable_source"]

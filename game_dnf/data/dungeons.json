@@ -357,6 +357,20 @@
     "sha256": "8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8"
    }
   },
+  "gbl_hatchery": {
+   "name": "GBL教孵化场",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/gbl_hatchery_v1/map_export.json",
+   "min_level": 47,
+   "monster_level": 50,
+   "source": {
+    "path": "dungeon/village/gbl/gbl_hatchery.dgn",
+    "sha256": "266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce"
+   }
+  },
   "gbl_laboratory": {
    "name": "GBL教研究所",
    "region": "behemoth",

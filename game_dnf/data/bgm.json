@@ -132,6 +132,10 @@
    "normal": "gblarad",
    "boss": "gblarad_boss"
   },
+  "gbl_hatchery": {
+   "normal": "gblarad_hatchery",
+   "boss": "gblarad_hatchery_boss"
+  },
   "gbl_laboratory": {
    "normal": "gblarad_lab",
    "boss": "gblarad_lab_boss"
@@ -456,6 +460,18 @@
    "source": "music/gblarad_boss.ogg",
    "sha256": "12aa68a6870a5a5a2912246f50967dc91ecac0b7f997578797dfe81064248444",
    "bytes": 1198353
+  },
+  "gblarad_hatchery": {
+   "file": "audio/bgm/gblarad_hatchery.ogg",
+   "source": "music/gblarad_hatchery.ogg",
+   "sha256": "cee057103fd5838a35ad2ed81c4382f382aa2fdc0d05e06486d278c029cb2964",
+   "bytes": 1679246
+  },
+  "gblarad_hatchery_boss": {
+   "file": "audio/bgm/gblarad_hatchery_boss.ogg",
+   "source": "music/gblarad_hatchery_boss.ogg",
+   "sha256": "07a9ed13a5691ed9323c0ea4ef3eb10940b403343efa71a3250feb8dc1ed9d24",
+   "bytes": 1671350
   },
   "gblarad_lab": {
    "file": "audio/bgm/gblarad_lab.ogg",

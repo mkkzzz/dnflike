@@ -980,9 +980,9 @@
     "id": 112,
     "min_level": 47,
     "path": "dungeon/village/gbl/gbl_hatchery.dgn",
-    "runtime_id": "",
+    "runtime_id": "gbl_hatchery",
     "sha256": "266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 51,
@@ -5623,8 +5623,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/goblin/tentaclerider/tentaclerider.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_goblin_tentaclerider_tentaclerider",
+    "state": "runtime"
    },
    {
     "id": 56705,
@@ -7175,8 +7175,8 @@
     "level_max": 50,
     "level_min": 36,
     "path": "monster/newmonsters/gbl/combinetentacle/combinetentacle.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_combinetentacle_combinetentacle",
+    "state": "runtime"
    },
    {
     "id": 61477,
@@ -7191,8 +7191,8 @@
     "level_max": 40,
     "level_min": 36,
     "path": "monster/newmonsters/gbl/gbltentaclenamed/gbltentaclenamed.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed",
+    "state": "runtime"
    },
    {
     "id": 56432,
@@ -7231,8 +7231,8 @@
     "level_max": 50,
     "level_min": 36,
     "path": "monster/newmonsters/gbl/thrower/thrower.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_thrower_thrower",
+    "state": "runtime"
    },
    {
     "id": 61471,
@@ -7639,8 +7639,8 @@
     "level_max": 39,
     "level_min": 39,
     "path": "monster/newmonsters/aradman/gblrebirtharadman/gblrebirtharadman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_aradman_gblrebirtharadman_gblrebirtharadman",
+    "state": "runtime"
    },
    {
     "id": 61476,
@@ -9199,16 +9199,16 @@
     "level_max": 54,
     "level_min": 49,
     "path": "monster/newmonsters/gbl/cocoon/cocoon.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_cocoon_cocoon",
+    "state": "runtime"
    },
    {
     "id": 61109,
     "level_max": 54,
     "level_min": 49,
     "path": "monster/newmonsters/gbl/vangelis/vangelis.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_vangelis_vangelis",
+    "state": "runtime"
    },
    {
     "id": 61704,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 38,
+   "runtime": 39,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 208,
+   "runtime": 215,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

@@ -1545,6 +1545,41 @@
    "mob": "monster/newmonsters/gbl/stickcle/stickcle.mob",
    "bank": "newmonsters_gbl_stickcle_stickcle",
    "name": "stickcle"
+  },
+  "newmonsters_aradman_gblrebirtharadman_gblrebirtharadman": {
+   "mob": "monster/newmonsters/aradman/gblrebirtharadman/gblrebirtharadman.mob",
+   "bank": "newmonsters_aradman_gblrebirtharadman_gblrebirtharadman",
+   "name": "gblrebirtharadman"
+  },
+  "newmonsters_gbl_cocoon_cocoon": {
+   "mob": "monster/newmonsters/gbl/cocoon/cocoon.mob",
+   "bank": "newmonsters_gbl_cocoon_cocoon",
+   "name": "cocoon"
+  },
+  "newmonsters_gbl_combinetentacle_combinetentacle": {
+   "mob": "monster/newmonsters/gbl/combinetentacle/combinetentacle.mob",
+   "bank": "newmonsters_gbl_combinetentacle_combinetentacle",
+   "name": "combinetentacle"
+  },
+  "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed": {
+   "mob": "monster/newmonsters/gbl/gbltentaclenamed/gbltentaclenamed.mob",
+   "bank": "newmonsters_gbl_gbltentaclenamed_gbltentaclenamed",
+   "name": "gbltentaclenamed"
+  },
+  "newmonsters_gbl_thrower_thrower": {
+   "mob": "monster/newmonsters/gbl/thrower/thrower.mob",
+   "bank": "newmonsters_gbl_thrower_thrower",
+   "name": "thrower"
+  },
+  "newmonsters_gbl_vangelis_vangelis": {
+   "mob": "monster/newmonsters/gbl/vangelis/vangelis.mob",
+   "bank": "newmonsters_gbl_vangelis_vangelis",
+   "name": "vangelis"
+  },
+  "newmonsters_goblin_tentaclerider_tentaclerider": {
+   "mob": "monster/newmonsters/goblin/tentaclerider/tentaclerider.mob",
+   "bank": "newmonsters_goblin_tentaclerider_tentaclerider",
+   "name": "tentaclerider"
   }
  },
  "boss_hp_lines": 3,
