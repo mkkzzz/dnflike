@@ -38,9 +38,12 @@ static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var interval := (loop_ms+int(appear["duration"])-int(config["impact"]))/hit_count
 	var final: Dictionary = game.native_fixed_hit(config["final_attack_hit"],amounts[1])
 	final["native_controller"] = attack["native_controller"]
+	# CB8573 divides static column 17 by two before applying the size percent.
+	@warning_ignore("integer_division")
+	var down_radius := (int(static_data[17])/2)*percent/100
 	object["column"] = {"config":config,"phase":0,"phase_at":0.0,"loop_ms":loop_ms,
 		"hit_interval":interval,"next_reset":int(config["impact"])+interval,"resets":hit_count-1,
-		"final":final,"erupted":false}
+		"final":final,"erupted":false,"down_radius":down_radius}
 	game.play_sound("B_FIRE_EXPLOSION_READY")
 	game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":100})
 	game.bus.emit("combat.cue",{"kind":"fx","key":config["wave"],"point":object["pos"],
@@ -131,10 +134,27 @@ static func step(game, object: Dictionary) -> bool:
 		var contact := HitJudge.contact(world,game.enemy_damage_boxes(enemy))
 		if contact.is_empty():continue
 		object["hits"][id] = true
-		game.land_hit(game.player,enemy,hit,contact["point"],facing,float(object["power"]))
+		var reaction_hit := hit
+		if can_force_down(game,object,enemy,contact["overlap"],int(column["down_radius"])):
+			var center_x := int(object["pos"].x)
+			var target_x := int(enemy["pos"].x)
+			var toward := -facing if center_x == target_x else (1 if center_x > target_x else -1)
+			reaction_hit = hit.merged({"native_down_facing":toward})
+		game.land_hit(game.player,enemy,reaction_hit,contact["point"],facing,float(object["power"]))
 	if game.native_maze != null:
 		game.apply_native_prop_hits(world,hit,float(object["power"]),object["hits"],"prop:")
 	return true
+
+static func can_force_down(game, object: Dictionary, enemy: Dictionary, overlap: AABB, radius: int) -> bool:
+	# A6AD23..A6AF74 clamps the column's center to the contact box, ignoring height.
+	var center := Vector2(Vector2i(object["pos"]))
+	var nearest := center.clamp(Vector2(overlap.position.x,overlap.position.y),Vector2(overlap.end.x,overlap.end.y))
+	if game.native_ground_distance(center,nearest) > radius:return false
+	# A6AF8D passes zero to 814390, ignoring the MOB's grabable flag.
+	var frame: Dictionary = game.enemy_frame(enemy)
+	if int(frame.get("items",{}).get("13",0)) not in [0,1] or not enemy["def"].get("grab_motions",true):return false
+	var effects: Dictionary = enemy["numeric"].effects.active
+	return not effects.has("freeze") and not effects.has("stone")
 
 static func stop_phase_effects(game, object: Dictionary) -> void:
 	var phase := int(object["column"]["phase"])

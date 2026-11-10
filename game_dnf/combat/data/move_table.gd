@@ -1153,6 +1153,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 				# 12A4FB3 loads the MOB flag copied to the actor by 899D74.
 				m["rave_common_champion_drop"] = int(field["values"][0]) != 0
 	m["grab_allowed"] = grab_allowed and grab_motions
+	m["grab_motions"] = grab_motions
 	if _native_target_classes.has(path):
 		var profile := {"uses_ai_vision":_native_target_classes[path]=="ai","sight":int(mob.get("sight",200)),
 			"vision":int(mob.get("vision",1500)),"back_vision":1500,"keep_distance":-1}

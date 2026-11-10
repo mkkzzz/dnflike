@@ -2624,22 +2624,27 @@ func release_grab_blast_victim(enemy: Dictionary) -> void:
 	enemy.erase("grab_blast_pose")
 	if float(enemy["hp"]) <= 0.0:return
 	var at := grab_blast_release_position(Vector3i(roundi(enemy["pos"].x),roundi(enemy["pos"].y),roundi(enemy["z"])),saved)
-	var facing := int(player["facing"])
+	enemy["pos"] = Vector2(at.x,at.y)
+	enemy["z"] = float(at.z)
+	apply_native_down_flight(enemy,-int(player["facing"]),1000,100)
+
+func apply_native_down_flight(enemy: Dictionary, facing: int, push: int, lift: int) -> String:
 	var weight := int(enemy["def"]["weight"])
-	# 25261B7 sends DOWN with raw push/lift 1000/100. 82C497 uses
-	# 827E40 for weight, 82C6A8 halves X, and 82C95D samples X before Z.
+	# 827E40 adjusts push and lift by weight. 82C6A8 halves X.
+	# 82C95D samples X before Z.
 	const GRAVITY := 1500.0
 	var scale := 2100.0+0.01209999993443489*(weight-10000)
-	var horizontal := int(4000000.0/scale)
-	var vertical := int(400000.0/scale)
+	var horizontal := int(push*4000.0/scale)
+	var vertical := int(lift*4000.0/scale)
 	var speed := sample_native_down(int(horizontal*0.5),0.8,1.2)
 	var rise := sample_native_down(int(vertical*vertical/(2.0*GRAVITY)),0.9,1.1)
-	enemy["pos"] = Vector2(at.x,at.y)
-	enemy["facing"] = -facing
+	var airborne := float(enemy["z"])>0.0 or float(enemy["vz"])>0.0
+	enemy["facing"] = facing
 	enemy["push_ms"] = 0.0
 	enemy["clock"] = 0.0
-	start_native_flight(enemy,float(at.z),Vector2(facing*speed,0),rise,-GRAVITY)
-	enemy["state"] = "grab_blast_down"
+	start_native_flight(enemy,float(enemy["z"]),Vector2(-facing*speed,0),rise,-GRAVITY)
+	enemy["state"] = "native_down_flight"
+	return "air" if airborne else ("launch" if rise > 0 else "down")
 
 func grab_blast_release_position(at: Vector3i, saved: Vector3i) -> Vector3i:
 	if at.z < 0:return saved
@@ -3149,6 +3154,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if draw_impact:
 			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
+		elif hit.has("native_down_facing"):
+			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
 		elif not contact_only:
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			target["clock"] = 0.0
@@ -3421,7 +3428,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 	elif state == "native_summon_jump":
 		step_native_summon_jump(enemy,dt)
 		return
-	elif state == "grab_blast_down":
+	elif state == "native_down_flight":
 		if advance_native_flight(enemy,dt):
 			enemy["state"] = "down"
 			enemy["down_ms"] = 0.0
@@ -4289,9 +4296,9 @@ func ghost_field_pulse(field: Dictionary) -> bool:
 
 func ghost_field_contains(field: Dictionary, position: Vector2) -> bool:
 	var controller: Dictionary = field["hit"]["native_controller"]
-	return ghost_distance(field["pos"],position,float(controller["depth_scale"])) <= int(controller["radius"])
+	return native_ground_distance(field["pos"],position,float(controller["depth_scale"])) <= int(controller["radius"])
 
-func ghost_distance(origin: Vector2, position: Vector2, depth_scale: float) -> int:
+func native_ground_distance(origin: Vector2, position: Vector2, depth_scale := 0.28999999165534973) -> int:
 	# 9269E0 -> 406580 -> 7F10A0 projects integer depth and truncates distance.
 	var delta := Vector2i(position)-Vector2i(origin)
 	var depth := int(_native_float32(float(delta.y)/_native_float32(depth_scale)))
@@ -4396,7 +4403,7 @@ func step_saya_crystal(object: Dictionary, controller: Dictionary) -> bool:
 			for enemy: Dictionary in monsters:
 				if float(enemy["hp"]) <= 0.0 or target_invulnerable(enemy):continue
 				if absi(int(enemy["z"])-int(object["z"])) > radius:continue
-				var distance := ghost_distance(object["pos"],enemy["pos"],float(field_controller["depth_scale"]))
+				var distance := native_ground_distance(object["pos"],enemy["pos"],float(field_controller["depth_scale"]))
 				if distance > radius:continue
 				object["crystal_target"] = enemy
 				object["crystal_origin"] = Vector3i(int(object["pos"].x),int(object["pos"].y),int(object["z"]))
@@ -5317,7 +5324,7 @@ func enemy_ani(enemy: Dictionary) -> Array:
 			if pick >= 0 and pick < moves.size():return [String(moves[pick]["stem"]).to_lower(), float(enemy["clock"])]
 			return ["attack",float(enemy["clock"])]
 		"hurt":return [String(enemy["hit_motion"]),0.0]
-		"grab_blast_down":return ["down",float(enemy["clock"])]
+		"native_down_flight":return ["down",float(enemy["clock"])]
 		"air":return ["overturn",0.0]
 		"down":return ["down",Kernel.Reaction.down_clock(enemy,rp,table.monster_timeline(m,"down"))]
 		"dead":

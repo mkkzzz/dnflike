@@ -6,6 +6,7 @@ const TestAPI = preload("res://debug/test_api.gd")
 const ProfileSession = preload("res://flow/session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const Frame = preload("res://view/world_frame.gd")
+const HellbenterColumn = preload("res://combat/resolve/hellbenter_column.gd")
 const POINT := Vector2(400,300)
 const ARMOR_PARTICLE := "common/commoneffect/particle/superarmor_damage_particle.ptl"
 
@@ -2358,7 +2359,9 @@ func check_hellbenter_first_cast() -> void:
 		"rank six uses the extended duration from the original level table")
 	var near: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(100,0))
 	var far: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(140,0))
-	far["pos"] = Vector2(game.player["pos"])+Vector2(641,0)
+	# Use exact target coordinates after the room's spawn placement clamps Y.
+	near["pos"] = Vector2(game.player["pos"])+Vector2(100,183)
+	far["pos"] = Vector2(game.player["pos"])+Vector2(100,184)
 	var dry: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(-90,0))
 	for enemy: Dictionary in [near,far,dry]:enemy["ai"] = false
 	for enemy: Dictionary in [near,far]:enemy["numeric"].effects.add_source_bleed(0,10000,60)
@@ -2366,6 +2369,9 @@ func check_hellbenter_first_cast() -> void:
 	effect = hellbenter.call()
 	game.step_game(0.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.native_ground_distance(game.player["pos"],near["pos"])==638
+		and game.native_ground_distance(game.player["pos"],far["pos"])==641,
+		"the original depth projection puts adjacent Y samples on opposite sides of the 640-pixel blood pulse")
 	check(blood.marks.size()==2 and not blood.marks.has(dry["id"]) and layers.call("targetmark1").size()==2,
 		"Hellbenter immediately marks bleeding hostiles, including those outside the pulse radius")
 	game.step_game(499.0)
@@ -2557,6 +2563,7 @@ func check_hellbenter_manual_finish() -> void:
 
 func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Dictionary, base: int) -> void:
 	move_target(target,object["pos"])
+	target["def"] = target["def"].merged({"grab_allowed":false},true)
 	target["hp"] = 500000.0
 	target["max_hp"] = target["hp"]
 	target["numeric"].values["hp_max"] = target["hp"]
@@ -2565,6 +2572,11 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	var normal_amount := int((int(base*1.55)+int(base*4.63))*0.5)
 	var final_amount := int((int(base*7.75)+int(base*23.24))*0.5)
 	var column: Dictionary = object["column"]
+	var center := Vector3(object["pos"].x,object["pos"].y,0)
+	var edge := AABB(center+Vector3(130,0,80),Vector3(10,10,10))
+	check(column["down_radius"]==130 and HellbenterColumn.can_force_down(game,object,target,edge,130)
+		and not HellbenterColumn.can_force_down(game,object,target,AABB(edge.position+Vector3(1,0,0),edge.size),130),
+		"the scaled state-four gate uses the nearest overlap point and accepts the exact 130-pixel boundary")
 	var loop_path := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
 	var loop_particles := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==loop_path)
 	var particle_path := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
@@ -2584,6 +2596,9 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(1.0)
 	check(game.hit_count==start+1 and game.last_damage["trace"]["fixed_part"]==normal_amount
 		and cues("B_FIRE_EXPLOSION").size()==1,"Appear5 starts the first contact exactly at 1680 ms")
+	check(target["state"]=="native_down_flight" and target["native_jump_velocity"]==Vector2.ZERO
+		and target["native_jump_gravity"]==-1500.0 and target["vz"]>0.0,
+		"the original state-four override lifts a valid target despite the ordinary grab ban")
 	var mark: Dictionary = target.get("hellbenter_column_mark",{})
 	check(mark.get("expires_at")==600 and not outside.has("hellbenter_column_mark")
 		and not target["numeric"].effects.active.has("bleed"),
@@ -2639,6 +2654,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues
 		and game.view.camera_x==320.0,
 		"the final explosion has independent damage, two original layers and its own sound")
+	check(target["state"]=="native_down_flight" and target["facing"]==-1 and target["native_jump_velocity"].x>0.0,
+		"the final center hit faces the target toward the column and launches opposite that facing")
 	check_hellbenter_screen_flash(object)
 	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==particle_path)
 	var ember_visuals: Array = embers.call()
@@ -3381,7 +3398,7 @@ func check_grab_blast_startup() -> void:
 			game.hurt_player(7,{"pos":POINT+Vector2(40*facing,0)},{},-facing)
 			step(750)
 			check(not game.player.has("grab_blast_target") and not target.has("grab_blast_pose")
-				and target["state"]=="grab_blast_down" and game.objects.is_empty()
+				and target["state"]=="native_down_flight" and game.objects.is_empty()
 				and not game.view.object_views.has("player:grab_hold")
 				and cues("BLOOD_SUCK").is_empty() and cues("BLOODR_FIRE").is_empty()
 				and target["facing"]==-facing and float(target["native_jump_velocity"].x)*facing>=633.0
@@ -3426,7 +3443,7 @@ func check_grab_blast_startup() -> void:
 			"Bloodlust grants row-three strength and uses the earlier bleed observation for duration")
 		check(target["hp"]<before_spray and game.objects[0]["hits"].has(target["id"]) and game.objects[0]["hits"].size()==1,
 			"Bloodlust directs its first spray hit to the held target even outside the ANI boxes")
-		check(target["state"]=="grab_blast_down" and game.enemy_ani(target)==["down",0.0]
+		check(target["state"]=="native_down_flight" and game.enemy_ani(target)==["down",0.0]
 			and target["native_jump_gravity"]==-1500.0 and float(target["native_jump_velocity"].x)>=633.0
 			and float(target["native_jump_velocity"].x)<=950.0
 			and int(round(float(target["vz"])*float(target["vz"])/3000.0)) in [7,8],

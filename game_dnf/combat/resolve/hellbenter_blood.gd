@@ -60,8 +60,7 @@ func step(game, ms: float) -> void:
 		mark["age"] += ms
 		if float(mark["age"]) < float(mark["next_pulse"]):continue
 		mark["next_pulse"] += float(config["pulse_ms"])
-		var origin: Vector2 = Vector2(Vector2i(enemy["pos"]))
-		if int(origin.distance_to(Vector2(destination.x,destination.y))) <= int(config["range"]):
+		if game.native_ground_distance(enemy["pos"],Vector2(destination.x,destination.y)) <= int(config["range"]):
 			_spawn(game,enemy,destination)
 
 func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:

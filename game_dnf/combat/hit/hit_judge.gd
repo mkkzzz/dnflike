@@ -20,13 +20,13 @@ static func world_boxes(boxes: Array, at: Vector3, facing: int, size_rate := 1.0
 	return out
 
 ## First intersection between two box lists, or an empty Dictionary.
-## Returns {"point": Vector3 centre of the overlap volume}.
+## Returns the overlap volume and its center point.
 static func contact(attack: Array, damage: Array) -> Dictionary:
 	for a: AABB in attack:
 		for d: AABB in damage:
 			if Box6.overlaps(a,d):
 				var inter := a.intersection(d)
-				return {"point":Box6.center(inter)}
+				return {"point":Box6.center(inter),"overlap":inter}
 	return {}
 
 ## Breakable props have a ground footprint and no authored damage box; treat the footprint as
