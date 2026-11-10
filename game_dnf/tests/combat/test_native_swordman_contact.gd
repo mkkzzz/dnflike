@@ -3043,6 +3043,16 @@ func check_outrage_break_impact() -> void:
 			"the original body ATK hits once without a synthetic bleed")
 		check(target["state"]=="native_down_flight" and target["vz"]>0.0,
 			"the body slash uses the original weighted knockdown")
+		var cuts := cues("hit_cut_s1")+cues("hit_cut_l1")
+		var blood := cues("hit_blood_s3")+cues("hit_blood_l")
+		check(cuts.size()==1 and blood.size()==1 and cues("R_SQUARESWDC_HIT").size()==1,
+			"the katana body contact uses the downward slash and blood variants with the ATK's hit sound")
+		if cuts.size()==1 and blood.size()==1:
+			var impact: Vector3 = game.bus.events_of("combat.hit")[0]["point"]
+			check((cuts[0]["key"]=="hit_cut_l1")== (blood[0]["key"]=="hit_blood_l")
+				and cuts[0]["scale"]==1.0 and blood[0]["scale"]==1.0
+				and cuts[0]["point"]==Vector2(int(impact.x),roundi(target["pos"].y)) and cuts[0]["height"]==int(impact.z),
+				"slash and blood share one original size and use the overlap X/Z and target depth at unit scale")
 		check(game.objects.size()==1 and game.objects[0]["pos"]==POINT+Vector2(279*facing,0)
 			and game.objects[0]["hit"]["fixed_amount"]==5846.0 and game.objects[0]["clock"]==0.0
 			and cues("OUTRAGE_SWING").size()==1 and cues("CCRASH_CRASH").size()==1,
@@ -3572,6 +3582,7 @@ func check_outrage_break_special_targets() -> void:
 		if impacts.size()!=1:return
 		var impact: Dictionary = impacts[0]
 		var position: Vector2 = impact["pos"]+Vector2(0,45)
+		game.bus.clear_history()
 		for target_case: Array in [["goblin","launch"],["dendroid_dendroid","stagger"],
 				["new_golem_platany","stagger"],["dendroid_dendroid","no_poses"],
 				["goblin","freeze"],["goblin","stone"]]:
@@ -3589,6 +3600,11 @@ func check_outrage_break_special_targets() -> void:
 				and game.player["stuck_ms"]==0.0,"the original hitstop freezes only the struck target: "+label)
 			match target_case[1]:
 				"launch":
+					var knocks := cues("hit_blow_s")+cues("hit_blow_l")
+					check(knocks.size()==1 and knocks[0]["scale"]==1.0 and knocks[0]["point"].y==roundi(position.y)
+						and cues("FLAMES_HIT").size()==1 and game.bus.events_of("combat.cue").all(
+							func(cue):return not String(cue.get("key","")).begins_with("hit_blood")),
+						"the source ATK uses a knock effect without blood and retains its flame hit sound: "+label)
 					check(victim["state"]=="native_down_flight" and victim["vz"]>0.0,"down animation allows launch: "+label)
 					game.update_enemy(victim,sample[1]-1.0)
 					check(victim["stuck_ms"]==1.0 and victim["z"]==0.0,"launch stays paused until the final millisecond: "+label)

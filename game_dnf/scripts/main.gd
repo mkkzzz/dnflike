@@ -3270,6 +3270,7 @@ func complete_native_prop_break(prop: Dictionary) -> void:
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
+	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3345,7 +3346,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		var native_down := native_kind in ["bloodblast","outrage_slash"] or native_kind in OUTRAGE_IMPACTS
+		var native_down := native_kind == "bloodblast" or native_outrage
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
 		var armor_blocks_reaction := (native_down or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
@@ -3412,7 +3413,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			"angle":hit.get("contact_angle",1.5700000524520874),"fresh":true})
 		play_sound(String(atk["hit_wav"]))
 	if not draw_impact and native_kind != "hundred_sword_field":
-		hit_cues(atk,point,facing,by_player)
+		var effect_point := point
+		# 87055B uses overlap X/Z and the target's integer depth for the common effect.
+		if native_outrage:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
+		hit_cues(atk,effect_point,facing,by_player,native_outrage)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3486,7 +3490,7 @@ func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
-func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool) -> void:
+func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_outrage: bool) -> void:
 	var kind := Kernel.MoveTable.enum_value(atk,"hit_info","")
 	var blood := ""
 	var size := 100.0
@@ -3504,15 +3508,22 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool) -> 
 		size = float(row[2])
 		scale = float(row[3])
 	var large := size >= 100
+	if native_outrage:
+		# 7E656B chooses one size for both effects. The ATK numbers are pause and stagger.
+		large = rng.range_int(0,1) == 0
+		scale = 1.0
+	var size_key := "l" if large else "s"
 	var fx := ""
 	match kind:
-		"[blow]":fx = "hit_blow_l" if large else "hit_blow_s"
+		"[blow]":fx = "hit_blow_"+size_key
 		"":fx = "hit_blow_s"
-		_:fx = ("hit_cut_l%d" if large else "hit_cut_s%d")%rng.range_int(1,3)
+		# The only Outrage cut uses [hit down]. 7E6947 picks slash variant 1 for that flag.
+		_:fx = "hit_cut_%s%d" % [size_key,1 if native_outrage else rng.range_int(1,3)]
 	var ground := Vector2(point.x,point.y)
 	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,"scale":scale})
 	if blood == "[blood]":
-		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%rng.range_int(1,3)
+		# 7E6B97 selects small blood variant 3 for [hit down].
+		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(3 if native_outrage else rng.range_int(1,3))
 		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,"scale":scale})
 	var wav := String(atk.get("hit_wav",""))
 	if wav == "" and by_player:
