@@ -309,10 +309,9 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 	for event: Dictionary in events:
 		if event["type"]=="modifier_changed":continue
 		if event["type"]=="removed":
-			if body["id"]==PLAYER_ID and event["id"]=="thirst":stop_thirst_loop()
 			if event["id"]=="sleep" and body["state"]=="down":
 				body["down_ms"] = float(rules["reaction"]["down_hold_ms"])
-			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
+			report_effect_removed(body,event["id"])
 			continue
 		var bleed_tick: bool = event["type"]=="bleed_tick"
 		var ignore_damage: bool = int(body["id"])==PLAYER_ID and god_mode
@@ -326,7 +325,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			var drain := int(event["damage"])
 			body["hp"] = maxf(1.0,hp-drain)
 			if int(hp)<=drain and actor.remove_effect(event["id"]):
-				bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
+				report_effect_removed(body,event["id"])
 			continue
 		var point := Vector3(body["pos"].x,body["pos"].y,float(body["z"]))
 		if event["type"] == "damage_number":
@@ -871,6 +870,9 @@ func leave_action() -> void:
 	player.erase("charge_crash_hold")
 	player.erase("charge_crash_release")
 	player.erase("action_slide")
+	# CC4C57 starts Frenzy's cooldown if phase zero exits before the form attaches.
+	if player.has("frenzy_cast") and int(player["stage"])==0:
+		begin_skill_cooldown("buff",move_def("buff"))
 	player.erase("frenzy_cast")
 	player.erase("self_buff_cast")
 	player.erase("draw_cast")
@@ -890,6 +892,9 @@ func step_game(ms: float) -> void:
 	var dt := ms/1000
 	native_jar_traps.advance_clock(self,ms)
 	preload("res://combat/item_restoration.gd").step(self,ms)
+	# A cooldown started by an effect removal below begins at the current tick.
+	for name: String in player["cooldowns"]:
+		player["cooldowns"][name] = maxf(0,float(player["cooldowns"][name])-dt)
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
 		if finished:return
@@ -909,8 +914,6 @@ func step_game(ms: float) -> void:
 	if numeric_player == null:player["buff_ms"] = maxf(0,float(player["buff_ms"])-ms)
 	player["landing_ms"] = maxf(0,float(player["landing_ms"])-ms)
 	door_lock_ms = maxf(0,door_lock_ms-ms)
-	for name: String in player["cooldowns"]:
-		player["cooldowns"][name] = maxf(0,float(player["cooldowns"][name])-dt)
 	if numeric_player == null:player["mp"] = minf(max_mp,float(player["mp"])+dt*float(rules["player"]["mp_regen_per_s"]))
 	combo_ms = maxf(0,combo_ms-ms)
 	if combo_ms <= 0:combo_count = 0
@@ -1558,6 +1561,13 @@ func cue_item_recovery(effect: Dictionary) -> void:
 	bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
 		"facing":int(player["facing"]),"follow":PLAYER_ID})
 
+func report_effect_removed(body: Dictionary, id: String) -> void:
+	if body["id"] == PLAYER_ID:
+		if id == "thirst":stop_thirst_loop()
+		# The Frenzy appendage's detach callback 997390 starts skill 76's cooldown.
+		if id == "frenzy":begin_skill_cooldown("buff",move_def("buff"))
+	bus.emit("combat.status",{"target":body["id"],"id":id,"change":"removed"})
+
 ## Effects already validated and paid for by the flow side (e.g. potions). Returns whether it applied.
 func apply_effect(effect: Dictionary) -> bool:
 	if effect.get("kind")=="restore":
@@ -1588,11 +1598,11 @@ func apply_effect(effect: Dictionary) -> bool:
 				body["max_hp"] = float(actor.values["hp_max"])
 				body["attack"] = float(actor.values["physical_attack"])
 			if body == player:
-				if id == "thirst" and effect["kind"] == "remove_effect":stop_thirst_loop()
 				max_hp = float(actor.values["hp_max"])
 				max_mp = float(actor.values["mp_max"])
 				player["mp"] = minf(float(player["mp"]),max_mp)
-			bus.emit("combat.status",{"target":body["id"],"id":id,"change":"added" if effect["kind"]=="effect" else "removed"})
+			if effect["kind"]=="effect":bus.emit("combat.status",{"target":body["id"],"id":id,"change":"added"})
+			else:report_effect_removed(body,id)
 		return applied
 	if player.is_empty() or finished or paused:return false
 	match String(effect.get("kind","")):
@@ -1730,7 +1740,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.get("native_state","") in ["thirst","outrage_break"] or cross_hp_payment:
 		player["hp"] = int(player["hp"])-int(hp_cost)
 	elif hp_cost > 0:player["hp"] = float(player["hp"])-hp_cost
-	if name not in ["triple","rapidmoveslash"]:begin_skill_cooldown(name,m)
+	if name not in ["triple","rapidmoveslash","buff"]:begin_skill_cooldown(name,m)
 	if backward_hop:
 		start_backstep()
 		return true

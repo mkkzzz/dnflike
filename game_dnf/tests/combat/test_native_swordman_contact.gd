@@ -1557,9 +1557,13 @@ func check_frenzy_drain() -> void:
 	check(game.player["hp"]==39.0 and game.primary_normal_attack()=="frenzy1",
 		"Frenzy keeps draining beyond the former eight-second timeout")
 	game.player["hp"] = 3.0
-	game.step_numeric_actor(game.player,game.numeric_player,400)
+	game.numeric_player.values["cooldown_rate"] = 1.0
+	game.clear_monsters()
+	game.step_game(400)
 	check(game.player["hp"]==1.0 and game.primary_normal_attack()=="attack1" and not game.view_snapshot()["player"]["buff"],
 		"Frenzy leaves one HP and clears the dual-wield form and its presentation")
+	check(game.player["cooldowns"].get("buff",0.0)==10.0,
+		"Frenzy drain starts the full cooldown on the update that removes the form")
 	check(game.bus.events_of("combat.damage").is_empty() and game.bus.events_of("combat.damage_number").is_empty()
 		and not game.finished,"Frenzy drain produces no hit, damage number or defeat")
 
@@ -1659,6 +1663,7 @@ func check_frenzy_cast() -> void:
 	step(0)
 	check(game.player["hp"]==2.0 and game.player["action"]=="buff" and game.primary_normal_attack()=="attack1"
 		and cues("frenzy_cast").size()==1,"the next integer HP admits the cast and starts its attached effect")
+	check(game.player["cooldowns"].get("buff",0.0)==0.0,"Frenzy charging does not start cooldown")
 	check(game.view.player_actor.pose=="throw1" and cues("SM_FLENSE").size()==1 and cues("FLENSE_GET").size()==1,
 		"Frenzy opens with the original charge motion and both cast audio cues")
 	var cast_fx = game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/frenzy/cast.ani"))[0]
@@ -1687,6 +1692,7 @@ func check_frenzy_cast() -> void:
 	check(game.view.player_actor.pose=="stay" and game.primary_normal_attack()=="frenzy1"
 		and game.view.effects.filter(func(fx):return fx.data["source"].ends_with("/frenzy/blast.ani")).is_empty(),
 		"recovery ends at 280 ms and clears the burst while leaving Frenzy active")
+	check(game.player["cooldowns"].get("buff",0.0)==0.0,"leaving phase one keeps active Frenzy off cooldown")
 
 	start_room("original_27601","katana",1,spec,"berserker")
 	game.numeric_player.values["cast_speed"] = 1.0
@@ -1699,10 +1705,13 @@ func check_frenzy_cast() -> void:
 
 	start_room("original_27601","katana",1,spec,"berserker")
 	game.numeric_player.values["cast_speed"] = 1.0
+	game.numeric_player.values["cooldown_rate"] = 1.0
 	game.player["hp"] = 1000.0
 	press(KEY_A)
 	step(499)
 	game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+	check(game.player["cooldowns"].get("buff",0.0)==10.0,
+		"interrupting the charge starts a full Frenzy cooldown before the form attaches")
 	step(500)
 	check(game.active_effect("frenzy").is_empty() and not game.player.has("frenzy_cast")
 		and game.bus.events_of("combat.cue").any(func(event):return event.get("kind")=="fx_clear"),
@@ -2603,6 +2612,7 @@ func check_frenzy_toggle() -> void:
 	spec["skill_slots"] = ["buff"]
 	start_room("original_27601","katana",1,spec,"berserker")
 	game.player["hp"] = 1000.0
+	game.numeric_player.values["cooldown_rate"] = 1.0
 	var spent: Array = []
 	session.set_skill_material_spender(func(id: int, amount: int):
 		spent.append([id,amount])
@@ -2611,8 +2621,6 @@ func check_frenzy_toggle() -> void:
 	step(0)
 	step(float(game.player["frenzy_cast"]["duration_ms"]))
 	game.end_action()
-	# Isolate the appendage gate from the normal cooldown, which began earlier.
-	game.player["cooldowns"]["buff"] = 0.0
 	game.step_numeric_actor(game.player,game.numeric_player,9999)
 	game.player["mp"] = 0.0
 	press(KEY_A)
@@ -2629,6 +2637,24 @@ func check_frenzy_toggle() -> void:
 		"the same shortcut deactivates Frenzy at 10000 ms without a new cast")
 	check(game.player["hp"]==hp and game.player["mp"]==0.0 and spent==[[3037,1]],
 		"deactivation takes no HP, MP, or additional cube")
+	check(game.player["cooldowns"].get("buff",0.0)==10.0,"manual deactivation starts the full Frenzy cooldown")
+	game.clear_monsters()
+	game.player["hp"] = 1000.0
+	game.player["mp"] = 1000.0
+	session.set_skill_material_spender(func(id: int, amount: int):
+		spent.append([id,amount])
+		return true)
+	game.step_game(9999)
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and spent==[[3037,1]]
+		and game.bus.events_of("combat.action_rejected")[-1]["reason"]=="cooldown",
+		"Frenzy cannot restart or spend another cube one millisecond before its cooldown ends")
+	game.step_game(1)
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="buff" and spent==[[3037,1],[3037,1]],
+		"Frenzy restarts at the exact cooldown boundary after a manual deactivation")
 
 func draw_slash_views() -> Array:
 	return game.view.effects.filter(func(fx):return String(fx.data.get("source","")).contains("/momentaryslash/momentaryslash_"))
