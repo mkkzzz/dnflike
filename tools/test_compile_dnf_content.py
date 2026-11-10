@@ -176,6 +176,33 @@ class OuterwallProductionContentTest(unittest.TestCase):
         self.assertEqual(hit['source'], 'sounds/effect/wood_hit.ogg')
         self.assertEqual(hashlib.sha256((game / hit['file'].removeprefix('res://')).read_bytes()).hexdigest(), hit['sha256'])
 
+    def test_breakable_with_explicit_destroy_particle_is_packaged(self):
+        game = ROOT / 'game_dnf'
+        assets = game / 'assets_local'
+        records = json.loads((assets / 'content/combat_content.json').read_text(encoding='utf8'))['records']
+        manifest = json.loads((assets / 'combat/manifest.json').read_text(encoding='utf8'))
+        path = 'passiveobject/mapobject/breakableobject/underfoot_tombstone.obj'
+        binding = records[path]['native_breakable']
+        self.assertEqual(binding['source']['layout'],
+                         'seven-int/six-string with explicit destroy particle reference')
+        self.assertEqual(binding['motion_ani'],
+                         'passiveobject/mapobject/breakableobject/animation/underfoot_tombstone.ani')
+        self.assertEqual(binding['destroy_particle'],
+                         'passiveobject/mapobject/breakableobject/particle/underfoot_tombstonedestroy.ptl')
+        self.assertEqual((binding['particle_offset'], binding['hp'], binding['trigger_stage'], binding['stages']),
+                         ([0, 0, 30], 1, 1, 1))
+        self.assertEqual((binding['hit_sound'], binding['destroy_sound']), ('WOOD_HIT', 'WOOD_CRASH'))
+        for dependency, digest in binding['source_hashes'].items():
+            self.assertEqual(records[dependency]['source']['sha256'], digest)
+        self.assertEqual(len(records[binding['motion_ani']]['decoded']['timeline'][0]['damage_boxes']), 1)
+        entries = records[binding['destroy_particle']]['decoded']['object_entries']
+        self.assertEqual(len(entries), 4)
+        for entry in entries:
+            animation = entry['path']
+            bank = manifest['effects']['ptl_' + PurePosixPath(animation).stem]
+            self.assertEqual(bank['source'], animation)
+            self.assertEqual(records[animation]['source']['sha256'], binding['source_hashes'][animation])
+
     def test_source_actors_and_attack_objects_are_packaged(self):
         assets = ROOT / 'game_dnf/assets_local'
         pack = json.loads((assets / 'content/combat_content.json').read_text(encoding='utf8'))

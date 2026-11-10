@@ -46,6 +46,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/bloodhell.dgn',
     'dungeon/act3/1stbackbone.dgn',
     'dungeon/act4/marpissalair.dgn',
+    'dungeon/act4/darkelfcemetary.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
@@ -67,9 +68,10 @@ COORDINATES = {
                'evidence': 'E-INFER from tag names; repeat behaviour unknown.'},
     'greed': {'claim': 'Dungeon cell letter minus "A" is a door mask: right=1 up=2 left=4 down=8',
               'evidence': 'E-INFER: all lorien neighbours are reciprocal; best of 24 bit orders across 328 dgn files.'},
-    'gate_images': {'claim': '%d%d in gate IMG templates is filled with the two digits of the second [int data] value; '
+    'gate_images': {'claim': '%d%d in gate IMG templates is filled with a zero-prefixed decimal variant from the second [int data] value; '
                              'first value is state 0=always 1=closed 2=open',
-                    'evidence': 'E-INFER: produces existing files (normal 01, boss 05/02); state matches Close/Open names.'},
+                    'evidence': 'E-PARSE: pathgate IMGs name variants 01..09 and 010..012; replacing %d%d with the bare '
+                                'value fails for 10..12, while prefixing zero matches all observed gate families.'},
 }
 
 
@@ -100,7 +102,7 @@ def fill_template(img_ref: str, variant: int | None) -> str:
         return img_ref
     if variant is None or not 0 <= variant <= 99:
         raise ValueError('Template variant unavailable')
-    return img_ref.replace('%d%d', f'{variant // 10}{variant % 10}', 1)
+    return img_ref.replace('%d%d', f'0{variant}', 1)
 
 
 def plain(tokens: list[dict]) -> list:

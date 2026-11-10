@@ -1069,8 +1069,8 @@ def compile_native_generic_breakables(passive_index: dict, add, records: dict) -
             token = str(value).replace('\\', '/').lower()
             return token if token.startswith('passiveobject/') else resolve(path, token)
         motion = str(motions[0]).replace('\\', '/').lower()
-        if len(integers) == 7 and len(strings) >= 6 and strings[2]:
-            particle = source_ref(strings[2])
+        if len(integers) == 7 and len(strings) >= 6 and (strings[2] or len(explicit_particles) == 1):
+            particle = source_ref(strings[2] or explicit_particles[0])
             particle_offset = integers[3:6]
             hp = max(1, integers[6])
             trigger_stage = integers[0]
@@ -1078,7 +1078,11 @@ def compile_native_generic_breakables(passive_index: dict, add, records: dict) -
             destroy_on_final_stage = bool(integers[2])
             hit_sound = strings[4]
             destroy_sound = strings[5]
-            source_evidence = {'evidence': 'E-PARSE', 'layout': 'standard seven-int/six-string'}
+            source_evidence = {
+                'evidence': 'E-PARSE',
+                'layout': ('standard seven-int/six-string' if strings[2]
+                           else 'seven-int/six-string with explicit destroy particle reference'),
+            }
         elif len(integers) == 1 and len(explicit_particles) == 1:
             particle = str(explicit_particles[0]).replace('\\', '/').lower()
             particle_offset = [0, 0, 0]

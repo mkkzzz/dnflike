@@ -1,7 +1,7 @@
 extends RefCounted
 ## Native maze special passive-object item groups compiled from DGN/STK sources.
 const SOURCE := "res://data/native_box_loot.json"
-const ART := "res://assets_local/items_original_v6/"
+const ART := "res://assets_local/items_original_v7/"
 const DetRng = preload("res://core/det_rng.gd")
 static var _source: Dictionary = {}
 static var _active: Dictionary = {}

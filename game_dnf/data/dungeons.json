@@ -231,6 +231,20 @@
     "sha256": "652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833"
    }
   },
+  "darkelfcemetary": {
+   "name": "暗精灵墓地",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/darkelfcemetary_v1/map_export.json",
+   "min_level": 39,
+   "monster_level": 42,
+   "source": {
+    "path": "dungeon/act4/darkelfcemetary.dgn",
+    "sha256": "ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

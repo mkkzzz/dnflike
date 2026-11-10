@@ -1165,6 +1165,31 @@
    "mob": "monster/wraith/wraithspectress.mob",
    "bank": "wraith_wraithspectress",
    "name": "wraithspectress"
+  },
+  "drake_drake": {
+   "mob": "monster/drake/drake.mob",
+   "bank": "drake_drake",
+   "name": "drake"
+  },
+  "skeleton_skeleton": {
+   "mob": "monster/skeleton/skeleton.mob",
+   "bank": "skeleton_skeleton",
+   "name": "skeleton"
+  },
+  "skeleton_stoneskeleton": {
+   "mob": "monster/skeleton/stoneskeleton.mob",
+   "bank": "skeleton_stoneskeleton",
+   "name": "stoneskeleton"
+  },
+  "spirit_souleter": {
+   "mob": "monster/spirit/souleter.mob",
+   "bank": "spirit_souleter",
+   "name": "souleter"
+  },
+  "wraith_wraithlilith": {
+   "mob": "monster/wraith/wraithlilith.mob",
+   "bank": "wraith_wraithlilith",
+   "name": "wraithlilith"
   }
  },
  "boss_hp_lines": 3,

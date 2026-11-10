@@ -47,6 +47,10 @@ SOURCES = {
         'dungeon/act4/shallowkeep.dgn',
         '652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833',
     ),
+    'darkelfcemetary': (
+        'dungeon/act4/darkelfcemetary.dgn',
+        'ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0',
+    ),
     'bloodhell': (
         'dungeon/act3/bloodhell.dgn',
         '8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57',

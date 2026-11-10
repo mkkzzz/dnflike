@@ -400,6 +400,18 @@
    "ptl_underfoot_blacklotusstemparticle5",
    "ptl_underfoot_blacklotusstemparticle6"
   ],
+  "passiveobject/mapobject/breakableobject/underfoot_graytombstone2.obj": [
+   "ptl_underfoot_graytombstoneparticle1",
+   "ptl_underfoot_graytombstoneparticle2",
+   "ptl_underfoot_graytombstoneparticle3",
+   "ptl_underfoot_graytombstoneparticle4"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_tombstone.obj": [
+   "ptl_underfoot_tombstoneparticle1",
+   "ptl_underfoot_tombstoneparticle2",
+   "ptl_underfoot_tombstoneparticle3",
+   "ptl_underfoot_tombstoneparticle4"
+  ],
   "passiveobject/mapobject/breakableobject/underfoot_treasurebox.obj": [
    "ptl_underfoot_treasureboxparticle1",
    "ptl_underfoot_treasureboxparticle2",

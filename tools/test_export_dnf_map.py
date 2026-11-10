@@ -18,6 +18,8 @@ class Rules(unittest.TestCase):
 
     def test_gate_template_needs_explicit_variant(self):
         self.assertEqual(m.fill_template('Map/PathGate/GranFlorisSideDoor%d%d.img', 5), 'Map/PathGate/GranFlorisSideDoor05.img')
+        self.assertEqual(m.fill_template('Map/PathGate/Act4/04ExitLeft%d%d.img', 10), 'Map/PathGate/Act4/04ExitLeft010.img')
+        self.assertEqual(m.fill_template('Map/PathGate/Act4/04ExitLeft%d%d.img', 12), 'Map/PathGate/Act4/04ExitLeft012.img')
         self.assertEqual(m.fill_template('Map/01tile00.img', None), 'Map/01tile00.img')
         with self.assertRaises(ValueError):
             m.fill_template('Map/PathGate/GranFlorisBush%d%d.img', None)

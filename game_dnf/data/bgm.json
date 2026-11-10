@@ -108,6 +108,10 @@
    "normal": "breeding_place",
    "boss": "breeding_place_boss"
   },
+  "darkelfcemetary": {
+   "normal": "darkelf_amb",
+   "boss": "darkelf_boss"
+  },
   "darkhell": {
    "normal": "purgatory",
    "boss": "purgatory_boss"
@@ -350,6 +354,18 @@
    "source": "music/breeding_place_boss.ogg",
    "sha256": "526b3bd60008522019a7489caf583c184c7160b0a8b2d3bb1c3f59ea754c04cb",
    "bytes": 1151526
+  },
+  "darkelf_amb": {
+   "file": "audio/bgm/darkelf_amb.ogg",
+   "source": "music/darkelf_amb.ogg",
+   "sha256": "6adf5b9113692d70936e86c86ecbadacbd647df21d0ce68285bb07fc12f60a8a",
+   "bytes": 3841842
+  },
+  "darkelf_boss": {
+   "file": "audio/bgm/darkelf_boss.ogg",
+   "source": "music/darkelf_boss.ogg",
+   "sha256": "94b0e994cfab7ac4396e787b7a09e4a4bffd4b641fa86f109f6003815b9b575c",
+   "bytes": 1358676
   },
   "purgatory": {
    "file": "audio/bgm/purgatory.ogg",
