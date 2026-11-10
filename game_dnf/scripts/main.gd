@@ -17,6 +17,7 @@ const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
 const FrenzyRecovery = preload("res://combat/resolve/frenzy_recovery.gd")
 const HellbenterBlood = preload("res://combat/resolve/hellbenter_blood.gd")
+const HellbenterColumn = preload("res://combat/resolve/hellbenter_column.gd")
 const HundredSwordFormation = preload("res://combat/action/hundred_sword_formation.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
@@ -1658,6 +1659,7 @@ func start_hellbenter_finish(move: Dictionary, blood_sword: Dictionary) -> void:
 	var hit := native_fixed_hit(stage["hits"][0],amount)
 	hit["percent"] = 0.0
 	stage["hits"] = [hit]
+	stage["blood_count"] = int(blood_sword.get("blood_count",0))
 	player["state"] = "action"
 	player["action"] = "hellbenter"
 	player["stage"] = 0
@@ -1701,6 +1703,8 @@ func step_hellbenter_finish(ms: float, refresh_ani_rate: bool) -> void:
 	player["clock"] = minf(next,float(phase["end_ms"]))
 	var current := action_ani_clock(float(player["clock"]))
 	action_cues(stage,previous_ani,current)
+	if action_timed_crossed(float(stage["timeline"][3]["start_ms"]),previous_ani,current):
+		HellbenterColumn.spawn(self,move_def("hellbenter"),int(stage["blood_count"]))
 	apply_player_hits(stage,previous_ani,current)
 	if next >= float(phase["end_ms"]):end_action()
 
@@ -4053,6 +4057,9 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var old_t := float(o["clock"])
 		var t := old_t+object_ms
 		o["clock"] = t
+		if kind == "hellbenter_column":
+			if not HellbenterColumn.step(self,o):objects.remove_at(i)
+			continue
 		if o.has("ptl_motion"):
 			var sample: Dictionary = o["ptl_motion"].advance_to(int(t))
 			if not sample.get("ok",false) or not sample["alive"]:
@@ -4874,6 +4881,8 @@ func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
+	for object: Dictionary in objects:
+		if object.has("column"):HellbenterColumn.stop_loop(self,object)
 	objects.clear()
 	draw_pending_hits.clear()
 	native_zealot_summons.proxies.clear()
@@ -5417,6 +5426,9 @@ func view_snapshot() -> Dictionary:
 	if player.has("hundred_sword_cast"):player["hundred_sword_cast"]["formation"].append_view(objs)
 	for o: Dictionary in objects:
 		if o.get("retired",false):continue
+		if o.has("column"):
+			HellbenterColumn.append_view(objs,o)
+			continue
 		var controller: Dictionary = o["hit"].get("native_controller",{})
 		var bank := String(o["def"]["bank"])
 		var effect := String(o["hit"].get("object_fx",""))

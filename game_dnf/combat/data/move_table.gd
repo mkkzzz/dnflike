@@ -422,6 +422,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["blood"] = spec["blood"]
 		move["finish"] = _build_stage(spec["finish"],skill)
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
+		var column: Dictionary = spec["column"].duplicate(true)
+		for phase: Dictionary in column["phases"]:phase["timeline"] = timeline(phase["motion"])
+		for key: String in ["attack","final_attack"]:
+			var path := String(column[key])
+			var attack := atk(path)
+			column[key+"_hit"] = {"atk":attack,"atk_path":path,"percent":0.0,"lift":-1.0,
+				"skill":true,"skill_id":name,"damage_type":"physical","element":"none",
+				"hitstop_ms":_atk_hitstop(attack,0.0)}
+		move["column"] = column
 	if spec.get("native_state","") == "grab_blast":
 		move["native_state"] = "grab_blast"
 		move["grab_duration_ms"] = float(skill["static"][0])

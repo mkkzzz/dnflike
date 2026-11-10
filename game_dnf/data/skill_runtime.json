@@ -8,7 +8,12 @@
    "skillfx_5_light_dodge_cd1070ff": "passiveobject/character/swordman/animation/illusionslashsub/5_light_dodge.ani",
    "skillfx_absorb_4b93bae3": "character/swordman/effect/animation/hellbenter/absorb.ani",
    "skillfx_add_e433feca": "character/swordman/effect/animation/wavemark/add.ani",
+   "skillfx_appear1_9271a6c2": "passiveobject/character/swordman/animation/hellbenterfinish/appear1.ani",
    "skillfx_appear1_9bb8086c": "character/swordman/effect/animation/keiga/appear1.ani",
+   "skillfx_appear2_2edf84c2": "passiveobject/character/swordman/animation/hellbenterfinish/appear2.ani",
+   "skillfx_appear3_9110513c": "passiveobject/character/swordman/animation/hellbenterfinish/appear3.ani",
+   "skillfx_appear4_2033cf0c": "passiveobject/character/swordman/animation/hellbenterfinish/appear4.ani",
+   "skillfx_appear5_77172cc5": "passiveobject/character/swordman/animation/hellbenterfinish/appear5.ani",
    "skillfx_area_3363e3fd": "character/swordman/effect/animation/shockwavearea/area.ani",
    "skillfx_autoguard_ldodge_cd812bbd": "character/swordman/effect/animation/autoguard_ldodge.ani",
    "skillfx_ballhead_bb847343": "character/swordman/effect/animation/blache/ballhead.ani",
@@ -69,6 +74,8 @@
    "skillfx_completesword3_68d74b89": "character/swordman/effect/animation/hellbenter/completesword3.ani",
    "skillfx_dash_e40d6dac": "character/swordman/effect/animation/chargecrash/dash.ani",
    "skillfx_dashattackmultihit1_308d28ca": "character/swordman/effect/animation/dashattackmultihit1.ani",
+   "skillfx_disappear1_a154c467": "passiveobject/character/swordman/animation/hellbenterfinish/disappear1.ani",
+   "skillfx_disappear2_2a8039b2": "passiveobject/character/swordman/animation/hellbenterfinish/disappear2.ani",
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
    "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
@@ -130,8 +137,11 @@
    "skillfx_lighttail4_244fdaa6": "character/swordman/effect/animation/hundredsword/lighttail4.ani",
    "skillfx_line1_e722e7d8": "character/swordman/effect/animation/bloodyrave/line1.ani",
    "skillfx_line2_3c639b26": "character/swordman/effect/animation/bloodyrave/line2.ani",
+   "skillfx_loop1_19920cb3": "passiveobject/character/swordman/animation/hellbenterfinish/loop1.ani",
    "skillfx_loop1_531a5c7f": "character/swordman/effect/animation/bloodyrave/loop1.ani",
+   "skillfx_loop2_2edbba5c": "passiveobject/character/swordman/animation/hellbenterfinish/loop2.ani",
    "skillfx_loop2_6e5fdb64": "character/swordman/effect/animation/bloodyrave/loop2.ani",
+   "skillfx_loop3_adabfb8a": "passiveobject/character/swordman/animation/hellbenterfinish/loop3.ani",
    "skillfx_momentaryslash_blue_ldodge_under_5f7d8fce": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_under.ani",
    "skillfx_momentaryslash_blue_ldodge_upper_6f91f65b": "character/swordman/effect/animation/momentaryslash/momentaryslash_blue_ldodge_upper.ani",
    "skillfx_momentaryslash_none_under_785ce934": "character/swordman/effect/animation/momentaryslash/momentaryslash_none_under.ani",
@@ -195,7 +205,8 @@
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
    "skillfx_upperslash1_65c825d8": "character/swordman/effect/animation/upperslash1.ani",
-   "skillfx_vaneslash_2607eaf7": "passiveobject/character/swordman/animation/vaneslash.ani"
+   "skillfx_vaneslash_2607eaf7": "passiveobject/character/swordman/animation/vaneslash.ani",
+   "skillfx_wave_c1ca86c2": "passiveobject/character/swordman/animation/hellbenterfinish/wave.ani"
   },
   "objects": {
    "passiveobject/character/swordman/ashenforksub.obj": "passiveobject/character/swordman/ashenforksub.obj",
@@ -5421,12 +5432,97 @@
     "range": 640,
     "scan_ms": 250
    },
+   "column": {
+    "attack": "passiveobject/character/swordman/attackinfo/hellbenterfinish.atk",
+    "final_attack": "passiveobject/character/swordman/attackinfo/hellbenterfinishfinal.atk",
+    "impact": 1680,
+    "object": "passiveobject/character/swordman/hellbenterfinish.obj",
+    "offset": 320,
+    "phases": [
+     {
+      "duration": 1780,
+      "layers": [
+       {
+        "depth": -1,
+        "duration": 1780,
+        "effect": "skillfx_appear1_9271a6c2"
+       },
+       {
+        "depth": -1,
+        "duration": 1680,
+        "effect": "skillfx_appear4_2033cf0c"
+       },
+       {
+        "depth": 0,
+        "duration": 1680,
+        "effect": "skillfx_appear2_2edf84c2"
+       },
+       {
+        "depth": 1,
+        "duration": 1680,
+        "effect": "skillfx_appear3_9110513c"
+       },
+       {
+        "depth": 2,
+        "duration": 1780,
+        "effect": "skillfx_appear5_77172cc5"
+       }
+      ],
+      "motion": "passiveobject/character/swordman/animation/hellbenterfinish/appear5.ani"
+     },
+     {
+      "duration": 360,
+      "layers": [
+       {
+        "depth": -1,
+        "duration": 240,
+        "effect": "skillfx_loop1_19920cb3"
+       },
+       {
+        "depth": 1,
+        "duration": 240,
+        "effect": "skillfx_loop3_adabfb8a"
+       },
+       {
+        "depth": 2,
+        "duration": 360,
+        "effect": "skillfx_loop2_2edbba5c"
+       }
+      ],
+      "motion": "passiveobject/character/swordman/animation/hellbenterfinish/loop2.ani"
+     },
+     {
+      "duration": 400,
+      "layers": [
+       {
+        "depth": 1,
+        "duration": 400,
+        "effect": "skillfx_disappear1_a154c467"
+       },
+       {
+        "depth": 2,
+        "duration": 400,
+        "effect": "skillfx_disappear2_2a8039b2"
+       }
+      ],
+      "motion": "passiveobject/character/swordman/animation/hellbenterfinish/disappear2.ani"
+     }
+    ],
+    "scale": [
+     75,
+     100
+    ],
+    "sha256": "1d0598357dba258d0ecdb14eea13a5ba431c7bdc98702021efacb2f147fa116c",
+    "source": "data/skill/swordman.sd",
+    "wave": "skillfx_wave_c1ca86c2"
+   },
    "effect_id": "hellbenter",
    "fidelity_pending": [
     "special_bleed",
-    "finish_object",
     "expiry_finish",
-    "original_command"
+    "original_command",
+    "finish_particles",
+    "finish_special_reaction"
    ],
    "finish": {
     "ani": "hellbenterfinish",

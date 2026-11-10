@@ -230,6 +230,8 @@ HELLBENTER_APPEARANCE = {
     "complete_flash": ("completeflash1", "completeflash2"),
     "finish": ("finish1", "finish2", "finish3"),
 }
+HELLBENTER_COLUMN = OBJ_ROOT + "hellbenterfinish.obj"
+HELLBENTER_WAVE = OBJ_ROOT + "animation/hellbenterfinish/wave.ani"
 IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
 
@@ -1218,6 +1220,37 @@ def bloody_rave_typhoon_params(library) -> dict:
     if params["spacing"] <= 0 or params["end_x"] <= params["start_x"]:
         raise ValueError("Invalid Bloody Rave typhoon distance parameters")
     return {**params, "source": path, "sha256": digest}
+
+
+def hellbenter_column_origin(library) -> dict:
+    source = "data/skill/swordman.sd"
+    raw, digest = library.raw(source)
+    tokens = decode_tokens(raw, library.strings)["tokens"]
+    offset, = (int(following["value"]) for current, following in zip(tokens, tokens[1:])
+               if current.get("value") == "hbt x offset")
+    return {"offset": offset, "source": source, "sha256": digest}
+
+
+def hellbenter_column(skill: dict, records: dict, fx: dict, effects: dict, origin: dict) -> dict:
+    statics = records[skill["path"]]["decoded"]["dungeon"]["static_data"]
+    obj = records[HELLBENTER_COLUMN]["decoded"]
+    motions = obj["etc_motions"]
+    keys = [add_fx(fx, effects, path) for path in [*motions, HELLBENTER_WAVE]]
+    if not all(keys):
+        raise ValueError("Missing original Hellbenter column animations")
+    # A6A7AB, A6A6AA and A6A4BC choose the object motion slots for states 3, 4 and 5.
+    phases = []
+    for main, slots in ((4, [(0, -1), (3, -1), (1, 0), (2, 1), (4, 2)]),
+                        (6, [(5, -1), (7, 1), (6, 2)]), (9, [(8, 1), (9, 2)])):
+        clip = records[motions[main]]["decoded"]
+        phases.append({"motion": motions[main], "duration": clip["duration_ms"],
+                       "layers": [{"effect": keys[index], "depth": depth,
+                                   "duration": records[motions[index]]["decoded"]["duration_ms"]}
+                                  for index, depth in slots]})
+    impact = records[motions[4]]["decoded"]["timeline"][6]["start_ms"]
+    return {"object": HELLBENTER_COLUMN, **origin,
+            "attack": obj["attack_infos"][0], "final_attack": obj["etc_attack_infos"][0],
+            "scale": statics[13:15], "impact": impact, "wave": keys[-1], "phases": phases}
 
 
 def build_bloody_rave(skill: dict, records: dict, fx: dict, effects: dict, objects: dict,
@@ -2278,12 +2311,15 @@ def main() -> int:
         rave_slots = swordman_skill_effect_slots(library, b"SKILL_BLOODY_RAVE")["paths"]
         outrage_slots = swordman_skill_effect_slots(library, b"SKILL_OUT_RAGE_BREAK")["paths"]
         rave_typhoon = bloody_rave_typhoon_params(library)
+        hellbenter_origin = hellbenter_column_origin(library)
         if len(rave_slots) != 15:
             raise ValueError("Unexpected Bloody Rave animation slots")
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(path for group in HELLBENTER_APPEARANCE.values() for stem in group
                             if safe_animation(library, path := CHR_FX + f"hellbenter/{stem}.ani"))
+        SAFE_EFFECTS.update(path for path in [*records[HELLBENTER_COLUMN]["decoded"]["etc_motions"], HELLBENTER_WAVE]
+                            if safe_animation(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
         SAFE_EFFECTS.update(path for path in (illusion_club_layers["attached"], *illusion_club_layers["detached"])
@@ -2463,6 +2499,9 @@ def main() -> int:
             if key == "hellbenter":
                 ani = move["finish"]["ani"]
                 player_anims[ani] = CHR_ANI + ani + ".ani"
+                move["column"] = hellbenter_column(skill, records, fx, effects, hellbenter_origin)
+                move["fidelity_pending"].remove("finish_object")
+                move["fidelity_pending"].extend(["finish_particles", "finish_special_reaction"])
             if key == "chargecrash":
                 move["finish_weapon_tracks"] = charge_finish_tracks
             if key == "grabblastblood":

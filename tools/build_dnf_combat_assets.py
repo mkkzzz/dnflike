@@ -1710,6 +1710,15 @@ def main() -> int:
                  for key in appearance[group]]
         finish = runtime['moves']['hellbenter']['finish']['ani']
         specs.append(('player_clips', finish, runtime['assets']['player_anims'][finish]))
+        column = runtime['moves']['hellbenter']['column']
+        column_keys = [layer['effect'] for phase in column['phases'] for layer in phase['layers']]
+        specs.extend(('effects', key, effects[key]) for key in [*column_keys, column['wave']])
+        specs.extend(('audio', key, path) for key, path in {
+            'B_FIRE_EXPLOSION_READY': 'sounds/char/swordman/effect/b_fire_explosion_ready.ogg',
+            'B_FIRE_EXPLOSION': 'sounds/char/swordman/effect/b_fire_explosion.ogg',
+            'B_FIRE_COLUMN_LOOP': 'sounds/char/swordman/effect/b_fire_column_loop.ogg',
+            'ASTORM_HIT_FIRE': 'sounds/char/wizard/effect/astorm_hit_fire.ogg',
+        }.items())
         specs.append(('audio', appearance['sound']['key'], 'sounds/char/swordman/effect/b_start.ogg'))
         specs.append(('audio', appearance['complete_sound'], 'sounds/char/swordman/effect/w_spirits_flash.ogg'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))

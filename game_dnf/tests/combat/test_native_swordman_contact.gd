@@ -2497,7 +2497,8 @@ func check_hellbenter_manual_finish() -> void:
 		and not game.view.object_views.has("hellbenter:sword_base"),
 		"the finisher hides the carried sword and attaches three original layers with both startup cues")
 	step(284.0)
-	check(game.hit_count==before and cues("DRAWING_SWORD").is_empty(),"the mode-three first three frames do not strike")
+	check(game.hit_count==before and cues("DRAWING_SWORD").is_empty() and game.objects.is_empty(),
+		"the mode-three first three frames do not strike or create the column")
 	step(1.0)
 	check(game.player_ani()[1]==360.0 and game.hit_count==before+1 and target["hp"]<target["max_hp"]
 		and outside["hp"]==outside["max_hp"] and game.last_damage["trace"]["fixed_part"]==expected,
@@ -2507,6 +2508,10 @@ func check_hellbenter_manual_finish() -> void:
 		and game.view.player_actor.equipment_layers.all(func(layer):
 			return int(layer.frame.get("frame",-1))==3 and layer.frame.get("img")==null),
 		"the effects and sounds align with the hit frame while both original equipment tracks stay blank")
+	check(game.objects.size()==1 and game.objects[0].has("column") and game.objects[0]["pos"]==POINT+Vector2(320,0)
+		and is_equal_approx(game.objects[0]["size_rate"],0.87) and game.objects[0]["clock"]==0.0
+		and cues("B_FIRE_EXPLOSION_READY").size()==1,
+		"the fourth frame creates the column at the original SD offset, age zero and the half-charge scale")
 	step(120.0)
 	check(game.player_ani()[1]==480.0 and game.hit_count==before+1,"recovery uses base speed and keeps the same hit ledger")
 	press(KEY_A)
@@ -2516,6 +2521,8 @@ func check_hellbenter_manual_finish() -> void:
 	step(1.0)
 	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
 		and cues("SM_MUSSANG_START").size()==1,"finisher exit removes the original appendage and does not retrigger")
+	if game.objects.size()==1 and game.objects[0].has("column"):
+		check_hellbenter_column(game.objects[0],target,outside,base)
 	check(game.numeric_player.add_effect("hellbenter",1),"a fresh sword can be installed after leaving the finisher")
 	press(KEY_A)
 	step(100.0)
@@ -2524,6 +2531,51 @@ func check_hellbenter_manual_finish() -> void:
 	check(not game.player.has("hellbenter_finish") and game.active_effect("hellbenter").is_empty()
 		and game.view.effects.all(func(fx):return fx.data["source"].get_file() not in ["finish1.ani","finish2.ani","finish3.ani"]),
 		"being interrupted before the swing consumes the sword and clears the attached finish effects")
+
+func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Dictionary, base: int) -> void:
+	move_target(target,object["pos"])
+	target["hp"] = 500000.0
+	target["max_hp"] = target["hp"]
+	game.numeric_player.values["hit"] = 1.0
+	var start := int(game.hit_count)
+	var normal_amount := int((int(base*1.55)+int(base*4.63))*0.5)
+	var final_amount := int((int(base*7.75)+int(base*23.24))*0.5)
+	var column: Dictionary = object["column"]
+	check(column["hit_interval"]==155 and object["hit"]["fixed_amount"]==normal_amount
+		and column["final"]["fixed_amount"]==final_amount,
+		"object 20052 uses the 155 ms reset and its own normal and final damage endpoints")
+	game.step_objects(1679.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var layers := func(stem: String):return game.view.object_views.values().filter(func(fx):
+		return String(fx.data["source"]).get_file().begins_with(stem))
+	check(layers.call("appear").size()==5 and game.hit_count==start and cues("B_FIRE_EXPLOSION").is_empty(),
+		"five original appearance tracks play without attacking through 1679 ms")
+	game.step_objects(1.0)
+	check(game.hit_count==start+1 and game.last_damage["trace"]["fixed_part"]==normal_amount
+		and cues("B_FIRE_EXPLOSION").size()==1,"Appear5 starts the first contact exactly at 1680 ms")
+	game.step_objects(100.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(column["phase"]==1 and layers.call("loop").size()==3 and cues("B_FIRE_COLUMN_LOOP").size()==1
+		and game.hit_count==start+1,"the column switches to its three looping layers without refreshing contact early")
+	game.step_objects(54.0)
+	check(game.hit_count==start+1,"the ledger is still closed at 1834 ms")
+	game.step_objects(1.0)
+	check(game.hit_count==start+2,"the normal ledger first refreshes at 1835 ms")
+	for i in 18:game.step_objects(155.0)
+	check(game.hit_count==start+20 and outside["hp"]==outside["max_hp"],"the original twenty contacts stay inside the column")
+	var fire_cues := cues("ASTORM_HIT_FIRE").size()
+	game.step_objects(154.0)
+	check(column["phase"]==1 and game.hit_count==start+20 and cues("ASTORM_HIT_FIRE").size()==fire_cues,
+		"the final explosion waits for the whole loop duration")
+	game.step_objects(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(column["phase"]==2 and layers.call("disappear").size()==2 and game.hit_count==start+21
+		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues,
+		"the final explosion has independent damage, two original layers and its own sound")
+	game.step_objects(399.0)
+	check(game.objects.has(object) and game.hit_count==start+21,"the final contact does not repeat during the tail")
+	game.step_objects(1.0)
+	check(not game.objects.has(object),"the source Disappear2 lifetime removes the object at 400 ms")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()
