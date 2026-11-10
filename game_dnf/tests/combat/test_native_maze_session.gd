@@ -10,7 +10,6 @@ const NativeBoxLoot = preload("res://loot/native_box.gd")
 const Loot = preload("res://loot/service.gd")
 const Inventory = preload("res://items/inventory.gd")
 const EXPORT := "res://assets_local/native_maps/outerwall_v1/map_export.json"
-const ROUTE := {"mode":"native_maze","map_export":EXPORT,"name":"神殿周边"}
 const NORMAL_MUSIC := "res://assets_local/audio/bgm/outer_temple.ogg"
 const BOSS_MUSIC := "res://assets_local/audio/bgm/behemoth_b01_1.ogg"
 
@@ -84,7 +83,7 @@ func seed_for(start_slot: int, boss_slot: int, map_slot: int) -> int:
 
 func start_spec(start_slot: int, boss_slot: int, map_slot: int, number := -1) -> Dictionary:
 	flow = FlowSession.new()
-	flow.dungeons["outerwall"] = ROUTE.duplicate()
+	flow.profile["level"] = 27
 	flow.profile["next_run"] = number if number > 0 else seed_for(start_slot,boss_slot,map_slot)
 	check(flow.profile["next_run"] > 0 and flow.command("flow.depart",{"dungeon":"outerwall"})["ok"],
 		"flow builds a run using the internal source route contract")
@@ -263,10 +262,10 @@ func check_breakable_run() -> void:
 			run = id
 			break
 	flow = FlowSession.new()
-	flow.dungeons["outerwall"] = ROUTE.duplicate()
+	flow.profile["level"] = 27
 	flow.profile["next_run"] = int(run.get_slice("_",1))
 	var started: bool = not run.is_empty() and flow.command("flow.depart",{"dungeon":"outerwall"})["ok"] and flow.run["id"] == run \
-		and session.start_room({"run_id":run,"dungeon":"outerwall","route":ROUTE,"audio":{"muted":true}})
+		and session.start_room({"run_id":run,"dungeon":"outerwall","route":flow.active_dungeon_route(),"audio":{"muted":true}})
 	check(started,"live source route starts with a replayable ordinary box placement")
 	if not started:return
 	clear_all()
@@ -415,11 +414,21 @@ func check_jar_trap_run() -> void:
 		var pot: Dictionary = traps[0]
 		var atk: Dictionary = game.move_def("normalwave")["hits"][0]["atk"]
 		game.bus.clear_history()
+		stop_one_shot_voices()
 		prop_melee(pot["damage_boxes"][1].get_center(),atk,1000)
 		match child:
 			40002:check_fire_jar(pot)
 			2200:check_green_fairy(pot)
 			48003:check_poison_jar(pot)
+
+func stop_one_shot_voices() -> void:
+	var loops: Array = game.view.audio._loop_voices.values()
+	for voice: AudioStreamPlayer in game.view.audio.voice_pool:
+		if voice in loops:continue
+		voice.stop()
+		voice.stream = null
+		if voice.has_meta("sound_key"):voice.remove_meta("sound_key")
+		if voice.has_meta("voice_tag"):voice.remove_meta("voice_tag")
 
 func check_fire_jar(pot: Dictionary) -> void:
 	var warning: Dictionary = pot.get("jar_warning",{})

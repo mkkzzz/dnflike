@@ -34,7 +34,8 @@ func run() -> void:
 		ids.sort()
 		for dungeon_id: String in ids:
 			var route: Dictionary = dungeons[dungeon_id]
-			if bool(route.get("legacy", false)) or bool(route.get("hidden", false)):
+			if bool(route.get("legacy", false)) or bool(route.get("hidden", false)) \
+					or String(route.get("mode", "")) == "native_maze":
 				continue
 			audit_route(dungeon_id, route)
 	check(completed_rooms == 107, "all 107 rooms complete their formal clear event")

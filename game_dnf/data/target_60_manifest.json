@@ -681,9 +681,9 @@
     "id": 21,
     "min_level": 27,
     "path": "dungeon/act3/outerwall.dgn",
-    "runtime_id": "",
+    "runtime_id": "outerwall",
     "sha256": "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 31,
@@ -4863,8 +4863,8 @@
     "level_max": 35,
     "level_min": 29,
     "path": "monster/starfish/starfishrukuku.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_starfish_rukuku",
+    "state": "runtime"
    },
    {
     "id": 61197,
@@ -4887,8 +4887,8 @@
     "level_max": 32,
     "level_min": 29,
     "path": "monster/vehicle/catapult.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_catapult",
+    "state": "runtime"
    },
    {
     "id": 41005,
@@ -4911,8 +4911,8 @@
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealot/raxy-a.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_raxy",
+    "state": "runtime"
    },
    {
     "id": 264,
@@ -6031,8 +6031,8 @@
     "level_max": 45,
     "level_min": 30,
     "path": "monster/spirit/lightspirit.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_lightspirit",
+    "state": "runtime"
    },
    {
     "id": 59012,
@@ -6399,8 +6399,8 @@
     "level_max": 38,
     "level_min": 31,
     "path": "monster/zealot/bossfather.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_bossfather",
+    "state": "runtime"
    },
    {
     "id": 61433,
@@ -6415,8 +6415,8 @@
     "level_max": 38,
     "level_min": 31,
     "path": "monster/zealot/bosspope.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_bosspope",
+    "state": "runtime"
    },
    {
     "id": 61434,
@@ -6615,8 +6615,8 @@
     "level_max": 45,
     "level_min": 32,
     "path": "monster/spirit/darkspirit.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_darkspirit",
+    "state": "runtime"
    },
    {
     "id": 1082,
@@ -6775,8 +6775,8 @@
     "level_max": 35,
     "level_min": 34,
     "path": "monster/starfish/starfish.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "native_starfish",
+    "state": "runtime"
    },
    {
     "id": 251,
@@ -16945,26 +16945,6 @@
     "type": "[seeking]"
    },
    {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_2.qst",
-    "level_max": 99,
-    "level_min": 16,
-    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_2.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[seeking]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_3.qst",
-    "level_max": 99,
-    "level_min": 16,
-    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_3.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[clear map]"
-   },
-   {
     "grade": "[common unique]",
     "id": "n_quest/westcost/draconiantower/normal_16_draconiantower_arin_1.qst",
     "level_max": 99,
@@ -17003,6 +16983,26 @@
     "runtime_id": "original.quest.4305",
     "state": "runtime",
     "type": "[meet npc]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4306",
+    "level_max": 99,
+    "level_min": 16,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_2.qst",
+    "runtime_id": "original.quest.4306",
+    "state": "runtime",
+    "type": "[seeking]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4307",
+    "level_max": 99,
+    "level_min": 16,
+    "path": "n_quest/westcost/draconiantower/epic_16_draconiantower_sky_gsd_3.qst",
+    "runtime_id": "original.quest.4307",
+    "state": "runtime",
+    "type": "[clear map]"
    },
    {
     "grade": "[epic]",
@@ -17505,26 +17505,6 @@
     "type": "[seeking]"
    },
    {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_4.qst",
-    "level_max": 99,
-    "level_min": 18,
-    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_4.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[clear map]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_5.qst",
-    "level_max": 99,
-    "level_min": 18,
-    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_5.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[meet npc]"
-   },
-   {
     "grade": "[common unique]",
     "id": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_arin_f_2.qst",
     "level_max": 99,
@@ -17585,26 +17565,6 @@
     "type": "[condition under clear]"
    },
    {
-    "grade": "[common unique]",
-    "id": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_insomnia.qst",
-    "level_max": 99,
-    "level_min": 18,
-    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_insomnia.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[meet npc]"
-   },
-   {
-    "grade": "[common unique]",
-    "id": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_stone_statue.qst",
-    "level_max": 99,
-    "level_min": 18,
-    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_stone_statue.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[hunt monster]"
-   },
-   {
     "grade": "[epic]",
     "id": "original.quest.119",
     "level_max": 99,
@@ -17621,6 +17581,46 @@
     "level_min": 18,
     "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_skycastle_5.qst",
     "runtime_id": "original.quest.120",
+    "state": "runtime",
+    "type": "[hunt monster]"
+   },
+   {
+    "grade": "[common unique]",
+    "id": "original.quest.298",
+    "level_max": 99,
+    "level_min": 18,
+    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_insomnia.qst",
+    "runtime_id": "original.quest.298",
+    "state": "runtime",
+    "type": "[meet npc]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4308",
+    "level_max": 99,
+    "level_min": 18,
+    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_4.qst",
+    "runtime_id": "original.quest.4308",
+    "state": "runtime",
+    "type": "[clear map]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4309",
+    "level_max": 99,
+    "level_min": 18,
+    "path": "n_quest/westcost/hallofdoll/epic_18_hallofdoll_sky_gsd_5.qst",
+    "runtime_id": "original.quest.4309",
+    "state": "runtime",
+    "type": "[meet npc]"
+   },
+   {
+    "grade": "[common unique]",
+    "id": "original.quest.4314",
+    "level_max": 99,
+    "level_min": 18,
+    "path": "n_quest/westcost/hallofdoll/normal_18_hallofdoll_stone_statue.qst",
+    "runtime_id": "original.quest.4314",
     "state": "runtime",
     "type": "[hunt monster]"
    },
@@ -18795,16 +18795,6 @@
     "type": "[hunt monster]"
    },
    {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/golemtower/epic_20_golemtower_sky_gsd_6.qst",
-    "level_max": 99,
-    "level_min": 20,
-    "path": "n_quest/westcost/golemtower/epic_20_golemtower_sky_gsd_6.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[condition under clear]"
-   },
-   {
     "grade": "[common unique]",
     "id": "n_quest/westcost/golemtower/normal_20_golemtower_arin_3.qst",
     "level_max": 99,
@@ -18813,16 +18803,6 @@
     "runtime_id": "",
     "state": "parsed",
     "type": "[condition under clear]"
-   },
-   {
-    "grade": "[common unique]",
-    "id": "n_quest/westcost/golemtower/normal_20_golemtower_stone.qst",
-    "level_max": 99,
-    "level_min": 20,
-    "path": "n_quest/westcost/golemtower/normal_20_golemtower_stone.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[hunt monster]"
    },
    {
     "grade": "[achievement]",
@@ -18906,6 +18886,26 @@
    },
    {
     "grade": "[epic]",
+    "id": "original.quest.4310",
+    "level_max": 99,
+    "level_min": 20,
+    "path": "n_quest/westcost/golemtower/epic_20_golemtower_sky_gsd_6.qst",
+    "runtime_id": "original.quest.4310",
+    "state": "runtime",
+    "type": "[condition under clear]"
+   },
+   {
+    "grade": "[common unique]",
+    "id": "original.quest.4316",
+    "level_max": 99,
+    "level_min": 20,
+    "path": "n_quest/westcost/golemtower/normal_20_golemtower_stone.qst",
+    "runtime_id": "original.quest.4316",
+    "state": "runtime",
+    "type": "[hunt monster]"
+   },
+   {
+    "grade": "[epic]",
     "id": "original.quest.4440",
     "level_max": 99,
     "level_min": 20,
@@ -18985,16 +18985,6 @@
     "type": "[hunt monster]"
    },
    {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/darkentrance/epic_22_darkentrance_sky_gsd_7.qst",
-    "level_max": 99,
-    "level_min": 22,
-    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_sky_gsd_7.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[condition under clear]"
-   },
-   {
     "grade": "[common unique]",
     "id": "n_quest/westcost/darkentrance/normal_22_darkentrance_arin_4.qst",
     "level_max": 99,
@@ -19021,6 +19011,16 @@
     "level_min": 22,
     "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_skycastle_11.qst",
     "runtime_id": "original.quest.126",
+    "state": "runtime",
+    "type": "[condition under clear]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4311",
+    "level_max": 99,
+    "level_min": 22,
+    "path": "n_quest/westcost/darkentrance/epic_22_darkentrance_sky_gsd_7.qst",
+    "runtime_id": "original.quest.4311",
     "state": "runtime",
     "type": "[condition under clear]"
    },
@@ -19205,66 +19205,6 @@
     "type": "[condition under clear]"
    },
    {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_8.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_8.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[clear map]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_9.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_9.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[meet npc]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_3.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_3.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[meet npc]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_4.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_4.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[seeking]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_5.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_5.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[seeking]"
-   },
-   {
-    "grade": "[epic]",
-    "id": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_6.qst",
-    "level_max": 99,
-    "level_min": 25,
-    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_6.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[meet npc]"
-   },
-   {
     "grade": "[common unique]",
     "id": "n_quest/westcost/palaceofload/normal_25_palaceofload_arin_5.qst",
     "level_max": 99,
@@ -19311,6 +19251,66 @@
     "level_min": 25,
     "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_2.qst",
     "runtime_id": "original.quest.17",
+    "state": "runtime",
+    "type": "[meet npc]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.18",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_3.qst",
+    "runtime_id": "original.quest.18",
+    "state": "runtime",
+    "type": "[meet npc]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.19",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_4.qst",
+    "runtime_id": "original.quest.19",
+    "state": "runtime",
+    "type": "[seeking]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.20",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_5.qst",
+    "runtime_id": "original.quest.20",
+    "state": "runtime",
+    "type": "[seeking]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4312",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_8.qst",
+    "runtime_id": "original.quest.4312",
+    "state": "runtime",
+    "type": "[clear map]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4313",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_sky_gsd_9.qst",
+    "runtime_id": "original.quest.4313",
+    "state": "runtime",
+    "type": "[meet npc]"
+   },
+   {
+    "grade": "[epic]",
+    "id": "original.quest.4321",
+    "level_max": 99,
+    "level_min": 25,
+    "path": "n_quest/westcost/palaceofload/epic_25_palaceofload_zig_6.qst",
+    "runtime_id": "original.quest.4321",
     "state": "runtime",
     "type": "[meet npc]"
    },
@@ -22606,16 +22606,6 @@
    },
    {
     "grade": "[achievement]",
-    "id": "n_quest/epicjob/achievement_50_epicjob_soul_4.qst",
-    "level_max": 99,
-    "level_min": 48,
-    "path": "n_quest/epicjob/achievement_50_epicjob_soul_4.qst",
-    "runtime_id": "",
-    "state": "parsed",
-    "type": "[seeking]"
-   },
-   {
-    "grade": "[achievement]",
     "id": "n_quest/epicjob/achievement_50_epicjob_soul_6.qst",
     "level_max": 99,
     "level_min": 48,
@@ -22852,6 +22842,16 @@
     "path": "n_quest/title/achievement_48_title.qst",
     "runtime_id": "",
     "state": "parsed",
+    "type": "[seeking]"
+   },
+   {
+    "grade": "[achievement]",
+    "id": "original.quest.981",
+    "level_max": 99,
+    "level_min": 48,
+    "path": "n_quest/epicjob/achievement_50_epicjob_soul_4.qst",
+    "runtime_id": "original.quest.981",
+    "state": "runtime",
     "type": "[seeking]"
    },
    {
@@ -24936,12 +24936,12 @@
    },
    {
     "grade": "[normaly repeat]",
-    "id": "n_quest/northmyre/leshphon/repeat_67_leshphon_hilder_bless.qst",
+    "id": "original.quest.9925",
     "level_max": 99,
     "level_min": 55,
     "path": "n_quest/northmyre/leshphon/repeat_67_leshphon_hilder_bless.qst",
-    "runtime_id": "",
-    "state": "parsed",
+    "runtime_id": "original.quest.9925",
+    "state": "runtime",
     "type": "[seeking]"
    },
    {
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 17,
+   "runtime": 18,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 75,
+   "runtime": 83,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,
@@ -42035,7 +42035,7 @@
     "[use item]": 14
    },
    "post_60": 2306,
-   "runtime": 120,
+   "runtime": 137,
    "source": 3716,
    "target": 1404,
    "unknown_level": 6
@@ -42070,9 +42070,9 @@
   "towns_npcs": {
    "npc_files_source": 180,
    "npc_index_source": 161,
-   "npc_runtime_placed": 15,
+   "npc_runtime_placed": 19,
    "scope": "level_60_whitelist_required",
-   "towns_runtime": 12,
+   "towns_runtime": 13,
    "towns_source": 16
   }
  }

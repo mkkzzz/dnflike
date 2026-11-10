@@ -35,6 +35,8 @@ func run() -> void:
 			var route: Dictionary = dungeons[dungeon_id]
 			if bool(route.get("legacy", false)):
 				continue
+			if String(route.get("mode", "")) == "native_maze":
+				continue
 			if bool(route.get("hidden", false)):
 				print("[WS1_WORLD_ROOMS] SKIP hidden dungeon ", dungeon_id)
 				continue

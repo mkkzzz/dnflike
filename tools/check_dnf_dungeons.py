@@ -35,6 +35,7 @@ def main() -> int:
     fails: list[str] = []
     warnings: list[str] = []
     playable = 0
+    native_routes = 0
     rooms_total = 0
     covered: dict[str, list[str]] = {}
 
@@ -65,6 +66,21 @@ def main() -> int:
         path = GAME / export.replace('res://', '')
         if not export or not path.is_file():
             fails.append('%s: 地图导出缺失 %s' % (name, export or '(空)'))
+            continue
+        if spec.get('mode') == 'native_maze':
+            data = json.loads(path.read_text(encoding='utf-8'))
+            source = spec.get('source', {})
+            dungeon = data.get('dungeon', {})
+            if not source.get('path') or source.get('path') != dungeon.get('path'):
+                fails.append('%s: native_maze 源路径不一致' % name)
+            if not source.get('sha256') or source.get('sha256') != dungeon.get('sha256'):
+                fails.append('%s: native_maze SHA256 不一致' % name)
+            if not data.get('dungeon', {}).get('placements'):
+                fails.append('%s: native_maze 导出没有 placement' % name)
+            playable += 1
+            native_routes += 1
+            print('   native_maze placements=%d source=%s' %
+                  (len(data.get('dungeon', {}).get('placements', [])), source.get('path')))
             continue
         if not rooms:
             fails.append('%s: 没有任何房间' % name)
@@ -159,7 +175,8 @@ def main() -> int:
             else:
                 fails.append('%s 没有任何城镇入口能选到它' % name)
 
-    print('\n[DUNGEONS] 可玩副本 %d 个、房间 %d 间' % (playable, rooms_total))
+    print('\n[DUNGEONS] 可玩副本 %d 个、固定房间 %d 间、原生迷宮 %d 个' %
+          (playable, rooms_total, native_routes))
     if fails:
         print('[DUNGEONS] FAIL %d' % len(fails))
         for line in fails:

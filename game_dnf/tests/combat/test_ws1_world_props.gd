@@ -41,7 +41,8 @@ func run() -> void:
 		ids.sort()
 		for dungeon_id: String in ids:
 			var route: Dictionary = dungeons[dungeon_id]
-			if bool(route.get("legacy", false)) or bool(route.get("hidden", false)):
+			if bool(route.get("legacy", false)) or bool(route.get("hidden", false)) \
+					or String(route.get("mode", "")) == "native_maze":
 				continue
 			audit_dungeon(dungeon_id, route)
 		test_room_snapshot_persistence(dungeons)
