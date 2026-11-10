@@ -746,13 +746,18 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if name == "upper":_append_upper_followup(move)
 	if spec.has("cross_bleed_base"):
 		var row: Array = skill["level_row"]
+		move["cross_followup"] = spec["cross_followup"]
+		move["cross_fixed_base"] = spec["fixed_attack_base"]["by_level"]
+		move["cross_wave_fixed"] = float(row[7])
+		move["cross_followup_damage"] = [float(row[10]),float(row[11])]
 		var stage: Dictionary = move["stages"][0]
 		# CBD073 ends the ordinary route when body frame 10 is reached.
 		stage["duration"] = float(stage["timeline"][10]["start_ms"])
-		stage["cancel_at"] = stage["duration"]
-		var wave: Dictionary = stage["hits"][0]
-		wave["hitstop_ms"] = _atk_hitstop(wave["atk"],0.0)
-		wave["size_rate"] = NativeMotion.f32(float(skill["static"][1])*NativeMotion.f32(0.01))
+		for cross_stage: Dictionary in move["stages"]:
+			var wave: Dictionary = cross_stage["hits"][0]
+			wave["hitstop_ms"] = _atk_hitstop(wave["atk"],0.0)
+			wave["size_rate"] = NativeMotion.f32(float(skill["static"][1])*NativeMotion.f32(0.01))
+			cross_stage["cancel_at"] = cross_stage["duration"]
 		var bleed_percent := NativeMotion.f32(float(row[2])*NativeMotion.f32(0.1))
 		if int(skill_levels.get("bloody_vigorous",0)) > 0:
 			var vigor := _skill_row("skill/swordman/bloodyvigorous.skl")

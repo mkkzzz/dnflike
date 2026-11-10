@@ -757,6 +757,9 @@ func buffering(code: int) -> void:
 	if player["action"] == "illusionslash" and (code == KEY_X or skill_request(code) == "illusionslash"):
 		if int(player["stage"]) < 4:player["illusion_cast"]["tap"] = true
 		return
+	if player["action"] == "rage_slash" and (code == KEY_X or skill_request(code) == "rage_slash"):
+		if job == "berserker" and int(player["stage"]) == 0:player["gorecross_followup_tap"] = true
+		return
 	if code in [KEY_X,KEY_Z] and player["action"] == "upper":
 		var followup := float(move_def("upper").get("upper_followup_at",-1.0))
 		if followup >= 0.0:
@@ -1321,6 +1324,15 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		elif step_grab_blast(m,stage,event_clock):return
 	else:
 		apply_player_hits(stage,old_event_clock,event_clock)
+	if player.get("gorecross_followup_tap",false):
+		player.erase("gorecross_followup_tap")
+		var gate: Dictionary = m["cross_followup"]
+		# CB3F07 tests the body tag after processing Slash2's ordinary release tag.
+		if event_clock >= float(gate["opens_at"]) and event_clock < float(gate["closes_at"]):
+			end_action_fx()
+			player["fx_tag"] = "act:%d" % (action_seq+1)
+			start_stage(1,float(gate["seek_to"]))
+			return
 	# CB1BB3 checks the full-charge release's body frame before the next phase.
 	if stage.has("hardattack_followup") and clock >= float(stage["timeline"][9]["start_ms"]):
 		start_hardattack_followup(stage["hardattack_followup"])
@@ -1431,7 +1443,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		player["queued_jump"] = false
 		play_sound("jump")
 	elif clock >= float(stage.get("continue_at",cancel_at)) and pending == name and m.has("stages") \
-		and name not in ["charge_crash","rapidmoveslash"] \
+		and name not in ["charge_crash","rapidmoveslash","rage_slash"] \
 		and not m.has("upper_followup_at") and m.get("native_state","") != "grab_blast" and int(player["stage"]) < m["stages"].size()-1 \
 		and (name != "weaponcombo" or (input_ready and clock < duration)):
 		player["queued_skill"] = ""
@@ -2312,6 +2324,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	player["clock"] = opening_clock
 	player["hits"] = {}
 	player.erase("gorecross_release_armed")
+	player.erase("gorecross_followup_tap")
 	player.erase("queued_upper_followup")
 	player.erase("action_slide")
 	action_seq += 1
@@ -3359,13 +3372,28 @@ func prepare_hop_shockwave(template: Dictionary) -> Dictionary:
 
 func prepare_cross_wave(template: Dictionary) -> Dictionary:
 	var move := move_def("rage_slash")
-	var hit := template.duplicate()
+	var base := native_fixed_attack_base(move["cross_fixed_base"])
+	var hit := native_fixed_hit(template,cross_wave_fixed(move["cross_wave_fixed"],base,template["percent"]))
+	hit["skill_id"] = "rage_slash"
 	var bleed: Dictionary = move["cross_bleed"].duplicate()
 	bleed["status_level"] += blood_memory_bleed_level_bonus()
 	bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["cross_bleed_base"])
-	hit["effects"] = [bleed]
 	set_blood_memory_resistance_payload(hit)
+	if template["native_controller"].has("extra_layers"):
+		# 9FBF03 leaves bleed disabled until the first follow-up contact changes the ATK.
+		var damage: Array = move["cross_followup_damage"]
+		var followup := native_fixed_hit(hit,cross_wave_fixed(damage[1],base,damage[0]))
+		followup["percent"] = damage[0]
+		followup["effects"] = [bleed]
+		hit["cross_second_impact"] = followup
+	else:
+		hit["effects"] = [bleed]
 	return hit
+
+func cross_wave_fixed(value: float, base: int, percent: float) -> float:
+	# CB4034 and 9FC168 pass the weapon bonus as the fixed-attack divisor to 90A950.
+	var product := native_fixed_attack_product(value,base)
+	return float(int(_native_float32(_native_float32(product*100.0)/maxf(1.0,percent))))
 
 func set_blood_memory_resistance_payload(hit: Dictionary) -> void:
 	var passive_rank := int(skill_levels.get("bleedingmastery",0))
@@ -3488,7 +3516,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
 	var club_wave := native_kind == "illusion_club_wave"
-	var native_down := native_outrage or club_wave or native_kind == "bloodblast"
+	var native_down := native_outrage or club_wave or native_kind == "bloodblast" \
+		or (native_kind == "gorecross_wave" and Kernel.MoveTable.enum_value(atk,"damage_reaction") == "[down]")
 	var rapid_slash := native_kind == "rapid_slash"
 	var native_illusion := native_kind in ["illusion_melee","illusion_finish","illusion_wave"]
 	var native_blood := rapid_slash or native_illusion or native_kind == "gorecross_wave"
@@ -4823,7 +4852,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
-					if common_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
+					if common_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field","gorecross_wave"]:
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
 					var first_target: bool = common_impact and not o["hits"].keys().any(func(key):return key is int)
@@ -4850,8 +4879,15 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						var delta_x := roundi(target["pos"].x)-source_x
 						if delta_x != 0 and (stationary_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
+					var contact_count := hit_count
 					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target,
 						int(o["facing"]) if illusion_travel else 0)
+					if hit.has("cross_second_impact") and hit_count > contact_count:
+						# 9FBB40 replaces the object ATK once, then requests contact on the same target directly.
+						hit = hit["cross_second_impact"]
+						o["hit"] = hit
+						if float(target["hp"]) > 0.0:
+							land_hit(attacker,target,hit,enemy_mid_height_point(target),hit_facing,float(o["power"]))
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break
@@ -6257,6 +6293,12 @@ func view_snapshot() -> Dictionary:
 			front["effect"] = o["def"]["add_fx"]
 			front["depth_offset"] = 3 if controller["kind"] == "hop_shockwave" else 1
 			objs.append(front)
+			for layer: String in controller.get("extra_layers",[]):
+				var extra := item.duplicate()
+				extra["id"] = "%s:%s"%[o["id"],layer]
+				extra["effect"] = layer
+				extra["depth_offset"] = 2
+				objs.append(extra)
 		elif controller.get("kind","") == "hundred_sword_field":
 			item["depth_offset"] = -2
 			item["hold_last_frame"] = true

@@ -1442,12 +1442,19 @@ def build_move(
         slash = records[CHR_FX + "gorecross/slash2.ani"]["decoded"]["timeline"]
         release = next(frame["start_ms"] for frame in slash if frame["items"].get("23") == 1)
         body = records[CHR_ANI + "gorecross.ani"]["decoded"]["timeline"]
+        followup_gate = next(frame["start_ms"] for frame in body if frame["items"].get("23") == 1)
+        followup_release = next(frame["start_ms"] for frame in body if frame["items"].get("23") == 2)
+        wave_hit = {"object": wave, "percent_col": 1, "offset": [85, 0, 82], "starts_at_zero": True}
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "cross_followup": {"opens_at": followup_gate, "closes_at": release, "seek_to": body[10]["start_ms"]},
                 "stages": [{"ani": "gorecross", "voice": "R_TSLASH",
                     "sounds": [{"key": "R_TSLASH", "at": body[6]["start_ms"]}], "fx": [
                     {"key": key, "at": 0, "action_clock": True} for key in ("gore_slash1", "gore_slash2")],
-                    "hits": [{"object": wave, "at": release, "percent_col": 1, "offset": [85, 0, 82],
-                              "starts_at_zero": True, "native_controller": {"kind": "gorecross_wave"}}]}]}
+                    "hits": [{**wave_hit, "at": release, "native_controller": {"kind": "gorecross_wave"}}]},
+                    {"ani": "gorecross", "fx": [
+                        {"key": key, "at": 0, "action_clock": True} for key in ("gore_slash3", "gore_slash4")],
+                     "hits": [{**wave_hit, "at": followup_release, "atk": OBJ_ROOT + "attackinfo/gorecrossadd.atk",
+                               "native_controller": {"kind": "gorecross_wave", "extra_layers": ["gore_cross3", "gore_cross4"]}}]}]}
     if key == "momentaryslash" and native_draw:
         # CC7F44 selects body/ATK slot 8. The body has no attack boxes.
         atk = "character/swordman/attackinfo/momentaryslash.atk"
@@ -2538,6 +2545,7 @@ def main() -> int:
             if key == "gorecross":
                 move["weapon_tracks"] = cross_tracks
                 move["cross_bleed_base"] = bleed_attack_base
+                move["fixed_attack_base"] = fixed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base

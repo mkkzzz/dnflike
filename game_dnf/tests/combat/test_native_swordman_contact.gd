@@ -1637,6 +1637,68 @@ func check_gorecross_wave() -> void:
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 
+func check_gorecross_followup() -> void:
+	for sample: Array in [[349,KEY_X,"berserker",false],[350,KEY_X,"berserker",true],
+			[499,KEY_A,"berserker",true],[500,KEY_A,"berserker",false],[350,KEY_X,"weaponmaster",false]]:
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":sample[2]})
+		profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["rage_slash"]
+		start_room("original_27601","katana",1,spec,sample[2])
+		press(KEY_A)
+		step(0)
+		game.numeric_player.values["attack_speed"] = 1.0
+		step(float(sample[0])-1.0)
+		var mp: float = game.player["mp"]
+		var hp: float = game.player["hp"]
+		press(sample[1])
+		step(1)
+		check((game.player["stage"]==1)==sample[3],"Gore Cross checks job, shortcut and both native input boundaries: %s"%[sample])
+		if not sample[3]:
+			step(502.0-float(sample[0]))
+			step(0)
+			check(game.objects.size()==1 and not game.objects[0]["hit"]["native_controller"].has("extra_layers"),
+				"Rejected Gore Cross inputs leave exactly one ordinary wave")
+			continue
+		check(game.player["clock"]==730.0 and game.player["mp"]==mp and game.player["hp"]==hp,
+			"Gore Cross seeks to body frame 10 without paying for another cast")
+		step(229)
+		check(cues("GORECROSS_ATK3").is_empty(),"Gore Cross waits for body frame 14 before the third swing sound")
+		step(1)
+		check(cues("GORECROSS_ATK3").size()==1,"Gore Cross plays the third swing sound on body frame 14")
+		step(30)
+		check(game.objects.is_empty(),"The second body tag arms the extra wave without an ordinary wave")
+		step(1)
+		check(game.objects.size()==1,"The next update emits exactly one follow-up wave")
+		if game.objects.is_empty():continue
+		var wave: Dictionary = game.objects[0]
+		check(wave["hit"]["atk_path"].ends_with("/gorecrossadd.atk") and wave["hit"]["percent"]==149.0,
+			"Gore Cross equips the original follow-up ATK at the base wave damage column")
+		for layer: String in ["gore_cross3","gore_cross4"]:
+			check(game.view.object_views.has("%s:%s"%[wave["id"],layer]),"Gore Cross draws the original "+layer)
+		var target: Dictionary = api.spawn_dummy(wave["pos"])
+		var other: Dictionary = game.spawn_enemy(wave["pos"])
+		other["hp"] = 5000.0
+		game.numeric_player.values["hit"] = 1.0
+		check(wave["hit"]["fixed_amount"]==136.0 and wave["hit"]["effects"].is_empty(),
+			"Gore Cross snapshots column 7 and leaves the initial follow-up contact without bleed")
+		game.step_objects(39.0)
+		check(wave["hits"].is_empty(),"Gore Cross's follow-up wave starts with the original blank attack frame")
+		var count: int = game.hit_count
+		game.step_objects(1.0)
+		check(wave["hits"].has(target["id"]) and target["state"]=="native_down_flight",
+			"Gore Cross uses the original follow-up launch reaction (%s, %s)"%[target["state"],wave["hits"]])
+		check(wave["hits"].has(other["id"]) and game.hit_count==count+3,
+			"Gore Cross repeats contact once on the first target and only once on later targets (%s, %s)"%[game.hit_count-count,wave["hits"]])
+		check(wave["hit"]["percent"]==167.0 and wave["hit"]["fixed_amount"]==145.0 and wave["hit"]["effects"].size()==1,
+			"Gore Cross installs columns 10 and 11 and restores bleed for the second ATK")
+		step(338)
+		check(game.player["action"]=="rage_slash","Gore Cross follows through to the final body frame")
+		step(1)
+		check(game.player["state"]=="idle","Gore Cross recovers at the end of the follow-up ANI")
+
 func check_hopsmash_bleed() -> void:
 	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:
 		var rank: int = scenario[0]
@@ -8007,6 +8069,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
 	check_gorecross_wave()
+	check_gorecross_followup()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()

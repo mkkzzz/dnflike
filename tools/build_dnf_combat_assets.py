@@ -457,7 +457,11 @@ EFFECTS = {
     'triple_move2': 'character/swordman/effect/animation/tripleslash/move2.ani',
     'gore_slash1': 'character/swordman/effect/animation/gorecross/slash1.ani',
     'gore_slash2': 'character/swordman/effect/animation/gorecross/slash2.ani',
+    'gore_slash3': 'character/swordman/effect/animation/gorecross/slash3.ani',
+    'gore_slash4': 'character/swordman/effect/animation/gorecross/slash4.ani',
     'gore_cross_add': 'passiveobject/character/swordman/animation/gorecross2.ani',
+    'gore_cross3': 'passiveobject/character/swordman/animation/gorecross3.ani',
+    'gore_cross4': 'passiveobject/character/swordman/animation/gorecross4.ani',
     'frenzy_cast': 'character/swordman/effect/animation/frenzy/cast.ani',
     'frenzy_blast': 'character/swordman/effect/animation/frenzy/blast.ani',
     'frenzy_buff': 'character/swordman/effect/animation/frenzy/buff.ani',
@@ -1768,6 +1772,8 @@ def main() -> int:
                         help='Add the ordinary Blood Blast layers and sounds')
     parser.add_argument('--extend-hop-smash', action='store_true',
                         help='Add the original Hop Smash shockwave front layer')
+    parser.add_argument('--extend-gorecross', action='store_true',
+                        help='Add the original Gore Cross follow-up slash and projectile layers')
     parser.add_argument('--extend-bloody-rave-audio', action='store_true',
                         help='Add the original Bloody Rave cast, loop and release sounds')
     parser.add_argument('--extend-bloody-rave-end', action='store_true',
@@ -1843,6 +1849,11 @@ def main() -> int:
         parser.error('--output and --pack require --extend-raxy-starfish, --extend-outerwall or --extend-native-particles')
     if args.extend_hop_smash:
         specs = [('effects', 'hop_smash_front', EFFECTS['hop_smash_front'])]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_gorecross:
+        specs = [('effects', key, EFFECTS[key]) for key in
+                 ('gore_slash3', 'gore_slash4', 'gore_cross3', 'gore_cross4')]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_outerwall:
