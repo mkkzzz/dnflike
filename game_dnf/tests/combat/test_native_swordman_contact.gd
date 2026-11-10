@@ -1692,6 +1692,17 @@ func check_gorecross_followup() -> void:
 		var other: Dictionary = game.spawn_enemy(contact)
 		other["hp"] = 5000.0
 		game.numeric_player.values["hit"] = 1.0
+		var ground_only := facing < 0
+		var slides: Array = []
+		var observe_damage := func(event):
+			if event["target"] == target["id"]:
+				slides.append([target["push_v"],target["push_ms"],target["stun_ms"],
+					game.last_damage["trace"]["defense_factor"]])
+		if ground_only:
+			target["def"] = target["def"].duplicate(true)
+			target["def"]["motions"].merge({"down":"","overturn":""},true)
+			target["numeric"].values.merge({"hit_recovery":0.0,"physical_defense":1000.0},true)
+			game.bus.subscribe("combat.damage",observe_damage)
 		check(wave["hit"]["fixed_amount"]==136.0 and wave["hit"]["effects"].is_empty(),
 			"Gore Cross snapshots column 7 and leaves the initial follow-up contact without bleed")
 		game.step_objects(39.0)
@@ -1699,7 +1710,15 @@ func check_gorecross_followup() -> void:
 		var count: int = game.hit_count
 		game.step_objects(1.0)
 		check(wave["pos"]==contact,"Gore Cross's follow-up travels 22 pixels by the first attack frame")
-		check(wave["hits"].has(target["id"]) and target["state"]=="native_down_flight",
+		if ground_only:
+			game.bus.unsubscribe("combat.damage",observe_damage)
+			check(slides.size()==2 and slides[0].slice(0,3)==[-800.0,333.0,333.0]
+				and slides[1].slice(0,3)==[-400.0,150.0,500.0],
+				"Gore Cross falls back to fixed knockback on first contact and ordinary knockback on the repeat: %s"%[slides])
+			check(slides.size()==2 and slides[0][3]<1.0 and slides[0][3]==slides[1][3],
+				"Both contacts keep the same physical defense calculation")
+		var reaction := "hurt" if ground_only else "native_down_flight"
+		check(wave["hits"].has(target["id"]) and target["state"]==reaction,
 			"Gore Cross uses the original follow-up launch reaction (%s, %s)"%[target["state"],wave["hits"]])
 		check(wave["hits"].has(other["id"]) and game.hit_count==count+3,
 			"Gore Cross repeats contact once on the first target and only once on later targets (%s, %s)"%[game.hit_count-count,wave["hits"]])

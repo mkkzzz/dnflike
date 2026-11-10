@@ -3383,6 +3383,9 @@ func prepare_cross_wave(template: Dictionary) -> Dictionary:
 		# 9FBF03 leaves bleed disabled until the first follow-up contact changes the ATK.
 		var damage: Array = move["cross_followup_damage"]
 		var followup := native_fixed_hit(hit,cross_wave_fixed(damage[1],base,damage[0]))
+		# 9FC0A2 installs [knuck back] mode 1. 9FBBAF clears it before the second contact.
+		hit["atk"]["knock_back"] = [1]
+		followup["atk"]["knock_back"] = [0]
 		followup["percent"] = damage[0]
 		followup["effects"] = [bleed]
 		hit["cross_second_impact"] = followup
