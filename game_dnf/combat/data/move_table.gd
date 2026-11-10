@@ -976,7 +976,9 @@ func _build_stage(spec: Dictionary, skill: Dictionary, weapon_hits: Array = []) 
 						"duration_ms":int(row[16]),"source_bleed_total":int(row[14])}]
 					hit["size_rate"] = _native_thirst_size(float(row[17]))
 				hit["native_controller"] = controller
-				if controller.get("kind","") == "bloodblast":hit["starts_at_zero"] = true
+				if controller.get("kind","") == "bloodblast":
+					hit["starts_at_zero"] = true
+					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
 			hit["rear_fx"] = String(h.get("rear_fx",""))
 			if h.get("starts_at_zero",false):hit["starts_at_zero"] = true
 			# Explicit skill-specific size column; other objects retain native size.

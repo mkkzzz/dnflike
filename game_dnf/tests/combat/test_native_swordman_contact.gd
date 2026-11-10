@@ -6352,6 +6352,12 @@ func check_bloodblast() -> void:
 		"at 100 ms only the ground burst registers contact with the centered target")
 	check(game.last_damage["trace"]["fixed_part"]==1448.0,
 		"the damage pipeline uses the released integer even after independent attack changes")
+	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
+		"the ground burst applies its original 50 ms pause to the target")
+	game.update_enemy(target,49.0)
+	check(target["stuck_ms"]==1.0 and target["clock"]==0.0,"the ground-burst target stays paused through 49 ms")
+	game.update_enemy(target,1.0)
+	check(target["stuck_ms"]==0.0,"the ground-burst target resumes at 50 ms")
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(game.view.object_views.has(ground["id"]) and game.view.object_views.has("%s:layer:0" % ground["id"]),
 		"the original ground burst exposes both its back and front layers")
@@ -6372,6 +6378,8 @@ func check_bloodblast() -> void:
 	check(pillar["hits"].has(target["id"]) and target["state"]=="air"
 		and is_equal_approx(float(target["vz"]),450.0*lift) and sub["hit"]["lift"]==450.0,
 		"the pillar launches at 1000 ms with the authored static lift, also configured on the spray")
+	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
+		"the main pillar applies its original 50 ms pause to the target")
 	game.monsters.clear()
 	pillar["hits"][99] = true
 	sub["hits"][99] = true
@@ -6387,6 +6395,7 @@ func check_bloodblast() -> void:
 		"all ten ALS tracks are attached at their original layer positions and remain blank at 1099 ms")
 	move_target(target,POINT+Vector2(100.75,-12.25))
 	target["vz"] = 0.0
+	target["stuck_ms"] = 0.0
 	game.monsters.append(target)
 	game.step_objects(1)
 	check(pillar["hits"].is_empty(),"the light layer does not widen the pillar's main ANI hitbox")
@@ -6408,6 +6417,8 @@ func check_bloodblast() -> void:
 	check(sub["hits"].has(target["id"]) and target["state"]=="air"
 		and is_equal_approx(float(target["vz"]),450.0*lift),
 		"the centered spray launches at 1120 ms with its own static lift")
+	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
+		"the centered spray applies its original 50 ms pause to the target")
 	var contact_origin := Vector2(Vector2i(target["pos"]))
 	check(contact_keys.all(func(key):return (cues(key).size()==1 and cues(key)[0]["point"]==contact_origin
 		and cues(key)[0]["height"]==0.0 and cues(key)[0]["facing"]==1)),
@@ -6418,10 +6429,12 @@ func check_bloodblast() -> void:
 		"the spray first resets at 1180 ms and the pillar cue stays one-shot")
 	move_target(target,contact_origin,30.0)
 	target["vz"] = 0.0
+	target["stuck_ms"] = 70.0
 	game.monsters.append(target)
 	game.step_objects(0.0)
 	check(sub["hits"].has(target["id"]) and contact_keys.all(func(key):return cues(key).size()==1),
 		"the same spray still hits an airborne target, without creating the ground effects")
+	check(target["stuck_ms"]==70.0,"the centered spray preserves the airborne target's longer pause")
 	game.monsters.clear()
 	step(559)
 	check(game.player["action"]=="bloodblast","recovery holds at 559 ms")
