@@ -156,6 +156,10 @@
    "normal": "cold_boy",
    "boss": "cold_boy"
   },
+  "whiteland": {
+   "normal": "whiteland",
+   "boss": "whiteland_boss"
+  },
   "whitenight": {
    "normal": "whitenight",
    "boss": "whitenight_boss"
@@ -502,6 +506,18 @@
    "source": "music/cold_boy.ogg",
    "sha256": "bb9bf3247a52aac9629c8fdbc4f69a7c079d2776ac34b8b4d4a46f6b1a6e8e47",
    "bytes": 2251132
+  },
+  "whiteland": {
+   "file": "audio/bgm/whiteland.ogg",
+   "source": "music/whiteland.ogg",
+   "sha256": "6e684904dee87081ba8619795e4ed92b3ad7371cc319645374035443eee5a5d6",
+   "bytes": 2078294
+  },
+  "whiteland_boss": {
+   "file": "audio/bgm/whiteland_boss.ogg",
+   "source": "music/whiteland_boss.ogg",
+   "sha256": "c37c44db2ea7575e042fb84f3583a392ba74591a3d2e3b7e6ce57e9b0b146ddf",
+   "bytes": 1997567
   },
   "whitenight": {
    "file": "audio/bgm/whitenight.ogg",

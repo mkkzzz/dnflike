@@ -301,6 +301,20 @@
     "sha256": "e4ca542dfdbb447d5b3382fcb506e47ba20348b455bb14d8fb816cd62247f01a"
    }
   },
+  "whiteland": {
+   "name": "白色废墟",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/whiteland_v1/map_export.json",
+   "min_level": 44,
+   "monster_level": 47,
+   "source": {
+    "path": "dungeon/act5/whiteland.dgn",
+    "sha256": "096575dbf1ac14fab9681071a8ddc00189008977353d07c706006d0aa5e11f25"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

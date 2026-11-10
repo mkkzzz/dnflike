@@ -189,6 +189,26 @@ class LibraryExport(unittest.TestCase):
             self.assertEqual(role, '[boss]')
             self.assertEqual(len(boss_rows), 1)
 
+    def test_white_land_export_keeps_two_boss_cells_and_shared_layouts(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/whiteland_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '096575dbf1ac14fab9681071a8ddc00189008977353d07c706006d0aa5e11f25')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [4, 4])
+        self.assertEqual(dungeon['start_map_raw'], [1, 3])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0, 3, 0])
+        self.assertEqual(len(dungeon['rooms']), 12)
+        self.assertEqual(len(dungeon['placements']), 20)
+        self.assertEqual(len(export['images']), 62)
+        for path in ('map/whiteland/boss(0,0).map', 'map/whiteland/boss(3,0).map'):
+            room = dungeon['rooms'][path]
+            role = next(span['values'][0][2] for span in room['raw'] if span['tag'] == '[type]')
+            boss_rows = [row for row in room['monsters'] if row['raw'][-1] == '[boss]']
+            self.assertEqual(role, '[boss]')
+            self.assertEqual(len(boss_rows), 1)
+        self.assertEqual(dungeon['rooms']['map/whiteland/normal1(0,1).map']['greed_pairs'], [[12, 12]])
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

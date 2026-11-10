@@ -915,9 +915,9 @@
     "id": 43,
     "min_level": 44,
     "path": "dungeon/act5/whiteland.dgn",
-    "runtime_id": "",
+    "runtime_id": "whiteland",
     "sha256": "096575dbf1ac14fab9681071a8ddc00189008977353d07c706006d0aa5e11f25",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 48,
@@ -5255,8 +5255,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/bantu/rabbitman/rabbitman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_rabbitman_rabbitman",
+    "state": "runtime"
    },
    {
     "id": 61451,
@@ -5895,8 +5895,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/snowman/louis/louis.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_snowman_louis_louis",
+    "state": "runtime"
    },
    {
     "id": 61706,
@@ -5983,8 +5983,8 @@
     "level_max": 45,
     "level_min": 30,
     "path": "monster/spirit/firehigherspirit.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spirit_firehigherspirit",
+    "state": "runtime"
    },
    {
     "id": 61252,
@@ -8791,8 +8791,8 @@
     "level_max": 51,
     "level_min": 46,
     "path": "monster/newmonsters/snowman/sasquatch/sasquatch.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_snowman_sasquatch_sasquatch",
+    "state": "runtime"
    },
    {
     "id": 43006,
@@ -8895,8 +8895,8 @@
     "level_max": 47,
     "level_min": 47,
     "path": "monster/newmonsters/snowman/snowman/snowman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_snowman_snowman_snowman",
+    "state": "runtime"
    },
    {
     "id": 62101,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 33,
+   "runtime": 34,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 172,
+   "runtime": 177,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

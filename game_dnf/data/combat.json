@@ -1365,6 +1365,31 @@
    "mob": "monster/newmonsters/spider/slotorblind/slotorblind.mob",
    "bank": "newmonsters_spider_slotorblind_slotorblind",
    "name": "slotorblind"
+  },
+  "newmonsters_bantu_rabbitman_rabbitman": {
+   "mob": "monster/newmonsters/bantu/rabbitman/rabbitman.mob",
+   "bank": "newmonsters_bantu_rabbitman_rabbitman",
+   "name": "rabbitman"
+  },
+  "newmonsters_snowman_louis_louis": {
+   "mob": "monster/newmonsters/snowman/louis/louis.mob",
+   "bank": "newmonsters_snowman_louis_louis",
+   "name": "louis"
+  },
+  "newmonsters_snowman_sasquatch_sasquatch": {
+   "mob": "monster/newmonsters/snowman/sasquatch/sasquatch.mob",
+   "bank": "newmonsters_snowman_sasquatch_sasquatch",
+   "name": "sasquatch"
+  },
+  "newmonsters_snowman_snowman_snowman": {
+   "mob": "monster/newmonsters/snowman/snowman/snowman.mob",
+   "bank": "newmonsters_snowman_snowman_snowman",
+   "name": "snowman"
+  },
+  "spirit_firehigherspirit": {
+   "mob": "monster/spirit/firehigherspirit.mob",
+   "bank": "spirit_firehigherspirit",
+   "name": "firehigherspirit"
   }
  },
  "boss_hp_lines": 3,
