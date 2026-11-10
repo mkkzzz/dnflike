@@ -882,11 +882,40 @@ func check_triple_cooldown() -> void:
 			"the cooldown stays at zero up to the last active frame or an interruption")
 		if interrupted:game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
 		else:step(1)
-		check(game.player["action"]=="" and is_equal_approx(float(game.player["cooldowns"].get("triple",0.0)),4.5),
-			"ending state 22 starts the full cooldown with the actor modifier")
+		check(game.player["action"]=="" and game.player["cooldowns"].get("triple",0.0)==4.275,
+			"ending state 22 starts the cooldown with the katana and actor modifiers")
 		game.step_game(100.0)
-		check(is_equal_approx(float(game.player["cooldowns"].get("triple",0.0)),4.4),
+		check(game.player["cooldowns"].get("triple",0.0)==4.175,
 			"the cooldown ticks after leaving state 22")
+
+func check_weapon_skill_cooldown() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["normalwave","grabblastblood"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var catalog := SkillCatalog.new()
+	for sample: Array in [["original_27000","shortsword",2000,3149],["original_27601","katana",1900,3000],["","katana",2000,3000]]:
+		if String(sample[0]).is_empty():
+			check(profile.command("numbers.gear_unequip",{"slot":"weapon"})["ok"],"remove the weapon through the profile")
+		else:
+			var gear := profile.command("numbers.gear_give",{"id":sample[0]})
+			check(gear["ok"] and profile.command("numbers.gear_equip",{"uid":gear.get("uid","")})["ok"],
+				"equip the original weapon through the profile: "+sample[0])
+		var spec := profile.stats()
+		spec["skill_slots"] = ["normalwave","grabblastblood"]
+		start_room(sample[0],sample[1],1,spec,"berserker")
+		for cast: Array in [["upper",KEY_Z,sample[2]],["normalwave",KEY_A,sample[3]],["grabblastblood",KEY_S,6000]]:
+			var skill: String = cast[0]
+			var expected := float(cast[2])/1000.0
+			game.player["mp"] = 5000.0
+			press(cast[1])
+			step(0)
+			check(game.player["action"]==skill and game.player["cooldowns"].get(skill,0.0)==expected,
+				"the weapon class adjusts the actual shortcut cooldown for "+skill+" "+sample[0])
+			check(catalog.get_profile_skill(skill,profile.profile)["cooldown"]==expected,
+				"the profile skill preview shows the same source cooldown for "+skill+" "+sample[0])
+			game.end_action()
 	step(370)
 	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
 		"the next cast uses the refreshed normal three-stage move")
@@ -1640,20 +1669,20 @@ func check_frenzy_attributes() -> void:
 		game.rng.reseed(70)
 		game.land_hit(game.player,target,hit,point,1,100)
 		check(not game.last_damage["missed"],"Frenzy turns the same roll into a hit")
-		var cooldown_rate := float(after["cooldown_rate"])
+		var expected_cooldowns: Array = [5.9,15.85,49.85,2.802,1.9] if sample[0]==1 else [5.826,15.682,49.682,2.749,1.9]
 		for index in cooldown_skills.size():
 			var skill: String = cooldown_skills[index]
 			var move: Dictionary = game.move_def(skill)
+			check(game.frenzy_cooldown_reduction_ms(skill)==sample[3][index],
+				"Frenzy reads its original flat reduction for "+skill)
 			game.begin_skill_cooldown(skill,move)
-			check(is_equal_approx(float(game.player["cooldowns"].get(skill,0.0)),
-				(float(move["cool_ms"])-float(sample[3][index]))*cooldown_rate/1000.0),
-				"Frenzy adjusts only the sourced cooldown by flat milliseconds for "+skill)
+			check(game.player["cooldowns"].get(skill,0.0)==expected_cooldowns[index],
+				"Frenzy subtracts its original flat value before the weapon adjustment for "+skill)
 		game.end_action()
 		game.player["cooldowns"].erase("rage_slash")
 		press(KEY_S)
 		step(0)
-		check(game.player["action"]=="rage_slash" and is_equal_approx(float(game.player["cooldowns"].get("rage_slash",0.0)),
-			(float(game.move_def("rage_slash")["cool_ms"])-float(sample[3][3]))*cooldown_rate/1000.0),
+		check(game.player["action"]=="rage_slash" and game.player["cooldowns"].get("rage_slash",0.0)==expected_cooldowns[3],
 			"the Gore Cross shortcut uses the sourced cooldown through actual cast")
 		var reaction: String = game.hurt_player(1,target,{},-1)
 		var rules: Dictionary = game.rules["reaction"]
@@ -6911,7 +6940,7 @@ func check_rapid_move_slash_fee_failure() -> void:
 				and not game.player["cooldowns"].has("rapidmoveslash"),
 				"an unaffordable repeat leaves the current slash and does not start cooldown early")
 			step(300)
-		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==20.0
+		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==19.0
 			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
 			"interruption or natural exit starts the cooldown without another payment")
 
@@ -8668,6 +8697,7 @@ func run() -> void:
 	check_triple_slash()
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
+	check_weapon_skill_cooldown()
 	check_overdrive_attributes()
 	check_reckless_attributes()
 	check_reckless_hit_strength()

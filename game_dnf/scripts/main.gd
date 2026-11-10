@@ -1661,6 +1661,7 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
 	var base_ms := int(move["cool_ms"])-frenzy_cooldown_reduction_ms(name)
 	if base_ms <= 0:return
+	base_ms = table.weapon_cooldown_ms(move,base_ms)
 	var rate := float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0
 	# 90A0BD converts to float32, multiplies, then truncates the result.
 	var duration_ms := int(ActorNumbers.native_scalar(ActorNumbers.native_scalar(float(base_ms))*ActorNumbers.native_scalar(rate)))

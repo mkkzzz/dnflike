@@ -179,7 +179,8 @@ func _build_player() -> void:
 		"jump_power":float(base.get("jump_power",0)),"hit_recovery":float(base.get("hit_recovery",500)),
 		"weight":float(base.get("weight",68000)),
 		"move_speed":float(base.get("move_speed",850)),"weapon_wav":chr.get("weapon_wav",[]),
-		"weapon_hit_info":chr.get("weapon_hit_info",[]),"width":chr.get("width",[0,0]),
+		"weapon_hit_info":chr.get("weapon_hit_info",[]),"weapon_skill_info":chr.get("weapon_skill_info",[]),
+		"width":chr.get("width",[0,0]),
 		"motions":{"damage1":"damage1","damage2":"damage2","down":"down","overturn":"overturn"}}
 	if player["hp_max"] <= 0:problems.append("CHR initial HP missing")
 
@@ -195,6 +196,22 @@ func weapon_wav(weapon: String) -> Array:
 	var index := int(rules["player"]["weapon_index"].get(weapon,0))
 	var rows: Array = player["weapon_wav"]
 	return rows[index] if index < rows.size() else []
+
+func weapon_cooldown_ms(move: Dictionary, base_ms: int) -> int:
+	if _swordman_weapon_item.is_empty():return base_ms
+	var index := int(rules["player"]["weapon_index"].get(weapon,-1))
+	if index < 0:return base_ms
+	var types: Array = db.original(String(move.get("skill","")),"weapon_effect_type",[])
+	var column: int
+	match types.front() if not types.is_empty() else "":
+		"[physical]":column = 1
+		"[magical]":column = 3
+		_:return base_ms
+	var values: Array = player["weapon_skill_info"]
+	var offset := index*4+column
+	if offset >= values.size():return base_ms
+	# 90927E consumes the binary32 CHR value and 909283 truncates before later corrections.
+	return int(NativeMotion.f32(NativeMotion.f32(float(base_ms))*float(values[offset])))
 
 func _skill_row(path: String) -> Dictionary:
 	var rec: Dictionary = db.record(path)

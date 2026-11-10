@@ -49,7 +49,7 @@ func _values(id: String) -> Dictionary:
 				_append_damage_line(damage_lines, hit)
 				var successor: Dictionary = hit.get("native_controller", {}).get("child", {})
 				if not successor.is_empty():_append_damage_line(damage_lines, successor)
-	return {"mp":float(move.get("mp", 0)), "cooldown":float(move.get("cool_ms", 0)) / 1000.0,
+	return {"mp":float(move.get("mp", 0)), "cooldown":table.weapon_cooldown_ms(move, int(move.get("cool_ms", 0))) / 1000.0,
 		"damage_percent":percentages, "damage_lines":damage_lines, "source":move.get("skill", "")}
 
 func _append_damage_line(lines: Array[String], hit: Dictionary) -> void:
