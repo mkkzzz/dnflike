@@ -4056,10 +4056,13 @@ func check_hundred_sword_automatic() -> void:
 	var travel_cues := func():
 		return game.bus.events_of("combat.cue").filter(func(event):
 			return String(event.get("key","")) in ["R_SM_HOANYOUNG","R_W_MOVING_ATK"])
+	var travel_flashes := func() -> Array:
+		return game.bus.events_of("combat.cue").filter(func(event):return event["kind"]=="screen_flash")
 	var dash_key := "hundred_sword_travel_dash"
 	var slash_key := "hundred_sword_travel_slash"
 	check(travel_cues.call().is_empty(),"the first sword pose starts without a movement voice or swing")
 	check(cues(dash_key).is_empty() and cues(slash_key).is_empty(),"the first sword pose does not start a travel effect")
+	check(travel_flashes.call().is_empty(),"the first sword pose does not request a screen flash")
 	var swings: Array = game.view.audio.variants.get("R_W_MOVING_ATK",[])
 	check(swings.size()==2 and swings.all(func(stream):return stream is AudioStreamOggVorbis),
 		"both original sword travel swings load as Ogg streams")
@@ -4134,6 +4137,8 @@ func check_hundred_sword_automatic() -> void:
 		var slashes := cues(slash_key)
 		check(dashes.size()==ordinal+1 and slashes.size()==ordinal+1,
 			"leaving stage %d submits one Dash and one Slash to the move-effect layer"%ordinal)
+		check(travel_flashes.call().size()==ordinal+1,"leaving stage %d requests one screen flash"%ordinal)
+		if ordinal==0 and travel_flashes.call().size()==1:check_hundred_sword_travel_flash(travel_flashes.call()[0])
 		if dashes.size()==ordinal+1 and slashes.size()==ordinal+1:
 			var dash: Dictionary = dashes[-1]
 			var slash: Dictionary = slashes[-1]
@@ -4175,6 +4180,38 @@ func check_hundred_sword_automatic() -> void:
 	step(701.0)
 	check(game.player["action"]=="" and not game.player.has("hundred_sword_cast"),
 		"one press completes the full Hundred Sword state sequence and clears the cast")
+
+func check_hundred_sword_travel_flash(cue: Dictionary) -> void:
+	check(cue["point"]==POINT+Vector2(150,0) and cue["height"]==75 and cue["trigger_size"]==Vector2i(500,300)
+		and cue["durations"]==[50,0,50] and cue["peak_alpha"]==50,
+		"the flash uses the saved field center, absolute height and original additive parameters")
+	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")
+	check(not flashes.is_empty(),"the in-view Hundred Sword flash is admitted")
+	if flashes.is_empty():return
+	var flash = flashes[-1]
+	check(flash.get_parent()==game.view and flash.position==Vector2.ZERO and flash.frame_color().a==0.0,
+		"the travel flash starts transparent at screen origin")
+	flash.advance(25.0)
+	check(is_equal_approx(flash.frame_color().a,25.0/255.0),"the travel flash reaches half brightness at 25 ms")
+	flash.advance(25.0)
+	check(flash.frame["frame"]==2 and is_equal_approx(flash.frame_color().a,50.0/255.0)
+		and flash.material.blend_mode==CanvasItemMaterial.BLEND_MODE_ADD,
+		"the travel flash starts fading from its native peak at 50 ms")
+	flash.advance(25.0)
+	check(is_equal_approx(flash.frame_color().a,25.0/255.0),"the travel flash returns to half brightness at 75 ms")
+	flash.advance(25.0)
+	check(flash.is_queued_for_deletion(),"the travel flash retires at 100 ms")
+
+	# Send viewport-only probes straight to the renderer to keep the cast's cue history intact.
+	for sample: Array in [[Vector2(-251,300),false],[Vector2(-250,300),true],
+			[Vector2(1049,300),true],[Vector2(1050,300),false],[Vector2(400,-1),false],
+			[Vector2(400,0),true],[Vector2(400,899),true],[Vector2(400,900),false]]:
+		var projected: Vector2 = sample[0]
+		var point: Vector2 = projected-game.view.world.position+Vector2(0,75-Frame.MAP_DY)
+		var before: int = game.view.effects.size()
+		game.view._spawn_screen_flash(cue.merged({"point":point},true))
+		check(game.view.effects.size()-before==int(sample[1]),
+			"the native travel flash viewport edge at "+str(projected))
 
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]

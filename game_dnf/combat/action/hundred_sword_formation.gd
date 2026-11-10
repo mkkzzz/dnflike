@@ -96,6 +96,9 @@ func consume(slot: int) -> Vector3i:
 	return point
 
 func emit_travel_effects(bus, destination: Vector3i, angle: float, facing: int) -> void:
+	# D2E41B projects the saved field center at absolute Z 75 for the layer-six flash.
+	bus.emit("combat.cue",{"kind":"screen_flash","point":_center,"height":75,
+		"trigger_size":Vector2i(500,300),"durations":[50,0,50],"peak_alpha":50})
 	# CD21B9 puts the move-effect container at sword slot 6 plus ten depth units.
 	var depth := waypoint(6).y+10
 	# D2E41B submits the destination and the previous pose's angle and facing.
