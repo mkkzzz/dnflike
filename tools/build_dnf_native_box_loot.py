@@ -35,6 +35,10 @@ SOURCES = {
         'dungeon/act3/2ndbackbone.dgn',
         '0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc',
     ),
+    'firstbackbone': (
+        'dungeon/act3/1stbackbone.dgn',
+        '005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85',
+    ),
     'shallowkeep': (
         'dungeon/act4/shallowkeep.dgn',
         '652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833',

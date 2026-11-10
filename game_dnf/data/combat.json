@@ -1135,6 +1135,11 @@
    "mob": "monster/ghoul/ghoulthrowerstand.mob",
    "bank": "ghoul_ghoulthrowerstand",
    "name": "ghoulthrowerstand"
+  },
+  "starfish_starfishking": {
+   "mob": "monster/starfish/starfishking.mob",
+   "bank": "starfish_starfishking",
+   "name": "starfishking"
   }
  },
  "boss_hp_lines": 3,

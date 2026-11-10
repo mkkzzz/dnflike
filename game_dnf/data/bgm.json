@@ -112,6 +112,10 @@
    "normal": "purgatory",
    "boss": "purgatory_boss"
   },
+  "firstbackbone": {
+   "normal": "1st_spine",
+   "boss": "1st_spine_boss"
+  },
   "goddesstemple": {
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
@@ -354,6 +358,18 @@
    "source": "music/purgatory_boss.ogg",
    "sha256": "014020fad65aed4d6f1c367982d037d3cbbc40576680875f972725f7da89858c",
    "bytes": 1415007
+  },
+  "1st_spine": {
+   "file": "audio/bgm/1st_spine.ogg",
+   "source": "music/1st_spine.ogg",
+   "sha256": "47dc07d9e7e500ade67664bd60e7bc67bafb1639b057b9fd8511f3fc47b3aa0b",
+   "bytes": 3062248
+  },
+  "1st_spine_boss": {
+   "file": "audio/bgm/1st_spine_boss.ogg",
+   "source": "music/1st_spine_boss.ogg",
+   "sha256": "92514bed60752997883c13832d6f0eae902ddec0e918b4676f56cc54f7c853f7",
+   "bytes": 1776999
   },
   "goddess_temple": {
    "file": "audio/bgm/goddess_temple.ogg",

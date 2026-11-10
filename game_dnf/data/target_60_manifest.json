@@ -733,9 +733,9 @@
     "id": 25,
     "min_level": 32,
     "path": "dungeon/act3/1stbackbone.dgn",
-    "runtime_id": "",
+    "runtime_id": "firstbackbone",
     "sha256": "005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 36,
@@ -6783,8 +6783,8 @@
     "level_max": 39,
     "level_min": 34,
     "path": "monster/starfish/starfishking.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "starfish_starfishking",
+    "state": "runtime"
    },
    {
     "id": 62735,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 26,
+   "runtime": 27,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 126,
+   "runtime": 127,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

@@ -195,6 +195,46 @@
         "1": -1
       }
     },
+    "005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85": {
+      "id": "firstbackbone",
+      "source": {
+        "path": "dungeon/act3/1stbackbone.dgn",
+        "sha256": "005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1068",
+            1000
+          ],
+          [
+            "original_1069",
+            1500
+          ],
+          [
+            "original_1070",
+            500
+          ],
+          [
+            "original_1071",
+            500
+          ],
+          [
+            "original_1072",
+            3000
+          ]
+        ],
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": 36,
+        "2": -1,
+        "3": -1
+      }
+    },
     "652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833": {
       "id": "shallowkeep",
       "source": {

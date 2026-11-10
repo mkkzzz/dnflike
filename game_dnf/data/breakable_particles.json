@@ -2,6 +2,14 @@
  "schema": "dnf_breakable_particles/1",
  "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
  "objects": {
+  "passiveobject/mapobject/breakableobject/1stbackbonelongchair.obj": [
+   "ptl_longchairparticle1",
+   "ptl_longchairparticle2",
+   "ptl_longchairparticle3",
+   "ptl_longchairparticle4",
+   "ptl_longchairparticle5",
+   "ptl_longchairparticle6"
+  ],
   "passiveobject/mapobject/breakableobject/1stbackbonelongpot.obj": [
    "ptl_longpotparticle1",
    "ptl_longpotparticle2",
