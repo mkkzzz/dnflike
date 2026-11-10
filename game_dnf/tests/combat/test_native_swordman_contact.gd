@@ -1593,9 +1593,10 @@ func check_gorecross_wave() -> void:
 		target["numeric"].base.merge(stats,true)
 		target["numeric"].values.merge(stats,true)
 		target["facing"] = -facing
+		game.numeric_player.values["attack_speed"] = 1.0
 		press(KEY_A)
 		step(0)
-		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0,"physical_attack":1000.0,
+		game.numeric_player.values.merge({"hit":1.0,"physical_attack":1000.0,
 			"strength":0.0,"physical_crit":0.0,"damage_rate":1.0,"skill_rate":1.0},true)
 		step(99)
 		check(game.hit_count==0 and game.objects.is_empty(),"Gore Cross has no hit before the first native sword frame")
@@ -1706,9 +1707,10 @@ func check_gorecross_wave_direction() -> void:
 		spec["skill_slots"] = ["rage_slash"]
 		start_room("original_27601","katana",facing,spec)
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(0,200))
+		game.numeric_player.values["attack_speed"] = 1.0
 		press(KEY_A)
 		step(0)
-		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0,
+		game.numeric_player.values.merge({"hit":1.0,
 			"physical_crit":0.0,"physical_back_crit":1.0},true)
 		step(500)
 		step(1)
@@ -1742,13 +1744,13 @@ func check_gorecross_followup() -> void:
 		spec["skill_slots"] = ["","","rage_slash"] if hold_cast_key else ["rage_slash"]
 		var facing := -1 if sample[0]==499 else 1
 		start_room("original_27601","katana",facing,spec,sample[2])
+		game.numeric_player.values["attack_speed"] = 1.0
 		var send_followup := func(down: bool, echo := false):
 			if hold_cast_key:session.submit_skill(2,down,echo)
 			else:session.submit_key(sample[1],down,echo)
 		if hold_cast_key:send_followup.call(true)
 		else:press(KEY_A)
 		step(0)
-		game.numeric_player.values["attack_speed"] = 1.0
 		if sample[3]:
 			if not hold_cast_key:send_followup.call(true)
 			step(200)
@@ -1863,6 +1865,97 @@ func check_gorecross_followup() -> void:
 		step(1)
 		check(game.player["state"]=="idle","Gore Cross recovers at the end of the follow-up ANI")
 	game.rng = previous_rng
+
+func check_gorecross_animation_speed() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rage_slash"]
+	for sample: Array in [["katana",1.25,78,390,574],["club",2.0,72,240,355]]:
+		start_room("",sample[0],1,spec,"berserker")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(35,0))
+		game.numeric_player.values.merge({"attack_speed":sample[1],"hit":1.0},true)
+		press(KEY_A)
+		step(0)
+		step(sample[2]-1)
+		check(game.hit_count==0,"Gore Cross %s swing does not hit before its adjusted weapon frame"%sample[0])
+		step(1)
+		check(game.hit_count==1,"Gore Cross %s hits on its adjusted weapon frame"%sample[0])
+		game.clear_monsters()
+		game.player["stuck_ms"] = 0.0
+		step(sample[3]-sample[2]-1)
+		var layers: Array = game.view.effects.filter(func(fx):return fx.cue_key=="gore_slash2")
+		check(layers.size()==1 and layers[0].frame["frame"]==9,
+			"Slash2 stays on frame nine until its own scaled release marker")
+		press(KEY_X)
+		step(1)
+		check(game.player["stage"]==0 and game.objects.is_empty(),
+			"Slash2 closes the follow-up window at its marker and arms the ordinary wave")
+		step(1)
+		check(game.objects.size()==1,"The accelerated ordinary wave emits on the next update")
+		step(sample[4]-sample[3]-2)
+		check(game.player["action"]=="rage_slash","The accelerated ordinary body keeps its last millisecond")
+		step(1)
+		check(game.player["state"]=="idle","The ordinary body recovers at the scaled frame ten")
+
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.25
+	press(KEY_A)
+	step(0)
+	press(KEY_X)
+	step(272)
+	check(game.player["stage"]==0,"At 1.25 speed the native follow-up is unavailable at 272 ms")
+	game.numeric_player.values["attack_speed"] = 2.0
+	session.submit_key(KEY_LEFT,true)
+	press(KEY_X)
+	step(1)
+	session.submit_key(KEY_LEFT,false)
+	game.numeric_player.values["attack_speed"] = 1.25
+	check(game.player["stage"]==1 and game.player["clock"]==583.0 and game.player["facing"]==1,
+		"At 273 ms the follow-up uses the last refreshed rate for its 583 ms seek without turning")
+	var trails: Array = game.view.effects.filter(func(fx):return fx.cue_key in ["gore_slash3","gore_slash4"])
+	check(trails.size()==2 and trails.all(func(fx):return fx.frame["frame"]==0),
+		"The follow-up seeks both independently timed attachments while they are blank")
+	step(143)
+	check(trails.size()==2 and trails.all(func(fx):return fx.frame["frame"]==0),
+		"The first additional layer is still blank 143 ms after the seek")
+	step(1)
+	check(trails.size()==2 and trails.any(func(fx):return fx.cue_key=="gore_slash3" and fx.frame["frame"]==1),
+		"Slash3 draws at 144 ms on its own clock")
+	step(26)
+	check(cues("GORECROSS_ATK3").is_empty(),"The third swing has no sound before its scaled body frame")
+	step(1)
+	check(cues("GORECROSS_ATK3").size()==1,"The third swing sounds 171 ms after the seek")
+	step(13)
+	check(trails.size()==2 and trails.any(func(fx):return fx.cue_key=="gore_slash4" and fx.frame["frame"]==1),
+		"Slash4 draws at 184 ms independently of the body and Slash3")
+	step(10)
+	check(game.objects.is_empty(),"The accelerated follow-up arms its body marker at 194 ms")
+	step(1)
+	check(game.objects.size()==1,"The accelerated additional wave releases after the body marker")
+	step(256)
+	check(game.player["stage"]==1 and game.player["action"]=="rage_slash","The follow-up remains active at 451 ms")
+	step(1)
+	check(game.player["state"]=="idle","The accelerated follow-up recovers after 452 ms")
+
+	start_room("original_27601","katana",1,spec,"berserker")
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(35,0))
+	game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0},true)
+	step(200)
+	press(KEY_A)
+	step(0)
+	game.numeric_player.values["attack_speed"] = 2.0
+	step(99)
+	check(game.hit_count==0 and game.player["clock"]==99.0,
+		"Gore Cross waits for the shared actor refresh before changing attack rate")
+	step(1)
+	var slash2: Array = game.view.effects.filter(func(fx):return fx.cue_key=="gore_slash2")
+	check(game.hit_count==1 and target["hp"]<5000.0 and game.player["clock"]==49.0
+		and slash2.size()==1 and slash2[0].frame["frame"]==2,
+		"The speed refresh rescales the body and Slash2 clocks before drawing and contact")
 
 func check_hopsmash_bleed() -> void:
 	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:
@@ -8237,6 +8330,7 @@ func run() -> void:
 	check_gorecross_cost()
 	check_gorecross_wave_direction()
 	check_gorecross_followup()
+	check_gorecross_animation_speed()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()

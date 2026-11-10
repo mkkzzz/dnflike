@@ -1332,7 +1332,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		player.erase("gorecross_followup_tap")
 		var gate: Dictionary = m["cross_followup"]
 		# CB3F07 tests the body tag after processing Slash2's ordinary release tag.
-		if event_clock >= float(gate["opens_at"]) and event_clock < float(gate["closes_at"]):
+		if event_clock >= float(gate["opens_at"]) and not native_phase.has("cross_release"):
 			end_action_fx()
 			player["fx_tag"] = "act:%d" % (action_seq+1)
 			start_stage(1,float(gate["seek_to"]))
@@ -1895,6 +1895,7 @@ func retime_native_action(phase: Dictionary, stage: Dictionary, rate: float) -> 
 	phase["native_ani_rate"] = rate
 	phase["native_timeline"] = timeline
 	phase["end_ms"] = Kernel.Timeline.duration(timeline)
+	if phase.has("cross_end_frame"):phase["end_ms"] = float(timeline[phase["cross_end_frame"]]["start_ms"])
 	if phase.has("outrage_impact_at"):
 		# CB44A7 calls 10857E0 on every airborne update using the current ANI rate.
 		phase["outrage_impact_ms"] = _native_ani_delay(float(phase["outrage_impact_at"]),rate)
@@ -2323,12 +2324,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	player["stage"] = index
 	player["clock"] = opening_clock
 	player["hits"] = {}
-	player.erase("gorecross_release_armed")
 	player.erase("gorecross_followup_tap")
 	player.erase("queued_upper_followup")
 	player.erase("action_slide")
 	action_seq += 1
 	var m := move_def(name)
+	var previous_phase: Dictionary = player.get("native_phase",{})
 	player["native_phase"] = {}
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
@@ -2447,6 +2448,16 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var phase := {"native_fx":{}}
 		retime_native_action(phase,action_def(),attack_animation_percent(0))
 		player["native_phase"] = phase
+	elif name == "rage_slash" and m.has("cross_followup"):
+		# CCB789 sets mode 2 for the body and its speed-linked layers.
+		var rate := attack_animation_percent(0) if index == 0 else float(previous_phase["native_ani_rate"])
+		var phase := {"native_fx":{}}
+		if index == 0:phase["cross_end_frame"] = 10
+		retime_native_action(phase,action_def(),rate)
+		player["native_phase"] = phase
+		# CC32E5 seeks using the scaled sum of raw delays, not the sum of scaled frames.
+		opening_clock = _native_ani_delay(opening_clock,rate)
+		player["clock"] = opening_clock
 	if name == "rapidmoveslash" and index % 2 == 1:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		begin_action_slide(m["rapid_slide"],attack_rate)
@@ -2467,7 +2478,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	if m.has("stages") and not (name in ["upper","bloodblast","hellbenter","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
 			and not (name == "illusionslash" and int(player["illusion_cast"]["slash"]) > 0) \
-			and not (name == "rapidmoveslash" and index > 0) \
+			and not (name in ["rapidmoveslash","rage_slash"] and index > 0) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
 		if turn != 0:player["facing"] = turn
@@ -2773,7 +2784,9 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			if phase.get("outrage_impact_at",-1.0) == at:at = new_t
 			if phase.has("native_fx") and combat_assets["effects"].has(key):
 				var source := Kernel.Timeline.from_ani(combat_assets["effects"][key])
-				phase["native_fx"][key] = {"clock":0.0,"source":source,
+				# CC3332 and CC3389 seek the additional layers to the body's elapsed time.
+				var clock := float(player["clock"]) if String(player["action"]) == "rage_slash" else 0.0
+				phase["native_fx"][key] = {"clock":clock,"source":source,
 					"timed":native_timed_frames(source,phase["native_ani_rate"]),
 					"detach_at_frame":fx.get("detach_at_frame",-1)}
 			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
@@ -3004,9 +3017,19 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			var due: bool = player["native_phase"].get("hop_landed_now",false) if hop_shockwave else action_timed_crossed(at,old_t,new_t)
 			if kind == "gorecross_wave":
 				# CB3EDB advances phase 1 at the marker. Phase 2 sends the object on the next update.
-				var armed: bool = player.get("gorecross_release_armed",false)
-				player["gorecross_release_armed"] = due
-				due = armed
+				var phase: Dictionary = player["native_phase"]
+				if int(player["stage"]) == 0:
+					var slash: Dictionary = phase["native_fx"].get("gore_slash2",{})
+					if not slash.is_empty():
+						due = _source_animation_clock(slash["clock"],slash["timed"],slash["source"]) >= at
+				match int(phase.get("cross_release",0)):
+					0:
+						if due:phase["cross_release"] = 1
+						due = false
+					1:
+						phase["cross_release"] = 2
+						due = true
+					2:due = false
 			if due:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
