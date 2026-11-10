@@ -2729,6 +2729,8 @@ func apply_native_down_flight(enemy: Dictionary, facing: int, push: int, lift: i
 	var rise := sample_native_down(base_rise,0.9,1.1)
 	# 82C39C preserves the previous body facing for a grounded phase-two rehit.
 	if not (ignore_weight and not airborne and previous_phase >= 2):enemy["facing"] = facing
+	if bounce and not airborne and previous_phase >= 2 and base_rise > 0:
+		play_native_down_contact(int(enemy["def"]["weight"]))
 	enemy["push_ms"] = 0.0
 	enemy["clock"] = 0.0
 	start_native_flight(enemy,float(enemy["z"]),Vector2(-facing*speed,0),rise,-GRAVITY)
@@ -3740,6 +3742,7 @@ func step_native_down_bounce(enemy: Dictionary, landed: bool, velocity: Vector2)
 		var speed := sample_native_down(int(absf(velocity.x)*0.5),0.8,1.2)*signf(velocity.x)
 		var rise := sample_native_down(base_rise,0.9,1.1)
 		if base_rise > 0:
+			play_native_down_contact(int(enemy["def"]["weight"]))
 			enemy["native_down_phase"] = 1
 			start_native_flight(enemy,0.0,Vector2(speed,0),rise,-1500.0)
 			enemy["state"] = "native_down_flight"
@@ -3747,6 +3750,11 @@ func step_native_down_bounce(enemy: Dictionary, landed: bool, velocity: Vector2)
 			return false
 	if landed:enemy["native_down_phase"] = 2
 	return landed
+
+func play_native_down_contact(weight: int) -> void:
+	# 82C82B..82C87F chooses the original floor-contact sample by target weight.
+	var key := "DOWN_LIGHT" if weight <= 60000 else "DOWN_MIDDLE" if weight <= 100000 else "DOWN_HEAVY"
+	play_sound(key)
 
 func native_spawn_roll(bounds: Array) -> int:
 	return int(bounds[0])+rng.range_int(0,0x7fffffff)%(int(bounds[1])-int(bounds[0])+1)

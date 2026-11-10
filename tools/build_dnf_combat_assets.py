@@ -640,8 +640,14 @@ SOURCE_AUDIO_WEIGHTS['R_W_MOVING_ATK'] = (50, 50)
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
+NATIVE_DOWN_AUDIO = {
+    'DOWN_LIGHT': 'sounds/effect/light_dn.ogg',
+    'DOWN_MIDDLE': 'sounds/effect/medium_dn.ogg',
+    'DOWN_HEAVY': 'sounds/effect/heavy_dn.ogg',
+}
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
+    **{key: [path] for key, path in NATIVE_DOWN_AUDIO.items()},
     **{key: [path] for key, path in ILLUSION_SLASH_AUDIO.items()},
     'R_SM_HOANYOUNG': ILLUSION_SLASH_REPEAT_VOICES,
     'R_W_MOVING_ATK': HUNDRED_SWORD_SWINGS,
@@ -1934,9 +1940,10 @@ def main() -> int:
         specs.extend(('variant_effects', key, spec)
                      for key, spec in (hundred_sword_blade_banks() | hundred_sword_weapon_banks()).items())
         specs.append(('objects', field['object'], field['object']))
-        specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))
-        specs.append(('audio', 'W_GET_SPIRITS', 'sounds/char/swordman/effect/W_get_spirits.ogg'))
+        specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/w_weapon_drive.ogg'))
+        specs.append(('audio', 'W_GET_SPIRITS', 'sounds/char/swordman/effect/w_get_spirits.ogg'))
         specs.append(('audio', 'R_W_MOVING_ATK', HUNDRED_SWORD_SWINGS))
+        specs.extend(('audio', key, path) for key, path in NATIVE_DOWN_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:

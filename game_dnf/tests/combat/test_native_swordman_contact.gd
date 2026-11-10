@@ -4535,12 +4535,20 @@ func check_hundred_sword_field_air_reaction() -> void:
 	if game.objects.size()!=1:return
 	var field: Dictionary = game.objects[0]
 	var center: Vector2 = field["pos"]
+	for weight in [60000,60001,100000,100001]:game.play_native_down_contact(weight)
+	var keys: Array = game.bus.events_of("combat.cue").filter(func(cue):return String(cue.get("key","")).begins_with("DOWN_"))
+	check(keys.map(func(cue):return cue["key"])==["DOWN_LIGHT","DOWN_MIDDLE","DOWN_MIDDLE","DOWN_HEAVY"]
+		and ["DOWN_LIGHT","DOWN_MIDDLE","DOWN_HEAVY"].all(func(key):
+			return game.view.audio.variants.get(key,[null])[0] is AudioStreamOggVorbis),
+		"the original weight boundaries select three loaded floor-contact clips")
+	game.bus.clear_history()
 	var airborne: Dictionary = api.spawn_dummy(center+Vector2(80,0))
 	airborne["def"] = airborne["def"].merged({"weight":300000},true)
 	airborne["state"] = "air"
 	airborne["z"] = 20.0
 	airborne["vz"] = 750.0
 	var grounded: Dictionary = game.spawn_enemy(center-Vector2(80,0))
+	grounded["def"] = grounded["def"].merged({"weight":60000},true)
 	grounded["state"] = "down"
 	grounded["down_ms"] = 50.0
 	grounded["facing"] = 1
@@ -4552,6 +4560,8 @@ func check_hundred_sword_field_air_reaction() -> void:
 	check(grounded["hp"]<500000.0 and grounded["state"]=="native_down_flight" and grounded["z"]==0.0
 		and grounded.get("native_down_phase")==1 and prone_rise>=22 and prone_rise<=27 and grounded["facing"]==1,
 		"a grounded downed target relaunches at a quarter of the base rise and keeps its facing")
+	check(cues("DOWN_LIGHT").size()==1 and cues("DOWN_HEAVY").is_empty(),
+		"the grounded rehit plays the light floor contact while the initial air hit stays quiet")
 	if not airborne.has("native_down_phase"):
 		check(false,"the airborne target enters native state four")
 		return
@@ -4567,6 +4577,7 @@ func check_hundred_sword_field_air_reaction() -> void:
 	rise = roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
 	check(airborne["hp"]<before and airborne["native_down_phase"]==0 and rise>=90 and rise<=110,
 		"a second sword-field hit before first landing still uses the full height")
+	check(cues("DOWN_HEAVY").is_empty(),"the pre-landing air rehit does not play a ground cue")
 	for index in 120:
 		game.update_enemy(airborne,10.0)
 		if airborne.get("native_down_phase")==1:break
@@ -4578,6 +4589,7 @@ func check_hundred_sword_field_air_reaction() -> void:
 	check(airborne["z"]==0.0 and bounce_height>=int(base_height*0.9) and bounce_height<=int(base_height*1.1)
 		and airborne["native_jump_velocity"].x<0.0,
 		"the first landing bounces from a fifth of the sampled peak and keeps inward drift")
+	check(cues("DOWN_HEAVY").size()==1,"the first landing plays one heavy floor contact")
 	game.update_enemy(airborne,10.0)
 	step(game.action_duration("hundredsword"))
 	before = airborne["hp"]
@@ -4585,6 +4597,11 @@ func check_hundred_sword_field_air_reaction() -> void:
 	rise = roundi(float(airborne["vz"])*float(airborne["vz"])/3000.0)
 	check(airborne["hp"]<before and airborne["native_down_phase"]==1 and rise>=22 and rise<=27,
 		"a sword-field hit during the bounce quarters the 100 px base rise before sampling")
+	for index in 90:
+		game.update_enemy(airborne,10.0)
+		if airborne.get("native_down_phase")==2:break
+	check(airborne.get("native_down_phase")==2 and cues("DOWN_HEAVY").size()==1,
+		"the airborne bounce hit and second landing do not repeat the floor contact")
 
 func check_hundred_sword_automatic() -> void:
 	var profile := ProfileSession.new()
