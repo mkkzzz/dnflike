@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 正在做 |
-| 正在做 | 原版全部副本世界内容线：已建立 30 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 29/97 runtime、68 parsed，怪物 runtime 137，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
+| 正在做 | 原版全部副本世界内容线：已建立 31 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地、熔岩穴与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 30/97 runtime、67 parsed，怪物 runtime 147，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-10 完成[熔岩穴原生迷宫与对象载荷](../../reports/ws1/2026-11/2026-11-10_熔岩穴原生迷宫与对象载荷.md)：把 `magmacave.dgn` 接入隐藏正式 `native_maze` 路线，保留 3×8 源网格、14 连通格、15 张源 MAP、48 个 MapGreed placement、1×1 起终点和两首原曲；113 只直接怪覆盖 15 个怪种，新增 10 个 bank 并保留 Atlas/Goliath/Titan 三条 Boss 行。68 个可破坏物、37 个 item draw、8 条特殊怪 payload 可执行；quest 4417、hell、封印门 60020、24 个混合 trap、25 个岩浆地面 trigger、`boom1` 与城镇/任务/结算显式留缺口。专项 116、全部原生迷宫 1,403+106、旧世界 573/9,286/6,302/966/90 项及怪物全链/七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 30 runtime、67 parsed，怪物 runtime 147。
 
 - 2026-11-10 完成[暗精灵墓地原生迷宫与对象载荷](../../reports/ws1/2026-11/2026-11-10_暗精灵墓地原生迷宫与对象载荷.md)：把 `darkelfcemetary.dgn` 接入隐藏正式 `native_maze` 路线，保留 5×3 源网格、13 连通格、24 张源 MAP、68 个 MapGreed placement、1×1 起终点和两首原曲；200 只直接怪覆盖 7 个怪种，新增普通骷髅、石骷髅、灵魂吞噬者、莉莉丝与 Drake 五个 bank。260 个可破坏物、111 个 item draw、14 条特殊怪 payload 可执行；Boss 猎杀 `50073..50076`、封印门 60020、hell、8 个混合 trap 与城镇/任务/结算显式留缺口。修复 pathgate `010/011/012` 通用模板展开、显式破坏粒子 OBJ 编译和 `original_3210` 缺失，并新增 v7 物品原帧包。专项 78、全部原生迷宫 1,287+106、旧世界 573/9,286/6,302/966/90 项及怪物全链/七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 29 runtime、68 parsed，怪物 runtime 137。
 
@@ -42,14 +44,15 @@
 - 第一脊椎的第二套 quest 4329/hell 布局只保留 raw，21 个混合未知 trap、34 个海星卵、8 个扫臂 trigger、6 个重力转换器与封印门 60012 未执行；20 条特殊 monster payload 和 Starfish King 6 招的阶段/生命周期仍需逐项取证。
 - 蜘蛛洞穴的 quests 4408/4421 与 hell 第三布局只保留 raw，12 个混合未知 trap、43 个骷髅堆 special object、16 个蜘蛛 spawn trigger 与封印门 60020 未执行；43 条特殊 monster payload 和 5 个新怪 bank 的阶段/生命周期仍需逐项取证。
 - 暗精灵墓地的 Boss 猎杀 `50073..50076`、封印门 60020、命中次数/出现率、`[hell dungeon]` 与 8 个混合未知 trap 只保留 raw；14 条特殊 monster payload 和 Drake 5 招的阶段/生命周期仍需逐项取证。
+- 熔岩穴的 quest 4417、hell、封印门 60020、事件怪 61728 与 24 个混合未知 trap 只保留 raw；25 个岩浆地面 trigger、`boom1`、8 条特殊 monster payload 和 Atlas/Goliath/Titan 三行 Boss 的阶段/关系仍需逐项取证。
 - 浅栖之地的第二套 quest/hell 布局只保留 raw，2 个 `shallowkeepfreezingluna` 与 21 个混合未知 trap 未执行；特殊棺/罐 `ghoulstand` 的生成/位置/生命周期、箱组随机和首领阶段仍需逐项取证。
-- 60 级目标 DGN 仍有 68 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
+- 60 级目标 DGN 仍有 67 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
 - 通用可破坏物标准七项布局的 HP/阶段与音效槽位按 E-PARSE 字段和既有外壁固定对象适配推定；逐 OBJ 的原客户端同条件受击、损伤阶段动作和更多 `/trap/` 联动仍待取证。
 - 1,176 条静态 MAP 对象仍只由地图渲染；开关、吊灯联动、地刺/毒沼地形、`goblinbunker` 多部件、可破坏 `/trap/` 与地图事件触发需继续分包。
 - 石像 OBJ 请求的 `HEXA_BREAK` 在当前唯一 `audio.xml` 中无精确条目；manifest 保留 unresolved，禁止用相近音效顶替。
 - Mirkius 空 `[attack motion]` 槽已按 E-INFER 复用前一动作并保留独立 `attackheart.atk`；需原客户端同条件确认第三招的动作与选招表现。
 - 阿登原档最低 68、basis 71，当前运行仍为 58 的隔离测试适配并标记 `future_above_60`；未纳入 60 级可玩基线。
-- 正式全套停在既有 `build_dnf_quest_rules.py --check` stale；按分工不由 ws1 擅自重建。前置已完成的新世界审计、龙人契约、Zealot、暗精灵墓地/蜘蛛洞穴/第一脊椎/浅栖之地/第二脊椎/树精繁殖地/GBL女神殿/天帷禁地/极昼/炼狱/树精/神殿原生迷宫、世界机关与战斗流程均通过。
+- 正式全套停在既有 `build_dnf_quest_rules.py --check` stale；按分工不由 ws1 擅自重建。前置已完成的新世界审计、龙人契约、Zealot、熔岩穴/暗精灵墓地/蜘蛛洞穴/第一脊椎/浅栖之地/第二脊椎/树精繁殖地/GBL女神殿/天帷禁地/极昼/炼狱/树精/神殿原生迷宫、世界机关与战斗流程均通过。
 - 战斗进场同步 mount 仍约 4.27 秒，尚未改造成显式 loading/异步加载；逐武器普攻盒、技能判定义项和小地图/结算覆盖层仍待原版证据与后续 UI 资源闭环。
 - 战斗响应、跳攻、拾取、原版字体、BGM 加载和音效声池仅完成自动化与 profiler 验证；真实手感、混音和 UI 观感等待 rainmk 实机复核。
 - `7a00f659` 已提交族级 AI 目录索引、运行时回退查询和拾取下蹲帧计数；接续时“未提交”的记载已纠正，未将提交视作回归或试玩通过。
