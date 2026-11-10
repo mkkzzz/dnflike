@@ -455,6 +455,20 @@
     "sha256": "1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b"
    }
   },
+  "outergent": {
+   "name": "根特周边",
+   "region": "gent",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/outergent_v1/map_export.json",
+   "min_level": 55,
+   "monster_level": 58,
+   "source": {
+    "path": "dungeon/act7/outergent.dgn",
+    "sha256": "246884645ad85315f63f144f86b1347fa52b4d8cc5df29006bccd2ff6d3dfdb7"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

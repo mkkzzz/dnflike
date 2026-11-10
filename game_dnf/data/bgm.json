@@ -180,6 +180,10 @@
    "normal": "odesa_new",
    "boss": "odesa_boss_new"
   },
+  "outergent": {
+   "normal": "gentgate_outside",
+   "boss": "gentgate_outside_boss"
+  },
   "ricuceiling": {
    "normal": "riku_cave",
    "boss": "riku_boss"
@@ -625,6 +629,18 @@
    "source": "music/odesa_boss_new.ogg",
    "sha256": "f6e872091acd51916a17d56e44d6d730c42aeb285a795880378f76d7cb53ee6c",
    "bytes": 1902801
+  },
+  "gentgate_outside": {
+   "file": "audio/bgm/gentgate_outside.ogg",
+   "source": "music/gentgate_outside.ogg",
+   "sha256": "17dc20c3cd63a3e45485eec6d9f6cb9570140be4a0780fc02a42ec81a9567f88",
+   "bytes": 1846808
+  },
+  "gentgate_outside_boss": {
+   "file": "audio/bgm/gentgate_outside_boss.ogg",
+   "source": "music/gentgate_outside_boss.ogg",
+   "sha256": "4110ce75f2eacf70d6815ce604309c2ac188300cbe8089083c7ef35cc30676a7",
+   "bytes": 1247122
   },
   "riku_cave": {
    "file": "audio/bgm/riku_cave.ogg",

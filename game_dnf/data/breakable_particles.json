@@ -39,6 +39,11 @@
    "ptl_coverparticle1",
    "ptl_coverparticle2"
   ],
+  "passiveobject/actionobject/breakableobject/fruitsack2.obj": [
+   "ptl_fruitsack2_particle0",
+   "ptl_fruitsack2_particle1",
+   "ptl_fruitsack2_particle2"
+  ],
   "passiveobject/actionobject/breakableobject/halfbookcase.obj": [
    "ptl_bookcaseparticle1",
    "ptl_bookcaseparticle2",
@@ -79,6 +84,17 @@
   "passiveobject/actionobject/breakableobject/odesabox.obj": [
    "ptl_odesaboxdebris0",
    "ptl_odesaboxdebris1"
+  ],
+  "passiveobject/actionobject/breakableobject/roadlamp.obj": [
+   "ptl_roadlamp_particle"
+  ],
+  "passiveobject/actionobject/breakableobject/roadlamp_half.obj": [
+   "ptl_roadlamp_particle"
+  ],
+  "passiveobject/actionobject/breakableobject/smalllamp.obj": [
+   "ptl_smalllamp_particle0",
+   "ptl_smalllamp_particle1",
+   "ptl_smalllamp_particle2"
   ],
   "passiveobject/actionobject/breakableobject/stone.obj": [
    "ptl_stoneparticle1",

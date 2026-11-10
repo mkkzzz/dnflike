@@ -197,6 +197,7 @@
   "newmonsters_bantu_elitebuffalowoman_elitebuffalowoman",
   "newmonsters_bantu_elitebuffaloman_elitebuffaloman",
   "newmonsters_golem_icewavegolem_icewavegolem",
+  "newmonsters_heaven_nife_claese_nife_claese",
   "newmonsters_haze_poena_poena",
   "newmonsters_haze_hass_hass",
   "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
@@ -261,7 +262,12 @@
   "newmonsters_spider_slotor_slotor",
   "newmonsters_snowman_sasquatch_sasquatch",
   "newmonsters_cartel_rocketman_rocketman",
+  "newmonsters_heaven_letsburn_bentinck_bentinck",
   "newmonsters_aganzo_pubman_gang3",
+  "newmonsters_cartel_minorsoldier_minorsoldier",
+  "newmonsters_cartel_normalsoldier_normalsoldier",
+  "newmonsters_cartel_spy_spy",
+  "newmonsters_cartel_incendiarysoldier_incendiarysoldier",
   "newmonsters_gbl_combinetentacle_combinetentacle",
   "newmonsters_bwanga_bwanga",
   "soceress_vinoshu_quest",
@@ -328,10 +334,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 710,
+ "effects": 714,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 59,
+ "unresolved": 62,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -675,6 +681,21 @@
    "kind": "particle_animation",
    "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle5.ani",
    "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle5.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/fruitsack2_particle0.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/fruitsack2_particle0.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/fruitsack2_particle1.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/fruitsack2_particle1.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/fruitsack2_particle2.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/fruitsack2_particle2.ani'"
   },
   {
    "kind": "audio",

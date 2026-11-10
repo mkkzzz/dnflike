@@ -1835,6 +1835,36 @@
    "mob": "monster/newmonsters/spider/slotor1/slotor1.mob",
    "bank": "newmonsters_spider_slotor1_slotor1",
    "name": "slotor1"
+  },
+  "newmonsters_cartel_incendiarysoldier_incendiarysoldier": {
+   "mob": "monster/newmonsters/cartel/incendiarysoldier/incendiarysoldier.mob",
+   "bank": "newmonsters_cartel_incendiarysoldier_incendiarysoldier",
+   "name": "incendiarysoldier"
+  },
+  "newmonsters_cartel_minorsoldier_minorsoldier": {
+   "mob": "monster/newmonsters/cartel/minorsoldier/minorsoldier.mob",
+   "bank": "newmonsters_cartel_minorsoldier_minorsoldier",
+   "name": "minorsoldier"
+  },
+  "newmonsters_cartel_normalsoldier_normalsoldier": {
+   "mob": "monster/newmonsters/cartel/normalsoldier/normalsoldier.mob",
+   "bank": "newmonsters_cartel_normalsoldier_normalsoldier",
+   "name": "normalsoldier"
+  },
+  "newmonsters_cartel_spy_spy": {
+   "mob": "monster/newmonsters/cartel/spy/spy.mob",
+   "bank": "newmonsters_cartel_spy_spy",
+   "name": "spy"
+  },
+  "newmonsters_heaven_letsburn_bentinck_bentinck": {
+   "mob": "monster/newmonsters/heaven/letsburn_bentinck/bentinck.mob",
+   "bank": "newmonsters_heaven_letsburn_bentinck_bentinck",
+   "name": "bentinck"
+  },
+  "newmonsters_heaven_nife_claese_nife_claese": {
+   "mob": "monster/newmonsters/heaven/nife_claese/nife_claese.mob",
+   "bank": "newmonsters_heaven_nife_claese_nife_claese",
+   "name": "nife_claese"
   }
  },
  "boss_hp_lines": 3,
