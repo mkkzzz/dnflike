@@ -115,12 +115,19 @@ func check_skill_runtime() -> void:
 	var levels: Dictionary = cfg["skill_defaults"].duplicate(true)
 	levels["lightswordmastery"] = 5
 	levels["blademastery"] = 5
+	levels["weapon_mastery_up"] = 1
+	game.table.bind_swordman_weapon("original_27601",game.player_clips)
 	game.table.configure_skills(levels,"weaponmaster","katana")
-	check(game.table.moves["triple"].get("stages",[]).size()==5,"weapon-master katana mastery selects the five-stage triple slash")
+	check(game.table.moves["triple"].get("stages",[]).size()==5,"katana mastery with Weapon Oath and the equipped katana selects five triple-slash stages")
+	levels["weapon_mastery_up"] = 0
+	game.table.configure_skills(levels,"weaponmaster","katana")
+	check(game.table.moves["triple"].get("stages",[]).size()==3,"katana mastery without Weapon Oath retains three triple-slash stages")
+	levels["weapon_mastery_up"] = 1
 	levels["lightswordmastery"] = 1
 	levels["blademastery"] = 1
 	game.table.configure_skills(levels,"weaponmaster","katana")
 	check(game.table.moves["triple"].get("stages",[]).size()==3,"without mastery levels triple slash remains the original three hits")
+	game.table.bind_swordman_weapon("",game.player_clips)
 	check(runtime.get("effects",{}).get("frenzy",{}).get("form","")=="dual_wield","frenzy declares the dual-wield form")
 	check(game.table.moves.has("frenzy1") and game.table.moves.has("frenzy4"),"frenzy source four-swing normal chain is available")
 	check(game.table.moves.has("kalla_attack1") and game.table.moves.has("kalla_attack3"),"Kalla sword form exposes its three-hit chain")
@@ -194,7 +201,10 @@ func check_kernel_tables() -> void:
 	check(upper["mp"]==6 and upper["cool_ms"]==2000 and is_equal_approx(float(upper["hits"][0]["percent"]),120) and is_equal_approx(float(upper["hits"][0]["lift"]),350),"upper slash MP, cooldown, damage percent and launch come from the SKL dungeon level-1 row")
 	var triple: Dictionary = api.move("triple")
 	check(triple["stages"].size()==3 and triple["cool_ms"]==6000 and String(triple["stages"][2]["ani"])=="tripleslash3","triple slash has three original stages and its SKL cooldown")
-	check(api.move("draw")["cool_ms"]==15000 and api.move("draw")["hits"][0]["kind"]=="object","draw slash hits through its original wave passive object")
+	var draw: Dictionary = api.move("draw")
+	var draw_opening: Dictionary = draw["stages"][0]
+	check(draw["cool_ms"]==15000 and draw_opening["ani"]=="momentaryslash"
+		and draw_opening["hits"][0]["source"]=="attached_weapon","draw slash opens with its original body pose and weapon hit boxes")
 	check(api.move("rage_slash")["hits"][2]["kind"]=="object" and String(api.move("rage_slash")["hits"][2]["object"]).ends_with("gorecross.obj"),"gore cross ends with its original cross passive object")
 	var hardattack: Dictionary = api.move("hardattack")
 	check(String(hardattack["skill"])=="skill/swordman/hardattack.skl" and String(hardattack["hits"][0]["source"])=="derived:hardattack1","ghost slash uses its original SKL/ATK and a source-effect hit window")
@@ -317,10 +327,22 @@ func run_combat() -> void:
 	api.restart()
 	api.set_god(true)
 	api.spawn_dummy(Vector2(330,250))
+	var draw_costs: Array = []
+	game.session.set_skill_material_spender(func(id: int, amount: int):
+		draw_costs.append([id,amount])
+		return id==3037 and amount==1)
 	await tap(KEY_A)
 	await ticks(2)
-	check(String(api.p("action"))=="draw","A starts the original draw-slash timeline")
-	check(api.effect_count()>0,"draw slash and actor share a spawned source effect timeline")
+	check(api.p("action")=="draw" and draw_costs==[[3037,1]],"A spends one cube and starts the draw-slash windup")
+	check(api.effect_count()==0,"draw slash keeps its effects hidden during the windup")
+	var opening: Dictionary = api.move("draw")["stages"][0]
+	var shot_clock := float(opening["timeline"][2]["start_ms"])
+	for i in 75:
+		if api.p("action")!="draw" or float(api.p("clock"))>=shot_clock:break
+		await ticks(1)
+	check(api.p("action")=="draw" and float(api.p("clock"))>=shot_clock and api.effect_count()>0,
+		"draw slash spawns its original effects on the outgoing frame")
+	game.session.set_skill_material_spender(Callable())
 	await ticks(90)
 	api.set_p("mp",api.p("mp")+200.0)
 	await tap(KEY_S)
