@@ -5599,7 +5599,8 @@ func check_draw_short_wave() -> void:
 		if game.objects.size()!=1:return
 		var wave: Dictionary = game.objects[0]
 		var hit: Dictionary = wave["hit"]
-		check(wave["pos"]==POINT and wave["z"]==50.0 and wave["speed"]==500.0
+		check(wave["pos"]==POINT and wave["z"]==50.0
+			and hit["ptl_motion"]["axes"]["x"]["move_variable_1"]==[500,500]
 			and hit["native_controller"]["distance"]==400,
 			"wave starts at the caster's ground point, native absolute Z, speed and range")
 		check(hit["native_controller"]["base_amount"]==1263 and hit["fixed_amount"]==1547
@@ -5622,20 +5623,21 @@ func check_draw_short_wave() -> void:
 			"the native StartB clip is attached behind the main wave")
 		step(380)
 		check(game.player["action"]=="" and game.objects.has(wave),"the wave persists after the caster recovers")
-		game.step_objects(798)
+		game.step_objects(799)
 		check(wave["pos"]==POINT+Vector2(399,0) and game.object_view_clock(wave)<10000.0
 			and wave["hits"].size()==1,"the rightward wave stays on flight frame zero at integer distance 399")
 		move_target(rear,POINT+Vector2(401,0))
 		game.step_objects(1)
-		check(wave["pos"]==POINT+Vector2(399.5,0) and game.object_view_clock(wave)==10000.0
+		check(wave["pos"]==POINT+Vector2(400,0) and game.object_view_clock(wave)==10000.0
 			and not wave["hits"].has(rear["id"]),
-			"the rightward wave rounds its half-pixel sample to distance 400 and loses collision")
+			"the rightward wave reaches integer distance 400 and loses collision")
 		game.view.present(game.view_snapshot(),0.0,0.0)
 		var drawn = game.view.object_views.get(wave["id"])
 		check(drawn!=null and drawn.frame["frame"]==1 and drawn.get_node("RearAnimation").frame["frame"]==1,
 			"both original animation layers enter frame one on the same update")
 		game.step_objects(279)
-		check(game.objects.has(wave),"the main ANI retains the final authored frame")
+		check(game.objects.has(wave) and wave["pos"]==POINT+Vector2(539,0),
+			"the motion instance continues through the final authored frame")
 		game.step_objects(1)
 		check(game.objects.is_empty(),"both clips retire after the 280 ms main tail")
 	var spec := profile.stats()
@@ -5657,14 +5659,14 @@ func check_draw_short_wave() -> void:
 	check(wave["pos"]==origin,"the wave launches from the caster's rounded X and depth")
 	game.step_objects(0)
 	game.step_objects(799)
-	check(wave["pos"]==origin-Vector2(399.5,0) and game.object_view_clock(wave)<10000.0,
-		"the leftward half-pixel sample at positive world X is still only 399 native pixels from launch")
+	check(wave["pos"]==origin-Vector2(399,0) and game.object_view_clock(wave)<10000.0,
+		"the leftward motion instance truncates the displacement at age 799 ms")
 	game.step_objects(11)
 	check(game.object_view_clock(wave)==10000.0 and wave["pos"]==origin-Vector2(405,0),
 		"a late range-crossing update starts the tail from age zero at its actual position")
 	game.step_objects(279)
-	check(game.objects.has(wave) and game.object_view_clock(wave)==10279.0,
-		"the late sample still has the full native animation tail")
+	check(game.objects.has(wave) and game.object_view_clock(wave)==10279.0 and wave["pos"]==origin-Vector2(544,0),
+		"the late sample retains the full tail and the native motion clock keeps advancing")
 	game.step_objects(1)
 	check(not game.objects.has(wave),"the late wave retires at the end of its own tail")
 

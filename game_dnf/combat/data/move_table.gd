@@ -807,9 +807,10 @@ func _append_draw_short_wave(stage: Dictionary, spec: Dictionary, draw_skill: Di
 	controller["base_amount"] = int(float(draw_skill["level_row"][0])*rate-100.0)+100
 	controller["hit_count_bonus"] = draw_skill["static"].slice(1,6)
 	controller["distance"] = int(values[5])
-	hit["speed"] = float(values[4])
+	# CB2103..CB2139 fills a fresh PTL descriptor with X mode 1 and both speeds.
+	var speed := int(values[4])
+	hit["ptl_motion"] = {"axes":{"x":{"move_type":"[straight line]","move_variable_1":[speed,speed]}}}
 	hit["at"] = float(stage["timeline"][6]["start_ms"])
-	hit["starts_at_zero"] = true
 	stage["hits"].append(hit)
 
 func _append_upper_followup(move: Dictionary) -> void:

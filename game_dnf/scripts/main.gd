@@ -4217,8 +4217,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var tl: Array = o.get("timeline",obj["timeline"])
 		if kind == "draw_short_wave":
 			# A60D2F saves the first updated X. A60E68 seeks to frame one
-			# when the rounded distance reaches the source mastery limit.
-			var x := roundi(o["pos"].x)
+			# when the PTL's integer position reaches the source mastery limit.
+			var x := int(o["pos"].x)
 			var origin := int(o.get("wave_origin_x",0))
 			if origin == 0:
 				origin = x
