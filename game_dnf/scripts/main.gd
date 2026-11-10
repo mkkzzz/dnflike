@@ -3287,7 +3287,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
 		var outrage_impact := native_kind in OUTRAGE_IMPACTS
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
-		var armor_blocks_reaction := (outrage_impact or native_kind == "draw_short_wave") \
+		var armor_blocks_reaction := (outrage_impact or native_kind in ["draw_short_wave","hundred_sword_field"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
@@ -3303,7 +3303,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if reaction != "none":
 				target.erase("outrage_down_phase")
 				target.erase("outrage_down_peak")
-			target["clock"] = 0.0
+		if not armor_blocks_reaction:target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player and not draw_impact:
 			combo_count += 1
@@ -4430,7 +4430,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
-					if outrage_impact or kind == "draw_short_wave":
+					if outrage_impact or kind in ["draw_short_wave","hundred_sword_field"]:
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
 					o["hits"][target["id"]] = true

@@ -4323,6 +4323,55 @@ func check_hundred_sword_ready() -> void:
 	check(game.player["action"]=="" and finish_layers.call().is_empty() and finish_trails.call().is_empty(),
 		"the finish ends at 1270 ms and clears attached layers and trails")
 
+func check_hundred_sword_field_body_modes() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hundredsword"]
+	start_room("original_27601","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.clear_monsters()
+	game.player["mp"] = 1500.0
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["hit"] = 1.0
+	press(KEY_A)
+	step(0.0)
+	step(2200.0)
+	check(game.objects.size()==1,"the protected target fixture creates one sword field")
+	if game.objects.size()!=1:return
+	var field: Dictionary = game.objects[0]
+	var target: Dictionary = api.spawn_dummy(Vector2(field["pos"])+Vector2(80,0))
+	for repeated in [false,true]:
+		if repeated:
+			step(800.0)
+			step(game.action_duration("hundredsword"))
+			check(field.get("repeat_started_at")==-1,"the first movement slash reopens the protected target fixture")
+		var state := "air" if repeated else "idle"
+		target["state"] = state
+		target["clock"] = 19.0
+		target["z"] = 20.0 if repeated else 0.0
+		target["vz"] = 35.0 if repeated else 0.0
+		target["push_v"] = 0.0
+		var frame: Dictionary = game.enemy_frame(target)
+		var original_items: Dictionary = frame.get("items",{})
+		var hp := float(target["hp"])
+		var cue_count := cues("hundred_sword_contact").size()
+		frame["items"] = original_items.merged({"13":2},true)
+		game.step_objects(0.0 if repeated else 100.0)
+		check(target["hp"]==hp and not field["hits"].has(target["id"])
+			and cues("hundred_sword_contact").size()==cue_count,
+			"the sword field skips body mode two before recording contact (repeat=%s)"%repeated)
+		frame["items"] = original_items.merged({"13":1},true)
+		game.step_objects(0.0)
+		frame["items"] = original_items
+		check(target["hp"]<hp and field["hits"].has(target["id"])
+			and cues("hundred_sword_contact").size()==cue_count+1
+			and target["state"]==state and target["clock"]==19.0 and target["push_v"]==0.0
+			and target["vz"]==(35.0 if repeated else 0.0),
+			"the sword field damages super armor without replacing its movement or pose (repeat=%s)"%repeated)
+
 func check_hundred_sword_automatic() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -6267,6 +6316,7 @@ func run() -> void:
 	check_rapid_move_slash()
 	check_illusion_finish()
 	check_hundred_sword_ready()
+	check_hundred_sword_field_body_modes()
 	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
