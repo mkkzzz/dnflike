@@ -3611,7 +3611,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		reaction = hurt_player(amount,attacker,atk,facing,point.z)
 		if reaction == "blocked":return false
 		amount = roundi(before_hp-float(player["hp"]))
-		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
+		if numeric_player != null and not contact_only:
+			last_damage["trace"]["actual_amount"] = amount
+			if amount > 0 and reaction != "guard" and float(player["hp"]) > 0.0:
+				numeric_player.apply_reckless_hit()
 	else:
 		if native_kind == "hellbenter_column":HellbenterColumn.mark_target(target,int(hit.get("hellbenter_hold_mode",-1)))
 		if victim == "monster" and by_player and not contact_only and hit_skill_id in ["frenzy1","frenzy2","frenzy3","frenzy4"] \

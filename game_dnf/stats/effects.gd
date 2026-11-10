@@ -17,13 +17,18 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 func remove(id: String) -> bool:
 	return active.erase(id)
 
-func add_timed_modifier(id: String, title: String, stat: String, amount: int, duration_ms: int) -> bool:
+func add_timed_modifier(id: String, title: String, stat: String, amount: int, duration_ms: int, max_stacks := 0) -> bool:
 	if duration_ms <= 0:return false
 	if not active.has(id):
 		add(id,{"name":title})
 		active[id]["timed_modifiers"] = []
 	var effect: Dictionary = active[id]
 	var grants: Array = effect["timed_modifiers"]
+	if max_stacks > 0 and grants.size() >= max_stacks:
+		grants.pop_front()
+		effect["remaining_ms"] = 0.0
+		for grant: Dictionary in grants:
+			effect["remaining_ms"] = maxf(float(effect["remaining_ms"]),float(grant["remaining_ms"]))
 	grants.append({"stat":stat,"amount":amount,"remaining_ms":float(duration_ms)})
 	effect["remaining_ms"] = maxf(float(effect["remaining_ms"]),duration_ms)
 	effect["stacks"] = grants.size()

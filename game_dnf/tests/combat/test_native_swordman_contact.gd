@@ -1273,6 +1273,56 @@ func check_reckless_attributes() -> void:
 		check(not game.numeric_player.effects.active.has("reckless") and game.numeric_player.values==base,
 			"Reckless expiry restores the original attribute snapshot")
 
+func check_reckless_hit_strength() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	var source := {"pos":POINT+Vector2(40,0),"id":999,"stuck_ms":0.0}
+	var hit := {"atk":{},"percent":100.0}
+	var point := Vector3(POINT.x,POINT.y,46.0)
+	for sample: Array in [[1,2],[10,24]]:
+		profile.command("numbers.skill_grant",{"id":"reckless","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["reckless"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.player["mp"] = 1000.0
+		var actor = game.numeric_player
+		var base_strength := int(actor.values["strength"])
+		game.land_hit(source,game.player,hit,point,-1,10.0)
+		check(not actor.effects.active.has("reckless_hit_strength"),"incoming hits outside Reckless grant no stack")
+		game.player["state"] = "idle"
+		game.player["invuln_ms"] = 0.0
+		press(KEY_A)
+		step(0)
+		var cast_strength := int(actor.values["strength"])
+		game.god_mode = true
+		game.land_hit(source,game.player,hit,point,-1,10.0)
+		check(not actor.effects.active.has("reckless_hit_strength"),"a rejected contact grants no Reckless stack")
+		game.god_mode = false
+		var amount := int(sample[1])
+		for index in 6:
+			if index > 0:game.step_numeric_actor(game.player,actor,1000.0)
+			game.player["invuln_ms"] = 0.0
+			game.land_hit(source,game.player,hit,point,-1,10.0)
+			game.step_numeric_actor(game.player,actor,0.0)
+			var count := mini(index+1,5)
+			check(int(actor.effects.active.get("reckless_hit_strength",{}).get("stacks",0))==count
+				and int(actor.values["strength"])==cast_strength+count*amount,
+				"Reckless stacks original rank strength on incoming hit %d at rank %s"%[index+1,sample[0]])
+		game.step_numeric_actor(game.player,actor,10999.0)
+		check(int(actor.values["strength"])==cast_strength+5*amount,"sixth hit replaced the first stack without refreshing the others")
+		game.step_numeric_actor(game.player,actor,1.0)
+		check(int(actor.values["strength"])==cast_strength+4*amount,"second stack expires at its own 15000 ms boundary")
+		game.step_numeric_actor(game.player,actor,23000.0)
+		game.player["invuln_ms"] = 0.0
+		game.land_hit(source,game.player,hit,point,-1,10.0)
+		game.step_numeric_actor(game.player,actor,1080.0)
+		check(not actor.effects.active.has("reckless") and int(actor.values["strength"])==base_strength+amount,
+			"a late hit stack survives expiration of the main Reckless buff")
+		game.step_numeric_actor(game.player,actor,13920.0)
+		check(not actor.effects.active.has("reckless_hit_strength") and int(actor.values["strength"])==base_strength,
+			"the last hit stack restores original strength when its own timer expires")
+
 func check_overdrive_cast() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -8442,6 +8492,7 @@ func run() -> void:
 	check_triple_cooldown()
 	check_overdrive_attributes()
 	check_reckless_attributes()
+	check_reckless_hit_strength()
 	check_weapon_combo()
 	check_weapon_combo_normal_cancel()
 	check_heavy_weapon_combo()

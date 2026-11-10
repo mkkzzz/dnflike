@@ -121,6 +121,18 @@ func apply_bloodlust_strength(rank: int, saw_bleed: bool) -> bool:
 	if added:recalculate()
 	return added
 
+func apply_reckless_hit() -> void:
+	var rank := int(effects.active.get("reckless",{}).get("rank",0))
+	if rank <= 0:return
+	var sample := Numbers.Skills.sample(Numbers.record("reckless"),rank)
+	var row: Array = sample["level_row"]
+	var limits: Array = sample["static"]
+	if row.size() < 14 or limits.is_empty() or int(limits[0]) <= 0:return
+	# 99E1C0 creates a separate timed strength modifier. 928F46 counts
+	# active instances of type 250 and removes the first one at the cap.
+	if effects.add_timed_modifier("reckless_hit_strength","暴走","strength",int(row[12]),int(row[13]),int(limits[0])):
+		_modifiers_pending = true
+
 func apply_blood_memory_resistance(source: Dictionary) -> void:
 	var amount := int(source["amount"])
 	if amount == 0:return
