@@ -5349,6 +5349,22 @@ func check_illusion_finish() -> void:
 		check(is_equal_approx(float(game.player["cooldowns"].get("illusionslash",0)),35.9),
 			"neither normal exit nor interruption resets the running cooldown")
 
+func check_rapid_impact_cues(target: Dictionary, variant: int) -> void:
+	var events: Array = game.bus.events_of("combat.cue")
+	var cut: Array = events.filter(func(event):return String(event.get("key","")).begins_with("hit_cut_"))
+	var blood: Array = events.filter(func(event):return String(event.get("key","")).begins_with("hit_blood_"))
+	var large := String(cut[-1]["key"]).begins_with("hit_cut_l") if not cut.is_empty() else false
+	var cut_key := "hit_cut_%s%d" % ["l" if large else "s",variant]
+	var blood_key := "hit_blood_l" if large else "hit_blood_s%d" % (4-variant)
+	check(not cut.is_empty() and not blood.is_empty() and cut[-1]["key"]==cut_key and blood[-1]["key"]==blood_key,
+		"Rapid Move Slash uses the ATK direction and a shared impact size for slash variant %d" % variant)
+	if cut.is_empty() or blood.is_empty():return
+	var contact: Vector3 = game.bus.events_of("combat.hit")[-1]["point"]
+	for cue: Dictionary in [cut[-1],blood[-1]]:
+		check(cue["point"]==Vector2(int(contact.x),roundi(target["pos"].y)) and cue["height"]==int(contact.z)
+			and cue["facing"]==game.player["facing"] and cue["scale"]==1.0 and cue["fresh"],
+			"Rapid Move Slash places "+String(cue["key"])+" at the original contact point at unit scale")
+
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -5370,7 +5386,7 @@ func check_rapid_move_slash() -> void:
 		session.set_skill_material_spender(func(id: int,amount: int):
 			payments.append([id,amount])
 			return true)
-		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0.6))
 		target["hp"] = 50000.0
 		target["numeric"].values["hit_recovery"] = 0.0
 		var move: Dictionary = game.move_def("rapidmoveslash")
@@ -5395,6 +5411,7 @@ func check_rapid_move_slash() -> void:
 		check(game.player["stuck_ms"]==15.0 and target["stuck_ms"]==15.0 and cues("JAKYEOL_HIT").size()==1
 			and cues("MENGRYOUNG_ATK").size()==1 and cues("rapid_move_slash_dust").size()==1,
 			"the opening contact and dash use the original pause and audio/dust cues")
+		check_rapid_impact_cues(target,1)
 		var layers: Array = game.action_def()["fx"]
 		check(layers.size()==3 and layers.map(func(layer):return int(layer["depth_offset"]))==[4,5,6]
 			and is_equal_approx(layers[1]["scale"],0.85)
@@ -5418,7 +5435,7 @@ func check_rapid_move_slash() -> void:
 			step(0)
 			check(game.player["stage"]==2*slash,"a valid repeat starts the next ready phase")
 			if slash == count-1:
-				victim = api.spawn_dummy(Vector2(game.player["pos"])+Vector2(20,0))
+				victim = api.spawn_dummy(Vector2(game.player["pos"])+Vector2(20,-0.6))
 				victim["hp"] = 50000.0
 				victim["def"] = victim["def"].merged({"weight":45000 if rank==3 else 300000},true)
 			step(160)
@@ -5433,6 +5450,7 @@ func check_rapid_move_slash() -> void:
 		check(game.hit_count==2 and game.bus.events_of("combat.damage")[-1]["reaction"]=="launch"
 			and is_equal_approx(game.action_def()["fx"][1]["scale"],0.77),
 			"the final weapon contact launches and applies the short sword finisher scale")
+		check_rapid_impact_cues(victim,3)
 		var rise := roundi(float(victim["vz"])*float(victim["vz"])/3000.0)
 		var speed := int(victim.get("native_jump_velocity",Vector2.ZERO).x)
 		var range_check := (rise>=119 and rise<=146 and speed>=63 and speed<=94) if rank==3 \
