@@ -748,6 +748,13 @@ func _spawn_fx(event: Dictionary) -> void:
 	if bool(event.get("fresh",false)):fx.set_meta("particle_birth_pending",true)
 	fx.setup(_effects[key],int(event["facing"]))
 	fx.advance(0)
+	if key == "hundred_sword_travel_dash":
+		# A6C7D7..A6C949 draws the whole Dash list before the Slash list at the same depth.
+		for earlier in effects:
+			if is_instance_valid(earlier) and not earlier.is_queued_for_deletion() \
+					and earlier.cue_key == "hundred_sword_travel_slash" and earlier.z_index == fx.z_index:
+				world.move_child(fx,earlier.get_index())
+				break
 	effects.append(fx)
 
 ## Translucent copy of the player's pose at the moment an action is cancelled.

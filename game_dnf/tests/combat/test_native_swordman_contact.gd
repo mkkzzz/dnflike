@@ -4464,6 +4464,7 @@ func check_hundred_sword_automatic() -> void:
 			check(not game.view.object_views.has(disappear_id),"the disappearance ends at the authored 300 ms boundary")
 			elapsed = 300.0
 		step(float(durations[ordinal])-1.0-elapsed)
+		if ordinal >= 21:game.view.present(game.view_snapshot(),0.0,float(durations[ordinal])-1.0)
 		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal,
 			"stage %d holds through its last millisecond"%ordinal)
 		check(no_starting_hurtbox and game.player_damage_boxes().is_empty() and not game.attack_body_armor(),
@@ -4512,6 +4513,11 @@ func check_hundred_sword_automatic() -> void:
 		return (fx.z_index==POINT.y+int(cos(deg_to_rad(97.0))*72.5)+10
 			and fx.data["duration_ms"]==210 and fx.tag=="" and fx.clock_ms==0.0)),
 		"the last two clips survive the stage change at the move-effect layer's depth")
+	var overlapping_dashes: Array = game.view.effects.filter(func(fx):return fx.cue_key==dash_key)
+	var overlapping_slashes: Array = game.view.effects.filter(func(fx):return fx.cue_key==slash_key)
+	check(overlapping_dashes.size()>1 and overlapping_slashes.size()>1
+		and overlapping_dashes[-1].get_index()<overlapping_slashes[0].get_index(),
+		"at the shared move-effect depth even the newest Dash draws before every overlapping Slash")
 	game.view.present(game.view_snapshot(),209.0,209.0)
 	check(ending_layers.all(func(fx):return not fx.is_queued_for_deletion()),
 		"the original 210 ms clips still draw in the final pose at 209 ms")
