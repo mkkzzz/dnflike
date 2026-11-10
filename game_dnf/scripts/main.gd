@@ -744,7 +744,8 @@ func action_ani_clock(elapsed: float) -> float:
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
 		return elapsed*float(phase["charge_rate"]) if elapsed < release_at else elapsed-release_at
-	if phase.has("hop_ani_rate"):return elapsed
+	if phase.has("hop_timeline"):
+		return _source_animation_clock(elapsed,phase["hop_timeline"],action_def()["timeline"])
 	return Kernel.NativeWave.ani_clock(phase,elapsed) if not phase.is_empty() else elapsed
 
 func action_event_clock(elapsed: float) -> float:
@@ -1104,7 +1105,8 @@ func step_player(ms: float, move: Vector2) -> void:
 			player["state"] = "jump" if float(player["z"])>0 else "move"
 		else:
 			player["state"] = "jump" if float(player["z"])>0 else "idle"
-	if (float(player["z"])>0 or float(player["vz"])>0) and not player.get("native_phase",{}).has("outrage_origin_x") \
+	var phase: Dictionary = player.get("native_phase",{})
+	if (float(player["z"])>0 or float(player["vz"])>0) and not phase.has("outrage_origin_x") and not phase.has("hop_origin_x") \
 			and not player.has("hundred_sword_cast"):
 		player["air_ms"] = float(player["air_ms"])+ms
 		player["z"] = maxf(0,float(player["z"])+float(player["vz"])*dt)
@@ -1170,8 +1172,17 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var minimum := ActorNumbers.native_scalar(float(rates[0])*percent)
 		var maximum := ActorNumbers.native_scalar(float(rates[1])*percent)
 		start_stage(1)
-		player["native_phase"]["hop_ani_rate"] = ActorNumbers.native_scalar(lerpf(minimum,maximum,power/100.0))
-		player["native_phase"]["hop_charge_percent"] = power
+		var phase: Dictionary = player["native_phase"]
+		var rate := _native_float32(ActorNumbers.native_scalar(lerpf(minimum,maximum,power/100.0))*100.0)
+		var motion: Array = m["hop_motion"]
+		var timeline: Array = action_def()["timeline"]
+		var timed := native_timed_frames(timeline,rate)
+		phase.merge({"hop_timeline":timed,"end_ms":Kernel.Timeline.duration(timed),
+			"hop_charge_percent":power,"hop_origin_x":roundi(player["pos"].x),
+			"hop_apex_ms":_native_ani_delay(timeline[2]["start_ms"],rate),
+			"hop_impact_ms":_native_ani_delay(timeline[4]["start_ms"],rate),
+			"hop_travel":Vector2i(_native_interpolate(int(motion[0]),int(motion[1]),power,100),
+				_native_interpolate(int(motion[2]),int(motion[3]),power,100))},true)
 		return
 	if m.has("upper_followup_at") and int(player["stage"]) == 0 and player.get("queued_upper_followup",false):
 		end_action_fx()
@@ -1193,7 +1204,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	var bloodblast := native_phase.has("bloodblast_timeline")
 	var old_native_event_clock := action_event_clock(old_clock) if native_timed_ani or bloodblast else 0.0
 	var previous_ani_end := float(native_phase.get("end_ms",0.0))
-	if not native_phase.is_empty():clock = old_clock+ms*float(native_phase.get("hop_ani_rate",1.0))
+	if not native_phase.is_empty():clock = old_clock+ms
 	if native_timed_ani:
 		var old_rate := float(native_phase["native_ani_rate"])
 		var rate := attack_animation_percent(0,old_rate) if refresh_ani_rate else old_rate
@@ -1237,6 +1248,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			start_stage(1)
 			return
 		if int(player["stage"]) == 1:step_outrage_motion(m,native_phase,clock,ms)
+	if native_phase.has("hop_origin_x"):step_hop_smash_motion(native_phase,int(clock))
 	if native_phase.has("velocity"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -1906,10 +1918,35 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float, ms: 
 	move_along_ground_pixels(x-float(player["pos"].x))
 	var half := maxi(1,impact>>1)
 	var time := clampi(mini(elapsed,2*half-elapsed),0,half)
+	player["z"] = native_leap_height(travel.y,time,half)
+
+func step_hop_smash_motion(phase: Dictionary, age: int) -> void:
+	phase["hop_landed_now"] = false
+	if phase.get("hop_landed",false):return
+	var apex := int(phase["hop_apex_ms"])
+	var impact := int(phase["hop_impact_ms"])
+	if age >= impact:
+		# CB4C6B writes Z only, keeping the last X accepted during flight.
+		player["z"] = 0.0
+		phase["hop_landed"] = true
+		phase["hop_landed_now"] = true
+		return
+	var travel: Vector2i = phase["hop_travel"]
+	var middle := int(_native_float32(float(travel.x)*_native_float32(0.8)))
+	var rising := age < apex
+	var distance := _native_interpolate(0,middle,age,apex) if rising \
+		else _native_interpolate(middle,travel.x,age-apex,impact-apex)
+	var x := int(phase["hop_origin_x"])+int(player["facing"])*distance
+	# CB4ABA and CB4B66 query the ground path even while the actor is airborne.
+	move_along_ground_pixels(x-float(player["pos"].x),0.0,0.0)
+	player["z"] = native_leap_height(float(travel.y),age if rising else impact-age,apex if rising else impact-apex)
+
+func native_leap_height(height: float, time: int, duration: int) -> float:
+	if time >= duration:return height
 	# 11AF052 and 11AF05B round the two coefficients before x87 evaluation.
-	var slope := _native_float32(travel.y*2.0/half)
-	var curve := _native_float32(slope/half)
-	player["z"] = travel.y if time == half else float(int((slope-0.5*curve*time)*time))
+	var slope := _native_float32(height*2.0/duration)
+	var curve := _native_float32(slope/duration)
+	return float(int((slope-0.5*curve*time)*time))
 
 func stop_bloody_rave_loop() -> void:
 	if player.erase("bloody_rave_loop"):
@@ -2935,7 +2972,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var hit: Dictionary = stage["hits"][i]
 		if hit["kind"] == "object":
 			var at := float(hit["at"])
-			if action_timed_crossed(at,old_t,new_t):
+			var hop_shockwave: bool = hit.get("native_controller",{}).get("kind","") == "hop_shockwave"
+			var due: bool = player["native_phase"].get("hop_landed_now",false) if hop_shockwave else action_timed_crossed(at,old_t,new_t)
+			if due:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
 				elif hit.get("skill_id","") == "bloodyrave":
@@ -2961,7 +3000,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("native_controller",{}).get("kind","") == "bloodblast":
 					# 86DE33 reads rounded XYZ before applying the eruption's offsets.
 					spawn_object(hit,"player",Vector2(player["pos"]).round(),roundf(player["z"]),facing,attack_power())
-				elif hit.get("native_controller",{}).get("kind","") == "hop_shockwave":
+				elif hop_shockwave:
 					spawn_object(prepare_hop_shockwave(hit),"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
 					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
@@ -5550,8 +5589,9 @@ func move_in_world(from: Vector2,delta: Vector2,z := 0.0) -> Vector2:
 func move_player(delta: Vector2) -> void:
 	player["pos"] = move_in_world(player["pos"],delta,float(player["z"]))
 
-func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
+func move_along_ground_pixels(dx: float, dy := 0.0, collision_z := -1.0) -> void:
 	var pos: Vector2 = player["pos"]
+	var height := float(player["z"]) if collision_z < 0.0 else collision_z
 	# 8A8C20 tests each rounded pixel on the current axis, with the other axis fixed.
 	for axis: int in 2:
 		var distance := dx if axis == 0 else dy
@@ -5562,7 +5602,7 @@ func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 		var direction := signi(target-start)
 		while pixel[axis] != target:
 			pixel[axis] += direction
-			if not ground_passable(Vector2(pixel),float(player["z"])):break
+			if not ground_passable(Vector2(pixel),height):break
 			start = pixel[axis]
 		# 8A8D63 writes the last clear pixel when blocked.
 		pos[axis] = pos[axis]+distance if start == target else float(start)

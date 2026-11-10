@@ -1582,6 +1582,8 @@ func check_hopsmash_bleed() -> void:
 		spec["skill_slots"] = ["hopsmash"]
 		start_room("original_27601","katana",facing,spec,"berserker")
 		game.player["pos"] = POINT+Vector2(0.5,0.5)
+		if not enabled:
+			game.room_blockers.append({"collision":Rect2(415,296,12,12),"pass_type":"[pass only float type]"})
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
 		var body_target: Dictionary = api.spawn_dummy(POINT+Vector2(55*facing,0))
@@ -1598,15 +1600,33 @@ func check_hopsmash_bleed() -> void:
 			session.submit_key(KEY_A,false)
 		check(game.player["action"]=="hopsmash" and game.player["stage"]==1,
 			"Hop Smash starts its strike on tap or full charge without a second press")
-		var rate: float = game.player["native_phase"]["hop_ani_rate"]
-		check(is_equal_approx(rate,2.5 if rank==1 else 3.81),"Hop Smash applies the sourced strike speed")
-		step(440.0/rate)
+		var timeline: Array = game.player["native_phase"]["hop_timeline"]
+		check(timeline[4]["start_ms"]==(240 if rank==1 else 155),"Hop Smash rounds each body frame at the sourced strike speed")
+		var apex := 144 if rank==1 else 94
+		var impact := 240 if rank==1 else 157
+		var peak := 50.0 if rank==1 else 120.0
+		var half := apex >> 1
+		step(half)
+		var midpoint_x := (421.0 if rank==1 else 321.0) if enabled else 414.0
+		check(game.player["pos"]==Vector2(midpoint_x,300.5) and game.player["z"]==(37.0 if rank==1 else 89.0),
+			"Hop Smash matches its ascent samples and uses ground collision while airborne")
+		step(apex-half)
+		var apex_x := (441.0 if rank==1 else 241.0) if enabled else 414.0
+		check(game.player["pos"].x==apex_x and game.player["z"]==peak,
+			"Hop Smash reaches its peak after 80 percent of the requested forward travel")
+		move_target(body_target,Vector2(apex_x+35*facing,300.5),peak-8.0)
+		var body_at := int(timeline[3]["start_ms"])+1
+		step(body_at-apex)
 		check(float(body_target["hp"])<5000.0 and not body_target["numeric"].effects.active.has("bleed"),
 			"Hop Smash's body contact never applies the shockwave status")
-		step(159.0/rate)
-		check(game.objects.is_empty(),"Hop Smash does not spawn its shockwave before body frame four")
+		step(impact-1-body_at)
+		var landing_x := (450.0 if rank==1 else 202.0) if enabled else 414.0
+		check(game.objects.is_empty() and game.player["pos"].x==landing_x and game.player["z"]==(1.0 if rank==1 else 3.0),
+			"Hop Smash matches the last airborne sample one millisecond before impact")
 		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
-		step(2.0/rate)
+		step(1.0)
+		check(game.player["pos"].x==landing_x and game.player["z"]==0.0,
+			"Hop Smash lands on its integer time boundary without moving X again")
 		var waves: Array = game.objects.filter(func(object):return object["hit"].get("skill_id")=="hopsmash")
 		check(waves.size()==int(enabled),"Bloody Vigorous enables one Hop Smash landing shockwave")
 		if waves.size()!=1:continue
@@ -1614,7 +1634,7 @@ func check_hopsmash_bleed() -> void:
 		var point: Vector2 = wave["pos"]
 		var expected_amount := 1305 if rank==1 else 1461
 		var expected_size := (250.0 if rank==1 else 306.0)/292.0
-		check(point==POINT+Vector2(1+123*facing,2) and wave["z"]==0.0 and wave["facing"]==facing,
+		check(point==Vector2(landing_x+123*facing,302) and wave["z"]==0.0 and wave["facing"]==facing,
 			"Hop Smash uses the rounded landing point and mirrored native forward offset")
 		check(wave["hit"]["percent"]==0.0 and wave["hit"]["fixed_amount"]==expected_amount
 			and wave["hit"]["atk"]["absolute_damage"]==expected_amount,

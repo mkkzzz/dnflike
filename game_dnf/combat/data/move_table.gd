@@ -747,6 +747,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		var row: Array = skill["level_row"]
 		var static_data: Array = skill["static"]
 		move["hop_charge_ms"] = [int(static_data[0]),int(static_data[1])]
+		move["hop_motion"] = static_data.slice(2,6)
 		move["hop_ani_percent"] = [int(row[6]),int(row[7])]
 		var strike: Dictionary = move["stages"][1]
 		if int(skill_levels.get("bloody_vigorous",0)) <= 0:
