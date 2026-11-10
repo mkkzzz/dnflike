@@ -8667,7 +8667,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -8719,7 +8719,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -8813,7 +8813,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -8862,7 +8862,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -8911,7 +8911,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -9005,7 +9005,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9054,7 +9054,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9103,7 +9103,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9152,7 +9152,7 @@
       "sprite": {
        "ani": "monster/soceress/animation_keraha/stay.ani",
        "ani_sha256": "77838e42b96ae39fc5c3a512fb1cd5da757e297fc936da1eab648643cc508447",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 640,
        "frames": [
         {
@@ -9306,7 +9306,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -9355,7 +9355,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17206,7 +17206,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -17306,7 +17306,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -17357,7 +17357,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -17415,7 +17415,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -17478,7 +17478,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -17594,7 +17594,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -17645,7 +17645,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17694,7 +17694,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17743,7 +17743,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17792,7 +17792,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17841,7 +17841,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -17890,7 +17890,7 @@
       "sprite": {
        "ani": "monster/soceress/animation_keraha/stay.ani",
        "ani_sha256": "77838e42b96ae39fc5c3a512fb1cd5da757e297fc936da1eab648643cc508447",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 640,
        "frames": [
         {
@@ -18044,7 +18044,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18093,7 +18093,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18142,7 +18142,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18191,7 +18191,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18240,7 +18240,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18289,7 +18289,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18338,7 +18338,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -18387,7 +18387,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -26933,7 +26933,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -26984,7 +26984,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -27035,7 +27035,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -27086,7 +27086,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -27144,7 +27144,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -27195,7 +27195,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -27246,7 +27246,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27295,7 +27295,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27344,7 +27344,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27393,7 +27393,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27442,7 +27442,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27491,7 +27491,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27540,7 +27540,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -27589,7 +27589,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -35586,7 +35586,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35637,7 +35637,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35688,7 +35688,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35739,7 +35739,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35790,7 +35790,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35841,7 +35841,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35892,7 +35892,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35943,7 +35943,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -35994,7 +35994,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -36045,7 +36045,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -36153,7 +36153,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -36217,7 +36217,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -36269,7 +36269,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -36321,7 +36321,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36370,7 +36370,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36419,7 +36419,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36468,7 +36468,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36517,7 +36517,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36566,7 +36566,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -36615,7 +36615,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44377,7 +44377,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -44471,7 +44471,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44520,7 +44520,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -44614,7 +44614,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44663,7 +44663,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_ral/stay.ani",
        "ani_sha256": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44723,7 +44723,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44772,7 +44772,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44821,7 +44821,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44870,7 +44870,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44919,7 +44919,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -44968,7 +44968,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -52873,7 +52873,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -52972,7 +52972,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -53029,7 +53029,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -53081,7 +53081,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -53130,7 +53130,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -53218,13 +53218,14 @@
        1,
        1,
        "[fixed]",
-       "[champion]"
+       "[champion]",
+       0
       ],
       "mob": "monster/tau/tauguard.mob",
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -53251,14 +53252,13 @@
       }
      },
      {
-      "id": 0,
+      "id": 5003,
       "anchor": [
-       0,
        897,
-       313
+       313,
+       0
       ],
       "raw": [
-       0,
        5003,
        1,
        0,
@@ -53267,10 +53267,78 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/lugaru/sirogaru.mob",
+      "sprite": {
+       "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
+       "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
+       "loop_flag": 0,
+       "duration_ms": 500,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 200,
+         "items": {
+          "12": 200
+         },
+         "image": "057f4faf5526_33",
+         "offset": [
+          -48,
+          -69
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_34",
+         "offset": [
+          -44,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_35",
+         "offset": [
+          -46,
+          -67
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 3,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_36",
+         "offset": [
+          -44,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -53278,14 +53346,13 @@
       }
      },
      {
-      "id": "[normal]",
+      "id": 5003,
       "anchor": [
-       0,
        1053,
-       340
+       340,
+       0
       ],
       "raw": [
-       "[normal]",
        5003,
        1,
        0,
@@ -53294,10 +53361,78 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/lugaru/sirogaru.mob",
+      "sprite": {
+       "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
+       "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
+       "loop_flag": 0,
+       "duration_ms": 500,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 200,
+         "items": {
+          "12": 200
+         },
+         "image": "057f4faf5526_33",
+         "offset": [
+          -48,
+          -69
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 1,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_34",
+         "offset": [
+          -44,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 2,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_35",
+         "offset": [
+          -46,
+          -67
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        },
+        {
+         "frame": 3,
+         "delay_ms": 100,
+         "items": {
+          "12": 100
+         },
+         "image": "057f4faf5526_36",
+         "offset": [
+          -44,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -61179,7 +61314,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -61229,7 +61364,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61280,7 +61415,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61331,7 +61466,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61389,7 +61524,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -61452,7 +61587,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61510,7 +61645,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61567,7 +61702,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -61618,7 +61753,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -61667,7 +61802,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -61716,7 +61851,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -61765,7 +61900,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -61808,13 +61943,14 @@
        1,
        1,
        "[fixed]",
-       "[champion]"
+       "[champion]",
+       0
       ],
       "mob": "monster/goblin/seagab.mob",
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -61841,14 +61977,13 @@
       }
      },
      {
-      "id": 0,
+      "id": 8,
       "anchor": [
-       0,
        910,
-       298
+       298,
+       0
       ],
       "raw": [
-       0,
        8,
        1,
        0,
@@ -61857,10 +61992,33 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/goblin/flagseagab.mob",
+      "sprite": {
+       "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
+       "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
+       "loop_flag": 1,
+       "duration_ms": 80,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 80,
+         "items": {
+          "12": 80
+         },
+         "image": "60b8659ebdd2_0",
+         "offset": [
+          -22,
+          -71
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -61868,14 +62026,13 @@
       }
      },
      {
-      "id": "[normal]",
+      "id": 8,
       "anchor": [
-       0,
        1087,
-       307
+       307,
+       0
       ],
       "raw": [
-       "[normal]",
        8,
        1,
        0,
@@ -61884,10 +62041,33 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/goblin/flagseagab.mob",
+      "sprite": {
+       "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
+       "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
+       "loop_flag": 1,
+       "duration_ms": 80,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 80,
+         "items": {
+          "12": 80
+         },
+         "image": "60b8659ebdd2_0",
+         "offset": [
+          -22,
+          -71
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -61895,14 +62075,13 @@
       }
      },
      {
-      "id": "[normal]",
+      "id": 3,
       "anchor": [
-       7,
        527,
-       330
+       330,
+       0
       ],
       "raw": [
-       "[normal]",
        3,
        0,
        7,
@@ -61911,10 +62090,33 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/goblin/seagab.mob",
+      "sprite": {
+       "ani": "monster/goblin/animation_islandgoblin/stay.ani",
+       "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
+       "loop_flag": 1,
+       "duration_ms": 80,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 80,
+         "items": {
+          "12": 80
+         },
+         "image": "0469c7967fa1_0",
+         "offset": [
+          -14,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -61922,14 +62124,13 @@
       }
      },
      {
-      "id": "[normal]",
+      "id": 3,
       "anchor": [
-       7,
        642,
-       340
+       340,
+       0
       ],
       "raw": [
-       "[normal]",
        3,
        0,
        7,
@@ -61938,10 +62139,33 @@
        0,
        1,
        1,
-       "[fixed]"
+       "[fixed]",
+       "[normal]"
       ],
-      "mob": null,
-      "sprite": null,
+      "mob": "monster/goblin/seagab.mob",
+      "sprite": {
+       "ani": "monster/goblin/animation_islandgoblin/stay.ani",
+       "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
+       "loop_flag": 1,
+       "duration_ms": 80,
+       "frames": [
+        {
+         "frame": 0,
+         "delay_ms": 80,
+         "items": {
+          "12": 80
+         },
+         "image": "0469c7967fa1_0",
+         "offset": [
+          -14,
+          -68
+         ],
+         "flip_x": false,
+         "color": null,
+         "additive": false
+        }
+       ]
+      },
       "field_meaning": {
        "0": "monster id (E-PARSE via monster.lst)",
        "3-5": "x,y,z (E-INFER)",
@@ -69921,7 +70145,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70022,7 +70246,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/largegrassmirkwood.ani",
        "ani_sha256": "d75f9d236a476627b612fc3029d496fa8dd025548f3a76058b8d2f6dd9674e46",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 1850,
        "frames": [
         {
@@ -70177,7 +70401,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70228,7 +70452,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70279,7 +70503,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70330,7 +70554,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70381,7 +70605,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/largegrassmirkwood.ani",
        "ani_sha256": "d75f9d236a476627b612fc3029d496fa8dd025548f3a76058b8d2f6dd9674e46",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 1850,
        "frames": [
         {
@@ -70536,7 +70760,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70587,7 +70811,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70688,7 +70912,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70739,7 +70963,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70790,7 +71014,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70841,7 +71065,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -70892,7 +71116,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/largegrassmirkwood.ani",
        "ani_sha256": "d75f9d236a476627b612fc3029d496fa8dd025548f3a76058b8d2f6dd9674e46",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 1850,
        "frames": [
         {
@@ -71047,7 +71271,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/largegrassmirkwood.ani",
        "ani_sha256": "d75f9d236a476627b612fc3029d496fa8dd025548f3a76058b8d2f6dd9674e46",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 1850,
        "frames": [
         {
@@ -71209,7 +71433,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -71260,7 +71484,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -71311,7 +71535,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71360,7 +71584,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71409,7 +71633,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71458,7 +71682,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_ral/stay.ani",
        "ani_sha256": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71518,7 +71742,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71567,7 +71791,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -71616,7 +71840,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -71710,7 +71934,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -80389,7 +80613,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80440,7 +80664,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80491,7 +80715,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80542,7 +80766,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80693,7 +80917,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80744,7 +80968,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80795,7 +81019,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80846,7 +81070,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80897,7 +81121,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80948,7 +81172,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -80999,7 +81223,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81100,7 +81324,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81201,7 +81425,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81252,7 +81476,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81303,7 +81527,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81354,7 +81578,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81405,7 +81629,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81463,7 +81687,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81520,7 +81744,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81578,7 +81802,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81636,7 +81860,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81694,7 +81918,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -81745,7 +81969,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -81794,7 +82018,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -81843,7 +82067,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -81892,7 +82116,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -81941,7 +82165,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -81990,7 +82214,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -82039,7 +82263,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -82088,7 +82312,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -82137,7 +82361,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -82186,7 +82410,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -89947,7 +90171,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -89997,7 +90221,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90048,7 +90272,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90099,7 +90323,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -90249,7 +90473,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90300,7 +90524,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90351,7 +90575,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90452,7 +90676,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90566,7 +90790,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90624,7 +90848,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -90716,7 +90940,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_ral/stay.ani",
        "ani_sha256": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -90776,7 +91000,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90870,7 +91094,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -90964,7 +91188,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_ral/stay.ani",
        "ani_sha256": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -91024,7 +91248,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -91118,7 +91342,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -91212,7 +91436,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -98203,7 +98427,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -98261,7 +98485,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -98312,7 +98536,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -98406,7 +98630,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -98455,7 +98679,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -106580,7 +106804,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -106630,7 +106854,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -106728,7 +106952,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/treasurebox.ani",
        "ani_sha256": "df79f0c1b59bbae5e6cb5c834b881369c3cd44e63d0d9c9848328d51b3254290",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -106785,7 +107009,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -106836,7 +107060,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -106885,7 +107109,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -106934,7 +107158,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -106983,7 +107207,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107032,7 +107256,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107081,7 +107305,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107130,7 +107354,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107179,7 +107403,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -107228,7 +107452,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116063,7 +116287,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -116121,7 +116345,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -116173,7 +116397,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116222,7 +116446,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116271,7 +116495,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116320,7 +116544,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116369,7 +116593,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116418,7 +116642,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -116467,7 +116691,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -124571,7 +124795,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124622,7 +124846,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124673,7 +124897,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124724,7 +124948,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124775,7 +124999,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124826,7 +125050,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124877,7 +125101,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124928,7 +125152,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -124979,7 +125203,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125030,7 +125254,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125081,7 +125305,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125132,7 +125356,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125183,7 +125407,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125234,7 +125458,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125285,7 +125509,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125336,7 +125560,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125387,7 +125611,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125438,7 +125662,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125489,7 +125713,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125540,7 +125764,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125591,7 +125815,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125642,7 +125866,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125693,7 +125917,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125763,7 +125987,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125862,7 +126086,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125926,7 +126150,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -125990,7 +126214,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -126042,7 +126266,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126091,7 +126315,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126140,7 +126364,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126189,7 +126413,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126238,7 +126462,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126287,7 +126511,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126336,7 +126560,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -126385,7 +126609,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133423,7 +133647,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -133481,7 +133705,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -133533,7 +133757,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133582,7 +133806,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -133676,7 +133900,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133725,7 +133949,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_ral/stay.ani",
        "ani_sha256": "25ce5caadf78936c0065710fc525326ffbc0ad13b0990cb78e7c4698c4bdf442",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133785,7 +134009,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133834,7 +134058,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133883,7 +134107,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133932,7 +134156,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -133981,7 +134205,7 @@
       "sprite": {
        "ani": "monster/lugaru/animation_whitelugaru/stay_2.ani",
        "ani_sha256": "99cbbf0e9aac341b81fbe5aff4c94e53c15ba9ceed13720e4916f1ae7eb6b74b",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141474,7 +141698,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141525,7 +141749,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141576,7 +141800,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141627,7 +141851,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141678,7 +141902,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141729,7 +141953,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141780,7 +142004,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141831,7 +142055,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141882,7 +142106,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -141933,7 +142157,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -142032,7 +142256,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -142083,7 +142307,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -142181,7 +142405,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -142233,7 +142457,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142282,7 +142506,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142331,7 +142555,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142380,7 +142604,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142429,7 +142653,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142478,7 +142702,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142527,7 +142751,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142576,7 +142800,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142625,7 +142849,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_bunkerworker/stay.ani",
        "ani_sha256": "af13519084e6caff9962e0cc34fee1935b9b91814d2d13da84db6c2034b2a245",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142674,7 +142898,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -142723,7 +142947,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_cowardgoblin2/stay.ani",
        "ani_sha256": "0a70e3441d79413c289e728556e96b08141542dc6ee78fc156decae6fb7089a5",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -150789,7 +151013,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -150839,7 +151063,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/stonepillar/stonepillar0.ani",
        "ani_sha256": "1a74db6726726a4c88f03740d71df7211225d760a2fac7286f320b5429bf4816",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 600000000,
        "frames": [
         {
@@ -150946,7 +151170,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -151010,7 +151234,7 @@
       "sprite": {
        "ani": "passiveobject/mapobject/breakableobject/animation/barrel.ani",
        "ani_sha256": "9d1783f430289a0413feeafa9d16c32cb78d38f9d0f834b2dba363eb9d7016f1",
-       "loop_flag": null,
+       "loop_flag": 0,
        "duration_ms": 500,
        "frames": [
         {
@@ -151062,7 +151286,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_kinol2/stay.ani",
        "ani_sha256": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151111,7 +151335,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151160,7 +151384,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151209,7 +151433,7 @@
       "sprite": {
        "ani": "monster/tau/guardanimation/stay.ani",
        "ani_sha256": "384c16a3f8b86df221dd4994d3acc52ea28860efa0b1de7fd022cd391e5ec322",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151258,7 +151482,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin2/stay.ani",
        "ani_sha256": "5df136052b4be39bd26f5b0a247fe8fe8c9b11eb53e64a7cb4c73f9081eda488",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151307,7 +151531,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_kinol2/stay.ani",
        "ani_sha256": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -151356,7 +151580,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_kinol2/stay.ani",
        "ani_sha256": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158460,7 +158684,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158509,7 +158733,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158558,7 +158782,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158607,7 +158831,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158656,7 +158880,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -158705,7 +158929,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -165933,7 +166157,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -165982,7 +166206,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_kinol2/stay.ani",
        "ani_sha256": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -166031,7 +166255,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -166080,7 +166304,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_kinol2/stay.ani",
        "ani_sha256": "533c2f0fa01430a6ade38e68ac3609c03fed19876afd88cce75496e31f89e4b1",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -166129,7 +166353,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -166178,7 +166402,7 @@
       "sprite": {
        "ani": "monster/goblin/animation_islandgoblin/stay.ani",
        "ani_sha256": "5b80ee1655942e8c6257e81d13905133e0402504b72e8d6cef5b16051c18e466",
-       "loop_flag": null,
+       "loop_flag": 1,
        "duration_ms": 80,
        "frames": [
         {
@@ -171616,24 +171840,6 @@
    "detail": "passiveobject/mapobject/trap/goblinbunker absent or not parsed"
   },
   {
-   "level": "error",
-   "code": "group_size",
-   "path": "map/mirkwoodfrost/h1402.map",
-   "detail": "[monster]: 51 values not divisible by 10; tail ignored"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1402.map",
-   "detail": "monster id 0 absent from monster.lst"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1402.map",
-   "detail": "monster id [normal] absent from monster.lst"
-  },
-  {
    "level": "info",
    "code": "unhandled_tags",
    "path": "map/mirkwoodfrost/h1402.map",
@@ -171650,36 +171856,6 @@
    "code": "object_unrendered",
    "path": "passiveobject/mapobject/particlefactory/haildrop.obj",
    "detail": "no [basic motion]; particle/behaviour not rendered, kept as data only"
-  },
-  {
-   "level": "error",
-   "code": "group_size",
-   "path": "map/mirkwoodfrost/h1403.map",
-   "detail": "[monster]: 91 values not divisible by 10; tail ignored"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1403.map",
-   "detail": "monster id 0 absent from monster.lst"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1403.map",
-   "detail": "monster id [normal] absent from monster.lst"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1403.map",
-   "detail": "monster id [normal] absent from monster.lst"
-  },
-  {
-   "level": "error",
-   "code": "monster_id",
-   "path": "map/mirkwoodfrost/h1403.map",
-   "detail": "monster id [normal] absent from monster.lst"
   },
   {
    "level": "info",
