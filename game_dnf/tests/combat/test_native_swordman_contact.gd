@@ -1615,11 +1615,36 @@ func check_hopsmash_bleed() -> void:
 		check(game.player["pos"].x==apex_x and game.player["z"]==peak,
 			"Hop Smash reaches its peak after 80 percent of the requested forward travel")
 		move_target(body_target,Vector2(apex_x+35*facing,300.5),peak-8.0)
+		game.numeric_player.values["strength"] = 0.0
+		game.numeric_player.values["physical_crit"] = 0.0
+		game.numeric_player.values["damage_rate"] = 1.0
+		game.numeric_player.values["skill_rate"] = 1.0
+		game.numeric_player.values["physical_attack"] = 1000.0
+		body_target["numeric"].values["physical_defense"] = 0.0
+		body_target["facing"] = -facing
 		var body_at := int(timeline[3]["start_ms"])+1
 		step(body_at-apex)
-		check(float(body_target["hp"])<5000.0 and not body_target["numeric"].effects.active.has("bleed"),
-			"Hop Smash's body contact never applies the shockwave status")
-		step(impact-1-body_at)
+		var body_damage := 1250 if rank==1 else 1400
+		check(body_target["hp"]==5000.0-body_damage and not body_target["numeric"].effects.active.has("bleed"),
+			"Hop Smash's first contact reads body column zero without the shockwave status")
+		var expected_hits := 1
+		var resets := [[215,216,true]] if rank==1 else [[130,150,false],[151,152,true]]
+		var clock := body_at
+		for reset: Array in resets:
+			step(int(reset[0])-clock)
+			check(body_target["hp"]==5000.0-body_damage*expected_hits,
+				"The Hop Smash body keeps its contact ledger through the update before a reset")
+			var body_pos: Vector2 = game.player["pos"]
+			move_target(body_target,body_pos+Vector2(35*facing,0),maxf(0.0,float(game.player["z"])-8.0))
+			body_target["vz"] = 0.0
+			body_target["facing"] = -facing
+			clock = int(reset[1])
+			step(clock-int(reset[0]))
+			expected_hits += 1
+			var expected_push := (200.0 if reset[2] else 30.0)*float(game.rules["reaction"]["push_speed_per_unit"])*facing
+			check(body_target["hp"]==5000.0-body_damage*expected_hits and is_equal_approx(body_target["push_v"],expected_push),
+				"Hop Smash reopens the body hit on schedule and uses the final ATK only on exhaustion")
+		step(impact-1-clock)
 		var landing_x := (450.0 if rank==1 else 202.0) if enabled else 414.0
 		check(game.objects.is_empty() and game.player["pos"].x==landing_x and game.player["z"]==(1.0 if rank==1 else 3.0),
 			"Hop Smash matches the last airborne sample one millisecond before impact")

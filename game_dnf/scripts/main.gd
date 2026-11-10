@@ -1177,8 +1177,15 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var motion: Array = m["hop_motion"]
 		var timeline: Array = action_def()["timeline"]
 		var timed := native_timed_frames(timeline,rate)
+		var counts: Array = m["hop_hit_counts"]
+		var hit_count := _native_interpolate(int(counts[0]),int(counts[1]),power,100)
+		var hit_start := _native_ani_delay(timeline[3]["start_ms"],rate)
+		var hit_end := _native_ani_delay(timeline[5]["start_ms"],rate)
+		@warning_ignore("integer_division")
+		var interval := (hit_end-hit_start)/hit_count
 		phase.merge({"hop_timeline":timed,"end_ms":Kernel.Timeline.duration(timed),
 			"hop_charge_percent":power,"hop_origin_x":roundi(player["pos"].x),
+			"hop_resets_left":hit_count-1,"hop_reset_interval_ms":interval,"hop_next_reset_ms":hit_start+interval,
 			"hop_apex_ms":_native_ani_delay(timeline[2]["start_ms"],rate),
 			"hop_impact_ms":_native_ani_delay(timeline[4]["start_ms"],rate),
 			"hop_travel":Vector2i(_native_interpolate(int(motion[0]),int(motion[1]),power,100),
@@ -1248,7 +1255,13 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			start_stage(1)
 			return
 		if int(player["stage"]) == 1:step_outrage_motion(m,native_phase,clock,ms)
-	if native_phase.has("hop_origin_x"):step_hop_smash_motion(native_phase,int(clock))
+	if native_phase.has("hop_origin_x"):
+		step_hop_smash_motion(native_phase,int(clock))
+		if int(native_phase["hop_resets_left"]) > 0 and int(clock) >= int(native_phase["hop_next_reset_ms"]):
+			# CB5037 permits one reset per update, keeping the original timer schedule.
+			native_phase["hop_next_reset_ms"] += native_phase["hop_reset_interval_ms"]
+			native_phase["hop_resets_left"] -= 1
+			player["hits"].clear()
 	if native_phase.has("velocity"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -3018,8 +3031,10 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
+		var hop_body: bool = stage.has("hop_final_hit") and hit.get("source","") == "body"
+		if hop_body and int(player["native_phase"].get("hop_resets_left",1)) == 0:hit = stage["hop_final_hit"]
 		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash","illusion_finish"]
-		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
+		var sample_from := new_t if attached or hop_body or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
 			contact = hit.duplicate()
@@ -3028,7 +3043,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		for s: int in hit["segments"].size():
 			var boxes: Array = Kernel.Timeline.segment_boxes(hit["segments"][s],sample_from,new_t)
 			if boxes.is_empty():continue
-			var group: int = 0 if attached else s
+			var group: int = 0 if attached or hop_body else s
 			var world: Array = Kernel.HitJudge.world_boxes(boxes,anchor,facing)
 			for enemy: Dictionary in monsters:
 				var id := "%d:%d:%d"%[i,group,int(enemy["id"])]

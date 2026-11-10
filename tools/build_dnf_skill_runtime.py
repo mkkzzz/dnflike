@@ -1975,13 +1975,6 @@ def mastery_variants() -> dict:
                 "append_object": OBJ_ROOT + "ashenforksub.obj",
             }
         ],
-        "hopsmash": [
-            {
-                "priority": 20,
-                "job": "berserker",
-                "append_hits": 1,
-            }
-        ],
         "weaponcombo": [
             {"priority": 40, "weapon": [family],
              "replace_stages": [f"weaponcombo{stem}{stage}" for stage in stages]}
@@ -2518,6 +2511,9 @@ def main() -> int:
                 move["grab_hold_fx"] = {**grab_hold, "effect": effect}
             if key == "hopsmash":
                 move["hop_bleed_base"] = bleed_attack_base
+                body = next(hit for hit in move["stages"][1]["hits"] if hit.get("body"))
+                body["percent_col"] = 0
+                move["hop_final_atk"] = CHR_ATK + "hopsmashfinal.atk"
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base

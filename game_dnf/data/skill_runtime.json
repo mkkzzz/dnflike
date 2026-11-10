@@ -5926,6 +5926,7 @@
     "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
     "source": "etc/etcparameter.etc"
    },
+   "hop_final_atk": "character/swordman/attackinfo/hopsmashfinal.atk",
    "name": "崩山击",
    "skill": "skill/swordman/hopsmash.skl",
    "stages": [
@@ -5942,7 +5943,7 @@
        "atk": "character/swordman/attackinfo/hopsmash.atk",
        "body": true,
        "effects": [],
-       "percent_col": 1
+       "percent_col": 0
       },
       {
        "at": 260,
@@ -5950,46 +5951,6 @@
        "object": "passiveobject/character/swordman/hopsmashsub.obj",
        "percent_col": 0,
        "speed": 0.0
-      }
-     ]
-    }
-   ]
-  },
-  "hopsmash__variant_1": {
-   "name": "崩山击",
-   "skill": "skill/swordman/hopsmash.skl",
-   "stages": [
-    {
-     "ani": "hopsmashready",
-     "atk": "",
-     "hits": []
-    },
-    {
-     "ani": "hopsmash",
-     "atk": "character/swordman/attackinfo/hopsmash.atk",
-     "hits": [
-      {
-       "atk": "character/swordman/attackinfo/hopsmash.atk",
-       "body": true,
-       "effects": [],
-       "percent_col": 1
-      },
-      {
-       "at": 260,
-       "life_ms": 1300,
-       "object": "passiveobject/character/swordman/hopsmashsub.obj",
-       "percent_col": 0,
-       "speed": 0.0
-      },
-      {
-       "atk": "character/swordman/attackinfo/hopsmash.atk",
-       "derived": "",
-       "effects": [],
-       "percent_col": 1,
-       "window": [
-        0,
-        240
-       ]
       }
      ]
     }
@@ -15421,7 +15382,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "d056b3be534990ce0152a49f851f7beea75895c5781ac3fcb442045ff8676d4a"
+  "pack_sha256": "a6c918e8306e41237bf336245b1b04a52c7b27885d67d2a195f8f0cdfc9c1b99"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,
@@ -15499,14 +15460,6 @@
     "skill": {
      "hardattackcharge": 1
     }
-   }
-  ],
-  "hopsmash": [
-   {
-    "append_hits": 1,
-    "job": "berserker",
-    "move": "hopsmash__variant_1",
-    "priority": 20
    }
   ],
   "moonlight": [

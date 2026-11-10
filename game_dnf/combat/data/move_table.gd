@@ -749,7 +749,13 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["hop_charge_ms"] = [int(static_data[0]),int(static_data[1])]
 		move["hop_motion"] = static_data.slice(2,6)
 		move["hop_ani_percent"] = [int(row[6]),int(row[7])]
+		move["hop_hit_counts"] = static_data.slice(8,10)
 		var strike: Dictionary = move["stages"][1]
+		var body: Dictionary = strike["hits"][0]
+		# CCC1BF and CB509B set the same skill column after installing either ETC ATK.
+		body["percent"] = float(100+int(float(row[0])-100.0))
+		var final_path := String(spec["hop_final_atk"])
+		strike["hop_final_hit"] = body.merged({"atk":atk(final_path),"atk_path":final_path,"skill_id":name},true)
 		if int(skill_levels.get("bloody_vigorous",0)) <= 0:
 			# CB4CF3..CB4D03 skips the 20050 spawn without Bloody Vigorous.
 			strike["hits"] = strike["hits"].filter(func(hit):return hit["kind"] != "object")
