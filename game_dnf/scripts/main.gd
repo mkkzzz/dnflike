@@ -787,6 +787,9 @@ func end_action_fx() -> void:
 	player["fx_tag"] = ""
 
 func leave_action() -> void:
+	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("outrage_stone_emitter"):
+		bus.emit("combat.cue",{"kind":"native_particle","stop":true,"object_emitter":phase["outrage_stone_emitter"]})
 	# CC5685 removes the appendage on leaving state 46, including interrupts.
 	if player.erase("hellbenter_finish") and numeric_player != null and numeric_player.remove_effect("hellbenter"):
 		bus.emit("combat.status",{"target":PLAYER_ID,"id":"hellbenter","change":"removed"})
@@ -1151,7 +1154,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			player["fx_tag"] = "act:%d" % (action_seq+1)
 			start_stage(1)
 			return
-		if int(player["stage"]) == 1:step_outrage_motion(m,native_phase,clock)
+		if int(player["stage"]) == 1:step_outrage_motion(m,native_phase,clock,ms)
 	if native_phase.has("velocity"):
 		var dx := Kernel.NativeWave.distance(native_phase,clock)-Kernel.NativeWave.distance(native_phase,old_clock)
 		if dx != 0:move_player(Vector2(dx*int(player["facing"]),0))
@@ -1769,7 +1772,7 @@ func retime_outrage_phase(phase: Dictionary, stage: Dictionary, rate: float) -> 
 		# CB44A7 calls 10857E0 on every airborne update using the current ANI rate.
 		phase["outrage_impact_ms"] = _native_ani_delay(float(phase["outrage_impact_at"]),rate)
 
-func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> void:
+func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float, ms: float) -> void:
 	var impact := int(phase["outrage_impact_ms"])
 	var elapsed := int(clock)
 	phase["outrage_landed_now"] = false
@@ -1779,14 +1782,19 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> v
 		if not phase.has("outrage_landed"):
 			phase["outrage_landed"] = true
 			phase["outrage_landed_now"] = true
-		if phase.has("outrage_stone_pending") and elapsed >= int(phase["outrage_timeline"][move["impact_frame"]]["start_ms"]):
-			phase.erase("outrage_stone_pending")
-			# CB4920..CB49BC first samples the emitter on the update after
-			# the impact latch. Its origin follows actor X +/- 150 and YZ.
-			var facing := int(player["facing"])
-			bus.emit("combat.cue",{"kind":"native_particle","path":move["stone_particle"],
-				"point":Vector2(player["pos"]).round()+Vector2(150*facing,0),"height":0.0,"mirrored":facing<0,
-				"action_instance":action_seq,"follow_x":150,"action_clock":clock})
+			return
+		if phase.has("outrage_stone_emitter"):phase["outrage_stone_clock"] += ms
+		if elapsed < int(phase["outrage_timeline"][move["impact_frame"]]["start_ms"]):return
+		# CB4920 gates sampling on the current body frame. E50BBB starts
+		# the emitter's own clock on its first sample, outside the ANI rate.
+		if not phase.has("outrage_stone_emitter"):
+			phase["outrage_stone_emitter"] = _next_entity_id
+			_next_entity_id += 1
+			phase["outrage_stone_clock"] = 0.0
+		var facing := int(player["facing"])
+		bus.emit("combat.cue",{"kind":"native_particle","path":move["stone_particle"],
+			"point":Vector2(player["pos"]).round()+Vector2(150*facing,0),"height":0.0,"mirrored":facing<0,
+			"object_emitter":phase["outrage_stone_emitter"],"elapsed_ms":int(phase["outrage_stone_clock"])})
 		return
 	var travel: Vector2 = move["outrage_motion"]
 	var x := int(phase["outrage_origin_x"])+int(player["facing"])*_native_interpolate(0,int(travel.x),elapsed,impact)
@@ -2777,7 +2785,6 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					hit = bloody_rave_slash(hit)
 				elif hit.get("skill_id","") == "outragebreak":
 					hit = prepare_outrage_damage(hit)
-					player["native_phase"]["outrage_stone_pending"] = true
 					# CB460B starts the room shake on the landing update.
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
 					# CB4900 -> 86DDB0 applies the forward offset to the rounded landing coordinates.
@@ -5661,7 +5668,6 @@ func view_snapshot() -> Dictionary:
 		"camera_focus_x":camera_focus_x(phase),
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
-			"action_elapsed_ms":float(player["clock"]),
 			"body_rotation":float(phase.get("body_rotation",0.0)),
 			"cast_layers":phase.get("cast_layers",[]),
 			"fx_clock":player.get("draw_charge",{}).get("fx_clock",player.get("charge_crash_hold",{}).get("fx_clock",ani[1])),

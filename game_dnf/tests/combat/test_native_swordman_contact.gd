@@ -2988,8 +2988,8 @@ func check_outrage_break_landing_near_wall() -> void:
 		game.player["pos"] += Vector2(0.75,1.0)
 		game.step_player(20.0,Vector2.ZERO)
 		game.view.present(game.view_snapshot(),20.0,20.0)
-		var emitters: Array = game.view._particle_emitters.filter(func(entry):return entry.path==stone)
-		check(emitters.size()==1 and emitters[0].emitter.origin==Vector3i(int(crater.x)+1,depth+1,0),
+		var channels: Dictionary = game.view._object_particle_emitters.get(game.player["native_phase"].get("outrage_stone_emitter",-1),{})
+		check(channels.has(0) and channels[0].emitter.origin==Vector3i(int(crater.x)+1,depth+1,0),
 			"later stone samples round the caster's current coordinates as well")
 		game.step_objects(1040.0)
 		check(game.objects.size()==2 and game.objects[1]["pos"]==floor["pos"],
@@ -3003,11 +3003,11 @@ func check_outrage_break_speed_refresh() -> void:
 		profile.command("numbers.skill_grant",{"id":skill,"level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["outragebreak"]
-	for phase: String in ["ready","leap","landed"]:
+	for phase: String in ["ready","leap","landed","stone_accelerate","stone_slow"]:
 		start_room("original_27601","katana",1,spec,"berserker")
 		game.clear_monsters()
 		game.apply_skill_effect("buff","frenzy")
-		game.numeric_player.values["attack_speed"] = 2.0 if phase == "landed" else 1.0
+		game.numeric_player.values["attack_speed"] = 2.0 if phase in ["landed","stone_slow"] else 1.0
 		game.numeric_player.values["hit"] = 1.0
 		game.player["hp"] = 1000.0
 		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
@@ -3047,7 +3047,7 @@ func check_outrage_break_speed_refresh() -> void:
 			step(4.0)
 			check(game.hit_count==1 and game.objects.size()==1 and game.player["z"]==0.0
 				and cues("OUTRAGE_SWING").size()==1,"the refreshed leap lands once and creates exactly one floor object")
-		else:
+		elif phase == "landed":
 			step(278.5)
 			step(0.5)
 			step(298.0)
@@ -3061,6 +3061,37 @@ func check_outrage_break_speed_refresh() -> void:
 			check(game.player["pos"]==landed and game.player["z"]==0.0 and game.objects.size()==1
 				and cues("OUTRAGE_SWING").size()==1 and native_particle_cues(stone).size()==1,
 				"a post-landing speed change keeps the landing latch and samples the stone emitter once")
+		else:
+			var slow := phase=="stone_slow"
+			if slow:
+				step(279.0)
+				step(21.0)
+				step(278.0)
+			else:
+				step(300.0)
+				step(260.0)
+				step(40.0)
+				step(300.0)
+				step(260.0)
+			step(1.0)
+			var id: int = game.player["native_phase"].get("outrage_stone_emitter",-1)
+			var channels: Dictionary = game.view._object_particle_emitters.get(id,{})
+			check(channels.has(0),"the stone emitter starts on the first eligible recovery update")
+			if channels.is_empty():continue
+			var emitter = channels[0].emitter
+			var before_refresh := 20 if slow else 38
+			step(float(before_refresh))
+			var body_clock: float = game.player["clock"]
+			check(emitter.last_call_time==before_refresh,"the stone emitter uses its own elapsed time before refresh")
+			game.numeric_player.values["attack_speed"] = 1.0 if slow else 2.0
+			step(1.0)
+			check(absf(float(game.player["clock"])-body_clock)>100.0
+				and emitter.last_call_time==before_refresh+1 and not emitter.finished,
+				"retiming the body neither freezes nor fast-forwards the running stone emitter")
+			step(14.0)
+			check(emitter.last_call_time==before_refresh+15,"stone emission keeps advancing at the native frequency")
+			game.end_action()
+			check(not game.view._object_particle_emitters.has(id),"leaving the action releases the stone emitter")
 
 func check_outrage_break_eruption() -> void:
 	var profile := ProfileSession.new()
@@ -3100,18 +3131,20 @@ func check_outrage_break_eruption() -> void:
 		"the mirrored slot-six composite renders at impact before the stone emitter is sampled")
 	step(1)
 	var stone_cues := native_particle_cues(stone)
+	var emitter_id: int = game.player["native_phase"].get("outrage_stone_emitter",-1)
+	var channels: Dictionary = game.view._object_particle_emitters.get(emitter_id,{})
 	check(stone_cues.size()==1 and stone_cues[0]["point"]==point and stone_cues[0]["mirrored"]
-		and game.view._particle_emitters.size()==1,
+		and channels.has(0),
 		"first post-impact update starts the actor stone emitter at the original anchor")
-	if game.view._particle_emitters.is_empty():return
+	if channels.is_empty():return
 	game.player["pos"] += Vector2(4,0)
 	game.step_player(30,Vector2.ZERO)
 	game.view.present(game.view_snapshot(),30.0,30.0)
-	var emitter: Dictionary = game.view._particle_emitters[0]
-	check(emitter.emitter.origin==Vector3i(int(point.x)+4,int(point.y),0) and emitter.elapsed_ms==30.0,
+	var emitter = channels[0].emitter
+	check(emitter.origin==Vector3i(int(point.x)+4,int(point.y),0) and emitter.last_call_time==30,
 		"stone sampling follows the caster and advances on the unscaled actor clock")
 	step(1349)
-	check(game.view._particle_emitters.is_empty() and game.view.effects.any(func(fx):return fx.get_meta("source_ptl","")==stone),
+	check(not game.view._object_particle_emitters.has(emitter_id) and game.view.effects.any(func(fx):return fx.get_meta("source_ptl","")==stone),
 		"recovery stops stone emission while already released particles survive")
 	var target: Dictionary = game.spawn_enemy(point+Vector2(0,45))
 	game.numeric_player.remove_effect("thirst")
