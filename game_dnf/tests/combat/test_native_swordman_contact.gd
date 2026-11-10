@@ -5355,7 +5355,7 @@ func check_rapid_impact_cues(target: Dictionary, variant: int) -> void:
 	var blood: Array = events.filter(func(event):return String(event.get("key","")).begins_with("hit_blood_"))
 	var large := String(cut[-1]["key"]).begins_with("hit_cut_l") if not cut.is_empty() else false
 	var cut_key := "hit_cut_%s%d" % ["l" if large else "s",variant]
-	var blood_key := "hit_blood_l" if large else "hit_blood_s%d" % (4-variant)
+	var blood_key := "hit_blood_l_young" if large else "hit_blood_s%d_young" % (4-variant)
 	check(not cut.is_empty() and not blood.is_empty() and cut[-1]["key"]==cut_key and blood[-1]["key"]==blood_key,
 		"Rapid Move Slash uses the ATK direction and a shared impact size for slash variant %d" % variant)
 	if cut.is_empty() or blood.is_empty():return
@@ -5493,7 +5493,7 @@ func check_rapid_move_slash_counter() -> void:
 			and game.last_damage["trace"]["situation_factor"]==1.25,
 			"both Rapid Move Slash targets take counter damage regardless of the cue interval")
 		var cuts := cues("hit_cut_s1")+cues("hit_cut_l1")
-		var blood := cues("hit_blood_s3")+cues("hit_blood_l")
+		var blood := cues("hit_blood_s3_young")+cues("hit_blood_l_young")
 		check(cues("hit_counter").size()==int(eligible) and cuts.size()==2 and blood.size()==2
 			and cuts.filter(func(cue):return cue["scale"]==1.5).size()==int(eligible)
 			and blood.all(func(cue):return cue["scale"]==1.0)
@@ -5520,6 +5520,57 @@ func check_rapid_move_slash_counter() -> void:
 		check(primary["counter_cue_at_ms"]==10002.0 and finish_cut.size()==1
 			and finish_cut[0]["scale"]==1.5 and cues("hit_counter")[-1]["scale"]==0.7,
 			"the finisher uses the original upper slash and 0.7-scale counter overlay")
+
+func check_rapid_move_slash_blood() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for sample: Array in [[0,"goblin",1],[1,"goblin",-1],[2,"goblin",1],[1,"new_golem_platany",1]]:
+		var mode: int = sample[0]
+		var kind: String = sample[1]
+		var facing: int = sample[2]
+		start_room("original_27601","katana",facing,spec)
+		if mode != 0:game.native_hit_age_mode = mode
+		game.clear_monsters()
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 200.0
+		var target: Dictionary = game.spawn_enemy(POINT+Vector2(45*facing,0),false,kind)
+		target["hp"] = 50000.0
+		target["ai"] = false
+		press(KEY_A)
+		step(160)
+		var expected := kind=="goblin" and mode!=2
+		var blood: Array = game.bus.events_of("combat.cue").filter(
+			func(event):return String(event.get("key","")).begins_with("hit_blood_"))
+		var deposit := "native_contact_blood_young" if mode==0 else "native_contact_blood"
+		var deposits: Array = cues("native_contact_blood_young")+cues("native_contact_blood")
+		check(game.hit_count==1 and target["hp"]<50000.0 and cues("JAKYEOL_HIT").size()==1
+			and blood.size()==int(expected) and deposits.size()==int(expected),
+			"Rapid Move Slash separates blood permission from damage and sound for %s at mode %d" % [kind,mode])
+		if not expected or blood.is_empty() or deposits.is_empty():continue
+		check(deposits[0]["key"]==deposit and String(blood[0]["key"]).ends_with("_young")==(mode==0)
+			and deposits[0]["point"]==blood[0]["point"]-Vector2(10*facing,0)
+			and deposits[0]["height"]==blood[0]["height"] and deposits[0]["facing"]==facing,
+			"the independent blood ANI keeps contact depth and height and offsets by ten pixels")
+		var views: Array = game.view.effects.filter(func(fx):return fx.cue_key==deposit)
+		check(views.size()==1 and views[0].clock_ms==0.0 and views[0].frame_color().a==0.0,
+			"the independent blood object starts on the transparent interpolation frame")
+		if views.is_empty():continue
+		var effect = views[0]
+		effect.advance(350.0)
+		check(is_equal_approx(effect.frame_color().a,0.5) and effect.frame_scale().is_equal_approx(Vector2(0.4,0.2)),
+			"the blood object's first 700 ms interpolate alpha and both scale axes")
+		effect.advance(350.0)
+		check(effect.frame_color().a==1.0 and effect.frame["frame"]==1,"the blood object peaks at 700 ms")
+		effect.advance(2999.0)
+		check(not effect.is_queued_for_deletion() and effect.frame_color().a>0.0,"the blood object persists through 3699 ms")
+		effect.advance(1.0)
+		check(effect.is_queued_for_deletion(),"the blood object retires at 3700 ms")
 
 func check_rapid_move_slash_body_modes() -> void:
 	var profile := ProfileSession.new()
@@ -7266,6 +7317,7 @@ func run() -> void:
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
 	check_rapid_move_slash_counter()
+	check_rapid_move_slash_blood()
 	check_rapid_move_slash_body_modes()
 	check_illusion_finish()
 	check_hundred_sword_ready()

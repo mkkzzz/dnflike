@@ -1140,6 +1140,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		problems.append("MOB not found: "+path)
 		return {}
 	var base: Dictionary = rules["monster_base"]
+	var die_effect: Array = mob.get("die_effect",[])
 	# 部分怪（雕像、机关类）没有 waiting motion 或 attack info，空数组直接取 [0] 会崩。
 	var waiting: Array = mob.get("waiting_motion", [])
 	var motion_dir := String(waiting[0]).get_base_dir() if not waiting.is_empty() else ""
@@ -1178,6 +1179,8 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		"hp":monster_base_hp(mob)*_ability(mob,"[HP MAX]")/100.0,
 		"attack":float(base["attack"])*_ability(mob,"[EQUIPMENT_PHYSICAL_ATTACK]")/100.0,
 		"weight":int(mob.get("weight",[68000])[0]),
+		# 12A54A4 reads the third [die effect] value. 87049A tests bit 1 for blood.
+		"hit_blood_allowed":die_effect.size() < 3 or (int(die_effect[2]) & 2) == 0,
 		"speed":move_px(float(mob.get("move_speed",[300])[0])),"sight":float(mob.get("vision",mob.get("sight",300))),
 		"blind_resistance":int(mob.get("blind_resistance",0)),
 		"sleep_resistance":int(mob.get("sleep_resistance",0)),

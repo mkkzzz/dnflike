@@ -106,6 +106,7 @@ var _next_entity_id := 1
 var toast := ""
 var toast_ms := 0.0
 var elapsed_ms := 0.0
+var native_hit_age_mode := 0
 var damage_taken := 0
 var hit_count := 0
 var combo_count := 0
@@ -373,6 +374,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	native_maze = maze
 	native_room = maze.current_room() if maze != null else {}
 	native_route_name = String(spec.get("route",{}).get("name","神殿周边"))
+	native_hit_age_mode = clampi(int(spec.get("native_hit_age_mode",0)),0,2)
 	var snapshot: Dictionary = spec.get("player",{})
 	numeric_player = null
 	skill_levels = {}
@@ -3487,7 +3489,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var show_counter := first_counter_target and counter \
 			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > NATIVE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
-		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter)
+		var blood_mode := -1
+		if rapid_slash:blood_mode = native_hit_age_mode if target["def"].get("hit_blood_allowed",true) else 2
+		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_mode)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3561,7 +3565,8 @@ func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
-func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_common_hit: bool, show_counter: bool) -> void:
+func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_common_hit: bool,
+		show_counter: bool, blood_mode: int) -> void:
 	var kind := Kernel.MoveTable.enum_value(atk,"hit_info","")
 	var blood := ""
 	var size := 100.0
@@ -3601,10 +3606,16 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 	if show_counter:
 		# 7E6A75 appends Counter+.ani before the unscaled blood layer.
 		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
-	if blood == "[blood]":
+	if blood == "[blood]" and blood_mode != 2:
 		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(4-slash_variant if native_common_hit else rng.range_int(1,3))
+		if blood_mode == 0:bfx += "_young"
 		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,
 			"scale":scale,"fresh":native_common_hit})
+		if blood_mode >= 0:
+			# 7E6BD8 selects the independent ANI; 7E6CEF offsets it against the swing.
+			var deposit := "native_contact_blood_young" if blood_mode == 0 else "native_contact_blood"
+			bus.emit("combat.cue",{"kind":"fx","key":deposit,"point":ground-Vector2(10*facing,0),
+				"height":point.z,"facing":facing,"fresh":true})
 	var wav := String(atk.get("hit_wav",""))
 	if wav == "" and by_player:
 		var w: Array = table.weapon_wav(weapon)
