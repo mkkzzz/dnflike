@@ -93,9 +93,9 @@ func step(game, ms: float) -> void:
 			_spawn(game,enemy,destination)
 
 func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:
-	# 99C4A0 sends the target position at half body height. Use the same
-	# hurt-extent fallback as Saya while the monster display-height getter is unmapped.
-	var point: Vector3i = Vector3i(game.enemy_mid_height_point(enemy))
+	# 99C4A0 reads the target's display height through +0x11C, then halves it.
+	var point := Vector3i(int(enemy["pos"].x),int(enemy["pos"].y),
+		int(enemy["z"])+int(_target_display_height(game,enemy)*0.5))
 	# Keep cosmetic draws separate from damage and status rolls.
 	var rng := DetRng.new(hash([game.rng.seed_value,enemy["id"],next_orb_id]))
 	var x_span := rng.range_int(150,249)
@@ -106,6 +106,17 @@ func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:
 	orbs.append({"id":"hellbenter:orb:%d"%next_orb_id,
 		"origin":point,"bend":Vector2i(bend_x,bend_y),"age":0.0,"point":head,"history":[head]})
 	next_orb_id += 1
+
+static func _target_display_height(game, enemy: Dictionary) -> int:
+	var bank: Dictionary = game.table.assets["monsters"].get(enemy["def"]["bank"],{})
+	if not bank.has("number_height"):
+		return 2*(int(game.enemy_mid_height_point(enemy).z)-int(enemy["z"]))
+	# 1086316 measures the first waiting frame from the uncropped IMG Y offset.
+	# The bank stores that base height. The engine also applies the frame's Y scale.
+	var frame: Dictionary = bank["clips"]["stay"]["frames"][0]
+	var scale := float(frame["items"].get("7",[1.0,1.0])[1])
+	var height := int(bank["number_height"])
+	return int(height*scale) if absf(scale-1.0) > absf(scale)*0.00000011920928955078125 else height
 
 static func _orb_point(orb: Dictionary, destination: Vector3i, flight: int) -> Vector4i:
 	var age := int(orb["age"])
@@ -157,19 +168,19 @@ func append_view(game, out: Array) -> void:
 		var id := int(enemy["id"])
 		if not marks.has(id):continue
 		var age := float(marks[id]["age"])
-		var mid: Vector3 = game.enemy_mid_height_point(enemy)
+		var height := _target_display_height(game,enemy)
+		var ground_z := int(enemy["z"])
 		var mark: Array = appearance["target_mark"]
-		var height := int(enemy["z"])+2*(int(mid.z)-int(enemy["z"]))
-		var layer := {"pos":Vector2(mid.x,mid.y),"z":height,"clock":age,
+		var layer := {"pos":Vector2(Vector2i(enemy["pos"])),"z":ground_z+height,"clock":age,
 			"facing":marks[id]["facing"],"depth_offset":1}
 		if age < float(appearance["target_mark_end"]):
 			out.append(layer.merged({"id":"hellbenter:mark_entry:%d"%id,"effect":mark[0]}))
 		else:
 			out.append(layer.merged({"id":"hellbenter:mark_base:%d"%id,"effect":mark[1],"hold_last_frame":true}))
 			out.append(layer.merged({"id":"hellbenter:mark_glow:%d"%id,"effect":mark[2],"loop":true}))
-		layer["z"] = mid.z
+		layer["z"] = ground_z+int(height*0.5)
 		# 99A8E6 scales the two body layers by an integer step above height 100.
-		layer["size_rate"] = int(Motion.ramp(1,3,clampi(height-int(enemy["z"])-100,0,200),200))
+		layer["size_rate"] = int(Motion.ramp(1,3,clampi(height-100,0,200),200))
 		for key: String in appearance["target_bleeding"]:
 			out.append(layer.merged({"id":"hellbenter:%s:%d"%[key,id],"effect":key,"loop":true}))
 	var ball: Array = appearance["ball"]

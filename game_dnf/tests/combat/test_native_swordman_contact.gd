@@ -2358,7 +2358,7 @@ func check_hellbenter_first_cast() -> void:
 	check(game.numeric_player.add_effect("hellbenter",6) and hellbenter.call()["remaining_ms"]==130130.0,
 		"rank six uses the extended duration from the original level table")
 	var near: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(100,0))
-	var far: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(140,0))
+	var far: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(140,0),false,"draconian_minius")
 	# Use exact target coordinates after the room's spawn placement clamps Y.
 	near["pos"] = Vector2(game.player["pos"])+Vector2(100,183)
 	far["pos"] = Vector2(game.player["pos"])+Vector2(100,184)
@@ -2374,6 +2374,17 @@ func check_hellbenter_first_cast() -> void:
 		"the original depth projection puts adjacent Y samples on opposite sides of the 640-pixel blood pulse")
 	check(blood.marks.size()==2 and not blood.marks.has(dry["id"]) and layers.call("targetmark1").size()==2,
 		"Hellbenter immediately marks bleeding hostiles, including those outside the pulse radius")
+	var target_layers: Array = game.view_snapshot()["objects"]
+	var far_mark := "hellbenter:mark_entry:%d"%int(far["id"])
+	check(target_layers.any(func(layer):return layer["id"]==far_mark and int(layer["z"])-int(far["z"])==83),
+		"the scaled Minius marker uses full standing-image height 83 without losing the odd pixel")
+	var far_bleed := ":%d"%int(far["id"])
+	var far_body_layers := target_layers.filter(func(layer):
+		return (str(layer["id"]).contains("bleeding") and str(layer["id"]).ends_with(far_bleed)
+			and int(layer["z"])-int(far["z"])==41))
+	check(far_body_layers.size()==2,
+		"both Minius body overlays use half of the scaled standing-image height")
+	near["state"] = "down"
 	check(blood.orbs.is_empty(),"installing the Hellbenter mark leaves its first target poll pending")
 	game.step_game(17.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
@@ -2383,6 +2394,8 @@ func check_hellbenter_first_cast() -> void:
 	if blood.orbs.is_empty():return
 	var orb: Dictionary = blood.orbs[0]
 	var origin: Vector3i = orb["origin"]
+	check(near["state"]=="down" and origin.z==int(near["z"])+34,
+		"a knocked-down goblin releases its blood orb at half the cached standing-image height")
 	var bend: Vector2i = orb["bend"]
 	game.step_game(150.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
