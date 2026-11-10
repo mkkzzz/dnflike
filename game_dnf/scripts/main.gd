@@ -762,7 +762,12 @@ func leave_action() -> void:
 	if player.has("rapid_move_slash_cast"):
 		begin_skill_cooldown("rapidmoveslash",player["rapid_move_slash_cast"])
 		player.erase("rapid_move_slash_cast")
-	player.erase("illusion_cast")
+	if player.erase("illusion_cast"):
+		# CC5290..CC52D1 removes only this actor's melee objects on leaving state 40.
+		# A hostile object can interrupt the skill from inside step_objects.
+		for object: Dictionary in objects:
+			if object["owner"] == "player" and object["hit"].get("native_controller",{}).get("kind","") == "illusion_melee":
+				object["retired"] = true
 	end_hardattack_charge()
 	stop_bloody_rave_loop()
 	player.erase("hardattack_release")
@@ -2462,6 +2467,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
+					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
+					var shake: Array = hit["native_controller"]["shake"]
+					bus.emit("combat.cue",{"kind":"screen_shake","degree":shake[0],"duration_ms":shake[1]})
 					# CB5614 creates object 20147 at the caster's integer XYZ plus 180 X.
 					spawn_object(hit,"player",Vector2(Vector2i(player["pos"])),float(int(player["z"])),facing,attack_power())
 				else:
@@ -3752,6 +3760,9 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 	var bremen_removed := false
 	for i in range(objects.size()-1,-1,-1):
 		var o: Dictionary = objects[i]
+		if o.get("retired",false):
+			objects.remove_at(i)
+			continue
 		var obj: Dictionary = o["def"]
 		var hit: Dictionary = o["hit"]
 		var controller: Dictionary = hit.get("native_controller",{})
@@ -5030,6 +5041,7 @@ func view_snapshot() -> Dictionary:
 			"poison":companion["numeric"].effects.poison_visual() if float(companion["hp"])>0 else 0})
 	var objs: Array = []
 	for o: Dictionary in objects:
+		if o.get("retired",false):continue
 		var controller: Dictionary = o["hit"].get("native_controller",{})
 		var bank := String(o["def"]["bank"])
 		var effect := String(o["hit"].get("object_fx",""))

@@ -3261,15 +3261,21 @@ func check_illusion_finish() -> void:
 		for slash: int in 9:step(150)
 		game.step_objects(1000.0)
 		step(299.0)
+		var before_shake: Array = game.bus.events_of("combat.cue").filter(func(cue):return cue["kind"]=="screen_shake")
 		check(game.player["stage"]==4 and game.objects.is_empty(),"the club branch also waits until the smash frame")
+		check(before_shake.is_empty(),"the club shake does not start one frame early")
 		var first_new_id: int = game._next_entity_id
 		step(1.0)
+		var shakes: Array = game.bus.events_of("combat.cue").filter(func(cue):return cue["kind"]=="screen_shake")
 		check(game.objects.size()==1,"the club finisher emits a single object")
 		if game.objects.is_empty():continue
 		var wave: Dictionary = game.objects[0]
 		if int(sample[2])==0:
-			check(wave["def"]["path"].ends_with("/illusionslashwave.obj"),"rank six keeps the original default wave")
+			check(wave["def"]["path"].ends_with("/illusionslashwave.obj") and shakes.is_empty(),
+				"rank six keeps the original default wave without the ground-wave shake")
 			continue
+		check(shakes.size()==1 and shakes[0]["degree"]==3 and shakes[0]["duration_ms"]==300
+			and game.view._shake_remaining_ms==300.0,"the mastered ground wave starts the original room shake at dispatch")
 		var controller: Dictionary = wave["hit"]["native_controller"]
 		var origin := POINT+Vector2(facing*180,0)
 		check(wave["def"]["path"].ends_with("/illusionslashsub.obj") and wave["pos"]==origin
@@ -3302,6 +3308,45 @@ func check_illusion_finish() -> void:
 			"the ground wave stays in place, and its final frame has no attack box")
 		game.step_objects(1.0)
 		check(game.objects.is_empty() and game.hit_count==1,"the ground object retires at 640 ms without reopening its hit ledger")
+	for interrupted: bool in [true,false]:
+		spec["skills"]["bluntmastery"] = 0
+		start_room("","club",1,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["cooldown_rate"] = 0.8
+		game.player["mp"] = 1000.0
+		press(KEY_A)
+		step(0)
+		check(is_equal_approx(float(game.player["cooldowns"].get("illusionslash",0)),36.0),
+			"the original skill cooldown starts at entry using the current cooldown rate")
+		game.step_game(100.0)
+		check(game.objects.size()==2,"a repeated slash preserves the previous melee object while state 40 continues")
+		if interrupted:
+			var strike: Dictionary = game.objects[0]["hit"].duplicate()
+			strike.erase("native_controller")
+			strike.erase("ptl_motion")
+			strike["object"] = "passiveobject/character/swordman/illusionslashwave.obj"
+			strike["offset"] = Vector3.ZERO
+			strike["skill_id"] = ""
+			var enemy: Dictionary = game.spawn_enemy(POINT+Vector2(80,0))
+			enemy["numeric"].values["hit"] = 1.0
+			var hostile: Dictionary = game.spawn_object(strike,"monster",enemy["pos"],0.0,-1,100.0,enemy)
+			game.step_objects(0.0)
+			check(game.player["action"]=="" and game.objects==[hostile] and game.hit_count==0,
+				"a hostile object can interrupt safely during the object update and cancel all owned melee contacts")
+		else:
+			for slash: int in 9:step(150.0)
+			step(300.0)
+			var released_wave: Dictionary = game.objects.back()
+			step(640.0)
+			var visible: Array = game.view_snapshot()["objects"]
+			check(game.player["action"]=="" and visible.size()==2 and visible[0]["id"]==released_wave["id"],
+				"normal exit hides old melee objects immediately and leaves the released wave visible")
+			game.step_objects(0.0)
+			check(game.objects==[released_wave],"the next object update keeps only the independent wave")
+		check(is_equal_approx(float(game.player["cooldowns"].get("illusionslash",0)),35.9),
+			"neither normal exit nor interruption resets the running cooldown")
 
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()

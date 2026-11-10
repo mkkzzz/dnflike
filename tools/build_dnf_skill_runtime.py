@@ -2273,9 +2273,13 @@ def main() -> int:
                 detached = [add_fx(fx, effects, path) for path in illusion_club_layers["detached"]]
                 if not ground_wave or not attached or not all(detached):
                     raise ValueError("missing original Illusion Slash ground-wave resources")
+                shake = records[str(skill["path"])]["decoded"]["shake_screen"]
+                if len(shake) != 2:
+                    raise ValueError("unexpected original Illusion Slash shake parameters")
                 move["club_wave"] = {"object": ground_wave, "at": smash_at, "offset": [180, 0, 0],
                                      "starts_at_zero": True, "native_controller": {"kind": "illusion_club_wave",
                                          "attached": attached, "detached": detached,
+                                         "shake": shake,
                                          "particle": OBJ_ROOT + "particle/illusionslashsub.ptl"}}
                 upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
                 smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")

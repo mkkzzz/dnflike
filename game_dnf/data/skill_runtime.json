@@ -5608,7 +5608,11 @@
       "skillfx_5_light_dodge_cd1070ff"
      ],
      "kind": "illusion_club_wave",
-     "particle": "passiveobject/character/swordman/particle/illusionslashsub.ptl"
+     "particle": "passiveobject/character/swordman/particle/illusionslashsub.ptl",
+     "shake": [
+      3,
+      300
+     ]
     },
     "object": "passiveobject/character/swordman/illusionslashsub.obj",
     "offset": [
