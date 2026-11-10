@@ -1365,7 +1365,17 @@ func advance_hundred_sword(move_defn: Dictionary) -> void:
 	if ordinal > 0:
 		var destination := Vector3i(int(cast["origin"].x),int(cast["origin"].y),40)
 		if ordinal < order.size():destination = cast["formation"].waypoint(int(order[ordinal]))
-		cast["formation"].emit_travel_effects(bus,destination,float(player["native_phase"]["body_rotation"]),int(player["facing"]))
+		var angle := float(player["native_phase"]["body_rotation"])
+		var facing := int(player["facing"])
+		cast["formation"].emit_travel_effects(bus,destination,angle,facing)
+		var field: Dictionary = cast.get("field",{})
+		if not field.is_empty() and not field.has("exit_at_ms"):
+			# D2E41B locates the owner's field and calls A6C0A0 with the outgoing pose.
+			if not field.has("repeat_started_at"):field["hit"]["percent"] = field["repeat_percent"]
+			field["hits"].clear()
+			field["repeat_started_at"] = -1
+			field["hit"]["contact_facing"] = facing
+			field["hit"]["contact_angle"] = angle
 		play_sound("R_SM_HOANYOUNG")
 		play_sound("R_W_MOVING_ATK")
 	if ordinal >= order.size():
@@ -2767,7 +2777,10 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					hit = prepare_illusion_wave(hit)
 				if hit.get("native_controller",{}).get("kind","") == "hundred_sword_field":
 					var cast: Dictionary = player["hundred_sword_cast"]
-					spawn_object(hit,"player",cast["origin"],0.0,int(cast["facing"]),attack_power())
+					var field := spawn_object(hit.duplicate(),"player",cast["origin"],0.0,int(cast["facing"]),attack_power())
+					if not field.is_empty():
+						field["repeat_percent"] = move_def("hundredsword")["field_repeat_percent"]
+						cast["field"] = field
 				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -3215,7 +3228,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		# A6BF20 initializes the neutral direction and 1.57-radian angle.
 		# A6E1EB..A6E242 places SlashLarge2 at the overlap X/Z and target Y.
 		bus.emit("combat.cue",{"kind":"fx","key":"hundred_sword_contact","point":Vector2(int(point.x),int(target["pos"].y)),
-			"height":int(point.z),"facing":1,"angle":1.5700000524520874,"fresh":true})
+			"height":int(point.z),"facing":hit.get("contact_facing",1),
+			"angle":hit.get("contact_angle",1.5700000524520874),"fresh":true})
 		play_sound(String(atk["hit_wav"]))
 	if not draw_impact and native_kind != "hundred_sword_field":
 		hit_cues(atk,point,facing,by_player)
@@ -4160,9 +4174,14 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			if o.has("exit_at_ms"):
 				if t-float(o["exit_at_ms"]) >= float(controller["exit_ms"]):objects.remove_at(i)
 				continue
-			var opens := float(controller["open_ms"])
-			if old_t < opens and t >= opens:play_sound("W_WEAPON_DRIVE")
-			if t < opens or t >= float(controller["close_ms"]):continue
+			if o.has("repeat_started_at"):
+				# A6CBB0 starts the 50 ms clock on the field's first update after the reset.
+				if int(o["repeat_started_at"]) < 0:o["repeat_started_at"] = int(t)
+				if int(t)-int(o["repeat_started_at"]) >= 50:continue
+			else:
+				var opens := float(controller["open_ms"])
+				if old_t < opens and t >= opens:play_sound("W_WEAPON_DRIVE")
+				if t < opens or t >= float(controller["close_ms"]):continue
 		var active := float(hit.get("active_ms",-1))
 		var done := false
 		var life := float(o["life_ms"])

@@ -3907,6 +3907,46 @@ func check_hundred_sword_ready() -> void:
 	check(late["hp"]==5000.0 and visible!=null and overlay!=null and visible.hold_last_frame and overlay.hold_last_frame
 		and cues("hundred_sword_contact").size()==3,
 		"the initial attack closes at 150 while both field layers hold their final frames")
+	step(800.0)
+	check(game.player["hundred_sword_cast"]["ordinal"]==0 and not field.has("repeat_started_at"),
+		"arrival at the first sword does not reopen the field")
+	var first_sword_ms: float = game.action_duration("hundredsword")
+	step(first_sword_ms-1.0)
+	var contact_angle: float = game.player["native_phase"]["body_rotation"]
+	var contact_facing: int = game.player["facing"]
+	check(not field.has("repeat_started_at") and not field["hits"].is_empty(),
+		"the old hit ledger is preserved until the first movement slash")
+	step(1.0)
+	check(game.player["hundred_sword_cast"]["field"]==field and field["hits"].is_empty()
+		and field.get("repeat_started_at")==-1 and field["hit"]["percent"]==417.0
+		and game.move_def("hundredsword")["stages"][0]["hits"][0]["percent"]==626.0,
+		"the first movement slash reopens the same field with the repeat rank column and a fresh ledger")
+	move_target(first,center+Vector2(80,0))
+	move_target(late,center+Vector2(1200,0))
+	move_target(centered,center+Vector2(1200,0))
+	var before_repeat: float = first["hp"]
+	game.step_objects(17.0)
+	var repeat_flash: Dictionary = cues("hundred_sword_contact")[-1]
+	check(first["hp"]<before_repeat and field["hits"].has(first["id"])
+		and field.get("repeat_started_at")==167 and repeat_flash["angle"]==contact_angle
+		and repeat_flash["facing"]==contact_facing and first["push_v"]<0.0,
+		"the first field update hits the same target with the outgoing slash visual and inward ATK direction")
+	after_contact = first["hp"]
+	move_target(first,center+Vector2(80,0))
+	move_target(late,center-Vector2(80,0))
+	game.step_objects(49.0)
+	check(first["hp"]==after_contact and late["hp"]<5000.0,
+		"the repeat window admits a late target at 49 ms and suppresses a second hit in the same window")
+	move_target(centered,center)
+	var centered_hp: float = centered["hp"]
+	game.step_objects(1.0)
+	check(centered["hp"]==centered_hp and not field["hits"].has(centered["id"]),
+		"the repeat window closes exactly 50 ms after its first field update")
+	step(game.action_duration("hundredsword"))
+	game.step_objects(0.0)
+	check(first["hp"]<after_contact and centered["hp"]<centered_hp and field["hit"]["percent"]==417.0
+		and cues("W_WEAPON_DRIVE").size()==1,
+		"the next movement slash can hit the same targets with the repeat amount and no new opening sound")
 	game.start_stage(game.move_def("hundredsword")["stages"].size()-1)
 	var exit_clock: float = game.action_def()["timeline"][2]["start_ms"]
 	game.player["clock"] = exit_clock-1.0
@@ -4030,7 +4070,7 @@ func check_hundred_sword_automatic() -> void:
 		"the first move tilts along the projected sword path and hides the ordinary equipped weapon")
 	var first_keys := ["hundred_sword_weaponready5_03","hundred_sword_weaponready5_01",
 		"hundred_sword_weaponready5_02","hundred_sword_weaponready5_00"]
-	check(layers.keys()==first_keys and layers[first_keys[0]].show_behind_parent
+	check(layers.keys().filter(func(key):return layers[key].visible)==first_keys and layers[first_keys[0]].show_behind_parent
 		and layers[first_keys[1]].show_behind_parent and not layers[first_keys[2]].show_behind_parent
 		and not layers[first_keys[3]].show_behind_parent,
 		"pose five installs both rear and front normal and dodge layers in native order")
@@ -4107,6 +4147,9 @@ func check_hundred_sword_automatic() -> void:
 				"the travel clips retain the outgoing tilt and facing and use the destination and field anchors")
 	check(game.view.player_actor.pose=="hundredswordfinish" and game.player["pos"]==POINT
 		and game.player["z"]==0.0 and game.player["facing"]==1,"stage 24 goes directly into the original grounded finish")
+	var returning_field: Dictionary = game.player["hundred_sword_cast"]["field"]
+	check(returning_field.get("repeat_started_at")==-1 and returning_field["hit"]["percent"]==417.0
+		and returning_field["hits"].is_empty(),"the return to the finish reopens the original field once more")
 	check(actor.body_rotation==0.0 and actor.equipment_layers.all(func(layer):return layer.visible)
 		and actor.get_meta("native_cast_layers",{}).values().all(func(layer):return not layer.visible),
 		"the finish clears travel tilt and sword layers and restores the equipped weapon")

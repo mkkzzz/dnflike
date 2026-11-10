@@ -481,6 +481,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["formation"] = spec["formation"]
 		move["travel_rate"] = spec["travel_rate"]
 		move["travel_weapon"] = spec["travel_weapon"]
+		# CB7F1F..CB7F37 stores this value in the field's creation packet.
+		move["field_repeat_percent"] = float(skill["level_row"][1])
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),
