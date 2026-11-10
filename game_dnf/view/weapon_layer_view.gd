@@ -10,6 +10,7 @@ var height:=0.0
 var tint:=Color.WHITE
 var parent_flash: ShaderMaterial
 var own_material: ShaderMaterial
+var _status_overlay: Node2D
 
 func setup(info: Dictionary, flash_material: ShaderMaterial) -> void:
 	bank=info["bank"];clips=info["clips"]
@@ -42,12 +43,39 @@ func present(pose: String, clock_ms: float, direction: int, z: float, color: Col
 	own_material.set_shader_parameter("hit_flash",parent_flash.get_shader_parameter("hit_flash"))
 	queue_redraw()
 
+func present_status_overlay(color: Color) -> void:
+	# The native status pass skips additive ANI frames (blend 2).
+	var blend: Dictionary = frame.get("items",{}).get("11",{})
+	if color.a <= 0.0 or not visible or frame.get("img") == null or int(blend.get("type",0)) == 2:
+		if _status_overlay != null:_status_overlay.hide()
+		return
+	if _status_overlay == null:
+		_status_overlay = Node2D.new()
+		var overlay_material := own_material.duplicate() as ShaderMaterial
+		overlay_material.set_shader_parameter("hit_flash",0.0)
+		overlay_material.set_shader_parameter("source_monochrome",true)
+		_status_overlay.material = overlay_material
+		_status_overlay.draw.connect(_draw_status_overlay)
+		add_child(_status_overlay)
+	_status_overlay.material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
+	_status_overlay.self_modulate = Color(1,1,1,color.a)
+	_status_overlay.show()
+	_status_overlay.queue_redraw()
+
+func _draw_status_overlay() -> void:
+	_draw_frame(_status_overlay,Color.WHITE)
+
 func _draw() -> void:
+	_draw_frame(self,tint)
+
+func _draw_frame(canvas: Node2D, color: Color) -> void:
 	if atlas==null or frame.is_empty() or frame.get("img")==null:return
 	var item: Dictionary=bank.get("items",{}).get(str(int(frame.get("img_frame",0))),{})
 	if item.is_empty():return
 	var rotate:=float(frame.get("items",{}).get("8",0))
-	draw_set_transform(Vector2(0,-roundf(height)),rotate*facing,Vector2(facing,1))
+	canvas.draw_set_transform(Vector2(0,-roundf(height)),rotate*facing,Vector2(facing,1))
 	var r: Array=item["rect"];var o: Array=item["offset"];var p: Array=frame.get("pos",[0,0])
-	draw_texture_rect_region(atlas,Rect2(float(o[0])+float(p[0]),float(o[1])+float(p[1]),float(r[2]),float(r[3])),Rect2(r[0],r[1],r[2],r[3]),tint)
-	draw_set_transform(Vector2.ZERO)
+	var source := Rect2(r[0],r[1],r[2],r[3])
+	var dest := Rect2(float(o[0])+float(p[0]),float(o[1])+float(p[1]),source.size.x,source.size.y)
+	canvas.draw_texture_rect_region(atlas,dest,source,color)
+	canvas.draw_set_transform(Vector2.ZERO)

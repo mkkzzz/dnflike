@@ -68,9 +68,11 @@ func set_additive_monochrome(color: Color) -> void:
 
 func set_equipment_layers(layers: Array) -> void:
 	clear_equipment_layers()
+	var first_index := 1 if is_instance_valid(_status_overlay) else 0
 	for info: Dictionary in layers:
 		var layer=preload("res://view/weapon_layer_view.gd").new()
 		add_child(layer);layer.setup(info,_flash_material)
+		move_child(layer,first_index+equipment_layers.size())
 		equipment_layers.append(layer)
 		layer.present(pose,clock_ms,facing,height,tint)
 
@@ -107,7 +109,8 @@ func present(next_pose: String, ms: float, direction: int, z: float, white: floa
 	queue_redraw()
 
 ## The original status pass selects a constant RGB and retains the ANI texture alpha.
-func present_status_overlay(color: Color) -> void:
+func present_status_overlay(color: Color, equipment_color := Color.TRANSPARENT) -> void:
+	for layer in equipment_layers:layer.present_status_overlay(equipment_color)
 	if color.a <= 0.0:
 		if is_instance_valid(_status_overlay):_status_overlay.hide()
 		return
@@ -125,6 +128,9 @@ func present_status_overlay(color: Color) -> void:
 		_status_overlay.material.shader = _flash_shader
 		_status_overlay.material.set_shader_parameter("source_monochrome",true)
 		add_child(_status_overlay)
+		# 1088770 draws rear attachments, then the body and its overlay,
+		# then front attachments with their own overlays.
+		move_child(_status_overlay,0)
 	var rect: Array = item["rect"]
 	var offset: Array = item["offset"]
 	var pos: Array = frame.get("pos",[0,0])

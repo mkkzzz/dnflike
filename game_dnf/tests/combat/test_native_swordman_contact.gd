@@ -7117,6 +7117,22 @@ func check_source_bleed_particle_poses() -> void:
 	var marker = game.view.player_actor.get_node_or_null("NativeBleeding")
 	check(marker != null and marker.frame["frame"]==0 and marker.position.y==-80.0,
 		"an external bleed attaches the same adult bank to the player at 80 percent of body height")
+	var actor_view = game.view.player_actor
+	var layers: Array = actor_view.equipment_layers
+	var red_layers := layers.filter(func(layer):
+		return (layer._status_overlay != null and layer._status_overlay.visible
+			and layer._status_overlay.material.get_shader_parameter("mono_rgb")==Vector3(1,0,0)))
+	check(layers.size()==2 and red_layers.size()==2,
+		"adult bleed tints both ordinary weapon attachments red")
+	if layers.size()==2 and marker != null:
+		check(layers[0].show_behind_parent and not layers[1].show_behind_parent
+			and actor_view._status_overlay.get_index()<layers[1].get_index() and layers[1].get_index()<marker.get_index(),
+			"weapon and body overlays keep the original rear and front draw order below the bleed ANI")
+		layers[1].frame = layers[1].frame.duplicate(true)
+		layers[1].frame["items"]["11"] = {"type":2}
+		layers[1].present_status_overlay(Color8(255,0,0,75))
+		check(layers[1]._status_overlay != null and not layers[1]._status_overlay.visible,
+			"the status overlay omits a weapon frame with native blend mode 2")
 	game.player["state"] = "move"
 	game.player["facing"] = -1
 	game.step_numeric_actor(game.player,game.numeric_player,480)
@@ -7145,6 +7161,17 @@ func check_source_bleed_particle_poses() -> void:
 	check(target["hp"]==0.0 and native_particle_cues(blood_path).size()==before_lethal+1
 		and cues("BLOOD_DROP_LOOP").size()==before_sound+1,
 		"lethal bleed still emits its adult burst and sound during the final tick")
+	game.numeric_player.effects.remove("bleed")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(layers.all(func(layer):return layer._status_overlay != null and not layer._status_overlay.visible),
+		"removing ordinary bleed clears the status pass on both weapon attachments")
+	game.numeric_player.effects.add_source_poison(25,500)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var purple_layers := layers.filter(func(layer):
+		return (layer._status_overlay != null and layer._status_overlay.visible
+			and layer._status_overlay.material.get_shader_parameter("mono_rgb")==Vector3(1,0,1)))
+	check(purple_layers.size()==2,
+		"native poison uses the same weapon pass with its own purple color")
 
 func check_bloodblast_speed_refresh() -> void:
 	var profile := ProfileSession.new()

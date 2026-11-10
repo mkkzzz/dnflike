@@ -242,7 +242,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_present_cast_layers(player_actor,p)
 	var player_bleed: Dictionary = p.get("bleed",{})
 	var player_overlay := poison_overlay if int(p.get("poison",0)) > 0 else Color.TRANSPARENT
-	player_actor.present_status_overlay(bleed_overlay if not player_bleed.is_empty() else player_overlay)
+	if not player_bleed.is_empty():player_overlay = bleed_overlay
+	player_actor.present_status_overlay(player_overlay,player_overlay)
 	_present_bleeding(player_actor,player_bleed)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]+companions:
@@ -256,8 +257,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		var bleed: Dictionary = e.get("bleed",{})
 		if not bleed.is_empty():overlay = bleed_overlay
 		var hellbenter_alpha := int(e.get("hellbenter_tint",0))
-		if hellbenter_alpha > 0:overlay = Color(1,1,1,alpha*hellbenter_alpha/255.0)
-		actor.present_status_overlay(overlay)
+		var body_overlay := Color(1,1,1,alpha*hellbenter_alpha/255.0) if hellbenter_alpha > 0 else overlay
+		actor.present_status_overlay(body_overlay,overlay)
 		_present_bleeding(actor,bleed)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
 		_present_sleep(actor,float(e.get("sleep_ms",-1)))
