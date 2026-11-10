@@ -5305,6 +5305,8 @@ func build_props(room: Dictionary) -> Array:
 				if item.get("sprite") == null and array_of(item.get("parts")).is_empty():
 					action_gaps.append("native_action_object_visual")
 				add_native_object_gaps(path, action_gaps)
+			elif path.contains("/boom/"):
+				add_native_object_gaps(path, ["native_object_trigger"])
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")

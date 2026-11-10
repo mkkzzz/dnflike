@@ -128,6 +128,10 @@
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
   },
+  "magmacave": {
+   "normal": "magma_cave",
+   "boss": "kings_ruins"
+  },
   "marpissalair": {
    "normal": "spider",
    "boss": "spider_boss"
@@ -408,6 +412,18 @@
    "source": "music/dendroid.ogg",
    "sha256": "0e46258f6ae02ce5e8f34c5be8aef9ec63b44af4d41aa1511477ab23ad722674",
    "bytes": 1781155
+  },
+  "magma_cave": {
+   "file": "audio/bgm/magma_cave.ogg",
+   "source": "music/magma_cave.ogg",
+   "sha256": "7f4bb9c0900d5e97dd9d352cbff39bf0e5153bd6ee05c029e03b488c05dd2bde",
+   "bytes": 1455444
+  },
+  "kings_ruins": {
+   "file": "audio/bgm/kings_ruins.ogg",
+   "source": "music/kings_ruins.ogg",
+   "sha256": "414c264e8b41bffe5b84885e24294d6f0b62453a9c0d8cc1ec1849e828e98c59",
+   "bytes": 977193
   },
   "spider": {
    "file": "audio/bgm/spider.ogg",

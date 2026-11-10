@@ -1190,6 +1190,56 @@
    "mob": "monster/wraith/wraithlilith.mob",
    "bank": "wraith_wraithlilith",
    "name": "wraithlilith"
+  },
+  "magma_atlas": {
+   "mob": "monster/magma/atlas.mob",
+   "bank": "magma_atlas",
+   "name": "atlas"
+  },
+  "magma_bossatlas": {
+   "mob": "monster/magma/bossatlas.mob",
+   "bank": "magma_bossatlas",
+   "name": "bossatlas"
+  },
+  "magma_bossgoliath": {
+   "mob": "monster/magma/bossgoliath.mob",
+   "bank": "magma_bossgoliath",
+   "name": "bossgoliath"
+  },
+  "magma_bosstitan": {
+   "mob": "monster/magma/bosstitan.mob",
+   "bank": "magma_bosstitan",
+   "name": "bosstitan"
+  },
+  "magma_burninghella": {
+   "mob": "monster/magma/burninghella.mob",
+   "bank": "magma_burninghella",
+   "name": "burninghella"
+  },
+  "magma_goliath": {
+   "mob": "monster/magma/goliath.mob",
+   "bank": "magma_goliath",
+   "name": "goliath"
+  },
+  "magma_magma_ghoul": {
+   "mob": "monster/magma/magma_ghoul.mob",
+   "bank": "magma_magma_ghoul",
+   "name": "magma_ghoul"
+  },
+  "magma_magma_ghoulstand": {
+   "mob": "monster/magma/magma_ghoulstand.mob",
+   "bank": "magma_magma_ghoulstand",
+   "name": "magma_ghoulstand"
+  },
+  "magma_oilsellerolrek": {
+   "mob": "monster/magma/oilsellerolrek.mob",
+   "bank": "magma_oilsellerolrek",
+   "name": "oilsellerolrek"
+  },
+  "magma_titan": {
+   "mob": "monster/magma/titan.mob",
+   "bank": "magma_titan",
+   "name": "titan"
   }
  },
  "boss_hp_lines": 3,

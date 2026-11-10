@@ -47,6 +47,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/1stbackbone.dgn',
     'dungeon/act4/marpissalair.dgn',
     'dungeon/act4/darkelfcemetary.dgn',
+    'dungeon/act4/magmacave.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']

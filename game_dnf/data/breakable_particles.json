@@ -216,6 +216,21 @@
    "ptl_grassparticle09",
    "ptl_grassparticle10"
   ],
+  "passiveobject/mapobject/breakableobject/magmacoffin.obj": [
+   "ptl_magmacoffinparticle1",
+   "ptl_magmacoffinparticle2",
+   "ptl_magmacoffinparticle3",
+   "ptl_magmacoffinparticle4"
+  ],
+  "passiveobject/mapobject/breakableobject/magmasphere.obj": [
+   "ptl_magmasphereparticle1",
+   "ptl_magmasphereparticle2",
+   "ptl_magmasphereparticle3",
+   "ptl_magmasphereparticle4",
+   "ptl_magmasphereshineparticle1",
+   "ptl_magmasphereshineparticle2",
+   "ptl_magmasphereshineparticle3"
+  ],
   "passiveobject/mapobject/breakableobject/outerwalllongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",
@@ -413,6 +428,20 @@
    "ptl_underfoot_tombstoneparticle4"
   ],
   "passiveobject/mapobject/breakableobject/underfoot_treasurebox.obj": [
+   "ptl_underfoot_treasureboxparticle1",
+   "ptl_underfoot_treasureboxparticle2",
+   "ptl_underfoot_treasureboxparticle3",
+   "ptl_underfoot_treasureboxparticle4",
+   "ptl_underfoot_treasureboxparticle5",
+   "ptl_underfoot_treasureboxparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_treasurebox_magma.obj": [
+   "ptl_underfoot_treasurebox_magmaparticle1",
+   "ptl_underfoot_treasurebox_magmaparticle2",
+   "ptl_underfoot_treasurebox_magmaparticle3",
+   "ptl_underfoot_treasurebox_magmaparticle4",
+   "ptl_underfoot_treasurebox_magmaparticle5",
+   "ptl_underfoot_treasurebox_magmaparticle6",
    "ptl_underfoot_treasureboxparticle1",
    "ptl_underfoot_treasureboxparticle2",
    "ptl_underfoot_treasureboxparticle3",

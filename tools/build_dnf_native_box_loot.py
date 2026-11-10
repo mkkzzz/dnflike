@@ -51,6 +51,10 @@ SOURCES = {
         'dungeon/act4/darkelfcemetary.dgn',
         'ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0',
     ),
+    'magmacave': (
+        'dungeon/act4/magmacave.dgn',
+        '5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8',
+    ),
     'bloodhell': (
         'dungeon/act3/bloodhell.dgn',
         '8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57',

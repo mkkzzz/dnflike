@@ -351,6 +351,34 @@
         "4": -1
       }
     },
+    "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8": {
+      "id": "magmacave",
+      "source": {
+        "path": "dungeon/act4/magmacave.dgn",
+        "sha256": "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1080",
+            700
+          ],
+          [
+            "original_1081",
+            1000
+          ],
+          [
+            "original_1082",
+            2500
+          ]
+        ],
+        "1": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1
+      }
+    },
     "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57": {
       "id": "bloodhell",
       "source": {

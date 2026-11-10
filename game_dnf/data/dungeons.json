@@ -245,6 +245,20 @@
     "sha256": "ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0"
    }
   },
+  "magmacave": {
+   "name": "熔岩穴",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/magmacave_v1/map_export.json",
+   "min_level": 40,
+   "monster_level": 43,
+   "source": {
+    "path": "dungeon/act4/magmacave.dgn",
+    "sha256": "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],
