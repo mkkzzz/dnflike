@@ -5467,6 +5467,60 @@ func check_rapid_move_slash() -> void:
 		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==15.0,
 			"final recovery starts the full source cooldown with the actor modifier")
 
+func check_rapid_move_slash_counter() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for first_ms: int in [5000,5001]:
+		start_room("original_27601","katana",1,spec)
+		session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==1)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 200.0
+		var primary: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+		var secondary: Dictionary = game.spawn_enemy(primary["pos"])
+		for enemy: Dictionary in [primary,secondary]:
+			enemy["hp"] = 50000.0
+			enemy["state"] = "attack"
+		game.elapsed_ms = float(first_ms)
+		press(KEY_A)
+		step(160)
+		var eligible := first_ms==5001
+		check(game.hit_count==2 and primary["hp"]==secondary["hp"] and primary["hp"]<50000.0
+			and game.last_damage["trace"]["situation_factor"]==1.25,
+			"both Rapid Move Slash targets take counter damage regardless of the cue interval")
+		var cuts := cues("hit_cut_s1")+cues("hit_cut_l1")
+		var blood := cues("hit_blood_s3")+cues("hit_blood_l")
+		check(cues("hit_counter").size()==int(eligible) and cuts.size()==2 and blood.size()==2
+			and cuts.filter(func(cue):return cue["scale"]==1.5).size()==int(eligible)
+			and blood.all(func(cue):return cue["scale"]==1.0)
+			and primary["counter_cue_at_ms"]==(5001.0 if eligible else 0.0)
+			and secondary["counter_cue_at_ms"]==0.0,
+			"only the leading contact emits the scaled Rapid Move Slash counter cue after the strict interval")
+		if not eligible:continue
+		game.monsters.erase(secondary)
+		for slash in range(1,4):
+			game.player["stuck_ms"] = 0.0
+			move_target(primary,POINT+Vector2(900,0))
+			step(200)
+			press(KEY_A)
+			step(0)
+			game.player["pos"] = POINT
+			move_target(primary,POINT+Vector2(45,0))
+			primary["state"] = "attack"
+			game.elapsed_ms = 10002.0 if slash==3 else 10001.0
+			step(160)
+			check(game.hit_count==2+slash and game.last_damage["trace"]["situation_factor"]==1.25
+				and cues("hit_counter").size()==(2 if slash==3 else 1),
+				"Rapid Move Slash reinstalls contact but shares the victim's counter timer on slash %d" % slash)
+		var finish_cut := cues("hit_cut_s3")+cues("hit_cut_l3")
+		check(primary["counter_cue_at_ms"]==10002.0 and finish_cut.size()==1
+			and finish_cut[0]["scale"]==1.5 and cues("hit_counter")[-1]["scale"]==0.7,
+			"the finisher uses the original upper slash and 0.7-scale counter overlay")
+
 func check_rapid_move_slash_body_modes() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -7211,6 +7265,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_rapid_move_slash_counter()
 	check_rapid_move_slash_body_modes()
 	check_illusion_finish()
 	check_hundred_sword_ready()

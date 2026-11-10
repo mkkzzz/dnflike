@@ -27,7 +27,7 @@ const PLAYER_ID := 0
 const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
 const OUTRAGE_IMPACTS := ["outrage_floor","outrage_magma"]
-const OUTRAGE_COUNTER_CUE_MS := 5000
+const NATIVE_COUNTER_CUE_MS := 5000
 const OUTRAGE_ERUPTION_OFFSETS := [Vector2i(22,-12),Vector2i(-117,15),Vector2i(-126,37),
 	Vector2i(104,-6),Vector2i(-60,58),Vector2i(76,33),Vector2i(10,80)]
 const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
@@ -2933,8 +2933,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
-		var outrage_slash: bool = hit.get("native_controller",{}).get("kind","") == "outrage_slash"
-		var native_body_gate: bool = outrage_slash or hit.get("native_controller",{}).get("kind","") == "rapid_slash"
+		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash"]
 		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
@@ -2951,8 +2950,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if player["hits"].has(id) or float(enemy["hp"])<=0:continue
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
-				if native_body_gate and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
-				var first_target: bool = outrage_slash and not player["hits"].keys().any(func(key):return not String(key).begins_with("prop:"))
+				if native_melee and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
+				var first_target: bool = native_melee and not player["hits"].keys().any(func(key):return not String(key).begins_with("prop:"))
 				player["hits"][id] = true
 				land_hit(player,enemy,contact,c["point"],facing,attack_power(),first_target)
 			if native_maze != null:
@@ -3347,7 +3346,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var grab_strike := bool(hit.get("grab_strike",false))
 	var target_state := String(target["state"])
 	# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
-	var counter := target_state in ["attack","action"] or (native_outrage \
+	var counter := target_state in ["attack","action"] or ((native_outrage or rapid_slash) \
 		and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
@@ -3486,7 +3485,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if native_common_hit:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
 		# 867720 uses a strict interval on the struck actor. Keep the full-effect option (2).
 		var show_counter := first_counter_target and counter \
-			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > OUTRAGE_COUNTER_CUE_MS
+			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > NATIVE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
 		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
