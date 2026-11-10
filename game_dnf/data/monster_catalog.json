@@ -55719,6 +55719,12 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/slash.ani",
+     "animation/attack.ani",
+     "animation/slash.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -55833,6 +55839,12 @@
     ],
     "overturn": [
      "monster/newmonsters/medeia/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/medeia/action/slash.act",
+     "monster/newmonsters/medeia/action/attack.act",
+     "monster/newmonsters/medeia/action/slash.act",
+     "monster/newmonsters/medeia/action/attack.act"
     ]
    },
    "action_anis": {
@@ -55856,9 +55868,22 @@
     ],
     "overturn": [
      "monster/newmonsters/medeia/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/medeia/animation/slash.ani",
+     "monster/newmonsters/medeia/animation/attack.ani",
+     "monster/newmonsters/medeia/animation/slash.ani",
+     "monster/newmonsters/medeia/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/medeia/action/slash.act",
+    "monster/newmonsters/medeia/action/attack.act",
+    "monster/newmonsters/medeia/action/slash.act",
+    "monster/newmonsters/medeia/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "medeia",
    "think_term": 500,
    "vision": 600,
@@ -57712,6 +57737,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/stay.ani"
     ]
    },
    "attacks": [
@@ -57782,6 +57810,10 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/dismantle/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/cartel/dismantle/action/dis.act"
     ]
    },
    "action_anis": {
@@ -57805,9 +57837,18 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/dismantle/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/cartel/dismantle/animation/stay.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/cartel/dismantle/action/dis.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "dismantle",
    "think_term": 200,
    "keep_distance_with_target": 210,
@@ -60719,6 +60760,13 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/rariat.ani",
+     "animation/rariat.ani",
+     "animation/rariat.ani",
+     "animation/rariat.ani"
     ]
    },
    "attacks": [
@@ -60842,6 +60890,13 @@
     ],
     "move": [
      "monster/newmonsters/bantu/_buffalorari/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/_buffalorari/action/kick.act",
+     "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+     "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+     "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+     "monster/newmonsters/bantu/_buffalorari/action/rariat.act"
     ]
    },
    "action_anis": {
@@ -60850,9 +60905,24 @@
     ],
     "move": [
      "monster/newmonsters/bantu/_buffalorari/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/_buffalorari/animation/kick.ani",
+     "monster/newmonsters/bantu/_buffalorari/animation/rariat.ani",
+     "monster/newmonsters/bantu/_buffalorari/animation/rariat.ani",
+     "monster/newmonsters/bantu/_buffalorari/animation/rariat.ani",
+     "monster/newmonsters/bantu/_buffalorari/animation/rariat.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bantu/_buffalorari/action/kick.act",
+    "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+    "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+    "monster/newmonsters/bantu/_buffalorari/action/rariat.act",
+    "monster/newmonsters/bantu/_buffalorari/action/rariat.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "buffalorari",
    "think_term": 500,
    "vision": 1000,
@@ -68908,6 +68978,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -68952,6 +69025,9 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
     ]
    },
    "action_anis": {
@@ -68966,9 +69042,16 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mechanicgisellen1",
    "think_term": 500,
    "vision": 500,
@@ -69040,6 +69123,9 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -69081,6 +69167,9 @@
     ],
     "damage2": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/damage2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
     ]
    },
    "action_anis": {
@@ -69092,9 +69181,16 @@
     ],
     "damage2": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mechanicgisellen2",
    "think_term": 500,
    "vision": 500,
@@ -69587,6 +69683,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/kick.ani"
     ]
    },
    "attacks": [
@@ -69727,6 +69826,12 @@
     ],
     "last": [
      "monster/newmonsters/heaven/sergeant/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/sergeant/action/kick.act",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -69753,9 +69858,22 @@
     ],
     "last": [
      "monster/newmonsters/heaven/sergeant/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/sergeant/animation/kick.ani",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/sergeant/action/kick.act",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "sergeant",
    "think_term": 300,
    "vision": 350,
@@ -69935,6 +70053,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/slash.ani"
     ]
    },
    "attacks": [
@@ -69998,6 +70119,9 @@
     ],
     "overturn": [
      "monster/act8/oneeyedmermaid/action/overturn.act"
+    ],
+    "attack": [
+     "monster/act8/oneeyedmermaid/action/slash.act"
     ]
    },
    "action_anis": {
@@ -70021,9 +70145,16 @@
     ],
     "overturn": [
      "monster/act8/oneeyedmermaid/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/act8/oneeyedmermaid/animation/slash.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/act8/oneeyedmermaid/action/slash.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "oneeyedmermaid",
    "think_term": 500,
    "vision": 700,
@@ -70083,6 +70214,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/bite2.ani"
     ]
    },
    "attacks": [
@@ -70178,6 +70312,11 @@
     ],
     "overturn": [
      "monster/act8/knifetooth/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/act8/knifetooth/action/bite2.act",
+     ""
     ]
    },
    "action_anis": {
@@ -70201,9 +70340,20 @@
     ],
     "overturn": [
      "monster/act8/knifetooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/act8/knifetooth/animation/bite2.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/act8/knifetooth/action/bite2.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "knifetooth",
    "think_term": 200,
    "vision": 600,
@@ -73872,6 +74022,11 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/dash.ani",
+     "animation/dash.ani"
     ]
    },
    "attacks": [
@@ -73964,6 +74119,11 @@
     ],
     "last": [
      "monster/newmonsters/timegate/formacartel/7shards_giselle/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/action/sawattack.act",
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act",
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act"
     ]
    },
    "action_anis": {
@@ -73978,9 +74138,20 @@
     ],
     "last": [
      "monster/newmonsters/timegate/formacartel/7shards_giselle/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/animation/attack.ani",
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/animation/dash.ani",
+     "monster/newmonsters/timegate/formacartel/7shards_giselle/animation/dash.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/timegate/formacartel/7shards_giselle/action/sawattack.act",
+    "monster/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act",
+    "monster/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "7shards_giselle",
    "think_term": 200,
    "vision": 1900,
@@ -79743,6 +79914,19 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/arm_right.ani",
+     "animation/arm_left.ani",
+     "animation/arm_clang.ani",
+     "animation/arm_count.ani",
+     "animation/arm_count.ani",
+     "animation/arm_count.ani",
+     "animation/kick.ani",
+     "animation/summer_kick.ani",
+     "animation/arm_right.ani",
+     "animation/arm_left.ani"
     ]
    },
    "attacks": [
@@ -80011,6 +80195,19 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_robert/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_robert/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_right.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_left.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_clang.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/summer_kick.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_right.act",
+     "monster/newmonsters/silverspoon/silverclown_robert/action/arm_left.act"
     ]
    },
    "action_anis": {
@@ -80034,9 +80231,36 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_robert/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_right.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_left.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_clang.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_count.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_count.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_count.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/summer_kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_right.ani",
+     "monster/newmonsters/silverspoon/silverclown_robert/animation/arm_left.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverclown_robert/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_right.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_left.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_clang.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_count.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/summer_kick.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_right.act",
+    "monster/newmonsters/silverspoon/silverclown_robert/action/arm_left.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_robert",
    "think_term": 300,
    "vision": 1000,
@@ -80894,6 +81118,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -81019,6 +81246,12 @@
     ],
     "overturn": [
      "monster/newmonsters/bee/bee_named/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bee/bee_named/action/attack.act",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -81042,9 +81275,22 @@
     ],
     "overturn": [
      "monster/newmonsters/bee/bee_named/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bee/bee_named/animation/attack.ani",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bee/bee_named/action/attack.act",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bee_named",
    "think_term": 200,
    "vision": 700,
@@ -82998,6 +83244,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/grap.ani"
     ]
    },
    "attacks": [
@@ -83092,6 +83341,11 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/namak/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/witch/namak/action/grap.act"
     ]
    },
    "action_anis": {
@@ -83115,9 +83369,20 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/namak/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/witch/namak/animation/grap.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/witch/namak/action/grap.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "namak",
    "think_term": 500,
    "vision": 1000,
@@ -93741,6 +94006,10 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/storm.ani",
+     "animation/earthquake.ani"
     ]
    },
    "attacks": [
@@ -93804,6 +94073,10 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/stormgolem/action/damage2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/stormgolem/action/storm.act",
+     "monster/newmonsters/golem/stormgolem/action/earthquake.act"
     ]
    },
    "action_anis": {
@@ -93812,9 +94085,18 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/stormgolem/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/stormgolem/animation/storm.ani",
+     "monster/newmonsters/golem/stormgolem/animation/earthquake.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/golem/stormgolem/action/storm.act",
+    "monster/newmonsters/golem/stormgolem/action/earthquake.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "stormgolem",
    "think_term": 500,
    "vision": 1000,
@@ -93873,6 +94155,18 @@
     ],
     "overturn": [
      "Animation/Overturn.ani"
+    ],
+    "attack": [
+     "animation/one.ani",
+     "animation/two.ani",
+     "animation/onetwo.ani",
+     "animation/two.ani",
+     "animation/dashtwo.ani",
+     "animation/throw.ani",
+     "animation/onetwoone.ani",
+     "animation/two.ani",
+     "animation/throwdown.ani",
+     "animation/two.ani"
     ]
    },
    "attacks": [
@@ -94096,6 +94390,48 @@
    ],
    "speech": [],
    "sounds": {},
+   "actions": {
+    "attack": [
+     "monster/newmonsters/bantu/wolfpatriarch/action/one1.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/two2.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/onetwo.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/two.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/dashtwo.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/throw.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/combination.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/two3.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/throwdown.act",
+     "monster/newmonsters/bantu/wolfpatriarch/action/two4.act"
+    ]
+   },
+   "action_anis": {
+    "attack": [
+     "monster/newmonsters/bantu/wolfpatriarch/animation/one.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/two.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/onetwo.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/two.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/dashtwo.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/throw.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/onetwoone.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/two.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/throwdown.ani",
+     "monster/newmonsters/bantu/wolfpatriarch/animation/two.ani"
+    ]
+   },
+   "attack_actions": [
+    "monster/newmonsters/bantu/wolfpatriarch/action/one1.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/two2.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/onetwo.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/two.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/dashtwo.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/throw.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/combination.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/two3.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/throwdown.act",
+    "monster/newmonsters/bantu/wolfpatriarch/action/two4.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
+   "motion_source": "same-stem attack action fallback",
    "name": "turmanbash",
    "think_term": 500,
    "vision": 1000,
@@ -94344,6 +94680,15 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/shoulderattack.ani",
+     "animation/dashattack.ani",
+     "animation/kick.ani",
+     "animation/shoulderattack2.ani",
+     "animation/shoulderattackking.ani",
+     "animation/dashattack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -94505,6 +94850,15 @@
     ],
     "move": [
      "monster/newmonsters/bantu/elitebuffalowoman/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattack.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/dashattack.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/kick.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattack2.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattackking.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/dashattack.act",
+     "monster/newmonsters/bantu/elitebuffalowoman/action/attack.act"
     ]
    },
    "action_anis": {
@@ -94513,9 +94867,28 @@
     ],
     "move": [
      "monster/newmonsters/bantu/elitebuffalowoman/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/shoulderattack.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/dashattack.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/kick.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/shoulderattack2.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/shoulderattackking.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/dashattack.ani",
+     "monster/newmonsters/bantu/elitebuffalowoman/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattack.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/dashattack.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/kick.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattack2.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/shoulderattackking.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/dashattack.act",
+    "monster/newmonsters/bantu/elitebuffalowoman/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "elitebuffalowoman",
    "think_term": 500,
    "vision": 1000,
@@ -94846,6 +95219,10 @@
     ],
     "overturn": [
      "Animation/Overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/bomb.ani"
     ]
    },
    "attacks": [
@@ -94898,6 +95275,24 @@
    ],
    "speech": [],
    "sounds": {},
+   "actions": {
+    "attack": [
+     "monster/newmonsters/golem/ricubaby/action/attack1.act",
+     "monster/newmonsters/golem/ricubaby/action/bomb.act"
+    ]
+   },
+   "action_anis": {
+    "attack": [
+     "monster/newmonsters/golem/ricubaby/animation/attack1.ani",
+     "monster/newmonsters/golem/ricubaby/animation/bomb.ani"
+    ]
+   },
+   "attack_actions": [
+    "monster/newmonsters/golem/ricubaby/action/attack1.act",
+    "monster/newmonsters/golem/ricubaby/action/bomb.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
+   "motion_source": "same-stem attack action fallback",
    "name": "ricubaby",
    "think_term": 500,
    "vision": 1000,
@@ -94956,6 +95351,10 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/throw.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -95019,6 +95418,10 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/icewavegolem/action/damage2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/icewavegolem/action/attack.act",
+     "monster/newmonsters/golem/icewavegolem/action/attack.act"
     ]
    },
    "action_anis": {
@@ -95027,9 +95430,18 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/icewavegolem/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/icewavegolem/animation/throw.ani",
+     "monster/newmonsters/golem/icewavegolem/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/golem/icewavegolem/action/attack.act",
+    "monster/newmonsters/golem/icewavegolem/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "icewavegolem",
    "think_term": 500,
    "vision": 1000,
@@ -95089,6 +95501,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack3.ani",
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -95179,6 +95596,11 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/nife_claese/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/nife_claese/action/attack1.act",
+     "monster/newmonsters/heaven/nife_claese/action/attack3.act",
+     "monster/newmonsters/heaven/nife_claese/action/attack4.act"
     ]
    },
    "action_anis": {
@@ -95202,9 +95624,20 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/nife_claese/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/nife_claese/animation/attack1.ani",
+     "monster/newmonsters/heaven/nife_claese/animation/attack3.ani",
+     "monster/newmonsters/heaven/nife_claese/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/nife_claese/action/attack1.act",
+    "monster/newmonsters/heaven/nife_claese/action/attack3.act",
+    "monster/newmonsters/heaven/nife_claese/action/attack4.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "nife_claese",
    "think_term": 200,
    "keep_distance_with_target": 100,
@@ -108156,6 +108589,9 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/changeposition.ani"
     ]
    },
    "attacks": [
@@ -108243,6 +108679,11 @@
     ],
     "last": [
      "monster/event/bluemarble/gt_proto/action/lastaction.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/event/bluemarble/gt_proto/action/changeposition.act"
     ]
    },
    "action_anis": {
@@ -108260,9 +108701,20 @@
     ],
     "last": [
      "monster/event/bluemarble/gt_proto/animation/lastaction.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/event/bluemarble/gt_proto/animation/changeposition.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/event/bluemarble/gt_proto/action/changeposition.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gt_proto",
    "think_term": 200,
    "vision": 900,
@@ -109871,6 +110323,9 @@
     ],
     "die": [
      "animation/last_1.ani"
+    ],
+    "attack": [
+     "animation/jumpattack.ani"
     ]
    },
    "attacks": [
@@ -110063,6 +110518,16 @@
     ],
     "last": [
      "monster/newmonsters/timegate/formacartel/gun_congcong/action/last.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/timegate/formacartel/gun_congcong/action/jumpattack.act"
     ]
    },
    "action_anis": {
@@ -110089,9 +110554,30 @@
     ],
     "last": [
      "monster/newmonsters/timegate/formacartel/gun_congcong/animation/last_1.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/timegate/formacartel/gun_congcong/animation/jumpattack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "monster/newmonsters/timegate/formacartel/gun_congcong/action/jumpattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gun_congcong",
    "think_term": 200,
    "vision": 2000,
@@ -113720,6 +114206,9 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/changeposition.ani"
     ]
    },
    "attacks": [
@@ -113807,6 +114296,11 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt_proto/action/lastaction.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/heaven/gt_proto/action/changeposition.act"
     ]
    },
    "action_anis": {
@@ -113824,9 +114318,20 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt_proto/animation/lastaction.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/heaven/gt_proto/animation/changeposition.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/heaven/gt_proto/action/changeposition.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gt_proto",
    "think_term": 200,
    "vision": 900,
@@ -123942,6 +124447,15 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani",
+     "animation/drill.ani",
+     "animation/bite.ani",
+     "animation/swallow.ani",
+     "animation/drill.ani"
     ]
    },
    "attacks": [
@@ -124127,6 +124641,15 @@
     ],
     "last": [
      "monster/newmonsters/direzie/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/direzie/action/attack1.act",
+     "monster/newmonsters/direzie/action/attack2.act",
+     "monster/newmonsters/direzie/action/attack3.act",
+     "monster/newmonsters/direzie/action/drill.act",
+     "monster/newmonsters/direzie/action/bite.act",
+     "monster/newmonsters/direzie/action/swallow.act",
+     "monster/newmonsters/direzie/action/drill.act"
     ]
    },
    "action_anis": {
@@ -124153,9 +124676,28 @@
     ],
     "last": [
      "monster/newmonsters/direzie/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/direzie/animation/attack1.ani",
+     "monster/newmonsters/direzie/animation/attack2.ani",
+     "monster/newmonsters/direzie/animation/attack3.ani",
+     "monster/newmonsters/direzie/animation/drill.ani",
+     "monster/newmonsters/direzie/animation/bite.ani",
+     "monster/newmonsters/direzie/animation/swallow.ani",
+     "monster/newmonsters/direzie/animation/drill.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/direzie/action/attack1.act",
+    "monster/newmonsters/direzie/action/attack2.act",
+    "monster/newmonsters/direzie/action/attack3.act",
+    "monster/newmonsters/direzie/action/drill.act",
+    "monster/newmonsters/direzie/action/bite.act",
+    "monster/newmonsters/direzie/action/swallow.act",
+    "monster/newmonsters/direzie/action/drill.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "direzie_sub",
    "think_term": 500,
    "vision": 1000,
@@ -124532,6 +125074,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani"
     ]
    },
    "attacks": [
@@ -124606,6 +125152,10 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/alterationsoldier/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/alterationsoldier/action/attack1.act",
+     "monster/newmonsters/cartel/alterationsoldier/action/attack2.act"
     ]
    },
    "action_anis": {
@@ -124629,9 +125179,18 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/alterationsoldier/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/alterationsoldier/animation/attack1.ani",
+     "monster/newmonsters/cartel/alterationsoldier/animation/attack2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/alterationsoldier/action/attack1.act",
+    "monster/newmonsters/cartel/alterationsoldier/action/attack2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "alterationsoldier",
    "think_term": 500,
    "vision": 350,
@@ -124689,6 +125248,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -124745,6 +125307,9 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/engineer/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/engineer/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -124768,9 +125333,16 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/engineer/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/engineer/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/engineer/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "engineer",
    "think_term": 700,
    "vision": 400,
@@ -135480,6 +136052,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -135529,6 +136104,9 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
     ]
    },
    "action_anis": {
@@ -135543,9 +136121,16 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mechanicgiselle",
    "think_term": 500,
    "vision": 1900,
@@ -137798,6 +138383,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -137885,6 +138475,11 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/alterationsoldier/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/alterationsoldier/action/attack1.act",
+     "monster/newmonsters/cartel/alterationsoldier/action/attack2.act",
+     "monster/newmonsters/cartel/alterationsoldier/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -137908,9 +138503,20 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/alterationsoldier/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/alterationsoldier/animation/attack1.ani",
+     "monster/newmonsters/cartel/alterationsoldier/animation/attack2.ani",
+     "monster/newmonsters/cartel/alterationsoldier/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/alterationsoldier/action/attack1.act",
+    "monster/newmonsters/cartel/alterationsoldier/action/attack2.act",
+    "monster/newmonsters/cartel/alterationsoldier/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "runalterationsoldier",
    "think_term": 500,
    "keep_distance_with_target": 300,
@@ -138124,6 +138730,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -138193,6 +138803,10 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/incendiarysoldier/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/incendiarysoldier/action/attack.act",
+     "monster/newmonsters/cartel/incendiarysoldier/action/attack.act"
     ]
    },
    "action_anis": {
@@ -138216,9 +138830,18 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/incendiarysoldier/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/incendiarysoldier/animation/attack.ani",
+     "monster/newmonsters/cartel/incendiarysoldier/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/incendiarysoldier/action/attack.act",
+    "monster/newmonsters/cartel/incendiarysoldier/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "runincendiarysoldier",
    "think_term": 200,
    "keep_distance_with_target": 300,
@@ -138461,6 +139084,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -138560,6 +139188,11 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/action/kick.act",
+     "monster/newmonsters/silverspoon/silverman/action/a_rara.act",
+     "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -138583,9 +139216,20 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverman/animation/throw.ani",
+     "monster/newmonsters/silverspoon/silverman/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverman/action/kick.act",
+    "monster/newmonsters/silverspoon/silverman/action/a_rara.act",
+    "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "runsilverman",
    "think_term": 300,
    "vision": 350,
@@ -138644,6 +139288,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -138719,6 +139367,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act",
+     "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
     ]
    },
    "action_anis": {
@@ -138742,9 +139394,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/animation/attack.ani",
+     "monster/newmonsters/silverspoon/silversmallmanb/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act",
+    "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "runsilversmallmanb",
    "think_term": 200,
    "vision": 350,
@@ -139261,6 +139922,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani"
     ]
    },
    "attacks": [
@@ -139338,6 +140003,10 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/majorcamoka/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/majorcamoka/action/attack1.act",
+     "monster/newmonsters/heaven/majorcamoka/action/attack2.act"
     ]
    },
    "action_anis": {
@@ -139361,9 +140030,18 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/majorcamoka/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/majorcamoka/animation/attack1.ani",
+     "monster/newmonsters/heaven/majorcamoka/animation/attack2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/majorcamoka/action/attack1.act",
+    "monster/newmonsters/heaven/majorcamoka/action/attack2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "majorcamoka",
    "think_term": 200,
    "keep_distance_with_target": 100,
@@ -139425,6 +140103,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -139477,6 +140158,9 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/shadow/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/shadow/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -139500,9 +140184,16 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/shadow/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/shadow/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/shadow/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "shadow",
    "think_term": 200,
    "keep_distance_with_target": 100,
@@ -139701,6 +140392,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/slash.ani",
+     "animation/dance2.ani"
     ]
    },
    "attacks": [
@@ -139800,6 +140495,11 @@
     ],
     "overturn": [
      "monster/act8/mermadia_warrior/action/overturn.act"
+    ],
+    "attack": [
+     "monster/act8/mermadia_warrior/action/slash.act",
+     "",
+     "monster/act8/mermadia_warrior/action/slash2.act"
     ]
    },
    "action_anis": {
@@ -139823,9 +140523,20 @@
     ],
     "overturn": [
      "monster/act8/mermadia_warrior/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/act8/mermadia_warrior/animation/slash.ani",
+     "",
+     "monster/act8/mermadia_warrior/animation/dance2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/act8/mermadia_warrior/action/slash.act",
+    "",
+    "monster/act8/mermadia_warrior/action/slash2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mermadia_warrior",
    "think_term": 500,
    "vision": 600,
@@ -140500,6 +141211,11 @@
     ],
     "jump": [
      "animation/jump.ani"
+    ],
+    "attack": [
+     "animation/screwattack.ani",
+     "animation/screwattack.ani",
+     "animation/superscrewattack2_ready.ani"
     ]
    },
    "attacks": [
@@ -140793,6 +141509,21 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/action/jump.act"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "",
+     "monster/act8/blackscalemoussambani/action/standup.act",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -140819,9 +141550,40 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/animation/jump.ani"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "",
+     "monster/act8/blackscalemoussambani/animation/superscrewattack2_ready.ani",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "",
+    "monster/act8/blackscalemoussambani/action/standup.act",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "blackscalemoussambani",
    "think_term": 200,
    "vision": 1000,
@@ -144724,6 +145486,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -144778,6 +145543,9 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/resident_evil/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/resident_evil/action/attack.act"
     ]
    },
    "action_anis": {
@@ -144801,9 +145569,16 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/resident_evil/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/resident_evil/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/witch/resident_evil/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "resident_evil",
    "think_term": 500,
    "vision": 600,
@@ -144861,6 +145636,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -144915,6 +145693,9 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/resident_evil/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/resident_evil/action/attack.act"
     ]
    },
    "action_anis": {
@@ -144938,9 +145719,16 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/resident_evil/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/resident_evil/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/witch/resident_evil/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "resident_evil1",
    "think_term": 500,
    "vision": 600,
@@ -145243,6 +146031,10 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/dash.ani",
+     "animation/dash.ani"
     ]
    },
    "attacks": [
@@ -145299,6 +146091,10 @@
     ],
     "move": [
      "monster/newmonsters/witch/bat/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/bat/action/dash.act",
+     "monster/newmonsters/witch/bat/action/dash.act"
     ]
    },
    "action_anis": {
@@ -145307,9 +146103,18 @@
     ],
     "move": [
      "monster/newmonsters/witch/bat/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/bat/animation/dash.ani",
+     "monster/newmonsters/witch/bat/animation/dash.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/witch/bat/action/dash.act",
+    "monster/newmonsters/witch/bat/action/dash.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bat2",
    "think_term": 200,
    "keep_distance_with_target": 200,
@@ -146800,6 +147605,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/laser.ani",
+     "animation/punch.ani",
+     "animation/hold.ani",
+     "animation/punch.ani",
+     "animation/punch.ani"
     ]
    },
    "attacks": [
@@ -146922,6 +147734,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/warjack/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/warjack/action/laser.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act",
+     "monster/newmonsters/cartel/warjack/action/hold.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act"
     ]
    },
    "action_anis": {
@@ -146945,9 +147764,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/warjack/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/warjack/animation/laser.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani",
+     "monster/newmonsters/cartel/warjack/animation/hold.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/warjack/action/laser.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act",
+    "monster/newmonsters/cartel/warjack/action/hold.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "warjack",
    "think_term": 200,
    "vision": 1000,
@@ -150015,6 +150849,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -150067,6 +150904,9 @@
     ],
     "overturn": [
      "monster/newmonsters/disguiser/mummy_basic/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/disguiser/mummy_basic/action/attack.act"
     ]
    },
    "action_anis": {
@@ -150090,9 +150930,16 @@
     ],
     "overturn": [
      "monster/newmonsters/disguiser/mummy_basic/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/disguiser/mummy_basic/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/disguiser/mummy_basic/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mummy_basic_quest",
    "think_term": 500,
    "vision": 1000,
@@ -150637,6 +151484,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -150693,6 +151543,9 @@
     ],
     "last": [
      "monster/newmonsters/disguiser/mummy_basic/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/disguiser/mummy_basic/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -150719,9 +151572,16 @@
     ],
     "last": [
      "monster/newmonsters/disguiser/mummy_basic/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/disguiser/mummy_basic/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/disguiser/mummy_basic/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mummy_basic_despair",
    "think_term": 500,
    "vision": 1000,
@@ -152045,6 +152905,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -152096,6 +152959,9 @@
     ],
     "overturn": [
      "monster/newmonsters/timegate/formacartel/cartelvolunteer/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/timegate/formacartel/cartelvolunteer/action/attack.act"
     ]
    },
    "action_anis": {
@@ -152119,9 +152985,16 @@
     ],
     "overturn": [
      "monster/newmonsters/timegate/formacartel/cartelvolunteer/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/timegate/formacartel/cartelvolunteer/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/timegate/formacartel/cartelvolunteer/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "cartelvolunteer",
    "think_term": 200,
    "keep_distance_with_target": 300,
@@ -155455,6 +156328,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -155541,6 +156418,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     ""
     ]
    },
    "action_anis": {
@@ -155564,9 +156446,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "skewer_q",
    "think_term": 500,
    "vision": 1900,
@@ -161872,6 +162765,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/cast.ani"
     ]
    },
    "attacks": [
@@ -161949,6 +162846,10 @@
     ],
     "overturn": [
      "monster/newmonsters/ranjerus/maryjane/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/ranjerus/maryjane/action/attack.act",
+     "monster/newmonsters/ranjerus/maryjane/action/cast.act"
     ]
    },
    "action_anis": {
@@ -161972,9 +162873,18 @@
     ],
     "overturn": [
      "monster/newmonsters/ranjerus/maryjane/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/ranjerus/maryjane/animation/attack.ani",
+     "monster/newmonsters/ranjerus/maryjane/animation/cast.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/ranjerus/maryjane/action/attack.act",
+    "monster/newmonsters/ranjerus/maryjane/action/cast.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "maryjane",
    "think_term": 200,
    "keep_distance_with_target": 200,
@@ -166801,6 +167711,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/combo1.ani",
+     "animation/combo2.ani",
+     "animation/combo3.ani",
+     "animation/overthestar_up.ani",
+     "animation/overthestar_shoot.ani"
     ]
    },
    "attacks": [
@@ -167014,6 +167931,17 @@
     ],
     "overturn": [
      "monster/newmonsters/bwanga/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/combo1.act",
+     "monster/newmonsters/bwanga/action/combo2.act",
+     "monster/newmonsters/bwanga/action/combo3.act",
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/overthestar_up.act",
+     "monster/newmonsters/bwanga/action/overthestar_shoot.act"
     ]
    },
    "action_anis": {
@@ -167037,9 +167965,32 @@
     ],
     "overturn": [
      "monster/newmonsters/bwanga/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/combo1.ani",
+     "monster/newmonsters/bwanga/animation/combo2.ani",
+     "monster/newmonsters/bwanga/animation/combo3.ani",
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/overthestar_up.ani",
+     "monster/newmonsters/bwanga/animation/overthestar_shoot.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/combo1.act",
+    "monster/newmonsters/bwanga/action/combo2.act",
+    "monster/newmonsters/bwanga/action/combo3.act",
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/overthestar_up.act",
+    "monster/newmonsters/bwanga/action/overthestar_shoot.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bwanga_grim",
    "think_term": 200,
    "cooltime": [
@@ -168155,6 +169106,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -168238,6 +169193,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/action/kick.act",
+     "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -168261,9 +169220,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverman/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverman/action/kick.act",
+    "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverman",
    "think_term": 300,
    "vision": 350,
@@ -168321,6 +169289,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -168401,6 +169373,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_crutches/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_crutches/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_crutches/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -168421,9 +169397,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_crutches/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_crutches/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_crutches/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverclown_crutches/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_crutches/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_crutches",
    "think_term": 200,
    "vision": 500,
@@ -168481,6 +169466,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -168554,6 +169542,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmana/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmana/action/attack.act",
+     ""
     ]
    },
    "action_anis": {
@@ -168577,9 +169569,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmana/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmana/animation/attack.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmana/action/attack.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silversmallmana",
    "think_term": 200,
    "vision": 300,
@@ -168642,6 +169643,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -168696,6 +169700,9 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
     ]
    },
    "action_anis": {
@@ -168719,9 +169726,16 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silversmallmanb",
    "think_term": 200,
    "vision": 350,
@@ -168781,6 +169795,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -168949,6 +169966,15 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanc/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanc/action/attack.act",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -168972,9 +169998,28 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanc/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanc/animation/attack.ani",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmanc/action/attack.act",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silversmallmanc",
    "think_term": 200,
    "vision": 300,
@@ -169041,6 +170086,10 @@
     ],
     "overturn": [
      "animation/change/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/kick.ani"
     ]
    },
    "attacks": [
@@ -169127,6 +170176,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_fluent/action/start_overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_fluent/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_fluent/action/kick.act"
     ]
    },
    "action_anis": {
@@ -169150,9 +170203,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_fluent/animation/change/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_fluent/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_fluent/animation/kick.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverclown_fluent/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_fluent/action/kick.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_fluent",
    "think_term": 200,
    "vision": 500,
@@ -169214,6 +170276,11 @@
     ],
     "overturn": [
      "animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/kick.ani",
+     "animation/kick.ani"
     ]
    },
    "attacks": [
@@ -169348,6 +170415,12 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/stone_overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
     ]
    },
    "action_anis": {
@@ -169371,9 +170444,22 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_ballacrobat",
    "think_term": 200,
    "vision": 500,
@@ -171188,6 +172274,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/approach_attack.ani"
     ]
    },
    "attacks": [
@@ -171318,6 +172407,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/peltshu/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/peltshu/action/approach_attack.act"
     ]
    },
    "action_anis": {
@@ -171341,9 +172437,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/peltshu/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/peltshu/animation/approach_attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "monster/newmonsters/cartel/peltshu/action/approach_attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "peltshu",
    "think_term": 200,
    "vision": 1000,
@@ -171595,6 +172706,9 @@
     ],
     "overturn": [
      "animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani"
     ]
    },
    "attacks": [
@@ -171648,6 +172762,9 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/stone_overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
     ]
    },
    "action_anis": {
@@ -171671,9 +172788,16 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_ballacrobat2",
    "think_term": 200,
    "vision": 1500,
@@ -171731,6 +172855,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -171809,6 +172937,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/action/kick.act",
+     "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -171832,9 +172964,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverman/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverman/action/kick.act",
+    "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "summon_silverman",
    "think_term": 300,
    "vision": 1000,
@@ -171892,6 +173033,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -171946,6 +173090,9 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
     ]
    },
    "action_anis": {
@@ -171969,9 +173116,16 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "attack_silversmallmanb",
    "think_term": 200,
    "vision": 1000,
@@ -172029,6 +173183,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -172130,6 +173288,11 @@
     ],
     "overturn": [
      "monster/newmonsters/bee/bee/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bee/bee/action/attack.act",
+     "",
+     "monster/newmonsters/bee/bee/action/attack.act"
     ]
    },
    "action_anis": {
@@ -172153,9 +173316,20 @@
     ],
     "overturn": [
      "monster/newmonsters/bee/bee/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bee/bee/animation/attack.ani",
+     "",
+     "monster/newmonsters/bee/bee/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bee/bee/action/attack.act",
+    "",
+    "monster/newmonsters/bee/bee/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bee",
    "think_term": 200,
    "vision": 400,
@@ -174950,6 +176124,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -175004,6 +176181,9 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
     ]
    },
    "action_anis": {
@@ -175027,9 +176207,16 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silversmallmanb/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silversmallmanb/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silversmallmanb/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silversmallmanb_startmap",
    "think_term": 200,
    "vision": 350,
@@ -175086,6 +176273,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -175169,6 +176360,10 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/action/kick.act",
+     "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -175192,9 +176387,18 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/silverspoon/silverman/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverman/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/silverspoon/silverman/action/kick.act",
+    "monster/newmonsters/silverspoon/silverman/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverman_startmap",
    "think_term": 300,
    "vision": 350,
@@ -176615,6 +177819,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack2.ani",
+     "animation/attack2.ani"
     ]
    },
    "attacks": [
@@ -176686,6 +177894,10 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/big_soldier/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/big_soldier/action/attack.act",
+     "monster/newmonsters/heaven/big_soldier/action/attack.act"
     ]
    },
    "action_anis": {
@@ -176709,9 +177921,18 @@
     ],
     "overturn": [
      "monster/newmonsters/heaven/big_soldier/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/big_soldier/animation/attack2.ani",
+     "monster/newmonsters/heaven/big_soldier/animation/attack2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/big_soldier/action/attack.act",
+    "monster/newmonsters/heaven/big_soldier/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bigsoldier",
    "think_term": 200,
    "vision": 800,
@@ -178033,6 +179254,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack2.ani"
     ]
    },
    "attacks": [
@@ -178104,6 +179328,10 @@
     ],
     "overturn": [
      "monster/newmonsters/grim/grimfiresprit/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/grim/grimfiresprit/action/attack2.act"
     ]
    },
    "action_anis": {
@@ -178124,9 +179352,18 @@
     ],
     "overturn": [
      "monster/newmonsters/grim/grimfiresprit/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/grim/grimfiresprit/animation/attack2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/grim/grimfiresprit/action/attack2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "grimfiresprit",
    "think_term": 500,
    "vision": 1000,
@@ -181591,6 +182828,13 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -181698,6 +182942,13 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/rodem/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+     "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+     "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+     "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+     "monster/newmonsters/towerofdespair/rodem/action/attack.act"
     ]
    },
    "action_anis": {
@@ -181715,9 +182966,24 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/rodem/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/rodem/animation/attack.ani",
+     "monster/newmonsters/towerofdespair/rodem/animation/attack.ani",
+     "monster/newmonsters/towerofdespair/rodem/animation/attack.ani",
+     "monster/newmonsters/towerofdespair/rodem/animation/attack.ani",
+     "monster/newmonsters/towerofdespair/rodem/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+    "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+    "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+    "monster/newmonsters/towerofdespair/rodem/action/attack.act",
+    "monster/newmonsters/towerofdespair/rodem/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "rodem",
    "think_term": 500,
    "vision": 1600,
@@ -182512,6 +183778,9 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -182566,6 +183835,10 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/soccer_ball/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soccer_ball/action/attack.act",
+     ""
     ]
    },
    "action_anis": {
@@ -182574,9 +183847,18 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/soccer_ball/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soccer_ball/animation/attack.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/soccer_ball/action/attack.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "soccer_ball",
    "think_term": 300,
    "vision": 5000,
@@ -182630,6 +183912,9 @@
     ],
     "damage2": [
      "animation/damage1.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -182674,6 +183959,9 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_blind/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_blind/action/attack.act"
     ]
    },
    "action_anis": {
@@ -182688,9 +183976,16 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_blind/animation/damage1.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_blind/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/robot_blind/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "blind_robot",
    "think_term": 300,
    "vision": 5000,
@@ -182742,6 +184037,9 @@
     ],
     "damage2": [
      "animation/damage1.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -182786,6 +184084,9 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_confuse/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_confuse/action/attack.act"
     ]
    },
    "action_anis": {
@@ -182800,9 +184101,16 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_confuse/animation/damage1.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_confuse/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/robot_confuse/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "confuse_robot",
    "think_term": 300,
    "vision": 5000,
@@ -182854,6 +184162,9 @@
     ],
     "damage2": [
      "animation/damage1.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -182898,6 +184209,9 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_hold/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_hold/action/attack.act"
     ]
    },
    "action_anis": {
@@ -182912,9 +184226,16 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_hold/animation/damage1.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_hold/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/robot_hold/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "hold_robot",
    "think_term": 300,
    "vision": 5000,
@@ -182966,6 +184287,9 @@
     ],
     "damage2": [
      "animation/damage1.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -183010,6 +184334,9 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_freeze/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_freeze/action/attack.act"
     ]
    },
    "action_anis": {
@@ -183024,9 +184351,16 @@
     ],
     "damage2": [
      "monster/newmonsters/towerofdespair/robot_freeze/animation/damage1.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/robot_freeze/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/robot_freeze/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "freeze_robot",
    "think_term": 300,
    "vision": 5000,
@@ -193034,6 +194368,10 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/shoulderattack.ani",
+     "animation/dashattack.ani"
     ]
    },
    "attacks": [
@@ -193092,6 +194430,10 @@
     ],
     "move": [
      "monster/newmonsters/bantu/buffalowoman/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/buffalowoman/action/shoulderattack.act",
+     "monster/newmonsters/bantu/buffalowoman/action/dashattack.act"
     ]
    },
    "action_anis": {
@@ -193100,9 +194442,18 @@
     ],
     "move": [
      "monster/newmonsters/bantu/buffalowoman/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bantu/buffalowoman/animation/shoulderattack.ani",
+     "monster/newmonsters/bantu/buffalowoman/animation/dashattack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bantu/buffalowoman/action/shoulderattack.act",
+    "monster/newmonsters/bantu/buffalowoman/action/dashattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "buffalowoman",
    "think_term": 500,
    "vision": 400,
@@ -193163,6 +194514,13 @@
     ],
     "overturn": [
      "Animation/Overturn.ani"
+    ],
+    "attack": [
+     "animation/nikick.ani",
+     "animation/lowkick.ani",
+     "animation/highkick.ani",
+     "animation/icebreath.ani",
+     "animation/icebreath.ani"
     ]
    },
    "attacks": [
@@ -193275,6 +194633,33 @@
    ],
    "speech": [],
    "sounds": {},
+   "actions": {
+    "attack": [
+     "monster/newmonsters/bantu/bantuwoman/action/nikick.act",
+     "monster/newmonsters/bantu/bantuwoman/action/lowkick.act",
+     "monster/newmonsters/bantu/bantuwoman/action/highkick.act",
+     "monster/newmonsters/bantu/bantuwoman/action/icebreath.act",
+     "monster/newmonsters/bantu/bantuwoman/action/icebreath.act"
+    ]
+   },
+   "action_anis": {
+    "attack": [
+     "monster/newmonsters/bantu/bantuwoman/animation/nikick.ani",
+     "monster/newmonsters/bantu/bantuwoman/animation/lowkick.ani",
+     "monster/newmonsters/bantu/bantuwoman/animation/highkick.ani",
+     "monster/newmonsters/bantu/bantuwoman/animation/icebreath.ani",
+     "monster/newmonsters/bantu/bantuwoman/animation/icebreath.ani"
+    ]
+   },
+   "attack_actions": [
+    "monster/newmonsters/bantu/bantuwoman/action/nikick.act",
+    "monster/newmonsters/bantu/bantuwoman/action/lowkick.act",
+    "monster/newmonsters/bantu/bantuwoman/action/highkick.act",
+    "monster/newmonsters/bantu/bantuwoman/action/icebreath.act",
+    "monster/newmonsters/bantu/bantuwoman/action/icebreath.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
+   "motion_source": "same-stem attack action fallback",
    "name": "bantuamazones",
    "think_term": 500,
    "vision": 400,
@@ -193506,6 +194891,9 @@
     ],
     "down": [
      "animation/down.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -193547,6 +194935,9 @@
     ],
     "down": [
      "monster/newmonsters/golem/icegolem/action/down.act"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/icegolem/action/attack.act"
     ]
    },
    "action_anis": {
@@ -193558,9 +194949,16 @@
     ],
     "down": [
      "monster/newmonsters/golem/icegolem/animation/down.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/icegolem/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/golem/icegolem/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "icegolem",
    "think_term": 500,
    "vision": 1000,
@@ -193611,6 +195009,12 @@
     ],
     "damage2": [
      "animation/stay_rosi.ani"
+    ],
+    "attack": [
+     "animation/attack2_rosi.ani",
+     "animation/attack_rosi.ani",
+     "animation/attack_rosi.ani",
+     "animation/attack_rosi.ani"
     ]
    },
    "attacks": [
@@ -193716,6 +195120,12 @@
     ],
     "damage2": [
      "monster/newmonsters/queen_rosi/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/queen_rosi/action/attack1.act",
+     "monster/newmonsters/queen_rosi/action/attack2.act",
+     "monster/newmonsters/queen_rosi/action/command1.act",
+     "monster/newmonsters/queen_rosi/action/command2.act"
     ]
    },
    "action_anis": {
@@ -193730,9 +195140,22 @@
     ],
     "damage2": [
      "monster/newmonsters/queen_rosi/animation/stay_rosi.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/queen_rosi/animation/attack2_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/queen_rosi/action/attack1.act",
+    "monster/newmonsters/queen_rosi/action/attack2.act",
+    "monster/newmonsters/queen_rosi/action/command1.act",
+    "monster/newmonsters/queen_rosi/action/command2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "queen_rosi",
    "think_term": 500,
    "vision": 1000,
@@ -193784,6 +195207,17 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/icewave.ani",
+     "animation/icewave.ani",
+     "animation/icewave.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani"
     ]
    },
    "attacks": [
@@ -193999,6 +195433,17 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/ricu/action/damage2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/ricu/action/attack1.act",
+     "monster/newmonsters/golem/ricu/action/attack2.act",
+     "monster/newmonsters/golem/ricu/action/icewave1.act",
+     "monster/newmonsters/golem/ricu/action/icewave2.act",
+     "monster/newmonsters/golem/ricu/action/icewave3.act",
+     "monster/newmonsters/golem/ricu/action/command1.act",
+     "monster/newmonsters/golem/ricu/action/command2.act",
+     "monster/newmonsters/golem/ricu/action/command3.act",
+     "monster/newmonsters/golem/ricu/action/summon.act"
     ]
    },
    "action_anis": {
@@ -194013,9 +195458,32 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/ricu/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/ricu/animation/attack1.ani",
+     "monster/newmonsters/golem/ricu/animation/attack2.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/golem/ricu/action/attack1.act",
+    "monster/newmonsters/golem/ricu/action/attack2.act",
+    "monster/newmonsters/golem/ricu/action/icewave1.act",
+    "monster/newmonsters/golem/ricu/action/icewave2.act",
+    "monster/newmonsters/golem/ricu/action/icewave3.act",
+    "monster/newmonsters/golem/ricu/action/command1.act",
+    "monster/newmonsters/golem/ricu/action/command2.act",
+    "monster/newmonsters/golem/ricu/action/command3.act",
+    "monster/newmonsters/golem/ricu/action/summon.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "ricu",
    "think_term": 500,
    "vision": 1000,
@@ -195196,6 +196664,13 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/shoot_little1.ani",
+     "animation/changeposition.ani",
+     "animation/shoot_big.ani",
+     "animation/shoot_big2.ani",
+     "animation/stomping.ani"
     ]
    },
    "attacks": [
@@ -195363,6 +196838,15 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt9600/action/lastaction.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/gt9600/action/shoot_little1.act",
+     "",
+     "",
+     "monster/newmonsters/heaven/gt9600/action/changeposition.act",
+     "monster/newmonsters/heaven/gt9600/action/shoot_big.act",
+     "monster/newmonsters/heaven/gt9600/action/shoot_big2.act",
+     "monster/newmonsters/heaven/gt9600/action/stomping.act"
     ]
    },
    "action_anis": {
@@ -195380,9 +196864,28 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt9600/animation/lastaction.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/gt9600/animation/shoot_little1.ani",
+     "",
+     "",
+     "monster/newmonsters/heaven/gt9600/animation/changeposition.ani",
+     "monster/newmonsters/heaven/gt9600/animation/shoot_big.ani",
+     "monster/newmonsters/heaven/gt9600/animation/shoot_big2.ani",
+     "monster/newmonsters/heaven/gt9600/animation/stomping.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/gt9600/action/shoot_little1.act",
+    "",
+    "",
+    "monster/newmonsters/heaven/gt9600/action/changeposition.act",
+    "monster/newmonsters/heaven/gt9600/action/shoot_big.act",
+    "monster/newmonsters/heaven/gt9600/action/shoot_big2.act",
+    "monster/newmonsters/heaven/gt9600/action/stomping.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gt9600",
    "think_term": 200,
    "vision": 900,
@@ -204056,6 +205559,11 @@
     ],
     "overturn": [
      "animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/kick.ani",
+     "animation/kick.ani"
     ]
    },
    "attacks": [
@@ -204190,6 +205698,12 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/stone_overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
     ]
    },
    "action_anis": {
@@ -204213,9 +205727,22 @@
     ],
     "overturn": [
      "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/ball/stone_overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani",
+     "monster/newmonsters/silverspoon/silverclown_ballacrobat/animation/kick.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act",
+    "monster/newmonsters/silverspoon/silverclown_ballacrobat/action/kick.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silverclown_ballacrobat_item",
    "think_term": 200,
    "vision": 500,
@@ -204811,6 +206338,9 @@
     ],
     "move": [
      "animation/move_00.ani"
+    ],
+    "attack": [
+     "animation/attack_00.ani"
     ]
    },
    "attacks": [
@@ -204851,6 +206381,9 @@
     ],
     "move": [
      "monster/newmonsters/airsword/longsword/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/airsword/longsword/action/attack.act"
     ]
    },
    "action_anis": {
@@ -204859,9 +206392,16 @@
     ],
     "move": [
      "monster/newmonsters/airsword/longsword/animation/move_00.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/airsword/longsword/animation/attack_00.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/airsword/longsword/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "longsword",
    "think_term": 300,
    "vision": 700,
@@ -209470,6 +211010,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -209539,6 +211083,10 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/incendiarysoldier/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/incendiarysoldier/action/attack.act",
+     "monster/newmonsters/cartel/incendiarysoldier/action/attack.act"
     ]
    },
    "action_anis": {
@@ -209562,9 +211110,18 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/incendiarysoldier/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/incendiarysoldier/animation/attack.ani",
+     "monster/newmonsters/cartel/incendiarysoldier/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/incendiarysoldier/action/attack.act",
+    "monster/newmonsters/cartel/incendiarysoldier/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "incendiarysoldier",
    "think_term": 200,
    "keep_distance_with_target": 300,
@@ -209626,6 +211183,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/approach_attack.ani"
     ]
    },
    "attacks": [
@@ -209756,6 +211316,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/silkhat/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/silkhat/action/approach_attack.act"
     ]
    },
    "action_anis": {
@@ -209779,9 +211346,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/silkhat/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/silkhat/animation/approach_attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "monster/newmonsters/cartel/silkhat/action/approach_attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silkhat",
    "think_term": 200,
    "vision": 1000,
@@ -210022,6 +211604,13 @@
     ],
     "die": [
      "animation/gameover.ani"
+    ],
+    "attack": [
+     "animation/combo1.ani",
+     "animation/combo2.ani",
+     "animation/combo3.ani",
+     "animation/overthestar_up.ani",
+     "animation/overthestar_shoot.ani"
     ]
    },
    "attacks": [
@@ -210238,6 +211827,17 @@
     ],
     "last": [
      "monster/newmonsters/bwanga/action/gameover.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/combo1.act",
+     "monster/newmonsters/bwanga/action/combo2.act",
+     "monster/newmonsters/bwanga/action/combo3.act",
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/overthestar_up.act",
+     "monster/newmonsters/bwanga/action/overthestar_shoot.act"
     ]
    },
    "action_anis": {
@@ -210264,9 +211864,32 @@
     ],
     "last": [
      "monster/newmonsters/bwanga/animation/gameover.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/combo1.ani",
+     "monster/newmonsters/bwanga/animation/combo2.ani",
+     "monster/newmonsters/bwanga/animation/combo3.ani",
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/overthestar_up.ani",
+     "monster/newmonsters/bwanga/animation/overthestar_shoot.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/combo1.act",
+    "monster/newmonsters/bwanga/action/combo2.act",
+    "monster/newmonsters/bwanga/action/combo3.act",
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/overthestar_up.act",
+    "monster/newmonsters/bwanga/action/overthestar_shoot.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bwanga",
    "think_term": 200,
    "cooltime": [
@@ -211421,6 +213044,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/combo1.ani",
+     "animation/combo2.ani",
+     "animation/combo3.ani",
+     "animation/overthestar_up.ani",
+     "animation/overthestar_shoot.ani"
     ]
    },
    "attacks": [
@@ -211634,6 +213264,17 @@
     ],
     "overturn": [
      "monster/newmonsters/bwanga/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/combo1.act",
+     "monster/newmonsters/bwanga/action/combo2.act",
+     "monster/newmonsters/bwanga/action/combo3.act",
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/overthestar_up.act",
+     "monster/newmonsters/bwanga/action/overthestar_shoot.act"
     ]
    },
    "action_anis": {
@@ -211657,9 +213298,32 @@
     ],
     "overturn": [
      "monster/newmonsters/bwanga/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/combo1.ani",
+     "monster/newmonsters/bwanga/animation/combo2.ani",
+     "monster/newmonsters/bwanga/animation/combo3.ani",
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/overthestar_up.ani",
+     "monster/newmonsters/bwanga/animation/overthestar_shoot.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/combo1.act",
+    "monster/newmonsters/bwanga/action/combo2.act",
+    "monster/newmonsters/bwanga/action/combo3.act",
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/overthestar_up.act",
+    "monster/newmonsters/bwanga/action/overthestar_shoot.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bwanga_hell",
    "think_term": 200,
    "cooltime": [
@@ -218210,6 +219874,15 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/grap.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani",
+     "animation/attack4.ani",
+     "animation/attack1.ani",
+     "animation/grap.ani"
     ]
    },
    "attacks": [
@@ -218399,6 +220072,16 @@
     ],
     "last": [
      "monster/newmonsters/bloodbutterfly/mosqueen/action/lastaction.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/grap.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack2.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack3.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack4.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack1.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/grap2.act",
+     ""
     ]
    },
    "action_anis": {
@@ -218422,9 +220105,30 @@
     ],
     "last": [
      "monster/newmonsters/bloodbutterfly/mosqueen/animation/lastaction.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/grap.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack2.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack3.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack4.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack1.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/grap.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/grap.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack2.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack3.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack4.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack1.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/grap2.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mosqueen",
    "think_term": 500,
    "vision": 800,
@@ -221356,6 +223060,9 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -221390,6 +223097,9 @@
     ],
     "move": [
      "monster/newmonsters/witch/bat/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/bat/action/attack.act"
     ]
    },
    "action_anis": {
@@ -221398,9 +223108,16 @@
     ],
     "move": [
      "monster/newmonsters/witch/bat/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/witch/bat/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/witch/bat/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bat",
    "think_term": 200,
    "cooltime": [
@@ -221460,6 +223177,9 @@
     ],
     "die": [
      "animation/last.ani"
+    ],
+    "attack": [
+     "animation/attack_d.ani"
     ]
    },
    "attacks": [
@@ -221534,6 +223254,10 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/action/last.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/action/attack_d.act"
     ]
    },
    "action_anis": {
@@ -221560,9 +223284,18 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/animation/last.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/animation/attack_d.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/witch/agarum/action/attack_d.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "agarum",
    "think_term": 500,
    "vision": 1000,
@@ -221826,6 +223559,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack_d.ani"
     ]
    },
    "attacks": [
@@ -221897,6 +223633,10 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/agarum/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/action/attack_d.act"
     ]
    },
    "action_anis": {
@@ -221920,9 +223660,18 @@
     ],
     "overturn": [
      "monster/newmonsters/witch/agarum/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/animation/attack_d.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/witch/agarum/action/attack_d.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "agarum2",
    "think_term": 500,
    "vision": 1000,
@@ -226340,6 +228089,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/super.ani"
     ]
    },
    "attacks": [
@@ -226447,6 +228201,12 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/super_attack.act",
+     ""
     ]
    },
    "action_anis": {
@@ -226470,9 +228230,22 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/super.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/super_attack.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "skewer",
    "think_term": 500,
    "vision": 1900,
@@ -226537,6 +228310,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -226625,6 +228402,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/pincers/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/pincers/action/attack.act",
+     "",
+     "monster/newmonsters/dimensiongate/blackearth/pincers/action/attack.act"
     ]
    },
    "action_anis": {
@@ -226648,9 +228430,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/pincers/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/pincers/animation/attack.ani",
+     "",
+     "monster/newmonsters/dimensiongate/blackearth/pincers/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/pincers/action/attack.act",
+    "",
+    "monster/newmonsters/dimensiongate/blackearth/pincers/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "pincers",
    "think_term": 500,
    "vision": 1900,
@@ -226713,6 +228506,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -226799,6 +228597,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act"
     ]
    },
    "action_anis": {
@@ -226822,9 +228625,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/skewer/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/skewer/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/skewer/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "skewer_n",
    "think_term": 500,
    "vision": 900,
@@ -227015,6 +228829,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -227107,6 +228926,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act"
     ]
    },
    "action_anis": {
@@ -227130,9 +228954,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "sawtooth_n",
    "think_term": 500,
    "vision": 900,
@@ -227191,6 +229026,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack1.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -227277,6 +229117,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/scissors/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack1.act",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act"
     ]
    },
    "action_anis": {
@@ -227300,9 +229145,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/scissors/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/scissors/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/animation/attack1.ani",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack1.act",
+    "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "scissors_n",
    "think_term": 500,
    "vision": 900,
@@ -227551,6 +229407,9 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -227586,6 +229445,9 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/pluto/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/pluto/action/attack.act"
     ]
    },
    "action_anis": {
@@ -227594,9 +229456,16 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/pluto/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/pluto/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/pluto/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "pluto",
    "think_term": 500,
    "vision": 1600,
@@ -227652,6 +229521,9 @@
     ],
     "die": [
      "animation/last.ani"
+    ],
+    "attack": [
+     "animation/dash_attack.ani"
     ]
    },
    "attacks": [
@@ -227699,6 +229571,9 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/ixia/action/last.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/ixia/action/attack.act"
     ]
    },
    "action_anis": {
@@ -227719,9 +229594,16 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/ixia/animation/last.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/ixia/animation/dash_attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/ixia/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "ixia",
    "think_term": 500,
    "vision": 1000,
@@ -227769,6 +229651,10 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/attack2.ani",
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -227820,6 +229706,10 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/ogong/action/move.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/ogong/action/attack2.act",
+     "monster/newmonsters/towerofdespair/ogong/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -227828,9 +229718,18 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/ogong/animation/move.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/ogong/animation/attack2.ani",
+     "monster/newmonsters/towerofdespair/ogong/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/ogong/action/attack2.act",
+    "monster/newmonsters/towerofdespair/ogong/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "ogong",
    "think_term": 500,
    "vision": 1000,
@@ -228224,6 +230123,11 @@
     ],
     "move": [
      "animation/proc.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani"
     ]
    },
    "attacks": [
@@ -228310,6 +230214,11 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/soldo/action/dash.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soldo/action/attack1.act",
+     "monster/newmonsters/towerofdespair/soldo/action/attack2.act",
+     "monster/newmonsters/towerofdespair/soldo/action/attack3.act"
     ]
    },
    "action_anis": {
@@ -228318,9 +230227,20 @@
     ],
     "move": [
      "monster/newmonsters/towerofdespair/soldo/animation/proc.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soldo/animation/attack1.ani",
+     "monster/newmonsters/towerofdespair/soldo/animation/attack2.ani",
+     "monster/newmonsters/towerofdespair/soldo/animation/attack3.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/soldo/action/attack1.act",
+    "monster/newmonsters/towerofdespair/soldo/action/attack2.act",
+    "monster/newmonsters/towerofdespair/soldo/action/attack3.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "soldo_sub1",
    "think_term": 200,
    "vision": 2000,
@@ -228368,6 +230288,11 @@
     ],
     "die": [
      "animation/stay.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani"
     ]
    },
    "attacks": [
@@ -228457,6 +230382,11 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/soldo/action/die2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soldo/action/attack1.act",
+     "monster/newmonsters/towerofdespair/soldo/action/attack2.act",
+     "monster/newmonsters/towerofdespair/soldo/action/attack3.act"
     ]
    },
    "action_anis": {
@@ -228468,9 +230398,20 @@
     ],
     "last": [
      "monster/newmonsters/towerofdespair/soldo/animation/stay.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/towerofdespair/soldo/animation/attack1.ani",
+     "monster/newmonsters/towerofdespair/soldo/animation/attack2.ani",
+     "monster/newmonsters/towerofdespair/soldo/animation/attack3.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/towerofdespair/soldo/action/attack1.act",
+    "monster/newmonsters/towerofdespair/soldo/action/attack2.act",
+    "monster/newmonsters/towerofdespair/soldo/action/attack3.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "soldo_sub2",
    "think_term": 200,
    "vision": 2000,
@@ -274473,6 +276414,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani",
+     "animation/attack1.ani",
+     "animation/attack1.ani",
+     "animation/attack1.ani"
     ]
    },
    "attacks": [
@@ -274607,6 +276555,13 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act"
     ]
    },
    "action_anis": {
@@ -274630,9 +276585,24 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack1.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack1.ani",
+     "monster/newmonsters/dimensiongate/blackearth/sawtooth/animation/attack1.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act",
+    "monster/newmonsters/dimensiongate/blackearth/sawtooth/action/attack1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "sawtooth",
    "think_term": 500,
    "vision": 1900,
@@ -274699,6 +276669,10 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -274787,6 +276761,11 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/scissors/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+     ""
     ]
    },
    "action_anis": {
@@ -274810,9 +276789,20 @@
     ],
     "overturn": [
      "monster/newmonsters/dimensiongate/blackearth/scissors/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/dimensiongate/blackearth/scissors/animation/attack.ani",
+     "monster/newmonsters/dimensiongate/blackearth/scissors/animation/attack.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+    "monster/newmonsters/dimensiongate/blackearth/scissors/action/attack.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "scissors",
    "think_term": 500,
    "vision": 1900,
@@ -284383,6 +286373,17 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/icewave.ani",
+     "animation/icewave.ani",
+     "animation/icewave.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani",
+     "animation/stay2.ani"
     ]
    },
    "attacks": [
@@ -284596,6 +286597,17 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/ricu/action/damage2.act"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/ricu/action/attack1.act",
+     "monster/newmonsters/golem/ricu/action/attack2.act",
+     "monster/newmonsters/golem/ricu/action/icewave1.act",
+     "monster/newmonsters/golem/ricu/action/icewave2.act",
+     "monster/newmonsters/golem/ricu/action/icewave3.act",
+     "monster/newmonsters/golem/ricu/action/command1.act",
+     "monster/newmonsters/golem/ricu/action/command2.act",
+     "monster/newmonsters/golem/ricu/action/command3.act",
+     "monster/newmonsters/golem/ricu/action/summon.act"
     ]
    },
    "action_anis": {
@@ -284610,9 +286622,32 @@
     ],
     "damage2": [
      "monster/newmonsters/golem/ricu/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/golem/ricu/animation/attack1.ani",
+     "monster/newmonsters/golem/ricu/animation/attack2.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/icewave.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani",
+     "monster/newmonsters/golem/ricu/animation/stay2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/golem/ricu/action/attack1.act",
+    "monster/newmonsters/golem/ricu/action/attack2.act",
+    "monster/newmonsters/golem/ricu/action/icewave1.act",
+    "monster/newmonsters/golem/ricu/action/icewave2.act",
+    "monster/newmonsters/golem/ricu/action/icewave3.act",
+    "monster/newmonsters/golem/ricu/action/command1.act",
+    "monster/newmonsters/golem/ricu/action/command2.act",
+    "monster/newmonsters/golem/ricu/action/command3.act",
+    "monster/newmonsters/golem/ricu/action/summon.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "ricu_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -285058,6 +287093,13 @@
     ],
     "die": [
      "animation/gameover.ani"
+    ],
+    "attack": [
+     "animation/combo1.ani",
+     "animation/combo2.ani",
+     "animation/combo3.ani",
+     "animation/overthestar_up.ani",
+     "animation/overthestar_shoot.ani"
     ]
    },
    "attacks": [
@@ -285274,6 +287316,17 @@
     ],
     "last": [
      "monster/newmonsters/bwanga/action/gameover.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/combo1.act",
+     "monster/newmonsters/bwanga/action/combo2.act",
+     "monster/newmonsters/bwanga/action/combo3.act",
+     "",
+     "",
+     "monster/newmonsters/bwanga/action/overthestar_up.act",
+     "monster/newmonsters/bwanga/action/overthestar_shoot.act"
     ]
    },
    "action_anis": {
@@ -285300,9 +287353,32 @@
     ],
     "last": [
      "monster/newmonsters/bwanga/animation/gameover.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/combo1.ani",
+     "monster/newmonsters/bwanga/animation/combo2.ani",
+     "monster/newmonsters/bwanga/animation/combo3.ani",
+     "",
+     "",
+     "monster/newmonsters/bwanga/animation/overthestar_up.ani",
+     "monster/newmonsters/bwanga/animation/overthestar_shoot.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/combo1.act",
+    "monster/newmonsters/bwanga/action/combo2.act",
+    "monster/newmonsters/bwanga/action/combo3.act",
+    "",
+    "",
+    "monster/newmonsters/bwanga/action/overthestar_up.act",
+    "monster/newmonsters/bwanga/action/overthestar_shoot.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "bwanga_global_bosstower",
    "think_term": 200,
    "cooltime": [
@@ -285642,6 +287718,12 @@
     ],
     "damage2": [
      "animation/stay_rosi.ani"
+    ],
+    "attack": [
+     "animation/attack2_rosi.ani",
+     "animation/attack_rosi.ani",
+     "animation/attack_rosi.ani",
+     "animation/attack_rosi.ani"
     ]
    },
    "attacks": [
@@ -285747,6 +287829,12 @@
     ],
     "damage2": [
      "monster/newmonsters/queen_rosi/action/damage1.act"
+    ],
+    "attack": [
+     "monster/newmonsters/queen_rosi/action/attack1.act",
+     "monster/newmonsters/queen_rosi/action/attack2.act",
+     "monster/newmonsters/queen_rosi/action/command1.act",
+     "monster/newmonsters/queen_rosi/action/command2.act"
     ]
    },
    "action_anis": {
@@ -285761,9 +287849,22 @@
     ],
     "damage2": [
      "monster/newmonsters/queen_rosi/animation/stay_rosi.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/queen_rosi/animation/attack2_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani",
+     "monster/newmonsters/queen_rosi/animation/attack_rosi.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/queen_rosi/action/attack1.act",
+    "monster/newmonsters/queen_rosi/action/attack2.act",
+    "monster/newmonsters/queen_rosi/action/command1.act",
+    "monster/newmonsters/queen_rosi/action/command2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "queen_rosi_global_bosstower",
    "think_term": 500,
    "vision": 11000,
@@ -289132,6 +291233,13 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/shoot_little1.ani",
+     "animation/changeposition.ani",
+     "animation/shoot_big.ani",
+     "animation/shoot_big2.ani",
+     "animation/stomping.ani"
     ]
    },
    "attacks": [
@@ -289299,6 +291407,15 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt9600/action/lastaction.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/gt9600/action/shoot_little1.act",
+     "",
+     "",
+     "monster/newmonsters/heaven/gt9600/action/changeposition.act",
+     "monster/newmonsters/heaven/gt9600/action/shoot_big.act",
+     "monster/newmonsters/heaven/gt9600/action/shoot_big2.act",
+     "monster/newmonsters/heaven/gt9600/action/stomping.act"
     ]
    },
    "action_anis": {
@@ -289316,9 +291433,28 @@
     ],
     "last": [
      "monster/newmonsters/heaven/gt9600/animation/lastaction.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/gt9600/animation/shoot_little1.ani",
+     "",
+     "",
+     "monster/newmonsters/heaven/gt9600/animation/changeposition.ani",
+     "monster/newmonsters/heaven/gt9600/animation/shoot_big.ani",
+     "monster/newmonsters/heaven/gt9600/animation/shoot_big2.ani",
+     "monster/newmonsters/heaven/gt9600/animation/stomping.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/gt9600/action/shoot_little1.act",
+    "",
+    "",
+    "monster/newmonsters/heaven/gt9600/action/changeposition.act",
+    "monster/newmonsters/heaven/gt9600/action/shoot_big.act",
+    "monster/newmonsters/heaven/gt9600/action/shoot_big2.act",
+    "monster/newmonsters/heaven/gt9600/action/stomping.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gt9600_global_bosstower",
    "think_term": 200,
    "vision": 1900,
@@ -289387,6 +291523,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/laser.ani",
+     "animation/punch.ani",
+     "animation/hold.ani",
+     "animation/punch.ani",
+     "animation/punch.ani"
     ]
    },
    "attacks": [
@@ -289509,6 +291652,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/warjack/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/warjack/action/laser.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act",
+     "monster/newmonsters/cartel/warjack/action/hold.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act",
+     "monster/newmonsters/cartel/warjack/action/punch.act"
     ]
    },
    "action_anis": {
@@ -289532,9 +291682,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/warjack/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/cartel/warjack/animation/laser.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani",
+     "monster/newmonsters/cartel/warjack/animation/hold.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani",
+     "monster/newmonsters/cartel/warjack/animation/punch.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/cartel/warjack/action/laser.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act",
+    "monster/newmonsters/cartel/warjack/action/hold.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act",
+    "monster/newmonsters/cartel/warjack/action/punch.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "warjack_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -289601,6 +291766,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/approach_attack.ani"
     ]
    },
    "attacks": [
@@ -289731,6 +291899,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/peltshu/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/peltshu/action/approach_attack.act"
     ]
    },
    "action_anis": {
@@ -289754,9 +291929,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/peltshu/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/peltshu/animation/approach_attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "monster/newmonsters/cartel/peltshu/action/approach_attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "peltshu_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -289832,6 +292022,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/approach_attack.ani"
     ]
    },
    "attacks": [
@@ -289962,6 +292155,13 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/silkhat/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/silkhat/action/approach_attack.act"
     ]
    },
    "action_anis": {
@@ -289985,9 +292185,24 @@
     ],
     "overturn": [
      "monster/newmonsters/cartel/silkhat/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "monster/newmonsters/cartel/silkhat/animation/approach_attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "monster/newmonsters/cartel/silkhat/action/approach_attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "silkhat_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -290464,6 +292679,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -290513,6 +292731,9 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
     ]
    },
    "action_anis": {
@@ -290527,9 +292748,16 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mechanicgiselle_global_bosstower",
    "think_term": 500,
    "vision": 11900,
@@ -290615,6 +292843,15 @@
     ],
     "die": [
      "animation/lastaction.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/grap.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani",
+     "animation/attack4.ani",
+     "animation/attack1.ani",
+     "animation/grap.ani"
     ]
    },
    "attacks": [
@@ -290804,6 +293041,16 @@
     ],
     "last": [
      "monster/newmonsters/bloodbutterfly/mosqueen/action/lastaction.act"
+    ],
+    "attack": [
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/grap.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack2.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack3.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack4.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/attack1.act",
+     "monster/newmonsters/bloodbutterfly/mosqueen/action/grap2.act",
+     ""
     ]
    },
    "action_anis": {
@@ -290827,9 +293074,30 @@
     ],
     "last": [
      "monster/newmonsters/bloodbutterfly/mosqueen/animation/lastaction.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/grap.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack2.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack3.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack4.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/attack1.ani",
+     "monster/newmonsters/bloodbutterfly/mosqueen/animation/grap.ani",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/grap.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack2.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack3.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack4.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/attack1.act",
+    "monster/newmonsters/bloodbutterfly/mosqueen/action/grap2.act",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mosqueen_global_bosstower",
    "think_term": 500,
    "vision": 1800,
@@ -290900,6 +293168,9 @@
     ],
     "die": [
      "animation/last.ani"
+    ],
+    "attack": [
+     "animation/attack_d.ani"
     ]
    },
    "attacks": [
@@ -290974,6 +293245,10 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/action/last.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/action/attack_d.act"
     ]
    },
    "action_anis": {
@@ -291000,9 +293275,18 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/animation/last.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/animation/attack_d.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/witch/agarum/action/attack_d.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "agarum_global_bosstower",
    "think_term": 500,
    "vision": 11000,
@@ -291079,6 +293363,11 @@
     ],
     "jump": [
      "animation/jump.ani"
+    ],
+    "attack": [
+     "animation/screwattack.ani",
+     "animation/screwattack.ani",
+     "animation/superscrewattack2_ready.ani"
     ]
    },
    "attacks": [
@@ -291372,6 +293661,21 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/action/jump.act"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "",
+     "monster/act8/blackscalemoussambani/action/standup.act",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -291398,9 +293702,40 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/animation/jump.ani"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "",
+     "monster/act8/blackscalemoussambani/animation/superscrewattack2_ready.ani",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "",
+    "monster/act8/blackscalemoussambani/action/standup.act",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "blackscalemoussambani_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -293030,6 +295365,9 @@
     ],
     "die": [
      "animation/last.ani"
+    ],
+    "attack": [
+     "animation/attack_d.ani"
     ]
    },
    "attacks": [
@@ -293104,6 +295442,10 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/action/last.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/action/attack_d.act"
     ]
    },
    "action_anis": {
@@ -293130,9 +295472,18 @@
     ],
     "last": [
      "monster/newmonsters/witch/agarum/animation/last.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/witch/agarum/animation/attack_d.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/witch/agarum/action/attack_d.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "agarum_hero_global_bosstower",
    "think_term": 500,
    "vision": 11000,
@@ -293197,6 +295548,9 @@
     ],
     "die": [
      "animation/die.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -293246,6 +295600,9 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/die.act"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
     ]
    },
    "action_anis": {
@@ -293260,9 +295617,16 @@
     ],
     "last": [
      "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/die.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle/action/sawattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "mechanicgiselle_hero_global_bosstower",
    "think_term": 500,
    "vision": 11900,
@@ -293350,6 +295714,11 @@
     ],
     "jump": [
      "animation/jump.ani"
+    ],
+    "attack": [
+     "animation/screwattack.ani",
+     "animation/screwattack.ani",
+     "animation/superscrewattack2_ready.ani"
     ]
    },
    "attacks": [
@@ -293643,6 +296012,21 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/action/jump.act"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "monster/act8/blackscalemoussambani/action/screwattack.act",
+     "",
+     "monster/act8/blackscalemoussambani/action/standup.act",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -293669,9 +296053,40 @@
     ],
     "jump": [
      "monster/act8/blackscalemoussambani/animation/jump.ani"
+    ],
+    "attack": [
+     "",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "monster/act8/blackscalemoussambani/animation/screwattack.ani",
+     "",
+     "monster/act8/blackscalemoussambani/animation/superscrewattack2_ready.ani",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "monster/act8/blackscalemoussambani/action/screwattack.act",
+    "",
+    "monster/act8/blackscalemoussambani/action/standup.act",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "blackscalemoussambani_hero_global_bosstower",
    "think_term": 200,
    "vision": 11000,
@@ -295994,6 +298409,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/bite2.ani"
     ]
    },
    "attacks": [
@@ -296071,6 +298489,10 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv1.act"
     ]
    },
    "action_anis": {
@@ -296094,9 +298516,18 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/animation/bite2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv1.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "knifetooth_lv1",
    "think_term": 200,
    "vision": 600,
@@ -298773,6 +301204,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -298818,6 +301252,9 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/enemy/goblin_fanatic/action/overturn.act"
+    ],
+    "attack": [
+     "monster/newmonsters/advanceatlar/enemy/goblin_fanatic/action/attack.act"
     ]
    },
    "action_anis": {
@@ -298838,9 +301275,16 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/enemy/goblin_fanatic/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/newmonsters/advanceatlar/enemy/goblin_fanatic/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/newmonsters/advanceatlar/enemy/goblin_fanatic/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "goblin_fanatic",
    "think_term": 500,
    "vision": 500,
@@ -301569,6 +304013,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/bite2.ani"
     ]
    },
    "attacks": [
@@ -301646,6 +304093,10 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv2.act"
     ]
    },
    "action_anis": {
@@ -301669,9 +304120,18 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/animation/bite2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv2.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "knifetooth_lv2",
    "think_term": 200,
    "vision": 600,
@@ -301727,6 +304187,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/bite2.ani"
     ]
    },
    "attacks": [
@@ -301804,6 +304267,10 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv3.act"
     ]
    },
    "action_anis": {
@@ -301827,9 +304294,18 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/animation/bite2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv3.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "knifetooth_lv3",
    "think_term": 200,
    "vision": 600,
@@ -301885,6 +304361,9 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/bite2.ani"
     ]
    },
    "attacks": [
@@ -301962,6 +304441,10 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/action/overturn.act"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv4.act"
     ]
    },
    "action_anis": {
@@ -301985,9 +304468,18 @@
     ],
     "overturn": [
      "monster/newmonsters/advanceatlar/friend/knifetooth/animation/overturn.ani"
+    ],
+    "attack": [
+     "",
+     "monster/newmonsters/advanceatlar/friend/knifetooth/animation/bite2.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/newmonsters/advanceatlar/friend/knifetooth/action/bite2_lv4.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "knifetooth_lv4",
    "think_term": 200,
    "vision": 600,
@@ -305281,6 +307773,9 @@
     ],
     "die": [
      "animation/last_1.ani"
+    ],
+    "attack": [
+     "animation/jumpattack.ani"
     ]
    },
    "attacks": [
@@ -305473,6 +307968,16 @@
     ],
     "last": [
      "monster/equipment/gun_congcong/action/last.act"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "monster/equipment/gun_congcong/action/jumpattack.act"
     ]
    },
    "action_anis": {
@@ -305499,9 +308004,30 @@
     ],
     "last": [
      "monster/equipment/gun_congcong/animation/last_1.ani"
+    ],
+    "attack": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "monster/equipment/gun_congcong/animation/jumpattack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "monster/equipment/gun_congcong/action/jumpattack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "gun_congcong",
    "think_term": 200,
    "vision": 2000,
@@ -305676,6 +308202,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/kick.ani",
+     "animation/throw.ani",
+     "animation/throw.ani"
     ]
    },
    "attacks": [
@@ -305775,6 +308306,11 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/kick.act",
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/a_rara.act",
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/a_rara.act"
     ]
    },
    "action_anis": {
@@ -305798,9 +308334,20 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/animation/kick.ani",
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/animation/throw.ani",
+     "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/animation/throw.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/kick.act",
+    "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/a_rara.act",
+    "monster/poongjintrainingroom/newmonsters/silverspoon/silverman/action/a_rara.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "runsilverman",
    "think_term": 300,
    "vision": 350,
@@ -305860,6 +308407,11 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/attack1.ani",
+     "animation/attack2.ani",
+     "animation/attack3.ani"
     ]
    },
    "attacks": [
@@ -305954,6 +308506,11 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/overturn.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack1.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack2.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack3.act"
     ]
    },
    "action_anis": {
@@ -305977,9 +308534,20 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/animation/attack1.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/animation/attack2.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/animation/attack3.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack1.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack2.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/rockslotor/action/attack3.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "rockslotor",
    "think_term": 200,
    "vision": 2000,
@@ -306470,6 +309038,11 @@
     ],
     "damage2": [
      "animation/damage2.ani"
+    ],
+    "attack": [
+     "animation/attack.ani",
+     "animation/dash.ani",
+     "animation/dash.ani"
     ]
    },
    "attacks": [
@@ -306554,6 +309127,11 @@
     ],
     "damage2": [
      "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/damage2.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/sawattack.act",
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act",
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act"
     ]
    },
    "action_anis": {
@@ -306565,9 +309143,20 @@
     ],
     "damage2": [
      "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/animation/damage2.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/animation/attack.ani",
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/animation/dash.ani",
+     "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/animation/dash.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/sawattack.act",
+    "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act",
+    "monster/poongjintrainingroom/newmonsters/timegate/formacartel/7shards_giselle/action/dash.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "7shards_giselle",
    "think_term": 200,
    "vision": 1900,
@@ -306887,6 +309476,9 @@
     ],
     "move": [
      "animation/move.ani"
+    ],
+    "attack": [
+     "animation/ignis_skill2_body.ani"
     ]
    },
    "attacks": [
@@ -306926,6 +309518,9 @@
     ],
     "move": [
      "monster/poongjintrainingroom/newmonsters/timegate/consciousness/ignis/action/move.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/timegate/consciousness/ignis/action/fire.act"
     ]
    },
    "action_anis": {
@@ -306934,9 +309529,16 @@
     ],
     "move": [
      "monster/poongjintrainingroom/newmonsters/timegate/consciousness/ignis/animation/move.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/timegate/consciousness/ignis/animation/ignis_skill2_body.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/timegate/consciousness/ignis/action/fire.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "ignis",
    "think_term": 200,
    "vision": 1000,
@@ -307071,6 +309673,11 @@
     ],
     "jump": [
      "animation/jump.ani"
+    ],
+    "attack": [
+     "animation/screwattack.ani",
+     "animation/screwattack.ani",
+     "animation/superscrewattack2_ready.ani"
     ]
    },
    "attacks": [
@@ -307364,6 +309971,21 @@
     ],
     "jump": [
      "monster/poongjintrainingroom/act8/blackscalemoussambani/action/jump.act"
+    ],
+    "attack": [
+     "",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/action/screwattack.act",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/action/screwattack.act",
+     "",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/action/standup.act",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
    "action_anis": {
@@ -307390,9 +310012,40 @@
     ],
     "jump": [
      "monster/poongjintrainingroom/act8/blackscalemoussambani/animation/jump.ani"
+    ],
+    "attack": [
+     "",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/animation/screwattack.ani",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/animation/screwattack.ani",
+     "",
+     "monster/poongjintrainingroom/act8/blackscalemoussambani/animation/superscrewattack2_ready.ani",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "",
+    "monster/poongjintrainingroom/act8/blackscalemoussambani/action/screwattack.act",
+    "monster/poongjintrainingroom/act8/blackscalemoussambani/action/screwattack.act",
+    "",
+    "monster/poongjintrainingroom/act8/blackscalemoussambani/action/standup.act",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "blackscalemoussambani",
    "think_term": 200,
    "vision": 1000,
@@ -307692,6 +310345,13 @@
     ],
     "overturn": [
      "animation/overturn.ani"
+    ],
+    "attack": [
+     "animation/hit.ani",
+     "animation/punch.ani",
+     "animation/punch1.ani",
+     "animation/powerpunch.ani",
+     "animation/teleport.ani"
     ]
    },
    "attacks": [
@@ -307830,6 +310490,13 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/overturn.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/hit.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/punch.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/punch1.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/powerpunch.act",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/teleport.act"
     ]
    },
    "action_anis": {
@@ -307850,9 +310517,24 @@
     ],
     "overturn": [
      "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/overturn.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/hit.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/punch.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/punch1.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/powerpunch.ani",
+     "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/animation/teleport.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/hit.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/punch.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/punch1.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/powerpunch.act",
+    "monster/poongjintrainingroom/newmonsters/powerstation/fuhrman/action/teleport.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "fuhrman",
    "think_term": 200,
    "vision": 2000,
@@ -308308,6 +310990,9 @@
     ],
     "die": [
      "animation/destroy.ani"
+    ],
+    "attack": [
+     "animation/attack.ani"
     ]
    },
    "attacks": [
@@ -308364,6 +311049,9 @@
     ],
     "last": [
      "monster/poongjintrainingroom/newmonsters/powerstation/rockslime/action/destroy.act"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslime/action/attack.act"
     ]
    },
    "action_anis": {
@@ -308390,9 +311078,16 @@
     ],
     "last": [
      "monster/poongjintrainingroom/newmonsters/powerstation/rockslime/animation/destroy.ani"
+    ],
+    "attack": [
+     "monster/poongjintrainingroom/newmonsters/powerstation/rockslime/animation/attack.ani"
     ]
    },
-   "motion_source": ".mob [* action] -> .act [BASE ANI]",
+   "motion_source": ".mob [* action] -> .act [BASE ANI]; same-stem attack action fallback",
+   "attack_actions": [
+    "monster/poongjintrainingroom/newmonsters/powerstation/rockslime/action/attack.act"
+   ],
+   "attack_action_source": "E-INFER: [attack info] stem -> sibling action/<stem>.act; missing slots remain empty",
    "name": "rockslime",
    "think_term": 200,
    "vision": 2000,

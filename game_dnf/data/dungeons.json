@@ -287,6 +287,20 @@
     "sha256": "dcf7202c45f573b15c34dcd576872ffca34370ed7ec049464543229b4b562a03"
    }
   },
+  "ricuceiling": {
+   "name": "利库天井",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/ricuceiling_v1/map_export.json",
+   "min_level": 43,
+   "monster_level": 46,
+   "source": {
+    "path": "dungeon/act5/ricuceiling.dgn",
+    "sha256": "e4ca542dfdbb447d5b3382fcb506e47ba20348b455bb14d8fb816cd62247f01a"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

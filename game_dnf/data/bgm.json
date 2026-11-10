@@ -140,6 +140,10 @@
    "normal": "spider",
    "boss": "spider_boss"
   },
+  "ricuceiling": {
+   "normal": "riku_cave",
+   "boss": "riku_boss"
+  },
   "secondbackbone": {
    "normal": "2nd_spine",
    "boss": "2nd_spine_boss"
@@ -456,6 +460,18 @@
    "source": "music/spider_boss.ogg",
    "sha256": "7dbf2af5d22bbba86d30372a1929c1525cef3f7293dc4c30b2880488160bdd97",
    "bytes": 1906811
+  },
+  "riku_cave": {
+   "file": "audio/bgm/riku_cave.ogg",
+   "source": "music/riku_cave.ogg",
+   "sha256": "b3cc7a9f430985254caa7bd104d583b32ab9a4a79caf9511d2c88de9db780ea4",
+   "bytes": 1576814
+  },
+  "riku_boss": {
+   "file": "audio/bgm/riku_boss.ogg",
+   "source": "music/riku_boss.ogg",
+   "sha256": "63ee53c1e701a1c9d610ba385f4863c0b51395a125dece272e52da4b7d933514",
+   "bytes": 1091097
   },
   "2nd_spine": {
    "file": "audio/bgm/2nd_spine.ogg",

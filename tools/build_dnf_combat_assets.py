@@ -1105,7 +1105,7 @@ def catalog_monster_specs() -> dict:
             # 攻击槽多值 = 多套招式（BOSS）。每招用 ANI 文件名（小写）当 clip 名，
             # 与运行时 enemy_ani 选的 stem 一致；第一招再额外挂 "attack" 兜底。
             for index, value in enumerate(values):
-                full = (mob['folder'] + '/' + str(value)).lower()
+                full = resolve_relative(mob['folder'], str(value))
                 if pose != 'attack':
                     if index == 0:
                         motions[pose] = full

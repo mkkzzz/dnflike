@@ -141,9 +141,14 @@
   "bantu_emre",
   "dollmaster_golemmaster",
   "hunter_rollinghunter",
+  "bantu_tower_bantuelite",
   "newmonsters_haze_tretri_tretri",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
   "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
+  "newmonsters_goblin_throwgoblin_goblinthrower",
+  "newmonsters_golem_stormgolem_stormgolem",
+  "newmonsters_bantu_wolfpatriarch_turmanbash",
+  "newmonsters_golem_icewavegolem_icewavegolem",
   "newmonsters_haze_poena_poena",
   "newmonsters_haze_hass_hass",
   "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
@@ -156,12 +161,15 @@
   "newmonsters_haze_chainbiker2_chainbiker2",
   "newmonsters_haze_enjosipho_enjosipho",
   "newmonsters_haze_enjosipho_enjosipho_quest",
+  "newmonsters_spider_slotorblind_slotorblind",
   "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
   "newmonsters_gbl_breeding_flare_worm_flare_worm",
   "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
   "dendroid_dendroid_breeding",
   "newmonsters_gbl_breeding_dendroid_disguise_dendroid_disguise",
   "newmonsters_gbl_breeding_woody_plant_woody_plant",
+  "newmonsters_golem_icegolem_icegolem",
+  "newmonsters_golem_ricu_ricu",
   "soceress_vinoshu_quest",
   "newmonsters_haze_death_squad_death_squad",
   "newmonsters_gbl_goddess_temple_astray_alsor_astray_alsor",
@@ -229,7 +237,7 @@
  "effects": 633,
  "digits": 71,
  "audio_keys": 316,
- "unresolved": 38,
+ "unresolved": 39,
  "particle_templates": 27,
  "unresolved_items": [
   {
@@ -439,6 +447,10 @@
    "kind": "audio",
    "key": "ASTROM_HIT_LIGHT",
    "note": "no original audio.xml entry"
+  },
+  {
+   "kind": "monster_no_clips",
+   "monster": "monster/bantu/tower_bantuelite.mob"
   }
  ]
 }

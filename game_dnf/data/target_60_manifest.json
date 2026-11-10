@@ -902,9 +902,9 @@
     "id": 42,
     "min_level": 43,
     "path": "dungeon/act5/ricuceiling.dgn",
-    "runtime_id": "",
+    "runtime_id": "ricuceiling",
     "sha256": "e4ca542dfdbb447d5b3382fcb506e47ba20348b455bb14d8fb816cd62247f01a",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 47,
@@ -5295,8 +5295,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_bantu_wolfpatriarch_turmanbash",
+    "state": "runtime"
    },
    {
     "id": 56009,
@@ -5631,24 +5631,24 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/goblin/throwgoblin/goblinthrower.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_goblin_throwgoblin_goblinthrower",
+    "state": "runtime"
    },
    {
     "id": 61703,
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/golem/icegolem/icegolem.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_golem_icegolem_icegolem",
+    "state": "runtime"
    },
    {
     "id": 56712,
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/golem/icewavegolem/icewavegolem.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_golem_icewavegolem_icewavegolem",
+    "state": "runtime"
    },
    {
     "id": 56711,
@@ -5663,8 +5663,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/golem/stormgolem/stormgolem.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_golem_stormgolem_stormgolem",
+    "state": "runtime"
    },
    {
     "id": 61152,
@@ -5919,8 +5919,8 @@
     "level_max": 50,
     "level_min": 30,
     "path": "monster/newmonsters/spider/slotorblind/slotorblind.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_spider_slotorblind_slotorblind",
+    "state": "runtime"
    },
    {
     "id": 61404,
@@ -7703,8 +7703,8 @@
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/tower_bantuelite.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_tower_bantuelite",
+    "state": "runtime"
    },
    {
     "id": 55009,
@@ -8519,8 +8519,8 @@
     "level_max": 49,
     "level_min": 44,
     "path": "monster/newmonsters/golem/ricu/ricu.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_golem_ricu_ricu",
+    "state": "runtime"
    },
    {
     "id": 62623,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 32,
+   "runtime": 33,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 164,
+   "runtime": 172,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

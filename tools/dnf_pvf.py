@@ -142,6 +142,32 @@ def resolve(base_file: str, relative: str) -> str:
     return '/'.join(parts).lower()
 
 
+def same_stem_attack_actions(lib, mob_path: str, attack_infos: list) -> list[str]:
+    """Match newmonster attack ATKs to sibling action/*.act files by stem.
+
+    The archive contains explicit [attack action] slots for only part of the
+    later monster data. When the MOB has base actions but no attack action slot,
+    an action with the same stem as each [attack info] entry is the bounded
+    source-backed fallback. Missing entries remain empty so slot indexes do not
+    shift.
+    """
+    folder = PurePosixPath(mob_path).parent.as_posix()
+    action_dirs = (folder + '/action', PurePosixPath(folder).parent.as_posix() + '/action')
+    result: list[str] = []
+    for value in attack_infos:
+        if not isinstance(value, str) or not value.lower().endswith('.atk'):
+            result.append('')
+            continue
+        act_path = ''
+        for action_dir in action_dirs:
+            candidate = (action_dir + '/' + PurePosixPath(value).stem + '.act').lower()
+            if lib.exists(candidate):
+                act_path = candidate
+                break
+        result.append(act_path)
+    return result if any(result) else []
+
+
 class Library:
     """Read-only access to the shared extraction library (pvf_config.sqlite)."""
 
@@ -201,4 +227,5 @@ def open_library(library: Path | None = None) -> Library:
 
 
 __all__ = ['ALIASES', 'ENUM_SLOTS', 'Library', 'canonical', 'find', 'first_values', 'key_of',
-           'open_library', 'parse_list', 'parse_script', 'resolve', 'sha256_file', 'closing', 'sqlite3']
+           'open_library', 'parse_list', 'parse_script', 'resolve', 'same_stem_attack_actions',
+           'sha256_file', 'closing', 'sqlite3']

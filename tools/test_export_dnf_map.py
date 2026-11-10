@@ -166,6 +166,29 @@ class LibraryExport(unittest.TestCase):
         ])
         self.assertEqual(len(export['images']), 46)
 
+    def test_ricu_ceiling_export_keeps_two_boss_cells_and_fixed_map_rows(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/ricuceiling_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'e4ca542dfdbb447d5b3382fcb506e47ba20348b455bb14d8fb816cd62247f01a')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [5, 4])
+        self.assertEqual(dungeon['start_map_raw'], [1, 3])
+        self.assertEqual(dungeon['boss_map_raw'], [2, 1, 3, 0])
+        specifications = [s for s in dungeon['raw'] if s['tag'] == '[map specification]']
+        self.assertEqual(len(specifications), 8)
+        self.assertEqual(len(dungeon['rooms']), 12)
+        self.assertEqual(len(dungeon['placements']), 15)
+        self.assertEqual(len(export['images']), 94)
+        self.assertEqual(dungeon['rooms']['map/ricuceiling/(2,1)ricuboss.map']['greed_pairs'], [[1, 1]])
+        self.assertEqual(dungeon['rooms']['map/ricuceiling/(3,0)ricuboss.map']['greed_pairs'], [[8, 8]])
+        for path in ('map/ricuceiling/(2,1)ricuboss.map', 'map/ricuceiling/(3,0)ricuboss.map'):
+            room = dungeon['rooms'][path]
+            role = next(span['values'][0][2] for span in room['raw'] if span['tag'] == '[type]')
+            boss_rows = [row for row in room['monsters'] if row['raw'][-1] == '[boss]']
+            self.assertEqual(role, '[boss]')
+            self.assertEqual(len(boss_rows), 1)
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

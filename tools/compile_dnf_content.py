@@ -21,13 +21,13 @@ import math
 from pathlib import Path, PurePosixPath
 import sys
 
-from dnf_pvf import Library, canonical, find, key_of, open_library, resolve
+from dnf_pvf import Library, canonical, find, key_of, open_library, resolve, same_stem_attack_actions
 from dnf_asset_store import ROOT
 from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 5
+COMPILER_VERSION = 6
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
 
 # These bindings come from native state handlers, outside the MOB field tree.
@@ -1331,6 +1331,21 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
             candidate = str(name).replace('\\', '/').lower()
             return candidate if lib.exists(candidate) else resolve(p, name)
 
+        base_action_fields = (
+            'waiting_actions', 'move_actions', 'sit_actions', 'damage_actions_1',
+            'damage_actions_2', 'down_actions', 'overturn_actions', 'last_actions',
+            'jump_actions', 'dash_actions',
+        )
+        has_new_action_layout = '/newmonsters/' in p or any(md.get(key) for key in base_action_fields)
+        if (not md.get('attack_actions') and not md.get('attack_motions')
+                and has_new_action_layout and md.get('attack_infos')):
+            inferred_actions = same_stem_attack_actions(lib, p, md['attack_infos'])
+            if inferred_actions:
+                md['attack_actions'] = inferred_actions
+                md['attack_action_source'] = (
+                    'E-INFER: [attack info] stem -> sibling action/<stem>.act; '
+                    'missing slots remain empty')
+                mob['evidence']['attack_actions'] = md['attack_action_source']
         for p2 in md.get('attack_infos') or []:
             if p2:add(located(p2), 'atk', p)
         for key, value in md.items():

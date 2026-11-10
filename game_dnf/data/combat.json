@@ -1325,6 +1325,46 @@
    "mob": "monster/toy/hiddend.mob",
    "bank": "toy_hiddend",
    "name": "hiddend"
+  },
+  "bantu_tower_bantuelite": {
+   "mob": "monster/bantu/tower_bantuelite.mob",
+   "bank": "bantu_tower_bantuelite",
+   "name": "tower_bantuelite"
+  },
+  "newmonsters_bantu_wolfpatriarch_turmanbash": {
+   "mob": "monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob",
+   "bank": "newmonsters_bantu_wolfpatriarch_turmanbash",
+   "name": "turmanbash"
+  },
+  "newmonsters_goblin_throwgoblin_goblinthrower": {
+   "mob": "monster/newmonsters/goblin/throwgoblin/goblinthrower.mob",
+   "bank": "newmonsters_goblin_throwgoblin_goblinthrower",
+   "name": "goblinthrower"
+  },
+  "newmonsters_golem_icegolem_icegolem": {
+   "mob": "monster/newmonsters/golem/icegolem/icegolem.mob",
+   "bank": "newmonsters_golem_icegolem_icegolem",
+   "name": "icegolem"
+  },
+  "newmonsters_golem_icewavegolem_icewavegolem": {
+   "mob": "monster/newmonsters/golem/icewavegolem/icewavegolem.mob",
+   "bank": "newmonsters_golem_icewavegolem_icewavegolem",
+   "name": "icewavegolem"
+  },
+  "newmonsters_golem_ricu_ricu": {
+   "mob": "monster/newmonsters/golem/ricu/ricu.mob",
+   "bank": "newmonsters_golem_ricu_ricu",
+   "name": "ricu"
+  },
+  "newmonsters_golem_stormgolem_stormgolem": {
+   "mob": "monster/newmonsters/golem/stormgolem/stormgolem.mob",
+   "bank": "newmonsters_golem_stormgolem_stormgolem",
+   "name": "stormgolem"
+  },
+  "newmonsters_spider_slotorblind_slotorblind": {
+   "mob": "monster/newmonsters/spider/slotorblind/slotorblind.mob",
+   "bank": "newmonsters_spider_slotorblind_slotorblind",
+   "name": "slotorblind"
   }
  },
  "boss_hp_lines": 3,

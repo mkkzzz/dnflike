@@ -15,6 +15,43 @@ from compile_dnf_content import (
     compile_native_attack_selection,
 )
 from dnf_asset_store import ROOT
+from dnf_pvf import same_stem_attack_actions
+
+
+class SameStemAttackActionTest(unittest.TestCase):
+    class Library:
+        def __init__(self, existing):
+            self.existing = set(existing)
+
+        def exists(self, path):
+            return path in self.existing
+
+    def test_missing_slots_remain_index_aligned(self):
+        mob = 'monster/newmonsters/golem/ricu/ricu.mob'
+        attacks = ['attackinfo/attack1.atk', 'attackinfo/attack2.atk', 'attackinfo/icewave1.atk']
+        library = self.Library({
+            'monster/newmonsters/golem/ricu/action/attack1.act',
+            'monster/newmonsters/golem/ricu/action/icewave1.act',
+        })
+        self.assertEqual(same_stem_attack_actions(library, mob, attacks), [
+            'monster/newmonsters/golem/ricu/action/attack1.act',
+            '',
+            'monster/newmonsters/golem/ricu/action/icewave1.act',
+        ])
+        self.assertEqual(same_stem_attack_actions(library, mob, ['missing.atk']), [])
+
+    def test_parent_action_directory_is_supported(self):
+        mob = 'monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob'
+        attacks = ['one1.atk', 'two2.atk', 'missing.atk']
+        library = self.Library({
+            'monster/newmonsters/bantu/wolfpatriarch/action/one1.act',
+            'monster/newmonsters/bantu/wolfpatriarch/action/two2.act',
+        })
+        self.assertEqual(same_stem_attack_actions(library, mob, attacks), [
+            'monster/newmonsters/bantu/wolfpatriarch/action/one1.act',
+            'monster/newmonsters/bantu/wolfpatriarch/action/two2.act',
+            '',
+        ])
 
 
 class NativeAttackEmissionTest(unittest.TestCase):

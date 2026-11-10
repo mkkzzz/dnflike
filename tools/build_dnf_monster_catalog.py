@@ -262,6 +262,27 @@ def main() -> int:
                 else:
                     missing_atk.append(atk_path)
                 entry['attacks'].append(info)
+            # Newmonsters sometimes omit [attack action] even though the
+            # sibling action/<atk-stem>.act exists. Keep slot indexes aligned.
+            inferred_actions = P.same_stem_attack_actions(
+                lib, path, [info['path'] for info in entry['attacks']])
+            if inferred_actions and not entry.get('actions', {}).get('attack'):
+                inferred_anis = [action_ani(lib, action) if action else '' for action in inferred_actions]
+                entry.setdefault('actions', {})['attack'] = inferred_actions
+                entry.setdefault('action_anis', {})['attack'] = inferred_anis
+                entry.setdefault('attack_actions', [])
+                entry['attack_actions'] = inferred_actions
+                entry['attack_action_source'] = (
+                    'E-INFER: [attack info] stem -> sibling action/<stem>.act; '
+                    'missing slots remain empty')
+                for action, ani in zip(inferred_actions, inferred_anis):
+                    if not action or not ani:
+                        continue
+                    relative = ani[len(folder) + 1:] if ani.startswith(folder + '/') else Path(ani).name
+                    entry.setdefault('motions', {}).setdefault('attack', []).append(relative)
+                entry['motion_source'] = (
+                    str(entry.get('motion_source', '')) + '; same-stem attack action fallback'
+                ).strip('; ')
             # 同名 mob 在不同目录下有多份（如 3 个 tauarmy.mob），key 必须带目录。
             entry['name'] = stem
             for key in ('think term', 'vision', 'keep distance with target'):
