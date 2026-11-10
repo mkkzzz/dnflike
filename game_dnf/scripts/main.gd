@@ -2822,8 +2822,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 						field["repeat_percent"] = move_def("hundredsword")["field_repeat_percent"]
 						cast["field"] = field
 				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
-					# CB2171 passes absolute Z 50 and the caster's integer ground point.
-					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
+					# CB2171 passes absolute Z 50 and the caster's rounded ground coordinates.
+					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
 					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
 					var shake: Array = hit["native_controller"]["shake"]
@@ -4069,17 +4069,6 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	if kind == "illusion_melee":
 		# 25218B4 copies the current body rate into the payload. A70624 applies it to the new ANI.
 		entity["timeline"] = native_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))
-	if kind == "draw_short_wave":
-		# A60D6B..A60E68 holds frame zero until the object has travelled
-		# the mastery distance. The original animation then runs normally.
-		var timeline: Array = obj["timeline"].duplicate(true)
-		var travel_ms := float(controller["distance"])*1000.0/float(entity["speed"])
-		var shift := travel_ms-float(timeline[0]["end_ms"])
-		timeline[0]["end_ms"] = travel_ms
-		for index in range(1,timeline.size()):
-			timeline[index]["start_ms"] = float(timeline[index]["start_ms"])+shift
-			timeline[index]["end_ms"] = float(timeline[index]["end_ms"])+shift
-		entity["timeline"] = timeline
 	if kind in ["bloodblast","illusion_wave"] and controller.has("reset_ms"):
 		var first := float(obj["segments"][0]["start"]) if kind == "bloodblast" else 0.0
 		entity["next_hit_reset"] = first+float(controller["reset_ms"])
@@ -4226,6 +4215,19 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
+		if kind == "draw_short_wave":
+			# A60D2F saves the first updated X. A60E68 seeks to frame one
+			# when the rounded distance reaches the source mastery limit.
+			var x := roundi(o["pos"].x)
+			var origin := int(o.get("wave_origin_x",0))
+			if origin == 0:
+				origin = x
+				o["wave_origin_x"] = origin
+			var tail_start := float(tl[0]["end_ms"])
+			if not o.has("wave_tail_at") and t < tail_start and absi(x-origin) >= int(controller["distance"]):
+				o["wave_tail_at"] = t
+			if o.has("wave_tail_at"):t = tail_start+t-float(o["wave_tail_at"])
+			o["wave_ani_clock"] = t
 		if kind == "illusion_melee" and not o.has("swing_played"):
 			# A70570/A705E0 set the melee object's entry cue, consumed at 7F9F22.
 			o["swing_played"] = true
@@ -4658,6 +4660,7 @@ func _native_float32(value: float) -> float:
 
 ## Render the same frame as collision while keeping the shared source atlas immutable.
 func object_view_clock(o: Dictionary) -> float:
+	if o.has("wave_ani_clock"):return float(o["wave_ani_clock"])
 	var clock := float(o["clock"])
 	if not o.has("timeline"):return clock
 	return _source_animation_clock(clock,o["timeline"],o["def"]["timeline"])
