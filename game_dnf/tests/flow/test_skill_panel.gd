@@ -81,6 +81,7 @@ func run(game, host) -> void:
 	panel._refresh_node(guard_skill["key"])
 	host.check(guard_icon.texture == panel._tex(guard_skill["icon"]) and guard_icon.modulate == Color.WHITE,
 		"reaching the original base level restores the color tree art")
+	await check_grabblastblood(game, host, panel)
 	game.session.profile["growtype"] = original_job
 	game.session.profile["level"] = original_level
 	panel.selected = original_selected
@@ -112,6 +113,32 @@ func run(game, host) -> void:
 	host.check(not is_instance_valid(preview), "closing the skill window releases the active demo")
 	game.show_overlay("numbers")
 	await host.ticks(3)
+
+func check_grabblastblood(game, host, panel) -> void:
+	game.session.profile["growtype"] = "berserker"
+	panel.selected = "upperslash"
+	panel.tree_scroll = 0
+	game.show_overlay("numbers")
+	await host.ticks(3)
+	var grab: Button = game.modal.find_child("skill_node_31", true, false)
+	var neighbor: Button = game.modal.find_child("skill_node_24", true, false)
+	var tree_scroll: VScrollBar = game.modal.find_child("skill_tree_scroll", true, false)
+	host.check(grab != null and neighbor != null, "the Berserker tree contains GrabBlastBlood and its neighboring skill")
+	if grab == null or neighbor == null:return
+	for button: Button in [grab, neighbor, grab]:
+		tree_scroll.value = button.position.y - tree_scroll.page / 2.0
+		host.click_control(button)
+		await host.ticks(3)
+		host.check(panel.selected == button.get_meta("skill_key"), "Berserker skill clicks complete across layout frames")
+	var body: RichTextLabel = game.modal.find_child("skill_detail_body", true, false)
+	var bar: VScrollBar = game.modal.find_child("skill_detail_scroll", true, false)
+	var title: Label = game.modal.find_child("skill_detail_title", true, false)
+	host.check(title.text == "嗜魂之手" and body.size.x == 174 and bar.visible and bar.max_value > bar.page,
+		"GrabBlastBlood Explain keeps its source wrap width and scrolls past the first page")
+	if not panel._preview_entry("skill/swordman/grabblastblood.skl").is_empty():
+		var preview := await playing_preview(game, host)
+		host.check(preview != null and preview.texture.atlas.resource_path.ends_with("/swordman_grabblastblood.png"),
+			"GrabBlastBlood still plays its optional original demo after repeated selection")
 
 func check_previews(game, host, panel, upper: Button, guard: Button) -> void:
 	var preview: TextureRect = await playing_preview(game, host)

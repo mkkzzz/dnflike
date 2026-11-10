@@ -782,6 +782,7 @@ func _detail(root: Control, preview: DetailPreview = null) -> void:
 	var body := RichTextLabel.new()
 	body.name = "skill_detail_body"
 	body.position = Vector2(9, 176)
+	body.size.x = _detail_wrap_width
 	var body_height_budget := 214
 	# The native viewport counts only complete lines.
 	body.size.y = body_height_budget - body_height_budget % _detail_line_height
@@ -791,30 +792,40 @@ func _detail(root: Control, preview: DetailPreview = null) -> void:
 	body.add_theme_color_override("default_color", Color("ddc58d"))
 	# Explain #4013 line height is the row advance. Godot adds separation to the font height.
 	body.add_theme_constant_override("line_separation", _detail_line_height - roundi(skin.font.get_height(body_font_size)))
-	body.text = description + "\n\n" + "\n".join(meta)
-	body.scroll_active = true
 	body.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.add_child(body)
-	var scroll := body.get_v_scroll_bar()
-	# Native arrows change the first visible row by one (0x11BCCC0).
-	scroll.custom_step = _detail_line_height
-	scroll.step = _detail_line_height
-	_style_detail_scroll(scroll)
-	# Measure the themed bar after attaching the control. Explain #4013 wraps at
-	# 179 + display marginwidth whether the scrollbar is shown or hidden.
-	var scroll_width := scroll.get_minimum_size().x
-	body.size.x = _detail_wrap_width + scroll_width
-	var gutter := StyleBoxEmpty.new()
-	body.add_theme_stylebox_override("normal", gutter)
-	var update_gutter := func() -> void:
-		if is_instance_valid(scroll):
-			gutter.content_margin_right = 0.0 if scroll.visible else scroll_width
-	scroll.visibility_changed.connect(update_gutter, CONNECT_DEFERRED)
-	update_gutter.call()
+	_attach_detail_scroll(panel, body)
+	body.text = description + "\n\n" + "\n".join(meta)
 	var state := _state(skill)
 	var tip := "可以学习" if bool(state["ok"]) else String(state["reason"])
 	_tip_label.text = tip
 	_tip_label.add_theme_color_override("font_color", Color("a7dd74") if bool(state["ok"]) else Color("c86a5a"))
+
+func _attach_detail_scroll(panel: Control, body: RichTextLabel) -> void:
+	# A zero-width internal bar keeps the text layout independent of visibility.
+	# The skinned bar beside the label shares its range and never changes the wrap width.
+	var internal := body.get_v_scroll_bar()
+	var empty := StyleBoxEmpty.new()
+	var icon := PlaceholderTexture2D.new()
+	icon.size = Vector2.ZERO
+	for state in ["scroll", "scroll_focus", "grabber", "grabber_highlight", "grabber_pressed"]:
+		internal.add_theme_stylebox_override(state, empty)
+	for state in ["increment", "decrement"]:
+		for suffix in ["", "_highlight", "_pressed"]:
+			internal.add_theme_icon_override(state + suffix, icon)
+	internal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	internal.step = _detail_line_height
+	var scroll := VScrollBar.new()
+	scroll.name = "skill_detail_scroll"
+	# Native arrows change the first visible row by one (0x11BCCC0).
+	scroll.custom_step = _detail_line_height
+	scroll.position = body.position + Vector2(body.size.x, 0)
+	scroll.size.y = body.size.y
+	panel.add_child(scroll)
+	_style_detail_scroll(scroll)
+	internal.share(scroll)
+	scroll.visible = internal.visible
+	internal.visibility_changed.connect(func(): scroll.visible = internal.visible)
 
 func _rank_button(parent: Control, title: String, at: Vector2, symbol: String, action: Callable) -> Button:
 	var hit := Button.new()

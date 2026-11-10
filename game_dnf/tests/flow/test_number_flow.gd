@@ -63,10 +63,10 @@ func run() -> void:
 	wheel_release.pressed = false
 	game.get_viewport().push_input(wheel_release, true)
 	await host.ticks(3)
-	var detail_scroll := body.get_v_scroll_bar()
+	var detail_scroll := body.get_parent().get_node("skill_detail_scroll") as VScrollBar
 	host.check(detail_scroll.value > 0 and fmod(detail_scroll.value, 14.0) == 0.0 and skill_panel.tree_scroll == initial_tree_scroll,
 		"mouse wheel scrolls the explanation by whole rows without moving the skill tree")
-	host.check(detail_scroll.size.x == 15 and detail_scroll.position.x == 174,
+	host.check(detail_scroll.size.x == 15 and detail_scroll.position.x == body.position.x + 174,
 		"the Explain scrollbar leaves the 174px text width intact")
 	var motion := InputEventMouseMotion.new()
 	for direction in [1, -1]:
@@ -105,11 +105,11 @@ func run() -> void:
 		"the short thumb clamps at the last full row and drags independently of the skill tree")
 	body.text = fits_source_width
 	await host.ticks(3)
-	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 1,
+	host.check(not detail_scroll.visible and body.get_line_count() == 1,
 		"a 173px description line fits the source width with no scrollbar")
 	body.text = (fits_source_width + "\n").repeat(19) + fits_source_width
 	await host.ticks(3)
-	host.check(body.get_v_scroll_bar().visible and body.get_line_count() == 20,
+	host.check(detail_scroll.visible and body.get_line_count() == 20,
 		"showing the scrollbar preserves the source description wrap width")
 	detail_scroll.value = 0
 	host.check(detail_track.thumb_rect() == Rect2(0, 0, 15, 78),
@@ -127,7 +127,7 @@ func run() -> void:
 		"long Explain drag keeps the grabbed offset and moves one row at the source boundary")
 	body.text = "汉".repeat(16)
 	await host.ticks(3)
-	host.check(not body.get_v_scroll_bar().visible and body.get_line_count() == 2,
+	host.check(not detail_scroll.visible and body.get_line_count() == 2,
 		"a 176px description line wraps at the source 174px boundary")
 	body.text = description
 	host.check(game.modal.find_child("skill_panel_slot_5",true,false)==null and game.hud.find_child("hud_skill_slot_11",true,false)!=null,"popup has no duplicate shortcut controls and live HUD exposes twelve drop targets")
