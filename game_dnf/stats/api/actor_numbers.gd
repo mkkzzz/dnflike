@@ -117,17 +117,16 @@ func apply_bloodlust_strength(rank: int, saw_bleed: bool) -> bool:
 	var row: Array = Numbers.Skills.sample(Numbers.record("grabblastblood"),rank)["level_row"]
 	if rank <= 0 or row.size() < 6:return false
 	# CB6FAD and CB6FD6 select duration, CB6FF6 reads the strength grant.
-	var added := effects.add_bloodlust_strength(int(row[3]),int(row[5 if saw_bleed else 2]))
+	var added := effects.add_timed_modifier("bloodlust_strength","嗜魂之手","strength",int(row[3]),int(row[5 if saw_bleed else 2]))
 	if added:recalculate()
 	return added
 
 func apply_blood_memory_resistance(source: Dictionary) -> void:
 	var amount := int(source["amount"])
 	if amount == 0:return
-	effects.add("blood_memory_resistance",{"name":"鲜血之忆","duration_ms":source["duration_ms"],
-		"modifiers":[{"stat":"bleeding_resistance","op":"add","value":-amount}]})
 	# 928B70 attaches first; 82A2D0 rebuilds the cached resistance on actor update.
-	_modifiers_pending = true
+	if effects.add_timed_modifier("blood_memory_resistance","鲜血之忆","bleeding_resistance",-amount,int(source["duration_ms"])):
+		_modifiers_pending = true
 
 ## Blind uses its own resistance index and scales both payloads before storage.
 ## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.

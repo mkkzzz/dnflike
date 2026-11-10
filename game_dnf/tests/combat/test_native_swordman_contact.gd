@@ -1708,11 +1708,20 @@ func check_hopsmash_bleed() -> void:
 			resistant_actor.step(0.0)
 			check(resistant_actor.values["bleeding_resistance"]==82,
 				"The next actor update applies the rank three resistance reduction")
-			resistant_actor.step(9999.0)
+			resistant_actor.step(5000.0)
+			resistant_actor.apply_blood_memory_resistance(wave["hit"]["blood_memory_resistance"])
+			check(resistant_actor.values["bleeding_resistance"]==82,"A second Blood Memory application leaves the current cache intact")
+			resistant_actor.step(0.0)
+			check(resistant_actor.values["bleeding_resistance"]==64,"Two active Blood Memory applications add their reductions")
+			resistant_actor.step(4999.0)
 			check(resistant_actor.apply_source_bleed(statuses[0],300,true),"A subsequent bleed uses the reduced resistance at 9999 ms")
 			resistant_actor.step(1.0)
+			check(resistant_actor.values["bleeding_resistance"]==82,"The first application expires independently at 10000 ms")
+			resistant_actor.step(4999.0)
+			check(resistant_actor.values["bleeding_resistance"]==82,"The second application keeps its own timer")
+			resistant_actor.step(1.0)
 			check(resistant_actor.values["bleeding_resistance"]==100 and not resistant_actor.apply_source_bleed(statuses[0],300,true),
-				"Blood Memory restores the target's resistance at 10000 ms")
+				"The last expiration restores the target's base resistance")
 		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
 		check(not bleed.is_empty() and statuses.size()==1,"The shockwave applies one native bleed entry")
 		if bleed.is_empty():continue

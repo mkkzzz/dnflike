@@ -17,14 +17,14 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 func remove(id: String) -> bool:
 	return active.erase(id)
 
-func add_bloodlust_strength(amount: int, duration_ms: int) -> bool:
+func add_timed_modifier(id: String, title: String, stat: String, amount: int, duration_ms: int) -> bool:
 	if duration_ms <= 0:return false
-	if not active.has("bloodlust_strength"):
-		add("bloodlust_strength",{"name":"嗜魂之手"})
-		active["bloodlust_strength"]["strength_grants"] = []
-	var effect: Dictionary = active["bloodlust_strength"]
-	var grants: Array = effect["strength_grants"]
-	grants.append({"amount":amount,"remaining_ms":float(duration_ms)})
+	if not active.has(id):
+		add(id,{"name":title})
+		active[id]["timed_modifiers"] = []
+	var effect: Dictionary = active[id]
+	var grants: Array = effect["timed_modifiers"]
+	grants.append({"stat":stat,"amount":amount,"remaining_ms":float(duration_ms)})
 	effect["remaining_ms"] = maxf(float(effect["remaining_ms"]),duration_ms)
 	effect["stacks"] = grants.size()
 	return true
@@ -107,9 +107,8 @@ func poison_visual() -> int:
 func modifiers() -> Array:
 	var result: Array = []
 	for effect: Dictionary in active.values():
-		if effect.has("strength_grants"):
-			for grant: Dictionary in effect["strength_grants"]:
-				result.append({"stat":"strength","op":"add","value":grant["amount"],"source":effect["definition"]["name"]})
+		for grant: Dictionary in effect.get("timed_modifiers",[]):
+			result.append({"stat":grant["stat"],"op":"add","value":grant["amount"],"source":effect["definition"]["name"]})
 		for mod: Dictionary in effect["definition"].get("modifiers",[]):
 			var entry := mod.duplicate(true)
 			entry["source"] = effect["definition"].get("name",effect["id"])
@@ -132,8 +131,8 @@ func step(ms: float, sleep_on_ground := true, active_bleed_pose := false) -> Arr
 	for id: String in active.keys():
 		if id == "sleep" and not sleep_on_ground:continue
 		var effect: Dictionary = active[id]
-		if effect.has("strength_grants"):
-			step_bloodlust_strength(effect,ms,events)
+		if effect.has("timed_modifiers"):
+			step_timed_modifiers(effect,ms,events)
 			continue
 		if effect.has("source_bleed"):step_source_bleed(effect,ms,events,active_bleed_pose)
 		if effect.has("source_shock"):
@@ -176,8 +175,8 @@ func step(ms: float, sleep_on_ground := true, active_bleed_pose := false) -> Arr
 				events.append({"type":"removed","id":id})
 	return events
 
-func step_bloodlust_strength(effect: Dictionary, ms: float, events: Array) -> void:
-	var grants: Array = effect["strength_grants"]
+func step_timed_modifiers(effect: Dictionary, ms: float, events: Array) -> void:
+	var grants: Array = effect["timed_modifiers"]
 	var old_count := grants.size()
 	var remaining := 0.0
 	for index in range(old_count-1,-1,-1):
@@ -188,10 +187,10 @@ func step_bloodlust_strength(effect: Dictionary, ms: float, events: Array) -> vo
 	effect["remaining_ms"] = remaining
 	effect["stacks"] = grants.size()
 	if grants.is_empty():
-		active.erase("bloodlust_strength")
-		events.append({"type":"removed","id":"bloodlust_strength"})
+		active.erase(effect["id"])
+		events.append({"type":"removed","id":effect["id"]})
 	elif grants.size() < old_count:
-		events.append({"type":"modifier_changed","id":"bloodlust_strength"})
+		events.append({"type":"modifier_changed","id":effect["id"]})
 
 func step_source_bleed(effect: Dictionary, ms: float, events: Array, active_pose: bool) -> void:
 	var source: Dictionary = effect["source_bleed"]
