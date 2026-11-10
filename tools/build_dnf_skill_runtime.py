@@ -453,16 +453,20 @@ BUFF_EFFECTS = {
     },
     "reckless": {
         "name": "暴走",
-        "duration_ms": 40080,
+        "source_skill": "reckless",
+        "duration_level_row": 0,
         "stacking": "refresh",
         "max_stacks": 1,
         "form": "reckless",
         "modifiers": [
-            {"stat": "attack_speed", "op": "mul", "value": 1.1},
-            {"stat": "move_speed", "op": "mul", "value": 1.08},
-            {"stat": "strength", "op": "add", "value": 50},
-            {"stat": "physical_crit", "op": "add", "value": 0.08},
-            {"stat": "taken_rate", "op": "mul", "value": 1.1},
+            # 99DF60 samples the SKL. 99DCE0 adds to the core and equipment stat slots.
+            {"stat": "strength", "op": "add", "level_row": 1},
+            {"stat": "physical_defense", "op": "percent", "level_row": 2, "scale": -0.01},
+            {"stat": "magical_defense", "op": "percent", "level_row": 3, "scale": -0.01},
+            {"stat": "intelligence", "op": "add", "level_row": 4, "scale": -1},
+            {"stat": "move_speed", "op": "add", "level_row": 5, "scale": 0.001},
+            {"stat": "attack_speed", "op": "add", "level_row": 6, "scale": 0.001},
+            {"stat": "abnormal_resistance", "op": "add", "level_row": 7},
         ],
     },
     "frenzy": {

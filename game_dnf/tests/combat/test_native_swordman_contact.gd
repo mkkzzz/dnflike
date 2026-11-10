@@ -1233,6 +1233,46 @@ func check_overdrive_attributes() -> void:
 		check(game.numeric_player.weapon_wear_units(2)==920 and game.numeric_player.weapon_wear_units(0)==1000,
 			"Overdrive expiry leaves only the learned Weapon Conservation reduction")
 
+func check_reckless_attributes() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for sample: Array in [[1,82,68,0.008,2],[10,294,101,0.075,18]]:
+		profile.command("numbers.skill_grant",{"id":"reckless","level":sample[0]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["reckless"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.player["mp"] = 1000.0
+		game.numeric_player.set_runtime_modifiers([
+			{"stat":"physical_defense","op":"add","value":200},
+			{"stat":"magical_defense","op":"add","value":160}])
+		var base: Dictionary = game.numeric_player.values.duplicate()
+		press(KEY_A)
+		step(0)
+		var effect: Dictionary = game.numeric_player.effects.active.get("reckless",{})
+		var active: Dictionary = game.numeric_player.values
+		check(effect.get("rank")==sample[0] and effect.get("remaining_ms")==40080.0,
+			"Reckless applies the authored duration at rank %s"%sample[0])
+		check(active["strength"]-base["strength"]==sample[1] and base["intelligence"]-active["intelligence"]==sample[2]
+			and active["physical_attack"]==base["physical_attack"] and active["magical_attack"]==base["magical_attack"],
+			"Reckless changes core strength and intelligence independently of weapon attack")
+		check(is_equal_approx(active["attack_speed"]-base["attack_speed"],sample[3])
+			and is_equal_approx(active["move_speed"]-base["move_speed"],sample[3])
+			and active["abnormal_resistance"]-base["abnormal_resistance"]==sample[4],
+			"Reckless applies the original additive speeds and abnormal resistance")
+		var formula: Dictionary = Numbers.shared_config()["formula"]
+		var vitality_defense: float = base["vitality"]*formula["defense_per_vitality"]
+		var spirit_defense: float = base["spirit"]*formula["defense_per_spirit"]
+		check(is_equal_approx(active["physical_defense"],(base["physical_defense"]-vitality_defense)*0.5+vitality_defense)
+			and is_equal_approx(active["magical_defense"],(base["magical_defense"]-spirit_defense)*0.5+spirit_defense)
+			and active["physical_crit"]==base["physical_crit"] and active["taken_rate"]==base["taken_rate"],
+			"Reckless halves the equipment defense channels without a critical or damage-taken modifier")
+		game.step_numeric_actor(game.player,game.numeric_player,40079.0)
+		check(effect.get("remaining_ms")==1.0,"Reckless retains the last millisecond of its SKL duration")
+		game.step_numeric_actor(game.player,game.numeric_player,1.0)
+		check(not game.numeric_player.effects.active.has("reckless") and game.numeric_player.values==base,
+			"Reckless expiry restores the original attribute snapshot")
+
 func check_overdrive_cast() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -8401,6 +8441,7 @@ func run() -> void:
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
 	check_overdrive_attributes()
+	check_reckless_attributes()
 	check_weapon_combo()
 	check_weapon_combo_normal_cancel()
 	check_heavy_weapon_combo()

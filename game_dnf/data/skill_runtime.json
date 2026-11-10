@@ -694,37 +694,53 @@
    "stacking": "refresh"
   },
   "reckless": {
-   "duration_ms": 40080,
+   "duration_level_row": 0,
    "form": "reckless",
    "max_stacks": 1,
    "modifiers": [
     {
-     "op": "mul",
-     "stat": "attack_speed",
-     "value": 1.1
-    },
-    {
-     "op": "mul",
-     "stat": "move_speed",
-     "value": 1.08
-    },
-    {
+     "level_row": 1,
      "op": "add",
-     "stat": "strength",
-     "value": 50
+     "stat": "strength"
     },
     {
+     "level_row": 2,
+     "op": "percent",
+     "scale": -0.01,
+     "stat": "physical_defense"
+    },
+    {
+     "level_row": 3,
+     "op": "percent",
+     "scale": -0.01,
+     "stat": "magical_defense"
+    },
+    {
+     "level_row": 4,
      "op": "add",
-     "stat": "physical_crit",
-     "value": 0.08
+     "scale": -1,
+     "stat": "intelligence"
     },
     {
-     "op": "mul",
-     "stat": "taken_rate",
-     "value": 1.1
+     "level_row": 5,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "move_speed"
+    },
+    {
+     "level_row": 6,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "attack_speed"
+    },
+    {
+     "level_row": 7,
+     "op": "add",
+     "stat": "abnormal_resistance"
     }
    ],
    "name": "暴走",
+   "source_skill": "reckless",
    "stacking": "refresh"
   },
   "shock": {
@@ -16320,7 +16336,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "5972ad86629ef2a0fc97f1989ab9d165b0d3b4ebbcec275a27873af5755b43cf"
+  "pack_sha256": "6373f00c212899f7740961a9ccd8937d5565ffe71074f826d83d13d25515f332"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,
