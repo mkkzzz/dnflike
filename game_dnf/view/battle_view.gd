@@ -184,8 +184,9 @@ func set_debug_collision(enabled: bool) -> void:
 func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	var p: Dictionary = s["player"]
 	var companions: Array = s.get("companions",[])
-	var companion_by_id := {}
-	for companion: Dictionary in companions:companion_by_id[companion["id"]] = companion
+	var actor_by_id := {}
+	for actor: Dictionary in s["enemies"]:actor_by_id[actor["id"]] = actor
+	for companion: Dictionary in companions:actor_by_id[companion["id"]] = companion
 	_player_pos = Vector2(p["pos"])
 	_player_z = float(p["z"])
 	_advance_native_emitters(sim_ms,p)
@@ -194,7 +195,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	var poison_overlay := _poison_overlay(float(s.get("status_clock_ms",0.0)))
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
-			var source: Dictionary = p if fx.follow == 0 else companion_by_id.get(fx.follow,{})
+			var source: Dictionary = p if fx.follow == 0 else actor_by_id.get(fx.follow,{})
 			if not source.is_empty():
 				fx.position = _canvas(Vector2(source["pos"]),float(source["z"]))+fx.follow_offset
 				if fx.has_meta("depth_offset"):fx.z_index = int(Vector2(source["pos"]).y)+int(fx.get_meta("depth_offset"))

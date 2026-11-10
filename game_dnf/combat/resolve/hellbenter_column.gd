@@ -3,6 +3,7 @@ extends RefCounted
 const Timeline = preload("res://combat/action/timeline.gd")
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Motion = preload("res://combat/particles/native_motion.gd")
+const Blood = preload("res://combat/resolve/hellbenter_blood.gd")
 const DISAPPEAR_PARTICLE := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
 const LOOP_PARTICLE := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
 const EXPLOSION_PARTICLE := "passiveobject/common/particle/noneexplosionparticle%d.ptl"
@@ -44,7 +45,9 @@ static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var down_radius := (int(static_data[17])/2)*percent/100
 	object["column"] = {"config":config,"phase":0,"phase_at":0.0,"loop_ms":loop_ms,
 		"hit_interval":interval,"next_reset":int(config["impact"])+interval,"resets":hit_count-1,
-		"final":final,"erupted":false,"down_radius":down_radius}
+		"final":final,"erupted":false,"down_radius":down_radius,
+		# CB85B6..CB8672 writes the duration, interval, and raw damage into the column packet.
+		"wound":{"duration":int(static_data[21])&0xffff,"interval":int(row[14])&0xffff,"amount":int(row[10])}}
 	game.play_sound("B_FIRE_EXPLOSION_READY")
 	game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":100})
 	game.bus.emit("combat.cue",{"kind":"fx","key":config["wave"],"point":object["pos"],
@@ -154,6 +157,7 @@ static func step(game, object: Dictionary) -> bool:
 		var contact := HitJudge.contact(world,game.enemy_damage_boxes(enemy))
 		if contact.is_empty():continue
 		object["hits"][id] = true
+		Blood.mark_column_contact(enemy,int(game.player["id"]),column["wound"])
 		var reaction_hit := hit
 		if within_reaction_radius(game,object,contact["overlap"],int(column["down_radius"])):
 			var target_frame: Dictionary = game.enemy_frame(enemy)

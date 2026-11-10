@@ -2763,6 +2763,75 @@ func check_hellbenter_column_hold() -> void:
 	check(final_target["state"]=="hold" and not final_target.has("hellbenter_column_mark"),
 		"mark expiry leaves another skill's hold state intact")
 
+func check_hellbenter_special_wounds() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"buff","level":1})
+	profile.command("numbers.skill_grant",{"id":"hellbenter","level":1})
+	start_room("original_27601","katana",1,profile.stats(),"berserker")
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+	target["numeric"].values["hp_max"] = target["max_hp"]
+	target["numeric"].values["bleeding_resistance"] = 100.0
+	game.numeric_player.add_effect("frenzy",1)
+	game.numeric_player.add_effect("hellbenter",1)
+	game.numeric_player.values["hit"] = 1.0
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.weapon_attack_speed_per_mille = 0
+	press(KEY_X)
+	step(0.0)
+	step(119.0)
+	step(1.0)
+	var mark: Dictionary = target.get("hellbenter_frenzy_wound",{})
+	check(game.hit_count==1 and mark.get("owner")==game.player["id"] and mark.get("duration")==50000
+		and mark.get("interval")==650 and mark.get("amount")==33 and not target["numeric"].effects.active.has("bleed"),
+		"equipped Hellbenter and Frenzy X install type 0x104 independently of ordinary bleed")
+	if mark.is_empty():return
+	var hp: float = target["hp"]
+	game.update_enemy(target,1.0)
+	check(target["hp"]==hp-33 and mark["next"]==651 and cues("hellbenter_frenzy_wound").size()==1,
+		"the first type 0x104 update writes raw HP and emits its own original ANI")
+	var object := HellbenterColumn.spawn(game,game.move_def("hellbenter"),40)
+	var center: Vector2 = object["pos"]
+	move_target(target,center)
+	var other: Dictionary = game.spawn_enemy(center+Vector2(15,0))
+	other["hellbenter_frenzy_wound"] = mark.merged({"owner":999},true)
+	var ordinary: Dictionary = game.spawn_enemy(center-Vector2(15,0))
+	ordinary["numeric"].add_effect("bleed",1)
+	for enemy: Dictionary in [target,other,ordinary]:
+		enemy["hp"] = 500000.0
+		enemy["max_hp"] = enemy["hp"]
+		enemy["numeric"].values["hp_max"] = enemy["hp"]
+	game.numeric_player.remove_effect("hellbenter")
+	game.step_objects(1680.0)
+	var column_mark: Dictionary = target.get("hellbenter_column_wound",{})
+	check(column_mark.get("duration")==3000 and column_mark.get("interval")==1300 and column_mark.get("amount")==2014
+		and not other.has("hellbenter_column_wound") and not ordinary.has("hellbenter_column_wound"),
+		"column contact consumes the independent packet only for a mark from its owner")
+	if column_mark.is_empty():return
+	hp = target["hp"]
+	game.update_enemy(target,0.0)
+	check(target["hp"]==hp-2014,"the first column wound poll writes its unscaled attack packet")
+	game.update_enemy(target,1299.0)
+	check(cues("hellbenter_column_wound").size()==1,
+		"the column wound ticks on its first poll but waits through 1299 ms")
+	game.update_enemy(target,1.0)
+	var sprites: Array = game.view.effects.filter(func(fx):return fx.cue_key=="hellbenter_column_wound")
+	check(target["hp"]==hp-33-2014*2 and sprites.size()==2 and sprites.all(func(fx):
+		return fx.data["source"].ends_with("givebloodblood.ani") and fx.follow==target["id"]),
+		"the next column HP loss at 1300 ms renders both original target-following bursts")
+	if sprites.size()==2:
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		var before: Vector2 = sprites[0].position
+		target["pos"] += Vector2(21,0)
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(sprites[0].position==before+Vector2(21,0),"the wound animation tracks the moving target")
+	game.update_enemy(target,1699.0)
+	check(target.has("hellbenter_column_wound"),"the column wound remains at age 2999")
+	game.update_enemy(target,1.0)
+	check(not target.has("hellbenter_column_wound") and target.has("hellbenter_frenzy_wound"),
+		"the 3000 ms wound expires independently of the 50000 ms marker")
+
 func check_hellbenter_screen_flash(object: Dictionary) -> void:
 	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")
 	check(flashes.size()==1,"the final entry requests one screen flash")
@@ -5690,6 +5759,7 @@ func run() -> void:
 	check_hellbenter_first_cast()
 	check_hellbenter_manual_finish()
 	check_hellbenter_column_hold()
+	check_hellbenter_special_wounds()
 	check_outrage_break_speed_refresh()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()

@@ -10,6 +10,32 @@ var marks: Dictionary = {}
 var orbs: Array[Dictionary] = []
 var next_orb_id := 0
 
+static func mark_frenzy_contact(target: Dictionary, owner: int, skill: Dictionary) -> void:
+	var row: Array = skill["level_row"]
+	# CA7463..CA74EE serializes one dword and two unsigned words for type 0x104.
+	target["hellbenter_frenzy_wound"] = {"owner":owner,"age":0.0,"next":0,
+		"duration":int(skill["static"][18]),"interval":int(row[12])&0xffff,"amount":int(row[13])&0xffff}
+
+static func mark_column_contact(target: Dictionary, owner: int, wound: Dictionary) -> void:
+	# A6ABD2..A6AC55 requires an active type 0x104 attached to this target by this owner.
+	if int(target.get("hellbenter_frenzy_wound",{}).get("owner",-1)) != owner:return
+	target["hellbenter_column_wound"] = wound.merged({"age":0.0,"next":0})
+
+static func step_wounds(target: Dictionary, ms: float, events: Array) -> void:
+	for key: String in ["hellbenter_frenzy_wound","hellbenter_column_wound"]:
+		if not target.has(key):continue
+		var wound: Dictionary = target[key]
+		wound["age"] += ms
+		var age := int(wound["age"])
+		if age >= int(wound["duration"]):
+			target.erase(key)
+			continue
+		if age < int(wound["next"]):continue
+		# 997A10 starts the interval timer due, then 1124937 reschedules from the current poll.
+		wound["next"] = age+int(wound["interval"])
+		events.append({"type":"direct_damage","id":key,"damage":wound["amount"],"damage_type":"physical",
+			"show_number":true,"native_fx":key})
+
 func clear() -> void:
 	marks.clear()
 	orbs.clear()

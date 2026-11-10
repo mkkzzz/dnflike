@@ -286,6 +286,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 	var hellbenter: Dictionary = active_effect("hellbenter") if body["id"] == PLAYER_ID else {}
 	var previous := float(hellbenter.get("remaining_ms",0.0))
 	var events: Array = actor.step(ms,body["state"]=="down")
+	if body["id"] != PLAYER_ID:HellbenterBlood.step_wounds(body,ms,events)
 	if not hellbenter.is_empty() and actor.effects.active.has("hellbenter"):
 		# Cast2 runs on the appendage clock even if the owner's release is interrupted.
 		var cue: Dictionary = move_def("hellbenter")["appearance"]["sound"]
@@ -322,9 +323,15 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if not direct:
 			var resolved := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
 			amount = int(resolved["amount"])
+		if event.has("native_fx"):
+			var half_height := int(enemy_mid_height_point(body).z)-int(body["z"])
+			var height := 2*int(2.0*half_height/3.0)
+			bus.emit("combat.cue",{"kind":"fx","key":event["native_fx"],"point":body["pos"],
+				"height":body["z"],"facing":body["facing"],"offset_y":1-height,"depth_offset":1,
+				"follow":body["id"],"fresh":true})
 		body["hp"] = maxf(0,float(body["hp"])-amount)
 		bus.emit("combat.damage",{"target":body["id"],"amount":amount,"critical":false,"category":event["damage_type"],
-			"victim":victim_kind(body),"reaction":"none","point":point,"show_number":not direct})
+			"victim":victim_kind(body),"reaction":"none","point":point,"show_number":event.get("show_number",not direct)})
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
@@ -3134,6 +3141,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if numeric_player != null and not contact_only:last_damage["trace"]["actual_amount"] = amount
 	else:
 		if native_kind == "hellbenter_column":HellbenterColumn.mark_target(target,int(hit.get("hellbenter_hold_mode",-1)))
+		if victim == "monster" and by_player and not contact_only and hit_skill_id in ["frenzy1","frenzy2","frenzy3","frenzy4"] \
+				and effect_form("dual_wield") and not active_effect("hellbenter").is_empty():
+			HellbenterBlood.mark_frenzy_contact(target,int(attacker["id"]),table._skill_row(move_def("hellbenter")["skill"]))
 		var ground_hit_fx: Array = hit.get("native_controller",{}).get("ground_hit_fx",[])
 		if not ground_hit_fx.is_empty() and not contact_only and int(target["z"]) == 0:
 			# A61738 checks the target height before the local reaction changes it.
