@@ -61,6 +61,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act7/genteastgate.dgn',
     'dungeon/act7/outergent.dgn',
     'dungeon/ancient/leshphon.dgn',
+    'dungeon/ancient/noirpera.dgn',
     'dungeon/ancient/vilmark.dgn',
     'dungeon/village/moonlightpub/aganzo.dgn',
     'dungeon/village/cartelarad/grozni.dgn',

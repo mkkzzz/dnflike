@@ -511,6 +511,20 @@
     "sha256": "523a5924b9faeae3da4e63c2cbac7f8f7fdb0bd27a7155d7b0b8388714365293"
    }
   },
+  "noirpera": {
+   "name": "诺伊佩拉",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/noirpera_v1/map_export.json",
+   "min_level": 59,
+   "monster_level": 55,
+   "source": {
+    "path": "dungeon/ancient/noirpera.dgn",
+    "sha256": "123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

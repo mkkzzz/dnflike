@@ -1955,6 +1955,61 @@
    "mob": "monster/newmonsters/leshphon/the_wicked_disease_direzie/the_wicked_disease_direzie.mob",
    "bank": "newmonsters_leshphon_the_wicked_disease_direzie_the_wicked_disease_direzie",
    "name": "the_wicked_disease_direzie"
+  },
+  "newmonsters_ancient_infected_ghoula_infected_ghoula": {
+   "mob": "monster/newmonsters/ancient/infected_ghoula/infected_ghoula.mob",
+   "bank": "newmonsters_ancient_infected_ghoula_infected_ghoula",
+   "name": "infected_ghoula"
+  },
+  "newmonsters_ancient_infected_ghoulb_infected_ghoulb": {
+   "mob": "monster/newmonsters/ancient/infected_ghoulb/infected_ghoulb.mob",
+   "bank": "newmonsters_ancient_infected_ghoulb_infected_ghoulb",
+   "name": "infected_ghoulb"
+  },
+  "newmonsters_ancient_noir_dimension_gate_noir_dimension_gate": {
+   "mob": "monster/newmonsters/ancient/noir_dimension_gate/noir_dimension_gate.mob",
+   "bank": "newmonsters_ancient_noir_dimension_gate_noir_dimension_gate",
+   "name": "noir_dimension_gate"
+  },
+  "newmonsters_direzie_direzie": {
+   "mob": "monster/newmonsters/direzie/direzie.mob",
+   "bank": "newmonsters_direzie_direzie",
+   "name": "direzie"
+  },
+  "newmonsters_disguiser_mummy_basic_mummy_basic": {
+   "mob": "monster/newmonsters/disguiser/mummy_basic/mummy_basic.mob",
+   "bank": "newmonsters_disguiser_mummy_basic_mummy_basic",
+   "name": "mummy_basic"
+  },
+  "newmonsters_disguiser_mummy_ghost_mummy_ghost": {
+   "mob": "monster/newmonsters/disguiser/mummy_ghost/mummy_ghost.mob",
+   "bank": "newmonsters_disguiser_mummy_ghost_mummy_ghost",
+   "name": "mummy_ghost"
+  },
+  "newmonsters_grim_priest_grim_priest_1_2_grim_priest1": {
+   "mob": "monster/newmonsters/grim_priest/grim_priest_1_2/grim_priest1.mob",
+   "bank": "newmonsters_grim_priest_grim_priest_1_2_grim_priest1",
+   "name": "grim_priest1"
+  },
+  "newmonsters_grim_priest_grim_priest_1_2_grim_priest2": {
+   "mob": "monster/newmonsters/grim_priest/grim_priest_1_2/grim_priest2.mob",
+   "bank": "newmonsters_grim_priest_grim_priest_1_2_grim_priest2",
+   "name": "grim_priest2"
+  },
+  "newmonsters_grim_priest_grimpriest_nubelus_grimpriest_nubelus": {
+   "mob": "monster/newmonsters/grim_priest/grimpriest_nubelus/grimpriest_nubelus.mob",
+   "bank": "newmonsters_grim_priest_grimpriest_nubelus_grimpriest_nubelus",
+   "name": "grimpriest_nubelus"
+  },
+  "newmonsters_militiaman_militiaman_militiaman": {
+   "mob": "monster/newmonsters/militiaman/militiaman/militiaman.mob",
+   "bank": "newmonsters_militiaman_militiaman_militiaman",
+   "name": "militiaman"
+  },
+  "newmonsters_militiaman_militiamanboss_militiamanboss": {
+   "mob": "monster/newmonsters/militiaman/militiamanboss/militiamanboss.mob",
+   "bank": "newmonsters_militiaman_militiamanboss_militiamanboss",
+   "name": "militiamanboss"
   }
  },
  "boss_hp_lines": 3,

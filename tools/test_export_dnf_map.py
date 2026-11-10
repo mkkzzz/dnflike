@@ -864,6 +864,46 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'scroll_absent']), 18)
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 6)
 
+    def test_noirpera_export_keeps_seven_fixed_rooms_and_no_objects(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/noirpera_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 1502)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(len(dungeon['maze_blocks']), 1)
+        self.assertEqual(dungeon['size'], [5, 2])
+        self.assertEqual(dungeon['start_map_raw'], [0, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [4, 0])
+        self.assertEqual(len(dungeon['rooms']), 7)
+        self.assertEqual(len(dungeon['placements']), 7)
+        self.assertEqual(len(export['images']), 81)
+        self.assertEqual(len(dungeon['cells']), 10)
+        self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 12)
+        block = dungeon['maze_blocks'][0]
+        self.assertEqual([row[2] for row in block['map_specifications']],
+                         [7102, 7103, 7104, 7105, 7106])
+        self.assertEqual(block['boss_map_specifications'], [])
+        self.assertEqual(block['hell_dungeon'], [1])
+        self.assertEqual(block['seal_door_map_index'], [60036])
+        self.assertEqual(block['seal_door_pos'], [3, 0])
+        self.assertEqual(block['seal_door_appear_rate'], [10])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(0, 0)]['map_candidates'], ['map/noirpera/map1(0,0)_start.map'])
+        self.assertEqual(cells[(4, 0)]['map_candidates'], ['map/noirpera/map7(4,0)_boss.map'])
+        self.assertEqual(cells[(0, 1)]['map_candidates'], [])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 47)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 0)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 3)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 7)
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

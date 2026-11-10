@@ -173,6 +173,7 @@
   "dollmaster_golemmaster",
   "hunter_rollinghunter",
   "bantu_tower_bantuelite",
+  "newmonsters_militiaman_militiamanboss_militiamanboss",
   "newmonsters_haze_tretri_tretri",
   "newmonsters_cartel_cypher_poltergeistbookshelf_poltergeistbookshelf",
   "newmonsters_bantu__rabbitbird_rabbitbird",
@@ -192,6 +193,7 @@
   "newmonsters_cartel_cypher_darkcrow_darkcrow",
   "newmonsters_cartel_westcoast_rod_boss_rod_boss",
   "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
+  "newmonsters_disguiser_mummy_ghost_mummy_ghost",
   "newmonsters_snowman_louis_louis",
   "newmonsters_spider_slotor1_slotor1",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
@@ -209,11 +211,18 @@
   "newmonsters_bantu_elitebuffaloman_elitebuffaloman",
   "newmonsters_golem_icewavegolem_icewavegolem",
   "newmonsters_heaven_nife_claese_nife_claese",
+  "newmonsters_grim_priest_grimpriest_nubelus_grimpriest_nubelus",
+  "newmonsters_grim_priest_grim_priest_1_2_grim_priest1",
+  "newmonsters_grim_priest_grim_priest_1_2_grim_priest2",
   "newmonsters_haze_poena_poena",
   "newmonsters_haze_hass_hass",
   "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
   "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope",
   "zombie_summon_zombieholloweye",
+  "newmonsters_disguiser_mummy_basic_mummy_basic",
+  "newmonsters_direzie_direzie",
+  "newmonsters_militiaman_militiaman_militiaman",
+  "newmonsters_ancient_noir_dimension_gate_noir_dimension_gate",
   "newmonsters_gbl_thrower_thrower",
   "newmonsters_gbl_gbltentacle_gbltentacle",
   "newmonsters_gbl_blacktentacle_blacktentacle",
@@ -253,6 +262,8 @@
   "newmonsters_cartel_cypher_cypher_cypher",
   "newmonsters_aganzo_cutpurse_cutpurse",
   "newmonsters_aganzo_sinead_sinead",
+  "newmonsters_ancient_infected_ghoula_infected_ghoula",
+  "newmonsters_ancient_infected_ghoulb_infected_ghoulb",
   "newmonsters_bantu_rabbitman_rabbitman",
   "newmonsters_bantu_rabbitwoman_rabbitwoman",
   "newmonsters_snowman_snowman_snowman",
@@ -355,7 +366,7 @@
  "effects": 738,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 62,
+ "unresolved": 66,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -466,6 +477,14 @@
   },
   {
    "kind": "monster_layers",
+   "monster": "monster/newmonsters/disguiser/mummy_ghost/mummy_ghost.mob",
+   "images": [
+    "Monster/Disguiser/Mummy_ghost.img",
+    "monster/Disguiser/Mummy_ghost.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
    "monster": "monster/newmonsters/bantu/ratree/ratree.mob",
    "images": [
     "Monster/Bantu/Ratree.img",
@@ -489,6 +508,22 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/hass/hass.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/disguiser/mummy_basic/mummy_basic.mob",
+   "images": [
+    "Monster/Disguiser/Mummy_basic.img",
+    "monster/Disguiser/Mummy_basic.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/direzie/direzie.mob",
+   "images": [
+    "Monster/Direzie/direzie_all.img",
+    "monster/direzie/direzie_all.img"
+   ]
   },
   {
    "kind": "monster_layers",
@@ -626,6 +661,14 @@
    "images": [
     "Monster/Arad/CutpurseSinead.img",
     "monster/Arad/CutpurseSinead.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/ancient/infected_ghoula/infected_ghoula.mob",
+   "images": [
+    "Monster/Ancient/Infected_GhoulA.img",
+    "Monster/Ancient/Infected_Ghoul_Cross.img"
    ]
   },
   {

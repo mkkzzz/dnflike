@@ -184,6 +184,10 @@
    "normal": "spider",
    "boss": "spider_boss"
   },
+  "noirpera": {
+   "normal": "npera",
+   "boss": "npera_boss"
+  },
   "odesa": {
    "normal": "odesa_new",
    "boss": "odesa_boss_new"
@@ -653,6 +657,18 @@
    "source": "music/spider_boss.ogg",
    "sha256": "7dbf2af5d22bbba86d30372a1929c1525cef3f7293dc4c30b2880488160bdd97",
    "bytes": 1906811
+  },
+  "npera": {
+   "file": "audio/bgm/npera.ogg",
+   "source": "music/npera.ogg",
+   "sha256": "530bea5c8c7b68108140ac86b5ae0a9fc3989c97c29bd0477b47e22ceadc8de8",
+   "bytes": 1670056
+  },
+  "npera_boss": {
+   "file": "audio/bgm/npera_boss.ogg",
+   "source": "music/npera_boss.ogg",
+   "sha256": "9fa65b7a499bd1e53ffa5a07d0d20b5769e54ad2fe6f87adaf18600c70789c51",
+   "bytes": 1393452
   },
   "odesa_new": {
    "file": "audio/bgm/odesa_new.ogg",

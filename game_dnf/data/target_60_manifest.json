@@ -1224,9 +1224,9 @@
     "id": 1502,
     "min_level": 59,
     "path": "dungeon/ancient/noirpera.dgn",
-    "runtime_id": "",
+    "runtime_id": "noirpera",
     "sha256": "123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 60,
@@ -10119,8 +10119,8 @@
     "level_max": 60,
     "level_min": 55,
     "path": "monster/newmonsters/disguiser/mummy_ghost/mummy_ghost.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_disguiser_mummy_ghost_mummy_ghost",
+    "state": "runtime"
    },
    {
     "id": 65011,
@@ -10135,8 +10135,8 @@
     "level_max": 58,
     "level_min": 55,
     "path": "monster/newmonsters/militiaman/militiamanboss/militiamanboss.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_militiaman_militiamanboss_militiamanboss",
+    "state": "runtime"
    },
    {
     "id": 62513,
@@ -10327,16 +10327,16 @@
     "level_max": 58,
     "level_min": 58,
     "path": "monster/newmonsters/ancient/infected_ghoula/infected_ghoula.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_ancient_infected_ghoula_infected_ghoula",
+    "state": "runtime"
    },
    {
     "id": 61420,
     "level_max": 58,
     "level_min": 58,
     "path": "monster/newmonsters/ancient/infected_ghoulb/infected_ghoulb.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_ancient_infected_ghoulb_infected_ghoulb",
+    "state": "runtime"
    },
    {
     "id": 61236,
@@ -10383,8 +10383,8 @@
     "level_max": 58,
     "level_min": 58,
     "path": "monster/newmonsters/militiaman/militiaman/militiaman.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_militiaman_militiaman_militiaman",
+    "state": "runtime"
    },
    {
     "id": 57017,
@@ -11271,8 +11271,8 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/ancient/noir_dimension_gate/noir_dimension_gate.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_ancient_noir_dimension_gate_noir_dimension_gate",
+    "state": "runtime"
    },
    {
     "id": 56107,
@@ -11615,16 +11615,16 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/direzie/direzie.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_direzie_direzie",
+    "state": "runtime"
    },
    {
     "id": 61000,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/disguiser/mummy_basic/mummy_basic.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_disguiser_mummy_basic_mummy_basic",
+    "state": "runtime"
    },
    {
     "id": 61346,
@@ -11927,24 +11927,24 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/grim_priest/grim_priest_1_2/grim_priest1.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_grim_priest_grim_priest_1_2_grim_priest1",
+    "state": "runtime"
    },
    {
     "id": 56803,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/grim_priest/grim_priest_1_2/grim_priest2.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_grim_priest_grim_priest_1_2_grim_priest2",
+    "state": "runtime"
    },
    {
     "id": 56801,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/grim_priest/grimpriest_nubelus/grimpriest_nubelus.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_grim_priest_grimpriest_nubelus_grimpriest_nubelus",
+    "state": "runtime"
    },
    {
     "id": 56124,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 50,
+   "runtime": 51,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 283,
+   "runtime": 294,
    "runtime_post_60": 18,
    "source": 1937,
    "target": 1429,
