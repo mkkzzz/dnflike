@@ -1475,6 +1475,46 @@
    "mob": "monster/spirit/lighthigherspirit.mob",
    "bank": "spirit_lighthigherspirit",
    "name": "lighthigherspirit"
+  },
+  "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian": {
+   "mob": "monster/newmonsters/aradwoman/gbl_chief_libraian/gbl_chief_libraian.mob",
+   "bank": "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
+   "name": "gbl_chief_libraian"
+  },
+  "newmonsters_aradwoman_gbl_libraian_gbl_libraian": {
+   "mob": "monster/newmonsters/aradwoman/gbl_libraian/gbl_libraian.mob",
+   "bank": "newmonsters_aradwoman_gbl_libraian_gbl_libraian",
+   "name": "gbl_libraian"
+  },
+  "newmonsters_gbl_gblcolossus_gblcolossus": {
+   "mob": "monster/newmonsters/gbl/gblcolossus/gblcolossus.mob",
+   "bank": "newmonsters_gbl_gblcolossus_gblcolossus",
+   "name": "gblcolossus"
+  },
+  "newmonsters_gbl_gbltentacle_gbltentacle": {
+   "mob": "monster/newmonsters/gbl/gbltentacle/gbltentacle.mob",
+   "bank": "newmonsters_gbl_gbltentacle_gbltentacle",
+   "name": "gbltentacle"
+  },
+  "newmonsters_gbl_isadora_isadora": {
+   "mob": "monster/newmonsters/gbl/isadora/isadora.mob",
+   "bank": "newmonsters_gbl_isadora_isadora",
+   "name": "isadora"
+  },
+  "newmonsters_gbl_isadora_isadora2": {
+   "mob": "monster/newmonsters/gbl/isadora/isadora2.mob",
+   "bank": "newmonsters_gbl_isadora_isadora2",
+   "name": "isadora2"
+  },
+  "newmonsters_gbl_ladyzealot_ladyzealot_characterteam": {
+   "mob": "monster/newmonsters/gbl/ladyzealot/ladyzealot_characterteam.mob",
+   "bank": "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
+   "name": "ladyzealot_characterteam"
+  },
+  "newmonsters_gbl_webcannon_webcannon": {
+   "mob": "monster/newmonsters/gbl/webcannon/webcannon.mob",
+   "bank": "newmonsters_gbl_webcannon_webcannon",
+   "name": "webcannon"
   }
  },
  "boss_hp_lines": 3,

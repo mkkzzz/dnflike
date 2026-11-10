@@ -343,6 +343,20 @@
     "sha256": "13c7ece1b64c949af4870f9413334459c723812fea0d56ee6bf0347143e7dd16"
    }
   },
+  "gbl_branchofarad": {
+   "name": "GBL教阿拉德分部",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/gbl_branchofarad_v1/map_export.json",
+   "min_level": 46,
+   "monster_level": 49,
+   "source": {
+    "path": "dungeon/village/gbl/gbl_branchofarad.dgn",
+    "sha256": "8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

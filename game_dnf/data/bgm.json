@@ -128,6 +128,10 @@
    "normal": "1st_spine",
    "boss": "1st_spine_boss"
   },
+  "gbl_branchofarad": {
+   "normal": "gblarad",
+   "boss": "gblarad_boss"
+  },
   "goddesstemple": {
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
@@ -436,6 +440,18 @@
    "source": "music/1st_spine_boss.ogg",
    "sha256": "92514bed60752997883c13832d6f0eae902ddec0e918b4676f56cc54f7c853f7",
    "bytes": 1776999
+  },
+  "gblarad": {
+   "file": "audio/bgm/gblarad.ogg",
+   "source": "music/gblarad.ogg",
+   "sha256": "c6625423d44080e8ed77190f6c9772fb994795b829df8fe5e64452080940f868",
+   "bytes": 2245853
+  },
+  "gblarad_boss": {
+   "file": "audio/bgm/gblarad_boss.ogg",
+   "source": "music/gblarad_boss.ogg",
+   "sha256": "12aa68a6870a5a5a2912246f50967dc91ecac0b7f997578797dfe81064248444",
+   "bytes": 1198353
   },
   "goddess_temple": {
    "file": "audio/bgm/goddess_temple.ogg",

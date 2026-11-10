@@ -230,6 +230,27 @@ class LibraryExport(unittest.TestCase):
                           if span['tag'] == '[map specification]']
         self.assertEqual(specifications, [9103, 9105, 9102, 9106, 9101, 9104, 9107])
 
+    def test_gbl_branchofarad_export_separates_quest_boss_layouts(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/gbl_branchofarad_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [4, 4])
+        self.assertEqual(dungeon['start_map_raw'], [3, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [2, 2])
+        self.assertEqual(len(dungeon['rooms']), 17)
+        self.assertEqual(len(dungeon['placements']), 27)
+        self.assertEqual(len(export['images']), 48)
+        self.assertEqual(dungeon['rooms']['map/gbl1/g1(s)002.map']['greed_pairs'], [[2, 2]])
+        self.assertEqual(dungeon['rooms']['map/gbl1/g1(b)002.map']['greed_pairs'], [[10, 10]])
+        self.assertEqual(dungeon['rooms']['map/gbl1/maze(2,2).map']['greed_pairs'], [[10, 10]])
+        self.assertEqual(dungeon['rooms']['map/gbl1/maze(3,3).map']['greed_pairs'], [[4, 4]])
+        boss_specs = [span['values'][2][2] for span in dungeon['raw']
+                      if span['tag'] == '[boss map specification]']
+        self.assertEqual(boss_specs, [13059, 13058])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

@@ -2,6 +2,15 @@
  "schema": "dnf_breakable_particles/1",
  "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
  "objects": {
+  "passiveobject/actionobject/breakableobject/bookcase.obj": [
+   "ptl_bookcaseparticle1",
+   "ptl_bookcaseparticle2",
+   "ptl_bookcaseparticle3",
+   "ptl_bookcaseparticle4",
+   "ptl_bookcaseparticle5",
+   "ptl_bookcaseparticle6",
+   "ptl_bookcaseparticle7"
+  ],
   "passiveobject/actionobject/breakableobject/bwanga_totem.obj": [
    "ptl_totem_pltcle0",
    "ptl_totem_pltcle1",
@@ -17,6 +26,15 @@
    "ptl_totem_pltcle3",
    "ptl_totem_pltcle4",
    "ptl_totem_pltcle5"
+  ],
+  "passiveobject/actionobject/breakableobject/halfbookcase.obj": [
+   "ptl_bookcaseparticle1",
+   "ptl_bookcaseparticle2",
+   "ptl_bookcaseparticle3",
+   "ptl_bookcaseparticle4",
+   "ptl_bookcaseparticle5",
+   "ptl_bookcaseparticle6",
+   "ptl_bookcaseparticle7"
   ],
   "passiveobject/actionobject/breakableobject/ice.obj": [
    "ptl_ice_particle0",
@@ -61,6 +79,14 @@
    "ptl_longpotparticle4",
    "ptl_longpotparticle5",
    "ptl_longpotparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/2ndbackbonelongchair.obj": [
+   "ptl_longchairparticle1",
+   "ptl_longchairparticle2",
+   "ptl_longchairparticle3",
+   "ptl_longchairparticle4",
+   "ptl_longchairparticle5",
+   "ptl_longchairparticle6"
   ],
   "passiveobject/mapobject/breakableobject/act6box_peter.obj": [
    "ptl_act6boxparticle01",
@@ -530,6 +556,13 @@
    "ptl_urnparticle1",
    "ptl_urnparticle2",
    "ptl_urnparticle3"
+  ],
+  "passiveobject/mapobject/breakableobject/vilmarkbox.obj": [
+   "ptl_vilmarkboxparticle00",
+   "ptl_vilmarkboxparticle01",
+   "ptl_vilmarkboxparticle02",
+   "ptl_vilmarkboxparticle03",
+   "ptl_vilmarkboxparticle04"
   ],
   "passiveobject/mapobject/breakableobject/whitenightlongchair.obj": [
    "ptl_longchairparticle1",

@@ -150,6 +150,8 @@
   "newmonsters_bantu__rabbitmedusa_rabbitmedusa",
   "newmonsters_bantu__buffalomalaga_buffalomalaga",
   "newmonsters_bantu__buffalorari_buffalorari",
+  "newmonsters_gbl_gblcolossus_gblcolossus",
+  "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
   "newmonsters_snowman_louis_louis",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
   "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
@@ -167,6 +169,11 @@
   "newmonsters_gbl_goddess_temple_zookeeper_zookeeper",
   "newmonsters_gbl_goddess_temple_astray_gbl_pope_astray_gbl_pope",
   "zombie_summon_zombieholloweye",
+  "newmonsters_gbl_gbltentacle_gbltentacle",
+  "newmonsters_gbl_isadora_isadora",
+  "newmonsters_gbl_webcannon_webcannon",
+  "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
+  "newmonsters_gbl_isadora_isadora2",
   "newmonsters_haze_axeoutlaw_axeoutlaw",
   "newmonsters_haze_outlaw_outlaw",
   "newmonsters_haze_humanhunter_humanhunter",
@@ -180,6 +187,7 @@
   "newmonsters_bantu_rabbitwoman_rabbitwoman",
   "newmonsters_snowman_snowman_snowman",
   "newmonsters_bantu_buffaloman_buffaloman",
+  "newmonsters_aradwoman_gbl_libraian_gbl_libraian",
   "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
   "newmonsters_gbl_breeding_flare_worm_flare_worm",
   "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
@@ -256,10 +264,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 650,
+ "effects": 662,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 46,
+ "unresolved": 48,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -343,6 +351,14 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/tretri/tretri.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/aradwoman/gbl_chief_libraian/gbl_chief_libraian.mob",
+   "images": [
+    "Monster/Arad/GBL_chief_libraian.img",
+    "monster/Arad/GBL_chief_libraian.img"
+   ]
   },
   {
    "kind": "monster_layers",
@@ -458,6 +474,14 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/enjosipho/enjosipho_quest.mob"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/aradwoman/gbl_libraian/gbl_libraian.mob",
+   "images": [
+    "Monster/Arad/GBL_libraian.img",
+    "monster/Arad/GBL_libraian.img"
+   ]
   },
   {
    "kind": "monster_image",

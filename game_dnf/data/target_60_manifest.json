@@ -954,9 +954,9 @@
     "id": 110,
     "min_level": 46,
     "path": "dungeon/village/gbl/gbl_branchofarad.dgn",
-    "runtime_id": "",
+    "runtime_id": "gbl_branchofarad",
     "sha256": "8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 50,
@@ -6735,8 +6735,8 @@
     "level_max": 37,
     "level_min": 34,
     "path": "monster/newmonsters/aradwoman/gbl_chief_libraian/gbl_chief_libraian.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_aradwoman_gbl_chief_libraian_gbl_chief_libraian",
+    "state": "runtime"
    },
    {
     "id": 56428,
@@ -6751,8 +6751,8 @@
     "level_max": 37,
     "level_min": 34,
     "path": "monster/newmonsters/aradwoman/gbl_libraian/gbl_libraian.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_aradwoman_gbl_libraian_gbl_libraian",
+    "state": "runtime"
    },
    {
     "id": 61475,
@@ -6767,8 +6767,8 @@
     "level_max": 40,
     "level_min": 34,
     "path": "monster/newmonsters/gbl/webcannon/webcannon.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_webcannon_webcannon",
+    "state": "runtime"
    },
    {
     "id": 250,
@@ -6959,8 +6959,8 @@
     "level_max": 40,
     "level_min": 35,
     "path": "monster/newmonsters/gbl/gbltentacle/gbltentacle.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_gbltentacle_gbltentacle",
+    "state": "runtime"
    },
    {
     "id": 61465,
@@ -6991,8 +6991,8 @@
     "level_max": 40,
     "level_min": 35,
     "path": "monster/newmonsters/gbl/isadora/isadora2.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_isadora_isadora2",
+    "state": "runtime"
    },
    {
     "id": 56101,
@@ -7215,8 +7215,8 @@
     "level_max": 50,
     "level_min": 36,
     "path": "monster/newmonsters/gbl/ladyzealot/ladyzealot_characterteam.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
+    "state": "runtime"
    },
    {
     "id": 61466,
@@ -8879,16 +8879,16 @@
     "level_max": 52,
     "level_min": 47,
     "path": "monster/newmonsters/gbl/gblcolossus/gblcolossus.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_gblcolossus_gblcolossus",
+    "state": "runtime"
    },
    {
     "id": 61103,
     "level_max": 52,
     "level_min": 47,
     "path": "monster/newmonsters/gbl/isadora/isadora.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_gbl_isadora_isadora",
+    "state": "runtime"
    },
    {
     "id": 61453,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 36,
+   "runtime": 37,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 194,
+   "runtime": 202,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,
