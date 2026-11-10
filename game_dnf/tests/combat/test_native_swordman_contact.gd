@@ -6978,6 +6978,7 @@ func check_thirst() -> void:
 	check(game.view.player_actor.pose=="stay" and not game.view.audio._loop_voices.has(0)
 		and not game.view.object_views.has("player:thirst"),
 		"natural expiry restores ordinary idle and stops both active presentations")
+	check_source_bleed_particle_poses()
 
 func check_thirst_burst() -> void:
 	check(game.objects.size()==1,"full-charge release creates exactly one passive object")
@@ -7029,17 +7030,26 @@ func check_thirst_burst() -> void:
 	var numbers: Array = game.bus.events_of("combat.damage_number").filter(
 		func(event):return event["id"]=="bleed" and event["target"]==first["id"])
 	var bank: Dictionary = game.table.assets["monsters"][first["def"]["bank"]]
+	var blood_path := "monster/common/particle/monsterdieblood.ptl"
+	var drops: Array = native_particle_cues(blood_path)
+	var particles: Array = game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==blood_path)
+	check(drops.size()==1 and drops[0]["point"]==first["pos"] and drops[0]["height"]==30
+		and drops[0]["burst_area"]==[30,50,floori(float(bank["number_height"])*0.7)]
+		and particles.size()==3 and particles.all(func(fx):return fx.errors.is_empty()),
+		"the adult blood PTL renders three original ANI particles at the airborne monster")
 	check(numbers.size()==1 and numbers[0]["amount"]==78 and numbers[0]["digits"]=="damage_bleed"
 		and numbers[0]["native_direct"] and numbers[0]["point"]==Vector3(first["pos"].x,first["pos"].y,45+int(bank["number_height"]))
 		and game.view.numbers.back()["end_ms"]==1000.0 and game.view.hud.digits.has("damage_bleed_7"),
 		"owned bleed draws the native gold digits at the victim's standing height plus airborne Z and 15 pixels")
 	first["z"] = 0.0
 	game.step_numeric_actor(first,first["numeric"],499)
-	check(first["hp"]==hp-78 and cues("BLOOD_DROP_LOOP").size()==1,"native bleed does not tick again before 500 ms")
+	check(first["hp"]==hp-78 and cues("BLOOD_DROP_LOOP").size()==1 and native_particle_cues(blood_path).size()==1,
+		"native bleed does not tick again before 500 ms")
 	first["state"] = "move"
 	game.step_numeric_actor(first,first["numeric"],1)
-	check(first["hp"]==hp-156 and cues("BLOOD_DROP_LOOP").size()==2,
-		"an ordinary moving monster takes the same 500 ms bleed tick and plays the same drop sound")
+	drops = native_particle_cues(blood_path)
+	check(first["hp"]==hp-156 and cues("BLOOD_DROP_LOOP").size()==2 and drops.size()==2 and drops.back()["burst_count"]==3,
+		"an ordinary moving monster takes the same 500 ms tick with three drops and the same sound")
 	game.step_objects(259)
 	check(game.objects.has(burst) and cues("FIRE_PILLAR_HIT").size()==2,"object keeps one hit per target through age 359")
 	game.step_objects(1)
@@ -7081,6 +7091,30 @@ func check_thirst_burst() -> void:
 	last_number = game.bus.events_of("combat.damage_number").back()
 	check(last_number["amount"]==25 and last_number["digits"]=="damage",
 		"the surviving external application returns to white after owned bleed expires")
+
+func check_source_bleed_particle_poses() -> void:
+	var blood_path := "monster/common/particle/monsterdieblood.ptl"
+	var player_hp := float(game.player["hp"])
+	game.numeric_player.effects.add_source_bleed(1,2000,40)
+	game.player["state"] = "idle"
+	game.step_numeric_actor(game.player,game.numeric_player,0)
+	game.player["state"] = "move"
+	game.step_numeric_actor(game.player,game.numeric_player,500)
+	game.player["state"] = "down"
+	game.step_numeric_actor(game.player,game.numeric_player,500)
+	var drops := native_particle_cues(blood_path)
+	check(drops.slice(-3).map(func(cue):return cue["burst_count"])==[3,6,3]
+		and drops[-2]["burst_area"]==[80,50,70] and game.player["hp"]==player_hp,
+		"zero damage still emits drops: three in waiting and down poses, six in the wider move branch")
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(90,0))
+	target["hp"] = 1.0
+	target["numeric"].effects.add_source_bleed(25,500,40)
+	var before_lethal := drops.size()
+	var before_sound := cues("BLOOD_DROP_LOOP").size()
+	game.step_numeric_actor(target,target["numeric"],0)
+	check(target["hp"]==0.0 and native_particle_cues(blood_path).size()==before_lethal+1
+		and cues("BLOOD_DROP_LOOP").size()==before_sound+1,
+		"lethal bleed still emits its adult burst and sound during the final tick")
 
 func check_bloodblast_speed_refresh() -> void:
 	var profile := ProfileSession.new()

@@ -628,6 +628,10 @@ func _spawn_native_particle(event: Dictionary) -> void:
 		_append_native_particles(path,scale_value,particle_bursts.emit_at(emitter,elapsed-int(entry["started_at"])))
 		return
 	if float(definition.get("creation_frequency",0)) <= 0.0:
+		if event.has("burst_count"):
+			definition = definition.duplicate()
+			definition["maximum_create_number"] = event["burst_count"]
+			definition["create_area_size"] = event["burst_area"]
 		_append_native_particles(path,scale_value,particle_bursts.emit_once(definition,origin,mirrored))
 		return
 	var emitter: RefCounted = particle_bursts.create_emitter(definition,origin,mirrored)

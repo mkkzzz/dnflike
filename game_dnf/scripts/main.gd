@@ -311,10 +311,12 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 				body["down_ms"] = float(rules["reaction"]["down_hold_ms"])
 			bus.emit("combat.status",{"target":body["id"],"id":event["id"],"change":"removed"})
 			continue
-		if event["type"]=="sound":
-			play_sound(event["key"])
+		var bleed_tick: bool = event["type"]=="bleed_tick"
+		var ignore_damage: bool = int(body["id"])==PLAYER_ID and god_mode
+		if bleed_tick and (ignore_damage or int(event["damage"])<=0):
+			present_source_bleed_tick(body)
 			continue
-		if int(body["id"])==PLAYER_ID and god_mode:continue
+		if ignore_damage:continue
 		if event["type"]=="frenzy_drain":
 			# The appendage writes HP directly and removes itself at the HP floor.
 			var hp := float(body["hp"])
@@ -328,7 +330,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			bus.emit("combat.damage_number",{"target":body["id"],"amount":event["damage"],"id":event["id"],
 				"victim":victim_kind(body),"point":point})
 			continue
-		var direct: bool = event["type"] == "direct_damage"
+		var direct: bool = bleed_tick or event["type"] == "direct_damage"
 		var amount := int(event["damage"])
 		if not direct:
 			var resolved := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
@@ -354,6 +356,7 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 					"follow":body["id"],"fresh":true})
 		bus.emit("combat.damage",{"target":body["id"],"amount":amount,"critical":false,"category":event["damage_type"],
 			"victim":victim_kind(body),"reaction":"none","point":point,"show_number":event.get("show_number",not direct)})
+		if bleed_tick:present_source_bleed_tick(body)
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
@@ -6228,6 +6231,23 @@ func announce_source_bleed(target_id: int) -> void:
 	bus.emit("combat.status",{"target":target_id,"id":"bleed","change":"added"})
 	# 8B56B1 plays this cue after a successful application or reapplication.
 	play_sound("CONDITION_BLOODING")
+
+func present_source_bleed_tick(body: Dictionary) -> void:
+	var is_player: bool = int(body["id"])==PLAYER_ID
+	var height := 100 if is_player else HellbenterBlood.target_display_height(self,body)
+	# 8B2772..8B2806 compares the character's current ANI with stay, sit,
+	# down and rest. Thirst uses the same override for both waiting getters.
+	var active_pose := false
+	if is_player:
+		var pose: String = player_ani()[0]
+		var thirst_idle := String(move_def("sacrifice").get("active_idle_ani",""))
+		active_pose = pose not in ["stay","sit","down","rest",thirst_idle]
+	# 8B2F00..8B2FE3 relocates and bursts the adult emitter at the target.
+	var height_range := int(Kernel.NativeMotion.f32(height*Kernel.NativeMotion.f32(0.7)))
+	bus.emit("combat.cue",{"kind":"native_particle","path":"monster/common/particle/monsterdieblood.ptl",
+		"point":Vector2(body["pos"]).round(),"height":roundi(float(body["z"])),
+		"burst_count":6 if active_pose else 3,"burst_area":[80 if active_pose else 30,50,height_range]})
+	play_sound("BLOOD_DROP_LOOP")
 
 func capture_frame(name: String) -> void:
 	await RenderingServer.frame_post_draw

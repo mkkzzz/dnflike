@@ -53,6 +53,14 @@ NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
     for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar', 'illusionslash', 'illusionslashsub')
 ] + [HUNDRED_SWORD_FINISH_PARTICLE]
+BLEED_PARTICLE = 'monster/common/particle/monsterdieblood.ptl'
+BLEED_ANIMATION = 'monster/common/animation/monsterdieblood.ani'
+BLEED_IMAGE = 'sprite/monster/common/monsterdieblood.img'
+BLEED_PARTICLE_SOURCES = {
+    BLEED_PARTICLE: 'c20d4234ceaf01c74a3beb50ab8544721c4fea8b8152ed384d36301bfdca06bb',
+    BLEED_ANIMATION: 'a277fdae34c5492da8c9faaf29dfb0b2dd3a56aeecd7fa656668e62dcb772d57',
+    BLEED_IMAGE: '355bb5c1677298a0fa3bcfe08cf48a1c5bf0798611994af971726a846d75a868',
+}
 OUTRAGE_PARTICLE_SOURCES = {
     OUTRAGE_PARTICLES['stone']: {
         OUTRAGE_PARTICLES['stone']: '917e7ec061ee2a42b90fdf938c5f71823612bfcce306d52d79d8f4b147bf44b3',
@@ -211,6 +219,7 @@ def native_particle_definitions(src, extra_pins=None):
     pinned.update(extra_pins or {})
     pinned.update(OUTRAGE_PARTICLE_SOURCES)
     pinned.update(HELLBENTER_PARTICLE_SOURCES)
+    pinned[BLEED_PARTICLE] = BLEED_PARTICLE_SOURCES
     pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
     pinned[PATTACK_PARTICLE] = PATTACK_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:
@@ -226,6 +235,12 @@ def native_particle_definitions(src, extra_pins=None):
             raise ValueError('Native particle source differs from compiled pack: '+path)
         particles[path] = {'sha256': entry['sha256'], 'decoded': entry['decoded']}
         src.sources[path] = entry['sha256']
+        if path == BLEED_PARTICLE:
+            if entry['animations'] != [BLEED_ANIMATION] or not src.image(BLEED_IMAGE) or (
+                    src.sources[BLEED_IMAGE] != BLEED_PARTICLE_SOURCES[BLEED_IMAGE]):
+                raise ValueError('Original bleed particle dependencies differ')
+            effects['native_contact_blood'] = BLEED_ANIMATION
+            continue
         if path == HELLBENTER_LOOP_PARTICLE:
             # A6B285..A6B3D4 installs the same random IMG frame in both blank ANIs.
             for animation in HELLBENTER_LOOP_ANIMATIONS:
@@ -402,7 +417,7 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
-    'native_contact_blood': 'monster/common/animation/monsterdieblood.ani',
+    'native_contact_blood': BLEED_ANIMATION,
     'native_flash_screen': NATIVE_FLASH_SCREEN,
     **HUNDRED_SWORD_TRAVEL_EFFECTS,
     **HELLBENTER_WOUND_EFFECTS,
