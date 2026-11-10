@@ -1385,8 +1385,12 @@ def build_outrage_break(skill: dict, records: dict, fx: dict, effects: dict, obj
                             "native_controller": {"kind": "outrage_magma", "layers": magma_fx, **timing}}}
     ready_fx = [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
                 for slot, depth in ((0, 2), (1, 1))]
-    slash_fx = [{"key": layers[slot], "at": at, "action_clock": True, "depth_offset": depth}
-                for slot, depth, at in ((2, 2, 0), (3, 1, 0), (4, 4, impact), (5, 3, impact))]
+    slash_fx = [{"key": layers[slot], "at": 0, "action_clock": True, "depth_offset": depth}
+                for slot, depth in ((2, 2), (3, 1))]
+    # CB49DB detaches both impact clips when registry slot 4 enters frame five.
+    slash_fx.extend({"key": layers[slot], "at": impact, "action_clock": True,
+                     "depth_offset": depth, "detach_at_frame": 5}
+                    for slot, depth in ((4, 4), (5, 3)))
     # CB4654 installs the stone composite in the caster's draw slot 6.
     slash_fx.append({"key": layers[6], "at": impact, "action_clock": True, "depth_offset": 6,
                      "offset_x": 121, "offset_y": 10})

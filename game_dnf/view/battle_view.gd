@@ -203,6 +203,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 				if int(source.get("action_instance",-1)) != fx.action_instance or source.get("state","") != "action":fx.queue_free()
 				else:
 					var elapsed: float = float(source.get("fx_clock",source["clock"]))-fx.action_clock_at+fx.action_clock_carry
+					elapsed = float(source.get("fx_clocks",{}).get(fx.cue_key,elapsed))
 					fx.seek(0.0 if fx.freeze_first_frame else maxf(0.0,elapsed))
 			elif fx.get_meta("particle_birth_pending",false):
 				# The cue was created during this simulation tick. Its ANI begins

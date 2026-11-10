@@ -3093,6 +3093,54 @@ func check_outrage_break_speed_refresh() -> void:
 			game.end_action()
 			check(not game.view._object_particle_emitters.has(id),"leaving the action releases the stone emitter")
 
+func check_outrage_break_impact_layers() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	for sample: Array in [[1.0,false,420],[2.0,false,205],[1.0,true,205]]:
+		start_room("original_27601","katana",-1,spec,"berserker")
+		game.clear_monsters()
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = sample[0]
+		game.player["hp"] = 1000.0
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		press(KEY_A)
+		step(0.0)
+		if sample[0] == 2.0:
+			step(279.0)
+			step(299.0)
+		else:
+			step(300.0)
+			step(260.0)
+			step(40.0)
+			step(300.0)
+			step(260.0)
+		var impact := func():
+			return game.view.effects.filter(func(fx):return String(fx.cue_key).contains("sword_slash_impact_"))
+		var stone := func():
+			return game.view.effects.filter(func(fx):return String(fx.cue_key).contains("sword_slash_stone"))
+		check(impact.call().size()==2 and impact.call().all(func(fx):return fx.clock_ms==0.0),
+			"the two original impact clips start their own clocks at the landing update")
+		var age := 0
+		if sample[1]:
+			step(39.0)
+			game.numeric_player.values["attack_speed"] = 2.0
+			step(1.0)
+			age = 19
+			check(impact.call().size()==2 and impact.call().all(func(fx):return fx.clock_ms>38.0 and fx.clock_ms<39.0),
+				"the impact clips rescale their own 40 ms elapsed time at an attack speed refresh")
+		step(float(sample[2]-age-1))
+		check(impact.call().size()==2 and impact.call().all(func(fx):return fx.frame["frame"]==4),
+			"both landing overlays still draw their fourth indexed frame one millisecond before detach")
+		step(1.0)
+		check(impact.call().is_empty() and stone.call().size()==1 and game.objects.size()==1
+			and game.player["action"]=="outragebreak",
+			"the original fifth-frame gate detaches only the two impact overlays before recovery ends")
+
 func check_outrage_break_eruption() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -6036,6 +6084,7 @@ func run() -> void:
 	check_hellbenter_column_hold()
 	check_hellbenter_special_wounds()
 	check_outrage_break_speed_refresh()
+	check_outrage_break_impact_layers()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()
 	check_outrage_break_camera()

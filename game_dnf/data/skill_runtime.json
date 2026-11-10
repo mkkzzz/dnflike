@@ -7794,12 +7794,14 @@
        "action_clock": true,
        "at": 600,
        "depth_offset": 4,
+       "detach_at_frame": 5,
        "key": "skillfx_sword_slash_impact_ldodge_8c40b1c6"
       },
       {
        "action_clock": true,
        "at": 600,
        "depth_offset": 3,
+       "detach_at_frame": 5,
        "key": "skillfx_sword_slash_impact_none_8a132f9c"
       },
       {

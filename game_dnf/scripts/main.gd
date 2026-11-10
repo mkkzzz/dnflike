@@ -1124,12 +1124,13 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	var outrage := native_phase.has("outrage_timeline")
 	var old_outrage_event_clock := action_event_clock(old_clock) if outrage else 0.0
 	if not native_phase.is_empty():clock = old_clock+ms
-	if outrage and refresh_ani_rate:
+	if outrage:
 		var old_rate := float(native_phase["outrage_rate"])
-		var rate := attack_animation_percent(0,old_rate)
+		var rate := attack_animation_percent(0,old_rate) if refresh_ani_rate else old_rate
 		if rate != old_rate:
 			clock = _rescale_native_ani_ms(clock,old_rate,rate)
 			retime_outrage_phase(native_phase,stage,rate)
+		step_outrage_fx(native_phase["outrage_fx"],ms,old_rate,rate)
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
 		cast["animation_ms"] += ms
@@ -1772,6 +1773,21 @@ func retime_outrage_phase(phase: Dictionary, stage: Dictionary, rate: float) -> 
 		# CB44A7 calls 10857E0 on every airborne update using the current ANI rate.
 		phase["outrage_impact_ms"] = _native_ani_delay(float(phase["outrage_impact_at"]),rate)
 
+func step_outrage_fx(layers: Dictionary, ms: float, old_rate: float, rate: float) -> void:
+	var detached := []
+	for key: String in layers:
+		var layer: Dictionary = layers[key]
+		layer["clock"] += ms
+		if rate != old_rate:
+			# 828BD8 applies the new rate to each attached ANI's own clock.
+			layer["clock"] = _rescale_native_ani_ms(layer["clock"],old_rate,rate)
+			layer["timed"] = native_timed_frames(layer["source"],rate)
+		var frame := int(layer["detach_at_frame"])
+		if frame >= 0 and layer["clock"] >= layer["timed"][frame]["start_ms"]:detached.append(key)
+	if detached.is_empty():return
+	for key: String in detached:layers.erase(key)
+	bus.emit("combat.cue",{"kind":"fx_clear","tag":player["fx_tag"],"keys":detached})
+
 func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float, ms: float) -> void:
 	var impact := int(phase["outrage_impact_ms"])
 	var elapsed := int(clock)
@@ -2222,7 +2238,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "outrage_break":
 		var stage := action_def()
-		var phase := {}
+		var phase := {"outrage_fx":{}}
 		if index == 1:
 			# CCBDF1 reads the rounded coordinate from the actor's X getter.
 			phase["outrage_origin_x"] = roundi(player["pos"].x)
@@ -2569,13 +2585,20 @@ func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 ## Timed effect/sound cues of the move plus the ANI's own frame sound events.
 ## Move effects are tagged with the running action and capped at the time it has left.
 func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
+	var phase: Dictionary = player["native_phase"]
 	for fx: Dictionary in stage.get("fx",[]):
 		var at := float(fx["at"])
 		if action_timed_crossed(at,old_t,new_t):
 			var left := action_duration(String(player["action"]))-at
 			var synchronized := bool(fx.get("action_clock",false))
-			if player["native_phase"].get("outrage_impact_at",-1.0) == at:at = new_t
-			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
+			var key := String(fx["key"])
+			if phase.get("outrage_impact_at",-1.0) == at:at = new_t
+			if phase.has("outrage_fx") and combat_assets["effects"].has(key):
+				var source := Kernel.Timeline.from_ani(combat_assets["effects"][key])
+				phase["outrage_fx"][key] = {"clock":0.0,"source":source,
+					"timed":native_timed_frames(source,phase["outrage_rate"]),
+					"detach_at_frame":fx.get("detach_at_frame",-1)}
+			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
 				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
 				"offset_y":float(fx.get("offset_y",0)),"scale":float(fx.get("scale",1.0)),
@@ -5664,6 +5687,10 @@ func view_snapshot() -> Dictionary:
 	append_hellbenter_view(objs)
 	hellbenter_blood.append_view(self,objs)
 	var phase: Dictionary = player.get("native_phase",{})
+	var fx_clocks := {}
+	for key: String in phase.get("outrage_fx",{}):
+		var layer: Dictionary = phase["outrage_fx"][key]
+		fx_clocks[key] = _source_animation_clock(layer["clock"],layer["timed"],layer["source"])
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"camera_focus_x":camera_focus_x(phase),
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
@@ -5671,6 +5698,7 @@ func view_snapshot() -> Dictionary:
 			"body_rotation":float(phase.get("body_rotation",0.0)),
 			"cast_layers":phase.get("cast_layers",[]),
 			"fx_clock":player.get("draw_charge",{}).get("fx_clock",player.get("charge_crash_hold",{}).get("fx_clock",ani[1])),
+			"fx_clocks":fx_clocks,
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
