@@ -50,7 +50,7 @@ BUILD_VERSION = 7
 SKILL_RUNTIME = ROOT / 'game_dnf/data/skill_runtime.json'
 NATIVE_PARTICLES = [
     'passiveobject/character/swordman/particle/'+stem+'.ptl'
-    for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar', 'illusionslash')
+    for stem in ('icewaveparticlesmoke', 'icewaveparticle', 'icewaveparticlestar', 'illusionslash', 'illusionslashsub')
 ]
 OUTRAGE_PARTICLE_SOURCES = {
     OUTRAGE_PARTICLES['stone']: {
@@ -542,6 +542,7 @@ ILLUSION_SLASH_AUDIO = {
     'SM_HOANYOUNG_START': 'sounds/char/swordman/sm_hoanyoung_start.ogg',
     'SM_HOANYOUNG_FIN': 'sounds/char/swordman/sm_hoanyoung_fin.ogg',
     'HOANYOUNG_HIT': 'sounds/char/swordman/effect/hoanyoung_hit.ogg',
+    'HOANYOUNG_WAVE': 'sounds/char/swordman/effect/hoanyoung_wave.ogg',
 }
 ILLUSION_SLASH_REPEAT_VOICES = [f'sounds/char/swordman/sm_hoanyoung_{index:02}.ogg' for index in range(1, 5)]
 ILLUSION_WAVE_LAYERS = {
@@ -1710,9 +1711,15 @@ def main() -> int:
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_illusion_slash_audio:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        ground_wave = runtime['moves']['illusionslash']['club_wave']
+        layers = ground_wave['native_controller']
         specs = [('audio', key, path) for key, path in ILLUSION_SLASH_AUDIO.items()]
         specs.append(('audio', 'R_SM_HOANYOUNG', ILLUSION_SLASH_REPEAT_VOICES))
         specs.extend(('effects', key, path) for key, path in ILLUSION_WAVE_LAYERS.items())
+        specs.extend(('effects', key, runtime['assets']['effect_anims'][key])
+                     for key in (layers['attached'], *layers['detached']))
+        specs.append(('objects', ground_wave['object'], ground_wave['object']))
         specs.extend(('objects', path, path) for path in
                      (f'passiveobject/character/swordman/illusionslashmelee{index}.obj' for index in range(1, 5)))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))

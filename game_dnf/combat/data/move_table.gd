@@ -21,6 +21,7 @@ const SHORT_MASTERY_SKL := "skill/swordman/shortswordmastery.skl"
 const BLADE_MASTERY_SKL := "skill/swordman/blademastery.skl"
 const LIGHT_MASTERY_SKL := "skill/swordman/lightswordmastery.skl"
 const HEAVY_MASTERY_SKL := "skill/swordman/heavyswordmastery.skl"
+const BLUNT_MASTERY_SKL := "skill/swordman/bluntmastery.skl"
 const CHARGE_CRASH_WAVE_OBJ := "passiveobject/character/swordman/chargecrashsub.obj"
 const NORMAL_ATTACK_CHAIN := ["attack1","attack2","attack3"]
 # CA5474 and CA548A append the two native normal-attack cancel frames.
@@ -296,7 +297,7 @@ func _selected_move_spec(name: String) -> Dictionary:
 		if job != "weaponmaster" or weapon not in ["greatsword","club"]:return base
 		# CBE956/CBE997 use each weapon's own mastery and its original gate column.
 		var heavy := weapon == "greatsword"
-		var mastery := _skill_row(HEAVY_MASTERY_SKL if heavy else "skill/swordman/bluntmastery.skl")
+		var mastery := _skill_row(HEAVY_MASTERY_SKL if heavy else BLUNT_MASTERY_SKL)
 		if int(mastery.get("rank",0)) < int(mastery["static"][2 if heavy else 1]):return base
 		var variant: Dictionary = move_specs.get("charge_crash__variant_1",{})
 		if variant.is_empty():return base
@@ -512,6 +513,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
 			if name == "illusionslash" and stage["ani"] == "illusionslashfinal":
+				if job == "weaponmaster" and weapon == "club":
+					var mastery := _skill_row(BLUNT_MASTERY_SKL)
+					# CB5569 gates the ground wave on mastery static[4]; CB55BA reads rank column 11.
+					if int(mastery["rank"]) >= int(mastery["static"][4]):
+						var wave: Dictionary = spec["club_wave"].duplicate()
+						wave["percent"] = int(mastery["level_row"][11])
+						built["hits"] = _build_stage({"hits":[wave]},skill)["hits"]
+						var ground_hit: Dictionary = built["hits"][0]
+						ground_hit["hitstop_ms"] = _atk_hitstop(ground_hit["atk"],0.0)
 				_append_illusion_finish_hits(built,skill,spec["finish_weapon_tracks"].get(weapon,[]))
 			elif name == "illusionslash":
 				var hit: Dictionary = built["hits"][0]

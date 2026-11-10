@@ -2,6 +2,10 @@
  "active_count": 74,
  "assets": {
   "effect_anims": {
+   "skillfx_2_ground_dodge_b2aef27e": "passiveobject/character/swordman/animation/illusionslashsub/2_ground_dodge .ani",
+   "skillfx_3_sword_dodge_a898212c": "passiveobject/character/swordman/animation/illusionslashsub/3_sword_dodge.ani",
+   "skillfx_4_attackt_dodge_42e3c96d": "passiveobject/character/swordman/animation/illusionslashsub/4_attackt_dodge.ani",
+   "skillfx_5_light_dodge_cd1070ff": "passiveobject/character/swordman/animation/illusionslashsub/5_light_dodge.ani",
    "skillfx_add_e433feca": "character/swordman/effect/animation/wavemark/add.ani",
    "skillfx_appear1_9bb8086c": "character/swordman/effect/animation/keiga/appear1.ani",
    "skillfx_area_3363e3fd": "character/swordman/effect/animation/shockwavearea/area.ani",
@@ -49,6 +53,7 @@
    "skillfx_dotareadamage_9130facc": "character/swordman/effect/animation/dotareadamage.ani",
    "skillfx_down_slash_f79b50a7": "character/swordman/effect/animation/chargecrash/down-slash.ani",
    "skillfx_dust_2e1015db": "character/swordman/effect/animation/guard/dust.ani",
+   "skillfx_earth_break_sub_84c03cd0": "passiveobject/character/swordman/animation/illusionslashsub/earth_break_sub.ani",
    "skillfx_end_3fcb6599": "character/swordman/effect/animation/bloodyrave/end.ani",
    "skillfx_end_7120532f": "passiveobject/character/swordman/animation/sayaex/end.ani",
    "skillfx_epidemicrasaareaappear1_a9cc3101": "passiveobject/character/swordman/animation/epidemicrasa/epidemicrasaareaappear1.ani",
@@ -168,6 +173,7 @@
    "passiveobject/character/swordman/illusionslashmelee2.obj": "passiveobject/character/swordman/illusionslashmelee2.obj",
    "passiveobject/character/swordman/illusionslashmelee3.obj": "passiveobject/character/swordman/illusionslashmelee3.obj",
    "passiveobject/character/swordman/illusionslashmelee4.obj": "passiveobject/character/swordman/illusionslashmelee4.obj",
+   "passiveobject/character/swordman/illusionslashsub.obj": "passiveobject/character/swordman/illusionslashsub.obj",
    "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
    "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
    "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
@@ -5591,6 +5597,27 @@
    ]
   },
   "illusionslash": {
+   "club_wave": {
+    "at": 300,
+    "native_controller": {
+     "attached": "skillfx_earth_break_sub_84c03cd0",
+     "detached": [
+      "skillfx_2_ground_dodge_b2aef27e",
+      "skillfx_3_sword_dodge_a898212c",
+      "skillfx_4_attackt_dodge_42e3c96d",
+      "skillfx_5_light_dodge_cd1070ff"
+     ],
+     "kind": "illusion_club_wave",
+     "particle": "passiveobject/character/swordman/particle/illusionslashsub.ptl"
+    },
+    "object": "passiveobject/character/swordman/illusionslashsub.obj",
+    "offset": [
+     180,
+     0,
+     0
+    ],
+    "starts_at_zero": true
+   },
    "finish_weapon_tracks": {
     "beamsword": [
      {
@@ -6330,6 +6357,9 @@
      "fx": [],
      "hits": [
       {
+       "native_controller": {
+        "kind": "illusion_melee"
+       },
        "object": "passiveobject/character/swordman/illusionslashmelee1.obj",
        "offset": [
         0,
@@ -6348,6 +6378,9 @@
      "fx": [],
      "hits": [
       {
+       "native_controller": {
+        "kind": "illusion_melee"
+       },
        "object": "passiveobject/character/swordman/illusionslashmelee2.obj",
        "offset": [
         0,
@@ -6365,6 +6398,9 @@
      "fx": [],
      "hits": [
       {
+       "native_controller": {
+        "kind": "illusion_melee"
+       },
        "object": "passiveobject/character/swordman/illusionslashmelee3.obj",
        "offset": [
         0,
@@ -6382,6 +6418,9 @@
      "fx": [],
      "hits": [
       {
+       "native_controller": {
+        "kind": "illusion_melee"
+       },
        "object": "passiveobject/character/swordman/illusionslashmelee4.obj",
        "offset": [
         0,

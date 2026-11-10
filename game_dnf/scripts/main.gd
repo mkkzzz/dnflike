@@ -2445,11 +2445,14 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					player["native_phase"]["outrage_stone_pending"] = true
 					# CB460B starts the room shake on the landing update.
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
-				elif hit.get("skill_id","") == "illusionslash" and int(player["stage"]) == 4:
+				elif hit.get("skill_id","") == "illusionslash" and hit.get("object","").ends_with("/illusionslashwave.obj"):
 					hit = prepare_illusion_wave(hit)
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
+				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
+					# CB5614 creates object 20147 at the caster's integer XYZ plus 180 X.
+					spawn_object(hit,"player",Vector2(Vector2i(player["pos"])),float(int(player["z"])),facing,attack_power())
 				else:
 					spawn_object(hit,"player",player["pos"],float(player["z"]),facing,attack_power())
 				if hit.get("skill_id","") == "bloodyrave":
@@ -3687,6 +3690,10 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["timeline"] = timeline
 	_next_entity_id += 1
 	objects.append(entity)
+	if kind == "illusion_club_wave":
+		for key: String in controller["detached"]:
+			bus.emit("combat.cue",{"kind":"fx","key":key,"point":entity["pos"],"height":entity["z"],
+				"facing":facing,"depth_offset":-1,"fresh":true})
 	if controller.get("kind","") == "icewave_chain":
 		# A6FE41 reads 1A5F820 (Smoke.ptl), sets emitter XYZ, resets it at 0,
 		# emits once, then A6FF21 applies ice DD8 to the generated ANI only.
@@ -3760,6 +3767,10 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var done := false
 		var life := float(o["life_ms"])
 		var tl: Array = o.get("timeline",obj["timeline"])
+		if kind == "illusion_melee" and not o.has("swing_played"):
+			# A70570/A705E0 set the melee object's entry cue, consumed at 7F9F22.
+			o["swing_played"] = true
+			play_sound("HOANYOUNG_WAVE")
 		if kind == "outrage_floor":
 			if old_t < float(controller["eruption_at_ms"]) and t >= float(controller["eruption_at_ms"]):
 				# A72AC8 uses the same strength and a longer independent window.
@@ -3777,6 +3788,11 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				objects.remove_at(i)
 				continue
 			step_outrage_magma(o,controller)
+		if kind == "illusion_club_wave" and not o.has("stones_emitted"):
+			# A704D5 updates the emitter's XYZ and A704E6 consumes the burst.
+			o["stones_emitted"] = true
+			bus.emit("combat.cue",{"kind":"native_particle","path":controller["particle"],
+				"point":o["pos"],"height":o["z"]})
 		if kind in ["bloodblast","illusion_wave"]:
 			if int(o.get("hit_resets_left",0)) > 0 and t >= float(o["next_hit_reset"]):
 				o["hits"].clear()
@@ -4990,6 +5006,13 @@ func view_snapshot() -> Dictionary:
 				"offset":Vector2(int(controller["trail_x"])*int(o["facing"]),-1)}
 			objs.append(item)
 			objs.append(front)
+		elif controller.get("kind","") == "illusion_club_wave":
+			item["depth_offset"] = -1
+			var floor := item.duplicate()
+			floor["id"] = "%s:floor"%o["id"]
+			floor["effect"] = controller["attached"]
+			objs.append(floor)
+			objs.append(item)
 		elif controller.get("kind","") in GHOST_FIELD_KINDS:
 			objs.append_array(_ghost_field_layers(item,controller,float(o["exit_at_ms"])))
 		elif controller.get("kind","") == "sayaex_ice":

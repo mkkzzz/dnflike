@@ -3068,7 +3068,8 @@ func grab_direct_hits() -> Array:
 
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]
-	check(game.view.audio.variants["HOANYOUNG_HIT"][0] is AudioStreamOggVorbis and voices.size()==4
+	check(game.view.audio.variants["HOANYOUNG_HIT"][0] is AudioStreamOggVorbis
+		and game.view.audio.variants["HOANYOUNG_WAVE"][0] is AudioStreamOggVorbis and voices.size()==4
 		and voices.all(func(voice):return voice is AudioStreamOggVorbis),
 		"the original hit cue and all four repeat voices load as audio streams")
 	var profile := ProfileSession.new()
@@ -3102,7 +3103,8 @@ func check_illusion_finish() -> void:
 			check(game.hit_count==0 and melee["pos"]==POINT+Vector2(19,1) and melee["z"]==1.0,
 				"the melee object advances on the original particle axis and its first two frames are blank")
 			game.step_objects(1.0)
-			check(game.hit_count==1 and melee["hits"].has(melee_target["id"]) and cues("R_SQUARESWDC_HIT").size()==1,
+			check(game.hit_count==1 and melee["hits"].has(melee_target["id"]) and cues("R_SQUARESWDC_HIT").size()==1
+				and cues("HOANYOUNG_WAVE").size()==1,
 				"the independent melee object hits on its first native attack frame")
 			game.clear_monsters()
 			game.hit_count = 0
@@ -3236,6 +3238,62 @@ func check_illusion_finish() -> void:
 		game.step_objects(200.0)
 		check(wave["pos"]==POINT+Vector2(facing*151,facing*14),
 			"the original angle and 29 percent depth projection turn the wave without mirroring depth")
+	for sample: Array in [[6,1,0],[7,1,3220],[8,-1,3427]]:
+		spec["skills"]["bluntmastery"] = sample[0]
+		var facing: int = sample[1]
+		start_room("","club",facing,spec)
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 1000.0
+		game.player["pos"] = POINT+Vector2(0.75,0.75)
+		press(KEY_A)
+		step(100)
+		for slash: int in 9:step(150)
+		game.step_objects(1000.0)
+		step(299.0)
+		check(game.player["stage"]==4 and game.objects.is_empty(),"the club branch also waits until the smash frame")
+		var first_new_id: int = game._next_entity_id
+		step(1.0)
+		check(game.objects.size()==1,"the club finisher emits a single object")
+		if game.objects.is_empty():continue
+		var wave: Dictionary = game.objects[0]
+		if int(sample[2])==0:
+			check(wave["def"]["path"].ends_with("/illusionslashwave.obj"),"rank six keeps the original default wave")
+			continue
+		var controller: Dictionary = wave["hit"]["native_controller"]
+		var origin := POINT+Vector2(facing*180,0)
+		check(wave["def"]["path"].ends_with("/illusionslashsub.obj") and wave["pos"]==origin
+			and wave["hit"]["percent"]==sample[2] and wave["hit"]["atk"]["lift_up"]==250
+			and wave["hit"]["atk"]["push_aside"]==100,
+			"mastered club dispatches the stationary object at mirrored offset 180 with its own rank and ATK")
+		var visible: Array = game.view_snapshot()["objects"]
+		check(visible.size()==2 and visible[0]["effect"]==controller["attached"]
+			and visible[1]["depth_offset"]==-1,
+			"the original earth layer accompanies the bottom-layer object")
+		for key: String in controller["detached"]:
+			check(cues(key).size()==1 and cues(key)[0]["point"]==origin,
+				"the four original draw-only layers start at the same ground point")
+		var victim: Dictionary = api.spawn_dummy(origin)
+		victim["hp"] = 50000.0
+		game.step_objects(16.0,first_new_id)
+		var debris: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==controller["particle"])
+		check(wave["clock"]==0.0 and wave["hits"].has(victim["id"]) and game.hit_count==1
+			and cues("R_SQUARESWDC_HIT").size()==1 and victim["state"]=="air" and victim["stuck_ms"]==40.0,
+			"the ground object knocks down at frame zero using the original impact cue")
+		check(debris.size()==1 and debris[0]["point"]==origin,"the first object update emits one original stone burst")
+		game.view.present(game.view_snapshot(),0.0,0.0)
+		check(game.view.effects.any(func(effect):return effect.has_meta("source_ptl") \
+			and effect.get_meta("source_ptl")==controller["particle"]),
+			"the original stone particle sprites load into the battle view")
+		game.step_objects(560.0)
+		var late: Dictionary = api.spawn_dummy(origin)
+		game.step_objects(79.0)
+		check(game.objects.size()==1 and wave["pos"]==origin and not wave["hits"].has(late["id"]),
+			"the ground wave stays in place, and its final frame has no attack box")
+		game.step_objects(1.0)
+		check(game.objects.is_empty() and game.hit_count==1,"the ground object retires at 640 ms without reopening its hit ledger")
 
 func check_rapid_move_slash() -> void:
 	var profile := ProfileSession.new()

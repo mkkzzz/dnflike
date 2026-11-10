@@ -37,6 +37,7 @@ CHR_ATK = "character/swordman/attackinfo/"
 CHR_FX = "character/swordman/effect/animation/"
 OBJ_ROOT = "passiveobject/character/swordman/"
 BLOODBLAST_LAYER_SCRIPT = OBJ_ROOT + "animation/blastblood1.ani.als"
+ILLUSION_CLUB_LAYER_SCRIPT = OBJ_ROOT + "animation/illusionslashsub/1_shockwave_dodge.ani.als"
 FIXED_ATTACK_BASE_SOURCE = "etc/etcparameter.etc"
 DRAW_SHOCK_STATUS_SOURCE = "etc/activestatustable_ex.etc"
 
@@ -1056,6 +1057,30 @@ def bloodblast_layer_script(library, records: dict) -> dict:
         raise ValueError("Incomplete Blood Blast layer sequence")
     return {"source": BLOODBLAST_LAYER_SCRIPT, "sha256": script["sha256"],
             "layers": sorted(layers, key=lambda layer: layer["order"])}
+
+
+def illusion_club_layer_script(library) -> dict:
+    script = library.script(ILLUSION_CLUB_LAYER_SCRIPT)
+    if not script or script["sha256"] != "d60736053f47094121b7342f0b0cc287f58e250be7cc6dfcf997faf2b2c3c65e":
+        raise ValueError("Unverified Illusion Slash ground-wave layer script")
+    directory = PurePosixPath(ILLUSION_CLUB_LAYER_SCRIPT).parent
+    paths: dict[str, str] = {}
+    attached = ""
+    detached = []
+    for field in script["fields"]:
+        tag, values = field["tag"], field["values"]
+        if tag == "[use animation]":
+            relative, alias = values
+            paths[alias] = str(directory / relative).lower()
+        elif tag == "[add]" and values[:2] == [0, 0] and not attached:
+            attached = paths[values[2]]
+        elif tag == "[create draw only object]" and values[0] == 0 and values[2:] == [0, 0, 0]:
+            detached.append(paths[values[1]])
+        else:
+            raise ValueError("Unexpected Illusion Slash ground-wave layer placement")
+    if not attached or len(detached) != 4:
+        raise ValueError("Incomplete Illusion Slash ground-wave layers")
+    return {"attached": attached, "detached": detached}
 
 
 def dungeon_fixed_attack_base(library, column: int) -> dict:
@@ -2083,6 +2108,7 @@ def main() -> int:
         }, [3, 4])
         rapid_tracks = rapid_move_slash_tracks(library)
         illusion_tracks = illusion_finish_tracks(library)
+        illusion_club_layers = illusion_club_layer_script(library)
         rapid_effects = swordman_skill_effect_slots(library, b"SKILL_RAPID_MOVE_SLASH")["paths"]
         if len(rapid_effects) != 4 or not all(path.startswith(CHR_FX + "rapidmoveslash/") for path in rapid_effects):
             raise ValueError("unexpected Rapid Move Slash effect slots")
@@ -2098,6 +2124,8 @@ def main() -> int:
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
+        SAFE_EFFECTS.update(path for path in (illusion_club_layers["attached"], *illusion_club_layers["detached"])
+                            if safe_animation(library, path))
         if safe_animation(library, draw_layer["path"]):
             SAFE_EFFECTS.add(draw_layer["path"])
         SAFE_EFFECTS.update(path for path in draw_slashes["paths"] if safe_animation(library, path))
@@ -2130,6 +2158,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "outragebreakfloor.obj")
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         object_candidates.update(OBJ_ROOT + f"illusionslashmelee{index}.obj" for index in range(1, 5))
+        object_candidates.add(OBJ_ROOT + "illusionslashsub.obj")
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -2227,7 +2256,7 @@ def main() -> int:
                     if not melee:
                         raise ValueError(f"missing original Illusion Slash melee object {index}")
                     stage["hits"] = [{"object": melee, "percent_col": 0, "offset": [0, 1, 1],
-                                      "starts_at_zero": True}]
+                                      "starts_at_zero": True, "native_controller": {"kind": "illusion_melee"}}]
                     stage["fx"] = []
                 move["stages"][0]["voice"] = "SM_HOANYOUNG_START"
                 final = move["stages"][-1]
@@ -2239,6 +2268,15 @@ def main() -> int:
                 if not wave:
                     raise ValueError("missing original Illusion Slash sword wave")
                 final["hits"] = [{"object": wave, "at": smash_at, "offset": [65, 0, 0], "starts_at_zero": True}]
+                ground_wave = add_object(objects, OBJ_ROOT + "illusionslashsub.obj")
+                attached = add_fx(fx, effects, illusion_club_layers["attached"])
+                detached = [add_fx(fx, effects, path) for path in illusion_club_layers["detached"]]
+                if not ground_wave or not attached or not all(detached):
+                    raise ValueError("missing original Illusion Slash ground-wave resources")
+                move["club_wave"] = {"object": ground_wave, "at": smash_at, "offset": [180, 0, 0],
+                                     "starts_at_zero": True, "native_controller": {"kind": "illusion_club_wave",
+                                         "attached": attached, "detached": detached,
+                                         "particle": OBJ_ROOT + "particle/illusionslashsub.ptl"}}
                 upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
                 smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")
                 if not upper or not smash:
