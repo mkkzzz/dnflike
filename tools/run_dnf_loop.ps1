@@ -239,6 +239,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$draconianPreference}
     $draconianAudit | Write-Output
     if ($draconianExit -ne 0 -or ($draconianAudit -match 'SCRIPT ERROR|ERROR:') -or -not ($draconianAudit -match '\[WS1_DRACONIAN_TOWER\] COMPLETE checks=\d+ failures=0')) {throw "Draconian Tower world contract failed."}
+    $worldRoomsPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $worldRooms=& $GodotPath --headless --path $gamePath --quit-after 5000 --script res://tests/combat/test_ws1_world_rooms.gd 2>&1
+        $worldRoomsExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$worldRoomsPreference}
+    $worldRooms | Write-Output
+    if ($worldRoomsExit -ne 0 -or ($worldRooms -match 'SCRIPT ERROR|ERROR:') -or -not ($worldRooms -match '\[WS1_WORLD_ROOMS\] COMPLETE checks=\d+ failures=0')) {throw "Visible dungeon room contract failed."}
     $reviveCheck=if ($assetsBundled -and -not $BuildAssets) {"--check-installed"} else {"--check"}
     & python (Join-Path $PSScriptRoot "bake_dnf_revive_assets.py") $reviveCheck
     if ($LASTEXITCODE -ne 0) {throw "Revival asset package is stale."}
