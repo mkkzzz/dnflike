@@ -67,6 +67,10 @@ SOURCES = {
         'dungeon/village/gbl/gbl_hatchery.dgn',
         '266393055e4e3894218aa8f26b4ab35c1e7a416ec0b486b57cdfc1fe5b5b70ce',
     ),
+    'astraythief': (
+        'dungeon/act6/astraythief.dgn',
+        '72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8',
+    ),
 }
 
 

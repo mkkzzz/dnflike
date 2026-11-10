@@ -100,6 +100,10 @@
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
   },
+  "astraythief": {
+   "normal": "thief",
+   "boss": "thief_boss"
+  },
   "bloodhell": {
    "normal": "bloodhell",
    "boss": "bloodhell_boss"
@@ -370,6 +374,18 @@
    "source": "music/behemoth_b01_1.ogg",
    "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
    "bytes": 1101176
+  },
+  "thief": {
+   "file": "audio/bgm/thief.ogg",
+   "source": "music/thief.ogg",
+   "sha256": "2bbedfdadb61c86d687983de0b15158dcb8319e65081918fad8b3f4bda7e0b9c",
+   "bytes": 846302
+  },
+  "thief_boss": {
+   "file": "audio/bgm/thief_boss.ogg",
+   "source": "music/thief_boss.ogg",
+   "sha256": "b310670b852e8b16419b12615b8941fe0226b27e39feb26f7038acaee6664e41",
+   "bytes": 862730
   },
   "bloodhell": {
    "file": "audio/bgm/bloodhell.ogg",

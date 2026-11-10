@@ -1580,6 +1580,51 @@
    "mob": "monster/newmonsters/goblin/tentaclerider/tentaclerider.mob",
    "bank": "newmonsters_goblin_tentaclerider_tentaclerider",
    "name": "tentaclerider"
+  },
+  "cityhallgate_cityhallgate": {
+   "mob": "monster/cityhallgate/cityhallgate.mob",
+   "bank": "cityhallgate_cityhallgate",
+   "name": "cityhallgate"
+  },
+  "dog_dog": {
+   "mob": "monster/dog/dog.mob",
+   "bank": "dog_dog",
+   "name": "dog"
+  },
+  "statue_statue": {
+   "mob": "monster/statue/statue.mob",
+   "bank": "statue_statue",
+   "name": "statue"
+  },
+  "thief_hakudo": {
+   "mob": "monster/thief/hakudo.mob",
+   "bank": "thief_hakudo",
+   "name": "hakudo"
+  },
+  "thief_myojin": {
+   "mob": "monster/thief/myojin.mob",
+   "bank": "thief_myojin",
+   "name": "myojin"
+  },
+  "thief_thieffemale": {
+   "mob": "monster/thief/thieffemale.mob",
+   "bank": "thief_thieffemale",
+   "name": "thieffemale"
+  },
+  "thief_thiefghostrunner": {
+   "mob": "monster/thief/thiefghostrunner.mob",
+   "bank": "thief_thiefghostrunner",
+   "name": "thiefghostrunner"
+  },
+  "thief_thiefmale": {
+   "mob": "monster/thief/thiefmale.mob",
+   "bank": "thief_thiefmale",
+   "name": "thiefmale"
+  },
+  "thief_thiefmalemad": {
+   "mob": "monster/thief/thiefmalemad.mob",
+   "bank": "thief_thiefmalemad",
+   "name": "thiefmalemad"
   }
  },
  "boss_hp_lines": 3,

@@ -109,6 +109,13 @@
   "zealotrebirth_rebirthgblpriest",
   "zealotrebirth_rebirthgblbishop",
   "zealotrebirth_rebirthgblleader",
+  "thief_thiefmalemad",
+  "thief_thiefmale",
+  "thief_thieffemale",
+  "thief_myojin",
+  "dog_dog",
+  "statue_statue",
+  "cityhallgate_cityhallgate",
   "goblin_nightvisionkagel",
   "lordoflight_lordoflight",
   "new_golem_platany",
@@ -139,7 +146,9 @@
   "toy_hiddenb",
   "toy_hiddenc",
   "toy_hiddend",
+  "thief_hakudo",
   "bantu_bantuelite",
+  "thief_thiefghostrunner",
   "bantu_bash",
   "bantu_emre",
   "dollmaster_golemmaster",
@@ -277,10 +286,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 666,
+ "effects": 673,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 50,
+ "unresolved": 51,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -354,6 +363,14 @@
     "Monster/Lotus/Die.img",
     "Monster/Lotus/Lair.img",
     "Monster/Lotus/SwingOnGround.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/thief/hakudo.mob",
+   "images": [
+    "Monster/Dog/Dog.img",
+    "monster/Thief/hakudo.img"
    ]
   },
   {

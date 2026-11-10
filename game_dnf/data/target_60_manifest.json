@@ -993,9 +993,9 @@
     "id": 50,
     "min_level": 48,
     "path": "dungeon/act6/astraythief.dgn",
-    "runtime_id": "",
+    "runtime_id": "astraythief",
     "sha256": "72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 50,
@@ -4503,8 +4503,8 @@
     "level_max": 29,
     "level_min": 22,
     "path": "monster/cityhallgate/cityhallgate.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "cityhallgate_cityhallgate",
+    "state": "runtime"
    },
    {
     "id": 50007,
@@ -6623,8 +6623,8 @@
     "level_max": 38,
     "level_min": 32,
     "path": "monster/statue/statue.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "statue_statue",
+    "state": "runtime"
    },
    {
     "id": 271,
@@ -8999,24 +8999,24 @@
     "level_max": 55,
     "level_min": 47,
     "path": "monster/thief/thieffemale.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_thieffemale",
+    "state": "runtime"
    },
    {
     "id": 50087,
     "level_max": 55,
     "level_min": 47,
     "path": "monster/thief/thiefghostrunner.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_thiefghostrunner",
+    "state": "runtime"
    },
    {
     "id": 1070,
     "level_max": 55,
     "level_min": 47,
     "path": "monster/thief/thiefmale.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_thiefmale",
+    "state": "runtime"
    },
    {
     "id": 50505,
@@ -9271,8 +9271,8 @@
     "level_max": 55,
     "level_min": 50,
     "path": "monster/dog/dog.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dog_dog",
+    "state": "runtime"
    },
    {
     "id": 41017,
@@ -9671,24 +9671,24 @@
     "level_max": 55,
     "level_min": 50,
     "path": "monster/thief/hakudo.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_hakudo",
+    "state": "runtime"
    },
    {
     "id": 1072,
     "level_max": 55,
     "level_min": 50,
     "path": "monster/thief/myojin.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_myojin",
+    "state": "runtime"
    },
    {
     "id": 1069,
     "level_max": 55,
     "level_min": 50,
     "path": "monster/thief/thiefmalemad.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_thiefmalemad",
+    "state": "runtime"
    },
    {
     "id": 43011,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 39,
+   "runtime": 40,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 215,
+   "runtime": 224,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

@@ -54,6 +54,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/whiteland.dgn',
     'dungeon/act5/bwanga.dgn',
     'dungeon/act5/icepalace.dgn',
+    'dungeon/act6/astraythief.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
     'dungeon/village/gbl/gbl_hatchery.dgn',
     'dungeon/village/gbl/gbl_laboratory.dgn',
@@ -386,7 +387,12 @@ def raw_spans(script: dict) -> list[dict]:
 
 
 def source_map_greed_pairs(room: dict) -> list[list[int]]:
-    values = [token[2] for span in room['raw'] if span['tag'] == '[greed]' for token in span['values']]
+    spans = [span for span in room['raw'] if span['tag'] == '[greed]']
+    if not spans:
+        return []
+    values = [token[2] for span in spans for token in span['values']]
+    if not values:
+        return []
     if len(values) != 1 or not isinstance(values[0], str):
         raise ValueError(f"Missing MAP [greed] pairs: {room['path']}")
     codes = values[0].split()
@@ -660,6 +666,9 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         room['map_id'] = candidates[path]['map_id']
         if verified_greed:
             room['greed_pairs'] = source_map_greed_pairs(room)
+            if not room['greed_pairs']:
+                lib.diags.append(diag('info', 'layout_absent', path,
+                                      'MAP has no [greed] layout; retained raw without ordinary cell placement'))
         room['role_hint'] = map_role_hint(path)
 
     gate_objects = {str(i): export_gate_object(lib, i, ids['objects']) for i in sorted(set(slots.values()))}

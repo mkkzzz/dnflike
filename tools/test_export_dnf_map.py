@@ -307,6 +307,45 @@ class LibraryExport(unittest.TestCase):
         self.assertFalse([span for span in dungeon['raw']
                           if span['tag'] == '[boss map specification]'])
 
+    def test_astray_thief_export_preserves_two_boss_cells_and_layoutless_quest_map(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/astraythief_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [5, 4])
+        self.assertEqual(dungeon['start_map_raw'], [3, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [4, 3, 3, 2])
+        self.assertEqual(len(dungeon['rooms']), 14)
+        self.assertEqual(len(dungeon['placements']), 19)
+        self.assertEqual(len(export['images']), 102)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(3, 0)]['map_candidates'], [
+            'map/astraythief/b6202.map',
+            'map/astraythief/h6204.map',
+            'map/astraythief/s6201.map',
+        ])
+        self.assertEqual(cells[(4, 3)]['map_candidates'], [
+            'map/astraythief/b6202.map',
+            'map/astraythief/h6204.map',
+            'map/astraythief/s6201.map',
+        ])
+        self.assertEqual(cells[(3, 2)]['map_candidates'], [
+            'map/astraythief/b6201.map',
+            'map/astraythief/h6203.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/astraythief/s6201.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/astraythief/b6201.map']['role_hint'], 'boss')
+        self.assertEqual(dungeon['rooms']['map/astraythief/q6220.map']['greed_pairs'], [])
+        layout_absent = [row for row in export['diagnostics'] if row['code'] == 'layout_absent']
+        self.assertEqual([row['path'] for row in layout_absent], ['map/astraythief/q6220.map'])
+        specifications = [span['values'][2][2] for span in dungeon['raw']
+                          if span['tag'] == '[map specification]']
+        self.assertEqual(specifications, [6203, 6202, 6205, 6206, 6207, 6208, 6209])
+        self.assertFalse([span for span in dungeon['raw']
+                          if span['tag'] == '[boss map specification]'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

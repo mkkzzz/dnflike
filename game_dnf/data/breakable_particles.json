@@ -102,11 +102,56 @@
    "ptl_longpotparticle5",
    "ptl_longpotparticle6"
   ],
+  "passiveobject/mapobject/breakableobject/act6box.obj": [
+   "ptl_act6boxparticle01",
+   "ptl_act6boxparticle02",
+   "ptl_act6boxparticle03",
+   "ptl_act6boxparticle04"
+  ],
   "passiveobject/mapobject/breakableobject/act6box_peter.obj": [
    "ptl_act6boxparticle01",
    "ptl_act6boxparticle02",
    "ptl_act6boxparticle03",
    "ptl_act6boxparticle04"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statue1.obj": [
+   "ptl_act6statueparticle01",
+   "ptl_act6statueparticle02",
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statue2.obj": [
+   "ptl_act6statueparticle01",
+   "ptl_act6statueparticle02",
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statuepodium1.obj": [
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statuepodium2.obj": [
+   "ptl_barrelparticle01",
+   "ptl_barrelparticle02",
+   "ptl_barrelparticle03",
+   "ptl_barrelparticle04",
+   "ptl_barrelparticle05",
+   "ptl_barrelparticle06",
+   "ptl_barrelparticle07",
+   "ptl_barrelparticle08",
+   "ptl_barrelparticle09",
+   "ptl_barrelparticle10",
+   "ptl_barrelparticle11",
+   "ptl_barrelparticle12"
   ],
   "passiveobject/mapobject/breakableobject/actionfountain.obj": [
    "ptl_fountainparticle1",
@@ -235,6 +280,15 @@
    "ptl_questcagedest07"
   ],
   "passiveobject/mapobject/breakableobject/epicquestrescueseriaquestcage.obj": [
+   "ptl_questcagedest01",
+   "ptl_questcagedest02",
+   "ptl_questcagedest03",
+   "ptl_questcagedest04",
+   "ptl_questcagedest05",
+   "ptl_questcagedest06",
+   "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/epicquestrescueshylockquestcage.obj": [
    "ptl_questcagedest01",
    "ptl_questcagedest02",
    "ptl_questcagedest03",

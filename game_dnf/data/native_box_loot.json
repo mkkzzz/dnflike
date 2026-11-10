@@ -448,6 +448,32 @@
       "group_levels": {
         "1": -1
       }
+    },
+    "72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8": {
+      "id": "astraythief",
+      "source": {
+        "path": "dungeon/act6/astraythief.dgn",
+        "sha256": "72925d7c530658a4a7f9a4196fe5dccbef11d068c327c4f0d77dff85d40f81d8"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1089",
+            1000
+          ],
+          [
+            "original_1090",
+            1000
+          ],
+          [
+            "original_3217",
+            1000
+          ]
+        ]
+      },
+      "group_levels": {
+        "0": -1
+      }
     }
   },
   "items": {
@@ -842,6 +868,94 @@
         ]
       }
     },
+    "original_1089": {
+      "name": "突变草莓",
+      "kind": "consumable",
+      "description": "",
+      "level": 45,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 500,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        65
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        21
+      ],
+      "source": {
+        "id": 1089,
+        "path": "stackable/strawberry_mutant.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "a809d926d556fd0ffb8f4c329ce293b510fa608e5df300bc84dff98ec70d84a6",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1089"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          1
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          2
+        ],
+        "[hp recovery]": [
+          "+",
+          1930,
+          1000,
+          "myself"
+        ]
+      }
+    },
+    "original_1090": {
+      "name": "突变苎麻花叶",
+      "kind": "consumable",
+      "description": "",
+      "level": 45,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 500,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        66
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        32
+      ],
+      "source": {
+        "id": 1090,
+        "path": "stackable/lamihwa_mutant.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "99f3b2245a863ef77ee19a523f93e53292b61c012055b94d608a69cbc94f4604",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1090"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          1
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          3
+        ],
+        "[mp recovery]": [
+          "+",
+          1420,
+          1000,
+          "myself"
+        ]
+      }
+    },
     "original_3210": {
       "name": "邪念体",
       "kind": "material",
@@ -866,6 +980,38 @@
         "sha256": "a09231f00001e1d0f3ad219b957d0bf62ee9c1dfa19338cbca9abb7383a0b2dd",
         "name_table": "stackable/stackable.kor.str",
         "name_key": "name_3210"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[material]",
+          1
+        ]
+      }
+    },
+    "original_3217": {
+      "name": "王之石像碎块",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 10,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/material.img",
+        151
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        24
+      ],
+      "source": {
+        "id": 3217,
+        "path": "stackable/material/statue_imperialmarble.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "d50f29f96e823c5715332cbfd1529364744a8981020152d6a3f39d9c80fcaf45",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_3217"
       },
       "source_fields": {
         "[stackable type]": [
