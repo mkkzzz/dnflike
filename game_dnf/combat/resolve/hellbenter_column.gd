@@ -45,9 +45,9 @@ static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 		"height":object["z"],"facing":object["facing"],"offset_y":1,"scale":scale,"depth_offset":2,"fresh":true})
 	return object
 
-static func owner_can_exit(object: Dictionary) -> bool:
+static func final_phase_elapsed(object: Dictionary) -> float:
 	var column: Dictionary = object["column"]
-	return column["phase"] == 2 and float(object["clock"])-float(column["phase_at"]) >= 200.0
+	return float(object["clock"])-float(column["phase_at"]) if column["phase"] == 2 else -1.0
 
 static func step(game, object: Dictionary) -> bool:
 	var column: Dictionary = object["column"]

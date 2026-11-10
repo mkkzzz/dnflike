@@ -258,7 +258,7 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		c.a *= 1.0-float(g["ms"])/GHOST_MS
 		node.tint = c
 		node.queue_redraw()
-	camera_x = stage.camera_for(_player_pos.x)
+	camera_x = stage.camera_for(float(s.get("camera_focus_x",_player_pos.x)))
 	_advance_camera_shake(sim_ms)
 	world.position = Vector2(-roundf(camera_x),0)+_shake_offset
 	stage.apply_camera(roundf(camera_x))

@@ -2513,7 +2513,8 @@ func check_hellbenter_manual_finish() -> void:
 		and not game.view.object_views.has("hellbenter:sword_base"),
 		"the finisher hides the carried sword and attaches three original layers with both startup cues")
 	step(284.0)
-	check(game.hit_count==before and cues("DRAWING_SWORD").is_empty() and game.objects.is_empty(),
+	check(game.hit_count==before and cues("DRAWING_SWORD").is_empty() and game.objects.is_empty()
+		and game.view.camera_x==0.0,
 		"the mode-three first three frames do not strike or create the column")
 	step(1.0)
 	check(game.player_ani()[1]==360.0 and game.hit_count==before+1 and target["hp"]<target["max_hp"]
@@ -2528,15 +2529,20 @@ func check_hellbenter_manual_finish() -> void:
 		and is_equal_approx(game.objects[0]["size_rate"],0.87) and game.objects[0]["clock"]==0.0
 		and cues("B_FIRE_EXPLOSION_READY").size()==1,
 		"the fourth frame creates the column at the original SD offset, age zero and the half-charge scale")
+	var room_width: float = game.view.stage.room_width
+	game.view.stage.room_width = 1600.0
+	check(game.view.camera_x==0.0,"the swing begins the focus pan at the caster")
 	step(120.0)
-	check(game.player_ani()[1]==480.0 and game.hit_count==before+1,"recovery uses base speed and keeps the same hit ledger")
+	check(game.player_ani()[1]==480.0 and game.hit_count==before+1 and game.view.camera_x==192.0
+		and game.player["pos"]==POINT,"recovery uses base speed and pans 192 pixels in 120 ms without moving the caster")
 	press(KEY_A)
 	step(2559.0)
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
 		"repeated input cannot restart the finisher and the appendage remains until state exit")
 	step(1.0)
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty()
-		and game.player_ani()[1]==3040.0,"the finished body animation waits on the linked column")
+		and game.player_ani()[1]==3040.0 and game.view.camera_x==320.0,
+		"the finished body animation and the 320-pixel camera focus wait on the linked column")
 	if game.objects.size()==1 and game.objects[0].has("column"):
 		check_hellbenter_column(game.objects[0],target,outside,base)
 	check(game.numeric_player.add_effect("hellbenter",1),"a fresh sword can be installed after leaving the finisher")
@@ -2547,6 +2553,7 @@ func check_hellbenter_manual_finish() -> void:
 	check(not game.player.has("hellbenter_finish") and game.active_effect("hellbenter").is_empty()
 		and game.view.effects.all(func(fx):return fx.data["source"].get_file() not in ["finish1.ani","finish2.ani","finish3.ani"]),
 		"being interrupted before the swing consumes the sword and clears the attached finish effects")
+	game.view.stage.room_width = room_width
 
 func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Dictionary, base: int) -> void:
 	move_target(target,object["pos"])
@@ -2614,7 +2621,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	var last_loop: Array = loop_particles.call()
 	check(column["phase"]==2 and layers.call("disappear").size()==2 and game.hit_count==start+21
-		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues,
+		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues
+		and game.view.camera_x==320.0,
 		"the final explosion has independent damage, two original layers and its own sound")
 	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==particle_path)
 	var ember_visuals: Array = embers.call()
@@ -2645,13 +2653,13 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(not last_loop.is_empty() and loop_particles.call()==last_loop,
 		"the terminal update stops the emitter while the spawned loop particles keep their lifetime")
 	check(explosions.call().size()==115,"the original independent emission limits leave one particle per group for 200 ms")
-	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
-		"the owner waits through the first 199 ms of the column's final animation")
+	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty() and game.view.camera_x==1.0,
+		"the owner still waits and the returning camera is one pixel from the caster at 199 ms")
 	game.step_objects(1.0)
 	step(0.0)
 	check(explosions.call().size()==120,"the 5 Hz template reaches its last particle exactly at 200 ms")
 	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
-		and game.objects.has(object) and cues("SM_MUSSANG_START").size()==1,
+		and game.objects.has(object) and cues("SM_MUSSANG_START").size()==1 and game.view.camera_x==0.0,
 		"the owner returns to idle at 200 ms, removing the appendage while the column remains")
 	game.step_objects(199.0)
 	check(game.objects.has(object) and game.hit_count==start+21,"the final contact does not repeat during the tail")

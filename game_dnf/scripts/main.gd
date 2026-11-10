@@ -1714,11 +1714,27 @@ func step_hellbenter_finish(ms: float, refresh_ani_rate: bool) -> void:
 	if action_timed_crossed(float(stage["timeline"][3]["start_ms"]),previous_ani,current):
 		phase["hellbenter_column"] = HellbenterColumn.spawn(self,move_def("hellbenter"),int(stage["blood_count"]))
 	apply_player_hits(stage,previous_ani,current)
-	var column: Dictionary = phase.get("hellbenter_column",{})
+	var column := active_hellbenter_column(phase)
 	# CC0656..CC06C4 waits for 200 ms of the object's final phase.
-	if not column.is_empty() and objects.has(column) and not column.get("retired",false):
-		if HellbenterColumn.owner_can_exit(column):end_action()
+	if not column.is_empty():
+		if HellbenterColumn.final_phase_elapsed(column) >= 200.0:end_action()
 	elif next >= float(phase["end_ms"]):end_action()
+
+func active_hellbenter_column(phase: Dictionary) -> Dictionary:
+	var column: Dictionary = phase.get("hellbenter_column",{})
+	return column if not column.is_empty() and objects.has(column) and not column.get("retired",false) else {}
+
+func camera_focus_x(phase: Dictionary) -> float:
+	var x := float(player["pos"].x)
+	if not player.has("hellbenter_finish"):return x
+	# C9E689..C9E759 writes the actor's camera focus, independently of the room shake.
+	var age := int(player["clock"])-int(phase["impact_ms"])
+	var offset := _native_interpolate(0,320,age,200)
+	if age >= 200:
+		var column := active_hellbenter_column(phase)
+		if not column.is_empty():
+			offset = _native_interpolate(320,0,int(HellbenterColumn.final_phase_elapsed(column)),200)
+	return float(int(x)+int(player["facing"])*offset)
 
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
@@ -5570,6 +5586,7 @@ func view_snapshot() -> Dictionary:
 	hellbenter_blood.append_view(self,objs)
 	var phase: Dictionary = player.get("native_phase",{})
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
+		"camera_focus_x":camera_focus_x(phase),
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"action_elapsed_ms":float(player["clock"]),
