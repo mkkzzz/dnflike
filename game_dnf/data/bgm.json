@@ -172,6 +172,10 @@
    "normal": "sc_b03",
    "boss": "kings_ruins"
   },
+  "leshphon": {
+   "normal": "leshphon",
+   "boss": "leshphon_boss"
+  },
   "magmacave": {
    "normal": "magma_cave",
    "boss": "kings_ruins"
@@ -619,6 +623,18 @@
    "source": "music/kings_ruins.ogg",
    "sha256": "414c264e8b41bffe5b84885e24294d6f0b62453a9c0d8cc1ec1849e828e98c59",
    "bytes": 977193
+  },
+  "leshphon": {
+   "file": "audio/bgm/leshphon.ogg",
+   "source": "music/leshphon.ogg",
+   "sha256": "6620c9ba084ddd9b2e82916d05761120f1249961b7ea1ad4c9fc32716014e1d7",
+   "bytes": 1664525
+  },
+  "leshphon_boss": {
+   "file": "audio/bgm/leshphon_boss.ogg",
+   "source": "music/leshphon_boss.ogg",
+   "sha256": "bc6697a1064016b685c765ce203bee1858794d9c3088d3672d54cd7fe4890069",
+   "bytes": 1387935
   },
   "magma_cave": {
    "file": "audio/bgm/magma_cave.ogg",

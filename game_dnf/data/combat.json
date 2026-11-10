@@ -1920,6 +1920,41 @@
    "mob": "monster/tau/taumetacow.mob",
    "bank": "tau_taumetacow",
    "name": "taumetacow"
+  },
+  "newmonsters_leshphon_divol_divol1": {
+   "mob": "monster/newmonsters/leshphon/divol/divol1.mob",
+   "bank": "newmonsters_leshphon_divol_divol1",
+   "name": "divol1"
+  },
+  "newmonsters_leshphon_duke_juris_duke_juris": {
+   "mob": "monster/newmonsters/leshphon/duke_juris/duke_juris.mob",
+   "bank": "newmonsters_leshphon_duke_juris_duke_juris",
+   "name": "duke_juris"
+  },
+  "newmonsters_leshphon_hyungteo_hyungteo": {
+   "mob": "monster/newmonsters/leshphon/hyungteo/hyungteo.mob",
+   "bank": "newmonsters_leshphon_hyungteo_hyungteo",
+   "name": "hyungteo"
+  },
+  "newmonsters_leshphon_isangoma_nazaloh_isangoma_nazaloh": {
+   "mob": "monster/newmonsters/leshphon/isangoma_nazaloh/isangoma_nazaloh.mob",
+   "bank": "newmonsters_leshphon_isangoma_nazaloh_isangoma_nazaloh",
+   "name": "isangoma_nazaloh"
+  },
+  "newmonsters_leshphon_melt_knight_melt_knight": {
+   "mob": "monster/newmonsters/leshphon/melt_knight/melt_knight.mob",
+   "bank": "newmonsters_leshphon_melt_knight_melt_knight",
+   "name": "melt_knight"
+  },
+  "newmonsters_leshphon_scavenger_scavenger": {
+   "mob": "monster/newmonsters/leshphon/scavenger/scavenger.mob",
+   "bank": "newmonsters_leshphon_scavenger_scavenger",
+   "name": "scavenger"
+  },
+  "newmonsters_leshphon_the_wicked_disease_direzie_the_wicked_disease_direzie": {
+   "mob": "monster/newmonsters/leshphon/the_wicked_disease_direzie/the_wicked_disease_direzie.mob",
+   "bank": "newmonsters_leshphon_the_wicked_disease_direzie_the_wicked_disease_direzie",
+   "name": "the_wicked_disease_direzie"
   }
  },
  "boss_hp_lines": 3,

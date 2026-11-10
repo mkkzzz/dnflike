@@ -820,6 +820,50 @@ class LibraryExport(unittest.TestCase):
         self.assertFalse([row for row in diagnostics if row['level'] in ('error', 'warning')])
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 6)
 
+    def test_leshphon_export_keeps_six_cells_and_event_action_objects(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/leshphon_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '523a5924b9faeae3da4e63c2cbac7f8f7fdb0bd27a7155d7b0b8388714365293')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 1506)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(len(dungeon['maze_blocks']), 1)
+        self.assertEqual(dungeon['size'], [2, 3])
+        self.assertEqual(dungeon['start_map_raw'], [1, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 2])
+        self.assertEqual(len(dungeon['rooms']), 6)
+        self.assertEqual(len(dungeon['placements']), 6)
+        self.assertEqual(len(export['images']), 79)
+        self.assertEqual(len(dungeon['cells']), 6)
+        self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 10)
+        block = dungeon['maze_blocks'][0]
+        self.assertEqual([row[2] for row in block['map_specifications']],
+                         [15057, 15058, 15059, 15060, 15061])
+        self.assertEqual([row[2] for row in block['boss_map_specifications']], [15062])
+        self.assertEqual(block['hell_dungeon'], [1])
+        self.assertEqual(block['seal_door_map_index'], [60053])
+        self.assertEqual(block['seal_door_pos'], [0, 1])
+        self.assertEqual(block['seal_door_appear_rate'], [10])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(1, 0)]['map_candidates'], ['map/leshphon/(1,0)start.map'])
+        self.assertEqual(cells[(0, 2)]['map_candidates'], ['map/leshphon/(0,2)boss.map'])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 28)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 113)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual({item['source_tag'] for item in objects}, {'[passive object]'})
+        self.assertEqual(len({item['obj'] for item in objects}), 15)
+        self.assertEqual(sum(item['sprite'] is None for item in objects), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 1)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'scroll_absent']), 18)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 6)
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))
