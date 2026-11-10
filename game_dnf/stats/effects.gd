@@ -2,6 +2,7 @@ extends RefCounted
 ## One container per combatant. Simulation milliseconds only; no timers or global state.
 var active: Dictionary = {}
 var poison_revision := 0
+var _application_order := 0
 
 func add(id: String, definition: Dictionary, rank := 1) -> bool:
 	if definition.is_empty():return false
@@ -9,6 +10,8 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 	var stacks := 1
 	if definition.get("stacking","refresh") == "stack":stacks = mini(int(old.get("stacks",0))+1,int(definition.get("max_stacks",1)))
 	var entry := {"id":id,"definition":definition.duplicate(true),"remaining_ms":float(definition.get("duration_ms",0)),"tick_ms":float(old.get("tick_ms",0)),"stacks":stacks,"rank":rank}
+	_application_order += 1
+	entry["application_order"] = _application_order
 	if definition.has("absorb_hits"):entry["absorb_remaining"] = int(definition["absorb_hits"])
 	if old.has("source_bleed"):entry["source_bleed"] = old["source_bleed"]
 	active[id] = entry
@@ -17,7 +20,7 @@ func add(id: String, definition: Dictionary, rank := 1) -> bool:
 func remove(id: String) -> bool:
 	return active.erase(id)
 
-func add_timed_modifier(id: String, title: String, stat: String, amount: int, duration_ms: int, max_stacks := 0) -> bool:
+func add_timed_modifier(id: String, title: String, stat: String, amount: int, duration_ms: int, max_stacks := 0, rank := 1) -> bool:
 	if duration_ms <= 0:return false
 	if not active.has(id):
 		add(id,{"name":title})
@@ -29,7 +32,9 @@ func add_timed_modifier(id: String, title: String, stat: String, amount: int, du
 		effect["remaining_ms"] = 0.0
 		for grant: Dictionary in grants:
 			effect["remaining_ms"] = maxf(float(effect["remaining_ms"]),float(grant["remaining_ms"]))
-	grants.append({"stat":stat,"amount":amount,"remaining_ms":float(duration_ms)})
+	_application_order += 1
+	grants.append({"stat":stat,"amount":amount,"remaining_ms":float(duration_ms),
+		"duration_ms":duration_ms,"rank":rank,"application_order":_application_order})
 	effect["remaining_ms"] = maxf(float(effect["remaining_ms"]),duration_ms)
 	effect["stacks"] = grants.size()
 	return true

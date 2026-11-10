@@ -371,12 +371,9 @@ func read_runtime_view() -> Dictionary:
 		enemies.append({"id":enemy["id"],"pos":Vector2(enemy["pos"]),"hp":float(enemy["hp"]),"chief":enemy["chief"]})
 	var room_count: int = game.route_room_count()
 	var exit_target: Vector2 = game.route_exit_target(enemies.size())
-	var reckless_timer := Vector2i.ZERO
-	var reckless_rank := 0
-	var reckless: Dictionary = game.active_effect("reckless")
-	if not reckless.is_empty() and float(p["hp"]) > 0.0:
-		reckless_timer = Vector2i(int(reckless["remaining_ms"]),int(reckless["definition"]["duration_ms"]))
-		reckless_rank = int(reckless["rank"])
+	var skill_statuses: Array = []
+	if game.numeric_player != null and float(p["hp"]) > 0.0:
+		skill_statuses = game.numeric_player.skill_statuses()
 	return {"run_id":game.run_id,"room_id":game.room_id,"room_index":game.room_index,
 		"time_ms":game.elapsed_ms,"death_id":game.last_defeat_id,"invulnerable_ms":float(p["invuln_ms"]),
 		"revive_fx_count":game.view.revive_fx_count,
@@ -386,7 +383,7 @@ func read_runtime_view() -> Dictionary:
 		"player_state":String(p["state"]),"player_z":float(p["z"]),"player_vz":float(p["vz"]),
 		"job":game.job,"weapon":game.weapon,"weapon_item":String(game.view._weapon_item) if game.view._item_appearance_enabled else "",
 		"cooldowns":Dictionary(p["cooldowns"]).duplicate(),"buff_ms":float(p["buff_ms"]),
-		"reckless_timer":reckless_timer,"reckless_rank":reckless_rank,
+		"skill_statuses":skill_statuses,
 		"enemies":enemies,"companions":game.companion_views(),"alive_monsters":enemies.size(),"exit_target":exit_target,
 		"room_cleared":game.room_is_open(enemies.size()),"finished":game.finished,"victory":game.victory,"paused":game.paused}
 

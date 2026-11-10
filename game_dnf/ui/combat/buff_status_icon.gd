@@ -5,12 +5,12 @@ const SOURCE_SIZE := Vector2(28, 28)
 const HOVER_RECT := Rect2(0, 0, 21, 21)
 const TIP_ORIGIN := Vector2(0, -40)
 const TIP_FONT_SIZE := 12
-const TIP_NAME := "暴走"
 var _frame_texture: Texture2D
 var _skill_texture: Texture2D
 var _shade_texture: Texture2D
 var _tip_tiles: Array[Texture2D]
 var _tip_font: Font
+var _skill_name := ""
 var _tip_rank := 0
 var _tip_rank_text := ""
 var _tip_columns := 0
@@ -18,17 +18,18 @@ var _pointer := Vector2.INF
 var _alpha := 255
 var _shade_height := 0
 
-func setup(frame_texture: Texture2D, skill_texture: Texture2D, shade_texture: Texture2D,
+func setup(frame_texture: Texture2D, shade_texture: Texture2D,
 		tip_tiles: Array[Texture2D], tip_font: Font) -> void:
 	_frame_texture = frame_texture
-	_skill_texture = skill_texture
 	_shade_texture = shade_texture
 	_tip_tiles = tip_tiles
 	_tip_font = tip_font
-	position = Vector2(92, 528)
 	size = Vector2(23, 23)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hide()
+
+func _ready() -> void:
+	_pointer = get_viewport().get_mouse_position()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouse:
@@ -38,7 +39,12 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_MOUSE_EXIT:
 		_pointer = Vector2.INF
 
-func present(timer: Vector2i, rank: int) -> void:
+func present(timer: Vector2i, rank: int, skill_name := "", skill_texture: Texture2D = null) -> void:
+	if _skill_texture != skill_texture or _skill_name != skill_name:
+		_skill_texture = skill_texture
+		_skill_name = skill_name
+		_tip_rank = 0
+		queue_redraw()
 	if timer.x <= 0 or timer.y <= 0 or _frame_texture == null or _skill_texture == null or _shade_texture == null:
 		_tip_rank = 0
 		hide()
@@ -51,7 +57,7 @@ func present(timer: Vector2i, rank: int) -> void:
 		_tip_rank = tip_rank
 		if tip_rank > 0:
 			_tip_rank_text = "技能Lv%d" % tip_rank
-			var title_width := _tip_font.get_string_size(TIP_NAME, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE).x
+			var title_width := _tip_font.get_string_size(_skill_name, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE).x
 			var rank_width := _tip_font.get_string_size(_tip_rank_text, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE).x
 			_tip_columns = ceili(maxf(title_width, rank_width) / 12.0)
 		queue_redraw()
@@ -95,5 +101,5 @@ func _draw_tip() -> void:
 			draw_texture(_tip_tiles[frame + 2], TIP_ORIGIN + Vector2(6 + 12 * _tip_columns, row_y))
 			row_y += _tip_tiles[frame].get_height()
 	var text_at := TIP_ORIGIN + Vector2(7, 7 + _tip_font.get_ascent(TIP_FONT_SIZE))
-	draw_string(_tip_font, text_at, TIP_NAME, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE)
+	draw_string(_tip_font, text_at, _skill_name, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE)
 	draw_string(_tip_font, text_at + Vector2(0, 13), _tip_rank_text, HORIZONTAL_ALIGNMENT_LEFT, -1, TIP_FONT_SIZE)

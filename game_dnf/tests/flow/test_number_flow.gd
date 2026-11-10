@@ -303,6 +303,7 @@ func run() -> void:
 	game.set_debug_open(false)
 	await host.frame("63_number_battle_attributes")
 	await _check_reckless_status()
+	await _check_bloodlust_status()
 	game.debug_panel.commands.execute("town")
 	host.check(game.session.state=="town","numeric battle can safely return to existing flow")
 	var snapshot: Dictionary = game.session.serialize()
@@ -315,10 +316,11 @@ func _check_reckless_status() -> void:
 	var was_processing: bool = battle.is_physics_processing()
 	battle.set_physics_process(false)
 	var actor = battle.numeric_player
-	var icon: Control = game.reckless_status
-	host.check(not icon.visible, "the status row is empty without the Reckless appendage")
+	host.check(game.skill_status_icons.all(func(icon: Control) -> bool: return not icon.visible),
+		"the status row is empty without the Reckless appendage")
 	actor.add_effect("reckless", 1)
 	await host.ticks(2)
+	var icon: Control = game.skill_status_icons[0]
 	host.check(icon.is_visible_in_tree() and icon.position == Vector2(92,528)
 		and icon.size == Vector2(23,23) and icon._shade_height == 0,
 		"the live HUD draws Reckless at the first original buff slot")
@@ -371,6 +373,46 @@ func _check_reckless_status() -> void:
 		"the tooltip follows a newly applied appendage rank under a stationary pointer")
 	actor.remove_effect("reckless")
 	_hover_status(icon, Vector2(-1,0))
+	battle.set_physics_process(was_processing)
+
+func _check_bloodlust_status() -> void:
+	var battle = game.battle
+	var was_processing: bool = battle.is_physics_processing()
+	battle.set_physics_process(false)
+	var actor = battle.numeric_player
+	actor.apply_bloodlust_strength(1, false)
+	actor.step(1000.0)
+	actor.add_effect("reckless", 3)
+	actor.apply_bloodlust_strength(1, true)
+	actor.apply_bloodlust_strength(2, true)
+	actor.step(4000.0)
+	await host.ticks(2)
+	var slots: Array = game.skill_status_icons
+	var statuses: Array = game.combat.read_runtime_view()["skill_statuses"]
+	host.check(statuses.size() == 3 and statuses[0]["timer"] == Vector2i(16000, 10000)
+		and statuses[1]["skill"] == "reckless" and statuses[2]["timer"] == Vector2i(16000, 20000),
+		"same-rank strength grants share a slot with the greatest remaining time and the oldest duration")
+	_hover_status(slots[2], Vector2.ZERO)
+	await host.ticks(2)
+	host.check(slots[0].position == Vector2(92,528) and slots[0]._shade_height == 0
+		and slots[1].position == Vector2(113,528) and slots[2].position == Vector2(134,528)
+		and slots[2]._skill_texture == game.skill_panel_texture("grabblastblood")
+		and slots[2]._skill_name == "嗜魂之手" and slots[2]._tip_rank_text == "技能Lv2",
+		"the HUD lays out both ranks and draws the GrabBlastBlood icon and source skill tooltip")
+	if host.capture:await host.frame("63f_bloodlust_status")
+	actor.step(5000.0)
+	await host.ticks(2)
+	statuses = game.combat.read_runtime_view()["skill_statuses"]
+	host.check(statuses.size() == 3 and statuses[0]["skill"] == "reckless"
+		and statuses[1]["timer"] == Vector2i(11000, 20000)
+		and slots[1]._skill_name == "嗜魂之手" and slots[1]._shade_height == 9,
+		"when the oldest grant expires the row follows the remaining applications and their original duration")
+	actor.step(11000.0)
+	await host.ticks(2)
+	host.check(slots[0].visible and not slots[1].visible and not slots[2].visible and slots[2]._tip_rank == 0,
+		"the strength icons and open tooltip disappear when the last grants expire")
+	actor.remove_effect("reckless")
+	_hover_status(slots[0], Vector2(-1,0))
 	battle.set_physics_process(was_processing)
 
 func _hover_status(icon: Control, point: Vector2) -> void:

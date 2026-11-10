@@ -5053,6 +5053,7 @@ func check_grab_blast_startup() -> void:
 		var bystander: Dictionary = game.spawn_enemy(POINT+Vector2(100,0))
 		var distant: Dictionary = game.spawn_enemy(POINT+Vector2(330,0))
 		var before_spray: float = target["hp"]
+		check(game.numeric_player.skill_statuses().is_empty(),"Bloodlust has no strength status before the spray")
 		step(1)
 		check(hand.clock_ms==750.0 and hand.frame.has("sprite"),"the hand ANI remains attached through the spray state")
 		check(cues("BLOODR_FIRE").size()==1,"spray plays its original release sound once")
@@ -5069,6 +5070,10 @@ func check_grab_blast_startup() -> void:
 		check(game.active_effect("bloodlust_strength").get("remaining_ms",0)==duration
 			and game.numeric_player.values["strength"]==strength+46.0,
 			"Bloodlust grants row-three strength and uses the earlier bleed observation for duration")
+		var statuses: Array = game.numeric_player.skill_statuses()
+		check(statuses.size()==1 and statuses[0]["skill"]=="grabblastblood" and statuses[0]["rank"]==1
+			and statuses[0]["timer"]==Vector2i(int(duration),int(duration)),
+			"the Bloodlust spray registers its applied rank and duration for the status row")
 		check(target["hp"]<before_spray and game.objects[0]["hits"].has(target["id"]) and game.objects[0]["hits"].size()==1,
 			"Bloodlust directs its first spray hit to the held target even outside the ANI boxes")
 		check(target["state"]=="native_down_flight" and game.enemy_ani(target)==["down",0.0]

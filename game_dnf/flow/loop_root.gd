@@ -49,7 +49,10 @@ var skin
 var windows
 var ui: Control
 var hud: Control
-var reckless_status: BuffStatusIcon
+var skill_status_icons: Array[BuffStatusIcon] = []
+var _status_frame: Texture2D
+var _status_shade: Texture2D
+var _status_tip_tiles: Array[Texture2D] = []
 var modal: Control
 var overlay := ""
 var notification := ""
@@ -178,17 +181,14 @@ func build_hud() -> void:
 	mp_bar.mouse_entered.connect(func(): windows.gauge_tip(mp_bar))
 	hp_bar.mouse_exited.connect(windows.hide_tooltip)
 	mp_bar.mouse_exited.connect(windows.hide_tooltip)
-	reckless_status = BuffStatusIcon.new()
-	reckless_status.name = "reckless_status"
 	var ui_images: Dictionary = town.loader.data["ui"]
-	var status_frame: Texture2D = town.loader.texture(ui_images.get("status_icon", {}).get("0"))
-	var status_shade: Texture2D = town.loader.texture(ui_images["base"].get("84"))
-	var status_tip_tiles: Array[Texture2D] = []
+	_status_frame = town.loader.texture(ui_images.get("status_icon", {}).get("0"))
+	_status_shade = town.loader.texture(ui_images["base"].get("84"))
 	var tip_frames: Dictionary = ui_images.get("status_tooltip", {})
 	for frame in range(134, 143):
-		status_tip_tiles.append(town.loader.texture(tip_frames.get(str(frame))))
-	reckless_status.setup(status_frame, skill_panel_texture("reckless"), status_shade, status_tip_tiles, skin.font)
-	hud.add_child(reckless_status)
+		_status_tip_tiles.append(town.loader.texture(tip_frames.get(str(frame))))
+	skill_panel_texture("reckless")
+	skill_panel_texture("grabblastblood")
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
 	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("numbers"), "角色属性 O")
 	skin.sprite_button(hud, "hud", [8, 9, 10], Vector2(299, 560), func(): hud_action("inventory"), "背包 I")
@@ -281,7 +281,7 @@ func _process(delta: float) -> void:
 		mp_max = mp
 		status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
-	reckless_status.present(snap.get("reckless_timer", Vector2i.ZERO), int(snap.get("reckless_rank", 0)))
+	present_skill_statuses(snap.get("skill_statuses", []))
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
 	hp_bar.set_meta("value_text", "生命值  %d / %d" % [hp, hp_max])
@@ -319,6 +319,22 @@ func _process(delta: float) -> void:
 		toast_panel.visible = notification_seconds > 0 and overlay in ["","numbers","death"]
 	if is_instance_valid(battle) and overlay == "" and not debug_is_open() and bool(snap.get("paused",false)):
 		show_overlay("menu")
+
+func present_skill_statuses(statuses: Array) -> void:
+	while skill_status_icons.size() < statuses.size():
+		var slot := skill_status_icons.size()
+		var icon := BuffStatusIcon.new()
+		icon.name = "skill_status_%d" % slot
+		@warning_ignore("integer_division")
+		icon.position = Vector2(92 + 21 * (slot % 9), 528 - 21 * (slot / 9))
+		icon.setup(_status_frame, _status_shade, _status_tip_tiles, skin.font)
+		hud.add_child(icon)
+		skill_status_icons.append(icon)
+	for slot in statuses.size():
+		var status: Dictionary = statuses[slot]
+		skill_status_icons[slot].present(status["timer"], status["rank"], status["title"], skill_panel_texture(status["skill"]))
+	for slot in range(statuses.size(), skill_status_icons.size()):
+		skill_status_icons[slot].present(Vector2i.ZERO, 0)
 
 func _input(event: InputEvent) -> void:
 	if transitioning:get_viewport().set_input_as_handled();return

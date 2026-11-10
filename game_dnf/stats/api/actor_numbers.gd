@@ -117,9 +117,33 @@ func apply_bloodlust_strength(rank: int, saw_bleed: bool) -> bool:
 	var row: Array = Numbers.Skills.sample(Numbers.record("grabblastblood"),rank)["level_row"]
 	if rank <= 0 or row.size() < 6:return false
 	# CB6FAD and CB6FD6 select duration, CB6FF6 reads the strength grant.
-	var added := effects.add_timed_modifier("bloodlust_strength","嗜魂之手","strength",int(row[3]),int(row[5 if saw_bleed else 2]))
+	var added := effects.add_timed_modifier("bloodlust_strength","嗜魂之手","strength",int(row[3]),int(row[5 if saw_bleed else 2]),0,rank)
 	if added:recalculate()
 	return added
+
+func skill_statuses() -> Array:
+	var statuses: Array = []
+	var reckless: Dictionary = effects.active.get("reckless",{})
+	if not reckless.is_empty():
+		statuses.append({"skill":"reckless","title":reckless["definition"]["name"],"rank":reckless["rank"],"order":reckless["application_order"],
+			"timer":Vector2i(int(reckless["remaining_ms"]),int(reckless["definition"]["duration_ms"]))})
+	var by_rank: Dictionary = {}
+	var bloodlust: Dictionary = effects.active.get("bloodlust_strength",{})
+	for grant: Dictionary in bloodlust.get("timed_modifiers",[]):
+		var rank: int = grant["rank"]
+		var remaining := int(grant["remaining_ms"])
+		if by_rank.has(rank):
+			# 4C89B0 takes the largest remaining time and the first entry's duration.
+			var timer: Vector2i = by_rank[rank]["timer"]
+			timer.x = maxi(timer.x, remaining)
+			by_rank[rank]["timer"] = timer
+		else:
+			var status := {"skill":"grabblastblood","title":bloodlust["definition"]["name"],"rank":rank,"order":grant["application_order"],
+				"timer":Vector2i(remaining,grant["duration_ms"])}
+			by_rank[rank] = status
+			statuses.append(status)
+	statuses.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["order"] < b["order"])
+	return statuses
 
 func apply_reckless_hit() -> void:
 	var rank := int(effects.active.get("reckless",{}).get("rank",0))
