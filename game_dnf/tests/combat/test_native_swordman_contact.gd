@@ -11,6 +11,11 @@ const DetRng = preload("res://core/det_rng.gd")
 const POINT := Vector2(400,300)
 const ARMOR_PARTICLE := "common/commoneffect/particle/superarmor_damage_particle.ptl"
 
+class GoreCrossStatusRng extends DetRng:
+	func chance(probability: float) -> bool:
+		# Surface any generic status roll. Source bleed uses range_int.
+		return probability>0.0
+
 var session := CombatSession.new()
 var game
 var api
@@ -1568,6 +1573,8 @@ func check_frenzy_normals() -> void:
 			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
 
 func check_gorecross_wave() -> void:
+	var previous_rng = game.rng
+	game.rng = GoreCrossStatusRng.new(1)
 	for sample: Array in [[1,1,0,0.1,17,234,149],[2,-1,3,0.514,22,267,167]]:
 		var rank: int = sample[0]
 		var facing: int = sample[1]
@@ -1593,7 +1600,8 @@ func check_gorecross_wave() -> void:
 		step(99)
 		check(game.hit_count==0 and game.objects.is_empty(),"Gore Cross has no hit before the first native sword frame")
 		step(1)
-		check(game.hit_count==1,"Gore Cross first weapon layer hits at frame 2")
+		check(game.hit_count==1 and not target["numeric"].effects.active.has("bleed"),
+			"Gore Cross first weapon layer hits at frame 2 without bleed")
 		game.player["stuck_ms"] = 0.0
 		step(249)
 		check(game.hit_count==1,"Gore Cross retains its first weapon contact through 349 ms")
@@ -1625,8 +1633,11 @@ func check_gorecross_wave() -> void:
 		check(wave["hits"].is_empty() and wave["pos"]==origin+Vector2(14*facing,0),
 			"Gore Cross moves before its first active attack frame")
 		game.step_objects(1.0)
-		check(wave["hits"].has(target["id"]) and target["numeric"].effects.active.has("bleed"),
-			"Gore Cross wave applies the captured bleed on its first active frame")
+		var bleed_events: Array = game.bus.events_of("combat.status").filter(func(event):
+			return event["target"]==target["id"] and event["id"]=="bleed")
+		var bleed_state: Dictionary = target["numeric"].effects.active.get("bleed",{})
+		check(wave["hits"].has(target["id"]) and bleed_state.has("source_bleed") and bleed_events.size()==1,
+			"Gore Cross wave applies the captured bleed exactly once on its first active frame")
 		check(cues("gorecross_cross").size()==1,"Gore Cross plays its native object entry cue once")
 		check(target["numeric"].effects.active.has("blood_memory_resistance")== (rank==2),
 			"Only a learned Blood Memory attaches the resistance reduction on Gore Cross contact")
@@ -1643,6 +1654,7 @@ func check_gorecross_wave() -> void:
 			"Gore Cross keeps its last position through 319 ms")
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
+	game.rng = previous_rng
 
 func check_gorecross_cost() -> void:
 	for sample: Array in [[1,0,17],[1,1,8],[2,1,12]]:
@@ -1716,6 +1728,8 @@ func check_gorecross_wave_direction() -> void:
 		check(cut.size()==1 and cut[0]["facing"]==facing,"The horizontal hit art still follows the blood blade's own facing")
 
 func check_gorecross_followup() -> void:
+	var previous_rng = game.rng
+	game.rng = GoreCrossStatusRng.new(1)
 	for sample: Array in [[349,KEY_X,"berserker",false],[350,KEY_X,"berserker",true],
 			[450,KEY_X,"berserker",true,"miss"],
 			[499,KEY_D,"berserker",true],[500,KEY_A,"berserker",false],[350,KEY_X,"weaponmaster",false]]:
@@ -1784,26 +1798,36 @@ func check_gorecross_followup() -> void:
 			protected_id = int(target["id"])
 			target = game.spawn_enemy(contact)
 			target["numeric"].values["evasion"] = 10.0
+		target["numeric"].values.merge({"level":17,"bleeding_resistance":-2000},true)
 		var other: Dictionary = game.spawn_enemy(contact)
 		other["hp"] = 5000.0
 		game.numeric_player.values["hit"] = 1.0
 		var ground_only := facing < 0
 		var slides: Array = []
+		var bleed_before_contact: Array[bool] = []
 		var observe_damage := func(event):
 			if event["target"] == target["id"]:
+				bleed_before_contact.append(target["numeric"].effects.active.has("bleed"))
 				slides.append([target["push_v"],target["push_ms"],target["stun_ms"],
 					game.last_damage["trace"]["defense_factor"]])
+		if not first_miss:game.bus.subscribe("combat.damage",observe_damage)
 		if ground_only:
 			target["def"] = target["def"].duplicate(true)
 			target["def"]["motions"].merge({"down":"","overturn":""},true)
 			target["numeric"].values.merge({"hit_recovery":0.0,"physical_defense":1000.0},true)
-			game.bus.subscribe("combat.damage",observe_damage)
 		check(wave["hit"]["fixed_amount"]==136.0 and wave["hit"]["effects"].is_empty(),
 			"Gore Cross snapshots column 7 and leaves the initial follow-up contact without bleed")
 		game.step_objects(39.0)
 		check(wave["hits"].is_empty(),"Gore Cross's follow-up wave starts with the original blank attack frame")
 		var count: int = game.hit_count
 		game.step_objects(1.0)
+		if not first_miss:
+			game.bus.unsubscribe("combat.damage",observe_damage)
+			var bleed_events: Array = game.bus.events_of("combat.status").filter(func(event):
+				return event["target"]==target["id"] and event["id"]=="bleed")
+			var bleed_state: Dictionary = target["numeric"].effects.active.get("bleed",{})
+			check(bleed_before_contact==[false,false] and bleed_state.has("source_bleed") and bleed_events.size()==1,
+				"Gore Cross follow-up applies bleed only after the repeat")
 		check(wave["pos"]==contact,"Gore Cross's follow-up travels 22 pixels by the first attack frame")
 		if first_miss:
 			var misses: Array = game.bus.events_of("combat.damage").filter(func(event):
@@ -1811,7 +1835,6 @@ func check_gorecross_followup() -> void:
 			check(not wave["hits"].has(protected_id) and wave["hits"].has(target["id"]) and misses.size()==2,
 				"Gore Cross skips invulnerability, then sends its one repeat even when the first contact misses")
 		if ground_only:
-			game.bus.unsubscribe("combat.damage",observe_damage)
 			check(slides.size()==2 and slides[0].slice(0,3)==[-800.0,333.0,333.0]
 				and slides[1].slice(0,3)==[-400.0,150.0,500.0],
 				"Gore Cross falls back to fixed knockback on first contact and ordinary knockback on the repeat: %s"%[slides])
@@ -1839,6 +1862,7 @@ func check_gorecross_followup() -> void:
 		check(game.player["action"]=="rage_slash","Gore Cross follows through to the final body frame")
 		step(1)
 		check(game.player["state"]=="idle","Gore Cross recovers at the end of the follow-up ANI")
+	game.rng = previous_rng
 
 func check_hopsmash_bleed() -> void:
 	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:

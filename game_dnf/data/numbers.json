@@ -606,13 +606,7 @@
    "max_level": 50,
    "cost": 15,
    "speed": "attack",
-   "active": true,
-   "on_hit": [
-    {
-     "id": "bleed",
-     "chance": 0.2
-    }
-   ]
+   "active": true
   },
   "buff": {
    "name": "血之狂暴",

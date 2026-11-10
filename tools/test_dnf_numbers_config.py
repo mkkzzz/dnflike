@@ -33,7 +33,7 @@ class NumericConfigTests(unittest.TestCase):
         self.assertTrue(validate(self.data))
 
     def test_unknown_on_hit_effect_is_rejected(self):
-        self.data['skills']['rage_slash']['on_hit'][0]['id'] = 'unknown'
+        self.data['skills']['rage_slash']['on_hit'] = [{'id': 'unknown', 'chance': 0.2}]
         self.assertTrue(validate(self.data))
 
     def test_invalid_passive_weapon_condition_is_rejected(self):
