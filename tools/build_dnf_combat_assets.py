@@ -79,6 +79,21 @@ OUTRAGE_PARTICLE_SOURCES = {
             '482fd68f3c68ee7047feec81345ccdb20abe25c4aaffa8d3223ff02a0a2cfdeb',
     },
 }
+HELLBENTER_DISAPPEAR_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterdisappear.ptl'
+HELLBENTER_PARTICLE_SOURCES = {
+    HELLBENTER_DISAPPEAR_PARTICLE: {
+        HELLBENTER_DISAPPEAR_PARTICLE: '000f657d6448cf1ecea12bc054b8d27c6d58bc8cfade9a1203882df52c312112',
+        **{f'passiveobject/character/swordman/animation/hellbenterfinish/disappearparticle{index}.ani': digest
+           for index, digest in enumerate((
+               '382d7f78fc95ca5cf823df8017b84dd626c0670cb9ee8b91d986d8ede72799aa',
+               'be00fe26a52b9114a361a0a5fccdc611e9739bc10db4145ada7ead350a8fb07c',
+               '6b162c3b97cae49a5b12075901872cd0ce2a162224c65aba12b3926f32c25c05',
+               '70c82b6ecf5fd1ce845a86da8603ccaef1dafb6fb0c14baefbdfc2cf1f3576a5',
+               'b9d3bf8a3b4af673bc2073f22ae4900709d586d253af7295dd3f7cf54430a555',
+               '1b83b3603f988e408bdab6911d7f27ca39398b4a8f9d43b591b95063e7800bcc',
+           ), 1)},
+    },
+}
 ARMOR_DAMAGE_PARTICLE = 'common/commoneffect/particle/superarmor_damage_particle.ptl'
 ARMOR_DAMAGE_SOURCES = {
     ARMOR_DAMAGE_PARTICLE: 'e33073aedab87783f38e3551f08a22a218be1efbcc82f1b8c849e260ce0aa309',
@@ -150,6 +165,7 @@ def native_particle_definitions(src, extra_pins=None):
         pinned[path] = hashes
     pinned.update(extra_pins or {})
     pinned.update(OUTRAGE_PARTICLE_SOURCES)
+    pinned.update(HELLBENTER_PARTICLE_SOURCES)
     pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
     pinned[PATTACK_PARTICLE] = PATTACK_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:

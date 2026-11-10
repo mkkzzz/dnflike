@@ -3,6 +3,7 @@ extends RefCounted
 const Timeline = preload("res://combat/action/timeline.gd")
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Motion = preload("res://combat/particles/native_motion.gd")
+const DISAPPEAR_PARTICLE := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
 
 static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var config: Dictionary = move["column"]
@@ -71,6 +72,10 @@ static func step(game, object: Dictionary) -> bool:
 		object["hits"].clear()
 		game.play_sound("ASTORM_HIT_FIRE")
 		game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":200})
+		# A6A508..A6A5BB emits once at Y+1, Z+200, then scales the child animations.
+		game.bus.emit("combat.cue",{"kind":"native_particle","path":DISAPPEAR_PARTICLE,
+			"point":Vector2(object["pos"])+Vector2(0,1),"height":float(object["z"])+200.0,
+			"scale":object["size_rate"]})
 	elif phase == 2 and age >= float(phases[2]["duration"]):
 		return false
 	column["phase"] = phase

@@ -2557,6 +2557,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	var normal_amount := int((int(base*1.55)+int(base*4.63))*0.5)
 	var final_amount := int((int(base*7.75)+int(base*23.24))*0.5)
 	var column: Dictionary = object["column"]
+	var particle_path := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
+	var embers := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==particle_path)
 	check(column["hit_interval"]==155 and object["hit"]["fixed_amount"]==normal_amount
 		and column["final"]["fixed_amount"]==final_amount,
 		"object 20052 uses the 155 ms reset and its own normal and final damage endpoints")
@@ -2583,11 +2585,20 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(154.0)
 	check(column["phase"]==1 and game.hit_count==start+20 and cues("ASTORM_HIT_FIRE").size()==fire_cues,
 		"the final explosion waits for the whole loop duration")
+	check(embers.call().is_empty(),"the final embers wait for the last phase")
 	game.step_objects(1.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(column["phase"]==2 and layers.call("disappear").size()==2 and game.hit_count==start+21
 		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues,
 		"the final explosion has independent damage, two original layers and its own sound")
+	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==particle_path)
+	var ember_visuals: Array = embers.call()
+	check(bursts.size()==1 and bursts[0]["point"]==object["pos"]+Vector2(0,1)
+		and bursts[0]["height"]==200.0 and ember_visuals.size()==12
+		and ember_visuals.all(func(fx):
+			return (is_equal_approx(fx.base_scale,object["size_rate"])
+				and String(fx.data["source"]).get_file().begins_with("disappearparticle"))),
+		"the final frame emits all twelve original ember animations once from Y+1 and Z+200 at column scale")
 	game.step_objects(199.0)
 	step(0.0)
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
@@ -2600,7 +2611,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(199.0)
 	check(game.objects.has(object) and game.hit_count==start+21,"the final contact does not repeat during the tail")
 	game.step_objects(1.0)
-	check(not game.objects.has(object),"the source Disappear2 lifetime removes the object at 400 ms")
+	check(not game.objects.has(object) and embers.call().size()==12,
+		"the source Disappear2 lifetime removes the object at 400 ms, leaving the independent embers")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()
