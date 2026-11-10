@@ -389,6 +389,40 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len(selected_diag), 1)
         self.assertIn('selected maze block 4 of 6', selected_diag[0]['detail'])
 
+    def test_kings_ruins_export_uses_six_fixed_single_cell_maps(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/kingsruins_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [6, 1])
+        self.assertEqual(dungeon['start_map_raw'], [5, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+        self.assertEqual(len(dungeon['rooms']), 6)
+        self.assertEqual(len(dungeon['placements']), 18)
+        self.assertEqual(len(export['images']), 45)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(5, 0)]['map_candidates'], ['map/kingsruins/s4801.map'])
+        self.assertEqual(cells[(0, 0)]['map_candidates'], ['map/kingsruins/b4801.map'])
+        self.assertEqual(cells[(1, 0)]['map_candidates'], [
+            'map/kingsruins/n4801.map',
+            'map/kingsruins/n4802.map',
+            'map/kingsruins/n4803.map',
+            'map/kingsruins/n4804.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/kingsruins/s4801.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/kingsruins/b4801.map']['role_hint'], 'boss')
+        self.assertEqual(dungeon['rooms']['map/kingsruins/s4801.map']['greed_pairs'], [[4, 4]])
+        self.assertEqual(dungeon['rooms']['map/kingsruins/n4801.map']['greed_pairs'], [[5, 5]])
+        self.assertEqual(dungeon['rooms']['map/kingsruins/b4801.map']['greed_pairs'], [[1, 1]])
+        specifications = [span['values'][2][2] for span in dungeon['raw']
+                          if span['tag'] == '[map specification]']
+        self.assertEqual(specifications, [4801, 4802, 4803, 4804, 4805, 4806])
+        self.assertFalse([span for span in dungeon['raw']
+                          if span['tag'] == '[boss map specification]'])
+        self.assertFalse([row for row in export['diagnostics'] if row['level'] in ('error', 'warning')])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

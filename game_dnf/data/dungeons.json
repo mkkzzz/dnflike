@@ -385,6 +385,20 @@
     "sha256": "882dc960c67fc9378e11b20e2331ad628cf012f78cc581c6e2f463280461524e"
    }
   },
+  "kingsruins": {
+   "name": "王的遗迹",
+   "region": "alphraira",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/kingsruins_v1/map_export.json",
+   "min_level": 52,
+   "monster_level": 55,
+   "source": {
+    "path": "dungeon/act4/kingsruins.dgn",
+    "sha256": "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

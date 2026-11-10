@@ -5398,9 +5398,11 @@ func build_props(room: Dictionary) -> Array:
 				var timeline: Array = table.timeline(source["motion_ani"])
 				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
 				if not trap.is_empty():prop["jar_trap"] = trap
-				var draws := NativeBoxLoot.draw_count(item)
+				var box_spec := NativeBoxLoot.draw_spec(item)
+				var draws := int(box_spec.get("draws",0))
 				if draws > 0:
-					prop["box_items"] = NativeBoxLoot.prepare(draws,hash("%s:%s:box:%d"%[run_id,room_id,object_index]))
+					prop["box_items"] = NativeBoxLoot.prepare(
+						draws,hash("%s:%s:box:%d"%[run_id,room_id,object_index]),String(box_spec["group"]))
 				var roster := NativePotMonsters.prepared(map_loader.data["dungeon"]["sha256"],room["sha256"],object_index)
 				if not roster.is_empty():
 					for child: Dictionary in roster:

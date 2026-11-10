@@ -1,7 +1,7 @@
 extends RefCounted
 ## Native maze special passive-object item groups compiled from DGN/STK sources.
 const SOURCE := "res://data/native_box_loot.json"
-const ART := "res://assets_local/items_original_v9/"
+const ART := "res://assets_local/items_original_v10/"
 const DetRng = preload("res://core/det_rng.gd")
 static var _source: Dictionary = {}
 static var _active: Dictionary = {}
@@ -46,19 +46,22 @@ static func ready(dungeon: Dictionary) -> bool:
 			if path.is_empty() or not ResourceLoader.exists(ART+path,"Texture2D"):return false
 	return true
 
-static func draw_count(item: Dictionary) -> int:
+static func draw_spec(item: Dictionary) -> Dictionary:
 	var raw: Array = item.get("raw",[])
-	if item.get("source_tag") != "[special passive object]" or raw.size() < 11:return 0
+	if item.get("source_tag") != "[special passive object]" or raw.size() < 11:return {}
 	var count := int(raw[4])
-	if raw.size() != 5+6*count:return 0
+	if raw.size() != 5+6*count:return {}
 	for at in range(5,raw.size(),6):
 		if raw[at] != "[item]":continue
 		var group := str(int(raw[at+1]))
 		if not _active.get("groups",{}).has(group):continue
 		var draws := int(raw[at+2])
 		if draws < 0 and at+3 < raw.size():draws = int(raw[at+3])
-		if draws > 0:return draws
-	return 0
+		if draws > 0:return {"group":group,"draws":draws}
+	return {}
+
+static func draw_count(item: Dictionary) -> int:
+	return int(draw_spec(item).get("draws",0))
 
 ## CObjectDrop 853825F draws from the inclusive 0..10000 stream. 853829C
 ## picks the first cumulative weight strictly greater than the roll.

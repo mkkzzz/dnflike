@@ -351,6 +351,36 @@
         "4": -1
       }
     },
+    "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346": {
+      "id": "kingsruins",
+      "source": {
+        "path": "dungeon/act4/kingsruins.dgn",
+        "sha256": "f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1091",
+            1000
+          ],
+          [
+            "original_1092",
+            1000
+          ],
+          [
+            "original_1079",
+            1000
+          ]
+        ],
+        "1": [],
+        "2": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1,
+        "2": -1
+      }
+    },
     "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8": {
       "id": "magmacave",
       "source": {
@@ -742,6 +772,50 @@
         ]
       }
     },
+    "original_1079": {
+      "name": "大块肉干",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1600,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        19
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        21
+      ],
+      "source": {
+        "id": 1079,
+        "path": "stackable/meat_lgdried.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "2463166e2f6cab2b34c60602eb1257cbd37d6ad6c43504b80fb75c0c7f637611",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1079"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          2
+        ],
+        "[hp recovery]": [
+          "+",
+          1450,
+          1000,
+          "myself"
+        ]
+      }
+    },
     "original_1080": {
       "name": "暗黑城特产干酪",
       "kind": "consumable",
@@ -952,6 +1026,91 @@
           "+",
           1420,
           1000,
+          "myself"
+        ]
+      }
+    },
+    "original_1091": {
+      "name": "浓缩的元素药剂",
+      "kind": "consumable",
+      "description": "",
+      "level": 45,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 500,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        67
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        19
+      ],
+      "source": {
+        "id": 1091,
+        "path": "stackable/ptn_conelement.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "459f3a24a66be5c0d9944b0bc97fbee7e907a88428527eaf78ccc8d8ed392051",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1091"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          1
+        ],
+        "[cool time]": [
+          40000
+        ],
+        "[cooltime group]": [
+          10
+        ]
+      }
+    },
+    "original_1092": {
+      "name": "跃翔药剂",
+      "kind": "consumable",
+      "description": "",
+      "level": 45,
+      "rarity": 1,
+      "weight": 0.001,
+      "price": 500,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        68
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        19
+      ],
+      "source": {
+        "id": 1092,
+        "path": "stackable/ptn_flying.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "251143f0f168dbf9b6d76a1f1d1e43ea9910525729426562ddbaabecd046c738",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1092"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          1
+        ],
+        "[cool time]": [
+          1000
+        ],
+        "[cooltime group]": [
+          10
+        ],
+        "[stat change]": [
+          "+",
+          20,
+          "jump power"
+        ],
+        "[stat change duration]": [
+          30000,
           "myself"
         ]
       }

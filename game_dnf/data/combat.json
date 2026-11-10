@@ -1650,6 +1650,36 @@
    "mob": "monster/newmonsters/aganzo/sinead/sinead.mob",
    "bank": "newmonsters_aganzo_sinead_sinead",
    "name": "sinead"
+  },
+  "soldier_guard_block": {
+   "mob": "monster/soldier/guard_block.mob",
+   "bank": "soldier_guard_block",
+   "name": "guard_block"
+  },
+  "soldier_guard_fire": {
+   "mob": "monster/soldier/guard_fire.mob",
+   "bank": "soldier_guard_fire",
+   "name": "guard_fire"
+  },
+  "soldier_guard_ice": {
+   "mob": "monster/soldier/guard_ice.mob",
+   "bank": "soldier_guard_ice",
+   "name": "guard_ice"
+  },
+  "soldier_guard_light": {
+   "mob": "monster/soldier/guard_light.mob",
+   "bank": "soldier_guard_light",
+   "name": "guard_light"
+  },
+  "soldier_guard_wind": {
+   "mob": "monster/soldier/guard_wind.mob",
+   "bank": "soldier_guard_wind",
+   "name": "guard_wind"
+  },
+  "soldier_hammerking": {
+   "mob": "monster/soldier/hammerking.mob",
+   "bank": "soldier_hammerking",
+   "name": "hammerking"
   }
  },
  "boss_hp_lines": 3,
