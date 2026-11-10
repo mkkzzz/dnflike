@@ -3686,7 +3686,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
 		var blood_allowed: bool = not native_blood or target["def"].get("hit_blood_allowed",true)
 		# 870345 uses the source facing for cut. The ETC wave uses 870397 instead.
-		var cue_facing := object_facing if native_kind == "illusion_melee" and object_facing != 0 else facing
+		var cue_facing := object_facing if native_kind in ["illusion_melee","gorecross_wave"] and object_facing != 0 else facing
 		hit_cues(atk,effect_point,cue_facing,by_player,native_common_hit,show_counter,blood_allowed,native_blood)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
@@ -4635,7 +4635,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 	return entity
 
-func sample_illusion_object_travel(object: Dictionary, age_ms: int) -> int:
+func sample_native_object_travel(object: Dictionary, age_ms: int) -> int:
 	var x := int(object["pos"].x)
 	var current := Vector2i(x,age_ms)
 	# 86E5C0 seeds both samples on the first update. 86E607 rolls them at 100 ms.
@@ -4691,7 +4691,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		else:
 			o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
 		var illusion_travel := kind in ["illusion_melee","illusion_wave"]
-		var travel_direction := sample_illusion_object_travel(o,int(t)) if illusion_travel else 0
+		var sampled_travel := illusion_travel or kind == "gorecross_wave"
+		var travel_direction := sample_native_object_travel(o,int(t)) if sampled_travel else 0
 		if kind in GHOST_FIELD_KINDS:
 			if o.has("first_update_sound"):
 				# A67B64 checks a per-object latch, independent of the pulse clock.
@@ -4875,7 +4876,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# 867485 compares rounded world X for stationary eruption objects.
 						var delta_x := roundi(target["pos"].x)-roundi(o["pos"].x)
 						if delta_x != 0:hit_facing = signi(delta_x)
-					elif illusion_travel:
+					elif sampled_travel:
 						# 867370 follows nonzero travel strictly inside 150 px.
 						var delta_x := roundi(target["pos"].x)-int(o["pos"].x)
 						if travel_direction != 0 and absi(delta_x) < 150:hit_facing = travel_direction
@@ -4888,13 +4889,13 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						if delta_x != 0 and (stationary_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
 					var resolved_contact := land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target,
-						int(o["facing"]) if illusion_travel else 0)
+						int(o["facing"]) if sampled_travel else 0)
 					if resolved_contact and hit.has("cross_second_impact"):
 						# E59DE0 calls 9FBB40 on misses too. It replaces the ATK and requests one direct rehit.
 						hit = hit["cross_second_impact"]
 						o["hit"] = hit
 						if float(target["hp"]) > 0.0:
-							land_hit(attacker,target,hit,enemy_mid_height_point(target),hit_facing,float(o["power"]))
+							land_hit(attacker,target,hit,enemy_mid_height_point(target),hit_facing,float(o["power"]),false,int(o["facing"]))
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break

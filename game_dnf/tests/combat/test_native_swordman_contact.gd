@@ -1644,6 +1644,39 @@ func check_gorecross_wave() -> void:
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 
+func check_gorecross_wave_direction() -> void:
+	for sample: Array in [[1,[],40,14,-1],[-1,[],40,14,1],
+			[1,[0],40,14,1],[-1,[0],40,14,-1],[1,[0,99,1,99,1],40,54,1]]:
+		var facing: int = sample[0]
+		var push: int = sample[4]
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["rage_slash"]
+		start_room("original_27601","katana",facing,spec)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(0,200))
+		press(KEY_A)
+		step(0)
+		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0,
+			"physical_crit":0.0,"physical_back_crit":1.0},true)
+		step(500)
+		step(1)
+		check(game.objects.size()==1,"The Gore Cross direction fixture releases one ordinary wave")
+		if game.objects.size()!=1:continue
+		var wave: Dictionary = game.objects[0]
+		var origin: Vector2 = wave["pos"]
+		for age_step: int in sample[1]:game.step_objects(float(age_step))
+		move_target(target,origin+Vector2((int(sample[3])-8)*facing,0))
+		target["facing"] = push
+		game.step_objects(float(sample[2]))
+		check(wave["hits"].has(target["id"]) and target["facing"]==-push and signf(target["push_v"])==push,
+			"Gore Cross uses measured travel when available and target side without a speed sample: %s"%[sample])
+		check(game.last_damage["critical"],"Gore Cross uses the same direction for back-only critical chance")
+		var cut: Array = game.bus.events_of("combat.cue").filter(func(event):
+			return String(event.get("key","")).begins_with("hit_cut_"))
+		check(cut.size()==1 and cut[0]["facing"]==facing,"The horizontal hit art still follows the blood blade's own facing")
+
 func check_gorecross_followup() -> void:
 	for sample: Array in [[349,KEY_X,"berserker",false],[350,KEY_X,"berserker",true],
 			[450,KEY_X,"berserker",true,"miss"],
@@ -8139,6 +8172,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
 	check_gorecross_wave()
+	check_gorecross_wave_direction()
 	check_gorecross_followup()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
