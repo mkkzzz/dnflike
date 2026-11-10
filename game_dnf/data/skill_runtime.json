@@ -164,6 +164,10 @@
    "passiveobject/character/swordman/icewave4.obj": "passiveobject/character/swordman/icewave4.obj",
    "passiveobject/character/swordman/icewave5.obj": "passiveobject/character/swordman/icewave5.obj",
    "passiveobject/character/swordman/icewave6.obj": "passiveobject/character/swordman/icewave6.obj",
+   "passiveobject/character/swordman/illusionslashmelee1.obj": "passiveobject/character/swordman/illusionslashmelee1.obj",
+   "passiveobject/character/swordman/illusionslashmelee2.obj": "passiveobject/character/swordman/illusionslashmelee2.obj",
+   "passiveobject/character/swordman/illusionslashmelee3.obj": "passiveobject/character/swordman/illusionslashmelee3.obj",
+   "passiveobject/character/swordman/illusionslashmelee4.obj": "passiveobject/character/swordman/illusionslashmelee4.obj",
    "passiveobject/character/swordman/illusionslashwave.obj": "passiveobject/character/swordman/illusionslashwave.obj",
    "passiveobject/character/swordman/khazan.obj": "passiveobject/character/swordman/khazan.obj",
    "passiveobject/character/swordman/momentaryslashwave.obj": "passiveobject/character/swordman/momentaryslashwave.obj",
@@ -6309,26 +6313,31 @@
    },
    "name": "幻影剑舞",
    "skill": "skill/swordman/illusionslash.skl",
+   "slash_order": [
+    0,
+    2,
+    1,
+    3,
+    2,
+    0,
+    3,
+    1
+   ],
    "stages": [
     {
      "ani": "illusionslash1",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_smash_c789bbe3"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_smash_c789bbe3",
-       "effects": [],
+       "object": "passiveobject/character/swordman/illusionslashmelee1.obj",
+       "offset": [
+        0,
+        1,
+        1
+       ],
        "percent_col": 0,
-       "window": [
-        0.0,
-        160.0
-       ]
+       "starts_at_zero": true
       }
      ],
      "voice": "SM_HOANYOUNG_START"
@@ -6336,66 +6345,51 @@
     {
      "ani": "illusionslash2",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upper_4c1c9ad1"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_upper_4c1c9ad1",
-       "effects": [],
-       "percent_col": 1,
-       "window": [
-        0.0,
-        150.0
-       ]
+       "object": "passiveobject/character/swordman/illusionslashmelee2.obj",
+       "offset": [
+        0,
+        1,
+        1
+       ],
+       "percent_col": 0,
+       "starts_at_zero": true
       }
      ]
     },
     {
      "ani": "illusionslash3",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upper_4c1c9ad1"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_upper_4c1c9ad1",
-       "effects": [],
-       "percent_col": 2,
-       "window": [
-        0.0,
-        150.0
-       ]
+       "object": "passiveobject/character/swordman/illusionslashmelee3.obj",
+       "offset": [
+        0,
+        1,
+        1
+       ],
+       "percent_col": 0,
+       "starts_at_zero": true
       }
      ]
     },
     {
      "ani": "illusionslash4",
      "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upper_4c1c9ad1"
-      }
-     ],
+     "fx": [],
      "hits": [
       {
-       "atk": "",
-       "derived": "skillfx_upper_4c1c9ad1",
-       "effects": [],
-       "percent_col": 3,
-       "window": [
-        0.0,
-        150.0
-       ]
+       "object": "passiveobject/character/swordman/illusionslashmelee4.obj",
+       "offset": [
+        0,
+        1,
+        1
+       ],
+       "percent_col": 0,
+       "starts_at_zero": true
       }
      ]
     },
@@ -6421,6 +6415,11 @@
        "at": 300,
        "life_ms": 1600,
        "object": "passiveobject/character/swordman/illusionslashwave.obj",
+       "offset": [
+        65,
+        0,
+        0
+       ],
        "percent_col": 0,
        "speed": 520.0,
        "starts_at_zero": true

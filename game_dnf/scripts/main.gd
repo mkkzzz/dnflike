@@ -317,7 +317,8 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if body["id"]==PLAYER_ID:
 			damage_taken += amount
 			if float(body["hp"])<=0:
-				if player.has("draw_cast") or player.has("grab_blast_target") or player.has("rapid_move_slash_cast"):leave_action()
+				if player.has("draw_cast") or player.has("grab_blast_target") or player.has("rapid_move_slash_cast") \
+						or player.has("illusion_cast"):leave_action()
 				body["state"] = "dead"
 				finished = true
 				victory = false
@@ -522,6 +523,8 @@ func move_def(name: String) -> Dictionary:
 		return player["draw_cast"]
 	if name == "rapidmoveslash" and player.get("action","") == name and player.has("rapid_move_slash_cast"):
 		return player["rapid_move_slash_cast"]
+	if name == "illusionslash" and player.get("action","") == name and player.has("illusion_cast"):
+		return player["illusion_cast"]["move"]
 	return table.moves.get(name,{})
 
 func active_effect(id: String) -> Dictionary:
@@ -675,6 +678,9 @@ func action_event_clock(elapsed: float) -> float:
 	return elapsed-float(phase["wait_ms"]) if phase.has("charge_rate") else action_ani_clock(elapsed)
 
 func buffering(code: int) -> void:
+	if player["action"] == "illusionslash" and (code == KEY_X or skill_request(code) == "illusionslash"):
+		if int(player["stage"]) < 4:player["illusion_cast"]["tap"] = true
+		return
 	if code in [KEY_X,KEY_Z] and player["action"] == "upper":
 		var followup := float(move_def("upper").get("upper_followup_at",-1.0))
 		if followup >= 0.0:
@@ -756,6 +762,7 @@ func leave_action() -> void:
 	if player.has("rapid_move_slash_cast"):
 		begin_skill_cooldown("rapidmoveslash",player["rapid_move_slash_cast"])
 		player.erase("rapid_move_slash_cast")
+	player.erase("illusion_cast")
 	end_hardattack_charge()
 	stop_bloody_rave_loop()
 	player.erase("hardattack_release")
@@ -1118,6 +1125,9 @@ func step_action(ms: float, move: Vector2) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
+	if name == "illusionslash" and int(player["stage"]) < 4:
+		step_illusion_chain(m["illusion_chain"],stage,event_clock)
+		return
 	if name == "rapidmoveslash":
 		var index := int(player["stage"])
 		var request: bool = player["queued_skill"] == name
@@ -1234,6 +1244,28 @@ func step_action(ms: float, move: Vector2) -> void:
 		if not start_action(String(m["next"]),true) and clock >= duration:end_action()
 	elif clock >= duration:
 		end_action()
+
+func step_illusion_chain(config: Dictionary, stage: Dictionary, clock: float) -> void:
+	var cast: Dictionary = player["illusion_cast"]
+	var now := int(player["motion_clock"])
+	var taps: Array = cast["taps"]
+	# CBD77C..CBD809 records one qualifying input per update, even before frame 3.
+	if cast["tap"]:
+		taps.append(now)
+		cast["tap"] = false
+	if clock < float(stage["timeline"][3]["start_ms"]):return
+	while not taps.is_empty() and int(taps[0]) < now-1000:
+		taps.pop_front()
+	# 8480F0 and CBD826 convert recent input frequency to presses per second * 1000.
+	var rate := int(float(taps.size())*1000000.0/clampi(now-int(cast["start"]),1,1000))
+	var count := _native_interpolate(int(config["min"]),int(config["max"]),rate,int(config["max_rate"]))
+	var next := int(cast["slash"])+1
+	if next < count:
+		cast["slash"] = next
+		start_stage(int(config["order"][next%config["order"].size()]))
+	else:
+		cast["wave_ratio"] = mini(100,int(float(rate)*100.0/float(config["max_rate"])))
+		start_stage(4)
 
 func flow_payload(extra := {}) -> Dictionary:
 	var payload := {"run_id":run_id,"room_id":room_id,"room_index":room_index,
@@ -1481,6 +1513,10 @@ func start_action(name: String, cancel := false) -> bool:
 		charge["elapsed_ms"] = 0.0
 		player["hardattack_charge"] = charge
 	var opening_clock := float(m["stages"][0]["entry_clock"]) if m.get("native_state","") == "grab_blast" else 0.0
+	if name == "illusionslash":
+		player["illusion_cast"] = {"move":m,"start":int(player["motion_clock"]),"slash":0,"taps":[],"tap":false}
+		var first_frame: Dictionary = m["stages"][0]["timeline"][0]
+		opening_clock = float(first_frame["end_ms"])*(1.0-float(m["illusion_chain"]["first_frame_rate"])/100.0)
 	start_stage(opening_stage,opening_clock)
 	match name:
 		"epidemicrasa":apply_effect({"kind":"effect","id":"epidemic_aura","rank":int(skill_levels.get(name,1))})
@@ -1970,6 +2006,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
 	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
+			and not (name == "illusionslash" and int(player["illusion_cast"]["slash"]) > 0) \
 			and not (name == "rapidmoveslash" and index % 2 == 1) \
 			and not (name == "draw" and opening_clock > 0.0) and not player.has("weapon_combo_release"):
 		var turn := int(bool(held.get(KEY_RIGHT,false)))-int(bool(held.get(KEY_LEFT,false)))
@@ -1990,7 +2027,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		elif index == 0:play_sound("SM_MENGRYONG_START")
 		elif index == m["stages"].size()-2:play_sound("SM_MENGRYONG_FIN")
 		else:play_sound("R_SM_MENGRYONG")
-	if String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
+	if name == "illusionslash" and index < 4 and int(player["illusion_cast"]["slash"]) > 0:
+		play_sound("R_SM_HOANYOUNG")
+	elif String(stage.get("voice","")) != "":play_sound(String(stage["voice"]))
 	if name == "charge_crash" and index == 2:
 		begin_charge_crash_hold(m["charge_crash_hold"])
 		return
@@ -2406,6 +2445,11 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					player["native_phase"]["outrage_stone_pending"] = true
 					# CB460B starts the room shake on the landing update.
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
+				elif hit.get("skill_id","") == "illusionslash" and int(player["stage"]) == 4:
+					var cast: Dictionary = player["illusion_cast"]
+					var damage: Array = cast["move"]["illusion_chain"]["wave_damage"]
+					hit = hit.duplicate()
+					hit["percent"] = 100+_native_interpolate(int(damage[0])-100,int(damage[1])-100,int(cast["wave_ratio"]),100)
 				if hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())
@@ -3532,7 +3576,8 @@ func hurt_player(amount: int, source: Dictionary, atk: Dictionary, facing: int, 
 	if float(player["hp"])<=0:
 		if player.has("triple_cast") or player.has("hardattack_charge") or player.has("hardattack_release") \
 				or player.has("weapon_combo_cast") or player.has("draw_cast") or player.has("grab_blast_target") \
-				or player.has("charge_crash_hold") or player.has("rapid_move_slash_cast"):leave_action()
+				or player.has("charge_crash_hold") or player.has("rapid_move_slash_cast") \
+				or player.has("illusion_cast"):leave_action()
 		player["state"] = "dead"
 		finished = true
 		victory = false
@@ -3944,8 +3989,8 @@ func step_saya_crystal(object: Dictionary, controller: Dictionary) -> bool:
 			var point := saya_crystal_impact(target)
 			var origin: Vector3i = object["crystal_origin"]
 			var flight := int(object["crystal_flight_ms"])
-			object["pos"] = Vector2(_saya_interpolate(origin.x,int(point.x),int(elapsed),flight),_saya_interpolate(origin.y,int(point.y),int(elapsed),flight))
-			object["z"] = _saya_interpolate(origin.z,int(point.z),int(elapsed),flight)
+			object["pos"] = Vector2(_native_interpolate(origin.x,int(point.x),int(elapsed),flight),_native_interpolate(origin.y,int(point.y),int(elapsed),flight))
+			object["z"] = _native_interpolate(origin.z,int(point.z),int(elapsed),flight)
 			if elapsed >= float(flight):
 				var attacker: Dictionary = player if object["owner"] == "player" else object["source"]
 				if not attacker.is_empty() and float(target["hp"]) > 0.0 and not target_invulnerable(target):
@@ -3973,7 +4018,7 @@ func saya_crystal_impact(target: Dictionary) -> Vector3:
 	# until the native +0x11C height getter is mapped for the enemy classes.
 	return Vector3(int(target["pos"].x),int(target["pos"].y),int(height)+int((top-height)*0.5))
 
-func _saya_interpolate(origin: int, target: int, age: int, duration: int) -> int:
+func _native_interpolate(origin: int, target: int, age: int, duration: int) -> int:
 	# 11AEE50 multiplies before dividing, with integer endpoints and SSE rounding.
 	if age >= duration:return target
 	if age <= 0:return origin

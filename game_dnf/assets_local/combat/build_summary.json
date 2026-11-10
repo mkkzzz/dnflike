@@ -137,11 +137,15 @@
   "passiveobject/character/swordman/sayaex.obj",
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/blastbloodpresuborigin.obj",
-  "passiveobject/character/swordman/givebloodsub.obj"
+  "passiveobject/character/swordman/givebloodsub.obj",
+  "passiveobject/character/swordman/illusionslashmelee1.obj",
+  "passiveobject/character/swordman/illusionslashmelee2.obj",
+  "passiveobject/character/swordman/illusionslashmelee3.obj",
+  "passiveobject/character/swordman/illusionslashmelee4.obj"
  ],
  "effects": 376,
  "digits": 61,
- "audio_keys": 283,
+ "audio_keys": 284,
  "unresolved": 32,
  "unresolved_items": [
   {

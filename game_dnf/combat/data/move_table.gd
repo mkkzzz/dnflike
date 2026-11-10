@@ -464,6 +464,19 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			move["full_charge_hit"] = burst["hits"][0]
 			move["full_charge_hit"]["skill_id"] = name
 	if spec.has("material_cost"):move["material_cost"] = spec["material_cost"]
+	if spec.has("slash_order"):
+		var values: Array = skill["static"]
+		var weapon_types := {"shortsword":0,"katana":1,"club":2,"greatsword":3,"beamsword":5}
+		var column := 1+2*int(weapon_types.get(weapon,0))
+		var blade := weapon == "katana"
+		var upgraded := job == "weaponmaster" and (blade or weapon == "beamsword") \
+			and int(_skill_row(BLADE_MASTERY_SKL if blade else LIGHT_MASTERY_SKL).get("rank",0)) >= int(values[19 if blade else 22])
+		if upgraded:column = 25 if blade else 27
+		move["illusion_chain"] = {"order":spec["slash_order"],"min":int(values[column]),"max":int(values[column+1]),
+			"max_rate":int(values[0])*1000,"wave_damage":skill["level_row"].slice(1,3),
+			"first_frame_rate":int(values[18]),
+			"melee_damage_rate":NativeMotion.f32(1.0+NativeMotion.f32(float(values[21 if blade else 24])*0.0010000000474974513)) if upgraded else 1.0,
+			"melee_motion":db.record("character/swordman/particle/illusionslashmelee.ptl").get("decoded",{})}
 	var weapon_hits := _swordman_hits(name)
 	var native_draw: bool = spec.get("native_state","") == "draw"
 	if native_draw:
@@ -489,6 +502,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var frames: Array = built["timeline"]
 			if name == "illusionslash" and stage["ani"] == "illusionslashfinal":
 				_append_illusion_finish_hits(built,skill,spec["finish_weapon_tracks"].get(weapon,[]))
+			elif name == "illusionslash":
+				var hit: Dictionary = built["hits"][0]
+				var ratio: float = move["illusion_chain"]["melee_damage_rate"]
+				hit["percent"] = 100.0+int(NativeMotion.f32(float(hit["percent"])*ratio)-100.0)
+				hit["ptl_motion"] = move["illusion_chain"]["melee_motion"]
 			if name == "rapidmoveslash" and not built["hits"].is_empty():
 				var hit: Dictionary = built["hits"][0]
 				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)

@@ -189,6 +189,7 @@ DIRECT_OBJECTS = {
 # Source bindings in CNSwordman state 24 and the ghost object's motion vector.
 # Keep other blank-frame clips out of the legacy filename heuristic.
 NATIVE_ANIMATION_BINDINGS = {
+    *(OBJ_ROOT + f"animation/illusionslashmelee{index}.ani" for index in range(1, 5)),
     OBJ_ROOT + "animation/momentaryslash/start.ani",
     CHR_FX + "giveblood/givebloodstay.ani",
     CHR_FX + "giveblood/givebloodshoot.ani",
@@ -2127,6 +2128,7 @@ def main() -> int:
         object_candidates.add(OBJ_ROOT + "bloodyrave.obj")
         object_candidates.add(OBJ_ROOT + "outragebreakfloor.obj")
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
+        object_candidates.update(OBJ_ROOT + f"illusionslashmelee{index}.obj" for index in range(1, 5))
         SAFE_OBJECTS.clear()
         SAFE_OBJECTS.update(
             path for path in object_candidates if safe_object(library, records, path)
@@ -2215,8 +2217,17 @@ def main() -> int:
                               bloodblast_script=bloodblast_script)
         if move:
             if key == "illusionslash":
+                # CC367B's eight ETC slots; 251F810 creates the matching melee object.
+                move["slash_order"] = [0, 2, 1, 3, 2, 0, 3, 1]
                 move["finish_weapon_tracks"] = illusion_tracks
                 move["material_cost"] = fixed_cube_cost(skill, records)
+                for index, stage in enumerate(move["stages"][:-1], 1):
+                    melee = add_object(objects, OBJ_ROOT + f"illusionslashmelee{index}.obj")
+                    if not melee:
+                        raise ValueError(f"missing original Illusion Slash melee object {index}")
+                    stage["hits"] = [{"object": melee, "percent_col": 0, "offset": [0, 1, 1],
+                                      "starts_at_zero": True}]
+                    stage["fx"] = []
                 move["stages"][0]["voice"] = "SM_HOANYOUNG_START"
                 final = move["stages"][-1]
                 final["hits"] = [hit for hit in final["hits"] if "object" in hit]
@@ -2225,6 +2236,7 @@ def main() -> int:
                 smash_at = finish_frames[6]["start_ms"]
                 # CB5145 gates both the smash record and the sword-wave dispatch on frame 6.
                 final["hits"][0]["at"] = smash_at
+                final["hits"][0]["offset"] = [65, 0, 0]
                 final["hits"][0]["starts_at_zero"] = True
                 upper = add_fx(fx, effects, CHR_FX + "illusionslash/upper.ani")
                 smash = add_fx(fx, effects, CHR_FX + "illusionslash/smash.ani")

@@ -543,12 +543,15 @@ ILLUSION_SLASH_AUDIO = {
     'SM_HOANYOUNG_FIN': 'sounds/char/swordman/sm_hoanyoung_fin.ogg',
     'HOANYOUNG_HIT': 'sounds/char/swordman/effect/hoanyoung_hit.ogg',
 }
+ILLUSION_SLASH_REPEAT_VOICES = [f'sounds/char/swordman/sm_hoanyoung_{index:02}.ogg' for index in range(1, 5)]
+SOURCE_AUDIO_WEIGHTS['R_SM_HOANYOUNG'] = (25, 25, 25, 25)
 OUTRAGE_AUDIO = {key: [f'sounds/char/swordman/effect/{key.lower()}.ogg']
                  for key in ('OUTRAGE_READY', 'OUTRAGE_SWING', 'CCRASH_CRASH', 'OUTRAGE_CRASH')}
 OUTRAGE_AUDIO['FLAMES_HIT'] = ['sounds/char/wizard/effect/fs_hit.ogg']
 CUE_SOUNDS = {
     **OUTRAGE_AUDIO,
     **{key: [path] for key, path in ILLUSION_SLASH_AUDIO.items()},
+    'R_SM_HOANYOUNG': ILLUSION_SLASH_REPEAT_VOICES,
     **{key: paths if isinstance(paths, list) else [paths] for key, paths in RAPID_SLASH_AUDIO.items()},
     'SM_CHARGE_CRASH': ['sounds/char/swordman/sm_chargecrash.ogg'],
     'CCRASH_MOVING': ['sounds/char/swordman/effect/ccrash_moving.ogg'],
@@ -1522,7 +1525,7 @@ def main() -> int:
     parser.add_argument('--extend-weapon-combo', action='store_true',
                         help='Add the original short-sword combo clips and short-sword/katana finish effects')
     parser.add_argument('--extend-illusion-slash-audio', action='store_true',
-                        help='Append the original Illusion Slash voices and sword-wave hit cue')
+                        help='Append the original Illusion Slash objects, voices and sword-wave hit cue')
     parser.add_argument('--extend-rapid-move-slash', action='store_true',
                         help='Append the original Rapid Move Slash dust and voice/swing cues')
     parser.add_argument('--extend-upper-armor-light', action='store_true',
@@ -1702,6 +1705,9 @@ def main() -> int:
         return 0
     if args.extend_illusion_slash_audio:
         specs = [('audio', key, path) for key, path in ILLUSION_SLASH_AUDIO.items()]
+        specs.append(('audio', 'R_SM_HOANYOUNG', ILLUSION_SLASH_REPEAT_VOICES))
+        specs.extend(('objects', path, path) for path in
+                     (f'passiveobject/character/swordman/illusionslashmelee{index}.obj' for index in range(1, 5)))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:
