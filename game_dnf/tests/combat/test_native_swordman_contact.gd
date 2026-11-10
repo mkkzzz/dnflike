@@ -3374,6 +3374,8 @@ func check_outrage_break_eruption() -> void:
 	for sample: Array in weights:
 		var victim: Dictionary = game.spawn_enemy(origin+Vector2(-20,45))
 		victim["hp"] = 50000.0
+		victim["max_hp"] = victim["hp"]
+		victim["numeric"].values["hp_max"] = victim["hp"]
 		victim["def"] = victim["def"].merged({"weight":sample[0]},true)
 		victims.append(victim)
 	for phase: String in ["floor","magma"]:
@@ -3390,6 +3392,35 @@ func check_outrage_break_eruption() -> void:
 				and victim.get("native_jump_velocity")==Vector2.ZERO
 				and height>=int(weights[index][1]) and height<=int(weights[index][2]),
 				"the "+phase+" applies the original launch height range for weight "+str(weights[index][0]))
+
+	var falling := victims[0]
+	var hit_total: int = game.hit_count
+	game.step_objects(126)
+	var full_rise := roundi(pow(float(falling["vz"]),2.0)/3000.0)
+	check(game.hit_count>hit_total and falling.get("outrage_down_phase")==0 and full_rise>=29 and full_rise<=36,
+		"another magma hit before first landing uses the full height range")
+	var peak := roundi(falling["z"])
+	for _tick in 80:
+		game.update_enemy(falling,16)
+		peak = maxi(peak,roundi(falling["z"]))
+		if falling.get("outrage_down_phase")==1:break
+	var bounce_height := roundi(pow(float(falling["vz"]),2.0)/3000.0)
+	var bounce_base := int(float(peak)/5.0)
+	check(falling["state"]=="native_down_flight" and falling["z"]==0.0 and falling.get("outrage_down_phase")==1
+		and bounce_height>=int(bounce_base*0.9) and bounce_height<=int(bounce_base*1.1),
+		"the first landing starts a bounce using one fifth of the tracked peak")
+	hit_total = game.hit_count
+	game.step_objects(126)
+	var repeat_rise := roundi(pow(float(falling["vz"]),2.0)/3000.0)
+	check(game.hit_count>hit_total and falling.get("outrage_down_phase")==1 and repeat_rise>=7 and repeat_rise<=8,
+		"a magma hit during the bounce quarters the weighted height before sampling")
+	for _tick in 80:
+		game.update_enemy(falling,16)
+		if falling["state"]=="down":break
+	check(falling["state"]=="down" and falling["z"]==0.0 and falling["vz"]==0.0
+		and falling.get("outrage_down_phase")==2,
+		"the second landing enters grounded down without another bounce (state=%s, z=%s, vz=%s, phase=%s, hp=%s)" % [
+			falling["state"],falling["z"],falling["vz"],falling.get("outrage_down_phase"),falling["hp"]])
 
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)

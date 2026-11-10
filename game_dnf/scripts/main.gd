@@ -2688,7 +2688,7 @@ func release_grab_blast_victim(enemy: Dictionary) -> void:
 	enemy["z"] = float(at.z)
 	apply_native_down_flight(enemy,-int(player["facing"]),1000,100)
 
-func apply_native_down_flight(enemy: Dictionary, facing: int, push: int, lift: int) -> String:
+func apply_native_down_flight(enemy: Dictionary, facing: int, push: int, lift: int, outrage_impact := false) -> String:
 	var weight := int(enemy["def"]["weight"])
 	# 827E40 adjusts push and lift by weight. 82C6A8 halves X.
 	# 82C95D samples X before Z.
@@ -2697,7 +2697,18 @@ func apply_native_down_flight(enemy: Dictionary, facing: int, push: int, lift: i
 	var horizontal := int(push*4000.0/scale)
 	var vertical := int(lift*4000.0/scale)
 	var speed := sample_native_down(int(horizontal*0.5),0.8,1.2)
-	var rise := sample_native_down(int(vertical*vertical/(2.0*GRAVITY)),0.9,1.1)
+	var base_rise := int(vertical*vertical/(2.0*GRAVITY))
+	if outrage_impact:
+		var bounced: bool = enemy["state"] in ["native_down_flight","down"] and int(enemy.get("outrage_down_phase",0)) >= 1
+		# 81879C selects phase one on a repeat hit after the first landing.
+		# 82C7B4 quarters the new height before sampling its random range.
+		if bounced:base_rise = base_rise >> 2
+		enemy["outrage_down_phase"] = int(bounced)
+		enemy["outrage_down_peak"] = 0
+	else:
+		enemy.erase("outrage_down_phase")
+		enemy.erase("outrage_down_peak")
+	var rise := sample_native_down(base_rise,0.9,1.1)
 	var airborne := float(enemy["z"])>0.0 or float(enemy["vz"])>0.0
 	enemy["facing"] = facing
 	enemy["push_ms"] = 0.0
@@ -3271,10 +3282,13 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
 		elif outrage_impact and not armor_blocks_reaction:
 			# 81F1F0 dispatches state 4 with the object's ATK push and lift.
-			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
+			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
 		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
 			# 无伤接触仍应打断正在进行的狂热者施法。
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
+			if reaction != "none":
+				target.erase("outrage_down_phase")
+				target.erase("outrage_down_peak")
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player and not draw_impact:
@@ -3521,6 +3535,9 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		for skill in skill_cd.keys():
 			skill_cd[skill] = maxf(0.0, float(skill_cd[skill]) - ms)
 	var state: String = enemy["state"]
+	if enemy.has("outrage_down_phase") and state not in ["native_down_flight","down"]:
+		enemy.erase("outrage_down_phase")
+		enemy.erase("outrage_down_peak")
 	var advance := ms
 	if state == NativeZealotSummons.CAST_STATE:
 		advance *= float(enemy["native_cast_rate"])
@@ -3548,7 +3565,9 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 		step_native_summon_jump(enemy,dt)
 		return
 	elif state == "native_down_flight":
-		if advance_native_flight(enemy,dt):
+		var landed := advance_native_flight(enemy,dt)
+		if enemy.has("outrage_down_phase"):landed = step_outrage_down_bounce(enemy,landed)
+		if landed:
 			enemy["state"] = "down"
 			enemy["down_ms"] = 0.0
 		return
@@ -3655,6 +3674,25 @@ func start_native_flight(enemy: Dictionary, height: float, velocity: Vector2, ri
 	enemy["state"] = "native_summon_jump"
 	enemy["native_jump_velocity"] = velocity
 	enemy["native_jump_gravity"] = gravity
+
+func step_outrage_down_bounce(enemy: Dictionary, landed: bool) -> bool:
+	if int(enemy["outrage_down_phase"]) == 0:
+		# 82A911 samples the highest integer Z before 82AC28 divides it by five.
+		var peak := maxi(int(enemy["outrage_down_peak"]),roundi(enemy["z"]))
+		enemy["outrage_down_peak"] = peak
+		if not landed:return false
+		@warning_ignore("integer_division")
+		var base_rise := peak/5
+		sample_native_down(0,0.8,1.2)
+		var rise := sample_native_down(base_rise,0.9,1.1)
+		if base_rise > 0:
+			enemy["outrage_down_phase"] = 1
+			start_native_flight(enemy,0.0,Vector2.ZERO,rise,-1500.0)
+			enemy["state"] = "native_down_flight"
+			enemy["clock"] = 0.0
+			return false
+	if landed:enemy["outrage_down_phase"] = 2
+	return landed
 
 func native_spawn_roll(bounds: Array) -> int:
 	return int(bounds[0])+rng.range_int(0,0x7fffffff)%(int(bounds[1])-int(bounds[0])+1)
