@@ -315,7 +315,7 @@ func _check_reckless_status() -> void:
 	var was_processing: bool = battle.is_physics_processing()
 	battle.set_physics_process(false)
 	var actor = battle.numeric_player
-	var icon = game.reckless_status
+	var icon: Control = game.reckless_status
 	host.check(not icon.visible, "the status row is empty without the Reckless appendage")
 	actor.add_effect("reckless", 1)
 	await host.ticks(2)
@@ -323,6 +323,23 @@ func _check_reckless_status() -> void:
 		and icon.size == Vector2(23,23) and icon._shade_height == 0,
 		"the live HUD draws Reckless at the first original buff slot")
 	if host.capture:await host.frame("63b_reckless_hud_start")
+	_hover_status(icon, Vector2(20,20))
+	await host.ticks(2)
+	host.check(icon._tip_rank == 1 and icon._tip_rank_text == "技能Lv1"
+		and icon.TIP_ORIGIN + icon.position == Vector2(92,488) and not icon._tip_tiles.has(null),
+		"the live status tooltip uses the original anchor, popup tiles and active rank text")
+	if host.capture:await host.frame("63e_reckless_hud_hover")
+	for outside in [Vector2(21,20), Vector2(20,21)]:
+		_hover_status(icon, outside)
+		await host.ticks(2)
+		host.check(icon._tip_rank == 0, "the original status hover excludes its right and bottom edges")
+		_hover_status(icon, Vector2(20,20))
+		await host.ticks(2)
+	game.show_overlay("menu")
+	await host.ticks(2)
+	host.check(icon._tip_rank == 1, "the ordinary menu preserves the hovered status tooltip")
+	game.show_overlay("")
+	_hover_status(icon, Vector2(-1,0))
 	actor.step(20040.0)
 	await host.ticks(2)
 	host.check(icon._shade_height == 10 and icon._alpha == 255,
@@ -340,11 +357,26 @@ func _check_reckless_status() -> void:
 	await host.ticks(2)
 	host.check(icon._shade_height == 19 and icon._alpha == 127,
 		"Reckless fades during the last second")
+	_hover_status(icon, Vector2.ZERO)
+	await host.ticks(2)
+	host.check(icon._tip_rank == 1, "the live tooltip includes the top-left pixel during fade")
 	actor.step(500.0)
 	await host.ticks(2)
-	host.check(not icon.visible, "the HUD removes the Reckless icon when the timed appendage expires")
+	host.check(not icon.visible and icon._tip_rank == 0,
+		"the HUD removes the icon and open tooltip when the Reckless appendage expires")
 	if host.capture:await host.frame("63d_reckless_hud_expired")
+	actor.add_effect("reckless", 7)
+	await host.ticks(2)
+	host.check(icon._tip_rank_text == "技能Lv7" and icon._tip_rank == 7,
+		"the tooltip follows a newly applied appendage rank under a stationary pointer")
+	actor.remove_effect("reckless")
+	_hover_status(icon, Vector2(-1,0))
 	battle.set_physics_process(was_processing)
+
+func _hover_status(icon: Control, point: Vector2) -> void:
+	var motion := InputEventMouseMotion.new()
+	motion.position = icon.get_global_transform_with_canvas() * point
+	game.get_viewport().push_input(motion, true)
 
 func _explain_motion(track: Control, y: float, pressed := true) -> void:
 	var motion := InputEventMouseMotion.new()

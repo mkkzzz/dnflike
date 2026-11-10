@@ -183,7 +183,11 @@ func build_hud() -> void:
 	var ui_images: Dictionary = town.loader.data["ui"]
 	var status_frame: Texture2D = town.loader.texture(ui_images.get("status_icon", {}).get("0"))
 	var status_shade: Texture2D = town.loader.texture(ui_images["base"].get("84"))
-	reckless_status.setup(status_frame, skill_panel_texture("reckless"), status_shade)
+	var status_tip_tiles: Array[Texture2D] = []
+	var tip_frames: Dictionary = ui_images.get("status_tooltip", {})
+	for frame in range(134, 143):
+		status_tip_tiles.append(town.loader.texture(tip_frames.get(str(frame))))
+	reckless_status.setup(status_frame, skill_panel_texture("reckless"), status_shade, status_tip_tiles, skin.font)
 	hud.add_child(reckless_status)
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
 	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("numbers"), "角色属性 O")
@@ -277,7 +281,7 @@ func _process(delta: float) -> void:
 		mp_max = mp
 		status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
-	reckless_status.present(snap.get("reckless_timer", Vector2i.ZERO))
+	reckless_status.present(snap.get("reckless_timer", Vector2i.ZERO), int(snap.get("reckless_rank", 0)))
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
 	hp_bar.set_meta("value_text", "生命值  %d / %d" % [hp, hp_max])

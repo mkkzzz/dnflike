@@ -205,6 +205,7 @@ def build(library: Path, output: Path) -> dict:
             'shop': ('Interface/StackableShopWindow.img', [0, 7, 8, 9, 10, 11, 12, 13]),
             'base': ('Interface/Base.img', [36, 50, 64, 67, 84, 119]),
             'status_icon': ('Interface/Status_Icon.img', [0]),
+            'status_tooltip': ('Interface2/Popup/popup.img', list(range(134, 143))),
             'close': ('Interface/commonbtn01.img', [4, 5, 6]),
             'dialog': ('Interface2/npc_dialogue_ui.img', [0, 20]),
             'dialog_face': ('Interface/npc_dialog_face.img', [0]),
