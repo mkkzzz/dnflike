@@ -1444,7 +1444,8 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		for value in filenames:
 			if not value is String or value == "":continue
 			var filename := String(value).to_lower()
-			var ptl_path := filename if filename.begins_with("passiveobject/") else path.get_base_dir().path_join(filename)
+			var root_relative := filename.begins_with("passiveobject/") or filename.begins_with("monster/")
+			var ptl_path := filename if root_relative else path.get_base_dir().path_join(filename)
 			ptl_paths.append(ptl_path)
 			if ptl.is_empty():ptl = db.record(ptl_path).get("decoded",{})
 		var speed: Array = ptl.get("axes",{}).get("x",{}).get("move_variable_1",[0])

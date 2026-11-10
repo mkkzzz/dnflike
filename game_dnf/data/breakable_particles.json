@@ -90,6 +90,13 @@
    "ptl_collectionboxparticle6",
    "ptl_collectionboxparticle7"
   ],
+  "passiveobject/mapobject/breakableobject/crystal.obj": [
+   "ptl_crystalparticle01",
+   "ptl_crystalparticle02",
+   "ptl_crystalparticle03",
+   "ptl_crystalparticle04",
+   "ptl_crystalparticle05"
+  ],
   "passiveobject/mapobject/breakableobject/darkhelllongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",
@@ -151,6 +158,15 @@
    "ptl_questcagedest05",
    "ptl_questcagedest06",
    "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/frozentree.obj": [
+   "ptl_frozentreeparticle01",
+   "ptl_frozentreeparticle02",
+   "ptl_frozentreeparticle03",
+   "ptl_frozentreeparticle04",
+   "ptl_frozentreeparticle05",
+   "ptl_frozentreeparticle06",
+   "ptl_frozentreeparticle07"
   ],
   "passiveobject/mapobject/breakableobject/junglelongchair.obj": [
    "ptl_longchairparticle1",

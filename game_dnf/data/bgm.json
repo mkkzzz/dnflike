@@ -108,6 +108,10 @@
    "normal": "breeding_place",
    "boss": "breeding_place_boss"
   },
+  "charnakridge": {
+   "normal": "charnakridge",
+   "boss": "charnakridge_boss"
+  },
   "darkelfcemetary": {
    "normal": "darkelf_amb",
    "boss": "darkelf_boss"
@@ -358,6 +362,18 @@
    "source": "music/breeding_place_boss.ogg",
    "sha256": "526b3bd60008522019a7489caf583c184c7160b0a8b2d3bb1c3f59ea754c04cb",
    "bytes": 1151526
+  },
+  "charnakridge": {
+   "file": "audio/bgm/charnakridge.ogg",
+   "source": "music/charnakridge.ogg",
+   "sha256": "e6d8463513a85406cacc87d86db15c3e51bf242e15770d35dc8141bd0dcf0e38",
+   "bytes": 1883346
+  },
+  "charnakridge_boss": {
+   "file": "audio/bgm/charnakridge_boss.ogg",
+   "source": "music/charnakridge_boss.ogg",
+   "sha256": "417fbff2b3f8b5f24fa9688cb1fd4946d4eb7a89f5d58ab37de7624165c000d7",
+   "bytes": 902067
   },
   "darkelf_amb": {
    "file": "audio/bgm/darkelf_amb.ogg",

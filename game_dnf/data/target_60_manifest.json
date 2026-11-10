@@ -876,9 +876,9 @@
     "id": 40,
     "min_level": 42,
     "path": "dungeon/act5/charnakridge.dgn",
-    "runtime_id": "",
+    "runtime_id": "charnakridge",
     "sha256": "172e5364d6e341d5eb23da3fe53ffa2291863930744548990bf541fd80122349",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 46,
@@ -3543,8 +3543,8 @@
     "level_max": 16,
     "level_min": 8,
     "path": "monster/goblin/snowmountain_flagseagab.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "goblin_snowmountain_flagseagab",
+    "state": "runtime"
    },
    {
     "id": 63,
@@ -4031,8 +4031,8 @@
     "level_max": 33,
     "level_min": 18,
     "path": "monster/icetiger/icetiger.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "icetiger_icetiger",
+    "state": "runtime"
    },
    {
     "id": 60111,
@@ -6271,8 +6271,8 @@
     "level_max": 45,
     "level_min": 30,
     "path": "monster/spirit/waterspiritshisuke.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spirit_waterspiritshisuke",
+    "state": "runtime"
    },
    {
     "id": 501,
@@ -7655,40 +7655,40 @@
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/bantuelite.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_bantuelite",
+    "state": "runtime"
    },
    {
     "id": 1012,
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/bantufighter.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_bantufighter",
+    "state": "runtime"
    },
    {
     "id": 50088,
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/bash.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_bash",
+    "state": "runtime"
    },
    {
     "id": 1014,
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/beastmasterlooger.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_beastmasterlooger",
+    "state": "runtime"
    },
    {
     "id": 50089,
     "level_max": 45,
     "level_min": 40,
     "path": "monster/bantu/emre.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_emre",
+    "state": "runtime"
    },
    {
     "id": 55010,
@@ -8399,16 +8399,16 @@
     "level_max": 47,
     "level_min": 42,
     "path": "monster/bantu/bantuamazones.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_bantuamazones",
+    "state": "runtime"
    },
    {
     "id": 50079,
     "level_max": 47,
     "level_min": 42,
     "path": "monster/bantu/labina.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "bantu_labina",
+    "state": "runtime"
    },
    {
     "id": 40006,
@@ -8439,8 +8439,8 @@
     "level_max": 47,
     "level_min": 42,
     "path": "monster/icetiger/shavante.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "icetiger_shavante",
+    "state": "runtime"
    },
    {
     "id": 64554,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 30,
+   "runtime": 31,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 147,
+   "runtime": 158,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

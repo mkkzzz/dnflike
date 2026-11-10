@@ -1240,6 +1240,61 @@
    "mob": "monster/magma/titan.mob",
    "bank": "magma_titan",
    "name": "titan"
+  },
+  "bantu_bantuamazones": {
+   "mob": "monster/bantu/bantuamazones.mob",
+   "bank": "bantu_bantuamazones",
+   "name": "bantuamazones"
+  },
+  "bantu_bantuelite": {
+   "mob": "monster/bantu/bantuelite.mob",
+   "bank": "bantu_bantuelite",
+   "name": "bantuelite"
+  },
+  "bantu_bantufighter": {
+   "mob": "monster/bantu/bantufighter.mob",
+   "bank": "bantu_bantufighter",
+   "name": "bantufighter"
+  },
+  "bantu_bash": {
+   "mob": "monster/bantu/bash.mob",
+   "bank": "bantu_bash",
+   "name": "bash"
+  },
+  "bantu_beastmasterlooger": {
+   "mob": "monster/bantu/beastmasterlooger.mob",
+   "bank": "bantu_beastmasterlooger",
+   "name": "beastmasterlooger"
+  },
+  "bantu_emre": {
+   "mob": "monster/bantu/emre.mob",
+   "bank": "bantu_emre",
+   "name": "emre"
+  },
+  "bantu_labina": {
+   "mob": "monster/bantu/labina.mob",
+   "bank": "bantu_labina",
+   "name": "labina"
+  },
+  "goblin_snowmountain_flagseagab": {
+   "mob": "monster/goblin/snowmountain_flagseagab.mob",
+   "bank": "goblin_snowmountain_flagseagab",
+   "name": "snowmountain_flagseagab"
+  },
+  "icetiger_icetiger": {
+   "mob": "monster/icetiger/icetiger.mob",
+   "bank": "icetiger_icetiger",
+   "name": "icetiger"
+  },
+  "icetiger_shavante": {
+   "mob": "monster/icetiger/shavante.mob",
+   "bank": "icetiger_shavante",
+   "name": "shavante"
+  },
+  "spirit_waterspiritshisuke": {
+   "mob": "monster/spirit/waterspiritshisuke.mob",
+   "bank": "spirit_waterspiritshisuke",
+   "name": "waterspiritshisuke"
   }
  },
  "boss_hp_lines": 3,

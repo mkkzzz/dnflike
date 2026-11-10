@@ -48,6 +48,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act4/marpissalair.dgn',
     'dungeon/act4/darkelfcemetary.dgn',
     'dungeon/act4/magmacave.dgn',
+    'dungeon/act5/charnakridge.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
@@ -104,6 +105,18 @@ def fill_template(img_ref: str, variant: int | None) -> str:
     if variant is None or not 0 <= variant <= 99:
         raise ValueError('Template variant unavailable')
     return img_ref.replace('%d%d', f'0{variant}', 1)
+
+
+def tile_pass(passes: list, empty_image: bool, path: str, diags: list) -> tuple[list | None, dict | None]:
+    if passes and len(passes) == GRID_COLS * GRID_ROWS:
+        return passes, None
+    if empty_image and passes and all(value == 2 for value in passes):
+        normalized = {'source_count': len(passes), 'value': 2}
+        diags.append(diag('info', 'empty_tile', path,
+                          f'empty IMAGE with {len(passes)} all-blocked pass values; normalized to {GRID_COLS}x{GRID_ROWS}'))
+        return [2] * (GRID_COLS * GRID_ROWS), normalized
+    diags.append(diag('error', 'tile_pass', path, f'pass type has {len(passes or [])} values'))
+    return None, None
 
 
 def plain(tokens: list[dict]) -> list:
@@ -396,20 +409,22 @@ def export_map(lib: Library, path: str, ids: dict) -> dict:
     for col, tile in enumerate(tiles):
         til_path = resolve(path, tile)
         til = lib.script(til_path)
-        entry = {'column': col, 'til': til_path, 'sha256': til and til['sha256'], 'image': None, 'offset': None, 'pass': None}
+        entry = {'column': col, 'til': til_path, 'sha256': til and til['sha256'], 'image': None, 'offset': None,
+                 'pass': None, 'pass_normalized_from': None}
         if til is None:
             diags.append(diag('error', 'tile_missing', path, til_path))
         else:
             image = span_values(til['spans'], '[IMAGE]')
             passes = span_values(til['spans'], '[pass type]')
             if image and len(image) >= 2:
-                entry['image'] = lib.image(image[0], image[1], til_path)
-                if entry['image']:
-                    entry['offset'] = lib.images[entry['image']]['canvas_offset']
-            if passes and len(passes) == GRID_COLS * GRID_ROWS:
-                entry['pass'] = passes
+                if image[0]:
+                    entry['image'] = lib.image(image[0], image[1], til_path)
+                    if entry['image']:
+                        entry['offset'] = lib.images[entry['image']]['canvas_offset']
+                entry['pass'], entry['pass_normalized_from'] = tile_pass(
+                    passes, image[0] == '', til_path, diags)
             else:
-                diags.append(diag('error', 'tile_pass', til_path, f'pass type has {len(passes or [])} values'))
+                entry['pass'], entry['pass_normalized_from'] = tile_pass(passes, False, til_path, diags)
         room['tiles'].append(entry)
     for row in range(GRID_ROWS):
         line = []

@@ -163,8 +163,9 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 				if mob not in pending:pending.append(mob)
 			var obj := String(item["obj"])
 			var source: Dictionary = game.content.record(obj).get("native_breakable",{})
-			if source.is_empty() or int(source["object_index"]) != int(item["id"]):
-				last_start_error = "native breakable metadata missing for " + obj
+			if source.is_empty():continue
+			if int(source["object_index"]) != int(item["id"]):
+				last_start_error = "native breakable object index mismatch for " + obj
 				return false
 			var sprite: Dictionary = item.get("sprite",{})
 			if sprite.get("ani") != source["motion_ani"] or sprite.get("ani_sha256") != source["source_hashes"][source["motion_ani"]]:
@@ -213,9 +214,14 @@ func _validate_zealot_summon(summon: Dictionary, actor_bank: Dictionary) -> bool
 
 func _validate_native_breakable(source: Dictionary) -> bool:
 	var timeline: Array = game.table.timeline(source["motion_ani"])
-	if timeline.size() != 1 or timeline[0]["damage_boxes"].is_empty():
+	if timeline.is_empty() or timeline[0].get("damage_boxes", []).is_empty():
 		last_start_error = "native breakable timeline invalid: " + String(source["motion_ani"])
 		return false
+	var boxes: Array = timeline[0]["damage_boxes"]
+	for frame: Dictionary in timeline:
+		if frame.get("damage_boxes", []) != boxes:
+			last_start_error = "native breakable animated hitbox unsupported: " + String(source["motion_ani"])
+			return false
 	var particle := String(source["destroy_particle"])
 	var template: Dictionary = game.combat_assets.get("particles",{}).get(particle,{})
 	var pinned: bool = source.get("source",{}).has("factory")

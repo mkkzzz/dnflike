@@ -5290,7 +5290,13 @@ func build_props(room: Dictionary) -> Array:
 			if NativeBreakable.supports(item):
 				var trap := NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
 				var source: Dictionary = content.record(path).get("native_breakable",{})
-				if source.is_empty():continue
+				if source.is_empty():
+					var missing_gaps: Array = ["native_breakable_source"]
+					if item.get("source_tag") == "[special passive object]":
+						missing_gaps.append("native_special_object")
+					missing_gaps.append_array(NativeJarTraps.unresolved_ids(item))
+					add_native_object_gaps(path, missing_gaps)
+					continue
 				var timeline: Array = table.timeline(source["motion_ani"])
 				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
 				if not trap.is_empty():prop["jar_trap"] = trap
@@ -5331,6 +5337,8 @@ func build_props(room: Dictionary) -> Array:
 				add_native_object_gaps(path, action_gaps)
 			elif path.contains("/boom/"):
 				add_native_object_gaps(path, ["native_object_trigger"])
+			elif path.contains("/particlefactory/"):
+				add_native_object_gaps(path, ["native_particle_factory"])
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")

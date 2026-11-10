@@ -259,6 +259,20 @@
     "sha256": "5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8"
    }
   },
+  "charnakridge": {
+   "name": "山脊",
+   "region": "snowmt",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/charnakridge_v1/map_export.json",
+   "min_level": 42,
+   "monster_level": 45,
+   "source": {
+    "path": "dungeon/act5/charnakridge.dgn",
+    "sha256": "172e5364d6e341d5eb23da3fe53ffa2291863930744548990bf541fd80122349"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

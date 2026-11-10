@@ -24,6 +24,18 @@ class Rules(unittest.TestCase):
         with self.assertRaises(ValueError):
             m.fill_template('Map/PathGate/GranFlorisBush%d%d.img', None)
 
+    def test_empty_tile_normalizes_only_all_blocked_sentinel(self):
+        diags = []
+        passes, normalized = m.tile_pass([2] * 280, True, 'map/empty/tile/emptytile.til', diags)
+        self.assertEqual(passes, [2] * 420)
+        self.assertEqual(normalized, {'source_count': 280, 'value': 2})
+        self.assertEqual([(row['level'], row['code']) for row in diags], [('info', 'empty_tile')])
+        diags = []
+        passes, normalized = m.tile_pass([2] * 279 + [0], True, 'map/empty/tile/emptytile.til', diags)
+        self.assertIsNone(passes)
+        self.assertIsNone(normalized)
+        self.assertEqual([(row['level'], row['code']) for row in diags], [('error', 'tile_pass')])
+
     def test_greed_mask_layout_and_unpaired_doors(self):
         diags = []
         cells = m.parse_greed('JJEE\r\n LLMM\r\n DDGG', 2, 3, 'lorien.dgn', diags)
