@@ -2931,6 +2931,71 @@ func check_outrage_break_impact() -> void:
 			check(floor_target["hp"]<50000.0 and game.objects[0]["clock"]==0.0 and not cues("FLAMES_HIT").is_empty(),
 				"the original floor ATK lands independently on its first frame")
 
+func check_outrage_break_feature() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff","sacrifice"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var learn: Dictionary = profile.command("numbers.skill",{"id":"outragebreakex","delta":1})
+	check(not learn["ok"] and Numbers.record("outragebreakex")["required_level"]==65,
+		"Outrage Break's feature remains unavailable through ordinary level-sixty learning")
+	for sample: Array in [[1,360,158,6431,6752,4504,4729],[2,320,172,7015,7366,4913,5159]]:
+		check(profile.command("numbers.skill_grant",{"id":"outragebreakex","level":sample[0]})["ok"],
+			"the debug grant supplies the original feature rank")
+		var spec := profile.stats()
+		spec["skill_slots"] = ["outragebreak"]
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.clear_monsters()
+		game.apply_skill_effect("buff","frenzy")
+		game.apply_skill_effect("sacrifice","thirst")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
+		var payments: Array = []
+		session.set_skill_material_spender(func(id: int,amount: int):
+			payments.append([id,amount])
+			return true)
+		game.player["hp"] = float(sample[1])+0.99
+		press(KEY_A)
+		step(0.0)
+		check(game.player["action"]=="" and payments.is_empty(),
+			"the modified integer HP threshold is checked before cube payment")
+		game.player["hp"] = float(sample[1])+1.0
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(180,0))
+		target["hp"] = 50000.0
+		press(KEY_A)
+		step(0.0)
+		check(game.player["action"]=="outragebreak" and game.player["hp"]==1.0 and payments==[[3037,2]],
+			"the modified HP column is paid once and cube cost stays at the source count")
+		step(560.0)
+		step(300.0)
+		step(299.0)
+		step(1.0)
+		var trace: Dictionary = game.last_damage.get("trace",{})
+		check(target["hp"]<50000.0 and not trace.is_empty()
+			and is_equal_approx(trace["percent_part"],float(trace["attack"])*float(sample[2])/100.0),
+			"the landing body ATK consumes the original truncated feature percentage")
+		check(game.objects.size()==1,"the featured cast creates its own ground attack object")
+		if game.objects.size()!=1:continue
+		var floor: Dictionary = game.objects[0]
+		var magma: Dictionary = floor["hit"]["native_controller"]["child"]
+		check(floor["hit"]["fixed_amount"]==sample[3] and floor["hit"]["fixed_amount_bleeding"]==sample[4]
+			and magma["fixed_amount"]==sample[5] and magma["fixed_amount_bleeding"]==sample[6],
+			"the ground and magma packets keep both native fixed values after feature and Thirst scaling")
+		move_target(target,Vector2(floor["pos"])+Vector2(0,45))
+		game.apply_effect({"kind":"effect","id":"bleed","target":target["id"]})
+		game.step_objects(0.0)
+		check(game.last_damage["trace"]["fixed_part"]==sample[4],"a bleeding target takes the modified ground hit")
+		move_target(target,POINT+Vector2(-300,0))
+		game.step_objects(1040.0)
+		var magma_target: Dictionary = game.spawn_enemy(Vector2(floor["pos"])+Vector2(0,45))
+		magma_target["hp"] = 100000.0
+		move_target(magma_target,magma_target["pos"],110.0)
+		game.step_objects(0.0)
+		check(magma_target["hp"]<100000.0 and game.last_damage["trace"]["fixed_part"]==sample[5],
+			"the spawned magma resolves the modified ordinary hit")
+
 func check_outrage_break_landing_near_wall() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -6078,6 +6143,7 @@ func run() -> void:
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
+	check_outrage_break_feature()
 	check_outrage_break_landing_near_wall()
 	check_hellbenter_first_cast()
 	check_hellbenter_manual_finish()

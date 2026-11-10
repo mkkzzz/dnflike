@@ -205,7 +205,12 @@ func _skill_row(path: String) -> Dictionary:
 	if not skill_levels.is_empty():
 		var cfg := Numbers.shared_config()
 		for id: String in cfg["skills"]:
-			if cfg["skills"][id].get("path","") == path:return Numbers.Skills.sample(d,int(skill_levels.get(id,1)))
+			if cfg["skills"][id].get("path","") != path:continue
+			var sample := Numbers.Skills.sample(d,int(skill_levels.get(id,1)))
+			if id == "outragebreak":
+				var feature_id: String = cfg["skill_index"].get(str(int(d.get("feature_skill_index",-1))),"")
+				_apply_outrage_feature(sample["level_row"],feature_id)
+			return sample
 	var dungeon: Dictionary = d.get("dungeon",{})
 	var pick = func(key: String):return dungeon.get(key,d.get(key,[]))
 	var info: Array = pick.call("level_info")
@@ -218,6 +223,19 @@ func _skill_row(path: String) -> Dictionary:
 	return {"mp":float(mp[0]) if not mp.is_empty() else 0.0,"cool_ms":float(cool[0]) if not cool.is_empty() else 0.0,
 		"cast_ms":float(cast[0]) if not cast.is_empty() else 0.0,"level_row":info.slice(1,1+cols) if cols > 0 else [],
 		"static":static_data}
+
+func _apply_outrage_feature(row: Array, feature_id: String) -> void:
+	var rank := int(skill_levels.get(feature_id,0))
+	if rank <= 0:return
+	var definition := Numbers.record(feature_id)
+	var entries: Array = definition.get("dungeon",{}).get("special_level_up",[])
+	for index in range(0,entries.size()-3,4):
+		var column := int(entries[index+1])
+		if entries[index] != -1 or entries[index+2] != "%" or column < 0 or column >= row.size():continue
+		# 906250 multiplies the authored term by rank, then adds a binary32 percent delta.
+		var rate := NativeMotion.f32(int(entries[index+3])*rank*NativeMotion.f32(0.01))
+		var value := float(row[column])
+		row[column] = NativeMotion.f32(value+NativeMotion.f32(rate*value))
 
 ## 81A6B0 tests the current body ANI first, then the attached weapon ANIs.
 func bind_swordman_weapon(item: String, body_clips: Dictionary) -> bool:
@@ -466,6 +484,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["suction_contact_fx"] = String(spec["suction_contact_fx"])
 		move["suction_contact_sound"] = String(spec["suction_contact_sound"])
 	if spec.get("native_state","") == "outrage_break":
+		# 90A4A0 truncates the body ATK's bonus above the base 100 percent.
+		var row: Array = skill["level_row"]
+		row[0] = 100+int(float(row[0])-100.0)
 		move["native_state"] = "outrage_break"
 		move["normal_cancel_job"] = "berserker"
 		move["impact_frame"] = int(spec["impact_frame"])
