@@ -1431,6 +1431,32 @@ func check_self_buff_gate_and_payment(skill: String, job: String, cost: int, coo
 	step(0)
 	check(game.player["action"]=="" and game.player["mp"]==cost,
 		skill+" rejects a cast during cooldown before charging MP")
+	var frame_ms := 1000.0 / 60.0
+	for frame in range(int(cooldown * 60.0) - 1):
+		game.step_game(frame_ms)
+	press(KEY_A)
+	game.step_game(frame_ms - 1.0)
+	check(game.player["action"]=="" and game.bus.events_of("combat.action_rejected")[-1]["reason"]=="cooldown",
+		skill+" still rejects the shortcut one millisecond before its deadline")
+	press(KEY_A)
+	game.step_game(1.0)
+	check(game.player["action"]==skill and game.player["cooldowns"][skill]==cooldown,
+		skill+" accepts the shortcut on the exact deadline after 60 Hz updates")
+
+	game.end_action()
+	game.player["cooldowns"].erase(skill)
+	game.player["mp"] = float(cost)
+	game.numeric_player.values["cooldown_rate"] = 0.625033
+	press(KEY_A)
+	step(0)
+	var scaled_duration := int(cooldown * 1000.0 * 0.625033)
+	check(game.player["action"]==skill and game.player["cooldowns"][skill]==scaled_duration/1000.0,
+		skill+" truncates its scaled cooldown to native whole milliseconds at cast")
+	if skill == "overdrive":
+		game.numeric_player.values["cooldown_rate"] = 0.69
+		game.begin_skill_cooldown(skill, game.move_def(skill))
+		check(game.player["cooldowns"][skill]==20.7,
+			"the native float32 product rounds to 20700 ms before truncation")
 
 func overdrive_particles() -> Array:
 	return game.view.effects.filter(func(fx):return fx.tag=="overdrive_status")

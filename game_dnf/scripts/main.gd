@@ -107,6 +107,7 @@ var _next_entity_id := 1
 var toast := ""
 var toast_ms := 0.0
 var elapsed_ms := 0.0
+var _skill_clock_fraction_ms := 0.0
 var damage_taken := 0
 var hit_count := 0
 var combo_count := 0
@@ -428,6 +429,7 @@ func begin_room(spec: Dictionary, maze: NativeMaze = null) -> void:
 	last_defeat_id = 0
 	paused = false
 	elapsed_ms = 0
+	_skill_clock_fraction_ms = 0.0
 	native_jar_traps.reset_clock()
 	damage_taken = 0
 	hit_count = 0
@@ -893,8 +895,14 @@ func step_game(ms: float) -> void:
 	native_jar_traps.advance_clock(self,ms)
 	preload("res://combat/item_restoration.gd").step(self,ms)
 	# A cooldown started by an effect removal below begins at the current tick.
+	# 904482 uses whole milliseconds. Keep sub-ms frame time without rounding
+	# each physics tick, and tolerate binary rounding at an integer boundary.
+	_skill_clock_fraction_ms += ms
+	var cooldown_tick_ms := floori(_skill_clock_fraction_ms + 1e-9)
+	_skill_clock_fraction_ms -= cooldown_tick_ms
 	for name: String in player["cooldowns"]:
-		player["cooldowns"][name] = maxf(0,float(player["cooldowns"][name])-dt)
+		var remaining_ms := roundi(float(player["cooldowns"][name]) * 1000.0)
+		player["cooldowns"][name] = maxi(0,remaining_ms-cooldown_tick_ms) / 1000.0
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
 		if finished:return
@@ -1651,10 +1659,12 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	return action in ["waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
-	var duration := (float(move["cool_ms"])-frenzy_cooldown_reduction_ms(name))/1000.0
-	if duration <= 0.0:return
+	var base_ms := int(move["cool_ms"])-frenzy_cooldown_reduction_ms(name)
+	if base_ms <= 0:return
 	var rate := float(numeric_player.values["cooldown_rate"]) if numeric_player != null else 1.0
-	player["cooldowns"][name] = duration*rate
+	# 90A0BD converts to float32, multiplies, then truncates the result.
+	var duration_ms := int(ActorNumbers.native_scalar(ActorNumbers.native_scalar(float(base_ms))*ActorNumbers.native_scalar(rate)))
+	player["cooldowns"][name] = duration_ms / 1000.0
 
 func skill_mp_cost(move: Dictionary) -> float:
 	return float(move["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
