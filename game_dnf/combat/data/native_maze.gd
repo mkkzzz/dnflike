@@ -275,17 +275,20 @@ func _read_endpoint_cells(raw, cells: Dictionary, flag: String) -> Array[Vector2
 func _read_specifications(raw, cells: Dictionary) -> Dictionary:
 	if not raw is Array:return {}
 	var pools := {"normal":{},"boss":{}}
-	var maze_found := false
+	var maze_blocks := 0
 	for span in raw:
 		if not span is Dictionary:return {}
 		var tag = span.get("tag")
 		if tag == "[maze info]":
-			if maze_found:return {}
-			maze_found = true
-		if tag in ["[quest connection]","[layered map specification]"]:return {}
+			maze_blocks += 1
+			# Some ACT3/4 scripts append a quest/hell variant after the ordinary layout.
+			# Runtime consumes the first block until that variant's selector is proven.
+			if maze_blocks > 1:break
+			continue
+		if tag == "[layered map specification]":return {}
 		if tag not in ["[map specification]","[boss map specification]"]:continue
 		var values = span.get("values")
-		if not maze_found or not values is Array or values.size() < 3:return {}
+		if maze_blocks == 0 or not values is Array or values.size() < 3:return {}
 		var row: Array[int] = []
 		for token in values:
 			if not token is Array or token.size() < 3 or not _whole(token[2]):return {}
@@ -293,7 +296,7 @@ func _read_specifications(raw, cells: Dictionary) -> Dictionary:
 		var point := Vector2i(row[0],row[1])
 		if not cells.has(point):return {}
 		pools["boss" if tag == "[boss map specification]" else "normal"][point] = row.slice(2)
-	return pools if maze_found else {}
+	return pools if maze_blocks else {}
 
 func _roll(source: RefCounted, count: int) -> int:
 	var result = source.range_int(0,count-1)

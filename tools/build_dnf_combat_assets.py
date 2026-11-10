@@ -1038,6 +1038,8 @@ def catalog_monster_specs() -> dict:
     if not catalog_path.is_file():
         return {}
     catalog = json.loads(catalog_path.read_text(encoding='utf-8'))['monsters']
+    by_id = {str(int(value['id'])): str(value['path']).lower()
+             for value in catalog.values() if value.get('id') is not None and value.get('path')}
     needed: set[str] = set()
     if dungeons_path.is_file():
         dungeons = json.loads(dungeons_path.read_text(encoding='utf-8'))['dungeons']
@@ -1053,6 +1055,17 @@ def catalog_monster_specs() -> dict:
                 for monster in room.get('monsters') or []:
                     if monster.get('mob'):
                         needed.add(str(monster['mob']).lower())
+                for item in room.get('objects') or []:
+                    raw = item.get('raw') or []
+                    if item.get('source_tag') != '[special passive object]' or len(raw) < 5:
+                        continue
+                    count = int(raw[4])
+                    if len(raw) != 5 + 6 * count:
+                        continue
+                    for at in range(5, len(raw), 6):
+                        if raw[at] == '[monster]' and isinstance(raw[at + 1], int):
+                            mob = by_id.get(str(int(raw[at + 1])))
+                            if mob:needed.add(mob)
     builtin = {str(mob).lower() for mob, _dir, _extra in MONSTERS.values()}
     builtin.update(NATIVE_ZEALOT_MONSTERS.values())
     builtin.update(NATIVE_OUTERWALL_BANKS.values())

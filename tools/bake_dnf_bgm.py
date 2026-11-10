@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import hashlib
 import json
 import sqlite3
@@ -76,25 +77,44 @@ AMBIENCE = {
 }
 
 
-def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str]) -> dict[str, str]:
+def music_candidates(keys: list[str], music: dict[str, str],
+                     random_music: dict[str, set[str]]) -> set[str]:
+    """A MAP sound list can combine ambience and its background track."""
+    candidates: set[str] = set()
+    for key in keys:
+        if key.upper().startswith(('R_AMB_', 'AMB_')):
+            continue
+        if key in music:
+            candidates.add(music[key])
+        elif key in random_music:
+            candidates.update(random_music[key])
+    return candidates
+
+
+def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str],
+                          random_music: dict[str, set[str]]) -> dict[str, str]:
     dungeon = export['dungeon']
     placements = {p['id']: p['map'] for p in dungeon['placements']}
-    tracks = {'normal': set(), 'boss': set()}
+    tracks = {'normal': Counter(), 'boss': Counter()}
     for room in rooms:
         map_path = placements[room['placement']]
         keys = dungeon['rooms'][map_path].get('sound', [])
-        candidates = {music[key] for key in keys if key in music}
+        candidates = music_candidates(keys, music, random_music)
         if len(candidates) != 1:
             raise ValueError(f'{map_path}: expected one audio.xml music cue, found {keys}')
         tracks['boss' if room.get('boss') else 'normal'].update(candidates)
-    for role, candidates in tracks.items():
-        if len(candidates) != 1:
-            raise ValueError(f'{dungeon["path"]}: expected one {role} track, found {sorted(candidates)}')
-    return {role: next(iter(candidates)) for role, candidates in tracks.items()}
+    result = {}
+    for role, counts in tracks.items():
+        ranked = counts.most_common()
+        if not ranked or (len(ranked) > 1 and ranked[0][1] == ranked[1][1]):
+            raise ValueError(f'{dungeon["path"]}: ambiguous {role} track, found {ranked}')
+        result[role] = ranked[0][0]
+    return result
 
 
-def source_native_dungeon_tracks(export: dict, music: dict[str, str]) -> dict[str, str]:
-    tracks = {'normal': set(), 'boss': set()}
+def source_native_dungeon_tracks(export: dict, music: dict[str, str],
+                                 random_music: dict[str, set[str]]) -> dict[str, str]:
+    tracks = {'normal': Counter(), 'boss': Counter()}
     for map_path, room in export['dungeon']['rooms'].items():
         role = ''
         for span in room.get('raw', []):
@@ -106,14 +126,17 @@ def source_native_dungeon_tracks(export: dict, music: dict[str, str]) -> dict[st
             break
         if role not in ('[normal]', '[boss]'):
             raise ValueError(f'{map_path}: native MAP has no normal/boss role')
-        candidates = {music[key] for key in room.get('sound', []) if key in music}
+        candidates = music_candidates(room.get('sound', []), music, random_music)
         if len(candidates) != 1:
             raise ValueError(f'{map_path}: expected one audio.xml music cue, found {room.get("sound", [])}')
         tracks['boss' if role == '[boss]' else 'normal'].update(candidates)
-    for role, candidates in tracks.items():
-        if len(candidates) != 1:
-            raise ValueError(f'{export["dungeon"]["path"]}: expected one {role} track, found {sorted(candidates)}')
-    return {role: next(iter(candidates)) for role, candidates in tracks.items()}
+    result = {}
+    for role, counts in tracks.items():
+        ranked = counts.most_common()
+        if not ranked or (len(ranked) > 1 and ranked[0][1] == ranked[1][1]):
+            raise ValueError(f'{export["dungeon"]["path"]}: ambiguous {role} track, found {ranked}')
+        result[role] = ranked[0][0]
+    return result
 
 
 def dungeon_music_sources(cat, library: Path) -> dict:
@@ -129,15 +152,23 @@ def dungeon_music_sources(cat, library: Path) -> dict:
         raise ValueError('Original audio.xml hash mismatch')
     music = {node.attrib['ID']: node.attrib['FILE'].replace('\\', '/').lower()
              for node in ET.fromstring(raw).findall('MUSIC')}
+    random_music = {
+        node.attrib['ID']: {
+            music[item.attrib['TAG']]
+            for item in node.findall('ITEM')
+            if item.attrib.get('TAG') in music
+        }
+        for node in ET.fromstring(raw).findall('RANDOM')
+    }
     result = DUNGEONS.copy()
     for key in missing:
         route = routes[key]
         export_path = route['map_export'].removeprefix('res://')
         export = json.loads((GAME / export_path).read_text(encoding='utf-8'))
         if route.get('mode') == 'native_maze':
-            result[key] = source_native_dungeon_tracks(export, music)
+            result[key] = source_native_dungeon_tracks(export, music, random_music)
         else:
-            result[key] = source_dungeon_tracks(export, route['rooms'], music)
+            result[key] = source_dungeon_tracks(export, route['rooms'], music, random_music)
     return result
 
 

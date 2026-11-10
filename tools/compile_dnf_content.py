@@ -637,6 +637,7 @@ def animation_record(lib: Library, path: str) -> dict | None:
 
 
 _CATALOG_CACHE: dict[str, list] | None = None
+_MONSTER_ID_CACHE: dict[str, str] | None = None
 
 
 def catalog_motions(mob_path: str) -> list[str]:
@@ -653,6 +654,18 @@ def catalog_motions(mob_path: str) -> list[str]:
                         _CATALOG_CACHE.setdefault(str(entry.get('path', '')).lower(), []).append(
                             (folder + '/' + str(value)).lower())
     return _CATALOG_CACHE.get(mob_path.lower(), [])
+
+
+def catalog_mob_by_id(monster_id: int) -> str:
+    global _MONSTER_ID_CACHE
+    if _MONSTER_ID_CACHE is None:
+        _MONSTER_ID_CACHE = {}
+        path = ROOT / 'game_dnf/data/monster_catalog.json'
+        if path.is_file():
+            for entry in json.loads(path.read_text(encoding='utf-8')).get('monsters', {}).values():
+                if isinstance(entry, dict) and entry.get('id') is not None:
+                    _MONSTER_ID_CACHE[str(int(entry['id']))] = str(entry.get('path', '')).lower()
+    return _MONSTER_ID_CACHE.get(str(int(monster_id)), '')
 
 
 def referenced_mob_paths() -> set[str]:
@@ -686,6 +699,19 @@ def referenced_mob_paths() -> set[str]:
                 mob = monster.get('mob')
                 if mob:
                     out.add(str(mob).lower())
+            for item in room.get('objects') or []:
+                raw = item.get('raw') or []
+                if item.get('source_tag') != '[special passive object]' or len(raw) < 5:
+                    continue
+                count = int(raw[4])
+                if len(raw) != 5 + 6 * count:
+                    continue
+                for at in range(5, len(raw), 6):
+                    if raw[at] != '[monster]' or not isinstance(raw[at + 1], int):
+                        continue
+                    mob = catalog_mob_by_id(int(raw[at + 1]))
+                    if mob:
+                        out.add(mob)
     return out
 
 
@@ -1036,10 +1062,36 @@ def compile_native_generic_breakables(passive_index: dict, add, records: dict) -
         integers = fields.get('int_data') or []
         strings = fields.get('string_data') or []
         motions = fields.get('basic_motion') or []
-        if len(integers) != 7 or len(strings) < 6 or len(motions) != 1 or not strings[2]:
+        explicit_particles = fields.get('destroy_particle') or []
+        if len(motions) != 1:
             continue
-        motion = str(motions[0])
-        particle = resolve(path, strings[2])
+        def source_ref(value) -> str:
+            token = str(value).replace('\\', '/').lower()
+            return token if token.startswith('passiveobject/') else resolve(path, token)
+        motion = str(motions[0]).replace('\\', '/').lower()
+        if len(integers) == 7 and len(strings) >= 6 and strings[2]:
+            particle = source_ref(strings[2])
+            particle_offset = integers[3:6]
+            hp = max(1, integers[6])
+            trigger_stage = integers[0]
+            stages = max(1, integers[1])
+            destroy_on_final_stage = bool(integers[2])
+            hit_sound = strings[4]
+            destroy_sound = strings[5]
+            source_evidence = {'evidence': 'E-PARSE', 'layout': 'standard seven-int/six-string'}
+        elif len(integers) == 1 and len(explicit_particles) == 1:
+            particle = str(explicit_particles[0]).replace('\\', '/').lower()
+            particle_offset = [0, 0, 0]
+            hp = 1
+            trigger_stage = max(0, integers[0])
+            stages = max(1, integers[0])
+            destroy_on_final_stage = True
+            hit_sound = ''
+            destroy_sound = ''
+            source_evidence = {'evidence': 'E-INFER', 'layout': 'single-stage explicit destroy particle',
+                               'hp': 'one-hit adaptation; source has no hp field'}
+        else:
+            continue
         ani = add(motion, 'ani', path)
         ptl = add(particle, 'ptl', path)
         if not ani or not ptl or ptl.get('unsupported') or not ptl.get('decoded'):
@@ -1058,11 +1110,11 @@ def compile_native_generic_breakables(passive_index: dict, add, records: dict) -
             continue
         obj['native_breakable'] = {
             'object_index': reverse[path], 'object_path': path, 'motion_ani': motion, 'destroy_particle': particle,
-            'particle_offset': integers[3:6], 'hp': max(1, integers[6]),
-            'trigger_stage': integers[0], 'stages': max(1, integers[1]),
-            'destroy_on_final_stage': bool(integers[2]),
-            'hit_sound': strings[4], 'destroy_sound': strings[5], 'source_hashes': hashes,
-            'source': {'evidence': 'E-PARSE', 'motion': motion, 'destroy_particle': particle},
+            'particle_offset': particle_offset, 'hp': hp,
+            'trigger_stage': trigger_stage, 'stages': stages,
+            'destroy_on_final_stage': destroy_on_final_stage,
+            'hit_sound': hit_sound, 'destroy_sound': destroy_sound, 'source_hashes': hashes,
+            'source': {**source_evidence, 'motion': motion, 'destroy_particle': particle},
         }
 
 

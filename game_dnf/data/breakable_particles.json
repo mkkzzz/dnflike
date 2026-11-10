@@ -231,6 +231,21 @@
    "ptl_seagrassparticle04",
    "ptl_seagrassparticle05"
   ],
+  "passiveobject/mapobject/breakableobject/shallowkeepcoffin.obj": [
+   "ptl_shallowkeepcoffinparticle1",
+   "ptl_shallowkeepcoffinparticle2",
+   "ptl_shallowkeepcoffinparticle3",
+   "ptl_shallowkeepcoffinparticle4"
+  ],
+  "passiveobject/mapobject/breakableobject/shallowkeepsphere.obj": [
+   "ptl_shallowkeepsphereparticle1",
+   "ptl_shallowkeepsphereparticle2",
+   "ptl_shallowkeepsphereparticle3",
+   "ptl_shallowkeepsphereparticle4",
+   "ptl_shallowkeepsphereshineparticle1",
+   "ptl_shallowkeepsphereshineparticle2",
+   "ptl_shallowkeepsphereshineparticle3"
+  ],
   "passiveobject/mapobject/breakableobject/skycastle_soldier.obj": [
    "ptl_skycastle_soldierparticle1",
    "ptl_skycastle_soldierparticle2",
@@ -368,6 +383,34 @@
    "ptl_treasurepotparticle4",
    "ptl_treasurepotparticle5",
    "ptl_treasurepotparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_blacklotusstem.obj": [
+   "ptl_underfoot_blacklotusstemparticle1",
+   "ptl_underfoot_blacklotusstemparticle2",
+   "ptl_underfoot_blacklotusstemparticle3",
+   "ptl_underfoot_blacklotusstemparticle4",
+   "ptl_underfoot_blacklotusstemparticle5",
+   "ptl_underfoot_blacklotusstemparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_treasurebox.obj": [
+   "ptl_underfoot_treasureboxparticle1",
+   "ptl_underfoot_treasureboxparticle2",
+   "ptl_underfoot_treasureboxparticle3",
+   "ptl_underfoot_treasureboxparticle4",
+   "ptl_underfoot_treasureboxparticle5",
+   "ptl_underfoot_treasureboxparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_treecross1.obj": [
+   "ptl_underfoot_treecross1particle1",
+   "ptl_underfoot_treecross1particle2",
+   "ptl_underfoot_treecross1particle3",
+   "ptl_underfoot_treecross1particle4"
+  ],
+  "passiveobject/mapobject/breakableobject/underfoot_treecross2.obj": [
+   "ptl_underfoot_treecross2particle1",
+   "ptl_underfoot_treecross2particle2",
+   "ptl_underfoot_treecross2particle3",
+   "ptl_underfoot_treecross2particle4"
   ],
   "passiveobject/mapobject/breakableobject/urn1.obj": [
    "ptl_urnparticle1",

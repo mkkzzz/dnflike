@@ -134,9 +134,9 @@ func run() -> void:
 	check(source_monsters.size() == 12 and source_monster_count == 343 and source_boss_rows == 1,
 		"second spine source has 343 direct placements, 12 MOBs and one boss row")
 	check(source_object_count == 722 and source_breakables == 178 and source_specials == 12
-		and source_triggers == 72 and source_static == 460 and source_box_objects == 19,
+		and source_triggers == 72 and source_static == 460 and source_box_objects == 31,
 		"second spine source has 722 objects: 178 breakables, 12 bell specials, "
-		+ "72 triggers, 460 static obstacles and 19 item boxes "
+		+ "72 triggers, 460 static obstacles and 31 item payload rows "
 		+ "(objects=%d breakables=%d special=%d triggers=%d static=%d boxes=%d)"
 		% [source_object_count, source_breakables, source_specials,
 			source_triggers, source_static, source_box_objects])

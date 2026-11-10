@@ -124,6 +124,10 @@
    "normal": "2nd_spine",
    "boss": "2nd_spine_boss"
   },
+  "shallowkeep": {
+   "normal": "underfoot",
+   "boss": "shallow_keep_b01"
+  },
   "whitenight": {
    "normal": "whitenight",
    "boss": "whitenight_boss"
@@ -380,6 +384,18 @@
    "source": "music/2nd_spine_boss.ogg",
    "sha256": "34c26f6cafcc94819d6360142d05c6440f15ad426340d14dd21b7393194054a3",
    "bytes": 1618364
+  },
+  "underfoot": {
+   "file": "audio/bgm/underfoot.ogg",
+   "source": "music/underfoot.ogg",
+   "sha256": "e8a2cd27af174d643eeb5b6f2627db7dcb35157cd622452be81b78e26737d571",
+   "bytes": 2324447
+  },
+  "shallow_keep_b01": {
+   "file": "audio/bgm/shallow_keep_b01.ogg",
+   "source": "music/shallow_keep_b01.ogg",
+   "sha256": "48d480580bd6ef89149b0d8a828be452a12975423236ae26c6efe3eb82250a13",
+   "bytes": 2283990
   },
   "whitenight": {
    "file": "audio/bgm/whitenight.ogg",

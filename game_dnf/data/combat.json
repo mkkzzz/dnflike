@@ -1105,6 +1105,36 @@
    "mob": "monster/zealot/father.mob",
    "bank": "zealot_father",
    "name": "father"
+  },
+  "ghoul_ghoul": {
+   "mob": "monster/ghoul/ghoul.mob",
+   "bank": "ghoul_ghoul",
+   "name": "ghoul"
+  },
+  "ghoul_ghoulmorgan": {
+   "mob": "monster/ghoul/ghoulmorgan.mob",
+   "bank": "ghoul_ghoulmorgan",
+   "name": "ghoulmorgan"
+  },
+  "ghoul_ghoulthrower": {
+   "mob": "monster/ghoul/ghoulthrower.mob",
+   "bank": "ghoul_ghoulthrower",
+   "name": "ghoulthrower"
+  },
+  "wraith_wraith": {
+   "mob": "monster/wraith/wraith.mob",
+   "bank": "wraith_wraith",
+   "name": "wraith"
+  },
+  "ghoul_ghoulstand": {
+   "mob": "monster/ghoul/ghoulstand.mob",
+   "bank": "ghoul_ghoulstand",
+   "name": "ghoulstand"
+  },
+  "ghoul_ghoulthrowerstand": {
+   "mob": "monster/ghoul/ghoulthrowerstand.mob",
+   "bank": "ghoul_ghoulthrowerstand",
+   "name": "ghoulthrowerstand"
   }
  },
  "boss_hp_lines": 3,

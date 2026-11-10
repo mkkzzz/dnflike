@@ -34,8 +34,10 @@ BUILTIN = {
 }
 
 
-def needed_mobs() -> set[str]:
+def needed_mobs(catalog: dict) -> set[str]:
     out: set[str] = set()
+    by_id = {str(int(value['id'])): str(value['path']).lower()
+             for value in catalog.values() if value.get('id') is not None and value.get('path')}
     dungeons = json.loads(DUNGEONS.read_text(encoding='utf-8'))['dungeons']
     for spec in dungeons.values():
         export = spec.get('map_export', '')
@@ -49,6 +51,17 @@ def needed_mobs() -> set[str]:
             for monster in room.get('monsters') or []:
                 if monster.get('mob'):
                     out.add(str(monster['mob']).lower())
+            for item in room.get('objects') or []:
+                raw = item.get('raw') or []
+                if item.get('source_tag') != '[special passive object]' or len(raw) < 5:
+                    continue
+                count = int(raw[4])
+                if len(raw) != 5 + 6 * count:
+                    continue
+                for at in range(5, len(raw), 6):
+                    if raw[at] == '[monster]' and isinstance(raw[at + 1], int):
+                        mob = by_id.get(str(int(raw[at + 1])))
+                        if mob:out.add(mob)
     return out
 
 
@@ -61,7 +74,7 @@ def main() -> int:
     monsters: dict = combat['monsters']
     existing = {str(v.get('mob', '')).lower() for v in monsters.values()}
     added, skipped = [], []
-    for mob_path in sorted(needed_mobs()):
+    for mob_path in sorted(needed_mobs(catalog)):
         if mob_path in existing:
             continue
         entry = next((m for m in catalog.values() if str(m['path']).lower() == mob_path), None)

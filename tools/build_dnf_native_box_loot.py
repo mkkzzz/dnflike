@@ -35,6 +35,10 @@ SOURCES = {
         'dungeon/act3/2ndbackbone.dgn',
         '0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc',
     ),
+    'shallowkeep': (
+        'dungeon/act4/shallowkeep.dgn',
+        '652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833',
+    ),
     'bloodhell': (
         'dungeon/act3/bloodhell.dgn',
         '8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57',
@@ -50,8 +54,6 @@ def referenced_groups(route: dict) -> set[str]:
         for item in room.get('objects', []):
             raw = item.get('raw', [])
             if item.get('source_tag') != '[special passive object]' or len(raw) < 11:
-                continue
-            if int(raw[0]) not in (300, 800):
                 continue
             count = int(raw[4])
             if len(raw) != 5 + 6 * count:

@@ -243,9 +243,11 @@ func _validate_native_breakable(source: Dictionary) -> bool:
 			if not ResourceLoader.exists(texture,"Texture2D"):
 				last_start_error = "native breakable effect atlas missing: " + String(key)
 				return false
-	for clip: Dictionary in game.combat_assets.get("audio",{}).get(source["hit_sound"],[]):
+	var hit_sound := String(source.get("hit_sound",""))
+	if hit_sound.is_empty():return true
+	for clip: Dictionary in game.combat_assets.get("audio",{}).get(hit_sound,[]):
 		if ResourceLoader.exists(String(clip.get("file","")),"AudioStream"):return true
-	last_start_error = "native breakable hit sound missing: " + String(source["hit_sound"])
+	last_start_error = "native breakable hit sound missing: " + hit_sound
 	return false
 
 ## The outer flow owns configurable hotkeys; the internal test harness uses this bridge.

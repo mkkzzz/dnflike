@@ -66,12 +66,19 @@
           ]
         ],
         "1": [],
-        "2": []
+        "2": [],
+        "4": [
+          [
+            "original_6013",
+            5000
+          ]
+        ]
       },
       "group_levels": {
         "0": -1,
         "1": -1,
-        "2": 32
+        "2": 32,
+        "4": -1
       }
     },
     "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974": {
@@ -139,12 +146,14 @@
             3000
           ]
         ],
+        "1": [],
         "2": [],
         "3": [],
         "4": []
       },
       "group_levels": {
         "0": -1,
+        "1": -1,
         "2": -1,
         "3": 35,
         "4": 34
@@ -178,10 +187,44 @@
             "original_1072",
             3000
           ]
-        ]
+        ],
+        "1": []
       },
       "group_levels": {
-        "0": -1
+        "0": -1,
+        "1": -1
+      }
+    },
+    "652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833": {
+      "id": "shallowkeep",
+      "source": {
+        "path": "dungeon/act4/shallowkeep.dgn",
+        "sha256": "652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1080",
+            700
+          ],
+          [
+            "original_1081",
+            1000
+          ],
+          [
+            "original_1082",
+            2500
+          ]
+        ],
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1,
+        "2": -1,
+        "3": 41
       }
     },
     "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57": {
@@ -212,10 +255,12 @@
             "original_1072",
             3000
           ]
-        ]
+        ],
+        "1": []
       },
       "group_levels": {
-        "0": -1
+        "0": -1,
+        "1": -1
       }
     }
   },
@@ -482,6 +527,167 @@
         "[stat change duration]": [
           60000,
           "myself"
+        ]
+      }
+    },
+    "original_1080": {
+      "name": "暗黑城特产干酪",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1600,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        20
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        21
+      ],
+      "source": {
+        "id": 1080,
+        "path": "stackable/cheese_spunder.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "8c377b06dbe5eaa526014cabff27a489296fe0c31fb19126fa94b9c2e3dd0f1e",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1080"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          2
+        ],
+        "[hp recovery]": [
+          "+",
+          1450,
+          1000,
+          "myself"
+        ]
+      }
+    },
+    "original_1081": {
+      "name": "黑色龙舌兰酒",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1600,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        21
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1081,
+        "path": "stackable/tequila_dark.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "4aa63aa8745b16d0b7663319782466fed6502743b806af86f8eece51d8119ae1",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1081"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          3
+        ],
+        "[mp recovery]": [
+          "+",
+          660,
+          1000,
+          "myself"
+        ]
+      }
+    },
+    "original_1082": {
+      "name": "暗黑倾向药剂",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1400,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        22
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        19
+      ],
+      "source": {
+        "id": 1082,
+        "path": "stackable/ptn_dkwhisper.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "60489927651ff70a7e30fcff52585399a0af7c030b26e61a4d57573f50ed9059",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1082"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          10
+        ]
+      }
+    },
+    "original_6013": {
+      "name": "轰爆弹",
+      "kind": "throwable",
+      "description": "",
+      "level": 23,
+      "rarity": 0,
+      "weight": 0.002,
+      "price": 720,
+      "stack_limit": 1,
+      "icon": [
+        "Item/IconMaterial2.img",
+        75
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        34
+      ],
+      "source": {
+        "id": 6013,
+        "path": "stackable/throw/bomber2.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "56fd4af126208040d60ccd07259f349e7f7e37a2e734690325813fc1f576512e",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_6013"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[throw]",
+          3
+        ],
+        "[cool time]": [
+          3000
         ]
       }
     }

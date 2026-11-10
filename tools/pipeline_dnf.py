@@ -27,13 +27,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TOOLS = ROOT / 'tools'
 GAME = ROOT / 'game_dnf'
+GODOT = TOOLS / 'godot/Godot_v4.7.2-stable_win64_console.exe'
 
 
-def run(label: str, args: list[str], required: bool = True) -> bool:
-    """跑一个工具；required=False 时失败只提示不中断（用于可选步骤）。"""
+def run_command(label: str, command: list[str], required: bool = True) -> bool:
+    """跑一个外部命令；required=False 时失败只提示不中断（用于可选步骤）。"""
     started = time.time()
     print('[PIPE] %-34s ...' % label, end='', flush=True)
-    done = subprocess.run([sys.executable, *args], cwd=str(ROOT), capture_output=True, text=True)
+    done = subprocess.run(
+        command,
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace',
+    )
     cost = time.time() - started
     if done.returncode != 0:
         print(' FAIL %.0fs' % cost)
@@ -45,6 +53,19 @@ def run(label: str, args: list[str], required: bool = True) -> bool:
         return False
     print(' ok %.0fs' % cost)
     return True
+
+
+def run(label: str, args: list[str], required: bool = True) -> bool:
+    return run_command(label, [sys.executable, *args], required)
+
+
+def import_assets() -> None:
+    """为新生成图集建立 Godot 导入记录；--script 测试不会自动导入。"""
+    if not GODOT.is_file():
+        raise SystemExit('[PIPE] 中断：找不到 Godot 4.7.2：%s' % GODOT)
+    run_command('Godot 资源导入', [
+        str(GODOT), '--headless', '--path', str(GAME), '--editor', '--import', '--quit',
+    ])
 
 
 def tool(name: str) -> str:
@@ -64,7 +85,14 @@ def verify() -> int:
     ]
     failed = []
     for label, args in checks:
-        done = subprocess.run([sys.executable, *args], cwd=str(ROOT), capture_output=True, text=True)
+        done = subprocess.run(
+            [sys.executable, *args],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            errors='replace',
+        )
         status = 'ok' if done.returncode == 0 else 'FAIL'
         print('[VERIFY] %-10s %s' % (label, status))
         if done.returncode != 0:
@@ -84,8 +112,9 @@ def monster_side(with_content: bool = True) -> None:
     if with_content:
         # 内容包必须在图集之前：图集烘焙依赖 catalog，运行时则依赖内容包里的 mob 记录。
         run('内容包 (mob/ani/atk)', [tool('compile_dnf_content.py')])
-    run('战斗图集 (按动动作烘焙)', [tool('build_dnf_combat_assets.py')])
     run('怪物映射 (mob→kind)', [tool('sync_dnf_monster_mapping.py')])
+    run('战斗图集 (按动动作烘焙)', [tool('build_dnf_combat_assets.py')])
+    import_assets()
 
 
 def dungeon_side(
