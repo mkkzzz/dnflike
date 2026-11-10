@@ -64,6 +64,12 @@
    "ptl_ice_particle2",
    "ptl_ice_particle3"
   ],
+  "passiveobject/actionobject/breakableobject/waterway.obj": [
+   "ptl_waterparticle1",
+   "ptl_waterparticle2",
+   "ptl_waterparticle3",
+   "ptl_waterparticle4"
+  ],
   "passiveobject/mapobject/breakableobject/1stbackbonelongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",
@@ -87,6 +93,14 @@
    "ptl_longchairparticle4",
    "ptl_longchairparticle5",
    "ptl_longchairparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/2ndbackbonelongpot.obj": [
+   "ptl_longpotparticle1",
+   "ptl_longpotparticle2",
+   "ptl_longpotparticle3",
+   "ptl_longpotparticle4",
+   "ptl_longpotparticle5",
+   "ptl_longpotparticle6"
   ],
   "passiveobject/mapobject/breakableobject/act6box_peter.obj": [
    "ptl_act6boxparticle01",

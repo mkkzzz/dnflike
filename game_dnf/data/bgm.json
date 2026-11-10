@@ -132,6 +132,10 @@
    "normal": "gblarad",
    "boss": "gblarad_boss"
   },
+  "gbl_laboratory": {
+   "normal": "gblarad_lab",
+   "boss": "gblarad_lab_boss"
+  },
   "goddesstemple": {
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
@@ -452,6 +456,18 @@
    "source": "music/gblarad_boss.ogg",
    "sha256": "12aa68a6870a5a5a2912246f50967dc91ecac0b7f997578797dfe81064248444",
    "bytes": 1198353
+  },
+  "gblarad_lab": {
+   "file": "audio/bgm/gblarad_lab.ogg",
+   "source": "music/gblarad_lab.ogg",
+   "sha256": "5ed61c2ccade5ff757f3cd89a74f7f502f047af62e3f7709be45e5069ceb23ed",
+   "bytes": 1711435
+  },
+  "gblarad_lab_boss": {
+   "file": "audio/bgm/gblarad_lab_boss.ogg",
+   "source": "music/gblarad_lab_boss.ogg",
+   "sha256": "6f58371e4cd47ede67cbed7aca79ec6c48bdc315de9626a8726dd581707636ce",
+   "bytes": 1784835
   },
   "goddess_temple": {
    "file": "audio/bgm/goddess_temple.ogg",

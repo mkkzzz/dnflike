@@ -357,6 +357,20 @@
     "sha256": "8666193f452687ae3eed7e27bf05d3b2b3721efa0952985eab4e6bb9fac357b8"
    }
   },
+  "gbl_laboratory": {
+   "name": "GBL教研究所",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/gbl_laboratory_v1/map_export.json",
+   "min_level": 47,
+   "monster_level": 50,
+   "source": {
+    "path": "dungeon/village/gbl/gbl_laboratory.dgn",
+    "sha256": "ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

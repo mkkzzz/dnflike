@@ -55,6 +55,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/bwanga.dgn',
     'dungeon/act5/icepalace.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
+    'dungeon/village/gbl/gbl_laboratory.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']

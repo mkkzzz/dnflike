@@ -59,6 +59,10 @@ SOURCES = {
         'dungeon/act3/bloodhell.dgn',
         '8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57',
     ),
+    'gbl_laboratory': (
+        'dungeon/village/gbl/gbl_laboratory.dgn',
+        'ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379',
+    ),
 }
 
 

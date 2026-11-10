@@ -414,6 +414,40 @@
         "0": -1,
         "1": -1
       }
+    },
+    "ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379": {
+      "id": "gbl_laboratory",
+      "source": {
+        "path": "dungeon/village/gbl/gbl_laboratory.dgn",
+        "sha256": "ee701f2b6a72085033a4b8fe8430d1374e9ddd4dbd5c88dc88455fd00ee9e379"
+      },
+      "groups": {
+        "1": [
+          [
+            "original_7141",
+            2000
+          ],
+          [
+            "original_7146",
+            2000
+          ],
+          [
+            "original_7151",
+            2000
+          ],
+          [
+            "original_7156",
+            2000
+          ],
+          [
+            "original_7192",
+            2000
+          ]
+        ]
+      },
+      "group_levels": {
+        "1": -1
+      }
     }
   },
   "items": {
@@ -872,6 +906,166 @@
         ],
         "[cool time]": [
           3000
+        ]
+      }
+    },
+    "original_7141": {
+      "name": "水罐的袖珍罐 (鬼剑士武器)",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 2,
+      "weight": 0.001,
+      "price": 28000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/consumption.img",
+        83
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        3
+      ],
+      "source": {
+        "id": 7141,
+        "path": "stackable/ect/uplegacy_smw04.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "591289d7b21f11df15db357b089cc3879e8e64236c79c5de2f793df236b05640",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_7141"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[upgradable legacy]",
+          1
+        ]
+      }
+    },
+    "original_7146": {
+      "name": "水罐的袖珍罐 (格斗家武器)",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 2,
+      "weight": 0.001,
+      "price": 28000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/consumption.img",
+        88
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        3
+      ],
+      "source": {
+        "id": 7146,
+        "path": "stackable/ect/uplegacy_ftw04.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "b5dd80c94871de917e1273df55b19f1f650ece6897cc1a04e3e6fd9973d15c60",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_7146"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[upgradable legacy]",
+          1
+        ]
+      }
+    },
+    "original_7151": {
+      "name": "水罐的袖珍罐 (神枪手武器)",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 2,
+      "weight": 0.001,
+      "price": 28000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/consumption.img",
+        93
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        3
+      ],
+      "source": {
+        "id": 7151,
+        "path": "stackable/ect/uplegacy_gnw04.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "cc62d07171b53f8497e609e49800474e9f452c8d892e0b30b562dc1dafb03dab",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_7151"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[upgradable legacy]",
+          1
+        ]
+      }
+    },
+    "original_7156": {
+      "name": "水罐的袖珍罐 (魔法师武器)",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 2,
+      "weight": 0.001,
+      "price": 28000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/consumption.img",
+        98
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        3
+      ],
+      "source": {
+        "id": 7156,
+        "path": "stackable/ect/uplegacy_mgw04.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "b981725f9e59e7efe3801d47d3b64c564ea01f50f7b810e57200f047884e4dbc",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_7156"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[upgradable legacy]",
+          1
+        ]
+      }
+    },
+    "original_7192": {
+      "name": "水罐的袖珍罐 (圣职者武器)",
+      "kind": "material",
+      "description": "",
+      "level": 1,
+      "rarity": 2,
+      "weight": 0.001,
+      "price": 28000,
+      "stack_limit": 1,
+      "icon": [
+        "Item/stackable/consumption.img",
+        146
+      ],
+      "field_image": [
+        "Item/field_consumption.img",
+        3
+      ],
+      "source": {
+        "id": 7192,
+        "path": "stackable/ect/uplegacy_prw04.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "2ddcfbc1a6be6b2eae2227ec849f9a528b37311e758c50befcc88ccc2e31aec8",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_7192"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[upgradable legacy]",
+          1
         ]
       }
     }

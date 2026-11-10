@@ -1515,6 +1515,36 @@
    "mob": "monster/newmonsters/gbl/webcannon/webcannon.mob",
    "bank": "newmonsters_gbl_webcannon_webcannon",
    "name": "webcannon"
+  },
+  "newmonsters_gbl_acidra_acidra": {
+   "mob": "monster/newmonsters/gbl/acidra/acidra.mob",
+   "bank": "newmonsters_gbl_acidra_acidra",
+   "name": "acidra"
+  },
+  "newmonsters_gbl_blacktentacle_blacktentacle": {
+   "mob": "monster/newmonsters/gbl/blacktentacle/blacktentacle.mob",
+   "bank": "newmonsters_gbl_blacktentacle_blacktentacle",
+   "name": "blacktentacle"
+  },
+  "newmonsters_gbl_hydracle_hydracle": {
+   "mob": "monster/newmonsters/gbl/hydracle/hydracle.mob",
+   "bank": "newmonsters_gbl_hydracle_hydracle",
+   "name": "hydracle"
+  },
+  "newmonsters_gbl_invader_invader": {
+   "mob": "monster/newmonsters/gbl/invader/invader.mob",
+   "bank": "newmonsters_gbl_invader_invader",
+   "name": "invader"
+  },
+  "newmonsters_gbl_ladyzealot_ladyzealot": {
+   "mob": "monster/newmonsters/gbl/ladyzealot/ladyzealot.mob",
+   "bank": "newmonsters_gbl_ladyzealot_ladyzealot",
+   "name": "ladyzealot"
+  },
+  "newmonsters_gbl_stickcle_stickcle": {
+   "mob": "monster/newmonsters/gbl/stickcle/stickcle.mob",
+   "bank": "newmonsters_gbl_stickcle_stickcle",
+   "name": "stickcle"
   }
  },
  "boss_hp_lines": 3,
