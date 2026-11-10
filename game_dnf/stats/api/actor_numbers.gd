@@ -119,6 +119,13 @@ func apply_bloodlust_strength(rank: int, saw_bleed: bool) -> bool:
 	if added:recalculate()
 	return added
 
+func apply_blood_memory_resistance(source: Dictionary) -> void:
+	var amount := int(source["amount"])
+	if amount == 0:return
+	effects.add("blood_memory_resistance",{"name":"鲜血之忆","duration_ms":source["duration_ms"],
+		"modifiers":[{"stat":"bleeding_resistance","op":"add","value":-amount}]})
+	recalculate()
+
 ## Blind uses its own resistance index and scales both payloads before storage.
 ## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.
 func apply_source_blind(source: Dictionary, roll: int) -> bool:

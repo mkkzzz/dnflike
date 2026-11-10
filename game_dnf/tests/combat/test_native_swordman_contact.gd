@@ -1644,6 +1644,8 @@ func check_hopsmash_bleed() -> void:
 			var expected_push := (200.0 if reset[2] else 30.0)*float(game.rules["reaction"]["push_speed_per_unit"])*facing
 			check(body_target["hp"]==5000.0-body_damage*expected_hits and is_equal_approx(body_target["push_v"],expected_push),
 				"Hop Smash reopens the body hit on schedule and uses the final ATK only on exhaustion")
+		check(not body_target["numeric"].effects.active.has("blood_memory_resistance"),
+			"Hop Smash's blade never attaches the shockwave resistance modifier")
 		step(impact-1-clock)
 		var landing_x := (450.0 if rank==1 else 202.0) if enabled else 414.0
 		check(game.objects.is_empty() and game.player["pos"].x==landing_x and game.player["z"]==(1.0 if rank==1 else 3.0),
@@ -1674,23 +1676,39 @@ func check_hopsmash_bleed() -> void:
 		var target: Dictionary = api.spawn_dummy(point+Vector2(10*facing,0))
 		var resistant: Dictionary = game.spawn_enemy(point-Vector2(10*facing,0))
 		resistant["ai"] = false
+		resistant["hp"] = 5000.0
+		resistant["max_hp"] = 5000.0
 		var level := int(scenario[3])
-		target["numeric"].values["level"] = level
-		target["numeric"].values["bleeding_resistance"] = -500
-		target["numeric"].values["physical_defense"] = 0.0
+		var target_stats := {"level":level,"bleeding_resistance":-500,"physical_defense":0.0,"hp_max":5000.0}
+		target["numeric"].base.merge(target_stats,true)
+		target["numeric"].values.merge(target_stats,true)
 		target["facing"] = -facing
 		game.numeric_player.values["strength"] = 0.0
 		game.numeric_player.values["physical_crit"] = 0.0
 		game.numeric_player.values["damage_rate"] = 1.0
 		game.numeric_player.values["skill_rate"] = 1.0
 		game.numeric_player.values["physical_attack"] = 9876.0
-		resistant["numeric"].values["level"] = level
-		resistant["numeric"].values["bleeding_resistance"] = 100
+		var resistant_actor = resistant["numeric"]
+		var resistant_stats := {"level":level,"bleeding_resistance":100,"hp_max":5000.0}
+		resistant_actor.base.merge(resistant_stats,true)
+		resistant_actor.values.merge(resistant_stats,true)
 		game.step_objects(1.0)
 		check(target["hp"]==5000.0-expected_amount,"Shockwave damage ignores the owner's weapon attack")
 		check(wave["hits"].has(target["id"]) and wave["hits"].has(resistant["id"])
 			and not resistant["numeric"].effects.active.has("bleed"),"Hop Smash's shockwave respects the target's bleed resistance")
 		var statuses: Array = wave["hit"]["effects"]
+		if int(scenario[2]) == 0:
+			check(not resistant_actor.effects.active.has("blood_memory_resistance") and resistant_actor.values["bleeding_resistance"]==100,
+				"An unlearned Blood Memory leaves the shockwave's target resistance unchanged")
+		else:
+			var debuff: Dictionary = resistant_actor.effects.active.get("blood_memory_resistance",{})
+			check(debuff.get("remaining_ms")==10000.0 and resistant_actor.values["bleeding_resistance"]==82,
+				"Rank three Blood Memory lowers the struck target's resistance even when it resisted the bleed")
+			resistant_actor.step(9999.0)
+			check(resistant_actor.apply_source_bleed(statuses[0],300,true),"A subsequent bleed uses the reduced resistance at 9999 ms")
+			resistant_actor.step(1.0)
+			check(resistant_actor.values["bleeding_resistance"]==100 and not resistant_actor.apply_source_bleed(statuses[0],300,true),
+				"Blood Memory restores the target's resistance at 10000 ms")
 		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
 		check(not bleed.is_empty() and statuses.size()==1,"The shockwave applies one native bleed entry")
 		if bleed.is_empty():continue

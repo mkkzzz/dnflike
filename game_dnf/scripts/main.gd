@@ -3345,6 +3345,12 @@ func prepare_hop_shockwave(template: Dictionary) -> Dictionary:
 	bleed["status_level"] += blood_memory_bleed_level_bonus()
 	bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["hop_bleed_base"])
 	hit["effects"] = template["effects"]+[bleed]
+	var passive_rank := int(skill_levels.get("bleedingmastery",0))
+	if passive_rank > 0:
+		# CB4F0D..CB4FC5 snapshots the resistance appendage in the object payload.
+		var record: Dictionary = Numbers.record("bleedingmastery")
+		var row: Array = Numbers.Skills.sample(record,passive_rank)["level_row"]
+		hit["blood_memory_resistance"] = {"amount":int(row[3]),"duration_ms":int(record["dungeon"]["static_data"][2])}
 	return hit
 
 func prepare_outrage_damage(template: Dictionary) -> Dictionary:
@@ -3665,6 +3671,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if effect.has("duration_ms"):request["duration_ms"] = duration_ms
 			if effect.has("status_level"):request["status_level"] = effect["status_level"]
 			apply_effect(request)
+		if by_player and native_kind == "hop_shockwave" and hit.has("blood_memory_resistance"):
+			# 9FCCB0..9FCDD3 attaches type 0x106 to the struck actor independently of the bleed roll.
+			target["numeric"].apply_blood_memory_resistance(hit["blood_memory_resistance"])
 		if by_player and bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
 			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
 	if victim == "companion":
