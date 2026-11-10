@@ -1571,6 +1571,7 @@ func check_hopsmash_bleed() -> void:
 	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:
 		var rank: int = scenario[0]
 		var enabled: bool = scenario[1]
+		var facing := 1 if rank==1 else -1
 		var profile := ProfileSession.new()
 		profile.command("numbers.level",{"level":60})
 		profile.command("numbers.growtype",{"growtype":"berserker"})
@@ -1579,10 +1580,11 @@ func check_hopsmash_bleed() -> void:
 		if int(scenario[2]) > 0:profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":scenario[2]})
 		var spec := profile.stats()
 		spec["skill_slots"] = ["hopsmash"]
-		start_room("original_27601","katana",1,spec,"berserker")
+		start_room("original_27601","katana",facing,spec,"berserker")
+		game.player["pos"] = POINT+Vector2(0.5,0.5)
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
-		var body_target: Dictionary = api.spawn_dummy(POINT+Vector2(55,0))
+		var body_target: Dictionary = api.spawn_dummy(POINT+Vector2(55*facing,0))
 		body_target["numeric"].values["bleeding_resistance"] = -500
 		if rank==1:
 			press(KEY_A)
@@ -1603,21 +1605,44 @@ func check_hopsmash_bleed() -> void:
 			"Hop Smash's body contact never applies the shockwave status")
 		step(159.0/rate)
 		check(game.objects.is_empty(),"Hop Smash does not spawn its shockwave before body frame four")
+		game.numeric_player.values["independent_attack"] = Numbers.shared_config()["base"]["independent_attack"]
 		step(2.0/rate)
 		var waves: Array = game.objects.filter(func(object):return object["hit"].get("skill_id")=="hopsmash")
 		check(waves.size()==int(enabled),"Bloody Vigorous enables one Hop Smash landing shockwave")
 		if waves.size()!=1:continue
 		var wave: Dictionary = waves[0]
 		var point: Vector2 = wave["pos"]
-		var target: Dictionary = api.spawn_dummy(point+Vector2(10,0))
-		var resistant: Dictionary = game.spawn_enemy(point-Vector2(10,0))
+		var expected_amount := 1305 if rank==1 else 1461
+		var expected_size := (250.0 if rank==1 else 306.0)/292.0
+		check(point==POINT+Vector2(1+123*facing,2) and wave["z"]==0.0 and wave["facing"]==facing,
+			"Hop Smash uses the rounded landing point and mirrored native forward offset")
+		check(wave["hit"]["percent"]==0.0 and wave["hit"]["fixed_amount"]==expected_amount
+			and wave["hit"]["atk"]["absolute_damage"]==expected_amount,
+			"The shockwave samples fixed attack from the source skill and owner-level tables")
+		var views: Dictionary = game.view.object_views
+		var back = views.get(wave["id"])
+		var front = views.get("%s:front"%wave["id"])
+		check(back!=null and front!=null and is_equal_approx(float(wave["size_rate"]),expected_size)
+			and is_equal_approx(back.base_scale,expected_size) and is_equal_approx(front.base_scale,expected_size)
+			and front.position==back.position and front.z_index==back.z_index+1 and front.facing==facing,
+			"The front and main shockwave frames use the same scale and origin as collision")
+		var target: Dictionary = api.spawn_dummy(point+Vector2(10*facing,0))
+		var resistant: Dictionary = game.spawn_enemy(point-Vector2(10*facing,0))
 		resistant["ai"] = false
 		var level := int(scenario[3])
 		target["numeric"].values["level"] = level
 		target["numeric"].values["bleeding_resistance"] = -500
+		target["numeric"].values["physical_defense"] = 0.0
+		target["facing"] = -facing
+		game.numeric_player.values["strength"] = 0.0
+		game.numeric_player.values["physical_crit"] = 0.0
+		game.numeric_player.values["damage_rate"] = 1.0
+		game.numeric_player.values["skill_rate"] = 1.0
+		game.numeric_player.values["physical_attack"] = 9876.0
 		resistant["numeric"].values["level"] = level
 		resistant["numeric"].values["bleeding_resistance"] = 100
 		game.step_objects(1.0)
+		check(target["hp"]==5000.0-expected_amount,"Shockwave damage ignores the owner's weapon attack")
 		check(wave["hits"].has(target["id"]) and wave["hits"].has(resistant["id"])
 			and not resistant["numeric"].effects.active.has("bleed"),"Hop Smash's shockwave respects the target's bleed resistance")
 		var statuses: Array = wave["hit"]["effects"]

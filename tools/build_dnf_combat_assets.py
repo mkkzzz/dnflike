@@ -418,6 +418,7 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
     'native_contact_blood': BLEED_ANIMATION,
+    'hop_smash_front': 'passiveobject/character/swordman/animation/hopsmashsubfront2.ani',
     'native_flash_screen': NATIVE_FLASH_SCREEN,
     **HUNDRED_SWORD_TRAVEL_EFFECTS,
     **HELLBENTER_WOUND_EFFECTS,
@@ -1765,6 +1766,8 @@ def main() -> int:
                         help='Add the original Frenzy release animation and cast sounds')
     parser.add_argument('--extend-bloodblast', action='store_true',
                         help='Add the ordinary Blood Blast layers and sounds')
+    parser.add_argument('--extend-hop-smash', action='store_true',
+                        help='Add the original Hop Smash shockwave front layer')
     parser.add_argument('--extend-bloody-rave-audio', action='store_true',
                         help='Add the original Bloody Rave cast, loop and release sounds')
     parser.add_argument('--extend-bloody-rave-end', action='store_true',
@@ -1838,6 +1841,10 @@ def main() -> int:
     args = parser.parse_args()
     if (args.output or args.pack) and not (args.extend_raxy_starfish or args.extend_outerwall or args.extend_native_particles):
         parser.error('--output and --pack require --extend-raxy-starfish, --extend-outerwall or --extend-native-particles')
+    if args.extend_hop_smash:
+        specs = [('effects', 'hop_smash_front', EFFECTS['hop_smash_front'])]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
     if args.extend_outerwall:
         specs = [('monsters', key, path) for key, path in NATIVE_OUTERWALL_BANKS.items()]
         specs.extend(('audio', key, paths) for key, paths in OUTERWALL_SOUNDS.items())

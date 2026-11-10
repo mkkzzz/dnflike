@@ -2500,7 +2500,7 @@ def main() -> int:
                 final["fx"] = [{"key": upper, "at": upper_at, "action_clock": True, "depth_offset": 1},
                                {"key": smash, "at": smash_at, "action_clock": True, "depth_offset": 2}]
                 final["sounds"] = [{"key": "SM_HOANYOUNG_FIN", "at": smash_at}]
-            if key in ("bloodblast", "grabblastblood", "chargecrash", "hellbenter"):
+            if key in ("bloodblast", "grabblastblood", "chargecrash", "hellbenter", "hopsmash"):
                 move["fixed_attack_base"] = fixed_attack_base
             if key == "hellbenter":
                 ani = move["finish"]["ani"]

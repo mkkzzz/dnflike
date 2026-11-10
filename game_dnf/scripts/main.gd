@@ -1165,9 +1165,13 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			action_cues(action_def(),old_clock,elapsed)
 			return
 		var power := _native_interpolate(0,100,int(elapsed)-int(charge[0]),int(charge[1])-int(charge[0]))
-		var rates: Array = m["hop_ani_rates"]
+		var rates: Array = m["hop_ani_percent"]
+		var percent := ActorNumbers.NATIVE_PERCENT
+		var minimum := ActorNumbers.native_scalar(float(rates[0])*percent)
+		var maximum := ActorNumbers.native_scalar(float(rates[1])*percent)
 		start_stage(1)
-		player["native_phase"]["hop_ani_rate"] = ActorNumbers.native_scalar(lerpf(rates[0],rates[1],power/100.0))
+		player["native_phase"]["hop_ani_rate"] = ActorNumbers.native_scalar(lerpf(minimum,maximum,power/100.0))
+		player["native_phase"]["hop_charge_percent"] = power
 		return
 	if m.has("upper_followup_at") and int(player["stage"]) == 0 and player.get("queued_upper_followup",false):
 		end_action_fx()
@@ -2957,6 +2961,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("native_controller",{}).get("kind","") == "bloodblast":
 					# 86DE33 reads rounded XYZ before applying the eruption's offsets.
 					spawn_object(hit,"player",Vector2(player["pos"]).round(),roundf(player["z"]),facing,attack_power())
+				elif hit.get("native_controller",{}).get("kind","") == "hop_shockwave":
+					spawn_object(prepare_hop_shockwave(hit),"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
 					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
 					var shake: Array = hit["native_controller"]["shake"]
@@ -3266,6 +3272,26 @@ func native_status_attack_amount(percent: float, base_by_level: Array) -> int:
 	var level := int(numeric_player.values["level"])
 	var base := int(base_by_level[level-1]) if level > 0 and level < base_by_level.size() else 0
 	return int(native_fixed_attack_product(percent,base))
+
+func prepare_hop_shockwave(template: Dictionary) -> Dictionary:
+	var move := move_def("hopsmash")
+	var hit := template.duplicate()
+	var charge: Array = move["hop_charge_ms"]
+	var rates: Array = move["hop_ani_percent"]
+	var power := int(player["native_phase"]["hop_charge_percent"])
+	# CB4E7B..CB4EF6 uses the release percent in the same interpolation as the time bounds.
+	var size := _native_interpolate(int(rates[0]),int(rates[1]),power-int(charge[0]),int(charge[1])-int(charge[0]))
+	hit["size_rate"] = ActorNumbers.native_scalar(size/292.0)
+	hit["percent"] = 0.0
+	var base := native_fixed_attack_base(move["fixed_attack_base"])
+	var amount := int(native_fixed_attack_product(move["hop_wave_damage"],base))
+	hit["fixed_amount"] = amount
+	hit["atk"] = Dictionary(template["atk"]).merged({"absolute_damage":amount},true)
+	var bleed: Dictionary = move["hop_bleed"].duplicate()
+	bleed["status_level"] += blood_memory_bleed_level_bonus()
+	bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["hop_bleed_base"])
+	hit["effects"] = template["effects"]+[bleed]
+	return hit
 
 func prepare_outrage_damage(template: Dictionary) -> Dictionary:
 	var base := native_fixed_attack_base(move_def("outragebreak")["fixed_attack_base"])
@@ -4417,13 +4443,6 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
-	if owner == "player" and numeric_player != null and hit.get("skill_id","") == "hopsmash":
-		var move := move_def("hopsmash")
-		if move.has("hop_bleed"):
-			var bleed: Dictionary = move["hop_bleed"].duplicate()
-			bleed["status_level"] += blood_memory_bleed_level_bonus()
-			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["hop_bleed_base"])
-			entity["hit"] = hit.merged({"effects":hit["effects"]+[bleed]},true)
 	if owner == "player" and numeric_player != null and kind in ["illusion_wave","illusion_club_wave"]:
 		# 7F7D60 binds the owner's attack fields. Only the melee callback refreshes them at contact.
 		entity["hit"] = hit.merged({"source_physical_attack":numeric_player.values["physical_attack"]},true)
@@ -4492,7 +4511,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		bus.emit("combat.cue",{"kind":"native_particle",
 			"path":"passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl",
 			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
-	if String(obj["add_fx"]) not in ["",String(hit.get("rear_fx",""))]:
+	if kind != "hop_shockwave" and String(obj["add_fx"]) not in ["",String(hit.get("rear_fx",""))]:
 		spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 	return entity
 
@@ -6133,6 +6152,13 @@ func view_snapshot() -> Dictionary:
 			floor["effect"] = controller["attached"]
 			objs.append(floor)
 			objs.append(item)
+		elif controller.get("kind","") == "hop_shockwave":
+			objs.append(item)
+			var front := item.duplicate()
+			front["id"] = "%s:front"%o["id"]
+			front["effect"] = o["def"]["add_fx"]
+			front["depth_offset"] = 3
+			objs.append(front)
 		elif controller.get("kind","") == "hundred_sword_field":
 			item["depth_offset"] = -2
 			item["hold_last_frame"] = true
