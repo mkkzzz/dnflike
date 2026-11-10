@@ -469,6 +469,20 @@
     "sha256": "246884645ad85315f63f144f86b1347fa52b4d8cc5df29006bccd2ff6d3dfdb7"
    }
   },
+  "genteastgate": {
+   "name": "根特东门",
+   "region": "gent",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/genteastgate_v1/map_export.json",
+   "min_level": 56,
+   "monster_level": 59,
+   "source": {
+    "path": "dungeon/act7/genteastgate.dgn",
+    "sha256": "064337edb39b84d7a4dc7c7fbef089378ae64c6c1b61857224f2f9371d06d1a0"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

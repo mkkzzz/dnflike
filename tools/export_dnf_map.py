@@ -58,6 +58,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/bwanga.dgn',
     'dungeon/act5/icepalace.dgn',
     'dungeon/act6/astraythief.dgn',
+    'dungeon/act7/genteastgate.dgn',
     'dungeon/act7/outergent.dgn',
     'dungeon/village/moonlightpub/aganzo.dgn',
     'dungeon/village/cartelarad/grozni.dgn',

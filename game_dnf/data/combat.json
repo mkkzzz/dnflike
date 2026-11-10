@@ -1865,6 +1865,31 @@
    "mob": "monster/newmonsters/heaven/nife_claese/nife_claese.mob",
    "bank": "newmonsters_heaven_nife_claese_nife_claese",
    "name": "nife_claese"
+  },
+  "newmonsters_cartel_medic_medic": {
+   "mob": "monster/newmonsters/cartel/medic/medic.mob",
+   "bank": "newmonsters_cartel_medic_medic",
+   "name": "medic"
+  },
+  "newmonsters_heaven_captainshured_captainshured": {
+   "mob": "monster/newmonsters/heaven/captainshured/captainshured.mob",
+   "bank": "newmonsters_heaven_captainshured_captainshured",
+   "name": "captainshured"
+  },
+  "newmonsters_heaven_caspar_caspar": {
+   "mob": "monster/newmonsters/heaven/caspar/caspar.mob",
+   "bank": "newmonsters_heaven_caspar_caspar",
+   "name": "caspar"
+  },
+  "newmonsters_heaven_specialforce_specialforce": {
+   "mob": "monster/newmonsters/heaven/specialforce/specialforce.mob",
+   "bank": "newmonsters_heaven_specialforce_specialforce",
+   "name": "specialforce"
+  },
+  "newmonsters_heaven_vulcherspecialforce_vulcherspecialforce": {
+   "mob": "monster/newmonsters/heaven/vulcherspecialforce/vulcherspecialforce.mob",
+   "bank": "newmonsters_heaven_vulcherspecialforce_vulcherspecialforce",
+   "name": "vulcherspecialforce"
   }
  },
  "boss_hp_lines": 3,

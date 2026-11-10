@@ -731,6 +731,55 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 17)
         self.assertFalse([row for row in diagnostics if row['code'] == 'maze_block_selected'])
 
+    def test_genteastgate_export_selects_hell_base_block_one(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/genteastgate_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '064337edb39b84d7a4dc7c7fbef089378ae64c6c1b61857224f2f9371d06d1a0')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 81)
+        self.assertEqual(dungeon['maze_block_index'], 1)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(dungeon['size'], [7, 3])
+        self.assertEqual(dungeon['start_map_raw'], [6, 1, 0, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 0, 1, 2])
+        self.assertEqual(len(dungeon['rooms']), 19)
+        self.assertEqual(len(dungeon['placements']), 71)
+        self.assertEqual(len(export['images']), 47)
+        self.assertEqual(len(dungeon['maze_blocks']), 2)
+        self.assertEqual(dungeon['maze_blocks'][0]['quest_connection'], [0, 4212, -1])
+        self.assertEqual(dungeon['maze_blocks'][0]['escape_hell'], [1])
+        self.assertEqual(len(dungeon['maze_blocks'][1]['map_specifications']), 6)
+        self.assertEqual(len(dungeon['maze_blocks'][1]['boss_map_specifications']), 2)
+        self.assertEqual(sum(bool(cell['doors']) for cell in dungeon['cells']), 13)
+        self.assertEqual(sum(cell['code'] == 'AA' for cell in dungeon['cells']), 8)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(0, 1)]['map_candidates'], [
+            'map/genteastgate/bonus2(2,0).map',
+            'map/genteastgate/boss1(0,2).map',
+            'map/genteastgate/start1(0,1).map',
+        ])
+        self.assertEqual(cells[(5, 0)]['map_candidates'], [
+            'map/genteastgate/(4,0)maze1boss.map',
+            'map/genteastgate/bonus1(4,2).map',
+            'map/genteastgate/boss2(6,0).map',
+            'map/genteastgate/start2(6,1).map',
+        ])
+        self.assertEqual(len(cells[(4, 1)]['map_candidates']), 9)
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 152)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 162)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 3)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 8)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 96)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 19)
+        selected = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected), 1)
+        self.assertIn('selected maze block 1 of 2', selected[0]['detail'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

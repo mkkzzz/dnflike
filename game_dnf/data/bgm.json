@@ -148,6 +148,10 @@
    "normal": "gblarad_lab",
    "boss": "gblarad_lab_boss"
   },
+  "genteastgate": {
+   "normal": "gentgate_east",
+   "boss": "gentgate_east_boss"
+  },
   "goddesstemple": {
    "normal": "goddess_temple",
    "boss": "goddess_temple_boss"
@@ -545,6 +549,18 @@
    "source": "music/gblarad_lab_boss.ogg",
    "sha256": "6f58371e4cd47ede67cbed7aca79ec6c48bdc315de9626a8726dd581707636ce",
    "bytes": 1784835
+  },
+  "gentgate_east": {
+   "file": "audio/bgm/gentgate_east.ogg",
+   "source": "music/gentgate_east.ogg",
+   "sha256": "e3b3baaa08cd1c0682c069356e7bf06ee3fb2d84381d67871df81e3eea49a966",
+   "bytes": 1738466
+  },
+  "gentgate_east_boss": {
+   "file": "audio/bgm/gentgate_east_boss.ogg",
+   "source": "music/gentgate_east_boss.ogg",
+   "sha256": "5fb7ad823bfc14da24c056658c6743802835c40142162d4ce0088e288c857523",
+   "bytes": 1472217
   },
   "goddess_temple": {
    "file": "audio/bgm/goddess_temple.ogg",
