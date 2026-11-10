@@ -789,7 +789,7 @@ func leave_action() -> void:
 	player.erase("draw_cast")
 	player.erase("draw_charge")
 	player.erase("draw_targets")
-	player.erase("hundred_sword_facing")
+	player.erase("hundred_sword_cast")
 	release_grab_blast_victim(grab_blast_victim())
 	end_action_fx()
 
@@ -2041,7 +2041,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			var timeline := native_timed_frames(action_def()["timeline"],_native_animation_percent(rate))
 			player["native_phase"] = {"hundred_sword_ready_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
 		elif index == m["stages"].size()-1:
-			# CD2795 selects mode 0 at 1000 per mille. CD288B restores the cast direction.
+			# CD2795 selects mode 0 at 1000 per mille.
 			player["native_phase"] = {"hundred_sword_finish":true}
 			end_action_fx()
 			player["fx_tag"] = "act:%d"%action_seq
@@ -2091,11 +2091,15 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		if turn != 0:player["facing"] = turn
 	if name == "hundredsword" and index == 0:
 		# CD1E09..CD1E9A takes the cast origin before the object exists.
-		player["native_phase"]["field_origin"] = Vector2(Vector2i(player["pos"]))
-		player["native_phase"]["field_facing"] = player["facing"]
-		player["hundred_sword_facing"] = player["facing"]
+		player["hundred_sword_cast"] = {"origin":Vector2(Vector2i(player["pos"])),"facing":player["facing"]}
 	elif player["native_phase"].get("hundred_sword_finish",false):
-		player["facing"] = player.get("hundred_sword_facing",player["facing"])
+		# CD2859 reads the terminal point from the saved origin. CD288B and
+		# CD28A4 restore cast direction and write the saved XY with Z zero.
+		var cast: Dictionary = player["hundred_sword_cast"]
+		player["pos"] = cast["origin"]
+		player["facing"] = cast["facing"]
+		player["z"] = 0.0
+		player["vz"] = 0.0
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	if name == "sacrifice" and index == 0:
 		bus.emit("combat.cue",{"kind":"fx","key":m["cast_fx"],"point":player["pos"],"height":player["z"],
@@ -2547,8 +2551,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				elif hit.get("skill_id","") == "illusionslash" and hit.get("object","").ends_with("/illusionslashwave.obj"):
 					hit = prepare_illusion_wave(hit)
 				if hit.get("native_controller",{}).get("kind","") == "hundred_sword_field":
-					var phase: Dictionary = player["native_phase"]
-					spawn_object(hit,"player",phase["field_origin"],0.0,int(phase["field_facing"]),attack_power())
+					var cast: Dictionary = player["hundred_sword_cast"]
+					spawn_object(hit,"player",cast["origin"],0.0,int(cast["facing"]),attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "draw_short_wave":
 					# CB2171 passes absolute Z 50 and the caster's integer ground point.
 					spawn_object(prepare_draw_short_wave(hit),"player",Vector2(Vector2i(player["pos"])),0.0,facing,attack_power())

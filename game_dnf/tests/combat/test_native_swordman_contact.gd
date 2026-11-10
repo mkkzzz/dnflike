@@ -3247,8 +3247,17 @@ func check_hundred_sword_ready() -> void:
 	game.step_objects(1.0)
 	check(game.objects.is_empty(),"the field is deleted at the original exit end")
 	game.numeric_player.values["attack_speed"] = 1.75
+	game.player["pos"] = POINT+Vector2(190.8,22.6)
+	game.player["z"] = 78.0
+	game.player["vz"] = 150.0
+	game.player["facing"] = 1
 	game.start_stage(game.move_def("hundredsword")["stages"].size()-1)
-	game.player["pos"] = POINT+Vector2(0.8,0.6)
+	check(game.player["pos"]==POINT and game.player["facing"]==-1 and game.player["z"]==0.0 and game.player["vz"]==0.0,
+		"the finish returns from the last sword to the original cast point, grounds the body and restores cast facing")
+	move_target(first,POINT-Vector2(90,0))
+	move_target(late,POINT+Vector2(100,22))
+	first["hp"] = 5000.0
+	late["hp"] = 5000.0
 	game.bus.clear_history()
 	var finish_layers := func():
 		return game.view.effects.filter(func(fx):return fx.follow==game.player["id"]).map(
@@ -3257,6 +3266,8 @@ func check_hundred_sword_ready() -> void:
 	check(finish_layers.call().is_empty() and game.player["facing"]==-1 and game.player["clock"]==559.0,
 		"the finish windup restores cast facing and holds its fixed clock without an early flash")
 	step(1.0)
+	check(first["hp"]<5000.0 and late["hp"]==5000.0,
+		"the finish hits in front of the cast origin and misses the target beside the last sword")
 	check(finish_layers.call()==["finishslash.ani","finishflash.ani","finishfloor.ani","finishcircle1.ani",
 		"finishcircle2.ani","finishcircle3.ani","finishcircle4.ani"] and cues("SM_BLOOD_RAVE_ATK").size()==1,
 		"frame two starts the original slash, flash, floor, four staggered circles and body sound")
