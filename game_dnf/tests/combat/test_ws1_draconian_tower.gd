@@ -4,13 +4,58 @@ const CombatSession = preload("res://combat/api/combat_session.gd")
 const MonsterAI = preload("res://combat/ai/monster_ai.gd")
 const MapLoader = preload("res://scripts/native_map_loader.gd")
 const DUNGEONS := "res://data/dungeons.json"
-const EXPECTED_SPECIES := {
-	"monster/draconian/lakius.mob": 1,
-	"monster/draconian/mirkius.mob": 2,
-	"monster/draconian/minius.mob": 2,
-	"monster/flydragon/harseseri.mob": 7,
-	"monster/flydragon/looseseri.mob": 11,
-}
+const EXPECTED_ROOMS := [
+	{
+		"placement": "2_0:(2,0)s1601",
+		"map_id": 1608,
+		"counts": {
+			"monster/draconian/mirkius.mob": 3,
+			"monster/draconian/minius.mob": 3,
+		},
+	},
+	{
+		"placement": "1_0:(1,0)n1826",
+		"map_id": 1602,
+		"counts": {
+			"monster/draconian/mirkius.mob": 3,
+			"monster/flydragon/harseseri.mob": 5,
+			"monster/flydragon/looseseri.mob": 8,
+		},
+	},
+	{
+		"placement": "1_1:(1,1)e1803",
+		"map_id": 1603,
+		"counts": {"monster/draconian/minius.mob": 7},
+	},
+	{
+		"placement": "2_1:(2,1)n1808",
+		"map_id": 1609,
+		"counts": {
+			"monster/draconian/mirkius.mob": 3,
+			"monster/draconian/minius.mob": 4,
+		},
+	},
+	{
+		"placement": "2_2:(2,2)h1827",
+		"map_id": 1610,
+		"counts": {
+			"monster/draconian/minius.mob": 6,
+			"monster/flydragon/harseseri.mob": 7,
+			"monster/flydragon/looseseri.mob": 7,
+		},
+	},
+	{
+		"placement": "3_2:(3,2)b1823",
+		"map_id": 1615,
+		"counts": {
+			"monster/draconian/lakius.mob": 1,
+			"monster/draconian/mirkius.mob": 2,
+			"monster/draconian/minius.mob": 2,
+			"monster/flydragon/harseseri.mob": 7,
+			"monster/flydragon/looseseri.mob": 11,
+		},
+	},
+]
 
 var session := CombatSession.new()
 var game
@@ -35,19 +80,20 @@ func run() -> void:
 	game.set_physics_process(false)
 	check(not game.missing_assets, "production Draconian Tower content and combat assets load")
 	if not game.missing_assets:
-		var started: bool = session.start_room({
-			"run_id": "ws1-draconiantower",
-			"dungeon": "draconiantower",
-			"route": route,
-			"room_id": "draconiantower:5",
-			"room_index": 5,
-			"player": {"hp": 500, "mp": 200, "weapon": "shortsword", "skill_slots": []},
-			"audio": {"muted": true},
-		})
-		check(started, "formal combat accepts the complete six-room Draconian Tower route")
-		if started:
-			check_live_room()
-			check_moves()
+		for index in EXPECTED_ROOMS.size():
+			var started: bool = session.start_room({
+				"run_id": "ws1-draconiantower-%d" % index,
+				"dungeon": "draconiantower",
+				"route": route,
+				"room_id": "draconiantower:%d" % index,
+				"room_index": index,
+				"player": {"hp": 500, "mp": 200, "weapon": "shortsword", "skill_slots": []},
+				"audio": {"muted": true},
+			})
+			check(started, "formal combat accepts Draconian Tower room %d" % (index + 1))
+			if started:
+				check_live_room(index)
+		check_moves()
 	session.stop()
 	await process_frame
 	print("[WS1_DRACONIAN_TOWER] COMPLETE checks=%d failures=%d" % [checks, failures])
@@ -59,29 +105,32 @@ func check_source_room(route: Dictionary) -> void:
 		"source route keeps six rooms and a boss terminal")
 	var loader = MapLoader.new()
 	check(loader.load_export(String(route["map_export"])), "source Draconian Tower MAP export loads")
-	var placement: Dictionary = {}
-	for candidate: Dictionary in loader.placements():
-		if String(candidate.get("id", "")) == "2_4:(3,2)b1823":
-			placement = candidate
-			break
-	check(String(placement.get("map", "")) == "map/draconiantower/(3,2)b1823.map",
-		"boss placement resolves the source b1823 MAP")
-	if placement.is_empty():
-		return
-	var room: Dictionary = loader.room(String(placement["map"]))
-	var counts := {}
-	var boss := 0
-	for monster: Dictionary in room.get("monsters", []):
-		var mob := String(monster.get("mob", ""))
-		counts[mob] = int(counts.get(mob, 0)) + 1
-		var raw: Array = monster.get("raw", [])
-		if raw.size() > 9 and String(raw[9]) == "[boss]":
-			boss += 1
-	check(room.get("monsters", []).size() == 23, "source b1823 keeps all 23 monster placements")
-	check(counts == EXPECTED_SPECIES, "source b1823 preserves the exact five-species lineup")
-	check(boss == 1, "source b1823 marks exactly one Lakius boss")
+	var by_id := {}
+	for placement: Dictionary in loader.placements():
+		by_id[String(placement.get("id", ""))] = placement
+	for index in EXPECTED_ROOMS.size():
+		var expected: Dictionary = EXPECTED_ROOMS[index]
+		var placement: Dictionary = by_id.get(String(expected["placement"]), {})
+		check(not placement.is_empty() and String(rooms[index]["placement"]) == String(expected["placement"]),
+			"route room %d keeps its source placement" % (index + 1))
+		if placement.is_empty():
+			continue
+		var room: Dictionary = loader.room(String(placement["map"]))
+		check(int(room.get("map_id", -1)) == int(expected["map_id"]),
+			"route room %d keeps source MAP%d" % [index + 1, int(expected["map_id"])])
+		var counts := {}
+		var bosses := 0
+		for monster: Dictionary in room.get("monsters", []):
+			var mob := String(monster.get("mob", ""))
+			counts[mob] = int(counts.get(mob, 0)) + 1
+			var raw: Array = monster.get("raw", [])
+			if raw.size() > 9 and String(raw[9]) == "[boss]":
+				bosses += 1
+		check(counts == expected["counts"], "source room %d keeps its exact species lineup" % (index + 1))
+		check(bosses == (1 if index == EXPECTED_ROOMS.size() - 1 else 0),
+			"source room %d has the expected boss markers" % (index + 1))
 
-func check_live_room() -> void:
+func check_live_room(index: int) -> void:
 	var counts := {}
 	var bosses := 0
 	for enemy: Dictionary in game.monsters:
@@ -89,11 +138,15 @@ func check_live_room() -> void:
 		counts[mob] = int(counts.get(mob, 0)) + 1
 		if bool(enemy.get("chief", false)):
 			bosses += 1
-	check(game.room_index == 5 and game.room_width > 0, "formal session loads the sixth room")
-	check(game.monsters.size() == 23 and counts == EXPECTED_SPECIES,
-		"formal session spawns the exact source monster lineup")
-	check(bosses == 1 and String(game.monsters.filter(func(enemy): return bool(enemy.get("chief", false)))[0].get("mob", ""))
-		== "monster/draconian/lakius.mob", "formal session identifies Lakius as the sole boss")
+	var expected: Dictionary = EXPECTED_ROOMS[index]
+	check(game.room_index == index and int(game.room_map.get("map_id", -1)) == int(expected["map_id"]),
+		"formal session loads source MAP%d in room %d" % [int(expected["map_id"]), index + 1])
+	check(counts == expected["counts"], "formal room %d spawns its exact source lineup" % (index + 1))
+	check(bosses == (1 if index == EXPECTED_ROOMS.size() - 1 else 0),
+		"formal room %d has the expected boss count" % (index + 1))
+	if bosses == 1:
+		check(String(game.monsters.filter(func(enemy): return bool(enemy.get("chief", false)))[0].get("mob", ""))
+			== "monster/draconian/lakius.mob", "formal session identifies Lakius as the sole boss")
 
 func check_moves() -> void:
 	var mirkius: Dictionary = game.table.monsters.get("draconian_mirkius", {})
