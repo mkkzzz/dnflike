@@ -6,6 +6,8 @@ const Motion = preload("res://combat/particles/native_motion.gd")
 const DetRng = preload("res://core/det_rng.gd")
 const RADIUS := 250
 const HEIGHT := 150
+const TRAIL_LAYERS := 12
+const TRAIL_STEP := 10
 
 var _center: Vector2
 var _facing: int
@@ -13,6 +15,7 @@ var _styles: Array
 var _art_facing: Array[int] = []
 var _disappear_fx: Array[String] = []
 var _light_rotations: Dictionary = {}
+var _trail_history: Dictionary = {}
 var _spent: Dictionary = {}
 var _disappear_ms: float
 var _effects: Dictionary
@@ -38,6 +41,7 @@ func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, co
 	# A6CD63..A6CE62 assigns a separate angle to each visible Light3 frame.
 	for slot in range(0,_styles.size(),3):
 		_light_rotations[slot] = {1:_random_rotation(),3:_random_rotation(),5:_random_rotation()}
+		_trail_history[slot] = []
 	_entry_ms = int(timeline[4]["start_ms"])
 	_spread_ms = int(timeline[11]["start_ms"])
 	_settle_ms = int(timeline[16]["start_ms"])
@@ -46,6 +50,10 @@ func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, co
 func advance(ms: float, owner_ready_ms: float) -> bool:
 	var was_waiting := _age < _entry_ms
 	_age = owner_ready_ms if owner_ready_ms >= 0.0 else _age+ms
+	if _age >= _entry_ms and _age < _spread_ms:
+		_record_trail(int(_age))
+	elif not _trail_history.is_empty() and _age >= _spread_ms:
+		_trail_history.clear()
 	return was_waiting and _age >= _entry_ms
 
 func waypoint(slot: int) -> Vector3i:
@@ -68,11 +76,10 @@ func append_view(out: Array) -> void:
 	var angle := 0
 	var phase_ms := float(now-_land_ms)
 	if now < _spread_ms:
-		var elapsed := now-_entry_ms
-		var duration := _spread_ms-_entry_ms
-		angle = int(Motion.ramp(0.0,360.0,elapsed,duration))
-		radius = _orbit_radius(RADIUS,0,elapsed,duration)
-		phase_ms = float(elapsed)
+		var orbit := _gather_orbit(now)
+		angle = orbit.x
+		radius = orbit.y
+		phase_ms = float(now-_entry_ms)
 	elif now < _land_ms:
 		var elapsed := mini(now,_settle_ms)-_spread_ms
 		var duration := _settle_ms-_spread_ms
@@ -105,6 +112,7 @@ func append_view(out: Array) -> void:
 			tint["uniform_frame_ms"] = _spread_ms-_entry_ms
 			var flash := _layer(out,slot,id+":light",_effects["light3"],point,height,phase_ms,2,false,true)
 			flash["frame_rotations"] = _light_rotations[slot]
+			_append_trail(out,slot,id,point,now)
 		else:
 			var stem := "swordspread" if now < _land_ms else "swordland" if ground else "swordair"
 			for layer in [1,2]:
@@ -115,6 +123,56 @@ func append_view(out: Array) -> void:
 				if phase_ms < 310.0:_layer(out,slot,id+":land",_effects["swordlandglow2"],point,0.0,phase_ms,-1,false)
 			elif now >= _land_ms:
 				_layer(out,slot,id+":air",_effects["swordairglow"],point,height,phase_ms,-1,false,true)
+
+func _gather_orbit(now: int) -> Vector2i:
+	var elapsed := now-_entry_ms
+	var duration := _spread_ms-_entry_ms
+	return Vector2i(int(Motion.ramp(0.0,360.0,elapsed,duration)),_orbit_radius(RADIUS,0,elapsed,duration))
+
+func _record_trail(now: int) -> void:
+	var orbit := _gather_orbit(now)
+	for slot: int in _trail_history:
+		var point := Vector2i(_blade_point(slot,orbit.x,orbit.y))
+		var history: Array = _trail_history[slot]
+		# E2DACF records a new projected point after at least ten pixels of movement.
+		# All points in this state have the same height, so Y-Z differences equal Y differences.
+		if history.is_empty() or point.distance_squared_to(Vector2i(history.back().x,history.back().y)) >= TRAIL_STEP*TRAIL_STEP:
+			history.append(Vector3i(point.x,point.y,now))
+
+func _append_trail(out: Array, slot: int, id: String, head: Vector2, now: int) -> void:
+	var history: Array = _trail_history[slot]
+	var points: Array[Vector3i] = [Vector3i(int(head.x),int(head.y),now)]
+	var sample_index := history.size()-1
+	# E2DC2C..E2E485 walks backwards from each layer, interpolating ten
+	# pixels toward the first older sample far enough away.
+	for layer in TRAIL_LAYERS:
+		var previous: Vector3i = points.back()
+		while sample_index >= 0:
+			var sample: Vector3i = history[sample_index]
+			var delta := Vector2(sample.x-previous.x,sample.y-previous.y)
+			var distance := int(delta.length())
+			if sample.z < previous.z and distance >= TRAIL_STEP:
+				# 11F0FF0/11F1060 index the original tenth-degree sine and cosine tables.
+				var angle := mini(posmod(int(Motion.f32(delta.angle())*572.957914),3600),3559)
+				var radians := Motion.f32(angle*0.0017453288892284036)
+				var offset := Vector2.from_angle(radians)*TRAIL_STEP
+				var stamp := int(Motion.ramp(previous.z,sample.z,TRAIL_STEP,distance))
+				points.append(Vector3i(previous.x+roundi(offset.x),previous.y+roundi(offset.y),stamp))
+				break
+			sample_index -= 1
+		if sample_index < 0:break
+	if points.size() < 2:return
+	var rotation := 0.0
+	for layer in mini(points.size(),TRAIL_LAYERS):
+		var point := Vector2(points[layer].x,points[layer].y)
+		if layer+1 < points.size():
+			var next := Vector2(points[layer+1].x,points[layer+1].y)
+			rotation = Motion.f32(Motion.f32((point-next).angle())+Motion.f32(3.14))
+		var variant := mini(4,int(Motion.ramp(1,5,layer,TRAIL_LAYERS)))
+		var view := _layer(out,slot,id+":tail:%d"%layer,_effects["lighttail%d"%variant],point,HEIGHT,0.0,3,true)
+		view["depth_offset"] = int(head.y-point.y)+3
+		view["rotation"] = rotation*_art_facing[slot]
+		view["fade"] = int(Motion.ramp(255,50,layer,TRAIL_LAYERS-1))/255.0
 
 func _blade_point(slot: int, angle: int, radius: int) -> Vector2:
 	var radians := deg_to_rad(float((7+slot*15+angle)%360))

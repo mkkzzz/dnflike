@@ -3201,6 +3201,7 @@ func check_hundred_sword_ready() -> void:
 	check(lights.size()==8 and lights[0]["pos"]==center+Vector2(-30,71) and lights[0]["z"]==150.0
 		and cues("W_GET_SPIRITS").size()==1 and game.view.audio.variants["W_GET_SPIRITS"][0] is AudioStreamOggVorbis,
 		"frame four spawns eight lights around the original mirrored center and plays the original collection sound")
+	check(swords.call("lighttail").is_empty(),"the first gathering frame has no past position to orient a trail")
 	var tint = game.view.object_views["hundred_sword:0:light:1"]
 	var flash = game.view.object_views["hundred_sword:0:light:2"]
 	var flash_angles: Dictionary = flash.frame_rotations
@@ -3221,11 +3222,27 @@ func check_hundred_sword_ready() -> void:
 	check(is_equal_approx(tint.frame_color().r,(255.0+150.0)/510.0)
 		and tint.frame_color().b==1.0 and flash.frame_rotations==flash_angles,
 		"the gathering tint is still interpolating halfway through the orbit and keeps the same flash angles")
+	var tail: Array = swords.call("lighttail").filter(func(o):return String(o["id"]).begins_with("hundred_sword:0:"))
+	check(tail.size()==12 and tail[0]["pos"]==lights[0]["pos"] and tail[0]["fade"]==1.0
+		and is_equal_approx(tail[11]["fade"],50.0/255.0),
+		"the full-effects trail starts at the gathering light and uses the native opacity endpoints")
+	for index in tail.size():
+		var layer: Dictionary = tail[index]
+		var trail = game.view.object_views.get(layer["id"])
+		var variant := mini(4,1+floori(index/3.0))
+		check(is_instance_valid(trail) and String(trail.data["source"]).ends_with("/lighttail%d.ani"%variant)
+			and trail.z_index==int(lights[0]["pos"].y)+3 and trail.base_rotation==layer["rotation"]
+			and trail.fade==layer["fade"],
+			"gathering trail layer %d uses its native sprite, angle, fade and sword draw group"%index)
+		if index>0:
+			var distance: float = layer["pos"].distance_to(tail[index-1]["pos"])
+			check(distance>=9.0 and distance<=11.0,"the next layer steps ten pixels into the sword history")
 	step(430.0)
 	var spread: Array = swords.call("swordspread1")
 	check(spread.size()==24 and spread.all(func(o):return o["pos"]==center and o["z"]==150.0)
+		and swords.call("lighttail").is_empty()
 		and game.view.object_views["hundred_sword:4:swordspread:1"].data["frames"][0]["img"].to_lower().ends_with("/sword05.img"),
-		"frame eleven adds the remaining sixteen swords at the center and renders the native style table")
+		"frame eleven clears the gathering trails and adds the remaining sixteen swords at the center")
 	step(1019.0)
 	check(swords.call("swordspread1").size()==24 and swords.call("swordland1").is_empty(),
 		"the spread formation stays in its airborne preparation pose through frame seventeen")

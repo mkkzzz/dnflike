@@ -1267,7 +1267,8 @@ HUNDRED_SWORD_POSES = [1, 2, 3, 4, 1, 5]
 HUNDRED_SWORD_WEAPON_DRAW_ORDER = ((2155, 655),)*4 + ((2607, 657, 2606, 656),)
 HUNDRED_SWORD_BLADES = ("swordspread", "swordair", "swordland")
 HUNDRED_SWORD_FORMATION_LAYERS = ("light1", "light2", "light3", "swordairglow", "swordlandglow1",
-                                 "swordlandglow2", "sworddisappear1", "sworddisappear2")
+                                 "swordlandglow2", "sworddisappear1", "sworddisappear2",
+                                 *(f"lighttail{i}" for i in range(1, 5)))
 
 
 def hundred_sword_blade_banks():
