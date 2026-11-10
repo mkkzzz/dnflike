@@ -27,6 +27,33 @@ static func ramp(a: float, b: float, time: float, term: float) -> float:
 	# Preserve the SSE single-precision operation order.
 	return f32(f32(f32(f32(b - a) * time) / term) + a)
 
+static func trail_projection(point: Vector4i) -> Vector2i:
+	return Vector2i(point.x,point.y-point.z)
+
+static func trail_points(history: Array, head: Vector4i, count: int, spacing: int) -> Array[Vector4i]:
+	var points: Array[Vector4i] = [head]
+	var sample_index := history.size()-1
+	# E2DC2C..E2E485 walks backwards from each layer, interpolating ten
+	# pixels toward the first older sample far enough away.
+	for layer in count:
+		var previous: Vector4i = points.back()
+		while sample_index >= 0:
+			var sample: Vector4i = history[sample_index]
+			var delta := Vector2(trail_projection(sample)-trail_projection(previous))
+			var distance := int(delta.length())
+			if sample.w < previous.w and distance >= spacing:
+				# 11F0FF0/11F1060 index the original tenth-degree sine and cosine tables.
+				var angle := mini(posmod(int(f32(delta.angle())*572.957914),3600),3559)
+				var radians := f32(angle*0.0017453288892284036)
+				var offset := Vector2.from_angle(radians)*spacing
+				var height := int(ramp(previous.z,sample.z,spacing,distance))
+				var stamp := int(ramp(previous.w,sample.w,spacing,distance))
+				points.append(Vector4i(previous.x+roundi(offset.x),previous.y-previous.z+roundi(offset.y)+height,height,stamp))
+				break
+			sample_index -= 1
+		if sample_index < 0:break
+	return points
+
 static func mean_ramp(a: float, b: float, time: float, term: float) -> float:
 	return f32(f32(ramp(a, b, time, term) + a) * 0.5)
 

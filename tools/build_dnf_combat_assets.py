@@ -1704,7 +1704,9 @@ def main() -> int:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
         effects = runtime['assets']['effect_anims']
         appearance = runtime['moves']['hellbenter']['appearance']
-        specs = [('effects', key, effects[key]) for group in ('cast', 'mark', 'sword') for key in appearance[group]]
+        specs = [('effects', key, effects[key])
+                 for group in ('cast', 'mark', 'sword', 'target_mark', 'target_bleeding', 'ball', 'absorb')
+                 for key in appearance[group]]
         specs.append(('audio', appearance['sound']['key'], 'sounds/char/swordman/effect/b_start.ogg'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0

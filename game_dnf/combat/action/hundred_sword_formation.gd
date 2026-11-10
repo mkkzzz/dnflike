@@ -168,47 +168,20 @@ func _append_trail(out: Array, slot: int, id: String, head: Vector2, now: int) -
 	_append_trail_layers(out,id+":tail",Vector4i(int(head.x),int(head.y),HEIGHT,now),
 		_trail_history[slot],"lighttail",TRAIL_LAYERS,50,_art_facing[slot],3)
 
-static func _project_trail_point(point: Vector4i) -> Vector2i:
-	return Vector2i(point.x,point.y-point.z)
-
 static func _record_trail_sample(history: Array, point: Vector4i) -> void:
 	# E2DACF records a new projected point after at least ten pixels of movement.
-	if history.is_empty() or _project_trail_point(point).distance_squared_to(_project_trail_point(history.back())) >= TRAIL_STEP*TRAIL_STEP:
+	if history.is_empty() or Motion.trail_projection(point).distance_squared_to(Motion.trail_projection(history.back())) >= TRAIL_STEP*TRAIL_STEP:
 		history.append(point)
-
-static func _trail_points(history: Array, head: Vector4i, count: int) -> Array[Vector4i]:
-	var points: Array[Vector4i] = [head]
-	var sample_index := history.size()-1
-	# E2DC2C..E2E485 walks backwards from each layer, interpolating ten
-	# pixels toward the first older sample far enough away.
-	for layer in count:
-		var previous: Vector4i = points.back()
-		while sample_index >= 0:
-			var sample: Vector4i = history[sample_index]
-			var delta := Vector2(_project_trail_point(sample)-_project_trail_point(previous))
-			var distance := int(delta.length())
-			if sample.w < previous.w and distance >= TRAIL_STEP:
-				# 11F0FF0/11F1060 index the original tenth-degree sine and cosine tables.
-				var angle := mini(posmod(int(Motion.f32(delta.angle())*572.957914),3600),3559)
-				var radians := Motion.f32(angle*0.0017453288892284036)
-				var offset := Vector2.from_angle(radians)*TRAIL_STEP
-				var height := int(Motion.ramp(previous.z,sample.z,TRAIL_STEP,distance))
-				var stamp := int(Motion.ramp(previous.w,sample.w,TRAIL_STEP,distance))
-				points.append(Vector4i(previous.x+roundi(offset.x),previous.y-previous.z+roundi(offset.y)+height,height,stamp))
-				break
-			sample_index -= 1
-		if sample_index < 0:break
-	return points
 
 func _append_trail_layers(out: Array, id: String, head: Vector4i, history: Array, bank: String,
 		count: int, end_alpha: int, facing: int, depth: int) -> void:
-	var points := _trail_points(history,head,count)
+	var points := Motion.trail_points(history,head,count,TRAIL_STEP)
 	if points.size() < 2:return
 	var rotation := 0.0
 	for layer in mini(points.size(),count):
 		var point: Vector4i = points[layer]
 		if layer+1 < points.size():
-			var delta := Vector2(_project_trail_point(point)-_project_trail_point(points[layer+1]))
+			var delta := Vector2(Motion.trail_projection(point)-Motion.trail_projection(points[layer+1]))
 			rotation = Motion.f32(Motion.f32(delta.angle())+Motion.f32(3.14))
 		var variant := mini(4,int(Motion.ramp(1,5,layer,count)))
 		out.append({"id":"%s:%d:%d"%[id,layer,depth],"effect":_effects["%s%d"%[bank,variant]],

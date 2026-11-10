@@ -6,12 +6,18 @@
    "skillfx_3_sword_dodge_a898212c": "passiveobject/character/swordman/animation/illusionslashsub/3_sword_dodge.ani",
    "skillfx_4_attackt_dodge_42e3c96d": "passiveobject/character/swordman/animation/illusionslashsub/4_attackt_dodge.ani",
    "skillfx_5_light_dodge_cd1070ff": "passiveobject/character/swordman/animation/illusionslashsub/5_light_dodge.ani",
+   "skillfx_absorb_4b93bae3": "character/swordman/effect/animation/hellbenter/absorb.ani",
    "skillfx_add_e433feca": "character/swordman/effect/animation/wavemark/add.ani",
    "skillfx_appear1_9bb8086c": "character/swordman/effect/animation/keiga/appear1.ani",
    "skillfx_area_3363e3fd": "character/swordman/effect/animation/shockwavearea/area.ani",
    "skillfx_autoguard_ldodge_cd812bbd": "character/swordman/effect/animation/autoguard_ldodge.ani",
    "skillfx_ballhead_bb847343": "character/swordman/effect/animation/blache/ballhead.ani",
+   "skillfx_ballhead_c19bc784": "character/swordman/effect/animation/hellbenter/ballhead.ani",
+   "skillfx_balltail1_d2911664": "character/swordman/effect/animation/hellbenter/balltail1.ani",
    "skillfx_balltail1_fe1b6b78": "character/swordman/effect/animation/blache/balltail1.ani",
+   "skillfx_balltail2_8a21e54e": "character/swordman/effect/animation/hellbenter/balltail2.ani",
+   "skillfx_balltail3_91810023": "character/swordman/effect/animation/hellbenter/balltail3.ani",
+   "skillfx_balltail4_04e997ba": "character/swordman/effect/animation/hellbenter/balltail4.ani",
    "skillfx_blade_cbafa5d0": "character/swordman/effect/animation/hellbenter/blade.ani",
    "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
@@ -22,6 +28,8 @@
    "skillfx_blastbloodhit1_59acce6f": "passiveobject/character/swordman/animation/blastbloodhit1.ani",
    "skillfx_blastbloodhit2_098a61e5": "passiveobject/character/swordman/animation/blastbloodhit2.ani",
    "skillfx_blastbloodpresub_front_bd8155d0": "passiveobject/character/swordman/animation/blastbloodpresub_front.ani",
+   "skillfx_bleeding1_486755de": "character/swordman/effect/animation/hellbenter/bleeding1.ani",
+   "skillfx_bleeding2_6311d4b3": "character/swordman/effect/animation/hellbenter/bleeding2.ani",
    "skillfx_blood1_8a08949c": "passiveobject/character/swordman/animation/blastblood/blood1.ani",
    "skillfx_blood2_610abe1d": "passiveobject/character/swordman/animation/blastblood/blood2.ani",
    "skillfx_blood3_9aa1bad7": "passiveobject/character/swordman/animation/blastblood/blood3.ani",
@@ -172,6 +180,9 @@
    "skillfx_sworddisappear2_61667d2f": "character/swordman/effect/animation/hundredsword/sworddisappear2.ani",
    "skillfx_swordlandglow1_45a764c3": "character/swordman/effect/animation/hundredsword/swordlandglow1.ani",
    "skillfx_swordlandglow2_39ce5d91": "character/swordman/effect/animation/hundredsword/swordlandglow2.ani",
+   "skillfx_targetmark1_7d34aedf": "character/swordman/effect/animation/hellbenter/targetmark1.ani",
+   "skillfx_targetmark2_8afe806d": "character/swordman/effect/animation/hellbenter/targetmark2.ani",
+   "skillfx_targetmark3_4f7b2627": "character/swordman/effect/animation/hellbenter/targetmark3.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
@@ -5333,6 +5344,17 @@
   },
   "hellbenter": {
    "appearance": {
+    "absorb": [
+     "skillfx_absorb_4b93bae3"
+    ],
+    "absorb_end": 700,
+    "ball": [
+     "skillfx_ballhead_c19bc784",
+     "skillfx_balltail1_d2911664",
+     "skillfx_balltail2_8a21e54e",
+     "skillfx_balltail3_91810023",
+     "skillfx_balltail4_04e997ba"
+    ],
     "body_height": 100,
     "cast": [
      "skillfx_cast1_f3b0165d",
@@ -5354,12 +5376,29 @@
      "skillfx_sword2_dbbbc612",
      "skillfx_blade_cbafa5d0"
     ],
+    "target_bleeding": [
+     "skillfx_bleeding1_486755de",
+     "skillfx_bleeding2_6311d4b3"
+    ],
+    "target_mark": [
+     "skillfx_targetmark1_7d34aedf",
+     "skillfx_targetmark2_8afe806d",
+     "skillfx_targetmark3_4f7b2627"
+    ],
+    "target_mark_end": 500,
     "visible_at": 340
+   },
+   "blood": {
+    "capacity": 80,
+    "flight_ms": 600,
+    "pulse_ms": 500,
+    "range": 640,
+    "scan_ms": 250
    },
    "effect_id": "hellbenter",
    "fidelity_pending": [
-    "blood_absorption",
-    "sword_growth",
+    "special_bleed",
+    "full_sword",
     "finish",
     "original_command"
    ],

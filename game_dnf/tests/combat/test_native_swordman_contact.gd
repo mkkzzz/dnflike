@@ -2352,6 +2352,49 @@ func check_hellbenter_first_cast() -> void:
 		and layers.call("buffmark").is_empty(),"the existing expiry removes the appendage and all held layers")
 	check(game.numeric_player.add_effect("hellbenter",6) and hellbenter.call()["remaining_ms"]==130130.0,
 		"rank six uses the extended duration from the original level table")
+	var near: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(100,0))
+	var far: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(140,0))
+	far["pos"] = Vector2(game.player["pos"])+Vector2(641,0)
+	var dry: Dictionary = game.spawn_enemy(game.player["pos"]+Vector2(-90,0))
+	for enemy: Dictionary in [near,far,dry]:enemy["ai"] = false
+	for enemy: Dictionary in [near,far]:enemy["numeric"].effects.add_source_bleed(0,10000,60)
+	var blood = game.hellbenter_blood
+	effect = hellbenter.call()
+	game.step_game(0.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(blood.marks.size()==2 and not blood.marks.has(dry["id"]) and layers.call("targetmark1").size()==2,
+		"Hellbenter immediately marks bleeding hostiles, including those outside the pulse radius")
+	game.step_game(499.0)
+	check(blood.orbs.is_empty(),"Hellbenter marks wait through 499 ms")
+	game.step_game(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(blood.orbs.size()==1 and layers.call("ballhead").size()==1 and layers.call("targetmark2").size()==2,
+		"the 500 ms pulse creates one original blood orb from the nearby bleeding target")
+	if blood.orbs.is_empty():return
+	var orb: Dictionary = blood.orbs[0]
+	var origin: Vector3i = orb["origin"]
+	var bend: Vector2i = orb["bend"]
+	game.step_game(150.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(orb["point"].x==bend.x and bend.x-origin.x>=150 and bend.x-origin.x<=249
+		and layers.call("balltail").size()>0,"the blood orb swings outward for 150 ms and draws the original tail")
+	game.step_game(250.0)
+	check(orb["point"].y==bend.y,"the separate depth curve turns at 400 ms")
+	near["numeric"].effects.remove("bleed")
+	game.step_game(199.0)
+	check(effect.get("blood_count",0)==0 and is_equal_approx(effect["definition"]["modifiers"][0]["value"],0.020)
+		and not blood.marks.has(near["id"]),"losing bleed removes the mark while the orb continues flying")
+	game.step_game(1.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(effect.get("blood_count",0)==1 and blood.orbs.is_empty()
+		and is_equal_approx(effect["definition"]["modifiers"][0]["value"],0.022)
+		and is_equal_approx(effect["definition"]["modifiers"][1]["value"],0.022),
+		"at 600 ms the orb adds exactly one charge and recalculates both speed bonuses")
+	check(layers.call("blade").size()==2 and layers.call("absorb").size()==1,
+		"the first charge extends the original blade and starts the absorption flash")
+	game.step_game(500.0)
+	check(blood.orbs.is_empty() and effect.get("blood_count",0)==1,
+		"neither the distant target nor the cured target can add another charge")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()

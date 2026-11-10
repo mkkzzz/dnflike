@@ -16,6 +16,7 @@ const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
 const FrenzyRecovery = preload("res://combat/resolve/frenzy_recovery.gd")
+const HellbenterBlood = preload("res://combat/resolve/hellbenter_blood.gd")
 const HundredSwordFormation = preload("res://combat/action/hundred_sword_formation.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
@@ -68,6 +69,7 @@ var props: Array = []
 var native_jar_traps := NativeJarTraps.new()
 var native_zealot_summons := NativeZealotSummons.new()
 var frenzy_recovery := FrenzyRecovery.new()
+var hellbenter_blood := HellbenterBlood.new()
 var room_index := 0
 var room_cleared := false
 var room_snapshots: Dictionary = {}
@@ -422,6 +424,7 @@ func emit_player_defeated() -> void:
 	stop_thirst_loop()
 	stop_bloody_rave_loop()
 	frenzy_recovery.clear()
+	hellbenter_blood.clear()
 	var event: Dictionary=bus.emit("combat.player_defeated",flow_payload())
 	last_defeat_id=int(event.get("event_id",0))
 
@@ -859,6 +862,7 @@ func step_game(ms: float) -> void:
 	# A creature admitted by another monster participates in clear checks now,
 	# and receives its first movement update on the following battle tick.
 	for index in monsters.size():update_enemy(monsters[index],ms)
+	hellbenter_blood.step(self,ms)
 	for companion: Dictionary in companions:update_companion(companion,ms)
 	step_objects(ms,first_new_object_id)
 	step_draw_hits(ms,first_new_object_id)
@@ -4299,7 +4303,7 @@ func step_saya_crystal(object: Dictionary, controller: Dictionary) -> bool:
 			if not monsters.has(target):
 				end_saya_crystal(object,age)
 				return true
-			var point := saya_crystal_impact(target)
+			var point := enemy_mid_height_point(target)
 			var origin: Vector3i = object["crystal_origin"]
 			var flight := int(object["crystal_flight_ms"])
 			object["pos"] = Vector2(_native_interpolate(origin.x,int(point.x),int(elapsed),flight),_native_interpolate(origin.y,int(point.y),int(elapsed),flight))
@@ -4323,7 +4327,7 @@ func end_saya_crystal(object: Dictionary, age: float) -> void:
 	object["crystal_phase_at"] = age
 	object.erase("crystal_target")
 
-func saya_crystal_impact(target: Dictionary) -> Vector3:
+func enemy_mid_height_point(target: Dictionary) -> Vector3:
 	var height := float(target["z"])
 	var top := height
 	for box: AABB in enemy_damage_boxes(target):top = maxf(top,box.end.z)
@@ -4904,6 +4908,7 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {
 
 func clear_monsters() -> void:
 	frenzy_recovery.clear()
+	hellbenter_blood.clear()
 	active_effect("frenzy").erase("bleed_targets")
 	for enemy: Dictionary in monsters:
 		if enemy.has("starfish_capture"):release_starfish_victim(enemy)
@@ -5278,7 +5283,20 @@ func append_hellbenter_view(out: Array) -> void:
 	var sword: Array = config["sword"]
 	out.append(layer.merged({"id":"hellbenter:sword_base","effect":sword[0],"hold_last_frame":true,"fade":fade}))
 	out.append(layer.merged({"id":"hellbenter:sword_glow","effect":sword[1],"hold_last_frame":true}))
-	out.append(layer.merged({"id":"hellbenter:blade","effect":sword[2],"loop":true,"fade":fade}))
+	var capacity := int(move_def("hellbenter")["blood"]["capacity"])
+	var extension := _native_interpolate(0,88,int(effect.get("blood_count",0)),capacity)
+	# 99BA33..99BB83 stacks up to five blade layers, drawing from hilt to tip.
+	var blade_offsets: Array[int] = []
+	for index in 5:
+		var offset := extension-22*index
+		blade_offsets.append(maxi(0,offset))
+		if offset <= 0:break
+	for index in range(blade_offsets.size()-1,-1,-1):
+		out.append(layer.merged({"id":"hellbenter:blade:%d"%index,"effect":sword[2],"loop":true,
+			"screen_offset":Vector2(-60*facing,bob-body_height+blade_offsets[index]),"fade":fade},true))
+	var absorb_age := age-float(effect.get("blood_absorb_at",-INF))
+	if absorb_age < float(config["absorb_end"]):
+		out.append(layer.merged({"id":"hellbenter:absorb","effect":config["absorb"][0],"clock":absorb_age},true))
 
 func view_snapshot() -> Dictionary:
 	var ani := player_ani()
@@ -5434,6 +5452,7 @@ func view_snapshot() -> Dictionary:
 			"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),
 			"clock":age,"loop":true,"depth_offset":1})
 	append_hellbenter_view(objs)
+	hellbenter_blood.append_view(self,objs)
 	var phase: Dictionary = player.get("native_phase",{})
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
