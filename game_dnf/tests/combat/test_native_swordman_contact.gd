@@ -1582,11 +1582,15 @@ func check_frenzy_bleed() -> void:
 		if seeds.size()==2:break
 	check(seeds.size()==2,"fixed seeds reach both sides of the Frenzy bleed roll")
 	if seeds.size()!=2:return
-	for rank in [1,2]:
+	for build: Array in [[1,0,0],[2,0,0],[1,1,2],[2,3,3]]:
+		var rank: int = build[0]
+		var passive_rank: int = build[1]
+		var level_bonus: int = build[2]
 		var profile := ProfileSession.new()
 		profile.command("numbers.level",{"level":60})
 		profile.command("numbers.growtype",{"growtype":"berserker"})
 		profile.command("numbers.skill_grant",{"id":"buff","level":rank})
+		if passive_rank > 0:profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":passive_rank})
 		var spec := profile.stats()
 		spec["skill_slots"] = ["buff"]
 		start_room("original_27601","katana",1,spec,"berserker")
@@ -1597,8 +1601,10 @@ func check_frenzy_bleed() -> void:
 		step(float(game.player["frenzy_cast"]["duration_ms"]))
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
-		var status_level := 36 if rank==1 else 38
-		for scenario: Array in [[599,0,0,true],[600,0,0,rank==2],[599,25,0,false],[600,0,-1,true],[599,0,3,false]]:
+		var status_level := (36 if rank==1 else 38)+level_bonus
+		var scenarios: Array = [[599,0,0,true],[600,0,0,rank==2],[599,25,0,false],[600,0,-1,true],[599,0,3,false]]
+		if rank==1 and passive_rank > 0:scenarios.append([600,0,-level_bonus,true])
+		for scenario: Array in scenarios:
 			var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
 			target["numeric"].values["level"] = status_level+int(scenario[2])
 			target["numeric"].values["bleeding_resistance"] = scenario[1]
@@ -1607,7 +1613,7 @@ func check_frenzy_bleed() -> void:
 			step(0)
 			step(120)
 			var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
-			check((not bleed.is_empty())==scenario[3],"Frenzy bleed roll %d at rank %d with %d resistance and level gap %d" % [scenario[0],rank,scenario[1],scenario[2]])
+			check((not bleed.is_empty())==scenario[3],"Frenzy bleed roll %d at rank %d, Blood Memory %d, resistance %d, level gap %d" % [scenario[0],rank,passive_rank,scenario[1],scenario[2]])
 			if not bleed.is_empty():
 				check(bleed["definition"]["status_level"]==status_level and bleed["remaining_ms"]==3000.0,
 					"Frenzy keeps the sourced status level and unscaled 3000 ms duration")

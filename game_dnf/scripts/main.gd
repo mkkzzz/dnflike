@@ -657,6 +657,13 @@ func refresh_dynamic_modifiers(force := false) -> void:
 			mods.append({"source":"鲜血之忆","stat":"hit","op":"add","value":hit})
 	numeric_player.set_runtime_modifiers(mods)
 
+func blood_memory_bleed_level_bonus() -> int:
+	var rank := int(skill_levels.get("bleedingmastery",0))
+	if rank <= 0:return 0
+	# 2549B82 reads column 0 of skill 90 at its effective rank.
+	var row: Array = Numbers.Skills.sample(Numbers.record("bleedingmastery"),rank)["level_row"]
+	return int(row[0]) if not row.is_empty() else 0
+
 func pulse_passive_auras() -> void:
 	var rank := int(skill_levels.get("darkaura",0))
 	if rank > 0:
@@ -2297,11 +2304,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		if index == 0 and numeric_player != null:
 			player["native_phase"]["thirst_pulse"] = bloody_rave_thirst_pulse()
 			var bleed: Dictionary = m["suction_bleed"].duplicate()
-			var passive_rank := int(skill_levels.get("bleedingmastery",0))
-			if passive_rank > 0:
-				# 2549B82 queries the effective rank of skill 90 and reads level column 0.
-				var row: Array = Numbers.Skills.sample(Numbers.record("bleedingmastery"),passive_rank)["level_row"]
-				bleed["status_level"] += int(row[0])
+			bleed["status_level"] += blood_memory_bleed_level_bonus()
 			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],m["suction_bleed_base"])
 			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "outrage_break":
@@ -3540,10 +3543,13 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"added"})
 				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
-				if by_player and effect.get("native_frenzy",false) and not active_effect("thirst").is_empty():
-					# CC26A8 passes the current Frenzy rank to Sacrifice's column 1 lookup.
-					var row: Array = Numbers.Skills.sample(Numbers.record("sacrifice"),int(skill_levels.get("buff",1)))["level_row"]
-					if row.size() > 1:effect["duration_ms"] += int(row[1])
+				if by_player and effect.get("native_frenzy",false):
+					# CC2717 adds Blood Memory before the receiver rolls for bleed.
+					effect["status_level"] += blood_memory_bleed_level_bonus()
+					if not active_effect("thirst").is_empty():
+						# CC26A8 passes the current Frenzy rank to Sacrifice's column 1 lookup.
+						var row: Array = Numbers.Skills.sample(Numbers.record("sacrifice"),int(skill_levels.get("buff",1)))["level_row"]
+						if row.size() > 1:effect["duration_ms"] += int(row[1])
 				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player,int(attacker.get("id",-1))):
 					announce_source_bleed(int(target["id"]))
 				continue
