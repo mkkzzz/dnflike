@@ -4,6 +4,7 @@ const Session = preload("res://flow/session.gd")
 const Store = preload("res://save/store.gd")
 const Town = preload("res://town/native_town.gd")
 const NativeSkin = preload("res://ui/flow/native_skin.gd")
+const BuffStatusIcon = preload("res://ui/combat/buff_status_icon.gd")
 const Windows = preload("res://ui/flow/native_windows.gd")
 const CombatSession = preload("res://combat/api/combat_session.gd")
 const Catalog = preload("res://items/catalog.gd")
@@ -48,6 +49,7 @@ var skin
 var windows
 var ui: Control
 var hud: Control
+var reckless_status: BuffStatusIcon
 var modal: Control
 var overlay := ""
 var notification := ""
@@ -176,6 +178,13 @@ func build_hud() -> void:
 	mp_bar.mouse_entered.connect(func(): windows.gauge_tip(mp_bar))
 	hp_bar.mouse_exited.connect(windows.hide_tooltip)
 	mp_bar.mouse_exited.connect(windows.hide_tooltip)
+	reckless_status = BuffStatusIcon.new()
+	reckless_status.name = "reckless_status"
+	var ui_images: Dictionary = town.loader.data["ui"]
+	var status_frame: Texture2D = town.loader.texture(ui_images.get("status_icon", {}).get("0"))
+	var status_shade: Texture2D = town.loader.texture(ui_images["base"].get("84"))
+	reckless_status.setup(status_frame, skill_panel_texture("reckless"), status_shade)
+	hud.add_child(reckless_status)
 	# Source ui/hud/hud.ui controls are relative to the bottom board.
 	skin.sprite_button(hud, "hud", [5, 6, 7], Vector2(273, 560), func(): hud_action("numbers"), "角色属性 O")
 	skin.sprite_button(hud, "hud", [8, 9, 10], Vector2(299, 560), func(): hud_action("inventory"), "背包 I")
@@ -268,6 +277,7 @@ func _process(delta: float) -> void:
 		mp_max = mp
 		status_text.text = "艾尔文防线  · 方向键移动  E 交谈  · 药剂 ×%d" % int(p["inventory"].get("potion", 0))
 	if save_failed:status_text.text = "存档写入失败 · 请检查目录后重试保存"
+	reckless_status.present(snap.get("reckless_timer", Vector2i.ZERO))
 	hp_bar.value = hp * 100 / hp_max
 	mp_bar.value = mp * 100 / mp_max
 	hp_bar.set_meta("value_text", "生命值  %d / %d" % [hp, hp_max])

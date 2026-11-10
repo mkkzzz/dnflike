@@ -302,11 +302,49 @@ func run() -> void:
 	game.show_overlay("numbers")
 	game.set_debug_open(false)
 	await host.frame("63_number_battle_attributes")
+	await _check_reckless_status()
 	game.debug_panel.commands.execute("town")
 	host.check(game.session.state=="town","numeric battle can safely return to existing flow")
 	var snapshot: Dictionary = game.session.serialize()
 	var restored = game.Session.new()
 	host.check(restored.restore(JSON.parse_string(JSON.stringify(snapshot))) and restored.profile["skills"]["draw"]==2,"new progression and equipment survive real flow save")
+
+func _check_reckless_status() -> void:
+	game.show_overlay("")
+	var battle = game.battle
+	var was_processing: bool = battle.is_physics_processing()
+	battle.set_physics_process(false)
+	var actor = battle.numeric_player
+	var icon = game.reckless_status
+	host.check(not icon.visible, "the status row is empty without the Reckless appendage")
+	actor.add_effect("reckless", 1)
+	await host.ticks(2)
+	host.check(icon.is_visible_in_tree() and icon.position == Vector2(92,528)
+		and icon.size == Vector2(23,23) and icon._shade_height == 0,
+		"the live HUD draws Reckless at the first original buff slot")
+	if host.capture:await host.frame("63b_reckless_hud_start")
+	actor.step(20040.0)
+	await host.ticks(2)
+	host.check(icon._shade_height == 10 and icon._alpha == 255,
+		"the original Reckless icon has a 10px top mask at half duration")
+	if host.capture:await host.frame("63c_reckless_hud_half")
+	actor.step(10540.0)
+	await host.ticks(2)
+	host.check(icon._shade_height == 15 and icon._alpha == 128,
+		"Reckless blinks in the original 500 ms phase")
+	actor.step(4900.0)
+	await host.ticks(2)
+	host.check(icon._shade_height == 17 and icon._alpha == 128,
+		"Reckless blinks in the original 200 ms phase")
+	actor.step(4100.0)
+	await host.ticks(2)
+	host.check(icon._shade_height == 19 and icon._alpha == 127,
+		"Reckless fades during the last second")
+	actor.step(500.0)
+	await host.ticks(2)
+	host.check(not icon.visible, "the HUD removes the Reckless icon when the timed appendage expires")
+	if host.capture:await host.frame("63d_reckless_hud_expired")
+	battle.set_physics_process(was_processing)
 
 func _explain_motion(track: Control, y: float, pressed := true) -> void:
 	var motion := InputEventMouseMotion.new()

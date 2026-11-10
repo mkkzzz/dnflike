@@ -9110,6 +9110,7 @@
    "50": "987c3569cc48_50",
    "64": "987c3569cc48_64",
    "67": "987c3569cc48_67",
+   "84": "987c3569cc48_84",
    "119": "987c3569cc48_119"
   },
   "close": {
@@ -9283,6 +9284,9 @@
    "iron_sword": "34339beae78b_0",
    "forest_sword": "34339beae78b_1",
    "potion": "c184259378ac_148"
+  },
+  "status_icon": {
+   "0": "afb20d6bce90_0"
   }
  },
  "font": {
@@ -13962,6 +13966,38 @@
     0
    ],
    "variants": 2
+  },
+  "987c3569cc48_84": {
+   "file": "img/987c3569cc48_84.png",
+   "source_path": "sprite/interface/base.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "987c3569cc48c257842e011c4747ce4f51f0f3337b75bc283deea84208ba0685",
+   "frame": 84,
+   "size": [
+    28,
+    28
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
+  },
+  "afb20d6bce90_0": {
+   "file": "img/afb20d6bce90_0.png",
+   "source_path": "sprite/interface/status_icon.img",
+   "source_npk": "ImagePacks2/sprite_interface.NPK",
+   "img_sha256": "afb20d6bce9025ed222eda351e27a0017082efe1f2690cd9e350a9214ad24400",
+   "frame": 0,
+   "size": [
+    23,
+    23
+   ],
+   "canvas_offset": [
+    0,
+    0
+   ],
+   "variants": 1
   }
  },
  "diagnostics": [
