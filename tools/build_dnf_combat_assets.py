@@ -453,6 +453,7 @@ EFFECTS = {
     'hit_blood_s2': 'common/hiteffect/animation/splashbloodsmall2.ani',
     'hit_blood_s3': 'common/hiteffect/animation/splashbloodsmall3.ani',
     'hit_blood_l': 'common/hiteffect/animation/splashbloodlarge.ani',
+    'hit_counter': 'common/hiteffect/animation/counter+.ani',
 }
 # combo.img frame ranges, read from the image itself (temp contact sheet, 2026-10-22).
 DIGITS = {'combo': (0, 10), 'combo_label': (10, 11), 'damage': (44, 54), 'damage_crit': (54, 64),
@@ -1892,6 +1893,7 @@ def main() -> int:
         floor = stages[1]['hits'][1]['native_controller']
         specs.extend(('effects', key, effects[key])
                      for key in (*floor['layers'], *floor['child']['native_controller']['layers']))
+        specs.append(('effects', 'hit_counter', EFFECTS['hit_counter']))
         specs.extend(('audio', cue, paths) for cue, paths in OUTRAGE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0

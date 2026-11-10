@@ -27,6 +27,7 @@ const PLAYER_ID := 0
 const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
 const OUTRAGE_IMPACTS := ["outrage_floor","outrage_magma"]
+const OUTRAGE_COUNTER_CUE_MS := 5000
 const OUTRAGE_ERUPTION_OFFSETS := [Vector2i(22,-12),Vector2i(-117,15),Vector2i(-126,37),
 	Vector2i(104,-6),Vector2i(-60,58),Vector2i(76,33),Vector2i(10,80)]
 const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
@@ -2895,8 +2896,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
 				if outrage_slash and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
+				var first_target: bool = outrage_slash and not player["hits"].keys().any(func(key):return not String(key).begins_with("prop:"))
 				player["hits"][id] = true
-				land_hit(player,enemy,contact,c["point"],facing,attack_power())
+				land_hit(player,enemy,contact,c["point"],facing,attack_power(),first_target)
 			if native_maze != null:
 				apply_native_prop_hits(world,hit,attack_power(),player["hits"],"prop:%d:%d:"%[i,group])
 				continue
@@ -3267,7 +3269,8 @@ func complete_native_prop_break(prop: Dictionary) -> void:
 	bus.emit("combat.prop_broken",{"node":prop["node"]})
 
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
-func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
+func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float,
+		first_counter_target := false) -> void:
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
@@ -3283,6 +3286,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var draw_contact := hit.has("draw_delay_ms")
 	var draw_impact := bool(hit.get("draw_impact",false))
 	var grab_strike := bool(hit.get("grab_strike",false))
+	var target_state := String(target["state"])
+	# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
+	var counter := target_state in ["attack","action"] or (native_outrage \
+		and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
 	if numeric_player != null and (not contact_only or draw_contact):
@@ -3297,10 +3304,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if context.has("fixed_amount_bleeding") and target["numeric"].effects.active.has("bleed"):
 			context["fixed_amount"] = context["fixed_amount_bleeding"]
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
-		var target_state := String(target["state"])
-		# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
-		context["counter"] = target_state in ["attack","action"] or (native_outrage \
-			and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
+		context["counter"] = counter
 		context["back"] = int(target["facing"])==facing
 		# CB6932/CB6984 bypass the ordinary hit gate on the already-held target.
 		var hit_roll := 0.0 if grab_strike else rng.next_float()
@@ -3419,7 +3423,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var effect_point := point
 		# 87055B uses overlap X/Z and the target's integer depth for the common effect.
 		if native_outrage:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
-		hit_cues(atk,effect_point,facing,by_player,native_outrage)
+		# 867720 uses a strict interval on the struck actor. Keep the full-effect option (2).
+		var show_counter := first_counter_target and counter \
+			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > OUTRAGE_COUNTER_CUE_MS
+		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
+		hit_cues(atk,effect_point,facing,by_player,native_outrage,show_counter)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3493,7 +3501,7 @@ func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
-func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_outrage: bool) -> void:
+func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_outrage: bool, show_counter: bool) -> void:
 	var kind := Kernel.MoveTable.enum_value(atk,"hit_info","")
 	var blood := ""
 	var size := 100.0
@@ -3523,7 +3531,10 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 		# The only Outrage cut uses [hit down]. 7E6947 picks slash variant 1 for that flag.
 		_:fx = "hit_cut_%s%d" % [size_key,1 if native_outrage else rng.range_int(1,3)]
 	var ground := Vector2(point.x,point.y)
-	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,"scale":scale})
+	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,"scale":1.5 if show_counter else scale})
+	if show_counter:
+		# 7E6A75 appends Counter+.ani before the unscaled blood layer.
+		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
 	if blood == "[blood]":
 		# 7E6B97 selects small blood variant 3 for [hit down].
 		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(3 if native_outrage else rng.range_int(1,3))
@@ -4531,6 +4542,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 					if outrage_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
+					var first_target: bool = outrage_impact and not o["hits"].keys().any(func(key):return key is int)
 					o["hits"][target["id"]] = true
 					var hit_facing := int(o["facing"])
 					if inward:
@@ -4549,7 +4561,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						var delta_x := roundi(target["pos"].x)-source_x
 						if delta_x != 0 and (outrage_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
-					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]))
+					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target)
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break
@@ -5429,7 +5441,7 @@ func spawn_enemy(point: Vector2, chief := false, kind := "goblin", reserved := {
 		"attack":float(m["attack"])*(float(base["boss_attack_scale"]) if chief else 1.0),
 		"stun_ms":0.0,"push_v":0.0,"push_ms":0.0,"hit_motion":"damage1","bounced":false,"down_ms":0.0,"stuck_ms":0.0,
 		"flash_ms":0.0,"cooldown_ms":500.0,"hits":{},"thrown":false,"death_ms":0.0,"ai":true,
-		"skill_cd":{}}
+		"skill_cd":{},"counter_cue_at_ms":elapsed_ms}
 	if reserved.has("level"):
 		enemy["source_level"] = int(reserved["level"])
 		var launch: Dictionary = reserved.get("launch",{})

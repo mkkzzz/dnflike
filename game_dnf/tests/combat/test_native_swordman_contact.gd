@@ -3636,6 +3636,69 @@ func check_outrage_break_special_targets() -> void:
 			game.step_objects(1040.0)
 			game.objects.erase(impact)
 
+func check_outrage_break_counter_cue() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	for first_ms: int in [5000,5001]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		session.set_skill_material_spender(func(id: int,amount: int):return id==3037 and amount==2)
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["hp"] = 1000.0
+		var primary: Dictionary = api.spawn_dummy(POINT+Vector2(180,0))
+		var secondary: Dictionary = game.spawn_enemy(primary["pos"])
+		for enemy: Dictionary in [primary,secondary]:
+			enemy["hp"] = 50000.0
+			enemy["state"] = "attack"
+		game.elapsed_ms = first_ms
+		press(KEY_A)
+		step(560.0)
+		step(600.0)
+		check(primary["hp"]<50000.0 and secondary["hp"]<50000.0 and game.last_damage["trace"]["situation_factor"]==1.25,
+			"both contacted targets take counter damage regardless of the presentation gate")
+		var overlay := cues("hit_counter")
+		var cuts := cues("hit_cut_s1")+cues("hit_cut_l1")
+		var blood := cues("hit_blood_s3")+cues("hit_blood_l")
+		check(overlay.size()==int(first_ms==5001) and cuts.size()==2 and blood.size()==2
+			and cuts.filter(func(cue):return cue["scale"]==1.5).size()==overlay.size()
+			and blood.all(func(cue):return cue["scale"]==1.0),"the first contact alone enlarges the slash after the strict 5000 ms boundary")
+		if first_ms==5001 and overlay.size()==1:
+			var views: Array = game.view.effects.filter(func(fx):return fx.cue_key=="hit_counter")
+			check(overlay[0]["scale"]==0.7 and primary["counter_cue_at_ms"]==5001 and secondary["counter_cue_at_ms"]==0.0
+				and views.size()==1 and views[0].frame["frame"]==0,
+				"the original 0.7-scale overlay is drawn and updates only the first target's timer")
+			if views.size()==1:
+				views[0].advance(399.0)
+				check(views[0].frame["frame"]==3 and not views[0].is_queued_for_deletion(),"the fourth counter frame persists at 399 ms")
+				views[0].advance(1.0)
+				check(views[0].is_queued_for_deletion(),"the counter overlay ends at 400 ms")
+			var floor: Dictionary = game.objects[0]
+			var anchor: Vector2 = floor["pos"]+Vector2(0,45)
+			move_target(secondary,POINT+Vector2(900,0))
+			move_target(primary,anchor)
+			primary["state"] = "attack"
+			game.step_objects(0.0)
+			check(cues("hit_counter").size()==1 and game.last_damage["trace"]["situation_factor"]==1.25,
+				"the floor still deals counter damage while the previous slash suppresses a second overlay")
+			move_target(primary,anchor)
+			primary["state"] = "attack"
+			game.step_objects(1040.0)
+			game.elapsed_ms = 10001.0
+			game.step_objects(0.0)
+			check(cues("hit_counter").size()==1,"magma cannot emit at exactly 5000 ms since the slash cue")
+			move_target(primary,anchor)
+			primary["state"] = "attack"
+			game.elapsed_ms = 10002.0
+			game.step_objects(126.0)
+			check(cues("hit_counter").size()==2 and primary["counter_cue_at_ms"]==10002.0,
+				"magma's next contact can emit after 5001 ms on the same target")
+
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 
@@ -6869,6 +6932,7 @@ func run() -> void:
 	check_outrage_break_impact_layers()
 	check_outrage_break_eruption()
 	check_outrage_break_special_targets()
+	check_outrage_break_counter_cue()
 	check_outrage_break_armor()
 	check_outrage_break_camera()
 	check_bloody_rave_special_targets()
