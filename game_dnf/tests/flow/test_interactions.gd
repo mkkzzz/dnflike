@@ -103,6 +103,7 @@ func check_sky_selector() -> void:
 	var previous_location: String = game.town.location
 	var previous_ground: Vector2 = game.town.ground
 	game.session = game.Session.new()
+	game.session.profile["level"] = 60
 	game.session.profile["town_location"] = "westcoast"
 	game.session.profile["town_position"] = [1370, 320]
 	game.show_overlay("")
@@ -351,13 +352,25 @@ func run() -> void:
 	host.check(game.act("slots.move", {"source":{"place":"skill_catalog","id":"draw"}, "target":{"place":"skill","index":1}}), "interaction fixture binds draw to the second key")
 	game.session.add_item("original_3037",1)
 	game.build_hotbars()
+	game.selected_dungeon = "lorien"
 	game.depart()
 	await ticks()
+	host.check(game.session.state == "battle" and is_instance_valid(game.battle) and
+		String(game.session.profile["skill_slots"][1]) == "draw",
+		"interaction fixture enters Lorien with the remapped skill slot")
 	host.key(KEY_S, true)
 	await ticks(2)
 	host.key(KEY_S, false)
-	await ticks(2)
-	host.check(float(game.combat.read_view()["cooldowns"].get("draw", 0)) > 0, "actual remapped S triggers draw skill after drag")
+	var draw_started := false
+	for attempt in 20:
+		await ticks(1)
+		if float(game.combat.read_view()["cooldowns"].get("draw", 0)) > 0:
+			draw_started = true
+			break
+	var draw_view: Dictionary = game.combat.read_view()
+	host.check(draw_started, "actual remapped S triggers draw skill after drag (state=%s action=%s mp=%.0f)" % [
+		String(draw_view.get("player_state", "")), String(game.battle.player.get("action", "")), float(draw_view.get("mp", 0))
+	])
 	host.check(game.Session.Inventory.stock(game.session.profile,"original_3037")==0,"remapped Draw Sword spends one clear cube")
 	game.act("flow.retreat")
 	game.return_town()

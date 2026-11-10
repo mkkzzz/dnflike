@@ -3169,7 +3169,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if reaction != "none":target["clock"] = 0.0
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif not contact_only:
+		elif not contact_only or target["state"] == NativeZealotSummons.CAST_STATE:
+			# 无伤接触仍应打断正在进行的狂热者施法。
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0

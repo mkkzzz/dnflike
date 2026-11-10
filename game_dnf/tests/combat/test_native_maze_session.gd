@@ -526,7 +526,11 @@ func check_poison_jar(pot: Dictionary) -> void:
 	var actors: Array = game.native_jar_traps.actors
 	check(actors.size() == 1 and pot["broken"] and actors[0].get("emission_ms") == 290
 		and game.view.audio._loop_voices.has(actors[0]["id"]),
-		"poison jars release the source gas loop and use the PTL deadline")
+		"poison jars release the source gas loop and use the PTL deadline "
+		+ "(actors=%d broken=%s emission_ms=%s loop_voices=%d)"
+		% [actors.size(), pot["broken"],
+			actors[0].get("emission_ms") if actors.size() == 1 else -1,
+			game.view.audio._loop_voices.size()])
 	if actors.size() != 1:return
 	var gas: Dictionary = actors[0]
 	var enemy: Dictionary = game.spawn_enemy(pot["pos"],false,"native_starfish_rukuku")

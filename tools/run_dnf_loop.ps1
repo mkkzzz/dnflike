@@ -228,6 +228,17 @@ if ($Test) {
         $testOutput | Write-Output
         if ($testExit -ne 0) {throw "Pipeline hardening test failed: $testName"}
     }
+    $worldAudit=& python (Join-Path $PSScriptRoot "audit_dnf_world_content.py")
+    $worldAudit | Write-Output
+    if ($LASTEXITCODE -ne 0) {throw "World content source audit failed."}
+    $draconianPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $draconianAudit=& $GodotPath --headless --path $gamePath --quit-after 1000 --script res://tests/combat/test_ws1_draconian_tower.gd 2>&1
+        $draconianExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$draconianPreference}
+    $draconianAudit | Write-Output
+    if ($draconianExit -ne 0 -or ($draconianAudit -match 'SCRIPT ERROR|ERROR:') -or -not ($draconianAudit -match '\[WS1_DRACONIAN_TOWER\] COMPLETE checks=\d+ failures=0')) {throw "Draconian Tower world contract failed."}
     $reviveCheck=if ($assetsBundled -and -not $BuildAssets) {"--check-installed"} else {"--check"}
     & python (Join-Path $PSScriptRoot "bake_dnf_revive_assets.py") $reviveCheck
     if ($LASTEXITCODE -ne 0) {throw "Revival asset package is stale."}

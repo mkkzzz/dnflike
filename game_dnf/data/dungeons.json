@@ -6,6 +6,12 @@
    "name": "洛兰",
    "requires": [],
    "map_export": "res://assets_local/native_maps/lorien/map_export.json",
+   "min_level": 1,
+   "monster_level": 1,
+   "source": {
+    "path": "dungeon/act1/lorien.dgn",
+    "sha256": "0a66d21a92945c306c74c3c1e926965c7ea644821a52606c0887687e27ab3541"
+   },
    "rooms": [
     {
      "name": "洛兰",
@@ -41,6 +47,12 @@
     "lorien.first_clear"
    ],
    "map_export": "res://assets_local/flow_v1/early_quests/lorien_inside/map_export.json",
+   "min_level": 2,
+   "monster_level": 2,
+   "source": {
+    "path": "dungeon/act1/lorieninside.dgn",
+    "sha256": "447e7412e9b547d1e5707032916f3ee60c691fa9572155c6b0c1fd2a7361a7e8"
+   },
    "rooms": [
     {
      "name": "洛兰深处",
@@ -201,10 +213,11 @@
      "boss": true
     }
    ],
-   "monster_level": 7,
+   "min_level": 8,
+   "monster_level": 11,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act1/mirkwoodfrost.dgn",
+    "sha256": "920805e3b32c8fb007473a45fde847d7ec511feb3a1334a54ec14ad19ccc2dca",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
   },
@@ -253,10 +266,11 @@
      "boss": true
     }
    ],
-   "monster_level": 9,
+   "min_level": 12,
+   "monster_level": 15,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act1/grakkarakburning.dgn",
+    "sha256": "767b6ebb77563a22797ab4e08d976aa12ec5934a3dd733c264763958aa536cd1",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -297,10 +311,10 @@
      "boss": true
     }
    ],
-   "monster_level": 10,
+   "monster_level": 8,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act1/sunderland.dgn",
+    "sha256": "09701e5f530bab84178d0cd78604435bbe380d4358d841e4763a3889b3c7f1dc",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    },
    "min_level": 5,
@@ -348,10 +362,11 @@
      "boss": true
     }
    ],
-   "monster_level": 11,
+   "min_level": 14,
+   "monster_level": 17,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act1/sunderlanddark.dgn",
+    "sha256": "0010a2b0306eba62124ba6fc27af46ee5000a40193ef7ece0a1e5b85099eae29",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -395,10 +410,11 @@
      "boss": true
     }
    ],
-   "monster_level": 13,
+   "min_level": 16,
+   "monster_level": 19,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/draconiantower.dgn",
+    "sha256": "6820b4a4fec53cd26ef31546d1906b04dbf4704771f0b2fa86729e98f109b8af",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    },
    "quest_routes": {
@@ -501,10 +517,11 @@
      "boss": true
     }
    ],
-   "monster_level": 14,
+   "min_level": 20,
+   "monster_level": 23,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/golemtower.dgn",
+    "sha256": "74721f20550b3fc723af93dec30f108fc1d6d3c386e7fb3ea41196053f9bb3eb",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -560,10 +577,11 @@
      "boss": true
     }
    ],
-   "monster_level": 15,
+   "min_level": 24,
+   "monster_level": 27,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/floatingcastle.dgn",
+    "sha256": "a47fbc4f4b1ad758db3deb1f9ed3d7a88daa8b23067eb7741362acc52d18168c",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -609,7 +627,8 @@
      "boss": true
     }
    ],
-   "monster_level": 16,
+   "min_level": 25,
+   "monster_level": 28,
    "source": {
     "path": "dungeon/act2/palaceofload.dgn",
     "sha256": "baf8aea1f8b0c30f953db28f3fe536ccd77d4f96499360adfefa29558def2bdb",
@@ -702,10 +721,11 @@
      "boss": true
     }
    ],
-   "monster_level": 15,
+   "min_level": 22,
+   "monster_level": 25,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/darkentrance.dgn",
+    "sha256": "8360d6af074f0e06d168676d4ddf41f5051fc01343e10dcb35cc2f294c6b94af",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -751,10 +771,11 @@
      "boss": true
     }
    ],
-   "monster_level": 14,
+   "min_level": 18,
+   "monster_level": 21,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/hallofdoll.dgn",
+    "sha256": "ab66fa90875965c5cf7f6d1e301bc5a8bd4ea42588923955f2e8b13658c5cef8",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    },
    "quest_routes": {
@@ -857,10 +878,11 @@
      "boss": true
     }
    ],
-   "monster_level": 14,
+   "min_level": 11,
+   "monster_level": 16,
    "source": {
-    "path": "",
-    "sha256": "",
+    "path": "dungeon/act2/draconiantower_amonlow.dgn",
+    "sha256": "2a52ad4b056671316f51c7983b26a21fd335187e3bf8482b5e0b0d2ac6c1eb31",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
   },
@@ -910,7 +932,7 @@
     "gran.meet_gsd"
    ],
    "min_level": 7,
-   "monster_level": 7,
+   "monster_level": 10,
    "source": {
     "path": "dungeon/act1/sunderlandpoison.dgn",
     "sha256": "c3c9a35364fcdcc125424524eee56a5e58137a0f10c60be95b243f5e99ff7a53",
@@ -978,6 +1000,9 @@
    "source": {
     "path": "dungeon/act8/arden.dgn",
     "sha256": "9a4906b12d7b7945e55cffd4203039baeeb4dad899ede8cf32beb45785433765",
+    "source_min_level": 68,
+    "source_basis_level": 71,
+    "target_scope": "future_above_60",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    },
    "hidden": true
@@ -1017,7 +1042,8 @@
      "boss": true
     }
    ],
-   "monster_level": 8,
+   "min_level": 10,
+   "monster_level": 13,
    "source": {
     "path": "dungeon/act1/grakkarak.dgn",
     "sha256": "f7bdf1dc94b047058b35cef9d6227c03624c8e4d7165b8532282c1fb52a7cece",

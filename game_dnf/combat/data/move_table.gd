@@ -1230,12 +1230,19 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	# 老架构多套招式：每招有独立 ANI 与 .atk。
 	var motions_all: Array = mob.get("attack_motions", []) if mob.get("attack_motions") is Array else []
 	if moves.is_empty() and motions_all.size() > 1:
+		var previous_stem := ""
 		for index in motions_all.size():
-			var stem := _stem([motions_all[index]])
+			var source_motion := String(motions_all[index])
+			var stem := _stem([source_motion])
+			if stem == "" and source_motion == "" and previous_stem != "" and index < attack_infos.size() \
+				and String(attack_infos[index]) != "":
+				# E-INFER：全库唯一的老架构空动作槽保留自己的 ATK，并复用前一动作。
+				stem = previous_stem
 			if stem == "":continue
 			var move_timeline := timeline(String(motion_dir).path_join(stem + ".ani"))
 			var move := {"stem":stem, "ani":String(motion_dir).path_join(stem + ".ani").to_lower(),
-				"timeline":move_timeline,"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+				"source_slot":index,"timeline":move_timeline,
+				"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
 			ani_paths[stem] = move["ani"]
 			if index < attack_infos.size():
 				var atk_path := String(attack_infos[index]).to_lower()
@@ -1246,6 +1253,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 			if emissions.has(index):_attach_attack_emission(move,emissions[index],path)
 			if record.has("native_starfish_jump"):move["source_slot"] = index
 			moves.append(move)
+			previous_stem = stem
 	if not moves.is_empty():m["moves"] = moves
 	if record.has("native_starfish_jump"):
 		_bind_native_starfish_jump(m,record["native_starfish_jump"],moves)
