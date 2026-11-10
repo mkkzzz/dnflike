@@ -6051,6 +6051,7 @@ func view_snapshot() -> Dictionary:
 			"sleep_ms":enemy["numeric"].sleep_age() if is_alive and enemy.has("numeric") and enemy["state"]=="down" else -1.0,
 			"cast_layers":enemy["def"]["native_spirit_summon"]["cast_layers"] if casting else [],
 			"hellbenter_tint":HellbenterColumn.target_mark_alpha(enemy),
+			"bleed":bleed_view(enemy,enemy.get("numeric")),
 			"poison":enemy["numeric"].effects.poison_visual() if is_alive and enemy.has("numeric") else 0})
 	var friendly: Array = []
 	for companion: Dictionary in companions:
@@ -6059,6 +6060,7 @@ func view_snapshot() -> Dictionary:
 			"facing":int(companion["facing"]),"ani":String(current[0]),"clock":float(current[1]),"state":companion["state"],
 			"action_instance":int(companion.get("action_instance",-1)),"flash":float(companion["flash_ms"])>0,
 			"alive":float(companion["hp"])>0,"death_ms":float(companion["death_ms"]),
+			"bleed":bleed_view(companion,companion["numeric"]),
 			"poison":companion["numeric"].effects.poison_visual() if float(companion["hp"])>0 else 0})
 	var objs: Array = []
 	if player.has("hundred_sword_cast"):player["hundred_sword_cast"]["formation"].append_view(objs)
@@ -6210,6 +6212,7 @@ func view_snapshot() -> Dictionary:
 			"fx_clocks":fx_clocks,
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,
+			"bleed":bleed_view(player,numeric_player),
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
 			"overdrive_age_ms":overdrive_age_ms,
 			"aura":String(move_def("buff").get("aura_fx","")) if buff_active else ""},
@@ -6234,7 +6237,7 @@ func announce_source_bleed(target_id: int) -> void:
 
 func present_source_bleed_tick(body: Dictionary) -> void:
 	var is_player: bool = int(body["id"])==PLAYER_ID
-	var height := 100 if is_player else HellbenterBlood.target_display_height(self,body)
+	var height := bleed_display_height(body)
 	# 8B2772..8B2806 compares the character's current ANI with stay, sit,
 	# down and rest. Thirst uses the same override for both waiting getters.
 	var active_pose := false
@@ -6248,6 +6251,14 @@ func present_source_bleed_tick(body: Dictionary) -> void:
 		"point":Vector2(body["pos"]).round(),"height":roundi(float(body["z"])),
 		"burst_count":6 if active_pose else 3,"burst_area":[80 if active_pose else 30,50,height_range]})
 	play_sound("BLOOD_DROP_LOOP")
+
+func bleed_display_height(body: Dictionary) -> int:
+	return 100 if int(body["id"])==PLAYER_ID else HellbenterBlood.target_display_height(self,body)
+
+func bleed_view(body: Dictionary, actor: ActorNumbers) -> Dictionary:
+	if actor == null or float(body["hp"])<=0:return {}
+	var age: float = actor.effects.source_bleed_age()
+	return {} if age < 0.0 else {"age":age,"height":bleed_display_height(body)}
 
 func capture_frame(name: String) -> void:
 	await RenderingServer.frame_post_draw

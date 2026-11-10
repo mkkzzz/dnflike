@@ -7015,6 +7015,10 @@ func check_thirst_burst() -> void:
 	if not bleed.has("source_bleed"):return
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	var views: Dictionary = game.view.object_views
+	var first_view = game.view.enemy_actors[first["id"]]
+	var marker = first_view.get_node_or_null("NativeBleeding")
+	check(marker != null and marker.frame["frame"]==0 and marker.loop,
+		"full-charge contact immediately attaches the adult bleed ANI")
 	var layer_id := "%s:layer:0" % burst["id"]
 	check(views.has(burst["id"]) and views.has(layer_id)
 		and views[burst["id"]].z_index<views[layer_id].z_index
@@ -7022,6 +7026,14 @@ func check_thirst_burst() -> void:
 		"front and back clips follow the source layering and share the scale")
 	first["z"] = 30.0
 	game.step_numeric_actor(first,first["numeric"],0)
+	var snapshot: Dictionary = game.view_snapshot()
+	snapshot["status_clock_ms"] = 175.0
+	game.view.present(snapshot,0.0,0.0)
+	var visual_height := int(snapshot["enemies"].filter(func(e):return e["id"]==first["id"])[0]["bleed"]["height"])
+	check(marker != null and marker.position.y==-30-ceili(visual_height*0.8)
+		and first_view._status_overlay.self_modulate==Color8(255,255,255,75)
+		and first_view._status_overlay.material.get_shader_parameter("mono_rgb")==Vector3(1,0,0),
+		"adult bleed follows airborne height and overlays the body with the native red pulse")
 	check(first["hp"]==hp-78,"first native tick floors 1096 / floor(7000 / 500)")
 	check(cues("CONDITION_BLOODING").size()==2 and cues("BLOOD_DROP_LOOP").size()==1
 		and game.view.audio.variants["CONDITION_BLOODING"][0] is AudioStreamOggVorbis
@@ -7060,6 +7072,9 @@ func check_thirst_burst() -> void:
 	check(first["numeric"].effects.active.has("bleed"),"bleed survives the object until its own duration ends")
 	game.step_numeric_actor(first,first["numeric"],1)
 	check(not first["numeric"].effects.active.has("bleed"),"rank two original bleed expires at 7000 ms")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(marker != null and not marker.visible and not first_view._status_overlay.visible,
+		"ordinary bleed expiry hides both attached presentation layers")
 	var effects = second["numeric"].effects
 	effects.step(6000)
 	check(second["numeric"].add_effect("bleed"),"generic bleed can apply during the source bleed")
@@ -7098,10 +7113,25 @@ func check_source_bleed_particle_poses() -> void:
 	game.numeric_player.effects.add_source_bleed(1,2000,40)
 	game.player["state"] = "idle"
 	game.step_numeric_actor(game.player,game.numeric_player,0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var marker = game.view.player_actor.get_node_or_null("NativeBleeding")
+	check(marker != null and marker.frame["frame"]==0 and marker.position.y==-80.0,
+		"an external bleed attaches the same adult bank to the player at 80 percent of body height")
 	game.player["state"] = "move"
-	game.step_numeric_actor(game.player,game.numeric_player,500)
+	game.player["facing"] = -1
+	game.step_numeric_actor(game.player,game.numeric_player,480)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(marker != null and marker.facing==-1 and marker.frame["frame"]==6 and not marker.frame.has("sprite"),
+		"the adult bleed ANI mirrors and enters the original blank frame at 480 ms")
+	game.step_numeric_actor(game.player,game.numeric_player,20)
+	game.numeric_player.effects.add_source_bleed(1,2000,40)
+	check(game.numeric_player.effects.source_bleed_age()==500.0,
+		"additional applications rearm the drop tick while the attached ANI keeps its phase")
 	game.player["state"] = "down"
 	game.step_numeric_actor(game.player,game.numeric_player,500)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(marker != null and marker.frame["frame"]==1,
+		"the 880 ms bleed loop resumes the visible original frames")
 	var drops := native_particle_cues(blood_path)
 	check(drops.slice(-3).map(func(cue):return cue["burst_count"])==[3,6,3]
 		and drops[-2]["burst_area"]==[80,50,70] and game.player["hp"]==player_hp,

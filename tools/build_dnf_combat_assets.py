@@ -434,6 +434,7 @@ EFFECTS = {
     'hardattack_dash_up': 'character/swordman/effect/animation/wave-up.ani',
     **HARDATTACK_WAVE_REARS,
     'native_sleep': 'common/activestatus/animation/sleep.ani',
+    'native_bleeding': 'common/activestatus/animation/bleeding.ani',
     'moonlight1': 'character/swordman/effect/animation/moonlightslash1.ani',
     'moonlight2': 'character/swordman/effect/animation/moonlightslash2.ani',
     'charge_dash': 'character/swordman/effect/animation/chargecrash/dash.ani',
@@ -1808,6 +1809,8 @@ def main() -> int:
                         help='Add the original sleep status ANI and sound')
     parser.add_argument('--extend-bleed-status-audio', action='store_true',
                         help='Add the original bleed application and tick sounds')
+    parser.add_argument('--extend-bleed-status-visual', action='store_true',
+                        help='Add the original adult Bleeding.ani bank')
     parser.add_argument('--extend-upper-followup', action='store_true',
                         help='Add the original short-sword Upper Slash follow-up effect and sounds')
     parser.add_argument('--extend-khazan', action='store_true',
@@ -2082,6 +2085,10 @@ def main() -> int:
         return 0
     if args.extend_bleed_status_audio:
         specs = [('audio', key, CUE_SOUNDS[key]) for key in ('CONDITION_BLOODING', 'BLOOD_DROP_LOOP')]
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_bleed_status_visual:
+        specs = [('effects', 'native_bleeding', EFFECTS['native_bleeding'])]
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_upper_followup:

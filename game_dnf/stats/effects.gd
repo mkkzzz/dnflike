@@ -34,7 +34,7 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int, from_play
 	if not active.has("bleed"):add("bleed",{"name":"出血"})
 	var bleed: Dictionary = active["bleed"]
 	if float(bleed["remaining_ms"]) <= 0.0:bleed["stacks"] = 0
-	if not bleed.has("source_bleed"):bleed["source_bleed"] = {"applications":[]}
+	if not bleed.has("source_bleed"):bleed["source_bleed"] = {"applications":[],"visual_age_ms":0.0}
 	var source: Dictionary = bleed["source_bleed"]
 	# 8B568E resets the shared tick gate. Each timed application keeps its age.
 	source["next_tick_ms"] = 0.0
@@ -45,6 +45,9 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int, from_play
 	if from_player:application["from_player"] = true
 	source["applications"].append(application)
 	return true
+
+func source_bleed_age() -> float:
+	return float(active.get("bleed",{}).get("source_bleed",{}).get("visual_age_ms",-1.0))
 
 func add_source_shock(amount: int, duration_ms: int, hit_ms: int) -> bool:
 	if duration_ms <= 0 or hit_ms <= 0:return false
@@ -191,6 +194,7 @@ func step_bloodlust_strength(effect: Dictionary, ms: float, events: Array) -> vo
 func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
 	var source: Dictionary = effect["source_bleed"]
 	var applications: Array = source["applications"]
+	source["visual_age_ms"] = float(source.get("visual_age_ms",0.0))+ms
 	source["next_tick_ms"] = float(source["next_tick_ms"])-ms
 	# 8B2747 permits the initial update at zero. 8B30C0 schedules from the
 	# current age, then 8B4F4F removes expired applications after processing.

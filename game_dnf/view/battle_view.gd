@@ -194,7 +194,11 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_advance_native_emitters(sim_ms)
 	_advance_poison_emitters([p]+s["enemies"]+companions,sim_ms)
 	_advance_overdrive_emitter(p)
-	var poison_overlay := _poison_overlay(float(s.get("status_clock_ms",0.0)))
+	var status_clock := float(s.get("status_clock_ms",0.0))
+	var poison_overlay := _poison_overlay(status_clock)
+	# 8B1F83: shared 700 ms pulse. The native D3D state swaps R/B on upload.
+	var bleed_phase := float(int(status_clock)&0xffffffff)*TAU*(1.0/700.0)
+	var bleed_overlay := Color8(255,0,0,int(50.0+25.0*sin(bleed_phase)))
 	for fx in effects:
 		if is_instance_valid(fx) and not fx.is_queued_for_deletion():
 			var source: Dictionary = p if fx.follow == 0 else actor_by_id.get(fx.follow,{})
@@ -236,7 +240,10 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0,player_tint,
 		float(p.get("body_rotation",0.0)),p.get("cast_layers",[]).is_empty())
 	_present_cast_layers(player_actor,p)
-	player_actor.present_status_overlay(poison_overlay if int(p.get("poison",0)) > 0 else Color.TRANSPARENT)
+	var player_bleed: Dictionary = p.get("bleed",{})
+	var player_overlay := poison_overlay if int(p.get("poison",0)) > 0 else Color.TRANSPARENT
+	player_actor.present_status_overlay(bleed_overlay if not player_bleed.is_empty() else player_overlay)
+	_present_bleeding(player_actor,player_bleed)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]+companions:
 		var actor = enemy_actors.get(e["id"])
@@ -246,9 +253,12 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 		var alpha := clampf(1.0-(float(e["death_ms"])-400)/400,0,1) if not e["alive"] else 1.0
 		actor.present(e["ani"],e["clock"],e["facing"],e["z"],1.0 if e["flash"] else 0.0,Color(1,1,1,alpha))
 		var overlay := poison_overlay if int(e.get("poison",0)) > 0 else Color.TRANSPARENT
+		var bleed: Dictionary = e.get("bleed",{})
+		if not bleed.is_empty():overlay = bleed_overlay
 		var hellbenter_alpha := int(e.get("hellbenter_tint",0))
 		if hellbenter_alpha > 0:overlay = Color(1,1,1,alpha*hellbenter_alpha/255.0)
 		actor.present_status_overlay(overlay)
+		_present_bleeding(actor,bleed)
 		if e.has("blind"):_present_blind(actor,e,sim_ms)
 		_present_sleep(actor,float(e.get("sleep_ms",-1)))
 		_present_cast_layers(actor,e)
@@ -397,6 +407,27 @@ func _present_sleep(actor: ActorView, age: float) -> void:
 	var bounds := actor.sprite_bounds()
 	fx.position = Vector2(int(-actor.facing*bounds.end.x*0.75),-roundf(actor.height)+int(bounds.position.y*0.5))
 	fx.seek(age)
+	fx.show()
+
+func _present_bleeding(actor: ActorView, bleed: Dictionary) -> void:
+	var fx := actor.get_node_or_null("NativeBleeding") as FxView
+	if bleed.is_empty():
+		if fx != null:fx.hide()
+		return
+	if fx == null:
+		var bank: Dictionary = _effects.get("native_bleeding",{})
+		if bank.is_empty():return
+		fx = FxView.new()
+		fx.name = "NativeBleeding"
+		fx.setup(bank,actor.facing)
+		fx.loop = bool(bank["loop"])
+		actor.add_child(fx)
+	# 8B2141..8B2157 subtracts 80% of the standing height from the draw anchor.
+	var height := float(PackedFloat32Array([int(bleed["height"])*0.800000011920929])[0])
+	var anchor := actor.position.y-roundf(actor.height)
+	fx.position.y = int(float(PackedFloat32Array([anchor-height])[0]))-actor.position.y
+	fx.facing = actor.facing
+	fx.seek(float(bleed["age"]))
 	fx.show()
 
 func _present_cast_layers(actor: Node2D, state: Dictionary) -> void:
