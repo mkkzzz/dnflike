@@ -6425,10 +6425,12 @@ func view_snapshot() -> Dictionary:
 	if native_maze != null:
 		stage_info["resolved_placement"] = native_room["placement"]
 	var buff_active: bool = float(player["buff_ms"])>0 or (numeric_player != null and numeric_player.effects.active.has("frenzy"))
-	var overdrive := active_effect("overdrive")
-	var overdrive_age_ms := -1.0
-	if not overdrive.is_empty() and float(player["hp"]) > 0.0:
-		overdrive_age_ms = float(overdrive["definition"]["duration_ms"])-float(overdrive["remaining_ms"])
+	var status_ages := {}
+	if float(player["hp"]) > 0.0:
+		for id in ["overdrive","reckless"]:
+			var effect := active_effect(id)
+			if not effect.is_empty():
+				status_ages[id] = float(effect["definition"]["duration_ms"])-float(effect["remaining_ms"])
 	var thirst := active_effect("thirst")
 	if not thirst.is_empty() and float(player["hp"]) > 0.0:
 		# CA06CC draws its own GiveBloodStay ANI as long as the appendage is valid.
@@ -6455,7 +6457,7 @@ func view_snapshot() -> Dictionary:
 			"jar_invincible":native_jar_traps.player_protected,
 			"bleed":bleed_view(player,numeric_player),
 			"poison":numeric_player.effects.poison_visual() if float(player["hp"])>0 and numeric_player != null else 0,
-			"overdrive_age_ms":overdrive_age_ms,
+			"status_ages":status_ages,
 			"aura":String(move_def("buff").get("aura_fx","")) if buff_active else ""},
 		"enemies":enemies,"companions":friendly,"objects":objs,"props":props_view(),
 		"stage":stage_info,

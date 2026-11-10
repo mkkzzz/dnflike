@@ -156,6 +156,11 @@ PATTACK_SOURCES = {
     PATTACK_PARTICLE: 'dd92ee249cb7b856b1cdbcf411485aa7ab51d643f46b1fa5e26ff1731817f9d7',
     'common/commoneffect/animation/status_effect/pattack.ani': '6e4247ee0318a29636209d00953962babef8ddd6e32384b5f695d77ee38eac0b',
 }
+RECKLESS_PARTICLE = 'common/commoneffect/particle/attackpowerup.ptl'
+RECKLESS_PARTICLE_SOURCES = {
+    RECKLESS_PARTICLE: '560f28582fb6f9616dd4f72ff903bd66f0e376517b9d43465fef94d8c1b8fed1',
+    'common/commoneffect/animation/attackpowerup.ani': '4927d8927fd17307909bc98f1fa3a33cfb453e26ed30ca3032a11ccc547cff0d',
+}
 
 
 def swordman_half_height(src) -> int:
@@ -222,6 +227,7 @@ def native_particle_definitions(src, extra_pins=None):
     pinned[BLEED_PARTICLE] = BLEED_PARTICLE_SOURCES
     pinned[ARMOR_DAMAGE_PARTICLE] = ARMOR_DAMAGE_SOURCES
     pinned[PATTACK_PARTICLE] = PATTACK_SOURCES
+    pinned[RECKLESS_PARTICLE] = RECKLESS_PARTICLE_SOURCES
     for path in [*NATIVE_PARTICLES, *pinned]:
         doc = src.lib.script(path)
         if not doc:
@@ -265,6 +271,7 @@ def native_particle_definitions(src, extra_pins=None):
     half_height = swordman_half_height(src)
     particles[ARMOR_DAMAGE_PARTICLE]['z_offset'] = half_height
     particles[PATTACK_PARTICLE]['z_offset'] = half_height
+    particles[RECKLESS_PARTICLE]['z_offset'] = 50  # 99E385 adds a fixed offset to owner Z.
     return particles, effects
 
 
@@ -274,6 +281,7 @@ def native_status_visuals(src):
             or poison.get('source', {}).get('source_hashes') != NATIVE_POISON_VISUAL_SHA):
         raise ValueError('Compile the original poison status visual before baking')
     return {'overdrive': {'particle': PATTACK_PARTICLE},
+            'reckless': {'particle': RECKLESS_PARTICLE},
             'poison': dict(poison, apply_sound='CONDITION_POSION', loop_sound='G_POISON_LOOP',
                            loop_items=[
                                {'sound': 'CONDITION_POSION_DROP', 'start_delay_ms': 0, 'loop_delay_ms': 3000},

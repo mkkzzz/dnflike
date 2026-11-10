@@ -1393,7 +1393,7 @@ func check_overdrive_particles() -> void:
 		"Overdrive starts with one native physical-attack particle at successful cast exit")
 	if particles.is_empty():return
 	var first: Node2D = particles[0]
-	var emitter: RefCounted = game.view._overdrive_emitter["emitter"]
+	var emitter: RefCounted = game.view._player_status_emitters["overdrive"]["emitter"]
 	check(emitter.origin==Vector3i(400,300,50) and emitter.config["life_time"]==700,
 		"Overdrive's source emitter starts at caster XYZ plus half the standing body height")
 	game.step_numeric_actor(game.player,game.numeric_player,249)
@@ -1413,8 +1413,63 @@ func check_overdrive_particles() -> void:
 	check(not overdrive_particles().is_empty(),"Overdrive retains the particle emitter through the last active millisecond")
 	game.step_numeric_actor(game.player,game.numeric_player,1)
 	game.view.present(game.view_snapshot(),1.0,1.0)
-	check(overdrive_particles().is_empty() and game.view._overdrive_emitter.is_empty(),
+	check(overdrive_particles().is_empty() and not game.view._player_status_emitters.has("overdrive"),
 		"Overdrive expiry discards the owned emitter and its remaining particles")
+
+func reckless_particles() -> Array:
+	return game.view.effects.filter(func(fx):return fx.tag=="reckless_status")
+
+func check_reckless_particles() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"reckless","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["reckless"]
+	start_room("original_27601","katana",-1,spec,"berserker")
+	game.player["mp"] = 1000.0
+	press(KEY_A)
+	step(0)
+	step(499)
+	check(reckless_particles().is_empty(),"Reckless emits no active particles during the cast")
+	step(1)
+	var particles := reckless_particles()
+	check(particles.size()==1 and particles[0].data["source"]=="common/commoneffect/animation/attackpowerup.ani",
+		"Reckless creates its own original particle on the first active update")
+	if particles.is_empty():return
+	var first: Node2D = particles[0]
+	var emitter: RefCounted = game.view._player_status_emitters["reckless"]["emitter"]
+	check(emitter.origin==Vector3i(400,300,50) and emitter.config["life_time"]==1000 and not emitter.mirrored,
+		"Reckless particle origin uses a fixed +50 height and the authored lifetime")
+	game.step_numeric_actor(game.player,game.numeric_player,142.0)
+	game.view.present(game.view_snapshot(),142.0,142.0)
+	game.view.present(game.view_snapshot(),250.0,0.0)
+	check(reckless_particles().size()==1,"Reckless accumulates its seven-per-second emission on simulation time")
+	game.player["pos"] = POINT+Vector2(180,20)
+	game.player["z"] = 12.0
+	game.step_numeric_actor(game.player,game.numeric_player,1.0)
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	particles = reckless_particles()
+	check(particles.size()==2 and emitter.origin==Vector3i(580,320,62)
+		and absf(first.position.x-400.0)<40.0 and absf(particles[1].position.x-580.0)<40.0,
+		"Reckless emits from the moved owner at 143 ms and keeps existing particles in world space")
+	game.numeric_player.add_effect("reckless",1)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view._player_status_emitters["reckless"]["emitter"]==emitter and reckless_particles().size()==2,
+		"Refreshing Reckless retains its running particle emitter")
+	game.step_numeric_actor(game.player,game.numeric_player,40079.0)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(game.view._player_status_emitters.has("reckless"),"Reckless still owns the emitter before expiration")
+	game.step_numeric_actor(game.player,game.numeric_player,1.0)
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(reckless_particles().is_empty() and not game.view._player_status_emitters.has("reckless"),
+		"Reckless expiration removes the owned emitter and particles")
+	game.numeric_player.add_effect("reckless",1)
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	game.player["hp"] = 0.0
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	check(reckless_particles().is_empty() and not game.view._player_status_emitters.has("reckless"),
+		"Reckless particles disappear when the owner dies")
 
 func check_frenzy_drain() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)
@@ -8503,6 +8558,7 @@ func run() -> void:
 	check_self_buff_cast("overdrive","weaponmaster","SM_OVERDRIVE","BUFF_OVERDRIVE")
 	check_self_buff_cast("reckless","berserker","SM_CONGESTION","BUFF_CONGESTION")
 	check_overdrive_particles()
+	check_reckless_particles()
 	check_frenzy_drain()
 	check_frenzy_attributes()
 	check_frenzy_cast()

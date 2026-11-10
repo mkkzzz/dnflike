@@ -40,7 +40,7 @@ var _particle_banks: Dictionary = {}
 var _particle_emitters: Array[Dictionary] = []
 var _object_particle_emitters: Dictionary = {}
 var _poison_emitters: Dictionary = {}
-var _overdrive_emitter: Dictionary = {}
+var _player_status_emitters: Dictionary = {}
 var revive_effects: Array = []
 var numbers: Array = []
 var prop_views: Array = []
@@ -193,7 +193,8 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_player_z = float(p["z"])
 	_advance_native_emitters(sim_ms)
 	_advance_poison_emitters([p]+s["enemies"]+companions,sim_ms)
-	_advance_overdrive_emitter(p)
+	for id in ["overdrive","reckless"]:
+		_advance_player_status_emitter(id,p,sim_ms)
 	var status_clock := float(s.get("status_clock_ms",0.0))
 	var poison_overlay := _poison_overlay(status_clock)
 	# 8B1F83: shared 700 ms pulse. The native D3D state swaps R/B on upload.
@@ -531,7 +532,7 @@ func _on_room_loaded(event: Dictionary) -> void:
 	_particle_emitters.clear()
 	_object_particle_emitters.clear()
 	_poison_emitters.clear()
-	_overdrive_emitter.clear()
+	_player_status_emitters.clear()
 	for v in object_views.values():
 		if is_instance_valid(v):v.queue_free()
 	object_views.clear()
@@ -718,26 +719,32 @@ func _poison_overlay(clock_ms: float) -> Color:
 	var alpha := int(float(tint["alpha_base_default"])+float(tint["alpha_amplitude"])*sin(phase))
 	return Color8((rgb>>16)&255,(rgb>>8)&255,rgb&255,alpha)
 
-func _advance_overdrive_emitter(actor: Dictionary) -> void:
-	var age := int(actor.get("overdrive_age_ms",-1.0))
+func _advance_player_status_emitter(id: String, actor: Dictionary, sim_ms: float) -> void:
+	var age := int(actor.get("status_ages",{}).get(id,-1))
+	var tag := id+"_status"
 	if age < 0:
-		if not _overdrive_emitter.is_empty():
+		if _player_status_emitters.erase(id):
 			for fx in effects:
-				if is_instance_valid(fx) and fx.tag=="overdrive_status":fx.queue_free()
-			_overdrive_emitter.clear()
+				if is_instance_valid(fx) and fx.tag==tag:fx.queue_free()
 		return
-	var path := String(_combat.get("native_status_visuals",{}).get("overdrive",{}).get("particle",""))
+	var path := String(_combat.get("native_status_visuals",{}).get(id,{}).get("particle",""))
 	if path.is_empty():return
 	var template: Dictionary = _combat["particles"][path]
 	var point: Vector2 = actor["pos"]
-	# 97EB5D follows XYZ and places the emitter half a standing body above the owner.
+	# 97EB5D and 99E385 both submit owner XYZ plus their own height offset.
 	var origin := Vector3i(int(point.x),int(point.y),int(actor["z"])+int(template["z_offset"]))
-	if _overdrive_emitter.is_empty() or age < int(_overdrive_emitter["age"]):
-		_overdrive_emitter = {"emitter":particle_bursts.create_emitter(template["decoded"],origin),"start":age}
-	_overdrive_emitter["age"] = age
-	var emitter: RefCounted = _overdrive_emitter["emitter"]
+	var entry: Dictionary = _player_status_emitters.get(id,{})
+	if entry.is_empty() or (id == "overdrive" and age < int(entry["age"])):
+		entry = {"emitter":particle_bursts.create_emitter(template["decoded"],origin),"elapsed_ms":0}
+		_player_status_emitters[id] = entry
+	else:
+		var delta := age-int(entry["age"])
+		# 99E31B keeps the existing Reckless emitter when its buff timer is renewed.
+		entry["elapsed_ms"] += int(sim_ms) if delta < 0 else delta
+	entry["age"] = age
+	var emitter: RefCounted = entry["emitter"]
 	emitter.origin = origin
-	_append_native_particles(path,1.0,particle_bursts.emit_at(emitter,age-int(_overdrive_emitter["start"])),"overdrive_status")
+	_append_native_particles(path,1.0,particle_bursts.emit_at(emitter,int(entry["elapsed_ms"])),tag)
 
 func _append_native_particles(path: String, scale_value: float, result: Dictionary, tag := "") -> bool:
 	if not result.ok:

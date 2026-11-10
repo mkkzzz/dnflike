@@ -239,11 +239,11 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 633,
+ "effects": 634,
  "digits": 71,
  "audio_keys": 318,
  "unresolved": 39,
- "particle_templates": 27,
+ "particle_templates": 28,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
