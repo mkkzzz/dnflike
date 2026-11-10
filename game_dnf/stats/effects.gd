@@ -29,7 +29,7 @@ func add_bloodlust_strength(amount: int, duration_ms: int) -> bool:
 	effect["stacks"] = grants.size()
 	return true
 
-func add_source_bleed(total: int, duration_ms: int, status_level: int, from_player := false) -> bool:
+func add_source_bleed(total: int, duration_ms: int, status_level: int, from_player := false, source_entity_id := -1) -> bool:
 	if duration_ms <= 0:return false
 	if not active.has("bleed"):add("bleed",{"name":"出血"})
 	var bleed: Dictionary = active["bleed"]
@@ -43,6 +43,7 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int, from_play
 	var amount := int(PackedFloat32Array([float(total)/ticks])[0])
 	var application := {"remaining_ms":float(duration_ms),"amount":amount,"status_level":status_level}
 	if from_player:application["from_player"] = true
+	elif source_entity_id >= 0:application["source_entity_id"] = source_entity_id
 	source["applications"].append(application)
 	return true
 
@@ -199,7 +200,7 @@ func step_source_bleed(effect: Dictionary, ms: float, events: Array, active_pose
 	source["next_tick_ms"] = float(source["next_tick_ms"])-ms
 	# 8B2747 permits the initial update at zero. 8B30C0 schedules from the
 	# current age, then 8B4F4F removes expired applications after processing.
-	if float(source["next_tick_ms"]) <= 0.0:
+	if not applications.is_empty() and float(source["next_tick_ms"]) <= 0.0:
 		source["next_tick_ms"] = 500.0
 		var amount := 0
 		var player_margin := 0
@@ -218,8 +219,12 @@ func step_source_bleed(effect: Dictionary, ms: float, events: Array, active_pose
 			single[1] = float(player_margin)
 			single[1] += scaled if application.get("from_player",false) else -scaled
 			player_margin = int(single[1])
+		# 8B2D31 and 8B2E9A pass the first application to the death handler,
+		# even when another source supplied more damage or this entry expires now.
+		var first: Dictionary = applications[0]
 		events.append({"type":"bleed_tick","id":"bleed","damage":amount,"damage_type":"physical",
-			"native_number":true,"player_bleed":player_margin>0,"active_pose":active_pose})
+			"native_number":true,"player_bleed":player_margin>0,"active_pose":active_pose,
+			"first_source_is_player":first.get("from_player",false),"first_source_id":first.get("source_entity_id",-1)})
 	for index in range(applications.size()-1,-1,-1):
 		applications[index]["remaining_ms"] -= ms
 		if float(applications[index]["remaining_ms"]) <= 0.0:applications.remove_at(index)

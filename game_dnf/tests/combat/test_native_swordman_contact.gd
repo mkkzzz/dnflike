@@ -1679,6 +1679,33 @@ func check_frenzy_recovery() -> void:
 		game.step_game(250.0)
 		check(is_equal_approx(game.player["hp"],before+expected) and game.item_restorations.is_empty(),
 			"Frenzy rank and enemy max HP cap finish at 1530 ms: "+str(scenario))
+	var defeats: Array[Dictionary] = []
+	var capture := func(event: Dictionary):defeats.append(event)
+	session.monster_defeated.connect(capture)
+	for player_first: bool in [false,true]:
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+		var external: Dictionary = game.spawn_enemy(POINT+Vector2(180,0))
+		target["hp"] = 1.0
+		var actor = target["numeric"]
+		for from_player: bool in [player_first,not player_first]:
+			actor.apply_source_bleed({"source_bleed_total":30 if from_player else 20,"duration_ms":500,
+				"status_level":actor.values["level"],"chance":1.0},0,from_player,int(external["id"]))
+		game.frenzy_recovery.step(game,100.0)
+		check(game.active_effect("frenzy")["bleed_targets"].has(target["id"]),
+			"Frenzy registers the living target before the lethal bleed tick")
+		var creation_count: int = cues("FLENSE_SUCK").size()
+		defeats.clear()
+		game.step_numeric_actor(target,actor,500.0)
+		game.report_defeat(target)
+		var number: Dictionary = game.bus.events_of("combat.damage_number").back()
+		var expected_source: int = game.player["id"] if player_first else external["id"]
+		check(target["hp"]==0.0 and not actor.effects.active.has("bleed") and number["amount"]==50
+			and number["digits"]=="damage_bleed" and defeats.size()==1 and defeats[0]["entity_id"]==target["id"]
+			and defeats[0].get("damage_status")=="bleed" and defeats[0].get("source_entity_id")==expected_source,
+			"lethal gold bleed credits the first source once even when its entry expires on this tick")
+		check(game.frenzy_recovery.orbs.is_empty() and cues("FLENSE_SUCK").size()==creation_count,
+			"bleed damage does not dispatch the direct-hit Frenzy recovery callback")
+	session.monster_defeated.disconnect(capture)
 	game.god_mode = false
 
 func check_frenzy_toggle() -> void:

@@ -373,6 +373,9 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			body["state"] = "dead"
 			body["death_ms"] = 0.0
 			if body.has("companion_id"):report_companion_defeat(body)
+			elif bleed_tick:
+				var source_id := PLAYER_ID if bool(event["first_source_is_player"]) else int(event["first_source_id"])
+				report_defeat(body,"bleed",source_id)
 			else:report_defeat(body)
 		if float(body["hp"])<=0:break
 
@@ -1538,12 +1541,16 @@ func set_input_paused(value: bool) -> void:
 		run_direction = 0
 		last_direction_release.clear()
 
-func report_defeat(enemy: Dictionary) -> void:
+func report_defeat(enemy: Dictionary, damage_status := "", source_entity_id := -1) -> void:
 	if enemy.get("defeat_reported",false):return
 	enemy["defeat_reported"] = true
-	bus.emit("combat.monster_defeated",{"run_id":run_id,"room_id":room_id,"room_index":room_index,
+	var event := {"run_id":run_id,"room_id":room_id,"room_index":room_index,
 		"entity_id":enemy["id"],"monster_id":String(enemy["mob"]),"boss":bool(enemy["chief"]),
-		"position":Vector2(enemy["pos"])})
+		"position":Vector2(enemy["pos"])}
+	if damage_status != "":
+		event["damage_status"] = damage_status
+		event["source_entity_id"] = source_entity_id
+	bus.emit("combat.monster_defeated",event)
 
 func reject_action(name: String, reason: String) -> bool:
 	bus.emit("combat.action_rejected",{"entity_id":PLAYER_ID,"action":name,"reason":reason})
@@ -3533,7 +3540,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"added"})
 				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
-				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player):
+				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player,int(attacker.get("id",-1))):
 					announce_source_bleed(int(target["id"]))
 				continue
 			var chance := float(effect.get("chance",1))
