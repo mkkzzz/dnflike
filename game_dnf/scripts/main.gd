@@ -1212,7 +1212,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		player["queued_skill"] = ""
 		start_stage(2)
 		return
-	if name == "bloodblast" and int(player["stage"]) == 0 and clock >= duration:
+	if name in ["bloodblast","hellbenter"] and int(player["stage"]) == 0 and clock >= duration:
 		start_stage(1)
 		return
 	if m.has("draw_second_slash_at") and int(player["stage"]) == 0:
@@ -1443,7 +1443,7 @@ func normal_attack_cancel_allowed(move: Dictionary) -> bool:
 	var action: String = player["action"]
 	if action in Kernel.MoveTable.NORMAL_ATTACK_CHAIN:return true
 	# CBDB67 accepts the original attack state, which also runs the four Frenzy swings.
-	if move.get("native_state","") in ["bloody_rave","outrage_break"]:return action in ["frenzy1","frenzy2","frenzy3","frenzy4"]
+	if move.get("native_state","") in ["bloody_rave","outrage_break","hellbenter_cast"]:return action in ["frenzy1","frenzy2","frenzy3","frenzy4"]
 	return action in ["waveeye_attack1","waveeye_attack2","waveeye_attack3"]
 
 func begin_skill_cooldown(name: String, move: Dictionary) -> void:
@@ -1480,7 +1480,7 @@ func start_action(name: String, cancel := false) -> bool:
 	if m.has("normal_cancel_job"):
 		var state := String(player["state"])
 		if state not in ["idle","move","guard","action"]:return reject_action(name,"state")
-		if state == "guard" and m.get("native_state","") in ["bloody_rave","outrage_break","hundred_sword"]:return reject_action(name,"state")
+		if state == "guard" and m.get("native_state","") in ["bloody_rave","outrage_break","hundred_sword","hellbenter_cast"]:return reject_action(name,"state")
 		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
@@ -1568,7 +1568,7 @@ func start_action(name: String, cancel := false) -> bool:
 		action_seq += 1
 		bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"instance":action_seq})
 		return true
-	if String(m.get("effect_id","")) != "" and m.get("native_state","") != "thirst":
+	if String(m.get("effect_id","")) != "" and m.get("native_state","") not in ["thirst","hellbenter_cast"]:
 		player["stage"] = 0
 		player["clock"] = 0.0
 		player["hits"] = {}
@@ -2031,10 +2031,11 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# Phase 1 sets mode 0 at 8591E3. The 1000 rate then preserves static[0].
 		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
 			"end_ms":release_at+float(m["native_recovery_ms"])}
-	elif m.get("native_state","") == "bloodblast":
-		# State 13 selects throw slot 1. Mode 3 uses the non-weapon attack speed.
-		# The local numeric model has one attack-speed channel.
-		var rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
+	elif m.get("native_state","") in ["bloodblast","hellbenter_cast"]:
+		# Both skills use throw slot 1. CC05DE selects mode 3 for both Hellbenter phases.
+		var rate := 1.0
+		if numeric_player != null:
+			rate = numeric_player.native_non_weapon_attack_rate() if name == "hellbenter" else float(numeric_player.values["attack_speed"])
 		var speed := maxi(1,roundi(rate*1000.0))
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
@@ -2139,7 +2140,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			slash["hits"][0]["effects"].append(shock)
 			m["stages"][index] = slash
 	# Multi-stage slides can pick their own side. These native follow-ups inherit facing.
-	if m.has("stages") and not (name in ["upper","bloodblast","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
+	if m.has("stages") and not (name in ["upper","bloodblast","hellbenter","sacrifice","draw","grabblastblood","outragebreak"] and index == 1) \
 			and not (name == "charge_crash" and index > 0) \
 			and not (name == "illusionslash" and int(player["illusion_cast"]["slash"]) > 0) \
 			and not (name == "rapidmoveslash" and index % 2 == 1) \
@@ -2202,6 +2203,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		begin_charge_crash_hold(m["charge_crash_hold"])
 		return
 	if name == "grabblastblood" and index == 1:play_sound("BLOODR_GET")
+	if name == "hellbenter" and index == 1:apply_skill_effect(name,String(m["effect_id"]))
 	if name == "triple":play_sound("R_TSLASH")
 	var swing := int(stage.get("swing",m.get("swing",-1)))
 	if swing >= 0:

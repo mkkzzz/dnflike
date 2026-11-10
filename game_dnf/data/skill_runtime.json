@@ -41,6 +41,8 @@
    "skillfx_bremenareaappear2_3c6655df": "passiveobject/character/swordman/animation/bremenareaappear2.ani",
    "skillfx_bremenareadisappear_69a734b7": "passiveobject/character/swordman/animation/bremenareadisappear.ani",
    "skillfx_bremenareastay_65cedcf5": "passiveobject/character/swordman/animation/bremenareastay.ani",
+   "skillfx_cast1_f3b0165d": "character/swordman/effect/animation/hellbenter/cast1.ani",
+   "skillfx_cast2_d59b9126": "character/swordman/effect/animation/hellbenter/cast2.ani",
    "skillfx_charge1_28f02c73": "character/swordman/effect/animation/momentaryslash/charge1.ani",
    "skillfx_charge1_522d5c86": "character/swordman/effect/animation/standalonewave/charge1.ani",
    "skillfx_charge2_31666c8e": "character/swordman/effect/animation/momentaryslash/charge2.ani",
@@ -164,7 +166,6 @@
    "skillfx_sworddisappear2_61667d2f": "character/swordman/effect/animation/hundredsword/sworddisappear2.ani",
    "skillfx_swordlandglow1_45a764c3": "character/swordman/effect/animation/hundredsword/swordlandglow1.ani",
    "skillfx_swordlandglow2_39ce5d91": "character/swordman/effect/animation/hundredsword/swordlandglow2.ani",
-   "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
    "skillfx_upper_4c1c9ad1": "character/swordman/effect/animation/illusionslash/upper.ani",
@@ -515,22 +516,25 @@
    "stacking": "refresh"
   },
   "hellbenter": {
-   "duration_ms": 60000,
+   "duration_level_row": 11,
    "form": "hellbenter",
    "max_stacks": 1,
    "modifiers": [
     {
-     "op": "mul",
-     "stat": "attack_speed",
-     "value": 1.1
+     "level_row": 6,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "attack_speed"
     },
     {
-     "op": "mul",
-     "stat": "move_speed",
-     "value": 1.08
+     "level_row": 8,
+     "op": "add",
+     "scale": 0.001,
+     "stat": "move_speed"
     }
    ],
    "name": "魔狱血刹",
+   "source_skill": "hellbenter",
    "stacking": "refresh"
   },
   "jump_power_up": {
@@ -5323,19 +5327,39 @@
   },
   "hellbenter": {
    "effect_id": "hellbenter",
+   "fidelity_pending": [
+    "blood_absorption",
+    "sword_layers",
+    "finish",
+    "original_command"
+   ],
+   "material_cost": {
+    "amount": 5,
+    "source_id": 3037
+   },
    "name": "魔狱血刹",
+   "native_state": "hellbenter_cast",
    "skill": "skill/swordman/hellbenter.skl",
    "stages": [
     {
+     "ani": "summon1"
+    },
+    {
      "ani": "summon2",
-     "atk": "",
      "fx": [
       {
        "at": 0,
-       "key": "skillfx_tn_balltail1_246e0c4a"
+       "depth_offset": -1,
+       "key": "skillfx_cast1_f3b0165d",
+       "offset_y": -70
+      },
+      {
+       "at": 0,
+       "depth_offset": -1,
+       "key": "skillfx_cast2_d59b9126",
+       "offset_y": -70
       }
-     ],
-     "hits": []
+     ]
     }
    ]
   },

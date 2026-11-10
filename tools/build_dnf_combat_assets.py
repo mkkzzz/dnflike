@@ -1541,6 +1541,8 @@ def main() -> int:
                         help='Add the original OutRageBreak ready, slash and impact layers and audio')
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
+    parser.add_argument('--extend-hellbenter', action='store_true',
+                        help='Add the original Hellbenter first-cast layers')
     parser.add_argument('--extend-draw', action='store_true',
                         help='Add the original Draw Sword slash and charge layers, short-sword wave and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
@@ -1697,6 +1699,14 @@ def main() -> int:
         specs = [('effects', key, path) for key, path in SELF_BUFF_EFFECTS.items()]
         specs.extend(('audio', key, path) for key, path in OVERDRIVE_AUDIO.items())
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
+        return 0
+    if args.extend_hellbenter:
+        runtime = json.loads(SKILL_RUNTIME.read_bytes())
+        effects = runtime['assets']['effect_anims']
+        release = runtime['moves']['hellbenter']['stages'][1]
+        print(json.dumps(extend_skill_banks(args.library, OUT, [
+            ('effects', cue['key'], effects[cue['key']]) for cue in release['fx']
+        ])))
         return 0
     if args.extend_thirst:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())

@@ -413,6 +413,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["cast_ms"] = float(skill["level_row"][1])
 		move["native_recovery_ms"] = float(skill["static"][int(spec["native_recovery_col"])])
 		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
+	if spec.get("native_state","") == "hellbenter_cast":
+		move["native_state"] = "hellbenter_cast"
+		move["cast_ms"] = float(skill["static"][0])
+		move["native_recovery_ms"] = float(skill["static"][1])
+		move["normal_cancel_job"] = "berserker"
 	if spec.get("native_state","") == "grab_blast":
 		move["native_state"] = "grab_blast"
 		move["grab_duration_ms"] = float(skill["static"][0])

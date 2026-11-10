@@ -2262,6 +2262,61 @@ func check_bloody_rave_thirst() -> void:
 		step(600)
 		check(game.bus.events_of("combat.damage_number").size()==release_count,"the release phase cannot pulse again")
 
+func check_hellbenter_first_cast() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"hellbenter","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hellbenter"]
+	start_room("original_27601","katana",-1,spec,"berserker")
+	game.clear_monsters()
+	game.player["mp"] = 2000.0
+	var requests: Array = []
+	var cubes := [4]
+	session.set_skill_material_spender(func(id: int, amount: int):
+		requests.append([id,amount])
+		if id!=3037 or cubes[0]<amount:return false
+		cubes[0] -= amount
+		return true)
+	press(KEY_A)
+	step(0.0)
+	check(game.player["action"]=="" and game.player["mp"]==2000.0 and cubes[0]==4
+		and not game.player["cooldowns"].has("hellbenter"),"Hellbenter rejects insufficient cubes before starting or charging MP")
+	cubes[0] = 5
+	game.numeric_player.values["attack_speed"] = 1.33
+	game.numeric_player.weapon_attack_speed_per_mille = 80
+	press(KEY_A)
+	step(0.0)
+	var hellbenter := func():return game.numeric_player.effects.active.get("hellbenter",{})
+	check(game.view.player_actor.pose=="summon1" and hellbenter.call().is_empty()
+		and requests==[[3037,5],[3037,5]] and cubes[0]==0 and game.player["mp"]==1100.0,
+		"Hellbenter first cast pays once and begins with the original throw-slot-one preparation")
+	step(479.0)
+	check(hellbenter.call().is_empty() and game.player["stage"]==0,"mode-three preparation lasts through 479 ms")
+	step(1.0)
+	var effect: Dictionary = hellbenter.call()
+	check(game.view.player_actor.pose=="summon2" and game.player["facing"]==-1
+		and effect.get("remaining_ms",0)==100100.0 and game.player["native_phase"]["end_ms"]==640,
+		"Hellbenter activates on phase one and uses the original recovery and rank duration")
+	var layers: Array = game.view.effects.filter(func(fx):return String(fx.data["source"]).contains("/hellbenter/cast"))
+	var anchored := func(fx):
+		return fx.follow==game.player["id"] and fx.follow_offset==Vector2(0,-70) and fx.z_index==int(POINT.y)-1
+	check(layers.size()==2 and layers.all(anchored),
+		"both original cast effects follow the character at the native draw offset")
+	var modifiers: Array = effect.get("definition",{}).get("modifiers",[])
+	check(modifiers.size()==2 and is_equal_approx(modifiers[0]["value"],0.003)
+		and is_equal_approx(modifiers[1]["value"],0.003),"initial speed gains use the two original rank-one columns")
+	step(639.0)
+	check(game.player["action"]=="hellbenter","Hellbenter recovery lasts through 639 ms")
+	step(1.0)
+	check(game.player["action"]=="" and requests.size()==2 and not hellbenter.call().is_empty(),
+		"recovery ends without a second charge and the appendage stays active")
+	game.numeric_player.step(100100)
+	check(hellbenter.call().is_empty(),"the original rank-one duration expires")
+	check(game.numeric_player.add_effect("hellbenter",6) and hellbenter.call()["remaining_ms"]==130130.0,
+		"rank six uses the extended duration from the original level table")
+
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -5162,6 +5217,7 @@ func run() -> void:
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
+	check_hellbenter_first_cast()
 	check_outrage_break_speed_refresh()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()

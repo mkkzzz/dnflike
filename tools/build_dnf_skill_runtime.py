@@ -478,13 +478,14 @@ BUFF_EFFECTS = {
     },
     "hellbenter": {
         "name": "魔狱血刹",
-        "duration_ms": 60000,
+        "source_skill": "hellbenter",
+        "duration_level_row": 11,
         "stacking": "refresh",
         "max_stacks": 1,
         "form": "hellbenter",
         "modifiers": [
-            {"stat": "attack_speed", "op": "mul", "value": 1.1},
-            {"stat": "move_speed", "op": "mul", "value": 1.08},
+            {"stat": "attack_speed", "op": "add", "level_row": 6, "scale": 0.001},
+            {"stat": "move_speed", "op": "add", "level_row": 8, "scale": 0.001},
         ],
     },
     "kalla": {
@@ -1487,6 +1488,18 @@ def build_move(
                                      "fixed_attack_normalization", "final_damage", "thirst_special_target_bonus",
                                      "etc_layer_order", "hit_fx_nested_lifetime", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
+    if key == "hellbenter":
+        layers = []
+        for index in (1, 2):
+            effect = add_fx(fx, effects, CHR_FX + f"hellbenter/cast{index}.ani")
+            if not effect:
+                raise ValueError(f"Missing original Hellbenter Cast{index}.ani")
+            layers.append({"key": effect, "at": 0, "offset_y": -70, "depth_offset": -1})
+        # CC057E..CC062C sends static columns 0 and 1 and throw slot 1 to state 13.
+        return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "hellbenter_cast",
+                "effect_id": "hellbenter", "material_cost": fixed_cube_cost(skill, records),
+                "stages": [{"ani": "summon1"}, {"ani": "summon2", "fx": layers}],
+                "fidelity_pending": ["blood_absorption", "sword_layers", "finish", "original_command"]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -2221,6 +2234,8 @@ def main() -> int:
             raise ValueError("Unexpected Bloody Rave animation slots")
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
+        SAFE_EFFECTS.update(path for index in (1, 2)
+                            if safe_animation(library, path := CHR_FX + f"hellbenter/cast{index}.ani"))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
         SAFE_EFFECTS.update(path for path in (illusion_club_layers["attached"], *illusion_club_layers["detached"])
