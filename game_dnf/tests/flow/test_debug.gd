@@ -29,8 +29,12 @@ func submit(text: String) -> void:
 	host.check(game.debug_panel.command_input.text.is_empty() and game.debug_panel.history[-1] == text, "one Enter submits the next console command: " + text)
 
 func button(command: String) -> void:
+	if not game.debug_panel.reveal_command(command):
+		host.check(false, "GM quick action is discoverable: " + command)
+		return
+	await ticks(2)
 	for node in game.debug_panel.find_children("*", "Button", true, false):
-		if node.get_meta("gm_command", "") == command:
+		if not node.is_queued_for_deletion() and node.get_meta("gm_command", "") == command:
 			host.click_control(node)
 			await ticks()
 			return
@@ -45,6 +49,10 @@ func run() -> void:
 	if DisplayServer.get_name() != "headless":host.check(game.get_window().unresizable, "fixed 1080p disables window resizing")
 	await key(KEY_P)
 	host.check(game.debug_is_open() and game.debug_panel.is_visible_in_tree(), "P opens an actually visible GM panel")
+	host.check(game.debug_panel.category_bar.get_child_count()==6 and game.debug_panel.active_category=="role",
+		"GM panel opens with six discoverable test categories")
+	host.check(game.debug_panel.status_label.text.contains("鬼剑士") and game.debug_panel.status_label.text.contains("Lv"),
+		"GM status identifies current class and level")
 	await key(KEY_P, 0, true)
 	host.check(game.debug_is_open(), "held P does not repeatedly toggle GM")
 	game.debug_panel.command_input.grab_focus()

@@ -17,6 +17,20 @@ func spawn(kind: String, count: int) -> void:
 	for i in count:
 		spawn_monster(Vector2(p("pos")) + Vector2(90 + (i % 5) * 35, (i / 5) * 22), "goblin_thrower" if kind == "thrower" else "goblin", kind == "chief")
 
+func spawn_current(count: int) -> int:
+	var kinds: Array[String] = []
+	for row: Dictionary in game.room_map.get("monsters",[]):
+		var kind: String=game.table.monster_by_mob(String(row.get("mob","")))
+		if kind!="" and kind not in kinds:kinds.append(kind)
+	if kinds.is_empty():kinds.append("goblin")
+	game.room_cleared=false
+	game.room_snapshots.erase(game.room_index)
+	for index in count:
+		var side := 1 if index % 2 == 0 else -1
+		spawn_monster(Vector2(p("pos"))+Vector2(side*(90+(index/2)*34),18+(index%3)*12),
+			kinds[index%kinds.size()],false)
+	return kinds.size()
+
 func lose() -> void:
 	set_god(false)
 	set_p("invuln_ms", 0.0)
