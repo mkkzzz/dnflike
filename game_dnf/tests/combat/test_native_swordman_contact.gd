@@ -1567,6 +1567,76 @@ func check_frenzy_normals() -> void:
 		check(game.player["state"]=="idle" and game.primary_normal_attack()=="attack1",
 			"Frenzy expiring at one HP clears the buffered form combo and returns to ordinary attacks")
 
+func check_gorecross_wave() -> void:
+	for sample: Array in [[1,1,0,0.1,17,234,149],[2,-1,3,0.514,22,267,167]]:
+		var rank: int = sample[0]
+		var facing: int = sample[1]
+		var profile := ProfileSession.new()
+		profile.command("numbers.level",{"level":60})
+		profile.command("numbers.growtype",{"growtype":"berserker"})
+		profile.command("numbers.skill_grant",{"id":"rage_slash","level":rank})
+		if rank == 2:
+			profile.command("numbers.skill_grant",{"id":"bloody_vigorous","level":1})
+			profile.command("numbers.skill_grant",{"id":"bleedingmastery","level":sample[2]})
+		var spec := profile.stats()
+		spec["skill_slots"] = ["rage_slash"]
+		start_room("original_27601","katana",facing,spec,"berserker")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(35*facing,0))
+		var stats := {"level":int(sample[4]),"bleeding_resistance":-2000,"physical_defense":0.0,"hp_max":5000.0}
+		target["numeric"].base.merge(stats,true)
+		target["numeric"].values.merge(stats,true)
+		target["facing"] = -facing
+		press(KEY_A)
+		step(0)
+		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0,"physical_attack":1000.0,
+			"strength":0.0,"physical_crit":0.0,"damage_rate":1.0,"skill_rate":1.0},true)
+		step(99)
+		check(game.hit_count==0 and game.objects.is_empty(),"Gore Cross has no hit before the first native sword frame")
+		step(1)
+		check(game.hit_count==1,"Gore Cross first weapon layer hits at frame 2")
+		game.player["stuck_ms"] = 0.0
+		step(249)
+		check(game.hit_count==1,"Gore Cross retains its first weapon contact through 349 ms")
+		move_target(target,POINT+Vector2(35*facing,0))
+		step(1)
+		check(game.hit_count==2 and not target["numeric"].effects.active.has("bleed"),
+			"Gore Cross's second weapon layer can hit the same target and has no wave bleed")
+		game.player["stuck_ms"] = 0.0
+		step(149)
+		check(game.objects.is_empty(),"Gore Cross waits for the original attached ANI release marker")
+		step(1)
+		check(game.objects.is_empty(),"Gore Cross consumes the release marker at 500 ms before the object update")
+		step(1)
+		check(game.objects.size()==1,"Gore Cross's ordinary route emits one passive object on the update after the marker")
+		if game.objects.size()!=1:continue
+		var wave: Dictionary = game.objects[0]
+		var hit: Dictionary = wave["hit"]
+		var bleed: Dictionary = hit["effects"][0]
+		check(wave["pos"]==POINT+Vector2(85*facing,0) and wave["z"]==82.0 and hit["percent"]==sample[6],
+			"Gore Cross uses the mirrored release point, native height, and object damage column")
+		check(is_equal_approx(bleed["chance"],sample[3]) and bleed["status_level"]==sample[4]
+			and bleed["duration_ms"]==10000 and bleed["source_bleed_total"]==sample[5],
+			"Gore Cross snapshots native probability, level, duration and status damage")
+		check(game.view.object_views.has(wave["id"]) and game.view.object_views.has("%s:front"%wave["id"]),
+			"Gore Cross draws both object layers from its shared object clock")
+		move_target(target,wave["pos"])
+		game.step_objects(39.0)
+		check(wave["hits"].is_empty(),"Gore Cross wave's first frame has no attack box")
+		game.step_objects(1.0)
+		check(wave["hits"].has(target["id"]) and target["numeric"].effects.active.has("bleed"),
+			"Gore Cross wave applies the captured bleed on its first active frame")
+		check(cues("gorecross_cross").size()==1,"Gore Cross plays its native object entry cue once")
+		check(target["numeric"].effects.active.has("blood_memory_resistance")== (rank==2),
+			"Only a learned Blood Memory attaches the resistance reduction on Gore Cross contact")
+		step(228)
+		check(game.player["action"]=="rage_slash","The ordinary Gore Cross keeps its motion through 729 ms")
+		step(1)
+		check(game.player["state"]=="idle","The ordinary Gore Cross recovers on body frame 10")
+		game.step_objects(279.0)
+		check(game.objects.has(wave),"The Gore Cross object remains through 319 ms")
+		game.step_objects(1.0)
+		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
+
 func check_hopsmash_bleed() -> void:
 	for scenario: Array in [[1,false,0,0,0],[1,true,0,12,245],[2,true,3,17,273]]:
 		var rank: int = scenario[0]
@@ -7936,6 +8006,7 @@ func run() -> void:
 	check_frenzy_normals()
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
+	check_gorecross_wave()
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()

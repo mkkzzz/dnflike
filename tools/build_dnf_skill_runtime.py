@@ -276,11 +276,11 @@ EFFECT_DIR_ALIASES = {
 }
 
 HIT_STATUS = {
+    "gorecross": [{"id": "bleed", "chance": 0.2}],
     # CNIceWave init 0xA6E602/643/679: probability per mille, status level, ms.
     "icewave": [{"id": "freeze", "chance_col": 4, "chance_scale": 0.001,
                  "status_level_col": 5, "duration_ms_col": 6}],
     "firewave": [{"id": "burn", "chance": 0.25}],
-    "gorecross": [{"id": "bleed", "chance": 0.2}],
 }
 
 AREA_REPEATS = {
@@ -1420,6 +1420,7 @@ def build_move(
     native_bloodblast: bool = True,
     bloodblast_script: dict | None = None,
     native_draw: bool = True,
+    native_cross: bool = True,
 ) -> dict | None:
     if skill.get("type") != "[active]":
         return None
@@ -1435,6 +1436,18 @@ def build_move(
         # a summon animation plus a one-millisecond effect cannot implement it.
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
                 "movement": "backstep", "stages": [{"ani": "jump", "atk": "", "hits": []}]}
+    if key == "gorecross" and native_cross:
+        wave = OBJ_ROOT + "gorecross.obj"
+        objects[wave] = wave
+        slash = records[CHR_FX + "gorecross/slash2.ani"]["decoded"]["timeline"]
+        release = next(frame["start_ms"] for frame in slash if frame["items"].get("23") == 1)
+        body = records[CHR_ANI + "gorecross.ani"]["decoded"]["timeline"]
+        return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "stages": [{"ani": "gorecross", "voice": "R_TSLASH",
+                    "sounds": [{"key": "R_TSLASH", "at": body[6]["start_ms"]}], "fx": [
+                    {"key": key, "at": 0, "action_clock": True} for key in ("gore_slash1", "gore_slash2")],
+                    "hits": [{"object": wave, "at": release, "percent_col": 1, "offset": [85, 0, 82],
+                              "starts_at_zero": True, "native_controller": {"kind": "gorecross_wave"}}]}]}
     if key == "momentaryslash" and native_draw:
         # CC7F44 selects body/ATK slot 8. The body has no attack boxes.
         atk = "character/swordman/attackinfo/momentaryslash.atk"
@@ -1997,15 +2010,6 @@ def mastery_variants() -> dict:
                 "append_object": OBJ_ROOT + "grandwavefullcharge.obj",
             }
         ],
-        "rage_slash": [
-            {
-                "priority": 20,
-                "job": "berserker",
-                "append_stage": "gorecross",
-                "append_hits": 1,
-                "append_status": {"id": "bleed", "chance": 0.4},
-            }
-        ],
         "moonlight": [
             {
                 "priority": 20,
@@ -2297,6 +2301,19 @@ def main() -> int:
         charge_finish_tracks = swordman_weapon_tracks(library, "chargecrashfinish", {
             "greatsword": "hsword/lswdc", "club": "club/clubb",
         }, [3, 4])
+        if not safe_object(library, records, OBJ_ROOT + "gorecross.obj"):
+            raise ValueError("Missing original Gore Cross object")
+        cross_tracks = [swordman_weapon_tracks(library, "gorecross", folders, frames) for folders, frames in (
+            ({"shortsword": "ssword/sswdc", "katana": "katana/katanac", "greatsword": "hsword/lswdc",
+              "club": "club/clubc", "beamsword": "beamsword/beamswdc"},
+             {family: ([3, 4, 5] if family == "club" else [2, 3, 4, 5])
+              for family in ("shortsword", "katana", "greatsword", "club", "beamsword")}),
+            ({"shortsword": "ssword/sswdb", "katana": "katana/katanab", "greatsword": "hsword/lswdb",
+              "club": "club/clubb", "beamsword": "beamsword/beamswdb"}, [7]),
+        )]
+        for phase, frame_count in zip(cross_tracks, (6, 8)):
+            for track in phase.values():
+                track["frames"] = track["frames"][:frame_count]
         rapid_tracks = rapid_move_slash_tracks(library)
         illusion_tracks = illusion_finish_tracks(library)
         illusion_club_layers = illusion_club_layer_script(library)
@@ -2399,6 +2416,10 @@ def main() -> int:
         if key == "momentaryslashex":
             move = build_move(by_id[9], records, atk_by_stem, effect_paths, fx, effects, objects,
                               native_draw=False)
+        if key == "bloodsword":
+            # Keep the legacy placeholder until Blood Sword has a source-backed controller.
+            move = build_move(by_id[64], records, atk_by_stem, effect_paths, fx, effects, objects,
+                              native_cross=False)
         if key == "illusionslashexp":
             move = build_move(by_id[73], records, atk_by_stem, effect_paths, fx, effects, objects)
         if move:
@@ -2514,6 +2535,9 @@ def main() -> int:
                 body = next(hit for hit in move["stages"][1]["hits"] if hit.get("body"))
                 body["percent_col"] = 0
                 move["hop_final_atk"] = CHR_ATK + "hopsmashfinal.atk"
+            if key == "gorecross":
+                move["weapon_tracks"] = cross_tracks
+                move["cross_bleed_base"] = bleed_attack_base
             if key == "momentaryslash":
                 move["weapon_tracks"] = draw_tracks
                 move["draw_bleed_base"] = bleed_attack_base

@@ -2311,6 +2311,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	player["stage"] = index
 	player["clock"] = opening_clock
 	player["hits"] = {}
+	player.erase("gorecross_release_armed")
 	player.erase("queued_upper_followup")
 	player.erase("action_slide")
 	action_seq += 1
@@ -2985,8 +2986,14 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var hit: Dictionary = stage["hits"][i]
 		if hit["kind"] == "object":
 			var at := float(hit["at"])
-			var hop_shockwave: bool = hit.get("native_controller",{}).get("kind","") == "hop_shockwave"
+			var kind := String(hit.get("native_controller",{}).get("kind",""))
+			var hop_shockwave := kind == "hop_shockwave"
 			var due: bool = player["native_phase"].get("hop_landed_now",false) if hop_shockwave else action_timed_crossed(at,old_t,new_t)
+			if kind == "gorecross_wave":
+				# CB3EDB advances phase 1 at the marker. Phase 2 sends the object on the next update.
+				var armed: bool = player.get("gorecross_release_armed",false)
+				player["gorecross_release_armed"] = due
+				due = armed
 			if due:
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
@@ -3015,6 +3022,8 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					spawn_object(hit,"player",Vector2(player["pos"]).round(),roundf(player["z"]),facing,attack_power())
 				elif hop_shockwave:
 					spawn_object(prepare_hop_shockwave(hit),"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
+				elif kind == "gorecross_wave":
+					spawn_object(prepare_cross_wave(hit),"player",Vector2(player["pos"]).round(),roundf(player["z"]),facing,attack_power())
 				elif hit.get("native_controller",{}).get("kind","") == "illusion_club_wave":
 					# CB558B uses the skill's room-shake parameters before CB5614 spawns the object.
 					var shake: Array = hit["native_controller"]["shake"]
@@ -3345,13 +3354,26 @@ func prepare_hop_shockwave(template: Dictionary) -> Dictionary:
 	bleed["status_level"] += blood_memory_bleed_level_bonus()
 	bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["hop_bleed_base"])
 	hit["effects"] = template["effects"]+[bleed]
+	set_blood_memory_resistance_payload(hit)
+	return hit
+
+func prepare_cross_wave(template: Dictionary) -> Dictionary:
+	var move := move_def("rage_slash")
+	var hit := template.duplicate()
+	var bleed: Dictionary = move["cross_bleed"].duplicate()
+	bleed["status_level"] += blood_memory_bleed_level_bonus()
+	bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],move["cross_bleed_base"])
+	hit["effects"] = [bleed]
+	set_blood_memory_resistance_payload(hit)
+	return hit
+
+func set_blood_memory_resistance_payload(hit: Dictionary) -> void:
 	var passive_rank := int(skill_levels.get("bleedingmastery",0))
 	if passive_rank > 0:
-		# CB4F0D..CB4FC5 snapshots the resistance appendage in the object payload.
+		# CB4F0D and CB420B snapshot the resistance appendage in the object payload.
 		var record: Dictionary = Numbers.record("bleedingmastery")
 		var row: Array = Numbers.Skills.sample(record,passive_rank)["level_row"]
 		hit["blood_memory_resistance"] = {"amount":int(row[3]),"duration_ms":int(record["dungeon"]["static_data"][2])}
-	return hit
 
 func prepare_outrage_damage(template: Dictionary) -> Dictionary:
 	var base := native_fixed_attack_base(move_def("outragebreak")["fixed_attack_base"])
@@ -3469,7 +3491,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var native_down := native_outrage or club_wave or native_kind == "bloodblast"
 	var rapid_slash := native_kind == "rapid_slash"
 	var native_illusion := native_kind in ["illusion_melee","illusion_finish","illusion_wave"]
-	var native_blood := rapid_slash or native_illusion
+	var native_blood := rapid_slash or native_illusion or native_kind == "gorecross_wave"
 	var native_reaction := native_down or native_blood or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
@@ -3633,8 +3655,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
-		if by_player and native_kind == "hop_shockwave" and hit.has("blood_memory_resistance"):
-			# E59CDE calls the wave's 9FCCB0 callback before the target processes status.
+		if by_player and hit.has("blood_memory_resistance"):
+			# E59CDE calls the wave's 9FCCB0 or 9FC4A0 callback before target status.
 			target["numeric"].apply_blood_memory_resistance(hit["blood_memory_resistance"])
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
@@ -3656,8 +3678,6 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					announce_source_bleed(int(target["id"]))
 				continue
 			var chance := float(effect.get("chance",1))
-			if effect.get("id","") == "bleed" and hit_skill_id == "rage_slash" and int(skill_levels.get("bloody_vigorous",0)) > 0:
-				chance = minf(1.0,chance+0.4)
 			var duration_ms := float(effect.get("duration_ms",0))
 			if effect.get("id","") == "sleep":
 				if target["numeric"].apply_source_sleep(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
@@ -4574,7 +4594,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		bus.emit("combat.cue",{"kind":"native_particle",
 			"path":"passiveobject/character/swordman/particle/icewaveparticlesmoke.ptl",
 			"point":entity["pos"],"height":entity["z"],"scale":entity["size_rate"]})
-	if kind != "hop_shockwave" and String(obj["add_fx"]) not in ["",String(hit.get("rear_fx",""))]:
+	if kind not in ["hop_shockwave","gorecross_wave"] and String(obj["add_fx"]) not in ["",String(hit.get("rear_fx",""))]:
 		spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 	return entity
 
@@ -4605,6 +4625,10 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 		var hit: Dictionary = o["hit"]
 		var controller: Dictionary = hit.get("native_controller",{})
 		var kind := String(controller.get("kind",""))
+		if kind == "gorecross_wave" and not o.get("entry_sound_played",false):
+			# 9FC45C sets GORECROSS_CROSS, played once by 7F9F24.
+			o["entry_sound_played"] = true
+			play_sound("gorecross_cross")
 		var object_ms := ms
 		if first_new_object_id > 0 and int(o["id"]) >= first_new_object_id and o["owner"] in ["player","companion"] \
 				and (kind in GHOST_FIELD_KINDS or hit.get("skill_id","") in ["normalwave","icewave","firewave"]):
@@ -6218,12 +6242,12 @@ func view_snapshot() -> Dictionary:
 			floor["effect"] = controller["attached"]
 			objs.append(floor)
 			objs.append(item)
-		elif controller.get("kind","") == "hop_shockwave":
+		elif controller.get("kind","") in ["hop_shockwave","gorecross_wave"]:
 			objs.append(item)
 			var front := item.duplicate()
 			front["id"] = "%s:front"%o["id"]
 			front["effect"] = o["def"]["add_fx"]
-			front["depth_offset"] = 3
+			front["depth_offset"] = 3 if controller["kind"] == "hop_shockwave" else 1
 			objs.append(front)
 		elif controller.get("kind","") == "hundred_sword_field":
 			item["depth_offset"] = -2

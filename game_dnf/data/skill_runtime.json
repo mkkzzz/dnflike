@@ -218,6 +218,7 @@
    "passiveobject/character/swordman/firewavebig.obj": "passiveobject/character/swordman/firewavebig.obj",
    "passiveobject/character/swordman/firewavebigsub.obj": "passiveobject/character/swordman/firewavebigsub.obj",
    "passiveobject/character/swordman/givebloodsub.obj": "passiveobject/character/swordman/givebloodsub.obj",
+   "passiveobject/character/swordman/gorecross.obj": "passiveobject/character/swordman/gorecross.obj",
    "passiveobject/character/swordman/grabblastblood.obj": "passiveobject/character/swordman/grabblastblood.obj",
    "passiveobject/character/swordman/grabblastbloodbig.obj": "passiveobject/character/swordman/grabblastbloodbig.obj",
    "passiveobject/character/swordman/grandwave.obj": "passiveobject/character/swordman/grandwave.obj",
@@ -8179,83 +8180,856 @@
    ]
   },
   "rage_slash": {
+   "cross_bleed_base": {
+    "by_level": [
+     59,
+     67,
+     75,
+     83,
+     91,
+     99,
+     107,
+     115,
+     123,
+     131,
+     139,
+     147,
+     154,
+     162,
+     170,
+     178,
+     186,
+     194,
+     202,
+     210,
+     218,
+     226,
+     234,
+     242,
+     249,
+     257,
+     265,
+     273,
+     281,
+     289,
+     297,
+     305,
+     313,
+     321,
+     329,
+     337,
+     345,
+     352,
+     360,
+     368,
+     376,
+     384,
+     392,
+     400,
+     408,
+     416,
+     424,
+     432,
+     440,
+     447,
+     457,
+     467,
+     477,
+     487,
+     497,
+     507,
+     517,
+     527,
+     537,
+     546,
+     556,
+     566,
+     576,
+     586,
+     596,
+     606,
+     616,
+     626,
+     636,
+     645,
+     655,
+     665,
+     675,
+     685,
+     695,
+     705,
+     715,
+     725,
+     735,
+     744,
+     754,
+     764,
+     774,
+     784,
+     794,
+     804,
+     814,
+     824,
+     834,
+     843,
+     853,
+     863,
+     873,
+     883,
+     893,
+     903,
+     913,
+     923,
+     933,
+     942
+    ],
+    "sha256": "61fe2583df5a6cbf0f33ab8a084d18aca760732441b332128dfcff98c1de0ba4",
+    "source": "etc/etcparameter.etc"
+   },
    "name": "十字斩",
    "skill": "skill/swordman/gorecross.skl",
    "stages": [
     {
      "ani": "gorecross",
-     "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
      "fx": [
       {
+       "action_clock": true,
        "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [
-        {
-         "chance": 0.2,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
-      }
-     ]
-    }
-   ]
-  },
-  "rage_slash__variant_1": {
-   "name": "十字斩",
-   "skill": "skill/swordman/gorecross.skl",
-   "stages": [
-    {
-     "ani": "gorecross",
-     "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_upperslash1_65c825d8"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [
-        {
-         "chance": 0.2,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0,
-        200.0
-       ]
+       "key": "gore_slash1"
       },
       {
-       "atk": "passiveobject/character/swordman/attackinfo/gorecross.atk",
-       "derived": "skillfx_upperslash1_65c825d8",
-       "effects": [
-        {
-         "chance": 0.4,
-         "id": "bleed"
-        }
-       ],
-       "percent_col": 0,
-       "window": [
-        0,
-        240
-       ]
+       "action_clock": true,
+       "at": 0,
+       "key": "gore_slash2"
       }
-     ]
+     ],
+     "hits": [
+      {
+       "at": 500,
+       "native_controller": {
+        "kind": "gorecross_wave"
+       },
+       "object": "passiveobject/character/swordman/gorecross.obj",
+       "offset": [
+        85,
+        0,
+        82
+       ],
+       "percent_col": 1,
+       "starts_at_zero": true
+      }
+     ],
+     "sounds": [
+      {
+       "at": 300,
+       "key": "R_TSLASH"
+      }
+     ],
+     "voice": "R_TSLASH"
+    }
+   ],
+   "weapon_tracks": [
+    {
+     "beamsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           16,
+           -20,
+           41,
+           131,
+           35,
+           45
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -70,
+           -10,
+           24,
+           139,
+           38,
+           50
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -106,
+           -10,
+           39,
+           158,
+           38,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -108,
+           -5,
+           43,
+           135,
+           38,
+           37
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       }
+      ],
+      "sha256": "f29d6ad55d786fd67d71e5f5804a66282667722a2420e1fa76fc9b7e329b12b9",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdc/gorecross.ani"
+     },
+     "club": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -70,
+           -10,
+           24,
+           139,
+           35,
+           50
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -91,
+           -10,
+           39,
+           145,
+           35,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -103,
+           -5,
+           43,
+           130,
+           35,
+           37
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       }
+      ],
+      "sha256": "70dce9d804fabffd4ba08e57d6d9cb3527086133a0b7b3053e7ef8eee3139f75",
+      "source": "equipment/character/swordman/weapon/club/clubc/gorecross.ani"
+     },
+     "greatsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           16,
+           -20,
+           41,
+           138,
+           38,
+           45
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -70,
+           -10,
+           24,
+           139,
+           41,
+           50
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -129,
+           -10,
+           39,
+           181,
+           41,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -127,
+           -5,
+           43,
+           154,
+           41,
+           37
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       }
+      ],
+      "sha256": "e4b4ce1bb8e6feca181ecd180865b0534c3f5714311983e9e2c9250937c269b3",
+      "source": "equipment/character/swordman/weapon/hsword/lswdc/gorecross.ani"
+     },
+     "katana": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           16,
+           -20,
+           41,
+           120,
+           35,
+           45
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -70,
+           -10,
+           24,
+           139,
+           35,
+           50
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -91,
+           -10,
+           39,
+           145,
+           35,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -103,
+           -5,
+           43,
+           130,
+           35,
+           37
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       }
+      ],
+      "sha256": "c3f10c1acd15be12ce1485b3aa5d64c11969c35d7ec6a2b7a32be3261e121c84",
+      "source": "equipment/character/swordman/weapon/katana/katanac/gorecross.ani"
+     },
+     "shortsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           16,
+           -20,
+           41,
+           118,
+           32,
+           45
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -70,
+           -10,
+           24,
+           139,
+           32,
+           50
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -91,
+           -10,
+           39,
+           145,
+           32,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -91,
+           -10,
+           39,
+           145,
+           32,
+           51
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 5
+       }
+      ],
+      "sha256": "2c84125a288fb429ffca2af8171586192a3b157000685b541941d5cc61942e26",
+      "source": "equipment/character/swordman/weapon/ssword/sswdc/gorecross.ani"
+     }
+    },
+    {
+     "beamsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -1,
+           -22,
+           20,
+           90,
+           49,
+           127
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 7
+       }
+      ],
+      "sha256": "4b931d0d3157adbc5cf0f4eb78379e9564b22b7298b2af1185d89baa8e1f16b2",
+      "source": "equipment/character/swordman/weapon/beamsword/beamswdb/gorecross.ani"
+     },
+     "club": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -1,
+           -22,
+           20,
+           85,
+           49,
+           127
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 7
+       }
+      ],
+      "sha256": "c37aa4a13120ae7d1712d1319cf59d344cd969b653fdf090886283ca77cae016",
+      "source": "equipment/character/swordman/weapon/club/clubb/gorecross.ani"
+     },
+     "greatsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -1,
+           -22,
+           20,
+           103,
+           49,
+           135
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 7
+       }
+      ],
+      "sha256": "ddbcf367cad5cf697d8d9468c48d090cf9e84744424d41e42a9a46ebfe679f34",
+      "source": "equipment/character/swordman/weapon/hsword/lswdb/gorecross.ani"
+     },
+     "katana": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -1,
+           -22,
+           20,
+           85,
+           49,
+           127
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 7
+       }
+      ],
+      "sha256": "c6e8f7c73cb3bf9ca5fb4d4323e7a5e096d941ca84ba2004d4563255fed431c0",
+      "source": "equipment/character/swordman/weapon/katana/katanab/gorecross.ani"
+     },
+     "shortsword": {
+      "frames": [
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 0
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 1
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 2
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 3
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 4
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 5
+       },
+       {
+        "boxes": [],
+        "delay_ms": 50,
+        "frame": 6
+       },
+       {
+        "boxes": [
+         {
+          "box": [
+           -1,
+           -22,
+           20,
+           76,
+           49,
+           127
+          ],
+          "kind": "attack"
+         }
+        ],
+        "delay_ms": 50,
+        "frame": 7
+       }
+      ],
+      "sha256": "92ece34e17a5a8d7fcea601d8e856ade8510b7ed4ea1dfa541d2c2289b222fae",
+      "source": "equipment/character/swordman/weapon/ssword/sswdb/gorecross.ani"
+     }
     }
    ]
   },
@@ -15382,7 +16156,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "a6c918e8306e41237bf336245b1b04a52c7b27885d67d2a195f8f0cdfc9c1b99"
+  "pack_sha256": "bb2cc1f30b625db55309581e86b80a79865aa3e9f11fbe8a441ddfa8370dd285"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,
@@ -15471,19 +16245,6 @@
     "skill": {
      "moonlightslashfull": 1
     }
-   }
-  ],
-  "rage_slash": [
-   {
-    "append_hits": 1,
-    "append_stage": "gorecross",
-    "append_status": {
-     "chance": 0.4,
-     "id": "bleed"
-    },
-    "job": "berserker",
-    "move": "rage_slash__variant_1",
-    "priority": 20
    }
   ],
   "triple": [

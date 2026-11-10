@@ -302,7 +302,7 @@ func companion_moves(levels: Dictionary, active_weapon: String) -> Dictionary:
 func _selected_move_spec(name: String) -> Dictionary:
 	var generated: Dictionary = skill_runtime.get("moves", {}).get(name, {})
 	if name == "draw" and generated.get("native_state","") == "draw":return generated.duplicate(true)
-	if name == "rapidmoveslash":return generated
+	if name == "rapidmoveslash" or (name == "rage_slash" and generated.has("cross_bleed_base")):return generated
 	var base: Dictionary = Dictionary(move_specs.get(name, {})).duplicate(true)
 	for field: String in ["hp_cost_row", "material_cost", "requires_effect", "super_armor", "invuln_ms", "effect_id", "cast_fx", "aura_fx"]:
 		if generated.has(field):
@@ -562,6 +562,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["stages"] = []
 		for stage: Dictionary in spec["stages"]:
 			var stage_hits := weapon_hits if move["stages"].is_empty() else []
+			if spec.has("cross_bleed_base"):stage_hits = []
 			if name in ["triple","weaponcombo"]:
 				stage_hits = _swordman_hits(String(stage["ani"]))
 			if name == "charge_crash" and stage["ani"] == "chargecrashfinish":
@@ -743,6 +744,29 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 	if normal_index >= 0 and normal_index < NORMAL_CONTINUE_FRAMES.size():
 		move["combo_at"] = float(move["timeline"][NORMAL_CONTINUE_FRAMES[normal_index]]["start_ms"])
 	if name == "upper":_append_upper_followup(move)
+	if spec.has("cross_bleed_base"):
+		var row: Array = skill["level_row"]
+		var stage: Dictionary = move["stages"][0]
+		# CBD073 ends the ordinary route when body frame 10 is reached.
+		stage["duration"] = float(stage["timeline"][10]["start_ms"])
+		stage["cancel_at"] = stage["duration"]
+		var wave: Dictionary = stage["hits"][0]
+		wave["hitstop_ms"] = _atk_hitstop(wave["atk"],0.0)
+		wave["size_rate"] = NativeMotion.f32(float(skill["static"][1])*NativeMotion.f32(0.01))
+		var bleed_percent := NativeMotion.f32(float(row[2])*NativeMotion.f32(0.1))
+		if int(skill_levels.get("bloody_vigorous",0)) > 0:
+			var vigor := _skill_row("skill/swordman/bloodyvigorous.skl")
+			bleed_percent = NativeMotion.f32(bleed_percent+NativeMotion.f32(float(vigor["static"][0])*NativeMotion.f32(0.1)))
+		move["cross_bleed"] = {"id":"bleed","chance":bleed_percent/100.0,
+			"status_level":int(row[3]),"duration_ms":int(row[4]),"damage_percent":float(row[5])}
+		move["cross_bleed_base"] = spec["cross_bleed_base"]["by_level"]
+		# CCB7A6 and CB3D38 install ETC ATK 24. The switch at frame 6 clears the first contact ledger.
+		for tracks: Dictionary in spec["weapon_tracks"]:
+			var track: Dictionary = tracks.get(weapon,{})
+			var segments := Timeline.attached_attack_segments(stage["timeline"],[Timeline.from_ani(track)])
+			var swing := _build_stage({"ani":"gorecross","hits":[{"atk":"character/swordman/attackinfo/gorecross2.atk",
+				"attached_weapon":true,"percent_col":0}]},skill,segments)
+			stage["hits"].append_array(swing["hits"])
 	if name == "hopsmash":
 		var row: Array = skill["level_row"]
 		var static_data: Array = skill["static"]
