@@ -6474,12 +6474,15 @@ func check_bloodblast() -> void:
 		and game.objects[1]["hit"]["fixed_amount"]==1048 and game.objects[2]["hit"]["fixed_amount"]==1399,
 		"active rank one Frenzy applies its one percent after the original truncation on all three objects")
 
-	for sample: Array in [[0,1120],[1,1000],[2,100]]:
-		start_room("original_27601","katana",1,spec,"berserker")
+	for sample: Array in [[0,1120,-1],[1,1000,1],[2,100,-1]]:
+		var facing: int = sample[2]
+		start_room("original_27601","katana",facing,spec,"berserker")
 		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 		game.clear_monsters()
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["hit"] = 1.0
+		game.numeric_player.values["physical_crit"] = 0.0
+		game.numeric_player.values["physical_back_crit"] = 1.0
 		press(KEY_A)
 		step(495)
 		if game.objects.size()!=3:
@@ -6487,7 +6490,8 @@ func check_bloodblast() -> void:
 			continue
 		var eruption: Dictionary = game.objects[int(sample[0])]
 		game.objects.assign([eruption])
-		var victim: Dictionary = api.spawn_dummy(POINT)
+		var victim: Dictionary = api.spawn_dummy(POINT+Vector2(0.75,0))
+		victim["facing"] = facing
 		victim["clock"] = 19.0
 		var frame: Dictionary = game.enemy_frame(victim)
 		var original_items: Dictionary = frame.get("items",{})
@@ -6508,6 +6512,15 @@ func check_bloodblast() -> void:
 		check(victim["hp"]<5000.0 and eruption["hits"].has(victim["id"]) and victim["stuck_ms"]==50.0
 			and victim["state"]=="idle" and victim["clock"]==19.0 and victim["vz"]==0.0,
 			"Blood Blast still damages armored targets without replacing their pose or launching them: "+str(sample))
+		check(game.last_damage["critical"],"equal integer X uses the eruption's facing: "+str(sample))
+		for side: int in [-1,1]:
+			var flank: Dictionary = game.spawn_enemy(POINT+Vector2(side*12,0))
+			flank["hp"] = 5000.0
+			flank["facing"] = 1
+			game.step_objects(0.0)
+			check(eruption["hits"].has(flank["id"]) and flank["hp"]<5000.0
+				and game.last_damage["critical"]==(side==1),
+				"Blood Blast back attacks are relative to the eruption center: "+str([sample,side]))
 
 func run() -> void:
 	game = session.mount(root)

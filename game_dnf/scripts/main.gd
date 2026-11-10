@@ -4493,6 +4493,10 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# is the victim's facing, opposite the push direction.
 						var delta_x := int(target["pos"].x)-int(o["pos"].x)
 						hit_facing = -hit_facing if delta_x == 0 else -signi(delta_x)
+					elif kind == "bloodblast":
+						# 867485 compares integer X for stationary eruption objects.
+						var delta_x := int(target["pos"].x)-int(o["pos"].x)
+						if delta_x != 0:hit_facing = signi(delta_x)
 					elif outrage_impact or kind == "draw_short_wave":
 						# 867370 uses the target's side for stationary objects.
 						# Moving waves keep their flight direction within 150 px.
