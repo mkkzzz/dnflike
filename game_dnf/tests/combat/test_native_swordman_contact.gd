@@ -1616,6 +1616,7 @@ func check_gorecross_wave() -> void:
 		step(1)
 		check(cues("R_TSLASH").size()==2 and cues("gorecross").size()==1,
 			"Gore Cross repeats the swing sound without replaying the voice at frame six")
+		check(game.player["hits"].is_empty(),"Gore Cross reinstalls the ATK and clears the contact ledger on frame six")
 		step(49)
 		check(game.hit_count==1,"Gore Cross retains its first weapon contact through 349 ms")
 		move_target(target,POINT+Vector2(35*facing,0))
@@ -1671,22 +1672,40 @@ func check_gorecross_wave() -> void:
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 	game.rng = previous_rng
 
-func check_gorecross_weapon_pause() -> void:
+func check_gorecross_weapon_contact() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
 	profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rage_slash"]
-	for sample: Array in [["shortsword",100,90],["club",150,100],["greatsword",100,120],["beamsword",100,60]]:
+	for sample: Array in [["shortsword",100,90,500],["katana",100,70,429],["club",150,100,599],
+			["greatsword",100,120,700],["beamsword",100,60,424]]:
 		start_room("",sample[0],1,spec,"berserker")
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(35,0))
+		target["numeric"].base["hit_recovery"] = 0.0
+		target["numeric"].values["hit_recovery"] = 0.0
 		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0},true)
 		press(KEY_A)
 		game.step_game(0.0)
 		game.step_game(sample[1])
 		check(game.hit_count==1 and game.player["stuck_ms"]==sample[2] and target["stuck_ms"]==sample[2],
 			"Gore Cross freezes both actors for the original %s pause without consuming its first update"%sample[0])
+		check(target["state"]=="hurt" and target["stun_ms"]==sample[3] and target["facing"]==-1
+			and target["push_v"]==400.0 and target["push_ms"]==150.0,
+			"Gore Cross uses state three and the quantized weapon stagger for %s"%sample[0])
+		var cut := cues("hit_cut_s3")+cues("hit_cut_l3")
+		var blood := cues("hit_blood_s1")+cues("hit_blood_l")
+		var blow := cues("hit_blow_s")+cues("hit_blow_l")
+		var deposit := cues("native_contact_blood")
+		if sample[0]=="club":
+			check(blow.size()==1 and cut.is_empty() and blood.is_empty() and deposit.is_empty(),
+				"Gore Cross with a club uses a blunt impact without blood")
+		else:
+			check(cut.size()==1 and blood.size()==1 and deposit.size()==1
+				and (cut[0]["key"]=="hit_cut_s3")== (blood[0]["key"]=="hit_blood_s1")
+				and cut[0]["scale"]==1.0 and blood[0]["scale"]==1.0 and deposit[0]["point"]==blood[0]["point"]-Vector2(10,0),
+				"Gore Cross uses the upward cut and adult blood layers with the same size draw")
 		game.step_game(sample[2]-1)
 		check(game.player["clock"]==sample[1] and game.player["stuck_ms"]==1.0 and target["stuck_ms"]==1.0,
 			"The weapon and its target keep the last millisecond of pause")
@@ -1694,6 +1713,34 @@ func check_gorecross_weapon_pause() -> void:
 		game.step_game(1.0)
 		check(game.player["clock"]==sample[1]+1 and target["stuck_ms"]==0.0,
 			"The Gore Cross body resumes on the update after its native pause")
+
+	for condition: String in ["air","no_blood","immune","armor","freeze"]:
+		start_room("original_27601","katana",-1,spec,"berserker")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(-35,0))
+		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0},true)
+		var items: Dictionary = game.enemy_frame(target)["items"]
+		var original_mode = items.get("13")
+		match condition:
+			"air":target["z"] = 25.0
+			"no_blood":
+				target["def"] = target["def"].duplicate()
+				target["def"]["hit_blood_allowed"] = false
+			"immune":items["13"] = 2
+			"armor":items["13"] = 1
+			"freeze":target["numeric"].effects.add("freeze",{"duration_ms":1000})
+		press(KEY_A)
+		step(100)
+		if original_mode == null:items.erase("13")
+		else:items["13"] = original_mode
+		if condition == "immune":
+			check(game.hit_count==0 and game.player["hits"].is_empty(),
+				"An immune frame is excluded before the Gore Cross contact ledger")
+			continue
+		var state := "native_down_flight" if condition=="air" else ("hurt" if condition=="no_blood" else "idle")
+		check(game.hit_count==1 and target["state"]==state,"The original damage-reaction gate handles "+condition)
+		if condition == "no_blood":
+			check(cues("native_contact_blood").is_empty() and cues("hit_blood_s1").is_empty() and cues("hit_blood_l").is_empty(),
+				"The adult blood layers honor the target's blood flag")
 
 func check_gorecross_cost() -> void:
 	for sample: Array in [[1,0,17],[1,1,8],[2,1,12]]:
@@ -8366,7 +8413,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
 	check_gorecross_wave()
-	check_gorecross_weapon_pause()
+	check_gorecross_weapon_contact()
 	check_gorecross_cost()
 	check_gorecross_wave_direction()
 	check_gorecross_followup()

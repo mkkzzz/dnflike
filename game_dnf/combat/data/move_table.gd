@@ -751,6 +751,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["cross_wave_fixed"] = float(row[7])
 		move["cross_followup_damage"] = [float(row[10]),float(row[11])]
 		var stage: Dictionary = move["stages"][0]
+		stage["cross_reinstall_at"] = float(stage["timeline"][6]["start_ms"])
 		# CBD073 ends the ordinary route when body frame 10 is reached.
 		stage["duration"] = float(stage["timeline"][10]["start_ms"])
 		for index in move["stages"].size():
@@ -778,6 +779,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			"status_level":int(row[3]),"duration_ms":int(row[4]),"damage_percent":float(row[5])}
 		move["cross_bleed_base"] = spec["cross_bleed_base"]["by_level"]
 		# CCB7A6 and CB3D38 install ETC ATK 24. The switch at frame 6 clears the first contact ledger.
+		var weapon_info := weapon_hit_info(weapon)
+		# 83F89D supplies the weapon multiplier. 81ED3A packs it as a whole percentage.
+		var stagger_percent := int(NativeMotion.f32(float(weapon_info[3])*100.0))
+		var stagger_factor := NativeMotion.f32(stagger_percent*NativeMotion.f32(0.01))
 		for tracks: Dictionary in spec["weapon_tracks"]:
 			var track: Dictionary = tracks.get(weapon,{})
 			var segments := Timeline.attached_attack_segments(stage["timeline"],[Timeline.from_ani(track)])
@@ -785,7 +790,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				"attached_weapon":true,"percent_col":0}]},skill,segments)
 			# 83F7FF fills the omitted ATK pause from the active CHR weapon row.
 			for hit: Dictionary in swing["hits"]:
-				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],float(weapon_hit_info(weapon)[2]))
+				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],float(weapon_info[2]))
+				hit["stagger_factor"] = stagger_factor
+				hit["native_controller"] = {"kind":"gorecross_melee"}
 			stage["hits"].append_array(swing["hits"])
 	if name == "hopsmash":
 		var row: Array = skill["level_row"]

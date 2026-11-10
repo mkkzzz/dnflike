@@ -1303,6 +1303,11 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
 	var old_event_clock := old_native_event_clock if native_timed_ani or bloodblast else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
+	if stage.has("cross_reinstall_at") and event_clock >= float(stage["cross_reinstall_at"]) \
+			and not native_phase.get("cross_atk_reinstalled",false):
+		# CB3D38 installs the second ATK before its hit boxes become active.
+		native_phase["cross_atk_reinstalled"] = true
+		player["hits"].clear()
 	if name == "hundredsword":
 		var cast: Dictionary = player["hundred_sword_cast"]
 		var preparing := int(player["stage"]) == 0
@@ -3078,7 +3083,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var attached: bool = hit.get("source","") == "attached_weapon"
 		var hop_body: bool = stage.has("hop_final_hit") and hit.get("source","") == "body"
 		if hop_body and int(player["native_phase"].get("hop_resets_left",1)) == 0:hit = stage["hop_final_hit"]
-		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash","illusion_finish"]
+		var native_melee: bool = hit.get("native_controller",{}).get("kind","") in ["outrage_slash","rapid_slash","illusion_finish","gorecross_melee"]
 		var sample_from := new_t if attached or hop_body or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
@@ -3302,7 +3307,7 @@ func apply_native_damage_reaction(target: Dictionary, atk: Dictionary, facing: i
 	var airborne := roundi(float(target["z"])) > 0
 	var in_down_state: bool = target["state"] in ["air","down","native_down_flight"]
 	if (airborne or in_down_state) and (motions.get("down","") != "" or motions.get("overturn","") != ""):
-		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true,int(atk["ignore_weight"])!=0)
+		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true,int(atk.get("ignore_weight",0))!=0)
 	return apply_native_ground_stagger(target,atk,facing,recovery,delay_factor)
 
 func apply_native_down_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor := 1.0) -> String:
@@ -3546,7 +3551,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		or (native_kind == "gorecross_wave" and Kernel.MoveTable.enum_value(atk,"damage_reaction") == "[down]")
 	var rapid_slash := native_kind == "rapid_slash"
 	var native_illusion := native_kind in ["illusion_melee","illusion_finish","illusion_wave"]
-	var native_blood := rapid_slash or native_illusion or native_kind == "gorecross_wave"
+	var native_blood := rapid_slash or native_illusion or native_kind in ["gorecross_wave","gorecross_melee"]
 	var native_reaction := native_down or native_blood or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
