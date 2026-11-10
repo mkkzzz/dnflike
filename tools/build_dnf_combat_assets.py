@@ -1747,6 +1747,8 @@ def main() -> int:
         keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'],
                 *(layer['key'] for layer in stages[-1]['fx']), *move['formation']['effects'].values())
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+        specs.extend(('player_clips', stage['ani'], runtime['assets']['player_anims'][stage['ani']])
+                     for stage in stages[1:-1])
         specs.extend(('variant_effects', key, spec) for key, spec in hundred_sword_blade_banks().items())
         specs.append(('objects', field['object'], field['object']))
         specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))

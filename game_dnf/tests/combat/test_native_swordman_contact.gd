@@ -3311,6 +3311,55 @@ func check_hundred_sword_ready() -> void:
 	step(1.0)
 	check(game.player["action"]=="" and finish_layers.call().is_empty(),"the finish ends at 1270 ms and clears attached layers")
 
+func check_hundred_sword_automatic() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hundredsword"]
+	start_room("","katana",1,spec)
+	game.clear_monsters()
+	game.player["mp"] = 1500.0
+	game.numeric_player.values["attack_speed"] = 1.25
+	game.numeric_player.weapon_attack_speed_per_mille = 250
+	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==5)
+	press(KEY_A)
+	step(2760.0)
+	check(game.player["pos"]==POINT and game.player["z"]==0.0 and game.player["stage"]==0,
+		"the approach starts at ready frame twenty-two from the saved ground origin")
+	step(120.0)
+	check(game.player["pos"]==Vector2(428,266) and game.player["z"]==54.0,
+		"the ready approach interpolates XYZ toward the first live sword with a 50-pixel height offset")
+	step(120.0)
+	var slots := [13,6,23,9,2,17,12,0,7,19,20,14,21,16,15,10,3,22,11,8,5,1,4,18]
+	var poses := [5,1,2,4,3,5,2,4,2,2,3,2,5,4,1,1,4,3,3,5,3,1,5,1]
+	var durations := [713,543,438,367,312,273,245,218,198,183,168,156,146,136,128,122,115,110,105,98,98,98,98,98]
+	for ordinal in slots.size():
+		var slot: int = slots[ordinal]
+		var angle := deg_to_rad(float(7+slot*15))
+		var expected := POINT+Vector2(150+int(sin(angle)*250.0),int(cos(angle)*72.5)-1)
+		var next_x := POINT.x
+		if ordinal+1 < slots.size():next_x += 150+int(sin(deg_to_rad(float(7+slots[ordinal+1]*15)))*250.0)
+		var expected_height: bool = game.player["z"]==40.0 if slot%2==0 else game.player["z"]>=150.0 and game.player["z"]<=160.0
+		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal
+			and game.view.player_actor.pose=="hundredswordmoveready%d"%poses[ordinal] and game.player["pos"]==expected
+			and expected_height and game.player["facing"]==(1 if expected.x<next_x else -1),
+			"automatic Hundred Sword stage %d uses the original sword point, body pose and next facing"%ordinal)
+		check(game.view.object_views.has("hundred_sword:%d:disappear:1"%slot),
+			"the selected sword enters its original disappearance state at stage %d"%ordinal)
+		check(game.action_duration("hundredsword")==durations[ordinal],
+			"stage %d applies its original rate to each body frame"%ordinal)
+		step(float(durations[ordinal])-1.0)
+		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal,
+			"stage %d holds through its last millisecond"%ordinal)
+		step(1.0)
+	check(game.view.player_actor.pose=="hundredswordfinish" and game.player["pos"]==POINT
+		and game.player["z"]==0.0 and game.player["facing"]==1,"stage 24 goes directly into the original grounded finish")
+	step(1270.0)
+	check(game.player["action"]=="" and not game.player.has("hundred_sword_cast"),
+		"one press completes the full Hundred Sword state sequence and clears the cast")
+
 func check_illusion_finish() -> void:
 	var voices: Array = game.view.audio.variants["R_SM_HOANYOUNG"]
 	check(game.view.audio.variants["HOANYOUNG_HIT"][0] is AudioStreamOggVorbis
@@ -4953,6 +5002,7 @@ func run() -> void:
 	check_rapid_move_slash()
 	check_illusion_finish()
 	check_hundred_sword_ready()
+	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
 	check_rapid_move_slash_depth()

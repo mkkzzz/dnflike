@@ -67,13 +67,15 @@ def replay(source, ordinal, origin, positions, ground_slots=()):
 
 
 def audit(source):
-    from build_dnf_skill_runtime import HUNDRED_SWORD_STYLES
+    from build_dnf_skill_runtime import HUNDRED_SWORD_ORDER, HUNDRED_SWORD_POSES, HUNDRED_SWORD_STYLES
 
     order = unpack('<24I', source.source_bytes(ORDER_TABLE, 96))
-    if sorted(order) != list(range(24)):
+    if sorted(order) != list(range(24)) or list(order) != HUNDRED_SWORD_ORDER:
         raise ValueError('Unexpected sword slot order')
     if list(unpack('<24I', source.source_bytes(0x16EBB78, 96))) != HUNDRED_SWORD_STYLES:
         raise ValueError('Formation variant table differs from the original')
+    if [pose+1 for pose in unpack('<6I', source.source_bytes(0x16EBC38, 24))] != HUNDRED_SWORD_POSES:
+        raise ValueError('Travel pose table differs from the original')
     positions = [(263+i*17, 333-i*12, i*7-31) for i in range(24)]
     for ground_slots in ((), range(24)):
         for ordinal, slot in enumerate(order):

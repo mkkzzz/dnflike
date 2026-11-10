@@ -11,6 +11,9 @@ var _center: Vector2
 var _facing: int
 var _styles: Array
 var _art_facing: Array[int] = []
+var _disappear_fx: Array[String] = []
+var _spent: Dictionary = {}
+var _disappear_ms: float
 var _effects: Dictionary
 var _entry_ms: int
 var _spread_ms: int
@@ -23,11 +26,13 @@ func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, co
 	_facing = facing
 	_styles = config["styles"]
 	_effects = config["effects"]
+	_disappear_ms = float(config["disappear_ms"])
 	# The source draws an independent mirror bit for each sword. Keep these
 	# cosmetic draws off the combat hit and critical RNG.
 	var art_rng := DetRng.new(cosmetic_seed)
 	for slot in _styles.size():
 		_art_facing.append(2*art_rng.range_int(0,1)-1)
+		_disappear_fx.append(_effects["sworddisappear%d"%art_rng.range_int(1,2)])
 	_entry_ms = int(timeline[4]["start_ms"])
 	_spread_ms = int(timeline[11]["start_ms"])
 	_settle_ms = int(timeline[16]["start_ms"])
@@ -37,6 +42,18 @@ func advance(ms: float, owner_ready_ms: float) -> bool:
 	var was_waiting := _age < _entry_ms
 	_age = owner_ready_ms if owner_ready_ms >= 0.0 else _age+ms
 	return was_waiting and _age >= _entry_ms
+
+func waypoint(slot: int) -> Vector3i:
+	if _spent.has(slot):return _spent[slot]["point"]
+	var point := _blade_point(slot,0,RADIUS)
+	var z := 40 if slot%2 == 0 else _air_height(slot,int(_age))
+	return Vector3i(int(point.x),int(point.y),z)
+
+func consume(slot: int) -> Vector3i:
+	var point := waypoint(slot)
+	# CD22CD selects CNHundredSword state 4 before CD2305 reads its point.
+	_spent[slot] = {"point":point,"at_ms":_age}
+	return point
 
 func append_view(out: Array) -> void:
 	var now := int(_age)
@@ -58,18 +75,18 @@ func append_view(out: Array) -> void:
 		phase_ms = float(now-_spread_ms)
 	for slot in _styles.size():
 		if now < _spread_ms and slot%3 != 0:continue
+		var id := "hundred_sword:%d"%slot
+		if _spent.has(slot):
+			var age := _age-float(_spent[slot]["at_ms"])
+			if age < _disappear_ms:
+				var point: Vector3i = _spent[slot]["point"]
+				_layer(out,slot,id+":disappear",_disappear_fx[slot],Vector2(point.x,point.y),point.z,age,1,false)
+			continue
 		var ground := slot%2 == 0
-		var radians := deg_to_rad(float((7+slot*15+angle)%360))
-		var x := int(Motion.f32(sin(radians))*radius)*_facing
-		var y := -int(Motion.f32(cos(radians))*radius*29*Motion.f32(-0.01))
-		var point := _center+Vector2(x,y)
+		var point := _blade_point(slot,angle,radius)
 		var height := float(HEIGHT)
 		if now >= _land_ms:
-			var born := _entry_ms if slot%3 == 0 else _spread_ms
-			var wave := (now-born)%3000
-			if wave > 1500:wave = 3000-wave
-			height = 0.0 if ground else HEIGHT+int(Motion.ramp(0.0,10.0,wave,1500))
-		var id := "hundred_sword:%d"%slot
+			height = 0.0 if ground else _air_height(slot,now)
 		if now < _spread_ms:
 			_layer(out,slot,id+":light",_effects["light1"],point,height,phase_ms,0,true)
 			_layer(out,slot,id+":light",_effects["light2"],point,height,phase_ms,1,true)
@@ -84,6 +101,18 @@ func append_view(out: Array) -> void:
 				if phase_ms < 310.0:_layer(out,slot,id+":land",_effects["swordlandglow2"],point,0.0,phase_ms,-1,false)
 			elif now >= _land_ms:
 				_layer(out,slot,id+":air",_effects["swordairglow"],point,height,phase_ms,-1,false,true)
+
+func _blade_point(slot: int, angle: int, radius: int) -> Vector2:
+	var radians := deg_to_rad(float((7+slot*15+angle)%360))
+	var x := int(Motion.f32(sin(radians))*radius)*_facing
+	var y := -int(Motion.f32(cos(radians))*radius*29*Motion.f32(-0.01))
+	return _center+Vector2(x,y)
+
+func _air_height(slot: int, now: int) -> int:
+	var born := _entry_ms if slot%3 == 0 else _spread_ms
+	var wave := (now-born)%3000
+	if wave > 1500:wave = 3000-wave
+	return HEIGHT+int(Motion.ramp(0.0,10.0,wave,1500))
 
 func _layer(out: Array, slot: int, id: String, bank: String, pos: Vector2, z: float, clock: float, depth: int,
 		hold: bool, loop := false) -> void:

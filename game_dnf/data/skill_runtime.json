@@ -152,6 +152,8 @@
    "skillfx_sword_slash_none_b381d2e0": "character/swordman/effect/animation/outragebreak/sword_slash_none.ani",
    "skillfx_sword_slash_stone_4ecdaf58": "character/swordman/effect/animation/outragebreak/sword_slash_stone.ani",
    "skillfx_swordairglow_f0c06cf0": "character/swordman/effect/animation/hundredsword/swordairglow.ani",
+   "skillfx_sworddisappear1_fa1b04f1": "character/swordman/effect/animation/hundredsword/sworddisappear1.ani",
+   "skillfx_sworddisappear2_61667d2f": "character/swordman/effect/animation/hundredsword/sworddisappear2.ani",
    "skillfx_swordlandglow1_45a764c3": "character/swordman/effect/animation/hundredsword/swordlandglow1.ani",
    "skillfx_swordlandglow2_39ce5d91": "character/swordman/effect/animation/hundredsword/swordlandglow2.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
@@ -227,11 +229,11 @@
    "hopsmash": "character/swordman/animation/hopsmash.ani",
    "hopsmashready": "character/swordman/animation/hopsmashready.ani",
    "hundredswordfinish": "character/swordman/animation/hundredswordfinish.ani",
-   "hundredswordmoveslash1": "character/swordman/animation/hundredswordmoveslash1.ani",
-   "hundredswordmoveslash2": "character/swordman/animation/hundredswordmoveslash2.ani",
-   "hundredswordmoveslash3": "character/swordman/animation/hundredswordmoveslash3.ani",
-   "hundredswordmoveslash4": "character/swordman/animation/hundredswordmoveslash4.ani",
-   "hundredswordmoveslash5": "character/swordman/animation/hundredswordmoveslash5.ani",
+   "hundredswordmoveready1": "character/swordman/animation/hundredswordmoveready1.ani",
+   "hundredswordmoveready2": "character/swordman/animation/hundredswordmoveready2.ani",
+   "hundredswordmoveready3": "character/swordman/animation/hundredswordmoveready3.ani",
+   "hundredswordmoveready4": "character/swordman/animation/hundredswordmoveready4.ani",
+   "hundredswordmoveready5": "character/swordman/animation/hundredswordmoveready5.ani",
    "hundredswordready": "character/swordman/animation/hundredswordready.ani",
    "illusionslash1": "character/swordman/animation/illusionslash1.ani",
    "illusionslash2": "character/swordman/animation/illusionslash2.ani",
@@ -5430,7 +5432,7 @@
   "hundredsword": {
    "fidelity_pending": [
     "sword_formation_pulls_and_repeat_contacts",
-    "automatic_travel_sequence",
+    "travel_slash_effects",
     "finish_trails_and_camera",
     "rank_bonuses",
     "original_command"
@@ -5438,15 +5440,52 @@
    "finish_impact_ms": 560,
    "finish_particle": "character/swordman/effect/particle/hundredswordfinish.ptl",
    "formation": {
+    "disappear_ms": 300.0,
     "distance": 150,
     "effects": {
      "light1": "skillfx_light1_b5a8fc47",
      "light2": "skillfx_light2_8cddc716",
      "light3": "skillfx_light3_739de2be",
      "swordairglow": "skillfx_swordairglow_f0c06cf0",
+     "sworddisappear1": "skillfx_sworddisappear1_fa1b04f1",
+     "sworddisappear2": "skillfx_sworddisappear2_61667d2f",
      "swordlandglow1": "skillfx_swordlandglow1_45a764c3",
      "swordlandglow2": "skillfx_swordlandglow2_39ce5d91"
     },
+    "order": [
+     13,
+     6,
+     23,
+     9,
+     2,
+     17,
+     12,
+     0,
+     7,
+     19,
+     20,
+     14,
+     21,
+     16,
+     15,
+     10,
+     3,
+     22,
+     11,
+     8,
+     5,
+     1,
+     4,
+     18
+    ],
+    "poses": [
+     1,
+     2,
+     3,
+     4,
+     1,
+     5
+    ],
     "styles": [
      3,
      0,
@@ -5519,46 +5558,19 @@
      ]
     },
     {
-     "ani": "hundredswordmoveslash1",
-     "atk": "",
-     "hits": []
+     "ani": "hundredswordmoveready1"
     },
     {
-     "ani": "hundredswordmoveslash2",
-     "atk": "",
-     "hits": []
+     "ani": "hundredswordmoveready2"
     },
     {
-     "ani": "hundredswordmoveslash3",
-     "atk": "",
-     "hits": []
+     "ani": "hundredswordmoveready3"
     },
     {
-     "ani": "hundredswordmoveslash4",
-     "atk": "",
-     "hits": []
+     "ani": "hundredswordmoveready4"
     },
     {
-     "ani": "hundredswordmoveslash5",
-     "atk": "",
-     "fx": [
-      {
-       "at": 0,
-       "key": "skillfx_finishcircle4_443f9b87"
-      }
-     ],
-     "hits": [
-      {
-       "atk": "",
-       "derived": "skillfx_finishcircle4_443f9b87",
-       "effects": [],
-       "percent_col": 5,
-       "window": [
-        0.0,
-        400.0
-       ]
-      }
-     ]
+     "ani": "hundredswordmoveready5"
     },
     {
      "ani": "hundredswordfinish",
@@ -5616,6 +5628,11 @@
       }
      ]
     }
+   ],
+   "travel_rate": [
+    35,
+    250,
+    20
    ]
   },
   "icewave": {

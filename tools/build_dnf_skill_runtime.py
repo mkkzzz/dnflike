@@ -80,11 +80,11 @@ STAGE_NAMES = {
     "hellbenter": ["hellbenterfinish"],
     "hundredsword": [
         "hundredswordready",
-        "hundredswordmoveslash1",
-        "hundredswordmoveslash2",
-        "hundredswordmoveslash3",
-        "hundredswordmoveslash4",
-        "hundredswordmoveslash5",
+        "hundredswordmoveready1",
+        "hundredswordmoveready2",
+        "hundredswordmoveready3",
+        "hundredswordmoveready4",
+        "hundredswordmoveready5",
         "hundredswordfinish",
     ],
     "blache": ["blachecast", "blachesmash"],
@@ -1262,9 +1262,11 @@ HUNDRED_SWORD_FINISH_PARTICLE = "character/swordman/effect/particle/hundredsword
 HUNDRED_SWORD_FINISH_LAYERS = (("finishslash", 1), ("finishflash", 2), ("finishfloor", -1),
                              *((f"finishcircle{i}", i + 1) for i in range(1, 5)))
 HUNDRED_SWORD_STYLES = [3, 0, 2, 3, 5, 2, 0, 1, 5, 3, 0, 2, 1, 5, 1, 0, 3, 5, 0, 1, 2, 5, 2, 1]
+HUNDRED_SWORD_ORDER = [13, 6, 23, 9, 2, 17, 12, 0, 7, 19, 20, 14, 21, 16, 15, 10, 3, 22, 11, 8, 5, 1, 4, 18]
+HUNDRED_SWORD_POSES = [1, 2, 3, 4, 1, 5]
 HUNDRED_SWORD_BLADES = ("swordspread", "swordair", "swordland")
-HUNDRED_SWORD_FORMATION_LAYERS = ("light1", "light2", "light3", "swordairglow",
-                                 "swordlandglow1", "swordlandglow2")
+HUNDRED_SWORD_FORMATION_LAYERS = ("light1", "light2", "light3", "swordairglow", "swordlandglow1",
+                                 "swordlandglow2", "sworddisappear1", "sworddisappear2")
 
 
 def hundred_sword_blade_banks():
@@ -1527,6 +1529,8 @@ def build_move(
             )
         )
     if key == "hundredsword":
+        # CD237F selects ETC 76..80. Only the terminal stage installs a body ATK.
+        stages[1:-1] = [{"ani": stage["ani"]} for stage in stages[1:-1]]
         ready = add_fx(fx, effects, CHR_FX + "hundredsword/ready.ani")
         if not ready:
             raise ValueError("Missing original Hundred Sword ready effect")
@@ -1620,8 +1624,11 @@ def build_move(
             raise ValueError("Missing original Hundred Sword formation effects")
         result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
                       finish_impact_ms=impact, finish_particle=HUNDRED_SWORD_FINISH_PARTICLE,
-                      formation={"distance": distance, "styles": HUNDRED_SWORD_STYLES, "effects": formation_fx},
-                      fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "automatic_travel_sequence",
+                      formation={"distance": distance, "styles": HUNDRED_SWORD_STYLES, "effects": formation_fx,
+                                 "order": HUNDRED_SWORD_ORDER, "poses": HUNDRED_SWORD_POSES,
+                                 "disappear_ms": duration_ms(records[CHR_FX + "hundredsword/sworddisappear1.ani"])},
+                      travel_rate=records[skill["path"]]["decoded"]["dungeon"]["static_data"][1:4],
+                      fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "travel_slash_effects",
                                         "finish_trails_and_camera", "rank_bonuses", "original_command"])
     if key == "normalwave":
         # SKL [level property]: percent <- (-1,2,1), fixed <- (-2,0,1),

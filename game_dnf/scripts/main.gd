@@ -672,6 +672,8 @@ func action_ani_clock(elapsed: float) -> float:
 		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
 	if phase.has("hundred_sword_ready_timeline"):
 		return _source_animation_clock(elapsed,phase["hundred_sword_ready_timeline"],action_def()["timeline"])
+	if phase.has("hundred_sword_move_timeline"):
+		return _source_animation_clock(elapsed,phase["hundred_sword_move_timeline"],action_def()["timeline"])
 	if phase.get("hundred_sword_finish",false):return elapsed
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
@@ -1013,7 +1015,8 @@ func step_player(ms: float, move: Vector2) -> void:
 			player["state"] = "jump" if float(player["z"])>0 else "move"
 		else:
 			player["state"] = "jump" if float(player["z"])>0 else "idle"
-	if (float(player["z"])>0 or float(player["vz"])>0) and not player.get("native_phase",{}).has("outrage_origin_x"):
+	if (float(player["z"])>0 or float(player["vz"])>0) and not player.get("native_phase",{}).has("outrage_origin_x") \
+			and not player.has("hundred_sword_cast"):
 		player["air_ms"] = float(player["air_ms"])+ms
 		player["z"] = maxf(0,float(player["z"])+float(player["vz"])*dt)
 		player["vz"] = float(player["vz"])-float(rules["player"]["gravity"])*dt
@@ -1144,8 +1147,10 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	var old_event_clock := old_outrage_event_clock if outrage else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	if name == "hundredsword":
-		var formation: RefCounted = player["hundred_sword_cast"]["formation"]
-		if formation.advance(ms,clock if int(player["stage"])==0 else -1.0):play_sound("W_GET_SPIRITS")
+		var cast: Dictionary = player["hundred_sword_cast"]
+		var preparing := int(player["stage"]) == 0
+		if cast["formation"].advance(ms,clock if preparing else -1.0):play_sound("W_GET_SPIRITS")
+		if preparing:step_hundred_sword_approach(cast,m,native_phase,clock)
 	action_cues(stage,old_event_clock,event_clock)
 	if m.get("native_state","") == "bloody_rave":
 		if int(player["stage"]) == 0:
@@ -1169,9 +1174,9 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		start_hardattack_followup(stage["hardattack_followup"])
 		return
 	var duration := action_duration(name)
-	if native_phase.get("hundred_sword_finish",false):
-		# CC0896..CC08B9 waits for the finish ANI to end before requesting idle.
-		if clock >= duration:end_action()
+	if name == "hundredsword":
+		# CC080A/CC0872/CC08B9 advance on ANI end without a second command.
+		if clock >= duration:advance_hundred_sword(m)
 		return
 	if name == "illusionslash" and int(player["stage"]) < 4:
 		step_illusion_chain(m["illusion_chain"],stage,event_clock)
@@ -1292,6 +1297,36 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		if not start_action(String(m["next"]),true) and clock >= duration:end_action()
 	elif clock >= duration:
 		end_action()
+
+func step_hundred_sword_approach(cast: Dictionary, move_defn: Dictionary, phase: Dictionary, clock: float) -> void:
+	var origin: Vector2 = cast["origin"]
+	var from_ms := float(phase["hundred_sword_ready_timeline"][22]["start_ms"])
+	var duration := float(phase["end_ms"])-from_ms
+	var elapsed := clampf(clock-from_ms,0.0,duration)
+	player["pos"] = origin
+	player["z"] = 0.0
+	if elapsed <= 0.0:return
+	var target: Vector3i = cast["formation"].waypoint(int(move_defn["formation"]["order"][0]))
+	# CB80B1/CC/E5 interpolate integer XYZ from the saved origin to sword 0.
+	var x := int(Kernel.NativeMotion.ramp(origin.x,target.x,elapsed,duration))
+	var y := int(Kernel.NativeMotion.ramp(origin.y,target.y,elapsed,duration))
+	player["pos"] = Vector2(x,y)
+	player["z"] = int(Kernel.NativeMotion.ramp(0.0,target.z-50,elapsed,duration))
+
+func advance_hundred_sword(move_defn: Dictionary) -> void:
+	if player["native_phase"].get("hundred_sword_finish",false):
+		end_action()
+		return
+	var cast: Dictionary = player["hundred_sword_cast"]
+	var config: Dictionary = move_defn["formation"]
+	var ordinal := int(cast["ordinal"])+1
+	var order: Array = config["order"]
+	if ordinal >= order.size():
+		start_stage(move_defn["stages"].size()-1)
+		return
+	cast["ordinal"] = ordinal
+	var slot := int(order[ordinal])
+	start_stage(int(config["poses"][int(config["styles"][slot])]))
 
 func step_illusion_chain(config: Dictionary, stage: Dictionary, clock: float) -> void:
 	var cast: Dictionary = player["illusion_cast"]
@@ -2049,6 +2084,18 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			player["native_phase"] = {"hundred_sword_finish":true}
 			end_action_fx()
 			player["fx_tag"] = "act:%d"%action_seq
+		else:
+			var cast: Dictionary = player["hundred_sword_cast"]
+			var ordinal := int(cast["ordinal"])
+			var rates: Array = m["travel_rate"]
+			var percent := int(Kernel.NativeMotion.ramp(float(rates[0]),float(rates[1]),
+				mini(ordinal,int(rates[2])-1),int(rates[2])-1))
+			# CD2264/CD22AC install the per-ordinal ANI speed, independent of equipment.
+			var rate := _native_float32(_native_float32(percent*1000.0)*_native_float32(0.001))
+			var timeline := native_timed_frames(action_def()["timeline"],rate)
+			player["native_phase"] = {"hundred_sword_move_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
+			end_action_fx()
+			player["fx_tag"] = "act:%d"%action_seq
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
 		var speed := maxi(1,int(rate*1000.0))
@@ -2100,7 +2147,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var formation := HundredSwordFormation.new(origin,facing,player["native_phase"]["hundred_sword_ready_timeline"],
 			m["formation"],rng.seed_value^action_seq)
 		player["hundred_sword_cast"] = {"origin":origin,"facing":facing,
-			"formation":formation}
+			"formation":formation,"ordinal":-1}
 	elif player["native_phase"].get("hundred_sword_finish",false):
 		# CD2859 reads the terminal point from the saved origin. CD288B and
 		# CD28A4 restore cast direction and write the saved XY with Z zero.
@@ -2108,6 +2155,20 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		player["pos"] = cast["origin"]
 		player["facing"] = cast["facing"]
 		player["z"] = 0.0
+		player["vz"] = 0.0
+	elif player["native_phase"].has("hundred_sword_move_timeline"):
+		var cast: Dictionary = player["hundred_sword_cast"]
+		var order: Array = m["formation"]["order"]
+		var ordinal := int(cast["ordinal"])
+		var current: Vector3i = cast["formation"].consume(int(order[ordinal]))
+		var next_x := int(cast["origin"].x)
+		if ordinal+1 < order.size():
+			var next: Vector3i = cast["formation"].waypoint(int(order[ordinal+1]))
+			next_x = next.x
+		# CD23AC uses sword XYZ with Y-1. CD2403 faces the next point.
+		player["pos"] = Vector2(current.x,current.y-1)
+		player["z"] = float(current.z)
+		player["facing"] = 1 if current.x < next_x else -1
 		player["vz"] = 0.0
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	if name == "sacrifice" and index == 0:
