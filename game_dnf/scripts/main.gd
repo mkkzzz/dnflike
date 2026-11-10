@@ -706,6 +706,8 @@ func action_ani_clock(elapsed: float) -> float:
 		return float(phase["body_clock"])
 	if phase.has("outrage_timeline"):
 		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
+	if phase.has("bloodblast_timeline"):
+		return _source_animation_clock(phase["bloodblast_ani_ms"],phase["bloodblast_timeline"],action_def()["timeline"])
 	if phase.has("hundred_sword_ready_timeline"):
 		return _source_animation_clock(elapsed,phase["hundred_sword_ready_timeline"],action_def()["timeline"])
 	if phase.has("hundred_sword_move_timeline"):
@@ -1140,7 +1142,8 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	var clock := old_clock+ms*speed
 	var native_phase: Dictionary = player.get("native_phase",{})
 	var outrage := native_phase.has("outrage_timeline")
-	var old_outrage_event_clock := action_event_clock(old_clock) if outrage else 0.0
+	var bloodblast := native_phase.has("bloodblast_timeline")
+	var old_native_event_clock := action_event_clock(old_clock) if outrage or bloodblast else 0.0
 	if not native_phase.is_empty():clock = old_clock+ms
 	if outrage:
 		var old_rate := float(native_phase["outrage_rate"])
@@ -1149,6 +1152,17 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			clock = _rescale_native_ani_ms(clock,old_rate,rate)
 			retime_outrage_phase(native_phase,stage,rate)
 		step_outrage_fx(native_phase["outrage_fx"],ms,old_rate,rate)
+	if bloodblast:
+		# 82A364 refreshes the body ANI independently of the state deadline.
+		native_phase["bloodblast_ani_ms"] += ms
+		if refresh_ani_rate:
+			var old_rate := float(native_phase["bloodblast_ani_rate"])
+			var multiplier: float = numeric_player.native_non_weapon_attack_rate() if numeric_player != null else 1.0
+			var rate := _native_animation_percent(multiplier,old_rate)
+			if rate != old_rate:
+				native_phase["bloodblast_ani_ms"] = _rescale_native_ani_ms(native_phase["bloodblast_ani_ms"],old_rate,rate)
+				native_phase["bloodblast_ani_rate"] = rate
+				native_phase["bloodblast_timeline"] = native_timed_frames(stage["timeline"],rate)
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
 		cast["animation_ms"] += ms
@@ -1205,7 +1219,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
 		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
-	var old_event_clock := old_outrage_event_clock if outrage else action_event_clock(old_clock)
+	var old_event_clock := old_native_event_clock if outrage or bloodblast else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	if name == "hundredsword":
 		var cast: Dictionary = player["hundred_sword_cast"]
@@ -2221,6 +2235,11 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var speed := maxi(1,roundi(rate*1000.0))
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
+		if name == "bloodblast":
+			var ani_rate := _native_animation_percent(rate)
+			player["native_phase"]["bloodblast_ani_ms"] = 0.0
+			player["native_phase"]["bloodblast_ani_rate"] = ani_rate
+			player["native_phase"]["bloodblast_timeline"] = native_timed_frames(action_def()["timeline"],ani_rate)
 	elif m.get("native_state","") == "grab_blast" and index == 1:
 		player["native_phase"] = {"grab_pose_ms":float(action_def()["duration"]),"end_ms":m["grab_duration_ms"],
 			"grab_substate":0,"grab_strikes_left":int(m.get("grab_strike_count",1)),"grab_next_strike_ms":100.0}

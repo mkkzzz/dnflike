@@ -6481,6 +6481,51 @@ func check_thirst_burst() -> void:
 	effects.step(1000)
 	check(effects.active.has("bleed") and not mixed.has("source_bleed"),"the source timer expires independently of generic bleed")
 
+func check_bloodblast_speed_refresh() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"bloodblast","level":2})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["bloodblast"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	session.set_skill_material_spender(func(_id: int, _amount: int):return true)
+	game.numeric_player.weapon_attack_speed_per_mille = 250
+	game.numeric_player.values["attack_speed"] = 1.25
+	step(270)
+	press(KEY_A)
+	step(0)
+	game.numeric_player.values["attack_speed"] = 2.25
+	step(29)
+	check(is_equal_approx(game.action_ani_clock(29.0),29.0),"Blood Blast keeps its entry ANI speed until the actor refresh")
+	step(1)
+	check(game.player["native_phase"]["bloodblast_ani_ms"]==14.0 and game.action_duration("bloodblast")==495.0,
+		"Blood Blast rescales the elapsed preparation ANI on refresh without rescaling its deadline")
+	step(9)
+	check(game.action_ani_clock(39.0)<50.0,"Blood Blast preparation still displays its first frame at 39 ms")
+	step(1)
+	check(game.action_ani_clock(40.0)==50.0,"Blood Blast preparation enters its second frame at 40 ms")
+	step(290)
+	step(164)
+	check(game.player["stage"]==0 and game.objects.is_empty(),"mid-cast acceleration does not release Blood Blast early")
+	step(1)
+	check(game.player["stage"]==1 and game.action_duration("bloodblast")==350.0
+		and game.objects.size()==3 and game.action_ani_clock(0.0)==0.0,
+		"Blood Blast releases once at 495 ms and samples a new speed for recovery")
+	game.numeric_player.values["attack_speed"] = 1.25
+	step(135)
+	check(game.player["native_phase"]["bloodblast_ani_ms"]==270.0 and game.action_duration("bloodblast")==350.0,
+		"Blood Blast deceleration rescales the recovery ANI but keeps the 350 ms exit deadline")
+	step(23)
+	check(game.action_ani_clock(158.0)<300.0,"slowed Blood Blast recovery stays below frame six at 158 ms")
+	step(1)
+	check(game.action_ani_clock(159.0)==300.0,"slowed Blood Blast recovery enters frame six at 159 ms")
+	step(190)
+	check(game.player["action"]=="bloodblast","Blood Blast remains in recovery one millisecond before its exit")
+	step(1)
+	check(game.player["action"]=="" and game.objects.size()==3 and cues("SM_BLOOD_CAST").size()==1,
+		"Blood Blast exits at 350 ms without repeating the voice or eruption")
+
 func check_bloodblast() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -6914,6 +6959,7 @@ func run() -> void:
 	check_frenzy_recovery()
 	check_frenzy_toggle()
 	check_bloodblast()
+	check_bloodblast_speed_refresh()
 	check_draw_sword()
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
