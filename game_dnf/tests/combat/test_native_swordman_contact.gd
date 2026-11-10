@@ -2931,6 +2931,70 @@ func check_outrage_break_impact() -> void:
 			check(floor_target["hp"]<50000.0 and game.objects[0]["clock"]==0.0 and not cues("FLAMES_HIT").is_empty(),
 				"the original floor ATK lands independently on its first frame")
 
+func check_outrage_break_landing_near_wall() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	for facing: int in [-1,1]:
+		start_room("original_27601","katana",facing,spec,"berserker")
+		game.clear_monsters()
+		session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==2)
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.player["hp"] = 1000.0
+		var cell: Dictionary = game.map_loader.constants()
+		var width := int(cell["cell_width"])
+		var height := int(cell["cell_height"])
+		var wall_col := floori(POINT.x/width)
+		var depth_row := floori(POINT.y/height)
+		var wall := wall_col*width
+		var depth := depth_row*height
+		var grid: Array = game.room_map["walk_grid"].duplicate(true)
+		for row: Array in grid:row.fill(0)
+		grid[depth_row][wall_col-(1 if facing<0 else 0)] = 1
+		game.room_map = game.room_map.merged({"walk_grid":grid},true)
+		var start := Vector2(wall+(1.75 if facing<0 else -1.25),depth-0.25)
+		var landing := Vector2(wall-(1 if facing>0 else 0),depth)
+		var crater := landing+Vector2(150*facing,0)
+		game.player["pos"] = start
+		press(KEY_A)
+		step(0.0)
+		step(560.0)
+		check(game.player["native_phase"].get("outrage_origin_x")==roundi(start.x),
+			"the leap saves the rounded native coordinate at the end of windup")
+		step(300.0)
+		check(game.player["pos"]==Vector2(landing.x,start.y) and game.player["z"]==150.0,
+			"the leap checks the rounded depth row and stops at the last clear X before the wall")
+		step(299.0)
+		check(game.objects.is_empty() and game.player["pos"].x==landing.x,
+			"the leap cannot cross the single blocked cell in either direction")
+		step(1.0)
+		check(game.objects.size()==1 and game.objects[0]["pos"]==crater and game.objects[0]["z"]==0.0,
+			"the original crater uses the rounded blocked landing point plus 150 pixels")
+		if game.objects.size()!=1:continue
+		var floor: Dictionary = game.objects[0]
+		var drawn = game.view.object_views.get(floor["id"])
+		check(drawn!=null and drawn.position==game.view._canvas(crater,0.0),
+			"the visible crater is anchored to the same native point as its attack object")
+		var stone: String = game.move_def("outragebreak")["stone_particle"]
+		step(1.0)
+		var samples := native_particle_cues(stone)
+		check(samples.size()==1 and samples[0]["point"]==crater,
+			"the first stone sample uses the same rounded forward point as the crater")
+		game.player["pos"] += Vector2(0.75,1.0)
+		game.step_player(20.0,Vector2.ZERO)
+		game.view.present(game.view_snapshot(),20.0,20.0)
+		var emitters: Array = game.view._particle_emitters.filter(func(entry):return entry.path==stone)
+		check(emitters.size()==1 and emitters[0].emitter.origin==Vector3i(int(crater.x)+1,depth+1,0),
+			"later stone samples round the caster's current coordinates as well")
+		game.step_objects(1040.0)
+		check(game.objects.size()==2 and game.objects[1]["pos"]==floor["pos"],
+			"the magma keeps the original crater point after the caster moves")
+
 func check_outrage_break_speed_refresh() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -5933,6 +5997,7 @@ func run() -> void:
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
+	check_outrage_break_landing_near_wall()
 	check_hellbenter_first_cast()
 	check_hellbenter_manual_finish()
 	check_hellbenter_column_hold()

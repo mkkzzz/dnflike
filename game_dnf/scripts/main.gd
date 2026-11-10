@@ -1785,7 +1785,7 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> v
 			# the impact latch. Its origin follows actor X +/- 150 and YZ.
 			var facing := int(player["facing"])
 			bus.emit("combat.cue",{"kind":"native_particle","path":move["stone_particle"],
-				"point":Vector2(player["pos"])+Vector2(150*facing,0),"height":0.0,"mirrored":facing<0,
+				"point":Vector2(player["pos"]).round()+Vector2(150*facing,0),"height":0.0,"mirrored":facing<0,
 				"action_instance":action_seq,"follow_x":150,"action_clock":clock})
 		return
 	var travel: Vector2 = move["outrage_motion"]
@@ -2216,7 +2216,8 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var stage := action_def()
 		var phase := {}
 		if index == 1:
-			phase["outrage_origin_x"] = int(player["pos"].x)
+			# CCBDF1 reads the rounded coordinate from the actor's X getter.
+			phase["outrage_origin_x"] = roundi(player["pos"].x)
 			phase["outrage_impact_at"] = float(stage["timeline"][m["impact_frame"]]["start_ms"])
 		retime_outrage_phase(phase,stage,attack_animation_percent(0))
 		player["native_phase"] = phase
@@ -2779,6 +2780,9 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 					player["native_phase"]["outrage_stone_pending"] = true
 					# CB460B starts the room shake on the landing update.
 					bus.emit("combat.cue",{"kind":"screen_shake","degree":5,"duration_ms":300})
+					# CB4900 -> 86DDB0 applies the forward offset to the rounded landing coordinates.
+					spawn_object(hit,"player",Vector2(player["pos"]).round(),0.0,facing,attack_power())
+					continue
 				elif hit.get("skill_id","") == "illusionslash" and hit.get("object","").ends_with("/illusionslashwave.obj"):
 					hit = prepare_illusion_wave(hit)
 				if hit.get("native_controller",{}).get("kind","") == "hundred_sword_field":

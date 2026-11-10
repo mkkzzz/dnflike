@@ -652,7 +652,7 @@ func _advance_native_emitters(sim_ms: float, actor: Dictionary) -> void:
 					continue
 				var point: Vector2 = actor["pos"]
 				var facing := int(actor["facing"])
-				entry.emitter.origin = Vector3i(int(point.x)+int(entry.follow_x)*facing,int(point.y),int(actor["z"]))
+				entry.emitter.origin = Vector3i(roundi(point.x)+int(entry.follow_x)*facing,roundi(point.y),roundi(actor["z"]))
 			entry.elapsed_ms = age
 			var result: Dictionary = particle_bursts.emit_at(entry.emitter,int(entry.elapsed_ms))
 			if not _append_native_particles(entry.path,entry.scale,result) or result.finished:
