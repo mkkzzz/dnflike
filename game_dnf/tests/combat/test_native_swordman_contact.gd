@@ -3366,6 +3366,31 @@ func check_outrage_break_eruption() -> void:
 	check(native_particle_cues(stone).size()==1,
 		"fractional attack speed still samples stones on the update after impact")
 
+	if game.objects.size()!=1:return
+	game.clear_monsters()
+	var origin: Vector2 = game.objects[0]["pos"]
+	var weights := [[45000,29,36],[300000,5,6]]
+	var victims: Array[Dictionary] = []
+	for sample: Array in weights:
+		var victim: Dictionary = game.spawn_enemy(origin+Vector2(-20,45))
+		victim["hp"] = 50000.0
+		victim["def"] = victim["def"].merged({"weight":sample[0]},true)
+		victims.append(victim)
+	for phase: String in ["floor","magma"]:
+		if phase == "magma":
+			for victim: Dictionary in victims:move_target(victim,origin+Vector2(-20,45),110.0)
+			game.step_objects(1040.0)
+		var before_hits: int = game.hit_count
+		game.step_objects(0.0)
+		check(game.hit_count==before_hits+victims.size(),"the "+phase+" hits both weight fixtures")
+		for index in victims.size():
+			var victim := victims[index]
+			var height := roundi(pow(float(victim["vz"]),2.0)/3000.0)
+			check(victim["state"]=="native_down_flight" and victim["facing"]==1
+				and victim.get("native_jump_velocity")==Vector2.ZERO
+				and height>=int(weights[index][1]) and height<=int(weights[index][2]),
+				"the "+phase+" applies the original launch height range for weight "+str(weights[index][0]))
+
 func native_particle_cues(path: String) -> Array:
 	return game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==path)
 

@@ -26,6 +26,7 @@ const PLAYER_ID := 0
 # Actor sound slots are separate from entity loops. Reserve a player-only ID for native slot 25.
 const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
+const OUTRAGE_IMPACTS := ["outrage_floor","outrage_magma"]
 const OUTRAGE_ERUPTION_OFFSETS := [Vector2i(22,-12),Vector2i(-117,15),Vector2i(-126,37),
 	Vector2i(104,-6),Vector2i(-60,58),Vector2i(76,33),Vector2i(10,80)]
 const ENEMY_ATTACK_RATE_REFRESH_MS := 300.0
@@ -3259,14 +3260,19 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		# 8184DF..818640 keeps the current pose when the wave hits ordinary super armor.
-		var wave_armored := native_kind == "draw_short_wave" and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
+		var outrage_impact := native_kind in OUTRAGE_IMPACTS
+		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
+		var armor_blocks_reaction := (outrage_impact or native_kind == "draw_short_wave") \
+			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
-		elif not wave_armored and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
+		elif outrage_impact and not armor_blocks_reaction:
+			# 81F1F0 dispatches state 4 with the object's ATK push and lift.
+			reaction = apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
+		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
 			# 无伤接触仍应打断正在进行的狂热者施法。
 			reaction = Kernel.Reaction.apply(target,atk,facing,rules["reaction"],recovery,float(hit.get("lift",-1)))
 			target["clock"] = 0.0
@@ -4366,12 +4372,13 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var friendly: bool = o["owner"] in ["player","companion"]
 				var targets := monsters if friendly else friendly_targets()
 				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
+				var outrage_impact := kind in OUTRAGE_IMPACTS
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
-					if kind == "draw_short_wave":
+					if outrage_impact or kind == "draw_short_wave":
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
 					o["hits"][target["id"]] = true
@@ -4381,12 +4388,12 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# is the victim's facing, opposite the push direction.
 						var delta_x := int(target["pos"].x)-int(o["pos"].x)
 						hit_facing = -hit_facing if delta_x == 0 else -signi(delta_x)
-					elif kind == "draw_short_wave":
-						# 867370 uses the signed movement inside 150 px. Before
-						# the first integer displacement, use the target's side.
-						var wave_x := int(o["pos"].x)
-						var delta_x := roundi(target["pos"].x)-wave_x
-						if delta_x != 0 and (absi(delta_x) >= 150 or wave_x == o["ptl_motion"].origin.x):
+					elif outrage_impact or kind == "draw_short_wave":
+						# 867370 uses the target's side for stationary objects.
+						# Moving waves keep their flight direction within 150 px.
+						var source_x := int(o["pos"].x)
+						var delta_x := roundi(target["pos"].x)-source_x
+						if delta_x != 0 and (outrage_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
 					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]))
 					if int(obj["piercing"]) <= 0:
