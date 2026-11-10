@@ -4016,7 +4016,10 @@ func check_hundred_sword_automatic() -> void:
 	var travel_cues := func():
 		return game.bus.events_of("combat.cue").filter(func(event):
 			return String(event.get("key","")) in ["R_SM_HOANYOUNG","R_W_MOVING_ATK"])
+	var dash_key := "hundred_sword_travel_dash"
+	var slash_key := "hundred_sword_travel_slash"
 	check(travel_cues.call().is_empty(),"the first sword pose starts without a movement voice or swing")
+	check(cues(dash_key).is_empty() and cues(slash_key).is_empty(),"the first sword pose does not start a travel effect")
 	var swings: Array = game.view.audio.variants.get("R_W_MOVING_ATK",[])
 	check(swings.size()==2 and swings.all(func(stream):return stream is AudioStreamOggVorbis),
 		"both original sword travel swings load as Ogg streams")
@@ -4080,16 +4083,45 @@ func check_hundred_sword_automatic() -> void:
 			"stage %d renders only its current sword layers on the second body frame"%ordinal)
 		check(travel_cues.call().size()==ordinal*2,
 			"stage %d has no extra travel cue before the next transition"%ordinal)
+		var from_angle: float = game.player["native_phase"]["body_rotation"]
+		var from_facing: int = game.player["facing"]
 		step(1.0)
 		var sounds: Array = travel_cues.call()
 		check(sounds.size()==(ordinal+1)*2 and sounds[-2]["key"]=="R_SM_HOANYOUNG"
 			and sounds[-1]["key"]=="R_W_MOVING_ATK",
 			"leaving stage %d requests exactly one original voice then one swing"%ordinal)
+		var dashes := cues(dash_key)
+		var slashes := cues(slash_key)
+		check(dashes.size()==ordinal+1 and slashes.size()==ordinal+1,
+			"leaving stage %d submits one Dash and one Slash to the move-effect layer"%ordinal)
+		if dashes.size()==ordinal+1 and slashes.size()==ordinal+1:
+			var dash: Dictionary = dashes[-1]
+			var slash: Dictionary = slashes[-1]
+			var finishing := ordinal+1 == slots.size()
+			var destination: Vector2 = POINT if finishing else Vector2(game.player["pos"])+Vector2(0,1)
+			var jitter_index := (float(slash["angle"])-from_angle+0.1)*99.0/0.2
+			check(dash["point"]==destination and dash["height"]==(40 if finishing else game.player["z"])
+				and dash["angle"]==from_angle and dash["facing"]==from_facing
+				and slash["point"]==POINT+Vector2(150,0) and slash["height"]==75 and slash["facing"]==from_facing
+				and jitter_index>=-0.001 and jitter_index<=99.001 and absf(jitter_index-roundf(jitter_index))<0.001,
+				"the travel clips retain the outgoing tilt and facing and use the destination and field anchors")
 	check(game.view.player_actor.pose=="hundredswordfinish" and game.player["pos"]==POINT
 		and game.player["z"]==0.0 and game.player["facing"]==1,"stage 24 goes directly into the original grounded finish")
 	check(actor.body_rotation==0.0 and actor.equipment_layers.all(func(layer):return layer.visible)
 		and actor.get_meta("native_cast_layers",{}).values().all(func(layer):return not layer.visible),
 		"the finish clears travel tilt and sword layers and restores the equipped weapon")
+	var ending_layers: Array = game.view.effects.filter(func(fx):
+		return fx.cue_key in [dash_key,slash_key]).slice(-2)
+	check(ending_layers.size()==2 and ending_layers.all(func(fx):
+		return (fx.z_index==POINT.y+int(cos(deg_to_rad(97.0))*72.5)+10
+			and fx.data["duration_ms"]==210 and fx.tag=="" and fx.clock_ms==0.0)),
+		"the last two clips survive the stage change at the move-effect layer's depth")
+	game.view.present(game.view_snapshot(),209.0,209.0)
+	check(ending_layers.all(func(fx):return not fx.is_queued_for_deletion()),
+		"the original 210 ms clips still draw in the final pose at 209 ms")
+	game.view.present(game.view_snapshot(),1.0,1.0)
+	check(ending_layers.all(func(fx):return fx.is_queued_for_deletion()),
+		"both clips retire on their independent 210 ms clock")
 	# Use the large room coordinate that crosses an integer only after the native f32 stores.
 	game.player["pos"] = Vector2(2000,POINT.y)
 	step(560.0)

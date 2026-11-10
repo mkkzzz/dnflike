@@ -82,6 +82,10 @@ OUTRAGE_PARTICLE_SOURCES = {
 HELLBENTER_DISAPPEAR_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterdisappear.ptl'
 HELLBENTER_LOOP_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterloop.ptl'
 NATIVE_FLASH_SCREEN = 'common/commoneffect/animation/flashscreen.ani'
+HUNDRED_SWORD_TRAVEL_EFFECTS = {
+    'hundred_sword_travel_dash': 'character/swordman/effect/animation/hundredsword/dash.ani',
+    'hundred_sword_travel_slash': 'character/swordman/effect/animation/hundredsword/slash.ani',
+}
 HELLBENTER_WOUND_EFFECTS = {
     'hellbenter_frenzy_wound': 'character/swordman/effect/animation/giveblood/bleeding.ani',
     'hellbenter_column_wound': 'character/swordman/effect/animation/giveblood/givebloodblood.ani',
@@ -396,6 +400,7 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
     'native_flash_screen': NATIVE_FLASH_SCREEN,
+    **HUNDRED_SWORD_TRAVEL_EFFECTS,
     **HELLBENTER_WOUND_EFFECTS,
     'item_heal': 'common/commoneffect/animation/heal.ani',
     'item_fastheal': 'common/commoneffect/animation/fastheal.ani',
@@ -1866,6 +1871,7 @@ def main() -> int:
                 *(layer['key'] for layer in stages[-1]['fx']), *move['formation']['effects'].values())
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
         specs.append(('effects', 'hundred_sword_contact', EFFECTS['hundred_sword_contact']))
+        specs.extend(('effects', key, path) for key, path in HUNDRED_SWORD_TRAVEL_EFFECTS.items())
         specs.extend(('player_clips', stage['ani'], runtime['assets']['player_anims'][stage['ani']])
                      for stage in stages[1:-1])
         specs.extend(('variant_effects', key, spec)

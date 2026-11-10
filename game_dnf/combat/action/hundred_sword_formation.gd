@@ -95,6 +95,19 @@ func consume(slot: int) -> Vector3i:
 	_spent[slot] = {"point":point,"at_ms":_age,"rotation":_random_rotation()}
 	return point
 
+func emit_travel_effects(bus, destination: Vector3i, angle: float, facing: int) -> void:
+	# CD21B9 puts the move-effect container at sword slot 6 plus ten depth units.
+	var depth := waypoint(6).y+10
+	# D2E41B submits the destination and the previous pose's angle and facing.
+	bus.emit("combat.cue",{"kind":"fx","key":"hundred_sword_travel_dash",
+		"point":Vector2(destination.x,destination.y),"height":destination.z,"facing":facing,
+		"angle":angle,"depth_offset":depth-destination.y,"fresh":true})
+	# A6C430 uses the saved field center, Z=75, and an independent angle perturbation.
+	var jitter := lerpf(Motion.f32(-0.1),Motion.f32(0.1),float(_art_rng.range_int(0,99))/99.0)
+	bus.emit("combat.cue",{"kind":"fx","key":"hundred_sword_travel_slash",
+		"point":_center,"height":75,"facing":facing,"angle":Motion.f32(angle+jitter),
+		"depth_offset":depth-int(_center.y),"fresh":true})
+
 func append_view(out: Array) -> void:
 	var now := int(_age)
 	if now < _entry_ms:return

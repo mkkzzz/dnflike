@@ -1361,8 +1361,11 @@ func advance_hundred_sword(move_defn: Dictionary) -> void:
 	var config: Dictionary = move_defn["formation"]
 	var ordinal := int(cast["ordinal"])+1
 	var order: Array = config["order"]
-	# CD2347 skips ordinal zero. CD287E uses the same cue sequence on the return.
+	# CD2347 skips ordinal zero. CD287E submits the terminal point on the return.
 	if ordinal > 0:
+		var destination := Vector3i(int(cast["origin"].x),int(cast["origin"].y),40)
+		if ordinal < order.size():destination = cast["formation"].waypoint(int(order[ordinal]))
+		cast["formation"].emit_travel_effects(bus,destination,float(player["native_phase"]["body_rotation"]),int(player["facing"]))
 		play_sound("R_SM_HOANYOUNG")
 		play_sound("R_W_MOVING_ATK")
 	if ordinal >= order.size():
