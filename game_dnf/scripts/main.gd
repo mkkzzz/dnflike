@@ -26,6 +26,7 @@ const PLAYER_ID := 0
 # Actor sound slots are separate from entity loops. Reserve a player-only ID for native slot 25.
 const BLOODY_RAVE_LOOP_ID := 0x40000019
 const GHOST_FIELD_KINDS := ["khazan_field","bremen_field","saya_field","rasa_field"]
+const SWORDMAN_STAND_RUN_BUFFS := ["overdrive","reckless"]
 const OUTRAGE_IMPACTS := ["outrage_floor","outrage_magma"]
 const NATIVE_COUNTER_CUE_MS := 5000
 const OUTRAGE_ERUPTION_OFFSETS := [Vector2i(22,-12),Vector2i(-117,15),Vector2i(-126,37),
@@ -779,11 +780,13 @@ func buffering(code: int) -> void:
 	elif skill_slot_index(code) >= 0:
 		var id := skill_request(code)
 		if id == "backstep" and backstep_allowed():player["queued_backstep"] = true
-		elif id != "":player["queued_skill"] = id
+		# CBBE9E polls Overdrive and Reckless only in stand or run.
+		elif id != "" and id not in SWORDMAN_STAND_RUN_BUFFS:player["queued_skill"] = id
 	elif code in [KEY_C,KEY_SPACE] and String(player["action"]) == "upper":player["queued_jump"] = true
 
 func buffer_recovery_input(code: int) -> void:
 	if not (code in [KEY_X,KEY_Z,KEY_C,KEY_SPACE] or skill_slot_index(code) >= 0):return
+	if skill_request(code) in SWORDMAN_STAND_RUN_BUFFS:return
 	player["recovery_code"] = code
 	player["recovery_buffer_ms"] = RECOVERY_INPUT_BUFFER_MS
 
@@ -1650,6 +1653,7 @@ func start_action(name: String, cancel := false) -> bool:
 	var m: Dictionary = table.moves.get(name,{})
 	if m.is_empty():return reject_action(name,"unknown")
 	if player["state"] == "hold":return reject_action(name,"state")
+	if name in SWORDMAN_STAND_RUN_BUFFS and player["state"] not in ["idle","move"]:return reject_action(name,"state")
 	if name == "triple" and player.has("triple_cast"):return reject_action(name,"state")
 	if name == "rapidmoveslash" and player.has("rapid_move_slash_cast"):return reject_action(name,"state")
 	if name == "weaponcombo" and player["state"] not in ["idle","move","action"]:return reject_action(name,"state")
@@ -1782,7 +1786,7 @@ func start_action(name: String, cancel := false) -> bool:
 			attach_frenzy_fx(cast_fx,delay)
 			play_sound("SM_FLENSE")
 			play_sound("FLENSE_GET")
-		elif name in ["overdrive","reckless"]:
+		elif name in SWORDMAN_STAND_RUN_BUFFS:
 			start_self_buff_cast(m,"SM_OVERDRIVE" if name == "overdrive" else "SM_CONGESTION")
 		else:
 			if cast_fx != "":spawn_effect(cast_fx,player["pos"],int(player["facing"]),float(player["z"]))

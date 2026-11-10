@@ -1370,6 +1370,68 @@ func check_self_buff_cast(skill: String, job: String, voice: String, finish_soun
 	check(not game.player.has("self_buff_cast") and game.active_effect(skill).is_empty()
 		and cues(finish_sound).is_empty(),"Incoming damage interrupts "+skill+" without attaching the buff")
 
+func check_self_buff_gate_and_payment(skill: String, job: String, cost: int, cooldown: float) -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":job})
+	profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = [skill]
+	start_room("original_27601","katana",1,spec,job)
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["cast_speed"] = 1.0
+	game.numeric_player.values["mp_cost_rate"] = 1.0
+	game.numeric_player.values["cooldown_rate"] = 1.0
+	game.player["mp"] = float(cost)
+	press(KEY_X)
+	step(0)
+	var attack: String = game.player["action"]
+	var duration: float = game.action_duration(attack)
+	var cancel_at := float(game.action_def().get("cancel_at", duration))
+	press(KEY_A)
+	step(cancel_at)
+	check(attack != "" and game.player["action"] != skill and game.player["queued_skill"]==""
+		and game.player["mp"]==cost and not game.player["cooldowns"].has(skill),
+		skill+" cannot pay for or queue a cast during a normal attack")
+	step(duration)
+	check(game.player["state"]=="idle" and game.active_effect(skill).is_empty(),
+		skill+" does not cast after a press from the attack state")
+	game.player["state"] = "guard"
+	game.player["guard_hold_ms"] = 500.0
+	press(KEY_A)
+	step(0)
+	check(game.player["state"]=="guard" and game.player["mp"]==cost
+		and not game.player["cooldowns"].has(skill),skill+" cannot start or pay while guarding")
+	game.player["state"] = "idle"
+	game.damage_player(7,POINT+Vector2(60,0))
+	press(KEY_A)
+	step(0)
+	check(game.player["state"]=="hurt" and game.player["recovery_code"]!=KEY_A,
+		skill+" does not buffer a cast from hitstun")
+	step(1500)
+	game.player["mp"] = float(cost - 1)
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["mp"]==cost-1
+		and not game.player["cooldowns"].has(skill),skill+" rejects one MP below its original cost")
+	game.player["mp"] = float(cost)
+	game.run_direction = 1
+	game.step_player(1.0,Vector2.RIGHT)
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]==skill and game.player["mp"]==0.0 and game.active_effect(skill).is_empty()
+		and game.player["cooldowns"].get(skill,0.0)==cooldown,
+		skill+" accepts exactly enough MP from run, debits once and starts cooldown before the buff")
+	step(500)
+	check(not game.active_effect(skill).is_empty() and game.player["mp"]==0.0,
+		skill+" applies the buff without another payment on normal exit")
+	game.player["mp"] = float(cost)
+	press(KEY_A)
+	step(0)
+	check(game.player["action"]=="" and game.player["mp"]==cost,
+		skill+" rejects a cast during cooldown before charging MP")
+
 func overdrive_particles() -> Array:
 	return game.view.effects.filter(func(fx):return fx.tag=="overdrive_status")
 
@@ -8557,6 +8619,8 @@ func run() -> void:
 	check_heavy_weapon_combo()
 	check_self_buff_cast("overdrive","weaponmaster","SM_OVERDRIVE","BUFF_OVERDRIVE")
 	check_self_buff_cast("reckless","berserker","SM_CONGESTION","BUFF_CONGESTION")
+	check_self_buff_gate_and_payment("overdrive","weaponmaster",140,30.0)
+	check_self_buff_gate_and_payment("reckless","berserker",30,40.0)
 	check_overdrive_particles()
 	check_reckless_particles()
 	check_frenzy_drain()
