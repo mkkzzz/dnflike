@@ -2374,12 +2374,12 @@ func check_hellbenter_first_cast() -> void:
 		"the original depth projection puts adjacent Y samples on opposite sides of the 640-pixel blood pulse")
 	check(blood.marks.size()==2 and not blood.marks.has(dry["id"]) and layers.call("targetmark1").size()==2,
 		"Hellbenter immediately marks bleeding hostiles, including those outside the pulse radius")
-	game.step_game(499.0)
-	check(blood.orbs.is_empty(),"Hellbenter marks wait through 499 ms")
-	game.step_game(1.0)
+	check(blood.orbs.is_empty(),"installing the Hellbenter mark leaves its first target poll pending")
+	game.step_game(17.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
-	check(blood.orbs.size()==1 and layers.call("ballhead").size()==1 and layers.call("targetmark2").size()==2,
-		"the 500 ms pulse creates one original blood orb from the nearby bleeding target")
+	check(blood.orbs.size()==1 and layers.call("ballhead").size()==1
+		and blood.marks[near["id"]].get("next_pulse")==517,
+		"the first target poll creates one blood orb immediately and anchors the 500 ms cadence")
 	if blood.orbs.is_empty():return
 	var orb: Dictionary = blood.orbs[0]
 	var origin: Vector3i = orb["origin"]
@@ -2391,7 +2391,13 @@ func check_hellbenter_first_cast() -> void:
 	game.step_game(250.0)
 	check(orb["point"].y==bend.y,"the separate depth curve turns at 400 ms")
 	near["numeric"].effects.remove("bleed")
-	game.step_game(199.0)
+	game.step_game(99.0)
+	check(blood.marks[far["id"]].get("next_pulse")==517,
+		"the next pulse remains pending after 499 ms even on an out-of-range mark")
+	game.step_game(1.0)
+	check(blood.marks[far["id"]].get("next_pulse")==1017 and blood.orbs.size()==1,
+		"at 500 ms the out-of-range mark advances its cadence without spawning a blood orb")
+	game.step_game(99.0)
 	check(effect.get("blood_count",0)==0 and is_equal_approx(effect["definition"]["modifiers"][0]["value"],0.020)
 		and not blood.marks.has(near["id"]),"losing bleed removes the mark while the orb continues flying")
 	game.step_game(1.0)
@@ -2410,7 +2416,7 @@ func check_hellbenter_first_cast() -> void:
 	effect["blood_count"] = 79
 	near["numeric"].effects.add_source_bleed(0,10000,60)
 	game.step_game(250.0)
-	game.step_game(500.0)
+	game.step_game(0.0)
 	game.step_game(599.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(effect["blood_count"]==79 and cues("W_SPIRITS_FLASH").is_empty()
@@ -2465,6 +2471,11 @@ func check_hellbenter_first_cast() -> void:
 	check(game.player.has("hellbenter_finish") and not hellbenter.call().is_empty()
 		and game.player["hellbenter_finish"]["blood_count"]==80 and layers.call("completesword").is_empty(),
 		"the first eligible poll starts the fully charged finisher and clears the held sword layers")
+	if not game.player.has("hellbenter_finish"):return
+	step(float(game.player["native_phase"]["impact_ms"]))
+	check(game.objects.size()==1 and game.objects[0]["size_rate"]==1.0
+		and game.objects[0]["column"]["down_radius"]==150,
+		"the full-charge snapshot reaches the real column at the authored maximum size and down radius")
 
 func check_hellbenter_manual_finish() -> void:
 	var profile := ProfileSession.new()

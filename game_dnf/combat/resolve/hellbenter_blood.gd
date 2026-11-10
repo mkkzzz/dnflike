@@ -80,12 +80,15 @@ func step(game, ms: float) -> void:
 			continue
 		if not marks.has(id):
 			if scan:
-				marks[id] = {"age":0.0,"next_pulse":float(config["pulse_ms"]),"facing":int(enemy["facing"])}
+				marks[id] = {"age":0.0,"facing":int(enemy["facing"])}
 			continue
 		var mark: Dictionary = marks[id]
 		mark["age"] += ms
-		if float(mark["age"]) < float(mark["next_pulse"]):continue
-		mark["next_pulse"] += float(config["pulse_ms"])
+		var mark_age := int(mark["age"])
+		# 99A691 configures the timer to fire at its first poll and then keep its cadence.
+		var next_pulse := int(mark.get("next_pulse",mark_age))
+		if mark_age < next_pulse:continue
+		mark["next_pulse"] = next_pulse+int(config["pulse_ms"])
 		if game.native_ground_distance(enemy["pos"],Vector2(destination.x,destination.y)) <= int(config["range"]):
 			_spawn(game,enemy,destination)
 
