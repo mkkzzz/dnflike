@@ -836,7 +836,7 @@ func end_action() -> void:
 
 func step_game(ms: float) -> void:
 	var dt := ms/1000
-	if native_maze != null:native_jar_traps.advance_clock(self,ms)
+	native_jar_traps.advance_clock(self,ms)
 	preload("res://combat/item_restoration.gd").step(self,ms)
 	if numeric_player != null:
 		step_numeric_actor(player,numeric_player,ms)
@@ -893,7 +893,7 @@ func step_game(ms: float) -> void:
 		_aura_pulse_ms = 1000.0
 		pulse_passive_auras()
 	step_hazards(ms)
-	if native_maze != null:native_jar_traps.step(self)
+	native_jar_traps.step(self)
 	for prop: Dictionary in props:
 		if prop.get("broken",false):prop["broken_ms"] = float(prop.get("broken_ms",0))+ms
 	var all_dead := true
@@ -922,6 +922,11 @@ func step_game(ms: float) -> void:
 					native_room = next
 					load_room(int(next["room_index"]),side)
 				else:
+					var legacy_snapshot: Dictionary = room_snapshots.get(room_index,{})
+					legacy_snapshot["cleared"] = bool(legacy_snapshot.get("cleared",room_cleared))
+					legacy_snapshot["props"] = props.duplicate(true)
+					legacy_snapshot["jar_traps"] = native_jar_traps.snapshot()
+					room_snapshots[room_index] = legacy_snapshot
 					load_room(int(door["to"]),side)
 				break
 
@@ -942,7 +947,8 @@ func finish_current_room() -> void:
 	elif not _muted:
 		view.audio.play_music("forest02" if boss else "forest01",view.audio.music.volume_db)
 	room_cleared = true
-	room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true)}
+	room_snapshots[room_index] = {"cleared":true,"props":props.duplicate(true),
+		"jar_traps":native_jar_traps.snapshot()}
 	bus.emit("combat.room_combat_finished",flow_payload(details))
 	if boss:
 		finished = true
@@ -2876,7 +2882,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				continue
 			for p in props.size():
 				var prop: Dictionary = props[p]
-				if not prop.get("breakable",false) or prop.get("broken",false):continue
+				if not prop.get("breakable",false) or prop.get("broken",false) or prop.has("jar_warning"):continue
 				for b: AABB in world:
 					if b.intersects(Kernel.HitJudge.prop_box(prop["collision"])):
 						var prop_key := "prop:%d:%d:%d"%[i,group,int(prop["node"])]
@@ -2902,6 +2908,8 @@ func apply_legacy_prop_damage(prop: Dictionary, amount: int) -> bool:
 	prop["stage"] = int(prop.get("stage",0))+1
 	if int(prop["stage"]) >= int(prop.get("stages",1)):
 		if bool(prop.get("destroy_on_final_stage",true)):
+			if native_jar_traps.break_pot(self,prop):
+				return false
 			complete_legacy_prop_break(prop)
 			return true
 		prop["hp"] = 1
@@ -2934,6 +2942,12 @@ func complete_legacy_prop_break(prop: Dictionary) -> void:
 		if int(blocker.get("node",-1)) == int(prop.get("node",-1)):
 			blocker["active"] = false
 	bus.emit("combat.prop_broken",{"node":int(prop.get("node",-1))})
+
+func complete_prop_break(prop: Dictionary) -> void:
+	if prop.has("native_breakable"):
+		complete_native_prop_break(prop)
+	else:
+		complete_legacy_prop_break(prop)
 
 func draw_hit_delay(timeline: Array, clock: float) -> int:
 	# CADB4F sums whole frames from the contact frame through frame six.
@@ -4903,10 +4917,10 @@ func build_props(room: Dictionary) -> Array:
 		var pos := Vector2(float(anchor[0]), float(anchor[1]))
 		var size := Vector2(float(width[0]), float(width[1]))
 		var damage_atk: Dictionary = table.atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
-		out.append({
+		var prop := {
 			"id": "%s#%d" % [path, out.size()],
 			"source_path": path,
-			"pos": pos, "z": float(anchor[2]) if anchor.size() > 2 else 0.0,
+			"pos": pos, "z": float(anchor[2]) if anchor.size() > 2 else 0.0, "facing": 1,
 			"collision": Rect2(pos.x - size.x * 0.5, pos.y - size.y, size.x, size.y),
 			"breakable": breakable, "broken": false, "broken_ms": 0.0,
 			# 陷阱：玩家走进判定范围就按 .atk 结算一次伤害（trap/* 的 [attack info]）。
@@ -4918,7 +4932,16 @@ func build_props(room: Dictionary) -> Array:
 			"hit_sound": breakable_hit_sound(strings) if breakable else "",
 			"particles": breakable_particle_keys(path),
 			"node": object_index,
-		})
+		}
+		var jar_rows := NativeJarTraps.candidate_rows(item)
+		var jar_trap := NativeJarTraps.prepare_candidate(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
+		if not jar_rows.is_empty():
+			prop["jar_trap_candidates"] = jar_rows.size()
+		if not jar_trap.is_empty():
+			prop["jar_trap"] = jar_trap
+		elif not jar_rows.is_empty():
+			prop["jar_trap_miss"] = true
+		out.append(prop)
 	return out
 
 func breakable_stage_count(data: Array) -> int:
@@ -5232,7 +5255,7 @@ func load_room(index: int, from_side: String) -> void:
 	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
 	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
 	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
-	if native_maze != null:native_jar_traps.restore_room(self,saved.get("jar_traps",[]))
+	native_jar_traps.restore_room(self,saved.get("jar_traps",[]))
 	# Dungeon entry: centre of the map's own [dungeon start area]; doors spawn beside the paired gate.
 	var spawn := Vector2(room_width-160,250)
 	var area = room_map.get("start_area")
@@ -5844,7 +5867,7 @@ func view_snapshot() -> Dictionary:
 			"z":float(player["z"])+90.0,"facing":facing,"clock":float(player["clock"])*float(grab_phase["grab_hold_rate"]),
 			"loop":true,"depth_offset":1})
 	append_bloody_rave_typhoon(objs)
-	if native_maze != null:objs.append_array(native_jar_traps.view_objects(self))
+	objs.append_array(native_jar_traps.view_objects(self))
 	objs.append_array(native_zealot_summons.view_objects())
 	objs.append_array(frenzy_recovery.view_objects(self))
 	var route: Array = native_maze.route_view() if native_maze != null else []

@@ -38,6 +38,19 @@ static func rows(item: Dictionary) -> Array:
 		result.append(raw.slice(at+1,at+6))
 	return result
 
+## Ordinary dungeon props can mix [trap] with [item]/[monster] rows. Select
+## only when every trap branch is one of the five verified source IDs.
+static func candidate_rows(item: Dictionary) -> Array:
+	var raw: Array = item.get("raw",[])
+	if item.get("source_tag") != "[special passive object]" or raw.size() < 5:return []
+	if raw.size() != 5+6*int(raw[4]):return []
+	var result: Array = []
+	for at in range(5,raw.size(),6):
+		if raw[at] != "[trap]":continue
+		if int(raw[at+1]) not in IDS or int(raw[at+4]) <= 0:return []
+		result.append(raw.slice(at+1,at+6))
+	return result
+
 ## 7DD4DA..523 consumes rows in source order and stops at the first success.
 static func select(children: Array, rolls) -> Dictionary:
 	for row: Array in children:
@@ -47,6 +60,9 @@ static func select(children: Array, rolls) -> Dictionary:
 
 static func prepare(item: Dictionary, seed: int) -> Dictionary:
 	return select(rows(item),DetRng.new(seed))
+
+static func prepare_candidate(item: Dictionary, seed: int) -> Dictionary:
+	return select(candidate_rows(item),DetRng.new(seed))
 
 static func warning_index(difficulty: String) -> int:
 	return maxi(0,DIFFICULTIES.find(difficulty))
@@ -137,7 +153,7 @@ func step(game) -> void:
 		if warning.is_empty() or clock_ms-float(warning["start"]) < float(warning["duration"]):continue
 		prop.erase("jar_warning")
 		spawn(game,prop)
-		game.complete_native_prop_break(prop)
+		game.complete_prop_break(prop)
 	if actors.is_empty():return
 	if game.finished:return
 	for i in range(actors.size()-1,-1,-1):

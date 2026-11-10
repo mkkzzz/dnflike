@@ -15,6 +15,9 @@ var breakable_paths := {}
 var hazard_paths := {}
 var tested_breakables := {}
 var tested_hazards := {}
+var jar_candidate_props := 0
+var tested_immediate_jar := false
+var tested_delayed_jar := false
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -47,6 +50,9 @@ func run() -> void:
 	check(hazard_count == 152, "all source traps with attack info are counted")
 	check(breakable_paths.size() == 22, "all 22 visible breakable source objects are covered")
 	check(hazard_paths.size() == 7, "all 7 visible attack-trap source objects are covered")
+	check(jar_candidate_props == 14, "all 14 mixed-payload props with verified trap branches are counted")
+	check(tested_immediate_jar and tested_delayed_jar,
+		"both immediate and delayed verified jar payloads execute")
 	check(tested_breakables.size() == 22, "every visible breakable source object survives a source-HP hit chain")
 	check(tested_hazards.size() == 7, "every visible attack-trap source object damages a contacting player")
 	session.stop()
@@ -174,8 +180,14 @@ func check_room(dungeon_id: String, index: int) -> void:
 				label + " preserves source hit sound for " + path)
 			check(String(prop.get("break_sound", "")) == breakable_destroy_sound(source),
 				label + " preserves source destroy sound for " + path)
+			if int(prop.get("jar_trap_candidates", 0)) > 0:
+				jar_candidate_props += 1
+				check(prop.has("jar_trap") or prop.get("jar_trap_miss", false),
+					label + " resolves or records its mixed trap selection for " + path)
 			if not tested_breakables.has(path):
 				test_breakable(prop, path)
+			elif int(prop.get("jar_trap_candidates", 0)) > 0:
+				test_generic_jar_payload(prop, path)
 		else:
 			check(bool(prop.get("hazard", false)), label + " marks " + path + " as a damage trap")
 			check(not (prop.get("damage_atk", {}) as Dictionary).is_empty(),
@@ -238,6 +250,36 @@ func test_hazard(prop: Dictionary, path: String) -> void:
 	var after := float(game.player["hp"])
 	game.step_hazards(1.0)
 	check(float(game.player["hp"]) == after, path + " does not damage twice inside its interval")
+
+func test_generic_jar_payload(prop: Dictionary, path: String) -> void:
+	var selection: Dictionary = prop.get("jar_trap", {})
+	if selection.is_empty():
+		return
+	var source_id := int(selection["id"])
+	if source_id in [40002, 48003]:
+		if tested_delayed_jar:
+			return
+		tested_delayed_jar = true
+		var before: int = game.native_jar_traps.actors.size()
+		var amount := int(prop["hp"]) * int(prop["stages"])
+		check(not game.apply_legacy_prop_damage(prop, amount),
+			path + " delayed trap waits instead of destroying immediately")
+		check(prop.has("jar_warning") and not bool(prop["broken"]),
+			path + " keeps the source pot visible during its trap warning")
+		game.native_jar_traps.advance_clock(game, 10000.0)
+		game.native_jar_traps.step(game)
+		check(bool(prop["broken"]) and game.native_jar_traps.actors.size() > before,
+			path + " delayed trap destroys the pot and spawns after the warning")
+	elif source_id in [2200, 2210, 2410]:
+		if tested_immediate_jar:
+			return
+		tested_immediate_jar = true
+		var before: int = game.native_jar_traps.actors.size()
+		var amount := int(prop["hp"]) * int(prop["stages"])
+		check(game.apply_legacy_prop_damage(prop, amount),
+			path + " immediate jar payload destroys the source prop")
+		check(game.native_jar_traps.actors.size() > before,
+			path + " immediate jar payload creates its source actor")
 
 func breakable_stages(source: Dictionary) -> int:
 	var data: Array = source.get("int_data", [])
