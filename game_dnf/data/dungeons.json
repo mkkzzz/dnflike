@@ -189,6 +189,20 @@
     "sha256": "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc"
    }
   },
+  "marpissalair": {
+   "name": "蜘蛛洞穴",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/marpissalair_v1/map_export.json",
+   "min_level": 38,
+   "monster_level": 41,
+   "source": {
+    "path": "dungeon/act4/marpissalair.dgn",
+    "sha256": "10848752c082de15b0929fb171fc827165fe995009bff7ff5786658754a308c7"
+   }
+  },
   "firstbackbone": {
    "name": "第一脊椎",
    "region": "behemoth",

@@ -811,9 +811,9 @@
     "id": 32,
     "min_level": 38,
     "path": "dungeon/act4/marpissalair.dgn",
-    "runtime_id": "",
+    "runtime_id": "marpissalair",
     "sha256": "10848752c082de15b0929fb171fc827165fe995009bff7ff5786658754a308c7",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 42,
@@ -7391,8 +7391,8 @@
     "level_max": 45,
     "level_min": 38,
     "path": "monster/ghoul/ghoulnomercy.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "ghoul_ghoulnomercy",
+    "state": "runtime"
    },
    {
     "id": 406,
@@ -7535,8 +7535,8 @@
     "level_max": 45,
     "level_min": 38,
     "path": "monster/spider/spiderpoison.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spider_spiderpoison",
+    "state": "runtime"
    },
    {
     "id": 55027,
@@ -7599,8 +7599,8 @@
     "level_max": 45,
     "level_min": 38,
     "path": "monster/wraith/wraithspectress.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "wraith_wraithspectress",
+    "state": "runtime"
    },
    {
     "id": 1043,
@@ -8375,16 +8375,16 @@
     "level_max": 46,
     "level_min": 41,
     "path": "monster/spider/spider.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spider_spider",
+    "state": "runtime"
    },
    {
     "id": 422,
     "level_max": 46,
     "level_min": 41,
     "path": "monster/spider/spiderboss.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "spider_spiderboss",
+    "state": "runtime"
    },
    {
     "id": 43007,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 27,
+   "runtime": 28,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 127,
+   "runtime": 132,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

@@ -1140,6 +1140,31 @@
    "mob": "monster/starfish/starfishking.mob",
    "bank": "starfish_starfishking",
    "name": "starfishking"
+  },
+  "ghoul_ghoulnomercy": {
+   "mob": "monster/ghoul/ghoulnomercy.mob",
+   "bank": "ghoul_ghoulnomercy",
+   "name": "ghoulnomercy"
+  },
+  "spider_spider": {
+   "mob": "monster/spider/spider.mob",
+   "bank": "spider_spider",
+   "name": "spider"
+  },
+  "spider_spiderboss": {
+   "mob": "monster/spider/spiderboss.mob",
+   "bank": "spider_spiderboss",
+   "name": "spiderboss"
+  },
+  "spider_spiderpoison": {
+   "mob": "monster/spider/spiderpoison.mob",
+   "bank": "spider_spiderpoison",
+   "name": "spiderpoison"
+  },
+  "wraith_wraithspectress": {
+   "mob": "monster/wraith/wraithspectress.mob",
+   "bank": "wraith_wraithspectress",
+   "name": "wraithspectress"
   }
  },
  "boss_hp_lines": 3,

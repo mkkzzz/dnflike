@@ -39,6 +39,10 @@ SOURCES = {
         'dungeon/act3/1stbackbone.dgn',
         '005a1cba836b48bd1f56f2a6a6dd5e72ffa91786c701cc0b2a6791027176da85',
     ),
+    'marpissalair': (
+        'dungeon/act4/marpissalair.dgn',
+        '10848752c082de15b0929fb171fc827165fe995009bff7ff5786658754a308c7',
+    ),
     'shallowkeep': (
         'dungeon/act4/shallowkeep.dgn',
         '652be6d9a2d862210a92c767e5cb7c3cbb4d3f8e887868e0e98cc8fa9f9ab833',

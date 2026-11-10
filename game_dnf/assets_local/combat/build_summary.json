@@ -66,7 +66,12 @@
   "ghoul_ghoulmorgan",
   "ghoul_ghoulstand",
   "ghoul_ghoulthrowerstand",
+  "ghoul_ghoulnomercy",
   "wraith_wraith",
+  "wraith_wraithspectress",
+  "spider_spider",
+  "spider_spiderpoison",
+  "spider_spiderboss",
   "dendroid_dendroid",
   "dendroid_goliden",
   "dendroid_rodinglo",
@@ -191,7 +196,7 @@
  "effects": 591,
  "digits": 71,
  "audio_keys": 314,
- "unresolved": 35,
+ "unresolved": 38,
  "particle_templates": 27,
  "unresolved_items": [
   {
@@ -231,6 +236,31 @@
    "monster": "monster/new_golem/greatgolemr.mob",
    "path": "equipment/monster/new_golem/greatarm.equ",
    "note": "equipment file absent; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/spider/spider.mob",
+   "images": [
+    "Monster/Spider/Spider.img",
+    "monster/Spider/Spider.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/spider/spiderpoison.mob",
+   "images": [
+    "Monster/Spider/SpiderPoison.img",
+    "monster/Spider/SpiderPoison.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/spider/spiderboss.mob",
+   "images": [
+    "Monster/Spider/SpiderBoss.img",
+    "Monster/Spider/SpiderBossBurrow.img",
+    "monster/Spider/SpiderBoss.img"
+   ]
   },
   {
    "kind": "monster_layers",

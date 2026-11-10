@@ -124,6 +124,10 @@
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
   },
+  "marpissalair": {
+   "normal": "spider",
+   "boss": "spider_boss"
+  },
   "secondbackbone": {
    "normal": "2nd_spine",
    "boss": "2nd_spine_boss"
@@ -388,6 +392,18 @@
    "source": "music/dendroid.ogg",
    "sha256": "0e46258f6ae02ce5e8f34c5be8aef9ec63b44af4d41aa1511477ab23ad722674",
    "bytes": 1781155
+  },
+  "spider": {
+   "file": "audio/bgm/spider.ogg",
+   "source": "music/spider.ogg",
+   "sha256": "67ea80c96a2287160d8a17d1591970ddf5d4454cdea7b0739fd662e0f0444ce4",
+   "bytes": 1685471
+  },
+  "spider_boss": {
+   "file": "audio/bgm/spider_boss.ogg",
+   "source": "music/spider_boss.ogg",
+   "sha256": "7dbf2af5d22bbba86d30372a1929c1525cef3f7293dc4c30b2880488160bdd97",
+   "bytes": 1906811
   },
   "2nd_spine": {
    "file": "audio/bgm/2nd_spine.ogg",
