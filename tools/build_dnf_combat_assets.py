@@ -80,7 +80,23 @@ OUTRAGE_PARTICLE_SOURCES = {
     },
 }
 HELLBENTER_DISAPPEAR_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterdisappear.ptl'
+HELLBENTER_LOOP_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterloop.ptl'
+HELLBENTER_LOOP_ANIMATIONS = tuple(
+    f'passiveobject/character/swordman/animation/hellbenterfinish/loopparticle{index}.ani'
+    for index in (1, 2)
+)
+HELLBENTER_LOOP_IMAGES = {
+    'sprite/character/swordman/effect/hellbenter/particle-n.img':
+        'b34ffd4b0f1fcbd9cf7e5d7ed87d07992c0641f78753d5a9a28e92b1d925ae11',
+    'sprite/character/swordman/effect/hellbenter/particle-d.img':
+        '3e6951dd5ca1547b5136a6d93e7df1460cbeaca347b4b7396c23518209396b20',
+}
 HELLBENTER_PARTICLE_SOURCES = {
+    HELLBENTER_LOOP_PARTICLE: {
+        HELLBENTER_LOOP_PARTICLE: 'a57a8e17c69c65d48e3a2f6420f1664b8da9e494da5cec4c117b6732e445ea55',
+        HELLBENTER_LOOP_ANIMATIONS[0]: '09f6be3fd5c90d4c46ac1c8f4686d5ccc8d5e045a6835c13c1197a1c7c01ca10',
+        HELLBENTER_LOOP_ANIMATIONS[1]: '0257314cd9e77f4d628cc6c2cbed6936ca54f302a9a5b66c63136177f7e51afa',
+    },
     HELLBENTER_DISAPPEAR_PARTICLE: {
         HELLBENTER_DISAPPEAR_PARTICLE: '000f657d6448cf1ecea12bc054b8d27c6d58bc8cfade9a1203882df52c312112',
         **{f'passiveobject/character/swordman/animation/hellbenterfinish/disappearparticle{index}.ani': digest
@@ -181,6 +197,25 @@ def native_particle_definitions(src, extra_pins=None):
             raise ValueError('Native particle source differs from compiled pack: '+path)
         particles[path] = {'sha256': entry['sha256'], 'decoded': entry['decoded']}
         src.sources[path] = entry['sha256']
+        if path == HELLBENTER_LOOP_PARTICLE:
+            # A6B285..A6B3D4 installs the same random IMG frame in both blank ANIs.
+            for animation in HELLBENTER_LOOP_ANIMATIONS:
+                if src.animation(animation)['frames'][0]['img'] is not None or (
+                        src.sources[animation] != pinned[path][animation]):
+                    raise ValueError('Unexpected Hellbenter particle animation: '+animation)
+            for image, digest in HELLBENTER_LOOP_IMAGES.items():
+                if not src.image(image) or src.sources[image] != digest:
+                    raise ValueError('Unexpected Hellbenter particle image: '+image)
+            pairs = []
+            for index in range(6):
+                pair = []
+                for animation, image in zip(HELLBENTER_LOOP_ANIMATIONS, HELLBENTER_LOOP_IMAGES):
+                    key = f'native_{PurePosixPath(animation).stem}_{index}'
+                    effects[key] = {'ani': animation, 'first_frame_image': (image, index)}
+                    pair.append(key)
+                pairs.append(pair)
+            particles[path]['sprite_pairs'] = pairs
+            continue
         for animation in entry['animations']:
             effects['native_'+PurePosixPath(animation).stem] = animation
     half_height = swordman_half_height(src)
@@ -767,11 +802,14 @@ def refresh_animation_metadata(src: Source, manifest: dict) -> dict:
     return result
 
 
-def effect_bank(src: Source, key: str, ani_path: str, unresolved: list, *, image_variant: int | None = None) -> dict:
+def effect_bank(src: Source, key: str, ani_path: str, unresolved: list, *, image_variant: int | None = None,
+                first_frame_image: tuple[str, int] | None = None) -> dict:
     ani = src.animation(ani_path)
     atlas, frames = Atlas('fx_' + key), []
     bounds = None
     for n, f in enumerate(ani['frames']):
+        if n == 0 and first_frame_image is not None:
+            f = dict(f, img=first_frame_image[0], img_frame=first_frame_image[1])
         rec = dict(f)
         if f.get('img'):
             image_path = f['img']
@@ -797,7 +835,15 @@ def effect_bank(src: Source, key: str, ani_path: str, unresolved: list, *, image
     if bounds is not None:
         # Box6 [x, y, z, w, d, h]: screen y grows downward, height z grows upward from the anchor.
         bank['pixel_box'] = [bounds[0], DERIVED_DEPTH[0], -bounds[3], bounds[2] - bounds[0], DERIVED_DEPTH[1], bounds[3] - bounds[1]]
+    if first_frame_image is not None:
+        bank['particle_variant'] = True
     return bank
+
+
+def build_effect_spec(src: Source, key: str, spec: str | dict, unresolved: list) -> dict:
+    if isinstance(spec, str):
+        return effect_bank(src, key, spec, unresolved)
+    return effect_bank(src, key, spec['ani'], unresolved, first_frame_image=spec['first_frame_image'])
 
 
 def monster_bank(src: Source, key: str, mob: str, clip_dir: str, unresolved: list, extra=(), motion_map=None,
@@ -1227,7 +1273,7 @@ def build(library: Path | None, output: Path = OUT) -> dict:
             unresolved.append({'kind': 'object_animation', 'path': path, 'error': str(error)})
     for key, path in effects.items():
         try:
-            manifest['effects'][key] = effect_bank(src, key, path, unresolved)
+            manifest['effects'][key] = build_effect_spec(src, key, path, unresolved)
         except KeyError as error:
             unresolved.append({'kind': 'animation', 'path': path, 'error': str(error)})
     # 可破坏物打碎的粒子（.obj 的 [destroy particle] → .ptl → ANI）。
@@ -1356,7 +1402,7 @@ def extend_native_particles(library: Path | None, output: Path = OUT, *, pack_pa
         effects.update(trap_effects)
         unresolved = []
         for key, path in effects.items():
-            bank = effect_bank(src, key, path, unresolved)
+            bank = build_effect_spec(src, key, path, unresolved)
             if key in manifest['effects'] and manifest['effects'][key] != bank:
                 raise ValueError('Existing particle bank differs; create a new version: '+key)
             texture = 'fx_'+key+'.png'

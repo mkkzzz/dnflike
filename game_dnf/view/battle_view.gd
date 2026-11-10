@@ -36,6 +36,7 @@ var effects: Array = []
 var particle_bursts = ParticleBursts.new()
 var _particle_banks: Dictionary = {}
 var _particle_emitters: Array[Dictionary] = []
+var _object_particle_emitters: Dictionary = {}
 var _poison_emitters: Dictionary = {}
 var _overdrive_emitter: Dictionary = {}
 var revive_effects: Array = []
@@ -85,7 +86,8 @@ func setup(assets: Dictionary, combat_assets: Dictionary, player_clips: Dictiona
 		if parsed is Dictionary and parsed.get("schema") == "dnf_status_assets/1":
 			_status_assets = parsed
 	for bank: Dictionary in combat_assets.get("effects",{}).values():
-		if bank.has("source"):_particle_banks[String(bank.source).to_lower()] = bank
+		if bank.has("source") and not bank.get("particle_variant",false):
+			_particle_banks[String(bank.source).to_lower()] = bank
 	_warm_render_assets()
 	world = Node2D.new()
 	add_child(world)
@@ -486,6 +488,7 @@ func _on_room_loaded(event: Dictionary) -> void:
 		if is_instance_valid(fx):fx.queue_free()
 	effects.clear()
 	_particle_emitters.clear()
+	_object_particle_emitters.clear()
 	_poison_emitters.clear()
 	_overdrive_emitter.clear()
 	for v in object_views.values():
@@ -555,6 +558,10 @@ func _on_cue(event: Dictionary) -> void:
 		"ghost":_spawn_ghost(event)
 
 func _spawn_native_particle(event: Dictionary) -> void:
+	var object_emitter := int(event.get("object_emitter",-1))
+	if event.get("stop",false):
+		_object_particle_emitters.erase(object_emitter)
+		return
 	var path := String(event["path"])
 	var template: Dictionary = _combat.get("particles",{}).get(path,{})
 	if template.is_empty():
@@ -565,6 +572,13 @@ func _spawn_native_particle(event: Dictionary) -> void:
 	var mirrored := bool(event.get("mirrored",false))
 	var scale_value := float(event.get("scale",1.0))
 	var definition: Dictionary = template.decoded
+	if object_emitter >= 0:
+		if not _object_particle_emitters.has(object_emitter):
+			_object_particle_emitters[object_emitter] = particle_bursts.create_emitter(definition,origin,mirrored)
+		var emitter: RefCounted = _object_particle_emitters[object_emitter]
+		emitter.origin = origin
+		_append_native_particles(path,scale_value,particle_bursts.emit_at(emitter,int(event["elapsed_ms"])))
+		return
 	if float(definition.get("creation_frequency",0)) <= 0.0:
 		_append_native_particles(path,scale_value,particle_bursts.emit_once(definition,origin,mirrored))
 		return
@@ -661,14 +675,21 @@ func _append_native_particles(path: String, scale_value: float, result: Dictiona
 	if not result.ok:
 		push_error(str(result.problems))
 		return false
+	var pairs: Array = _combat.get("particles",{}).get(path,{}).get("sprite_pairs",[])
 	for emission: Dictionary in result.particles:
+		var bank: Dictionary = _particle_banks.get(String(emission.entry.path).to_lower(),{})
+		var overlay: Dictionary = {}
+		if not pairs.is_empty():
+			var pair: Array = pairs[particle_bursts.draw_global()%pairs.size()]
+			bank = _effects[pair[0]]
+			overlay = _effects[pair[1]]
 		var particle = NativeParticleView.new()
 		world.add_child(particle)
 		particle.base_scale = scale_value
 		particle.tag = tag
 		particle.set_meta("source_ptl",path)
 		particle.set_meta("particle_birth_pending",true)
-		if not particle.setup_particle(emission,_particle_banks.get(String(emission.entry.path).to_lower(),{})):
+		if not particle.setup_particle(emission,bank,overlay):
 			push_error(str(particle.errors))
 			particle.queue_free()
 			continue

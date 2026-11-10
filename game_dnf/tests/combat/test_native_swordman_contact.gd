@@ -2557,6 +2557,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	var normal_amount := int((int(base*1.55)+int(base*4.63))*0.5)
 	var final_amount := int((int(base*7.75)+int(base*23.24))*0.5)
 	var column: Dictionary = object["column"]
+	var loop_path := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
+	var loop_particles := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==loop_path)
 	var particle_path := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
 	var embers := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==particle_path)
 	check(column["hit_interval"]==155 and object["hit"]["fixed_amount"]==normal_amount
@@ -2566,7 +2568,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	var layers := func(stem: String):return game.view.object_views.values().filter(func(fx):
 		return String(fx.data["source"]).get_file().begins_with(stem))
-	check(layers.call("appear").size()==5 and game.hit_count==start and cues("B_FIRE_EXPLOSION").is_empty(),
+	check(layers.call("appear").size()==5 and game.hit_count==start and cues("B_FIRE_EXPLOSION").is_empty()
+		and loop_particles.call().is_empty(),
 		"five original appearance tracks play without attacking through 1679 ms")
 	game.step_objects(1.0)
 	check(game.hit_count==start+1 and game.last_damage["trace"]["fixed_part"]==normal_amount
@@ -2574,8 +2577,25 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.step_objects(100.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(column["phase"]==1 and layers.call("loop").size()==3 and cues("B_FIRE_COLUMN_LOOP").size()==1
-		and game.hit_count==start+1,"the column switches to its three looping layers without refreshing contact early")
-	game.step_objects(54.0)
+		and game.hit_count==start+1 and loop_particles.call().is_empty(),
+		"loop entry resets the emitter without sampling or refreshing contact")
+	game.step_objects(33.0)
+	var first_loop: Array = loop_particles.call()
+	check(first_loop.size()==1,"the first loop update emits the reset particle without a second particle before 34 ms")
+	if first_loop.size()==1:
+		var normal = first_loop[0]
+		var overlay = normal.get_child(0)
+		check(normal.data["source"].ends_with("loopparticle1.ani") and overlay.data["source"].ends_with("loopparticle2.ani")
+			and normal.frame["img_frame"]==overlay.frame["img_frame"] and int(overlay.frame["items"]["11"]["type"])==2
+			and is_equal_approx(normal.base_scale,object["size_rate"]) and is_equal_approx(overlay.base_scale,object["size_rate"]),
+			"the two original particle layers share one sprite index, position, and column scale")
+	game.step_objects(1.0)
+	check(loop_particles.call().size()==2,"the 30 Hz column emitter produces its next particle at 34 ms")
+	var emissions: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==loop_path)
+	check(emissions.size()==2 and emissions[-1]["point"]==object["pos"]+Vector2(0,1)
+		and emissions[-1]["height"]==10.0 and emissions[-1]["elapsed_ms"]==34,
+		"the looping emitter samples the passive object's clock at Y+1 and Z+10")
+	game.step_objects(20.0)
 	check(game.hit_count==start+1,"the ledger is still closed at 1834 ms")
 	game.step_objects(1.0)
 	check(game.hit_count==start+2,"the normal ledger first refreshes at 1835 ms")
@@ -2588,6 +2608,7 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(embers.call().is_empty(),"the final embers wait for the last phase")
 	game.step_objects(1.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
+	var last_loop: Array = loop_particles.call()
 	check(column["phase"]==2 and layers.call("disappear").size()==2 and game.hit_count==start+21
 		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues,
 		"the final explosion has independent damage, two original layers and its own sound")
@@ -2601,6 +2622,9 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 		"the final frame emits all twelve original ember animations once from Y+1 and Z+200 at column scale")
 	game.step_objects(199.0)
 	step(0.0)
+	check(not last_loop.is_empty() and loop_particles.call()==last_loop
+		and not game.view._object_particle_emitters.has(object["id"]),
+		"the terminal update stops the emitter while the spawned loop particles keep their lifetime")
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
 		"the owner waits through the first 199 ms of the column's final animation")
 	game.step_objects(1.0)

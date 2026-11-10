@@ -4,6 +4,7 @@ const Timeline = preload("res://combat/action/timeline.gd")
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Motion = preload("res://combat/particles/native_motion.gd")
 const DISAPPEAR_PARTICLE := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
+const LOOP_PARTICLE := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
 
 static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var config: Dictionary = move["column"]
@@ -53,6 +54,9 @@ static func step(game, object: Dictionary) -> bool:
 	var phase := int(column["phase"])
 	var age := clock-float(column["phase_at"])
 	var phases: Array = config["phases"]
+	if phase == 1:
+		# A6B216..A6B26C samples before the state-5 transition, at Y+1 and Z+10.
+		emit_loop_particles(game,object,age)
 	if phase == 0:
 		if age >= float(config["impact"]) and not column["erupted"]:
 			column["erupted"] = true
@@ -105,6 +109,12 @@ static func step(game, object: Dictionary) -> bool:
 static func stop_loop(game, object: Dictionary) -> void:
 	if int(object["column"]["phase"]) == 1:
 		game.bus.emit("combat.cue",{"kind":"sound","stop":true,"loop_id":object["id"]})
+		game.bus.emit("combat.cue",{"kind":"native_particle","stop":true,"object_emitter":object["id"]})
+
+static func emit_loop_particles(game, object: Dictionary, age: float) -> void:
+	game.bus.emit("combat.cue",{"kind":"native_particle","path":LOOP_PARTICLE,
+		"point":Vector2(object["pos"])+Vector2(0,1),"height":float(object["z"])+10.0,
+		"scale":object["size_rate"],"object_emitter":object["id"],"elapsed_ms":int(age)})
 
 static func append_view(out: Array, object: Dictionary) -> void:
 	var column: Dictionary = object["column"]

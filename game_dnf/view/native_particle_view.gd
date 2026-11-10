@@ -3,12 +3,14 @@ extends "res://view/fx_view.gd"
 ## following and passive-object factories require separate, proven adapters.
 const Playback = preload("res://combat/api/particle_playback.gd")
 const Frame = preload("res://view/world_frame.gd")
+const FxView = preload("res://view/fx_view.gd")
 var playback: RefCounted
+var _overlay: Node2D
 var errors: Array[String] = []
 
 ## bank must preserve source, loop, original frame delays and atlas anchors.
 ## No asset lookup by basename: the selected PTL entry identifies the exact bank.
-func setup_particle(emission: Dictionary, bank: Dictionary) -> bool:
+func setup_particle(emission: Dictionary, bank: Dictionary, overlay_bank := {}) -> bool:
 	var entry: Dictionary = emission.get("entry", {})
 	if emission.get("object_type", "") != "[animation]":
 		errors.append("passive particle objects need their native object factory")
@@ -26,6 +28,11 @@ func setup_particle(emission: Dictionary, bank: Dictionary) -> bool:
 	# 0x2226217 skips ANI-end deletion; 0x224257E checks motion alive instead.
 	hold_last_frame = true
 	setup(bank, -1 if playback.mirrored else 1)
+	if not overlay_bank.is_empty():
+		_overlay = FxView.new()
+		_overlay.hold_last_frame = true
+		_overlay.setup(overlay_bank,facing)
+		add_child(_overlay)
 	clock_ms = 0.0
 	advance(0.0)
 	return errors.is_empty()
@@ -47,3 +54,7 @@ func advance(ms: float) -> void:
 	z_index = point.y + 4
 	fade = float(state.alpha) / 100.0
 	super.seek(state.animation_ms)
+	if is_instance_valid(_overlay):
+		_overlay.base_scale = base_scale
+		_overlay.fade = fade
+		_overlay.seek(state.animation_ms)
