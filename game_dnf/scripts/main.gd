@@ -2161,15 +2161,18 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var order: Array = m["formation"]["order"]
 		var ordinal := int(cast["ordinal"])
 		var current: Vector3i = cast["formation"].consume(int(order[ordinal]))
-		var next_x := int(cast["origin"].x)
+		var next := Vector3i(int(cast["origin"].x),int(cast["origin"].y),40)
 		if ordinal+1 < order.size():
-			var next: Vector3i = cast["formation"].waypoint(int(order[ordinal+1]))
-			next_x = next.x
+			next = cast["formation"].waypoint(int(order[ordinal+1]))
 		# CD23AC uses sword XYZ with Y-1. CD2403 faces the next point.
 		player["pos"] = Vector2(current.x,current.y-1)
 		player["z"] = float(current.z)
-		player["facing"] = 1 if current.x < next_x else -1
+		player["facing"] = 1 if current.x < next.x else -1
 		player["vz"] = 0.0
+		# CD2412..CD24D0 compares the projected points before applying the body angle.
+		var projected_y := current.y-current.z-(next.y-next.z)
+		player["native_phase"]["body_rotation"] = _native_float32(atan2(projected_y,absi(next.x-current.x)))
+		player["native_phase"]["cast_layers"] = m["travel_weapon"][index-1]
 	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":name,"stage":index,"instance":action_seq})
 	if name == "sacrifice" and index == 0:
 		bus.emit("combat.cue",{"kind":"fx","key":m["cast_fx"],"point":player["pos"],"height":player["z"],
@@ -5352,10 +5355,13 @@ func view_snapshot() -> Dictionary:
 		objs.append({"id":"player:thirst","effect":move_def("sacrifice")["cast_fx"],
 			"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),
 			"clock":age,"loop":true,"depth_offset":1})
+	var phase: Dictionary = player.get("native_phase",{})
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),
 			"facing":int(player["facing"]),"ani":ani[0],"clock":ani[1],"action_instance":action_seq,
 			"action_elapsed_ms":float(player["clock"]),
+			"body_rotation":float(phase.get("body_rotation",0.0)),
+			"cast_layers":phase.get("cast_layers",[]),
 			"fx_clock":player.get("draw_charge",{}).get("fx_clock",player.get("charge_crash_hold",{}).get("fx_clock",ani[1])),
 			"flash":float(player["flash_ms"])>0,"buff":buff_active,"weapon":weapon,
 			"jar_invincible":native_jar_traps.player_protected,

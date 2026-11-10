@@ -5633,6 +5633,90 @@
     35,
     250,
     20
+   ],
+   "travel_weapon": [
+    [
+     {
+      "bank": "hundred_sword_weaponready1_01",
+      "behind": true,
+      "loop": false,
+      "order": 655
+     },
+     {
+      "bank": "hundred_sword_weaponready1_00",
+      "behind": false,
+      "loop": false,
+      "order": 2155
+     }
+    ],
+    [
+     {
+      "bank": "hundred_sword_weaponready2_01",
+      "behind": true,
+      "loop": false,
+      "order": 655
+     },
+     {
+      "bank": "hundred_sword_weaponready2_00",
+      "behind": false,
+      "loop": false,
+      "order": 2155
+     }
+    ],
+    [
+     {
+      "bank": "hundred_sword_weaponready3_01",
+      "behind": true,
+      "loop": false,
+      "order": 655
+     },
+     {
+      "bank": "hundred_sword_weaponready3_00",
+      "behind": false,
+      "loop": false,
+      "order": 2155
+     }
+    ],
+    [
+     {
+      "bank": "hundred_sword_weaponready4_01",
+      "behind": true,
+      "loop": false,
+      "order": 655
+     },
+     {
+      "bank": "hundred_sword_weaponready4_00",
+      "behind": false,
+      "loop": false,
+      "order": 2155
+     }
+    ],
+    [
+     {
+      "bank": "hundred_sword_weaponready5_03",
+      "behind": true,
+      "loop": false,
+      "order": 656
+     },
+     {
+      "bank": "hundred_sword_weaponready5_01",
+      "behind": true,
+      "loop": false,
+      "order": 657
+     },
+     {
+      "bank": "hundred_sword_weaponready5_02",
+      "behind": false,
+      "loop": false,
+      "order": 2606
+     },
+     {
+      "bank": "hundred_sword_weaponready5_00",
+      "behind": false,
+      "loop": false,
+      "order": 2607
+     }
+    ]
    ]
   },
   "icewave": {

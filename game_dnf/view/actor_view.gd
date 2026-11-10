@@ -12,6 +12,7 @@ var pose := "stay"
 var clock_ms := 0.0
 var facing := 1
 var height := 0.0
+var body_rotation := 0.0
 var flash := 0.0
 var tint := Color.WHITE
 var shadow_width := 18.0
@@ -64,18 +65,22 @@ func sample() -> Dictionary:
 		if t < elapsed:return frame
 	return frames[-1]
 
-func present(next_pose: String, ms: float, direction: int, z: float, white: float, color := Color.WHITE) -> void:
+func present(next_pose: String, ms: float, direction: int, z: float, white: float, color := Color.WHITE,
+		angle := 0.0, draw_equipped := true) -> void:
 	pose = next_pose
 	clock_ms = ms
 	facing = direction
 	height = z
+	body_rotation = angle
 	flash = white
 	tint = color
 	if _flash_material != null:
 		_flash_material.set_shader_parameter("hit_flash", clampf(flash,0,1))
 	if not equipment_layers.is_empty():
 		var body_frame := int(sample().get("frame",-1))
-		for layer in equipment_layers:layer.present(next_pose,ms,direction,z,color,body_frame)
+		for layer in equipment_layers:
+			layer.visible = draw_equipped
+			if draw_equipped:layer.present(next_pose,ms,direction,z,color,body_frame)
 	queue_redraw()
 
 ## The original status pass selects a constant RGB and retains the ANI texture alpha.
@@ -104,7 +109,7 @@ func present_status_overlay(color: Color) -> void:
 	_status_overlay.region_rect = Rect2(rect[0],rect[1],rect[2],rect[3])
 	_status_overlay.offset = Vector2(offset[0]+pos[0],offset[1]+pos[1])
 	_status_overlay.position = Vector2(0,-roundf(height))
-	_status_overlay.rotation = float(frame.get("items",{}).get("8",0))*facing
+	_status_overlay.rotation = (float(frame.get("items",{}).get("8",0))+body_rotation)*facing
 	_status_overlay.scale = Vector2(facing,1)
 	_status_overlay.self_modulate = Color(1,1,1,color.a)
 	_status_overlay.material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
@@ -131,7 +136,7 @@ func _draw() -> void:
 	# ANI [ROTATE] (item 8, radians) turns the frame around the anchor; overturn.ani uses pi
 	# to show the damage pose upside down. Mirroring flips the rotation direction.
 	var rotate := float(frame.get("items",{}).get("8",0.0))
-	draw_set_transform(Vector2(0,-roundf(height)),rotate*facing,Vector2(facing,1))
+	draw_set_transform(Vector2(0,-roundf(height)),(rotate+body_rotation)*facing,Vector2(facing,1))
 	var key := str(int(frame.get("img_frame",0)))
 	var frame_bank: Dictionary = pose_banks.get(pose, bank)
 	var frame_atlas: Texture2D = pose_atlases.get(pose, atlas)

@@ -3318,7 +3318,7 @@ func check_hundred_sword_automatic() -> void:
 	profile.command("numbers.skill_grant",{"id":"hundredsword","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["hundredsword"]
-	start_room("","katana",1,spec)
+	start_room("original_27601","katana",1,spec)
 	game.clear_monsters()
 	game.player["mp"] = 1500.0
 	game.numeric_player.values["attack_speed"] = 1.25
@@ -3332,6 +3332,23 @@ func check_hundred_sword_automatic() -> void:
 	check(game.player["pos"]==Vector2(428,266) and game.player["z"]==54.0,
 		"the ready approach interpolates XYZ toward the first live sword with a 50-pixel height offset")
 	step(120.0)
+	var actor = game.view.player_actor
+	var layers: Dictionary = actor.get_meta("native_cast_layers",{})
+	var first_angle := atan2(-176.0,341.0)
+	check(is_equal_approx(actor.body_rotation,first_angle)
+		and not actor.equipment_layers.is_empty() and actor.equipment_layers.all(func(layer):return not layer.visible),
+		"the first move tilts along the projected sword path and hides the ordinary equipped weapon")
+	var first_keys := ["hundred_sword_weaponready5_03","hundred_sword_weaponready5_01",
+		"hundred_sword_weaponready5_02","hundred_sword_weaponready5_00"]
+	check(layers.keys()==first_keys and layers[first_keys[0]].show_behind_parent
+		and layers[first_keys[1]].show_behind_parent and not layers[first_keys[2]].show_behind_parent
+		and not layers[first_keys[3]].show_behind_parent,
+		"pose five installs both rear and front normal and dodge layers in native order")
+	for key: String in first_keys:
+		var layer = layers.get(key)
+		check(layer!=null and layer.visible and is_equal_approx(layer.base_rotation,first_angle)
+			and layer.frame.get("img_frame",-1)==0 and layer.position.y==-157.0,
+			"the move weapon layer follows the source frame, height and tilt")
 	var slots := [13,6,23,9,2,17,12,0,7,19,20,14,21,16,15,10,3,22,11,8,5,1,4,18]
 	var poses := [5,1,2,4,3,5,2,4,2,2,3,2,5,4,1,1,4,3,3,5,3,1,5,1]
 	var durations := [713,543,438,367,312,273,245,218,198,183,168,156,146,136,128,122,115,110,105,98,98,98,98,98]
@@ -3353,9 +3370,16 @@ func check_hundred_sword_automatic() -> void:
 		step(float(durations[ordinal])-1.0)
 		check(game.player.get("hundred_sword_cast",{}).get("ordinal",-1)==ordinal,
 			"stage %d holds through its last millisecond"%ordinal)
+		var visible: Array = actor.get_meta("native_cast_layers",{}).values().filter(func(layer):return layer.visible)
+		check(visible.size()==(4 if poses[ordinal]==5 else 2)
+			and visible.all(func(layer):return layer.frame.get("img_frame",-1)==1),
+			"stage %d renders only its current sword layers on the second body frame"%ordinal)
 		step(1.0)
 	check(game.view.player_actor.pose=="hundredswordfinish" and game.player["pos"]==POINT
 		and game.player["z"]==0.0 and game.player["facing"]==1,"stage 24 goes directly into the original grounded finish")
+	check(actor.body_rotation==0.0 and actor.equipment_layers.all(func(layer):return layer.visible)
+		and actor.get_meta("native_cast_layers",{}).values().all(func(layer):return not layer.visible),
+		"the finish clears travel tilt and sword layers and restores the equipped weapon")
 	step(1270.0)
 	check(game.player["action"]=="" and not game.player.has("hundred_sword_cast"),
 		"one press completes the full Hundred Sword state sequence and clears the cast")

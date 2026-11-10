@@ -36,7 +36,7 @@ from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
 from build_dnf_skill_runtime import (HUNDRED_SWORD_FINISH_PARTICLE, OUTRAGE_PARTICLES,
-                                     WEAPON_COMBO_LIGHT_DEPTHS, hundred_sword_blade_banks)
+                                     WEAPON_COMBO_LIGHT_DEPTHS, hundred_sword_blade_banks, hundred_sword_weapon_banks)
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
@@ -1179,7 +1179,7 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
     if 'formation' in runtime.get('moves', {}).get('hundredsword', {}):
-        for key, spec in hundred_sword_blade_banks().items():
+        for key, spec in (hundred_sword_blade_banks() | hundred_sword_weapon_banks()).items():
             manifest['effects'][key] = effect_bank(src, key, spec['ani'], unresolved, image_variant=spec['image_variant'])
     manifest['native_jar_traps'], trap_effects, trap_pins = native_jar_trap_assets(src)
     manifest['native_spirit_summons'], summon_effects = native_spirit_summon_assets(src)
@@ -1749,7 +1749,8 @@ def main() -> int:
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
         specs.extend(('player_clips', stage['ani'], runtime['assets']['player_anims'][stage['ani']])
                      for stage in stages[1:-1])
-        specs.extend(('variant_effects', key, spec) for key, spec in hundred_sword_blade_banks().items())
+        specs.extend(('variant_effects', key, spec)
+                     for key, spec in (hundred_sword_blade_banks() | hundred_sword_weapon_banks()).items())
         specs.append(('objects', field['object'], field['object']))
         specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))
         specs.append(('audio', 'W_GET_SPIRITS', 'sounds/char/swordman/effect/W_get_spirits.ogg'))

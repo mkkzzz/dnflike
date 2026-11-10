@@ -1264,6 +1264,7 @@ HUNDRED_SWORD_FINISH_LAYERS = (("finishslash", 1), ("finishflash", 2), ("finishf
 HUNDRED_SWORD_STYLES = [3, 0, 2, 3, 5, 2, 0, 1, 5, 3, 0, 2, 1, 5, 1, 0, 3, 5, 0, 1, 2, 5, 2, 1]
 HUNDRED_SWORD_ORDER = [13, 6, 23, 9, 2, 17, 12, 0, 7, 19, 20, 14, 21, 16, 15, 10, 3, 22, 11, 8, 5, 1, 4, 18]
 HUNDRED_SWORD_POSES = [1, 2, 3, 4, 1, 5]
+HUNDRED_SWORD_WEAPON_DRAW_ORDER = ((2155, 655),)*4 + ((2607, 657, 2606, 656),)
 HUNDRED_SWORD_BLADES = ("swordspread", "swordair", "swordland")
 HUNDRED_SWORD_FORMATION_LAYERS = ("light1", "light2", "light3", "swordairglow", "swordlandglow1",
                                  "swordlandglow2", "sworddisappear1", "sworddisappear2")
@@ -1276,6 +1277,18 @@ def hundred_sword_blade_banks():
         }
         for stem in HUNDRED_SWORD_BLADES for layer in (1, 2) for style in sorted(set(HUNDRED_SWORD_STYLES))
     }
+
+
+def hundred_sword_weapon_banks():
+    return {
+        f"hundred_sword_weaponready{pose}_{layer:02d}": {
+            "ani": CHR_FX + f"hundredsword/weaponready{pose}{'dodge' if layer >= 2 else 'normal'}.ani",
+            "image_variant": layer,
+        }
+        for pose, orders in enumerate(HUNDRED_SWORD_WEAPON_DRAW_ORDER, 1)
+        for layer in range(len(orders))
+    }
+
 
 OUTRAGE_PARTICLES = {
     "stone": "character/swordman/effect/particle/outragebreak_stone_part.ptl",
@@ -1622,12 +1635,21 @@ def build_move(
                         for stem in HUNDRED_SWORD_FORMATION_LAYERS}
         if not all(formation_fx.values()):
             raise ValueError("Missing original Hundred Sword formation effects")
+        # CD2550 chooses Normal for layers 0/1, Dodge for layers 2/3.
+        # CD26E7 attaches the result by its native render order.
+        travel_weapon = [
+            [{"bank": f"hundred_sword_weaponready{pose}_{layer:02d}", "order": order,
+              "behind": order < 1000, "loop": False}
+             for layer, order in sorted(enumerate(orders), key=lambda entry: entry[1])]
+            for pose, orders in enumerate(HUNDRED_SWORD_WEAPON_DRAW_ORDER, 1)
+        ]
         result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
                       finish_impact_ms=impact, finish_particle=HUNDRED_SWORD_FINISH_PARTICLE,
                       formation={"distance": distance, "styles": HUNDRED_SWORD_STYLES, "effects": formation_fx,
                                  "order": HUNDRED_SWORD_ORDER, "poses": HUNDRED_SWORD_POSES,
                                  "disappear_ms": duration_ms(records[CHR_FX + "hundredsword/sworddisappear1.ani"])},
                       travel_rate=records[skill["path"]]["decoded"]["dungeon"]["static_data"][1:4],
+                      travel_weapon=travel_weapon,
                       fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "travel_slash_effects",
                                         "finish_trails_and_camera", "rank_bonuses", "original_command"])
     if key == "normalwave":

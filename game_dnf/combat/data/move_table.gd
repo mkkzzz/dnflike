@@ -462,6 +462,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["finish_particle"] = String(spec["finish_particle"])
 		move["formation"] = spec["formation"]
 		move["travel_rate"] = spec["travel_rate"]
+		move["travel_weapon"] = spec["travel_weapon"]
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),

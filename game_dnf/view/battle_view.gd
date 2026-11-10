@@ -227,7 +227,9 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	elif pickup_pose_frames > 0:
 		pickup_pose_frames = 0
 	var player_tint := Color(1,1,1,100.0/255.0) if p.get("jar_invincible",false) else Color.WHITE
-	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0,player_tint)
+	player_actor.present(pose,pose_clock,p["facing"],p["z"],1.0 if p["flash"] else 0.0,player_tint,
+		float(p.get("body_rotation",0.0)),p.get("cast_layers",[]).is_empty())
+	_present_cast_layers(player_actor,p)
 	player_actor.present_status_overlay(poison_overlay if int(p.get("poison",0)) > 0 else Color.TRANSPARENT)
 	_present_aura(String(p.get("aura","")),p,sim_ms)
 	for e: Dictionary in s["enemies"]+companions:
@@ -307,7 +309,12 @@ func _set_weapon(weapon: String) -> void:
 
 func setup_weapon_family(actor, family: String) -> void:
 	if _assets["players"].has(family):
-		actor.setup(_assets["players"][family],_player_clips,_combat.get("player_locomotion",{}).get("battle",{}).get(family,{}))
+		var overrides: Dictionary = _combat.get("player_locomotion",{}).get("battle",{}).get(family,{}).duplicate()
+		var body: Dictionary = WeaponAppearance.data().get("body",{}).get("base",{})
+		if not body.is_empty():
+			for pose: String in _player_clips:
+				if pose.begins_with("hundredswordmoveready"):overrides[pose] = body
+		actor.setup(_assets["players"][family],_player_clips,overrides)
 	else:
 		WeaponAppearance.apply(actor,"",_player_clips)
 
@@ -381,26 +388,31 @@ func _present_sleep(actor: ActorView, age: float) -> void:
 	fx.seek(age)
 	fx.show()
 
-func _present_cast_layers(actor: Node2D, enemy: Dictionary) -> void:
-	var layers: Array = enemy.get("cast_layers",[])
+func _present_cast_layers(actor: Node2D, state: Dictionary) -> void:
+	var layers: Array = state.get("cast_layers",[])
 	var views: Dictionary = actor.get_meta("native_cast_layers",{})
 	if layers.is_empty():
 		for layer: Node2D in views.values():layer.hide()
 		return
+	var active := {}
 	for info: Dictionary in layers:
 		var key: String = info["bank"]
+		active[key] = true
 		var view = views.get(key)
 		if view == null:
 			view = FxView.new()
-			view.show_behind_parent = int(info["order"]) < 0
-			view.setup(_effects[key],int(enemy["facing"]))
-			view.loop = true
+			view.show_behind_parent = bool(info.get("behind",int(info["order"]) < 0))
+			view.setup(_effects[key],int(state["facing"]))
+			view.loop = bool(info.get("loop",true))
 			actor.add_child(view)
 			views[key] = view
-		view.position.y = -roundf(float(enemy["z"]))
-		view.facing = int(enemy["facing"])
-		view.seek(float(enemy["clock"]))
+		view.position.y = -roundf(float(state["z"]))
+		view.facing = int(state["facing"])
+		view.base_rotation = float(state.get("body_rotation",0.0))
+		view.seek(float(state["clock"]))
 		view.show()
+	for key: String in views:
+		if not active.has(key):views[key].hide()
 	actor.set_meta("native_cast_layers",views)
 
 func _present_objects(list: Array) -> void:
