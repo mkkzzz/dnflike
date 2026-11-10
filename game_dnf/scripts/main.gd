@@ -4894,7 +4894,7 @@ func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 func load_room(index: int, from_side: String) -> void:
 	clear_monsters()
 	for object: Dictionary in objects:
-		if object.has("column"):HellbenterColumn.stop_loop(self,object)
+		if object.has("column"):HellbenterColumn.stop_phase_effects(self,object)
 	objects.clear()
 	draw_pending_hits.clear()
 	native_zealot_summons.proxies.clear()

@@ -2561,6 +2561,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	var loop_particles := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==loop_path)
 	var particle_path := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
 	var embers := func():return game.view.effects.filter(func(fx):return fx.get_meta("source_ptl","")==particle_path)
+	var explosions := func():return game.view.effects.filter(func(fx):
+		return String(fx.get_meta("source_ptl","")).get_file().begins_with("noneexplosionparticle"))
 	check(column["hit_interval"]==155 and object["hit"]["fixed_amount"]==normal_amount
 		and column["final"]["fixed_amount"]==final_amount,
 		"object 20052 uses the 155 ms reset and its own normal and final damage endpoints")
@@ -2579,7 +2581,7 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(column["phase"]==1 and layers.call("loop").size()==3 and cues("B_FIRE_COLUMN_LOOP").size()==1
 		and game.hit_count==start+1 and loop_particles.call().is_empty(),
 		"loop entry resets the emitter without sampling or refreshing contact")
-	game.step_objects(33.0)
+	game.step_objects(10.0)
 	var first_loop: Array = loop_particles.call()
 	check(first_loop.size()==1,"the first loop update emits the reset particle without a second particle before 34 ms")
 	if first_loop.size()==1:
@@ -2589,13 +2591,15 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 			and normal.frame["img_frame"]==overlay.frame["img_frame"] and int(overlay.frame["items"]["11"]["type"])==2
 			and is_equal_approx(normal.base_scale,object["size_rate"]) and is_equal_approx(overlay.base_scale,object["size_rate"]),
 			"the two original particle layers share one sprite index, position, and column scale")
+	game.step_objects(33.0)
+	check(loop_particles.call().size()==1,"there is no second particle 33 ms after the first loop update")
 	game.step_objects(1.0)
-	check(loop_particles.call().size()==2,"the 30 Hz column emitter produces its next particle at 34 ms")
+	check(loop_particles.call().size()==2,"the 30 Hz column emitter produces its next particle after 34 ms on its own clock")
 	var emissions: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==loop_path)
-	check(emissions.size()==2 and emissions[-1]["point"]==object["pos"]+Vector2(0,1)
-		and emissions[-1]["height"]==10.0 and emissions[-1]["elapsed_ms"]==34,
+	check(emissions.size()==3 and emissions[-1]["point"]==object["pos"]+Vector2(0,1)
+		and emissions[-1]["height"]==10.0 and emissions[-1]["elapsed_ms"]==44,
 		"the looping emitter samples the passive object's clock at Y+1 and Z+10")
-	game.step_objects(20.0)
+	game.step_objects(10.0)
 	check(game.hit_count==start+1,"the ledger is still closed at 1834 ms")
 	game.step_objects(1.0)
 	check(game.hit_count==start+2,"the normal ledger first refreshes at 1835 ms")
@@ -2620,23 +2624,41 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 			return (is_equal_approx(fx.base_scale,object["size_rate"])
 				and String(fx.data["source"]).get_file().begins_with("disappearparticle"))),
 		"the final frame emits all twelve original ember animations once from Y+1 and Z+200 at column scale")
+	check(explosions.call().is_empty() and not game.view._object_particle_emitters.has(object["id"]),
+		"entering the final phase closes the loop emitter and waits for the first update before starting the five explosions")
+	game.step_objects(0.0)
+	var starts: Array = game.bus.events_of("combat.cue").filter(func(event):
+		return String(event.get("path","")).get_file().begins_with("noneexplosionparticle"))
+	var centers: Array = []
+	for event: Dictionary in starts:
+		if not centers.has([event["point"],event["height"]]):centers.append([event["point"],event["height"]])
+	var origin: Vector2 = object["pos"]
+	check(starts.size()==20 and explosions.call().size()==20 and centers==[
+		[Vector2(int(origin.x-159*0.87),origin.y+1),52],[Vector2(int(origin.x-106*0.87),origin.y+1),118],
+		[Vector2(int(origin.x+7*0.87),origin.y+1),15],[Vector2(int(origin.x+120*0.87),origin.y+1),99],
+		[Vector2(int(origin.x+162*0.87),origin.y+1),37]],
+		"the first terminal poll starts four independent PTLs at each of the five original scaled centers")
+	check(explosions.call().all(func(fx):return is_equal_approx(fx.base_scale,2.175)),
+		"each emitted animation is scaled by the original 2.5 times the column scale")
 	game.step_objects(199.0)
 	step(0.0)
-	check(not last_loop.is_empty() and loop_particles.call()==last_loop
-		and not game.view._object_particle_emitters.has(object["id"]),
+	check(not last_loop.is_empty() and loop_particles.call()==last_loop,
 		"the terminal update stops the emitter while the spawned loop particles keep their lifetime")
+	check(explosions.call().size()==115,"the original independent emission limits leave one particle per group for 200 ms")
 	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
 		"the owner waits through the first 199 ms of the column's final animation")
 	game.step_objects(1.0)
 	step(0.0)
+	check(explosions.call().size()==120,"the 5 Hz template reaches its last particle exactly at 200 ms")
 	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
 		and game.objects.has(object) and cues("SM_MUSSANG_START").size()==1,
 		"the owner returns to idle at 200 ms, removing the appendage while the column remains")
 	game.step_objects(199.0)
 	check(game.objects.has(object) and game.hit_count==start+21,"the final contact does not repeat during the tail")
 	game.step_objects(1.0)
-	check(not game.objects.has(object) and embers.call().size()==12,
-		"the source Disappear2 lifetime removes the object at 400 ms, leaving the independent embers")
+	check(not game.objects.has(object) and embers.call().size()==12 and explosions.call().size()==120
+		and not game.view._object_particle_emitters.has(object["id"]),
+		"the source Disappear2 lifetime removes the object and emitters at 400 ms, leaving the independent particles")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()

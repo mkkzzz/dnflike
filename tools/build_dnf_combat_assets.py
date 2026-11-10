@@ -91,7 +91,24 @@ HELLBENTER_LOOP_IMAGES = {
     'sprite/character/swordman/effect/hellbenter/particle-d.img':
         '3e6951dd5ca1547b5136a6d93e7df1460cbeaca347b4b7396c23518209396b20',
 }
+HELLBENTER_EXPLOSION_SOURCES = {
+    f'passiveobject/common/particle/noneexplosionparticle{index}.ptl': {
+        f'passiveobject/common/particle/noneexplosionparticle{index}.ptl': particle_sha,
+        f'passiveobject/common/animation/noneexplosionparticle{index}.ani': animation_sha,
+    }
+    for index, (particle_sha, animation_sha) in enumerate((
+        ('73b5a406e1e9b5e451fda4b2d3a988249a6ef997a222f5bf735fe788511ffac6',
+         'f76f68e4a28d0e5d6e2d8f910ff5d675cb65b01834c5157badf188fb7a210ee8'),
+        ('b18041fbbe3df3b3346d69f28dadc01d0118699e8a1e844846e1659996471f60',
+         '3cf24becf5f89b68e1fa3200ba5cc7bf5a8b28554906f9f58f8054f423a42ec8'),
+        ('c63986db003e27c7ddee355a1661f4f677c83b63c9672d6db4c373a94b2bd7bd',
+         '1dfa71ed60c5c56e79677b765349acef30eb57b4b689f822519d3cba07a3308e'),
+        ('1a7609a0c040ece5483011ee681ffee06f15f87064ed412547611c9d7f32a404',
+         '4cdd032d48b183698b6e98cebdd6a2e77aebd9115bb9082494ab3a761e892cc3'),
+    ), 1)
+}
 HELLBENTER_PARTICLE_SOURCES = {
+    **HELLBENTER_EXPLOSION_SOURCES,
     HELLBENTER_LOOP_PARTICLE: {
         HELLBENTER_LOOP_PARTICLE: 'a57a8e17c69c65d48e3a2f6420f1664b8da9e494da5cec4c117b6732e445ea55',
         HELLBENTER_LOOP_ANIMATIONS[0]: '09f6be3fd5c90d4c46ac1c8f4686d5ccc8d5e045a6835c13c1197a1c7c01ca10',

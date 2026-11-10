@@ -5,6 +5,8 @@ const HitJudge = preload("res://combat/hit/hit_judge.gd")
 const Motion = preload("res://combat/particles/native_motion.gd")
 const DISAPPEAR_PARTICLE := "passiveobject/character/swordman/particle/hellbenterdisappear.ptl"
 const LOOP_PARTICLE := "passiveobject/character/swordman/particle/hellbenterloop.ptl"
+const EXPLOSION_PARTICLE := "passiveobject/common/particle/noneexplosionparticle%d.ptl"
+const EXPLOSION_OFFSETS := [Vector2i(-159,60),Vector2i(-106,136),Vector2i(7,18),Vector2i(120,114),Vector2i(162,43)]
 
 static func spawn(game, move: Dictionary, charges: int) -> Dictionary:
 	var config: Dictionary = move["column"]
@@ -69,7 +71,7 @@ static func step(game, object: Dictionary) -> bool:
 			game.bus.emit("combat.cue",{"kind":"screen_shake","degree":2,"duration_ms":column["loop_ms"]})
 			game.bus.emit("combat.cue",{"kind":"sound","key":"B_FIRE_COLUMN_LOOP","loop_id":object["id"]})
 	elif phase == 1 and age >= float(column["loop_ms"]):
-		stop_loop(game,object)
+		stop_phase_effects(game,object)
 		phase = 2
 		column["phase_at"] = clock
 		age = 0.0
@@ -79,9 +81,12 @@ static func step(game, object: Dictionary) -> bool:
 		# A6A508..A6A5BB emits once at Y+1, Z+200, then scales the child animations.
 		game.bus.emit("combat.cue",{"kind":"native_particle","path":DISAPPEAR_PARTICLE,
 			"point":Vector2(object["pos"])+Vector2(0,1),"height":float(object["z"])+200.0,
-			"scale":object["size_rate"]})
-	elif phase == 2 and age >= float(phases[2]["duration"]):
-		return false
+			"scale":object["size_rate"],"mirrored":int(object["facing"])<0})
+	elif phase == 2:
+		emit_final_explosions(game,object,age)
+		if age >= float(phases[2]["duration"]):
+			stop_phase_effects(game,object)
+			return false
 	column["phase"] = phase
 	if phase < 2 and int(column["resets"]) > 0 and clock >= float(column["next_reset"]):
 		# A6B708 clears the object's contact list once per timer update.
@@ -106,15 +111,34 @@ static func step(game, object: Dictionary) -> bool:
 		game.apply_native_prop_hits(world,hit,float(object["power"]),object["hits"],"prop:")
 	return true
 
-static func stop_loop(game, object: Dictionary) -> void:
-	if int(object["column"]["phase"]) == 1:
+static func stop_phase_effects(game, object: Dictionary) -> void:
+	var phase := int(object["column"]["phase"])
+	if phase == 1:
 		game.bus.emit("combat.cue",{"kind":"sound","stop":true,"loop_id":object["id"]})
+	if phase > 0:
 		game.bus.emit("combat.cue",{"kind":"native_particle","stop":true,"object_emitter":object["id"]})
 
 static func emit_loop_particles(game, object: Dictionary, age: float) -> void:
 	game.bus.emit("combat.cue",{"kind":"native_particle","path":LOOP_PARTICLE,
 		"point":Vector2(object["pos"])+Vector2(0,1),"height":float(object["z"])+10.0,
-		"scale":object["size_rate"],"object_emitter":object["id"],"elapsed_ms":int(age)})
+		"scale":object["size_rate"],"object_emitter":object["id"],"elapsed_ms":int(age),
+		"mirrored":int(object["facing"])<0})
+
+static func emit_final_explosions(game, object: Dictionary, age: float) -> void:
+	var pos := Vector2i(object["pos"])
+	var z := int(object["z"])
+	var facing := int(object["facing"])
+	var scale := float(object["size_rate"])
+	var visual_scale := Motion.f32(scale*2.5)
+	# A6B505..A6B68E walks five (X,Z) pairs and four independent PTLs per pair.
+	for group in EXPLOSION_OFFSETS.size():
+		var offset: Vector2i = EXPLOSION_OFFSETS[group]
+		var x := int(Motion.f32(pos.x+facing*Motion.f32(offset.x*scale)))
+		var height := int(Motion.f32(z+Motion.f32(offset.y*scale)))
+		for variant in range(1,5):
+			game.bus.emit("combat.cue",{"kind":"native_particle","path":EXPLOSION_PARTICLE%variant,
+				"point":Vector2(x,pos.y+1),"height":height,"scale":visual_scale,"mirrored":facing<0,
+				"object_emitter":object["id"],"emitter_channel":group*4+variant,"elapsed_ms":int(age)})
 
 static func append_view(out: Array, object: Dictionary) -> void:
 	var column: Dictionary = object["column"]

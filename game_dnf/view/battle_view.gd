@@ -573,11 +573,17 @@ func _spawn_native_particle(event: Dictionary) -> void:
 	var scale_value := float(event.get("scale",1.0))
 	var definition: Dictionary = template.decoded
 	if object_emitter >= 0:
-		if not _object_particle_emitters.has(object_emitter):
-			_object_particle_emitters[object_emitter] = particle_bursts.create_emitter(definition,origin,mirrored)
-		var emitter: RefCounted = _object_particle_emitters[object_emitter]
+		var channels: Dictionary = _object_particle_emitters.get_or_add(object_emitter,{})
+		var channel := int(event.get("emitter_channel",0))
+		var elapsed := int(event["elapsed_ms"])
+		# E50BBB starts the original emitter clock on the first generation update.
+		if not channels.has(channel):
+			channels[channel] = {"emitter":particle_bursts.create_emitter(definition,origin,mirrored),"started_at":elapsed}
+		var entry: Dictionary = channels[channel]
+		var emitter: RefCounted = entry["emitter"]
+		if emitter.finished:return
 		emitter.origin = origin
-		_append_native_particles(path,scale_value,particle_bursts.emit_at(emitter,int(event["elapsed_ms"])))
+		_append_native_particles(path,scale_value,particle_bursts.emit_at(emitter,elapsed-int(entry["started_at"])))
 		return
 	if float(definition.get("creation_frequency",0)) <= 0.0:
 		_append_native_particles(path,scale_value,particle_bursts.emit_once(definition,origin,mirrored))
