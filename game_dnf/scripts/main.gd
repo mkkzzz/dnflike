@@ -706,8 +706,8 @@ func action_ani_clock(elapsed: float) -> float:
 	if phase.has("grab_pose_ms"):return float(phase["grab_pose_ms"])
 	if phase.has("thirst_loop_ms"):
 		return float(phase["body_clock"])
-	if phase.has("outrage_timeline"):
-		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
+	if phase.has("native_timeline"):
+		return _source_animation_clock(elapsed,phase["native_timeline"],action_def()["timeline"])
 	if phase.has("bloodblast_timeline"):
 		return _source_animation_clock(phase["bloodblast_ani_ms"],phase["bloodblast_timeline"],action_def()["timeline"])
 	if phase.has("hundred_sword_ready_timeline"):
@@ -1143,17 +1143,18 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		if name == "grabblastblood":speed = numeric_player.native_non_weapon_attack_rate()
 	var clock := old_clock+ms*speed
 	var native_phase: Dictionary = player.get("native_phase",{})
-	var outrage := native_phase.has("outrage_timeline")
+	var native_timed_ani := native_phase.has("native_timeline")
 	var bloodblast := native_phase.has("bloodblast_timeline")
-	var old_native_event_clock := action_event_clock(old_clock) if outrage or bloodblast else 0.0
+	var old_native_event_clock := action_event_clock(old_clock) if native_timed_ani or bloodblast else 0.0
+	var previous_ani_end := float(native_phase.get("end_ms",0.0))
 	if not native_phase.is_empty():clock = old_clock+ms
-	if outrage:
-		var old_rate := float(native_phase["outrage_rate"])
+	if native_timed_ani:
+		var old_rate := float(native_phase["native_ani_rate"])
 		var rate := attack_animation_percent(0,old_rate) if refresh_ani_rate else old_rate
 		if rate != old_rate:
 			clock = _rescale_native_ani_ms(clock,old_rate,rate)
-			retime_outrage_phase(native_phase,stage,rate)
-		step_outrage_fx(native_phase["outrage_fx"],ms,old_rate,rate)
+			retime_native_action(native_phase,stage,rate)
+		step_native_action_fx(native_phase["native_fx"],ms,old_rate,rate)
 	if bloodblast:
 		# 82A364 refreshes the body ANI independently of the state deadline.
 		native_phase["bloodblast_ani_ms"] += ms
@@ -1202,6 +1203,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 			old_motion_clock = float(motion["elapsed_ms"])
 			# Original forced movement uses its own clock, independently of the ANI.
 			var remaining_ms := maxf(0.0,(action_duration(name)-old_clock)/maxf(speed,0.001))
+			if name == "rapidmoveslash":remaining_ms = maxf(0.0,previous_ani_end-old_clock)
 			new_motion_clock = old_motion_clock+minf(ms,remaining_ms)
 			motion["elapsed_ms"] = new_motion_clock
 		var dx := slide_delta(motion,old_motion_clock,new_motion_clock,float(stage.get("duration",0)))*int(player["facing"])
@@ -1221,7 +1223,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
 		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
-	var old_event_clock := old_native_event_clock if outrage or bloodblast else action_event_clock(old_clock)
+	var old_event_clock := old_native_event_clock if native_timed_ani or bloodblast else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	if name == "hundredsword":
 		var cast: Dictionary = player["hundred_sword_cast"]
@@ -1801,16 +1803,16 @@ func camera_focus_x(phase: Dictionary) -> float:
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
 
-func retime_outrage_phase(phase: Dictionary, stage: Dictionary, rate: float) -> void:
+func retime_native_action(phase: Dictionary, stage: Dictionary, rate: float) -> void:
 	var timeline := native_timed_frames(stage["timeline"],rate)
-	phase["outrage_rate"] = rate
-	phase["outrage_timeline"] = timeline
+	phase["native_ani_rate"] = rate
+	phase["native_timeline"] = timeline
 	phase["end_ms"] = Kernel.Timeline.duration(timeline)
 	if phase.has("outrage_impact_at"):
 		# CB44A7 calls 10857E0 on every airborne update using the current ANI rate.
 		phase["outrage_impact_ms"] = _native_ani_delay(float(phase["outrage_impact_at"]),rate)
 
-func step_outrage_fx(layers: Dictionary, ms: float, old_rate: float, rate: float) -> void:
+func step_native_action_fx(layers: Dictionary, ms: float, old_rate: float, rate: float) -> void:
 	var detached := []
 	for key: String in layers:
 		var layer: Dictionary = layers[key]
@@ -1837,7 +1839,7 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float, ms: 
 			phase["outrage_landed_now"] = true
 			return
 		if phase.has("outrage_stone_emitter"):phase["outrage_stone_clock"] += ms
-		if elapsed < int(phase["outrage_timeline"][move["impact_frame"]]["start_ms"]):return
+		if elapsed < int(phase["native_timeline"][move["impact_frame"]]["start_ms"]):return
 		# CB4920 gates sampling on the current body frame. E50BBB starts
 		# the emitter's own clock on its first sample, outside the ANI rate.
 		if not phase.has("outrage_stone_emitter"):
@@ -2280,12 +2282,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "outrage_break":
 		var stage := action_def()
-		var phase := {"outrage_fx":{}}
+		var phase := {"native_fx":{}}
 		if index == 1:
 			# CCBDF1 reads the rounded coordinate from the actor's X getter.
 			phase["outrage_origin_x"] = roundi(player["pos"].x)
 			phase["outrage_impact_at"] = float(stage["timeline"][m["impact_frame"]]["start_ms"])
-		retime_outrage_phase(phase,stage,attack_animation_percent(0))
+		retime_native_action(phase,stage,attack_animation_percent(0))
 		player["native_phase"] = phase
 	elif m.get("native_state","") == "hundred_sword":
 		if index == 0:
@@ -2330,6 +2332,11 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		# CC7C56 and CD0366 use the same attack-speed movement mode.
 		begin_action_slide(m["dash"],attack_rate)
 		if m.has("dash_rehit_ms"):player["action_slide"]["rehit_at_ms"] = m["dash_rehit_ms"]
+	if name == "rapidmoveslash":
+		# CCC40D and CCC800 use weapon attack speed for the ready and slash ANI.
+		var phase := {"native_fx":{}}
+		retime_native_action(phase,action_def(),attack_animation_percent(0))
+		player["native_phase"] = phase
 	if name == "rapidmoveslash" and index % 2 == 1:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		begin_action_slide(m["rapid_slide"],attack_rate)
@@ -2635,10 +2642,10 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 			var synchronized := bool(fx.get("action_clock",false))
 			var key := String(fx["key"])
 			if phase.get("outrage_impact_at",-1.0) == at:at = new_t
-			if phase.has("outrage_fx") and combat_assets["effects"].has(key):
+			if phase.has("native_fx") and combat_assets["effects"].has(key):
 				var source := Kernel.Timeline.from_ani(combat_assets["effects"][key])
-				phase["outrage_fx"][key] = {"clock":0.0,"source":source,
-					"timed":native_timed_frames(source,phase["outrage_rate"]),
+				phase["native_fx"][key] = {"clock":0.0,"source":source,
+					"timed":native_timed_frames(source,phase["native_ani_rate"]),
 					"detach_at_frame":fx.get("detach_at_frame",-1)}
 			bus.emit("combat.cue",{"kind":"fx","key":key,"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
@@ -6071,8 +6078,8 @@ func view_snapshot() -> Dictionary:
 	hellbenter_blood.append_view(self,objs)
 	var phase: Dictionary = player.get("native_phase",{})
 	var fx_clocks := {}
-	for key: String in phase.get("outrage_fx",{}):
-		var layer: Dictionary = phase["outrage_fx"][key]
+	for key: String in phase.get("native_fx",{}):
+		var layer: Dictionary = phase["native_fx"][key]
 		fx_clocks[key] = _source_animation_clock(layer["clock"],layer["timed"],layer["source"])
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"camera_focus_x":camera_focus_x(phase),

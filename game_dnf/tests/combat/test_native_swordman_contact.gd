@@ -5545,6 +5545,61 @@ func check_rapid_move_slash_fee_failure() -> void:
 			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
 			"interruption or natural exit starts the cooldown without another payment")
 
+func check_rapid_move_slash_animation_speed() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	start_room("original_27601","katana",1,spec)
+	game.clear_monsters()
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.values["mp_cost_rate"] = 1.0
+	game.player["mp"] = 100.0
+	step(120)
+	press(KEY_A)
+	step(160)
+	var trail_key: String = game.action_def()["fx"][0]["key"]
+	var trails: Array = game.view.effects.filter(func(fx):return fx.cue_key == trail_key)
+	check(game.player["stage"]==1 and trails.size()==1,
+		"the ready ANI completes at actor age 280 ms and attaches the first trail")
+	if trails.size()!=1:return
+	game.numeric_player.values["attack_speed"] = 2.0
+	step(19)
+	check(game.player["clock"]==19.0 and game.action_duration("rapidmoveslash")==500.0,
+		"the live attack speed waits for the shared actor refresh")
+	step(1)
+	check(game.player["clock"]==9.0 and game.action_duration("rapidmoveslash")==245.0,
+		"the refresh rescales the elapsed ANI and recalculates five independent 49 ms frames")
+	step(20)
+	check(trails[0].frame["frame"]==1 and game.view.player_actor.sample()["frame"]==0,
+		"the attached 60 ms trail changes frames on its own shortened ANI")
+	check(is_equal_approx(float(game.player["pos"].x),POINT.x+76.0),
+		"the speed refresh keeps the already-installed 40 ms horizontal trajectory")
+	press(KEY_A)
+	step(68)
+	check(game.player["stage"]==1 and game.player["mp"]==75.0,
+		"the retimed slash rejects a repeat at 97 ms, one millisecond before frame two")
+	press(KEY_A)
+	step(1)
+	check(game.player["stage"]==2 and game.player["mp"]==50.0
+		and game.action_duration("rapidmoveslash")==78.0,
+		"frame two opens at 98 ms and the next ready uses two independent 39 ms frames")
+	step(78)
+	step(195)
+	game.player["pos"] = POINT
+	var last_target: Dictionary = api.spawn_dummy(POINT+Vector2(20,0))
+	var old_hp: float = last_target["hp"]
+	step(0)
+	check(last_target["hp"]<old_hp,"the regular slash still contacts a new target at 195 ms")
+	var late_target: Dictionary = api.spawn_dummy(POINT+Vector2(40,0))
+	old_hp = late_target["hp"]
+	step(1)
+	check(late_target["hp"]==old_hp and game.player["stage"]==3,
+		"the regular slash loses its attack boxes at 196 ms while the body is still active")
+
 func check_rapid_move_slash_repeat_direction() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -5607,13 +5662,14 @@ func check_rapid_move_slash_depth() -> void:
 		game.room_map = game.room_map.duplicate(true)
 		for row: Array in game.room_map["walk_grid"]:row.fill(0)
 		press(KEY_A)
-		step(159.0/rate)
+		var ready_ms := 160.0 if rate == 1.0 else 126.0
+		step(ready_ms-1.0)
 		if sample.size()>4 and int(sample[4])!=0:session.submit_key(sample[4],true)
 		session.submit_key(sample[1],true)
 		check(game.player["pos"]==POINT,"Rapid Move Slash stays still while reading the ready animation")
 		if depth == 0:session.submit_key(sample[1],false)
 		if sample.size()>5:game.numeric_player.effects.add("confuse",{"duration_ms":1.0})
-		step(1.0/rate)
+		step(1.0)
 		check(game.player["stage"]==1,"the ready boundary samples the depth input")
 		if sample.size()>5:
 			game.numeric_player.step(1.0)
@@ -5632,7 +5688,7 @@ func check_rapid_move_slash_depth() -> void:
 		press(KEY_A)
 		step(0)
 		var next_origin: Vector2 = game.player["pos"]
-		step(161.0/rate)
+		step(ready_ms)
 		step(100)
 		var next_depth := -1 if opposite == KEY_UP else 1
 		check(game.player["stage"]==3 and is_equal_approx(float(game.player["pos"].y),next_origin.y+25*rate*next_depth),
@@ -7042,6 +7098,7 @@ func run() -> void:
 	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
+	check_rapid_move_slash_animation_speed()
 	check_rapid_move_slash_repeat_direction()
 	check_rapid_move_slash_depth()
 	check_charge_crash_body_armor()
