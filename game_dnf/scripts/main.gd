@@ -3342,8 +3342,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var club_wave := native_kind == "illusion_club_wave"
 	var native_down := native_outrage or club_wave or native_kind == "bloodblast"
 	var rapid_slash := native_kind == "rapid_slash"
-	var illusion_wave := native_kind == "illusion_wave"
-	var native_blood := rapid_slash or illusion_wave or native_kind == "illusion_finish"
+	var native_illusion := native_kind in ["illusion_melee","illusion_finish","illusion_wave"]
+	var native_blood := rapid_slash or native_illusion
 	var native_reaction := native_down or native_blood or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
@@ -3478,7 +3478,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
-	if illusion_wave:
+	if native_kind == "illusion_wave":
 		# A709EF..A70A66 uses the overlap center X/Z and the victim's ground Y.
 		var roll := rng.range_int(0,99)
 		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
@@ -4631,7 +4631,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var targets := monsters if friendly else friendly_targets()
 				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
 				var stationary_impact := kind in OUTRAGE_IMPACTS or kind == "illusion_club_wave"
-				var common_impact := stationary_impact or kind == "illusion_wave"
+				var common_impact := stationary_impact or kind in ["illusion_melee","illusion_wave"]
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)

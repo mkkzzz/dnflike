@@ -5074,6 +5074,10 @@ func check_illusion_finish() -> void:
 			"the entry uses the original two cubes and start voice")
 		if family == "katana":
 			var melee_target: Dictionary = api.spawn_dummy(POINT+Vector2(95,0))
+			melee_target["numeric"].values["hit_recovery"] = 0.0
+			var immune: Dictionary = game.spawn_enemy(melee_target["pos"])
+			immune["invuln_ms"] = 10000.0
+			var immune_hp: float = immune["hp"]
 			var melee: Dictionary = game.objects[0]
 			var before := frame_ms*2.0-1.0
 			game.step_objects(before)
@@ -5085,6 +5089,18 @@ func check_illusion_finish() -> void:
 				"the melee object uses the actor rate for its first attack frame and presents that same frame")
 			check(melee_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
 				"the melee object applies its 40 ms ATK pause only to the target")
+			check(melee_target["state"]=="hurt" and melee_target["stun_ms"]==500.0 and melee_target["push_v"]==0.0,
+				"the melee object applies the original ground stagger without horizontal knockback")
+			check(immune["hp"]==immune_hp and not melee["hits"].has(immune["id"]),
+				"the melee object skips invulnerable targets before recording contact")
+			var cuts := cues("hit_cut_s2")+cues("hit_cut_l2")
+			var blood := cues("hit_blood_s2")+cues("hit_blood_l")
+			var deposits := cues("native_contact_blood")
+			check(cuts.size()==1 and blood.size()==1 and deposits.size()==1
+				and (cuts[0]["key"]=="hit_cut_l2")== (blood[0]["key"]=="hit_blood_l")
+				and cuts[0]["scale"]==1.0 and blood[0]["scale"]==1.0
+				and deposits[0]["point"]==blood[0]["point"]-Vector2(10,0),
+				"the melee object defaults to a horizontal cut and matched adult blood at the original scale")
 			game.update_enemy(melee_target,39.0)
 			game.step_objects(39.0)
 			check(melee_target["stuck_ms"]==1.0 and melee["clock"]==before+40.0,

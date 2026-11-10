@@ -582,6 +582,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				var ratio: float = move["illusion_chain"]["melee_damage_rate"]
 				hit["percent"] = 100.0+int(NativeMotion.f32(float(hit["percent"])*ratio)-100.0)
 				hit["ptl_motion"] = move["illusion_chain"]["melee_motion"]
+				hit["stagger_factor"] = float(enum_args(hit["atk"],"hit_info",1)[1])
+				if enum_value(hit["atk"],"attack_direction").is_empty():
+					# 12AD66A initializes the omitted attack direction to horizontal.
+					hit["atk"] = hit["atk"].duplicate()
+					hit["atk"]["attack_direction"] = [{"value":"[hit horizon]","args":[]}]
 			if name == "illusionslash":
 				for hit: Dictionary in built["hits"]:
 					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
