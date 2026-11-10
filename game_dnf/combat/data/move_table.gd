@@ -571,14 +571,15 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 						var wave: Dictionary = spec["club_wave"].duplicate()
 						wave["percent"] = int(mastery["level_row"][11])
 						built["hits"] = _build_stage({"hits":[wave]},skill)["hits"]
-						var ground_hit: Dictionary = built["hits"][0]
-						ground_hit["hitstop_ms"] = _atk_hitstop(ground_hit["atk"],0.0)
 				_append_illusion_finish_hits(built,skill,spec["finish_weapon_tracks"].get(weapon,[]))
 			elif name == "illusionslash":
 				var hit: Dictionary = built["hits"][0]
 				var ratio: float = move["illusion_chain"]["melee_damage_rate"]
 				hit["percent"] = 100.0+int(NativeMotion.f32(float(hit["percent"])*ratio)-100.0)
 				hit["ptl_motion"] = move["illusion_chain"]["melee_motion"]
+			if name == "illusionslash":
+				for hit: Dictionary in built["hits"]:
+					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
 			if name == "rapidmoveslash" and not built["hits"].is_empty():
 				var hit: Dictionary = built["hits"][0]
 				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
@@ -759,7 +760,6 @@ func _append_illusion_finish_hits(stage: Dictionary, skill: Dictionary, tracks: 
 		if boxes.is_empty():continue
 		var path := "character/swordman/attackinfo/illusionslash"+suffix+".atk"
 		var hit: Dictionary = _build_stage({"atk":path,"hits":[{"attached_weapon":true,"percent_col":0}]},skill,boxes)["hits"][0]
-		hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
 		var stat: Array = skill["static"]
 		var blade := weapon == "katana"
 		if job == "weaponmaster" and (blade or (weapon == "beamsword" and suffix == "smash")):

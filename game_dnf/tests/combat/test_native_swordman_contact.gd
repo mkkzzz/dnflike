@@ -4914,6 +4914,14 @@ func check_illusion_finish() -> void:
 			check(game.hit_count==1 and melee["hits"].has(melee_target["id"]) and cues("R_SQUARESWDC_HIT").size()==1
 				and cues("HOANYOUNG_WAVE").size()==1 and game.object_view_clock(melee)==100.0,
 				"the melee object uses the actor rate for its first attack frame and presents that same frame")
+			check(melee_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
+				"the melee object applies its 40 ms ATK pause only to the target")
+			game.update_enemy(melee_target,39.0)
+			game.step_objects(39.0)
+			check(melee_target["stuck_ms"]==1.0 and melee["clock"]==before+40.0,
+				"the melee object continues to advance while the target is paused")
+			game.update_enemy(melee_target,1.0)
+			check(melee_target["stuck_ms"]==0.0,"the melee target resumes at 40 ms")
 			game.clear_monsters()
 			game.hit_count = 0
 		var slash_order := [0,2,1,3,2,0,3,1]
@@ -4974,15 +4982,26 @@ func check_illusion_finish() -> void:
 			"the neutral finisher uses the original forward offset and lower damage column")
 		game.clear_monsters()
 		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(70,0))
+		game.player["stuck_ms"] = 0.0
 		game.step_objects(50.0,wave_id)
 		check(game.objects.size()==1 and game.objects[0]["clock"]==0.0,
 			"the wave begins at animation time zero on its creation update")
 		check(game.objects.size()==1 and game.objects[0]["hits"].has(wave_target["id"])
 			and cues("HOANYOUNG_HIT").size()==1 and game.table.assets["audio"].has("HOANYOUNG_HIT"),
 			"a sword-wave contact plays the hit cue from its original attack record")
+		check(wave_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
+			"the sword wave applies its 40 ms ATK pause only to the target")
 		var hit_fx: Array = cues("illusion_wave_hit")
 		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and absf(float(hit_fx[0]["angle"]))<=0.801,
 			"the wave creates its own angled impact animation at the target's ground depth")
+		if family == "beamsword" and int(sample[1]) == 6:
+			var wave: Dictionary = game.objects[0]
+			game.update_enemy(wave_target,39.0)
+			game.step_objects(39.0)
+			check(wave_target["stuck_ms"]==1.0 and wave["clock"]==39.0 and wave["pos"]==POINT+Vector2(84,0),
+				"the sword wave keeps moving while the target is paused")
+			game.update_enemy(wave_target,1.0)
+			check(wave_target["stuck_ms"]==0.0,"the sword-wave target resumes at 40 ms")
 		if family == "katana" and int(sample[1]) == 6:
 			var wave: Dictionary = game.objects[0]
 			for count: int in range(1,4):
