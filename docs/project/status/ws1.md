@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 正在做 |
-| 正在做 | 原版全部副本世界内容线：已建立 48 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地、暗黑城入口、熔岩穴、山脊、斯卡萨之巢、根特周边、冰心少年、利库天井、白色废墟、布万加、冰雪宫殿、GBL教阿拉德分部、GBL教研究所、GBL教孵化场、堕落的盗贼、月光酒馆、王的遗迹、绿都格罗兹尼、热血八番街与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 47/97 runtime、50 parsed，怪物 runtime 272，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
+| 正在做 | 原版全部副本世界内容线：已建立 49 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地、暗黑城入口、熔岩穴、山脊、斯卡萨之巢、根特周边、根特东门、冰心少年、利库天井、白色废墟、布万加、冰雪宫殿、GBL教阿拉德分部、GBL教研究所、GBL教孵化场、堕落的盗贼、月光酒馆、王的遗迹、绿都格罗兹尼、热血八番街与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 48/97 runtime、49 parsed，怪物 runtime 277，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-11 完成[根特东门原生迷宫与对象载荷](../../reports/ws1/2026-11/2026-11-11_根特东门原生迷宫与对象载荷.md)：把 `genteastgate.dgn` 的 hell 基础 block 1 接入隐藏正式 `native_maze` 路线，闭合 7×3 源网格、13 个连通房、双起点/双 boss 四种组合、8 个怪种、152 只全部源怪、162 个全部源对象和两首原曲。8 个 bank、20 个多招槽与源 AI 优先级接入；四种单局为 98～106 怪、96/116 对象、55/56 可破坏候选。灯柱/果袋、spider mine、Captain Shured 阶段与 quest 4212/escape 保持显式缺口。专项 142、全部原生迷宫 33 文件 3,076、旧世界 573/9,286/6,302/966/90 项及七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 48 runtime、49 parsed，怪物 runtime 277。
 
 - 2026-11-11 完成[根特周边原生迷宫与对象载荷](../../reports/ws1/2026-11/2026-11-11_根特周边原生迷宫与对象载荷.md)：把 `outergent.dgn` 的 hell 基础布局接入隐藏正式 `native_maze` 路线，闭合 5×5 源网格、15 个连通房、双 boss 分支、6 个怪种、149 只全部源怪、186 个全部源对象和两首原曲。6 个新 bank、22 个动作槽与源 AI 优先级接入；西/东 boss run 分别 131 怪与 160/153 对象，未选中 boss 格切换为 boss_not 普通图。73/72 个灯柱/APC/果袋候选与 43/37 个 drum tongue 保持显式缺口。专项 112、全部原生迷宫 32 文件 2,934、旧世界 573/9,286/6,302/966/90 项及七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 47 runtime、50 parsed，怪物 runtime 272。
 
@@ -96,16 +98,17 @@
 - 暗黑城入口的 20 个 brazier/60 个 torch breakable source、coffin trap 2211、19 个 lightning-bug/7 个 neckless-knight/1 个 underfoot-gate 行为、封印门 60020、事件怪 61728、hell、Headless Knight 7 槽阶段与 `noierfera` 城镇入口/奖励/结算只保留 raw/gap。
 - 斯卡萨之巢的 27 个 scasa egg、item pocket trap 2211、blizzard factory、bull totem/静态冰冻障碍行为、封印门 60031、事件怪 61728、quest 4571/escape block、quest boss 9311、Scasa 27 招阶段与 `snowmt` 城镇入口/奖励/结算只保留 raw/gap。
 - 根特周边的 73/72 个灯柱/APC/果袋 breakable source、果袋 trap 2200/2201/2210、43/37 个 drum tongue 行为、封印门 60034、事件怪 61728、hell、Bentinck 12 招阶段与 `gent` 城镇入口/奖励/结算只保留 raw/gap。
+- 根特东门的 55/56 个灯柱/果袋 breakable source、trap 2200/2201/2210/2211、6/12 个 spider mine、quest 4212/escape block、封印门 60034、事件怪 61728、hell、Captain Shured 10 招阶段与 `gent` 城镇入口/奖励/结算只保留 raw/gap。
 - 浅栖之地的第二套 quest/hell 布局只保留 raw，2 个 `shallowkeepfreezingluna` 与 21 个混合未知 trap 未执行；特殊棺/罐 `ghoulstand` 的生成/位置/生命周期、箱组随机和首领阶段仍需逐项取证。
-- 60 级目标 DGN 仍有 50 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
+- 60 级目标 DGN 仍有 49 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
 - 通用可破坏物标准七项布局的 HP/阶段与音效槽位按 E-PARSE 字段和既有外壁固定对象适配推定；逐 OBJ 的原客户端同条件受击、损伤阶段动作和更多 `/trap/` 联动仍待取证。
 - 1,176 条静态 MAP 对象仍只由地图渲染；开关、吊灯联动、地刺/毒沼地形、`goblinbunker` 多部件、可破坏 `/trap/` 与地图事件触发需继续分包。
 - 石像 OBJ 请求的 `HEXA_BREAK` 在当前唯一 `audio.xml` 中无精确条目；manifest 保留 unresolved，禁止用相近音效顶替。
 - Mirkius 空 `[attack motion]` 槽已按 E-INFER 复用前一动作并保留独立 `attackheart.atk`；需原客户端同条件确认第三招的动作与选招表现。
 - 阿登原档最低 68、basis 71，当前运行仍为 58 的隔离测试适配并标记 `future_above_60`；未纳入 60 级可玩基线。
 - 暗影迷宫已调查但暂不接入：4 套 3×3 布局的 Boss 使用 `[ai character] 1301 → swordman/Sayoung/Sayoung.aic`，当前缺少敌方 AICharacter/APC 战斗内核；临时导出只留在本机 `temp/shadowmaze_v1_blocked_20261110/`，禁止以零怪 Boss 房冒充完成。
-- 正式全套停在既有 `build_dnf_quest_rules.py --check` stale；按分工不由 ws1 擅自重建。前置已完成的新世界审计、龙人契约、Zealot、GBL教阿拉德分部/GBL教研究所/GBL教孵化场/堕落的盗贼/月光酒馆/王的遗迹/绿都格罗兹尼/热血八番街/暗黑城入口/斯卡萨之巢/根特周边/冰雪宫殿/布万加/白色废墟/利库天井/冰心少年/山脊/熔岩穴/暗精灵墓地/蜘蛛洞穴/第一脊椎/浅栖之地/第二脊椎/树精繁殖地/GBL女神殿/天帷禁地/极昼/炼狱/树精/神殿原生迷宫、世界机关与战斗流程均通过。
-- 正式 `loop.tscn --loop-test` 当前为 489 checks / 35 failures：30 条 `native_maze` 被既有断言要求非空 `rooms`，另有 5 条既有可见副本战斗/门/任务推进/存档失败；不计入本批通过。
+- 正式全套停在既有 `build_dnf_quest_rules.py --check` stale；按分工不由 ws1 擅自重建。前置已完成的新世界审计、龙人契约、Zealot、GBL教阿拉德分部/GBL教研究所/GBL教孵化场/堕落的盗贼/月光酒馆/王的遗迹/绿都格罗兹尼/热血八番街/暗黑城入口/斯卡萨之巢/根特周边/根特东门/冰雪宫殿/布万加/白色废墟/利库天井/冰心少年/山脊/熔岩穴/暗精灵墓地/蜘蛛洞穴/第一脊椎/浅栖之地/第二脊椎/树精繁殖地/GBL女神殿/天帷禁地/极昼/炼狱/树精/神殿原生迷宫、世界机关与战斗流程均通过。
+- 正式 `loop.tscn --loop-test` 当前为 490 checks / 36 failures：31 条 `native_maze` 被既有断言要求非空 `rooms`，另有 5 条既有可见副本战斗/门/任务推进/存档失败；不计入本批通过。
 - 战斗进场同步 mount 仍约 4.27 秒，尚未改造成显式 loading/异步加载；逐武器普攻盒、技能判定义项和小地图/结算覆盖层仍待原版证据与后续 UI 资源闭环。
 - 战斗响应、跳攻、拾取、原版字体、BGM 加载和音效声池仅完成自动化与 profiler 验证；真实手感、混音和 UI 观感等待 rainmk 实机复核。
 - `7a00f659` 已提交族级 AI 目录索引、运行时回退查询和拾取下蹲帧计数；接续时“未提交”的记载已纠正，未将提交视作回归或试玩通过。
