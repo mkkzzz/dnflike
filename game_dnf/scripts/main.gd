@@ -3633,6 +3633,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
+		if by_player and native_kind == "hop_shockwave" and hit.has("blood_memory_resistance"):
+			# E59CDE calls the wave's 9FCCB0 callback before the target processes status.
+			target["numeric"].apply_blood_memory_resistance(hit["blood_memory_resistance"])
 		var effect_list: Array = hit.get("effects",[]).duplicate(true)
 		if by_player:
 			effect_list.append_array(Numbers.shared_config()["skills"].get(hit_skill_id,{}).get("on_hit",[]))
@@ -3671,9 +3674,6 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if effect.has("duration_ms"):request["duration_ms"] = duration_ms
 			if effect.has("status_level"):request["status_level"] = effect["status_level"]
 			apply_effect(request)
-		if by_player and native_kind == "hop_shockwave" and hit.has("blood_memory_resistance"):
-			# 9FCCB0..9FCDD3 attaches type 0x106 to the struck actor independently of the bleed roll.
-			target["numeric"].apply_blood_memory_resistance(hit["blood_memory_resistance"])
 		if by_player and bool(resolved.get("critical",false)) and int(skill_levels.get("defensedownoncritical",0)) > 0:
 			apply_effect({"kind":"effect","id":"defense_down","target":target["id"],"rank":int(skill_levels["defensedownoncritical"])})
 	if victim == "companion":

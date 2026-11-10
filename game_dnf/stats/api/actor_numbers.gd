@@ -15,6 +15,7 @@ var config: Dictionary = Numbers.shared_config()
 var element := "none"
 var runtime_modifiers: Array = []
 var weapon_attack_speed_per_mille := 0
+var _modifiers_pending := false
 
 func configure(spec: Dictionary) -> void:
 	base = spec.get("numbers",{}).duplicate(true)
@@ -34,6 +35,7 @@ func native_non_weapon_attack_rate() -> float:
 	return maxi(1,int(native_scalar(multiplier*1000.0)))/1000.0
 
 func recalculate() -> void:
+	_modifiers_pending = false
 	var cfg := config.duplicate()
 	var mods: Array = effects.modifiers()+runtime_modifiers.duplicate(true)
 	var level := int(base.get("level",1))
@@ -124,7 +126,8 @@ func apply_blood_memory_resistance(source: Dictionary) -> void:
 	if amount == 0:return
 	effects.add("blood_memory_resistance",{"name":"鲜血之忆","duration_ms":source["duration_ms"],
 		"modifiers":[{"stat":"bleeding_resistance","op":"add","value":-amount}]})
-	recalculate()
+	# 928B70 attaches first; 82A2D0 rebuilds the cached resistance on actor update.
+	_modifiers_pending = true
 
 ## Blind uses its own resistance index and scales both payloads before storage.
 ## 8AE001 scales the duration and 8B535C only replaces a strictly weaker entry.
@@ -242,8 +245,9 @@ func step(ms: float, sleep_on_ground := true, active_bleed_pose := false) -> Arr
 	var events: Array = effects.step(ms,sleep_on_ground,active_bleed_pose)
 	for event: Dictionary in events:
 		if event["type"] in ["removed","modifier_changed"]:
-			recalculate()
+			_modifiers_pending = true
 			break
+	if _modifiers_pending:recalculate()
 	return events
 
 func effective_element() -> String:

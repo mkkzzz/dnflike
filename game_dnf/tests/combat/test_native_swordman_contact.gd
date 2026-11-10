@@ -1702,8 +1702,12 @@ func check_hopsmash_bleed() -> void:
 				"An unlearned Blood Memory leaves the shockwave's target resistance unchanged")
 		else:
 			var debuff: Dictionary = resistant_actor.effects.active.get("blood_memory_resistance",{})
-			check(debuff.get("remaining_ms")==10000.0 and resistant_actor.values["bleeding_resistance"]==82,
-				"Rank three Blood Memory lowers the struck target's resistance even when it resisted the bleed")
+			check(debuff.get("remaining_ms")==10000.0 and resistant_actor.values["bleeding_resistance"]==100
+				and not resistant_actor.apply_source_bleed(statuses[0],300,true),
+				"Blood Memory attaches on contact but the same update still rolls against cached resistance")
+			resistant_actor.step(0.0)
+			check(resistant_actor.values["bleeding_resistance"]==82,
+				"The next actor update applies the rank three resistance reduction")
 			resistant_actor.step(9999.0)
 			check(resistant_actor.apply_source_bleed(statuses[0],300,true),"A subsequent bleed uses the reduced resistance at 9999 ms")
 			resistant_actor.step(1.0)
