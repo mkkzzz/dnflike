@@ -3264,24 +3264,44 @@ func check_hundred_sword_ready() -> void:
 	game.numeric_player.values["hit"] = 1.0
 	var first: Dictionary = game.monsters[0]
 	var late: Dictionary = game.monsters[1]
-	var centered: Dictionary = game.spawn_enemy(center+Vector2(0.75,0))
+	var centered: Dictionary = game.spawn_enemy(center+Vector2(0.75,9))
 	first["hp"] = 5000.0
 	late["hp"] = 5000.0
 	centered["hp"] = 5000.0
 	move_target(first,center+Vector2(80,0))
 	game.step_objects(99.0)
-	check(first["hp"]==5000.0 and cues("W_WEAPON_DRIVE").is_empty(),"the field neither hits nor plays its entry cue at age 99")
+	check(first["hp"]==5000.0 and cues("W_WEAPON_DRIVE").is_empty() and cues("hundred_sword_contact").is_empty(),
+		"the field neither hits nor plays a cue at age 99")
 	game.step_objects(1.0)
 	check(first["hp"]<5000.0 and cues("W_WEAPON_DRIVE").size()==1
 		and game.view.audio.variants["W_WEAPON_DRIVE"][0] is AudioStreamOggVorbis,
 		"the original three-box contact and its archived cue open at age 100")
 	check(first["push_v"]<0.0 and centered["hp"]<5000.0 and centered["push_v"]>0.0,
 		"the field pulls from the right and uses reverse cast facing for a victim on the same integer X")
+	var hits: Array = game.bus.events_of("combat.hit").filter(func(event):
+		return String(event.get("atk","")).ends_with("/hundredswordhit.atk"))
+	var flashes := cues("hundred_sword_contact")
+	check(hits.size()==2 and flashes.size()==2 and cues("R_SLESSSWDA_HIT").size()==2,
+		"each successful contact emits one sword-field slash and the archived hit sound")
+	for index in mini(hits.size(),flashes.size()):
+		var overlap: Vector3 = hits[index]["point"]
+		var target: Dictionary = first if hits[index]["target"]==first["id"] else centered
+		check(flashes[index]["point"]==Vector2(int(overlap.x),int(target["pos"].y))
+			and flashes[index]["height"]==int(overlap.z) and flashes[index]["facing"]==1
+			and is_equal_approx(flashes[index]["angle"],1.57),
+			"the sword-field slash uses the overlap X and Z, target ground Y and native angle")
+	game.view.present(game.view_snapshot(),0.0,0.0)
+	var drawn_flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="hundred_sword_contact")
+	check(drawn_flashes.size()==2 and drawn_flashes.all(func(fx):
+		return (fx.data["source"]=="common/hiteffect/animation/slashlarge2.ani"
+			and fx.frame_scale().is_equal_approx(Vector2(1.2,1.2)) and fx.data["duration_ms"]==200.0)),
+		"the field contact draws the original 200-ms SlashLarge2 at its authored scale")
 	var after_contact: float = first["hp"]
 	move_target(first,center+Vector2(80,0))
 	move_target(late,center-Vector2(80,0))
 	game.step_objects(49.0)
-	check(first["hp"]==after_contact and late["hp"]<5000.0 and late["push_v"]>0.0,
+	check(first["hp"]==after_contact and late["hp"]<5000.0 and late["push_v"]>0.0
+		and cues("hundred_sword_contact").size()==3,
 		"a fresh target is pulled in from the left at 149 while the ledger blocks a duplicate")
 	field["hits"].erase(late["id"])
 	late["hp"] = 5000.0
@@ -3290,7 +3310,8 @@ func check_hundred_sword_ready() -> void:
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	var visible = game.view.object_views.get(field["id"])
 	var overlay = game.view.object_views.get("%s:overlay"%field["id"])
-	check(late["hp"]==5000.0 and visible!=null and overlay!=null and visible.hold_last_frame and overlay.hold_last_frame,
+	check(late["hp"]==5000.0 and visible!=null and overlay!=null and visible.hold_last_frame and overlay.hold_last_frame
+		and cues("hundred_sword_contact").size()==3,
 		"the initial attack closes at 150 while both field layers hold their final frames")
 	game.start_stage(game.move_def("hundredsword")["stages"].size()-1)
 	var exit_clock: float = game.action_def()["timeline"][2]["start_ms"]

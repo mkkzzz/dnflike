@@ -2946,6 +2946,7 @@ func complete_native_prop_break(prop: Dictionary) -> void:
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float) -> void:
 	var atk: Dictionary = hit["atk"]
+	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3036,7 +3037,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var stop := float(hit.get("hitstop_ms",rules["hitstop"]["down_ms"] if reaction in ["launch","down","air"] else rules["hitstop"]["hit_ms"]))
 	# The independent delayed hit and short-sword wave keep their unset pause.
 	if draw_contact:stop = float(hit["draw_stop_ms"])
-	elif draw_impact or hit.get("native_controller",{}).get("kind","") == "draw_short_wave":stop = 0.0
+	elif draw_impact or native_kind == "draw_short_wave":stop = 0.0
 	# Thrown and spawned objects freeze only their target; the caster keeps moving.
 	if String(hit.get("kind","")) != "object" and not hit.has("object") and not draw_impact and not grab_strike:
 		attacker["stuck_ms"] = maxf(float(attacker.get("stuck_ms",0)),stop)
@@ -3055,13 +3056,20 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
-	if hit.get("native_controller",{}).get("kind","") == "illusion_wave":
+	if native_kind == "illusion_wave":
 		# A709EF..A70A66 uses the overlap center X/Z and the victim's ground Y.
 		var roll := rng.range_int(0,99)
 		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
 		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),int(target["pos"].y)),
 			"height":int(point.z),"facing":facing,"angle":angle,"fresh":true})
-	if not draw_impact:hit_cues(atk,point,facing,by_player)
+	elif native_kind == "hundred_sword_field":
+		# A6BF20 initializes the neutral direction and 1.57-radian angle.
+		# A6E1EB..A6E242 places SlashLarge2 at the overlap X/Z and target Y.
+		bus.emit("combat.cue",{"kind":"fx","key":"hundred_sword_contact","point":Vector2(int(point.x),int(target["pos"].y)),
+			"height":int(point.z),"facing":1,"angle":1.5700000524520874,"fresh":true})
+		play_sound(String(atk["hit_wav"]))
+	if not draw_impact and native_kind != "hundred_sword_field":
+		hit_cues(atk,point,facing,by_player)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):

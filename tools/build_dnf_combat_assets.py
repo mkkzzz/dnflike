@@ -365,6 +365,7 @@ EFFECTS = {
     'hit_cut_s3': 'common/hiteffect/animation/age12/slashsmall3.ani',
     'hit_cut_l1': 'common/hiteffect/animation/age12/slashlarge1.ani',
     'hit_cut_l2': 'common/hiteffect/animation/age12/slashlarge2.ani',
+    'hundred_sword_contact': 'common/hiteffect/animation/slashlarge2.ani',
     'hit_cut_l3': 'common/hiteffect/animation/age12/slashlarge3.ani',
     'hit_blow_s': 'common/hiteffect/animation/age12/knocksmall.ani',
     'hit_blow_l': 'common/hiteffect/animation/age12/knocklarge.ani',
@@ -1747,6 +1748,7 @@ def main() -> int:
         keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'],
                 *(layer['key'] for layer in stages[-1]['fx']), *move['formation']['effects'].values())
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+        specs.append(('effects', 'hundred_sword_contact', EFFECTS['hundred_sword_contact']))
         specs.extend(('player_clips', stage['ani'], runtime['assets']['player_anims'][stage['ani']])
                      for stage in stages[1:-1])
         specs.extend(('variant_effects', key, spec)
