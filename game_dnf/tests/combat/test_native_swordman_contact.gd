@@ -7,6 +7,7 @@ const ProfileSession = preload("res://flow/session.gd")
 const Numbers = preload("res://stats/api/numbers.gd")
 const Frame = preload("res://view/world_frame.gd")
 const HellbenterColumn = preload("res://combat/resolve/hellbenter_column.gd")
+const DetRng = preload("res://core/det_rng.gd")
 const POINT := Vector2(400,300)
 const ARMOR_PARTICLE := "common/commoneffect/particle/superarmor_damage_particle.ptl"
 
@@ -2385,6 +2386,12 @@ func check_hellbenter_first_cast() -> void:
 	check(far_body_layers.size()==2,
 		"both Minius body overlays use half of the scaled standing-image height")
 	near["state"] = "down"
+	# Pick a seed that exercises both inclusive interpolation endpoints on the live spawn.
+	for seed_value: int in 100000:
+		var random := DetRng.new(hash([seed_value,near["id"],blood.next_orb_id]))
+		if random.range_int(0,99)!=99 or random.range_int(0,99)!=99:continue
+		game.rng.reseed(seed_value)
+		break
 	check(blood.orbs.is_empty(),"installing the Hellbenter mark leaves its first target poll pending")
 	game.step_game(17.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
@@ -2397,9 +2404,12 @@ func check_hellbenter_first_cast() -> void:
 	check(near["state"]=="down" and origin.z==int(near["z"])+34,
 		"a knocked-down goblin releases its blood orb at half the cached standing-image height")
 	var bend: Vector2i = orb["bend"]
+	var destination := Vector2i(game.player["pos"])
+	check(bend.x-origin.x==250 and bend.y in [destination.y-80,origin.y+80],
+		"maximum source rolls place the turn 250 pixels outward and 80 past the chosen depth boundary")
 	game.step_game(150.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
-	check(orb["point"].x==bend.x and bend.x-origin.x>=150 and bend.x-origin.x<=249
+	check(orb["point"].x==bend.x
 		and layers.call("balltail").size()>0,"the blood orb swings outward for 150 ms and draws the original tail")
 	game.step_game(250.0)
 	check(orb["point"].y==bend.y,"the separate depth curve turns at 400 ms")
@@ -2410,7 +2420,13 @@ func check_hellbenter_first_cast() -> void:
 	game.step_game(1.0)
 	check(blood.marks[far["id"]].get("next_pulse")==1017 and blood.orbs.size()==1,
 		"at 500 ms the out-of-range mark advances its cadence without spawning a blood orb")
+	var saved_owner: Vector2 = game.player["pos"]
+	game.player["pos"] = saved_owner+Vector2(90,-20)
 	game.step_game(99.0)
+	var homing: Vector4i = orb["point"]
+	check(Vector2(homing.x,homing.y).distance_to(game.player["pos"])<=4.0,
+		"the incoming trajectory follows the caster's new position by 599 ms")
+	game.player["pos"] = saved_owner
 	check(effect.get("blood_count",0)==0 and is_equal_approx(effect["definition"]["modifiers"][0]["value"],0.020)
 		and not blood.marks.has(near["id"]),"losing bleed removes the mark while the orb continues flying")
 	game.step_game(1.0)

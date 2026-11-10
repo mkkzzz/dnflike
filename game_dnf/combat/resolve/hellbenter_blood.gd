@@ -98,8 +98,9 @@ func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:
 		int(enemy["z"])+int(_target_display_height(game,enemy)*0.5))
 	# Keep cosmetic draws separate from damage and status rolls.
 	var rng := DetRng.new(hash([game.rng.seed_value,enemy["id"],next_orb_id]))
-	var x_span := rng.range_int(150,249)
-	var y_span := int(Motion.ramp(40,80,rng.range_int(0,99),100))
+	# CAC386 and CAC3AA use a modulo-100 sample with 99 as the interpolation term.
+	var x_span := int(Motion.ramp(150,250,rng.range_int(0,99),99))
+	var y_span := int(Motion.ramp(40,80,rng.range_int(0,99),99))
 	var bend_x := point.x+x_span if point.x > destination.x else point.x-x_span
 	var bend_y := mini(point.y,destination.y)-y_span if rng.range_int(0,1) == 0 else maxi(point.y,destination.y)+y_span
 	var head := Vector4i(point.x,point.y,point.z,0)
