@@ -1076,7 +1076,10 @@ func object(path: String) -> Dictionary:
 		for key: String in assets.get("effects",{}):
 			if String(assets["effects"][key]["source"]) == add_path:add_fx = key
 	var obj := {"path":path,"motion":motion,"timeline":timeline(motion),"atk":atk(atk_path),"atk_path":atk_path,
-		"bank":bank,"add_fx":add_fx,"piercing":int(d.get("piercing_power",0)),"floating":float(d.get("floating_height",0))}
+		"bank":bank,"add_fx":add_fx,"piercing":int(d.get("piercing_power",0)),"floating":float(d.get("floating_height",0)),
+		"attack_infos":d.get("attack_infos",[]),"int_data":d.get("int_data",[]),
+		"string_data":d.get("string_data",[]),"etc_motions":d.get("etc_motions",[]),
+		"destroy_particle":d.get("destroy_particle",[]),"width":d.get("width",[])}
 	obj["segments"] = Timeline.attack_segments(obj["timeline"])
 	objects[path] = obj
 	return obj

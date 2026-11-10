@@ -961,6 +961,22 @@ def sound_files(src: Source, key: str) -> list[str]:
     return effect or found
 
 
+def audio_xml_index(src: Source) -> dict[str, str]:
+    """Exact original sound key -> Ogg path from audio.xml."""
+    row = src.cat.execute(
+        "select local_path from assets where lower(original_path)='audio.xml' limit 1"
+    ).fetchone()
+    if row is None:
+        return {}
+    text = (src.root / row['local_path']).read_text(encoding='utf-8', errors='replace')
+    return {
+        match.group(1).upper(): match.group(2).replace('\\', '/')
+        for match in re.finditer(
+            r'<EFFECT[^>]*ID="([^"]+)"[^>]*FILE="([^"]+)"', text, re.I
+        )
+    }
+
+
 def copy_audio(src: Source, files: list[str], audio: dict, key: str, unresolved: list) -> None:
     out = []
     weights = SOURCE_AUDIO_WEIGHTS.get(key, ())
@@ -1132,6 +1148,37 @@ def breakable_particle_animations(src: Source) -> tuple[dict, dict]:
         if keys:
             mapping[path] = keys
     return effects, mapping
+
+
+def breakable_sound_keys(src: Source) -> list[str]:
+    """Original breakable OBJ hit/destroy keys.
+
+    Standard seven-or-more-int objects keep hit/destroy sound at string slots
+    4/5. The compact grass objects use slot 1 as hit and slot 2 as destroy.
+    """
+    keys: set[str] = set()
+    for path in breakable_objects():
+        if not src.lib.exists(path):
+            continue
+        document = src.lib.script(path)
+        spans = {}
+        for item in document.get('fields') or []:
+            spans.setdefault(item['tag'], []).append(item['values'])
+        strings = (spans.get('[string data]') or [[]])[0]
+        slots: list[int]
+        if len(strings) >= 5:
+            slots = [4, 5]
+        elif len(strings) == 3:
+            slots = [1, 2]
+        elif len(strings) == 2:
+            slots = [1]
+        else:
+            slots = []
+        for slot in slots:
+            key = str(strings[slot]) if slot < len(strings) else ''
+            if key:
+                keys.add(key)
+    return sorted(keys)
 
 
 def native_monster_bank(src: Source, key: str, mob: str, unresolved: list) -> dict:
@@ -1374,6 +1421,16 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     copy_native_jar_trap_audio(src, manifest['audio'], unresolved)
     for key in SOUND_KEYS:
         copy_audio(src, sound_files(src, key), manifest['audio'], key, unresolved)
+    breakable_audio = audio_xml_index(src)
+    for key in breakable_sound_keys(src):
+        source_path = breakable_audio.get(key.upper(), '')
+        if source_path:
+            copy_audio(src, [source_path], manifest['audio'], key, unresolved)
+        else:
+            unresolved.append({
+                'kind': 'audio', 'key': key,
+                'note': 'audio.xml has no exact entry; no filename fallback',
+            })
     # MomentarySlashWave.atk requests ASTROM; audio.xml only registers ASTORM.
     unresolved.append({'kind': 'audio', 'key': 'ASTROM_HIT_LIGHT', 'note': 'no original audio.xml entry'})
     for weapon, row in weapon_sounds(src).items():

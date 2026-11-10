@@ -146,8 +146,8 @@
  ],
  "effects": 526,
  "digits": 61,
- "audio_keys": 294,
- "unresolved": 32,
+ "audio_keys": 304,
+ "unresolved": 34,
  "unresolved_items": [
   {
    "kind": "monster_equipment",
@@ -311,6 +311,16 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
+  },
+  {
+   "kind": "audio",
+   "key": "HEXA_BREAK",
+   "note": "audio.xml has no exact entry; no filename fallback"
+  },
+  {
+   "kind": "audio",
+   "key": "ASTROM_HIT_LIGHT",
+   "note": "no original audio.xml entry"
   }
  ],
  "particle_templates": 26

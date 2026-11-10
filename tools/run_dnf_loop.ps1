@@ -247,6 +247,14 @@ if ($Test) {
     } finally {$ErrorActionPreference=$worldRoomsPreference}
     $worldRooms | Write-Output
     if ($worldRoomsExit -ne 0 -or ($worldRooms -match 'SCRIPT ERROR|ERROR:') -or -not ($worldRooms -match '\[WS1_WORLD_ROOMS\] COMPLETE checks=\d+ failures=0')) {throw "Visible dungeon room contract failed."}
+    $worldPropsPreference=$ErrorActionPreference
+    try {
+        $ErrorActionPreference="Continue"
+        $worldProps=& $GodotPath --headless --path $gamePath --quit-after 6000 --script res://tests/combat/test_ws1_world_props.gd 2>&1
+        $worldPropsExit=$LASTEXITCODE
+    } finally {$ErrorActionPreference=$worldPropsPreference}
+    $worldProps | Write-Output
+    if ($worldPropsExit -ne 0 -or ($worldProps -match 'SCRIPT ERROR|ERROR:') -or -not ($worldProps -match '\[WS1_WORLD_PROPS\] COMPLETE checks=\d+ failures=0')) {throw "Visible dungeon prop contract failed."}
     $bossContactsPreference=$ErrorActionPreference
     try {
         $ErrorActionPreference="Continue"

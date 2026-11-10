@@ -2866,20 +2866,58 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if not prop.get("breakable",false) or prop.get("broken",false):continue
 				for b: AABB in world:
 					if b.intersects(Kernel.HitJudge.prop_box(prop["collision"])):
-						prop["hp"] = int(prop.get("hp", 1)) - 1
-						if int(prop["hp"]) > 0:
-							spawn_effect("hit_cut_s1", prop["pos"] - Vector2(0, 18), facing)
-							if String(prop.get("hit_sound", "")) != "":play_sound(String(prop["hit_sound"]))
-						else:
-							prop["broken"] = true
-							prop["broken_ms"] = 0.0
-							spawn_effect("hit_cut_s1", prop["pos"] - Vector2(0, 18), facing)
-							# 原版破坏粒子（.obj 的 [destroy particle] → .ptl → ANI）。
-							for particle in array_of(prop.get("particles")):
-								spawn_effect(String(particle), prop["pos"] - Vector2(0, 16), facing)
-							if String(prop.get("break_sound", "")) != "":play_sound(String(prop["break_sound"]))
-							bus.emit("combat.prop_broken", {"node": int(prop.get("node", -1))})
+						var prop_key := "prop:%d:%d:%d"%[i,group,int(prop["node"])]
+						if player["hits"].has(prop_key):
+							break
+						player["hits"][prop_key] = true
+						apply_legacy_prop_damage(prop, legacy_prop_hit_amount(hit,attack_power()))
+						if bool(prop.get("broken",false)):
+							break
 						break
+
+func legacy_prop_hit_amount(hit: Dictionary, power: float) -> int:
+	var percent := float(hit.get("percent",100.0))*skill_damage_multiplier(String(hit.get("skill_id",player["action"])))
+	return maxi(1, roundi(power*percent/100.0+float(hit.get("fixed",0.0))))
+
+func apply_legacy_prop_damage(prop: Dictionary, amount: int) -> bool:
+	if not bool(prop.get("breakable",false)) or bool(prop.get("broken",false)) or amount <= 0:
+		return false
+	prop["hp"] = int(prop["hp"])-amount
+	if int(prop["hp"]) > 0:
+		legacy_prop_contact(prop)
+		return false
+	prop["stage"] = int(prop.get("stage",0))+1
+	if int(prop["stage"]) >= int(prop.get("stages",1)):
+		if bool(prop.get("destroy_on_final_stage",true)):
+			complete_legacy_prop_break(prop)
+			return true
+		prop["hp"] = 1
+		legacy_prop_contact(prop)
+		return false
+	var data: Array = array_of(prop.get("def",{}).get("int_data"))
+	prop["hp"] = breakable_source_hp(data)
+	legacy_prop_contact(prop)
+	return false
+
+func legacy_prop_contact(prop: Dictionary) -> void:
+	spawn_effect("hit_cut_s1",prop["pos"]-Vector2(0,18),int(prop.get("facing",1)))
+	if String(prop.get("hit_sound","")) != "":play_sound(String(prop["hit_sound"]))
+
+func complete_legacy_prop_break(prop: Dictionary) -> void:
+	if bool(prop.get("broken",false)):
+		return
+	prop["broken"] = true
+	prop["broken_ms"] = 0.0
+	legacy_prop_contact(prop)
+	# Original destroy particle chain: OBJ [destroy particle] -> PTL -> ANI bank.
+	for particle in array_of(prop.get("particles")):
+		spawn_effect(String(particle),prop["pos"]-Vector2(0,16),int(prop.get("facing",1)))
+	if String(prop.get("break_sound","")) != "":play_sound(String(prop["break_sound"]))
+	var saved: Dictionary = room_snapshots.get(room_index,{})
+	saved["cleared"] = bool(saved.get("cleared",room_cleared))
+	saved["props"] = props.duplicate(true)
+	room_snapshots[room_index] = saved
+	bus.emit("combat.prop_broken",{"node":int(prop.get("node",-1))})
 
 func draw_hit_delay(timeline: Array, clock: float) -> int:
 	# CADB4F sums whole frames from the contact frame through frame six.
@@ -4781,13 +4819,15 @@ func build_props(room: Dictionary) -> Array:
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")
-		var hazard := path.contains("/trap/")
-		if not breakable and not hazard:
+		var trap := path.contains("/trap/")
+		if not breakable and not trap:
 			continue
 		var def: Dictionary = table.object(path)
 		if def.is_empty():
 			continue
-		if hazard and not breakable and array_of(def.get("attack_infos")).is_empty():
+		var attack_infos: Array = array_of(def.get("attack_infos"))
+		var hazard := trap and not breakable and not attack_infos.is_empty()
+		if not breakable and not hazard:
 			continue
 		var anchor: Array = array_of(item.get("anchor"))
 		if anchor.size() < 2:
@@ -4797,26 +4837,59 @@ func build_props(room: Dictionary) -> Array:
 			width = [40, 20]
 		var data: Array = array_of(def.get("int_data"))
 		var strings: Array = array_of(def.get("string_data"))
-		# Legacy room adapter uses the previously inferred hit count.
-		var hits := int(data[1]) if data.size() > 1 else 1
+		var stages := breakable_stage_count(data) if breakable else 1
+		var hp := breakable_source_hp(data) if breakable else 1
 		var pos := Vector2(float(anchor[0]), float(anchor[1]))
 		var size := Vector2(float(width[0]), float(width[1]))
-		var attack_infos: Array = array_of(def.get("attack_infos"))
 		var damage_atk: Dictionary = table.atk(String(attack_infos[0])) if not attack_infos.is_empty() else {}
 		out.append({
 			"id": "%s#%d" % [path, out.size()],
+			"source_path": path,
 			"pos": pos, "z": float(anchor[2]) if anchor.size() > 2 else 0.0,
 			"collision": Rect2(pos.x - size.x * 0.5, pos.y - size.y, size.x, size.y),
 			"breakable": breakable, "broken": false, "broken_ms": 0.0,
 			# 陷阱：玩家走进判定范围就按 .atk 结算一次伤害（trap/* 的 [attack info]）。
 			"hazard": hazard and not breakable, "damage_atk": damage_atk, "hazard_ms": 0.0,
-			"hp": maxi(1, hits), "def": def,
-			"break_sound": String(strings[5]) if strings.size() > 5 else "",
-			"hit_sound": String(strings[4]) if strings.size() > 4 else "",
+			"hp": hp, "stages": stages, "stage": 0,
+			"destroy_on_final_stage": breakable_destroy_on_final(data) if breakable else true,
+			"def": def,
+			"break_sound": breakable_destroy_sound(strings) if breakable else "",
+			"hit_sound": breakable_hit_sound(strings) if breakable else "",
 			"particles": breakable_particle_keys(path),
 			"node": object_index,
 		})
 	return out
+
+func breakable_stage_count(data: Array) -> int:
+	if data.size() >= 7:
+		return maxi(1, int(data[1]))
+	if data.size() == 2:
+		return maxi(1, int(data[1]))
+	return 1
+
+func breakable_source_hp(data: Array) -> int:
+	if data.size() >= 7:
+		return maxi(1, int(data[6]))
+	if data.size() == 2:
+		return maxi(1, int(data[0]))
+	return 1
+
+func breakable_destroy_on_final(data: Array) -> bool:
+	return bool(int(data[2])) if data.size() >= 7 else true
+
+func breakable_hit_sound(strings: Array) -> String:
+	if strings.size() >= 5:
+		return String(strings[4])
+	if strings.size() >= 2:
+		return String(strings[1])
+	return ""
+
+func breakable_destroy_sound(strings: Array) -> String:
+	if strings.size() >= 6 and String(strings[5]) != "":
+		return String(strings[5])
+	if strings.size() == 3:
+		return String(strings[2])
+	return ""
 
 ## 陷阱的伤害间隔：原版 .obj 的 [int data] 里有一位像冷却（cryplant 为 2000），
 ## 语义未完全确定，先统一按 2 秒（E-INFER）。
@@ -4837,8 +4910,11 @@ func step_hazards(ms: float) -> void:
 		var atk: Dictionary = prop.get("damage_atk", {})
 		var env := {"id": -2, "pos": prop["pos"], "z": 0.0, "numeric": null,
 			"facing": 1, "state": "idle", "hits": {}}
+		# OBJ traps carry their own ATK. The absent damage field falls back to the
+		# ordinary base scale; player attack power must never drive a hazard.
+		var trap_power := float(atk.get("damage", 100.0))
 		land_hit(env, player, {"atk": atk, "percent": 100.0 + float(atk.get("damage_bonus", 0)), "lift": -1.0},
-			Vector3(float(prop["pos"].x), float(prop["pos"].y), 0.0), 1, float(player["attack"]))
+			Vector3(float(prop["pos"].x), float(prop["pos"].y), 0.0), 1, trap_power)
 
 func room_placement(index: int) -> Dictionary:
 	if native_maze != null:return native_room["placement"] if index == room_index else {}
@@ -5044,7 +5120,7 @@ func load_room(index: int, from_side: String) -> void:
 			var next_side: String = rules["rooms"][index]["next"]
 			doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
 		room_cleared = bool(saved.get("cleared",false))
-		props = build_props(room_map)
+		props = saved["props"].duplicate(true) if saved.has("props") else build_props(room_map)
 	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
 	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
 	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
@@ -5672,9 +5748,9 @@ func view_snapshot() -> Dictionary:
 	var open := room_is_open(alive)
 	var stage_info := {"room_index":room_index,"placement":placement_id,
 		"cleared":open and not route_boss_room(),"doors":doors.duplicate(true)}
+	stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
 	if native_maze != null:
 		stage_info["resolved_placement"] = native_room["placement"]
-		stage_info["broken_props"] = props.filter(func(prop):return prop.get("broken",false)).map(func(prop):return int(prop["node"]))
 	var buff_active: bool = float(player["buff_ms"])>0 or (numeric_player != null and numeric_player.effects.active.has("frenzy"))
 	var overdrive := active_effect("overdrive")
 	var overdrive_age_ms := -1.0
