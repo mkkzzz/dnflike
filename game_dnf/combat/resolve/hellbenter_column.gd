@@ -77,11 +77,14 @@ static func step(game, object: Dictionary) -> bool:
 		age = 0.0
 		object["hits"].clear()
 		game.play_sound("ASTORM_HIT_FIRE")
-		game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":200})
 		# A6A508..A6A5BB emits once at Y+1, Z+200, then scales the child animations.
 		game.bus.emit("combat.cue",{"kind":"native_particle","path":DISAPPEAR_PARTICLE,
 			"point":Vector2(object["pos"])+Vector2(0,1),"height":float(object["z"])+200.0,
 			"scale":object["size_rate"],"mirrored":int(object["facing"])<0})
+		# A6A5D0..A6A616 requests a layer-six white additive flash.
+		game.bus.emit("combat.cue",{"kind":"screen_flash","point":object["pos"],"height":object["z"],
+			"trigger_size":Vector2i(400,480),"durations":[70,0,70],"peak_alpha":130})
+		game.bus.emit("combat.cue",{"kind":"screen_shake","degree":20,"duration_ms":200})
 	elif phase == 2:
 		emit_final_explosions(game,object,age)
 		if age >= float(phases[2]["duration"]):

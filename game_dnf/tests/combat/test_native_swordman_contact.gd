@@ -2617,6 +2617,8 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(column["phase"]==1 and game.hit_count==start+20 and cues("ASTORM_HIT_FIRE").size()==fire_cues,
 		"the final explosion waits for the whole loop duration")
 	check(embers.call().is_empty(),"the final embers wait for the last phase")
+	check(game.view.effects.all(func(fx):return fx.cue_key!="native_flash_screen"),
+		"the full-screen flash waits for the final phase")
 	game.step_objects(1.0)
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	var last_loop: Array = loop_particles.call()
@@ -2624,6 +2626,7 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 		and game.last_damage["trace"]["fixed_part"]==final_amount and cues("ASTORM_HIT_FIRE").size()>fire_cues
 		and game.view.camera_x==320.0,
 		"the final explosion has independent damage, two original layers and its own sound")
+	check_hellbenter_screen_flash(object)
 	var bursts: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==particle_path)
 	var ember_visuals: Array = embers.call()
 	check(bursts.size()==1 and bursts[0]["point"]==object["pos"]+Vector2(0,1)
@@ -2667,6 +2670,30 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(not game.objects.has(object) and embers.call().size()==12 and explosions.call().size()==120
 		and not game.view._object_particle_emitters.has(object["id"]),
 		"the source Disappear2 lifetime removes the object and emitters at 400 ms, leaving the independent particles")
+
+func check_hellbenter_screen_flash(object: Dictionary) -> void:
+	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")
+	check(flashes.size()==1,"the final entry requests one screen flash")
+	if flashes.size()!=1:return
+	var flash = flashes[0]
+	check(flash.get_parent()==game.view and flash.position==Vector2.ZERO and flash.frame_scale()==Vector2(20,15)
+		and flash.data["source"].get_file()=="flashscreen.ani" and flash.frame_color().a==0.0,
+		"the native 800 by 600 ANI starts transparent in screen space above the world")
+	flash.advance(35.0)
+	check(is_equal_approx(flash.frame_color().a,65.0/255.0),"the first 70 ms ramps up linearly")
+	flash.advance(35.0)
+	check(flash.frame["frame"]==2 and is_equal_approx(flash.frame_color().a,130.0/255.0)
+		and flash.material.blend_mode==CanvasItemMaterial.BLEND_MODE_ADD,
+		"the zero-length hold crosses straight into the additive fade at alpha 130")
+	flash.advance(35.0)
+	check(is_equal_approx(flash.frame_color().a,65.0/255.0),"the second 70 ms ramps down linearly")
+	flash.advance(35.0)
+	check(flash.is_queued_for_deletion(),"the flash ends at 140 ms")
+	var cue: Dictionary = game.bus.events_of("combat.cue").filter(func(event):return event["kind"]=="screen_flash")[0]
+	var offscreen := Vector2(1000.0-game.view.world.position.x,object["pos"].y)
+	var before: int = game.view.effects.size()
+	game.bus.emit("combat.cue",cue.merged({"point":offscreen},true))
+	check(game.view.effects.size()==before,"a trigger starting exactly at the right viewport edge is culled")
 
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()

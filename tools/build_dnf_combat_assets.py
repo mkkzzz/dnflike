@@ -81,6 +81,7 @@ OUTRAGE_PARTICLE_SOURCES = {
 }
 HELLBENTER_DISAPPEAR_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterdisappear.ptl'
 HELLBENTER_LOOP_PARTICLE = 'passiveobject/character/swordman/particle/hellbenterloop.ptl'
+NATIVE_FLASH_SCREEN = 'common/commoneffect/animation/flashscreen.ani'
 HELLBENTER_LOOP_ANIMATIONS = tuple(
     f'passiveobject/character/swordman/animation/hellbenterfinish/loopparticle{index}.ani'
     for index in (1, 2)
@@ -390,6 +391,7 @@ BORROWED = ['character/swordman/effect/animation/shortswordmastery/shortattack1d
             'character/swordman/effect/animation/shortswordmastery/shortattack2dodge.ani',
             'character/swordman/effect/animation/shortswordmastery/shortweaponupperslashafter.ani']
 EFFECTS = {
+    'native_flash_screen': NATIVE_FLASH_SCREEN,
     'item_heal': 'common/commoneffect/animation/heal.ani',
     'item_fastheal': 'common/commoneffect/animation/fastheal.ani',
     'hardattack1': 'character/swordman/effect/animation/hardattack1.ani',
@@ -1792,6 +1794,7 @@ def main() -> int:
         column = runtime['moves']['hellbenter']['column']
         column_keys = [layer['effect'] for phase in column['phases'] for layer in phase['layers']]
         specs.extend(('effects', key, effects[key]) for key in [*column_keys, column['wave']])
+        specs.append(('effects', 'native_flash_screen', NATIVE_FLASH_SCREEN))
         specs.extend(('audio', key, path) for key, path in {
             'B_FIRE_EXPLOSION_READY': 'sounds/char/swordman/effect/b_fire_explosion_ready.ogg',
             'B_FIRE_EXPLOSION': 'sounds/char/swordman/effect/b_fire_explosion.ogg',

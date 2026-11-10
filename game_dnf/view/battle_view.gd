@@ -537,6 +537,7 @@ func _on_cue(event: Dictionary) -> void:
 		"sound":audio.on_cue(event)
 		"fx":_spawn_fx(event)
 		"native_particle":_spawn_native_particle(event)
+		"screen_flash":_spawn_screen_flash(event)
 		"screen_shake":
 			_shake_degree = int(event["degree"])
 			_shake_remaining_ms = float(event["duration_ms"])
@@ -556,6 +557,31 @@ func _on_cue(event: Dictionary) -> void:
 					fx.fade = float(event["opacity"])
 					fx.freeze_first_frame = true
 		"ghost":_spawn_ghost(event)
+
+func _spawn_screen_flash(event: Dictionary) -> void:
+	var center := Vector2i(_canvas(event["point"],float(event["height"]))+world.position)
+	var size: Vector2i = event["trigger_size"]
+	# The native rectangle is only an allocation gate. FlashScreen.ani draws at screen (0,0).
+	var half_width := size.x>>1
+	if (center.x+half_width < 0 or center.x-half_width >= Frame.WIDTH
+			or center.y < 0 or center.y-size.y >= Frame.HEIGHT):return
+	var bank: Dictionary = _effects["native_flash_screen"].duplicate(true)
+	var durations: Array = event["durations"]
+	var frames: Array = bank["frames"]
+	for index in durations.size():
+		frames[index]["delay_ms"] = durations[index]
+	bank["duration_ms"] = durations[0]+durations[1]+durations[2]
+	for index in [1,2]:
+		frames[index]["items"]["9"] = [255,255,255,int(event["peak_alpha"])]
+	var flash := FxView.new()
+	# Scene layer six draws above the world and below the HUD's separate CanvasLayer.
+	add_child(flash)
+	flash.z_index = 4095
+	flash.cue_key = "native_flash_screen"
+	flash.set_meta("particle_birth_pending",true)
+	flash.setup(bank,1)
+	flash.seek(0.0)
+	effects.append(flash)
 
 func _spawn_native_particle(event: Dictionary) -> void:
 	var object_emitter := int(event.get("object_emitter",-1))
