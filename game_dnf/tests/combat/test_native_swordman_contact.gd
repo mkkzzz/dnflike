@@ -5047,7 +5047,9 @@ func check_illusion_finish() -> void:
 			[7,-1,[KEY_UP],600,60,9,"illusion_wave_bottom2",70],
 			[6,1,[KEY_UP,KEY_DOWN],500,125,3,"illusion_wave_bottom1",20],
 			[7,-1,[KEY_DOWN,KEY_UP],600,60,9,"illusion_wave_bottom2",70],
-			[7,-1,[KEY_UP,KEY_DOWN],600,60,9,"illusion_wave_bottom2",70,true]]:
+			[7,-1,[KEY_UP,KEY_DOWN],600,60,9,"illusion_wave_bottom2",70,true],
+			[6,1,[KEY_UP],500,125,3,"illusion_wave_bottom1",20,false,true],
+			[7,-1,[KEY_UP,KEY_DOWN],600,60,9,"illusion_wave_bottom2",70,false,true]]:
 		spec["skills"]["shortswordmastery"] = sample[0]
 		var facing: int = sample[1]
 		start_room("","shortsword",facing,spec)
@@ -5061,9 +5063,11 @@ func check_illusion_finish() -> void:
 		check(game.player["stage"]==4,"the short sword automatically reaches the finisher")
 		game.step_objects(1000.0)
 		for key: int in sample[2]:session.submit_key(key,true)
-		if sample.size()>8:session.submit_key(KEY_DOWN,false)
+		if sample.size()>8 and sample[8]:session.submit_key(KEY_DOWN,false)
+		if sample.size()>9:game.numeric_player.effects.add("confuse",{"duration_ms":3000.0})
 		step(300.0)
 		for key: int in sample[2]:session.submit_key(key,false)
+		game.numeric_player.effects.remove("confuse")
 		var wave: Dictionary = game.objects[0]
 		var visible: Array = game.view_snapshot()["objects"]
 		check(wave["life_ms"]==sample[3] and wave["next_hit_reset"]==sample[4]
@@ -5380,7 +5384,8 @@ func check_rapid_move_slash_depth() -> void:
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rapidmoveslash"]
 	for sample: Array in [[1,KEY_DOWN,1.0,1],[-1,KEY_UP,1.25,-1],[1,KEY_UP,1.0,0],
-			[1,KEY_DOWN,1.0,1,KEY_UP],[-1,KEY_UP,1.25,-1,KEY_DOWN]]:
+			[1,KEY_DOWN,1.0,1,KEY_UP],[-1,KEY_UP,1.25,-1,KEY_DOWN],
+			[1,KEY_UP,1.0,1,0,true],[-1,KEY_DOWN,1.0,-1,KEY_UP,true],[1,KEY_UP,1.0,0,0,true]]:
 		start_room("original_27601","katana",sample[0],spec)
 		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 		game.clear_monsters()
@@ -5391,12 +5396,17 @@ func check_rapid_move_slash_depth() -> void:
 		for row: Array in game.room_map["walk_grid"]:row.fill(0)
 		press(KEY_A)
 		step(159.0/rate)
-		if sample.size()>4:session.submit_key(sample[4],true)
+		if sample.size()>4 and int(sample[4])!=0:session.submit_key(sample[4],true)
 		session.submit_key(sample[1],true)
 		check(game.player["pos"]==POINT,"Rapid Move Slash stays still while reading the ready animation")
 		if depth == 0:session.submit_key(sample[1],false)
+		if sample.size()>5:game.numeric_player.effects.add("confuse",{"duration_ms":1.0})
 		step(1.0/rate)
 		check(game.player["stage"]==1,"the ready boundary samples the depth input")
+		if sample.size()>5:
+			game.numeric_player.step(1.0)
+			check(game.active_effect("confuse").is_empty(),"confusion expires after the slash has sampled its direction")
+			game.numeric_player.values["attack_speed"] = rate
 		session.submit_key(sample[1],false)
 		var opposite := KEY_UP if sample[1] == KEY_DOWN else KEY_DOWN
 		session.submit_key(opposite,true)
@@ -5406,6 +5416,7 @@ func check_rapid_move_slash_depth() -> void:
 		step(201)
 		check(is_equal_approx(float(game.player["pos"].y),POINT.y+45*rate*depth),
 			"the original depth axis stops at 300 ms independently of the body and horizontal motion")
+		if sample.size()>5:game.player["pos"] = POINT
 		press(KEY_A)
 		step(0)
 		var next_origin: Vector2 = game.player["pos"]
@@ -5413,7 +5424,7 @@ func check_rapid_move_slash_depth() -> void:
 		step(100)
 		var next_depth := -1 if opposite == KEY_UP else 1
 		check(game.player["stage"]==3 and is_equal_approx(float(game.player["pos"].y),next_origin.y+25*rate*next_depth),
-			"the next slash re-reads depth at the end of its own ready phase")
+			"the next slash re-reads depth at the end of its own ready phase: "+str(sample))
 		session.submit_key(opposite,false)
 
 	for blocked_axis: int in 2:

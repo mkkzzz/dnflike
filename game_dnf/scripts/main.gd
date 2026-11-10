@@ -4205,9 +4205,13 @@ func damage_player(amount: float, source: Vector2) -> void:
 
 func native_skill_depth() -> int:
 	# 113CBE0 scans registered held inputs from newest to oldest.
+	var depth := 0
 	if held.get(KEY_DOWN,false):
-		return -1 if last_depth_key == KEY_UP and held.get(KEY_UP,false) else 1
-	return -1 if held.get(KEY_UP,false) else 0
+		depth = -1 if last_depth_key == KEY_UP and held.get(KEY_UP,false) else 1
+	elif held.get(KEY_UP,false):
+		depth = -1
+	# 84201D checks confusion (15), then 75BD20 swaps up and down.
+	return -depth if not active_effect("confuse").is_empty() else depth
 
 func prepare_illusion_wave(template: Dictionary) -> Dictionary:
 	var cast: Dictionary = player["illusion_cast"]
