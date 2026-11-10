@@ -1390,6 +1390,51 @@
    "mob": "monster/spirit/firehigherspirit.mob",
    "bank": "spirit_firehigherspirit",
    "name": "firehigherspirit"
+  },
+  "newmonsters_bantu__buffalomalaga_buffalomalaga": {
+   "mob": "monster/newmonsters/bantu/_buffalomalaga/buffalomalaga.mob",
+   "bank": "newmonsters_bantu__buffalomalaga_buffalomalaga",
+   "name": "buffalomalaga"
+  },
+  "newmonsters_bantu__buffalorari_buffalorari": {
+   "mob": "monster/newmonsters/bantu/_buffalorari/buffalorari.mob",
+   "bank": "newmonsters_bantu__buffalorari_buffalorari",
+   "name": "buffalorari"
+  },
+  "newmonsters_bantu__rabbitbird_rabbitbird": {
+   "mob": "monster/newmonsters/bantu/_rabbitbird/rabbitbird.mob",
+   "bank": "newmonsters_bantu__rabbitbird_rabbitbird",
+   "name": "rabbitbird"
+  },
+  "newmonsters_bantu__rabbitmedusa_rabbitmedusa": {
+   "mob": "monster/newmonsters/bantu/_rabbitmedusa/rabbitmedusa.mob",
+   "bank": "newmonsters_bantu__rabbitmedusa_rabbitmedusa",
+   "name": "rabbitmedusa"
+  },
+  "newmonsters_bantu_buffaloman_buffaloman": {
+   "mob": "monster/newmonsters/bantu/buffaloman/buffaloman.mob",
+   "bank": "newmonsters_bantu_buffaloman_buffaloman",
+   "name": "buffaloman"
+  },
+  "newmonsters_bantu_buffalowoman_buffalowoman": {
+   "mob": "monster/newmonsters/bantu/buffalowoman/buffalowoman.mob",
+   "bank": "newmonsters_bantu_buffalowoman_buffalowoman",
+   "name": "buffalowoman"
+  },
+  "newmonsters_bantu_rabbitwoman_rabbitwoman": {
+   "mob": "monster/newmonsters/bantu/rabbitwoman/rabbitwoman.mob",
+   "bank": "newmonsters_bantu_rabbitwoman_rabbitwoman",
+   "name": "rabbitwoman"
+  },
+  "newmonsters_bwanga_bwanga": {
+   "mob": "monster/newmonsters/bwanga/bwanga.mob",
+   "bank": "newmonsters_bwanga_bwanga",
+   "name": "bwanga"
+  },
+  "spirit_waterhigherspirit": {
+   "mob": "monster/spirit/waterhigherspirit.mob",
+   "bank": "spirit_waterhigherspirit",
+   "name": "waterhigherspirit"
   }
  },
  "boss_hp_lines": 3,

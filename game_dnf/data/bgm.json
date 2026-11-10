@@ -108,6 +108,10 @@
    "normal": "breeding_place",
    "boss": "breeding_place_boss"
   },
+  "bwanga": {
+   "normal": "bwanga",
+   "boss": "bwanga"
+  },
   "charnakridge": {
    "normal": "charnakridge",
    "boss": "charnakridge_boss"
@@ -374,6 +378,12 @@
    "source": "music/breeding_place_boss.ogg",
    "sha256": "526b3bd60008522019a7489caf583c184c7160b0a8b2d3bb1c3f59ea754c04cb",
    "bytes": 1151526
+  },
+  "bwanga": {
+   "file": "audio/bgm/bwanga.ogg",
+   "source": "music/bwanga.ogg",
+   "sha256": "c854dc69b5429ef3b3a282eeb896060a00ca65b88379eb440aa999ee410f5e69",
+   "bytes": 1417475
   },
   "charnakridge": {
    "file": "audio/bgm/charnakridge.ogg",

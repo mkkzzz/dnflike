@@ -2,6 +2,22 @@
  "schema": "dnf_breakable_particles/1",
  "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
  "objects": {
+  "passiveobject/actionobject/breakableobject/bwanga_totem.obj": [
+   "ptl_totem_pltcle0",
+   "ptl_totem_pltcle1",
+   "ptl_totem_pltcle2",
+   "ptl_totem_pltcle3",
+   "ptl_totem_pltcle4",
+   "ptl_totem_pltcle5"
+  ],
+  "passiveobject/actionobject/breakableobject/bwanga_totem1.obj": [
+   "ptl_totem_pltcle0",
+   "ptl_totem_pltcle1",
+   "ptl_totem_pltcle2",
+   "ptl_totem_pltcle3",
+   "ptl_totem_pltcle4",
+   "ptl_totem_pltcle5"
+  ],
   "passiveobject/mapobject/breakableobject/1stbackbonelongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",

@@ -52,6 +52,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/theboywithcoldheart.dgn',
     'dungeon/act5/ricuceiling.dgn',
     'dungeon/act5/whiteland.dgn',
+    'dungeon/act5/bwanga.dgn',
     'dungeon/act4/shallowkeep.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']

@@ -53,6 +53,43 @@ class SameStemAttackActionTest(unittest.TestCase):
             '',
         ])
 
+    def test_bwanga_action_list_is_the_source_attack_slot_table(self):
+        records = json.loads(
+            (ROOT / 'game_dnf/assets_local/content/combat_content.json').read_text(encoding='utf8')
+        )['records']
+        mob = records['monster/newmonsters/bwanga/bwanga.mob']
+        decoded = mob['decoded']
+        expected = [
+            'monster/newmonsters/bwanga/action/5bbatta_ready.act',
+            'monster/newmonsters/bwanga/action/5bbatta_loop.act',
+            'monster/newmonsters/bwanga/action/combo1.act',
+            'monster/newmonsters/bwanga/action/combo2.act',
+            'monster/newmonsters/bwanga/action/combo3.act',
+            'monster/newmonsters/bwanga/action/combo4_hardattack.act',
+            'monster/newmonsters/bwanga/action/jumpandcrash.act',
+            'monster/newmonsters/bwanga/action/casting_superarmor.act',
+            'monster/newmonsters/bwanga/action/superarmorend.act',
+            'monster/newmonsters/bwanga/action/teleport.act',
+            'monster/newmonsters/bwanga/action/overthestar_up.act',
+            'monster/newmonsters/bwanga/action/overthestar_shoot.act',
+        ]
+        self.assertEqual(decoded['action_list'], expected)
+        self.assertEqual(decoded['attack_actions'], expected)
+        self.assertEqual(len(decoded['attack_infos']), len(expected))
+        self.assertEqual(len(decoded['cooltimes']), len(expected))
+        self.assertEqual(mob['evidence']['attack_actions'],
+                         'E-PARSE: [action list] aligned 1:1 with [attack info] and [cooltime]')
+        icewave = records['monster/newmonsters/golem/icewavegolem/icewavegolem.mob']['decoded']
+        expected_icewave = [
+            'monster/newmonsters/golem/icewavegolem/action/attack.act',
+            'monster/newmonsters/golem/icewavegolem/action/attack2.act',
+        ]
+        self.assertEqual(icewave['action_list'], expected_icewave)
+        self.assertEqual(icewave['attack_actions'], expected_icewave)
+        wolf = records['monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob']['decoded']
+        self.assertEqual(len(wolf['action_list']), 12)
+        self.assertEqual(wolf['attack_actions'], wolf['action_list'])
+
 
 class NativeAttackEmissionTest(unittest.TestCase):
     def setUp(self):

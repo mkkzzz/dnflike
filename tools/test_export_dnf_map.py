@@ -209,6 +209,26 @@ class LibraryExport(unittest.TestCase):
             self.assertEqual(len(boss_rows), 1)
         self.assertEqual(dungeon['rooms']['map/whiteland/normal1(0,1).map']['greed_pairs'], [[12, 12]])
 
+    def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '87a37cd9a924747b4a7ab422e4ac4788a26c9443716c5acafad572f96cac6021')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['size'], [10, 1])
+        self.assertEqual(dungeon['start_map_raw'], [0, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [9, 0])
+        self.assertEqual(len(dungeon['rooms']), 15)
+        self.assertEqual(len(dungeon['placements']), 116)
+        self.assertEqual(len(export['images']), 84)
+        self.assertEqual(dungeon['rooms']['map/bwanga/(0,0)bwangastart.map']['greed_pairs'], [[1, 1]])
+        self.assertEqual(dungeon['rooms']['map/bwanga/(1,0)bwanga.map']['greed_pairs'], [[5, 5], [4, 4]])
+        self.assertEqual(dungeon['rooms']['map/bwanga/(1,0)maze0_bwanga.map']['map_id'], 16020)
+        self.assertEqual(dungeon['rooms']['map/bwanga/(8,0)maze4_bwanga.map']['map_id'], 16024)
+        boss_specs = [span['values'][2][2] for span in dungeon['raw']
+                      if span['tag'] == '[boss map specification]']
+        self.assertEqual(boss_specs, [16019, 16020, 16021, 16022, 16023, 16024, 16019])
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

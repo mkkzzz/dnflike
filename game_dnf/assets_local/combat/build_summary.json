@@ -79,6 +79,7 @@
   "dendroid_rodinglo",
   "spirit_waterspirit",
   "spirit_firespirit",
+  "spirit_waterhigherspirit",
   "spirit_firehigherspirit",
   "soldier_expeller",
   "soldier_axeexpeller",
@@ -144,6 +145,10 @@
   "hunter_rollinghunter",
   "bantu_tower_bantuelite",
   "newmonsters_haze_tretri_tretri",
+  "newmonsters_bantu__rabbitbird_rabbitbird",
+  "newmonsters_bantu__rabbitmedusa_rabbitmedusa",
+  "newmonsters_bantu__buffalomalaga_buffalomalaga",
+  "newmonsters_bantu__buffalorari_buffalorari",
   "newmonsters_snowman_louis_louis",
   "newmonsters_gbl_breeding_flare_spawn_flare_spawn",
   "newmonsters_gbl_breeding_dendroid_elder_dendroid_elder",
@@ -165,16 +170,20 @@
   "newmonsters_haze_enjosipho_enjosipho_quest",
   "newmonsters_spider_slotorblind_slotorblind",
   "newmonsters_bantu_rabbitman_rabbitman",
+  "newmonsters_bantu_rabbitwoman_rabbitwoman",
   "newmonsters_snowman_snowman_snowman",
+  "newmonsters_bantu_buffaloman_buffaloman",
   "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
   "newmonsters_gbl_breeding_flare_worm_flare_worm",
   "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
   "dendroid_dendroid_breeding",
   "newmonsters_gbl_breeding_dendroid_disguise_dendroid_disguise",
   "newmonsters_gbl_breeding_woody_plant_woody_plant",
+  "newmonsters_bantu_buffalowoman_buffalowoman",
   "newmonsters_golem_icegolem_icegolem",
   "newmonsters_golem_ricu_ricu",
   "newmonsters_snowman_sasquatch_sasquatch",
+  "newmonsters_bwanga_bwanga",
   "soceress_vinoshu_quest",
   "newmonsters_haze_death_squad_death_squad",
   "newmonsters_gbl_goddess_temple_astray_alsor_astray_alsor",
@@ -242,7 +251,7 @@
  "effects": 634,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 39,
+ "unresolved": 45,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -442,6 +451,36 @@
   {
    "kind": "monster_no_clips",
    "monster": "monster/newmonsters/haze/death_squad/death_squad.mob"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle0.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle0.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle1.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle1.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle2.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle2.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle3.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle3.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle4.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle4.ani'"
+  },
+  {
+   "kind": "particle_animation",
+   "path": "passiveobject/actionobject/breakableobject/animation/totem_pltcle5.ani",
+   "error": "'Missing parsed ANI: passiveobject/actionobject/breakableobject/animation/totem_pltcle5.ani'"
   },
   {
    "kind": "audio",

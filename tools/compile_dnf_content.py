@@ -27,7 +27,7 @@ from dnf_particle_fields import decode_particle_fields
 
 OUT = ROOT / 'game_dnf/assets_local/content'
 SCHEMA = 'dnf_combat_content/1'
-COMPILER_VERSION = 6
+COMPILER_VERSION = 7
 HANDLED_FILE = ROOT / 'game_dnf/combat/fields/handled.json'
 
 # These bindings come from native state handlers, outside the MOB field tree.
@@ -388,6 +388,8 @@ MOB_FIELDS = {
     '[down action]': ('down_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
     '[overturn action]': ('overturn_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
     '[attack action]': ('attack_actions', 'paths', 'E-PARSE', 'Aligned with [attack info] and [cooltime]'),
+    '[action list]': ('action_list', 'paths', 'E-PARSE',
+                      'Newmonsters indexed action table aligned with [attack info] and [cooltime]'),
     '[last action]': ('last_actions', 'paths', 'E-PARSE', 'Newmonsters death action'),
     '[jump action]': ('jump_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
     '[dash action]': ('dash_actions', 'paths', 'E-PARSE', 'Newmonsters action file'),
@@ -1336,6 +1338,16 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
             'damage_actions_2', 'down_actions', 'overturn_actions', 'last_actions',
             'jump_actions', 'dash_actions',
         )
+        if (not md.get('attack_actions') and md.get('action_list')
+                and md.get('attack_infos')
+                and len(md['action_list']) == len(md['attack_infos'])):
+            # Newmonsters carry this table under [action list]. Exact length
+            # alignment with [attack info] and [cooltime] proves the slot map.
+            md['attack_actions'] = list(md['action_list'])
+            md['attack_action_source'] = (
+                'E-PARSE: [action list] aligned 1:1 with [attack info] and [cooltime]'
+            )
+            mob['evidence']['attack_actions'] = md['attack_action_source']
         has_new_action_layout = '/newmonsters/' in p or any(md.get(key) for key in base_action_fields)
         if (not md.get('attack_actions') and not md.get('attack_motions')
                 and has_new_action_layout and md.get('attack_infos')):

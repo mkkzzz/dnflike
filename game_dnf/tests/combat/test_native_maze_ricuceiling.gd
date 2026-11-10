@@ -211,7 +211,7 @@ func run() -> void:
 		"monster/bantu/tower_bantuelite.mob": ["bantu_tower_bantuelite", 4, false],
 		"monster/goblin/flagseagab.mob": ["goblin_flagseagab", 0, false],
 		"monster/goblin/seagab.mob": ["goblin_ice", 0, true],
-		"monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob": ["newmonsters_bantu_wolfpatriarch_turmanbash", 10, false],
+		"monster/newmonsters/bantu/wolfpatriarch/turmanbash.mob": ["newmonsters_bantu_wolfpatriarch_turmanbash", 12, false],
 		"monster/newmonsters/goblin/throwgoblin/goblinthrower.mob": ["newmonsters_goblin_throwgoblin_goblinthrower", 3, false],
 		"monster/newmonsters/golem/icegolem/icegolem.mob": ["newmonsters_golem_icegolem_icegolem", 1, false],
 		"monster/newmonsters/golem/icewavegolem/icewavegolem.mob": ["newmonsters_golem_icewavegolem_icewavegolem", 2, false],

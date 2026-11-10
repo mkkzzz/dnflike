@@ -105,12 +105,12 @@ class DungeonMusicTest(unittest.TestCase):
             'M_OUTER_TEMPLE': 'music/outer_temple.ogg',
             'M_BEHEMOTH_BOSS_01_1': 'music/behemoth_b01_1.ogg',
         }
-        self.assertEqual(source_dungeon_tracks(export, route, music), {
+        self.assertEqual(source_dungeon_tracks(export, route, music, {}), {
             'normal': 'music/outer_temple.ogg', 'boss': 'music/behemoth_b01_1.ogg',
         })
         source_rooms['boss.map']['sound'] = ['R_AMB_WIND']
         with self.assertRaisesRegex(ValueError, 'boss.map.*audio.xml'):
-            source_dungeon_tracks(export, route, music)
+            source_dungeon_tracks(export, route, music, {})
 
 
 class DungeonSpecifiedMapTest(unittest.TestCase):
