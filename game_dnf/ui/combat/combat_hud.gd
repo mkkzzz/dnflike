@@ -96,7 +96,7 @@ func number(style: String, value: int, point: Vector2, alpha := 1.0, align := 0)
 	for c in text:x += glyph(style+"_"+c,Vector2(x,point.y),alpha)-2
 	return width
 
-func thirst_damage_number(value: int, point: Vector2, alpha: float) -> void:
+func native_direct_damage_number(value: int, point: Vector2, alpha: float) -> void:
 	var text := str(value)
 	var width := 0.0
 	for digit in text:width += glyph_width("damage_"+digit)-(5.0 if digit=="1" else 6.0)

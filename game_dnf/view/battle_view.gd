@@ -774,9 +774,9 @@ func _spawn_ghost(event: Dictionary) -> void:
 func _on_damage(event: Dictionary) -> void:
 	if not event.get("show_number",true):return
 	var point: Vector3 = event["point"]
-	if event.get("id","") == "bloody_rave_thirst":
+	if event.get("native_direct",false):
 		numbers.append({"pos":Vector2(point.x,point.y+Frame.MAP_DY-point.z),"value":int(event["amount"]),
-			"ms":0.0,"style":"thirst_damage","end_ms":1000.0})
+			"ms":0.0,"style":"native_direct_damage","end_ms":1000.0})
 		return
 	var style := "damage_crit" if event.get("critical",false) else "damage"
 	if String(event.get("victim","monster")) == "player":

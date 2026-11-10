@@ -2780,7 +2780,7 @@ func check_hellbenter_column_body_modes() -> void:
 		frame["items"] = original_items.merged({"13":2},true)
 		game.step_objects(3000.0 if phase=="final" else 1680.0)
 		check(target["hp"]==hp and not object["hits"].has(target["id"])
-			and not target.has("hellbenter_column_mark") and not target.has("hellbenter_column_wound"),
+			and not target.has("hellbenter_column_mark") and not target.has("hellbenter_column_wounds"),
 			"the column's %s hit skips an invulnerable frame before applying any contact effects"%phase)
 		frame["items"] = original_items.merged({"13":1},true)
 		target["invuln_ms"] = 1.0
@@ -2791,7 +2791,7 @@ func check_hellbenter_column_body_modes() -> void:
 		game.step_objects(0.0)
 		frame["items"] = original_items
 		check(target["hp"]<hp and object["hits"].has(target["id"])
-			and target.has("hellbenter_column_mark") and target.has("hellbenter_column_wound")
+			and target.has("hellbenter_column_mark") and target.has("hellbenter_column_wounds")
 			and target["state"]=="idle" and target["clock"]==19.0 and target["vz"]==0.0,
 			"the column's %s hit damages super armor outside its control radius (offset=%s, hp=%s, state=%s, age=%s)" % [
 				phase,target["pos"]-object["pos"],target["hp"],target["state"],object["clock"]])
@@ -2871,9 +2871,19 @@ func check_hellbenter_special_wounds() -> void:
 		"equipped Hellbenter and Frenzy X install type 0x104 independently of ordinary bleed")
 	if mark.is_empty():return
 	var hp: float = target["hp"]
+	target["z"] = 12.0
 	game.update_enemy(target,1.0)
-	check(target["hp"]==hp-33 and mark["next"]==651 and cues("hellbenter_frenzy_wound").size()==1,
+	var frenzy_cues := cues("hellbenter_frenzy_wound")
+	check(target["hp"]==hp-33 and mark["next"]==651 and frenzy_cues.size()==1,
 		"the first type 0x104 update writes raw HP and emits its own original ANI")
+	var anchor := Vector3(int(target["pos"].x),int(target["pos"].y)+1,95)
+	var numbers: Array = game.bus.events_of("combat.damage_number")
+	check(numbers.size()==1 and numbers[0]["point"]==anchor and numbers[0]["amount"]==33
+		and game.view.numbers.back()["pos"]==Vector2(anchor.x,anchor.y+Frame.MAP_DY-anchor.z)
+		and game.view.numbers.back()["end_ms"]==1000.0,
+		"special wounds float the nominal packet at the standing sprite height plus 15, including airborne Z")
+	check(frenzy_cues.size()==1 and frenzy_cues[0]["offset_y"]==-43 and frenzy_cues[0]["depth_offset"]==1,
+		"the attached burst sits at twice the truncated third of the original 68-pixel height")
 	var object := HellbenterColumn.spawn(game,game.move_def("hellbenter"),40)
 	var center: Vector2 = object["pos"]
 	move_target(target,center)
@@ -2887,17 +2897,25 @@ func check_hellbenter_special_wounds() -> void:
 		enemy["numeric"].values["hp_max"] = enemy["hp"]
 	game.numeric_player.remove_effect("hellbenter")
 	game.step_objects(1680.0)
-	var column_mark: Dictionary = target.get("hellbenter_column_wound",{})
+	var wounds: Array = target.get("hellbenter_column_wounds",[])
+	var column_mark: Dictionary = {} if wounds.is_empty() else wounds[0]
 	check(column_mark.get("duration")==3000 and column_mark.get("interval")==1300 and column_mark.get("amount")==2014
-		and not other.has("hellbenter_column_wound") and not ordinary.has("hellbenter_column_wound"),
+		and not other.has("hellbenter_column_wounds") and not ordinary.has("hellbenter_column_wounds"),
 		"column contact consumes the independent packet only for a mark from its owner")
 	if column_mark.is_empty():return
 	hp = target["hp"]
 	game.update_enemy(target,0.0)
 	check(target["hp"]==hp-2014,"the first column wound poll writes its unscaled attack packet")
-	game.update_enemy(target,1299.0)
+	game.update_enemy(target,155.0)
+	move_target(target,center)
+	game.step_objects(155.0)
+	hp = target["hp"]
+	game.update_enemy(target,0.0)
+	check(wounds.size()==2 and column_mark["age"]==155.0 and column_mark["next"]==1300 and target["hp"]==hp-2014,
+		"the second column hit starts a new due timer and preserves the first wound's age and deadline")
+	game.update_enemy(target,1144.0)
 	check(cues("hellbenter_column_wound").size()==1,
-		"the column wound ticks on its first poll but waits through 1299 ms")
+		"the second wound deals damage without another burst and the first waits through 1299 ms")
 	game.update_enemy(target,1.0)
 	var sprites: Array = game.view.effects.filter(func(fx):return fx.cue_key=="hellbenter_column_wound")
 	check(target["hp"]==hp-33-2014*2 and sprites.size()==2 and sprites.all(func(fx):
@@ -2909,11 +2927,18 @@ func check_hellbenter_special_wounds() -> void:
 		target["pos"] += Vector2(21,0)
 		game.view.present(game.view_snapshot(),0.0,0.0)
 		check(sprites[0].position==before+Vector2(21,0),"the wound animation tracks the moving target")
-	game.update_enemy(target,1699.0)
-	check(target.has("hellbenter_column_wound"),"the column wound remains at age 2999")
+	game.update_enemy(target,154.0)
+	hp = target["hp"]
 	game.update_enemy(target,1.0)
-	check(not target.has("hellbenter_column_wound") and target.has("hellbenter_frenzy_wound"),
-		"the 3000 ms wound expires independently of the 50000 ms marker")
+	check(target["hp"]==hp-2014 and cues("hellbenter_column_wound").size()==2,
+		"the second wound ticks again at its own 1300 ms while the first still owns the burst")
+	game.update_enemy(target,1544.0)
+	check(wounds.size()==2,"both column wounds remain when the first reaches age 2999")
+	game.update_enemy(target,1.0)
+	check(wounds.size()==1 and wounds[0]["age"]==2845.0,"the first wound expires at 3000 without removing the second")
+	game.update_enemy(target,155.0)
+	check(not target.has("hellbenter_column_wounds") and target.has("hellbenter_frenzy_wound"),
+		"the last wound expires independently of the 50000 ms marker")
 
 func check_hellbenter_screen_flash(object: Dictionary) -> void:
 	var flashes: Array = game.view.effects.filter(func(fx):return fx.cue_key=="native_flash_screen")

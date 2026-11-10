@@ -19,22 +19,41 @@ static func mark_frenzy_contact(target: Dictionary, owner: int, skill: Dictionar
 static func mark_column_contact(target: Dictionary, owner: int, wound: Dictionary) -> void:
 	# A6ABD2..A6AC55 requires an active type 0x104 attached to this target by this owner.
 	if int(target.get("hellbenter_frenzy_wound",{}).get("owner",-1)) != owner:return
-	target["hellbenter_column_wound"] = wound.merged({"age":0.0,"next":0})
+	# 92AF01 registers a zero limit for 0x105: each contact attaches a new timer.
+	var wounds: Array = target.get_or_add("hellbenter_column_wounds",[])
+	wounds.append(wound.merged({"owner":owner,"age":0.0,"next":0}))
 
 static func step_wounds(target: Dictionary, ms: float, events: Array) -> void:
-	for key: String in ["hellbenter_frenzy_wound","hellbenter_column_wound"]:
-		if not target.has(key):continue
-		var wound: Dictionary = target[key]
-		wound["age"] += ms
-		var age := int(wound["age"])
-		if age >= int(wound["duration"]):
-			target.erase(key)
-			continue
-		if age < int(wound["next"]):continue
+	if target.has("hellbenter_frenzy_wound"):
+		if not _step_wound(target["hellbenter_frenzy_wound"],ms,"hellbenter_frenzy_wound",true,events):
+			target.erase("hellbenter_frenzy_wound")
+	if not target.has("hellbenter_column_wounds"):return
+	var wounds: Array = target["hellbenter_column_wounds"]
+	var active_count := 0
+	var owners: Dictionary = {}
+	for index in wounds.size():
+		var wound: Dictionary = wounds[index]
+		var owner: int = wound["owner"]
+		# 998400..9984BD gives the attached ANI to the first active 0x105 for this owner.
+		if _step_wound(wound,ms,"hellbenter_column_wound",not owners.has(owner),events):
+			if active_count != index:wounds[active_count] = wound
+			active_count += 1
+			owners[owner] = true
+	if active_count == 0:target.erase("hellbenter_column_wounds")
+	elif active_count < wounds.size():wounds.resize(active_count)
+
+static func _step_wound(wound: Dictionary, ms: float, key: String, show_fx: bool, events: Array) -> bool:
+	wound["age"] += ms
+	var age := int(wound["age"])
+	if age >= int(wound["duration"]):return false
+	if age >= int(wound["next"]):
 		# 997A10 starts the interval timer due, then 1124937 reschedules from the current poll.
 		wound["next"] = age+int(wound["interval"])
-		events.append({"type":"direct_damage","id":key,"damage":wound["amount"],"damage_type":"physical",
-			"show_number":true,"native_fx":key})
+		var event := {"type":"direct_damage","id":key,"damage":wound["amount"],"damage_type":"physical",
+			"show_number":false,"native_number":true}
+		if show_fx:event["native_fx"] = key
+		events.append(event)
+	return true
 
 func clear() -> void:
 	marks.clear()
@@ -95,7 +114,7 @@ func step(game, ms: float) -> void:
 func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:
 	# 99C4A0 reads the target's display height through +0x11C, then halves it.
 	var point := Vector3i(int(enemy["pos"].x),int(enemy["pos"].y),
-		int(enemy["z"])+int(_target_display_height(game,enemy)*0.5))
+		int(enemy["z"])+int(target_display_height(game,enemy)*0.5))
 	# Keep cosmetic draws separate from damage and status rolls.
 	var rng := DetRng.new(hash([game.rng.seed_value,enemy["id"],next_orb_id]))
 	# CAC386 and CAC3AA use a modulo-100 sample with 99 as the interpolation term.
@@ -108,7 +127,7 @@ func _spawn(game, enemy: Dictionary, destination: Vector3i) -> void:
 		"origin":point,"bend":Vector2i(bend_x,bend_y),"age":0.0,"point":head,"history":[head]})
 	next_orb_id += 1
 
-static func _target_display_height(game, enemy: Dictionary) -> int:
+static func target_display_height(game, enemy: Dictionary) -> int:
 	var bank: Dictionary = game.table.assets["monsters"].get(enemy["def"]["bank"],{})
 	if not bank.has("number_height"):
 		return 2*(int(game.enemy_mid_height_point(enemy).z)-int(enemy["z"]))
@@ -169,7 +188,7 @@ func append_view(game, out: Array) -> void:
 		var id := int(enemy["id"])
 		if not marks.has(id):continue
 		var age := float(marks[id]["age"])
-		var height := _target_display_height(game,enemy)
+		var height := target_display_height(game,enemy)
 		var ground_z := int(enemy["z"])
 		var mark: Array = appearance["target_mark"]
 		var layer := {"pos":Vector2(Vector2i(enemy["pos"])),"z":ground_z+height,"clock":age,

@@ -326,13 +326,18 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 		if not direct:
 			var resolved := Numbers.Damage.resolve({"independent_attack":100,"level":numeric_monster_level},actor.values,{"percent":0,"fixed":event["damage"],"damage_type":event["damage_type"]},[0.0,1.0],Numbers.shared_config()["formula"])
 			amount = int(resolved["amount"])
-		if event.has("native_fx"):
-			var half_height := int(enemy_mid_height_point(body).z)-int(body["z"])
-			var height := 2*int(2.0*half_height/3.0)
-			bus.emit("combat.cue",{"kind":"fx","key":event["native_fx"],"point":body["pos"],
-				"height":body["z"],"facing":body["facing"],"offset_y":1-height,"depth_offset":1,
-				"follow":body["id"],"fresh":true})
 		body["hp"] = maxf(0,float(body["hp"])-amount)
+		if event.get("native_number",false):
+			var height := HellbenterBlood.target_display_height(self,body)
+			# 998249..99828A uses the same number renderer as Bloody Rave's Thirst pulse.
+			var number_point := Vector3(Vector3i(point))+Vector3(0,1,height+15)
+			bus.emit("combat.damage_number",{"target":body["id"],"amount":amount,"id":event["id"],
+				"victim":victim_kind(body),"point":number_point,"native_direct":true})
+			if event.has("native_fx"):
+				var burst_height := 2*int(height/3.0)
+				bus.emit("combat.cue",{"kind":"fx","key":event["native_fx"],"point":body["pos"],
+					"height":body["z"],"facing":body["facing"],"offset_y":1-burst_height,"depth_offset":1,
+					"follow":body["id"],"fresh":true})
 		bus.emit("combat.damage",{"target":body["id"],"amount":amount,"critical":false,"category":event["damage_type"],
 			"victim":victim_kind(body),"reaction":"none","point":point,"show_number":event.get("show_number",not direct)})
 		if body["id"]==PLAYER_ID:
@@ -1989,7 +1994,7 @@ func step_bloody_rave_thirst(phase: Dictionary, clock: int) -> void:
 		var bank: Dictionary = table.assets["monsters"].get(enemy["def"]["bank"],{})
 		var number_point := Vector3(Vector3i(point))+Vector3(0,1,int(bank.get("number_height",50))+15)
 		bus.emit("combat.damage_number",{"target":enemy["id"],"amount":amount,"id":"bloody_rave_thirst",
-			"victim":"monster","point":number_point})
+			"victim":"monster","point":number_point,"native_direct":true})
 
 func bloody_rave_thirst_pulse() -> Dictionary:
 	var rank := int(skill_levels.get("sacrifice",0))
