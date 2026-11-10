@@ -3346,8 +3346,11 @@ func check_hundred_sword_ready() -> void:
 	var finish_layers := func():
 		return game.view.effects.filter(func(fx):return fx.follow==game.player["id"]).map(
 			func(fx):return String(fx.data["source"]).get_file())
+	var finish_trails := func():
+		return game.view.object_views.keys().filter(func(id):return String(id).begins_with("hundred_sword:finish_tail:"))
 	step(559.0)
-	check(finish_layers.call().is_empty() and game.player["facing"]==-1 and game.player["clock"]==559.0,
+	check(finish_layers.call().is_empty() and finish_trails.call().is_empty()
+		and game.player["facing"]==-1 and game.player["clock"]==559.0,
 		"the finish windup restores cast facing and holds its fixed clock without an early flash")
 	step(1.0)
 	check(first["hp"]<5000.0 and late["hp"]==5000.0,
@@ -3364,10 +3367,32 @@ func check_hundred_sword_ready() -> void:
 	check(not drawn.is_empty() and drawn.all(func(fx):return String(fx.data["source"]).get_file() in [
 		"finishparticle1.ani","finishparticle2.ani"]),
 		"the finish burst renders instances of the two authored particle animations")
-	step(709.0)
+	for sample in 12:
+		step(10.0)
+	var heads := [Vector2i(-35,378),Vector2i(-31,388),Vector2i(-55,349),Vector2i(-89,338),
+		Vector2i(-50,333),Vector2i(-42,267),Vector2i(-66,162)]
+	check(finish_trails.call().size()==7*24,"the finish renders seven tracks of twenty-four trail layers")
+	var finish_objects: Array = game.view_snapshot()["objects"]
+	for track in heads.size():
+		var prefix := "hundred_sword:finish_tail:%d:"%track
+		var trail := finish_objects.filter(func(layer):return String(layer["id"]).begins_with(prefix))
+		check(trail.size()==24 and trail[0]["pos"]==Vector2(heads[track].x,POINT.y)
+			and trail[0]["z"]==heads[track].y and trail[0]["facing"]==-1,
+			"finish trail %d reaches the original left-facing X and Z"%track)
+	for group in 4:
+		var layer = game.view.object_views.get("hundred_sword:finish_tail:0:%d:-1"%(group*6))
+		check(layer!=null and String(layer.data["source"]).ends_with("finishtail%d.ani"%(group+1))
+			and layer.z_index==int(POINT.y)-1,"finish trail group %d uses its original art behind the body"%group)
+	var first_finish_layer = game.view.object_views.get("hundred_sword:finish_tail:0:0:-1")
+	var last_finish_layer = game.view.object_views.get("hundred_sword:finish_tail:0:23:-1")
+	check(first_finish_layer!=null and last_finish_layer!=null and first_finish_layer.fade==1.0
+		and is_equal_approx(last_finish_layer.fade,100.0/255.0),
+		"the finish trail fades from original alpha 255 to 100")
+	step(589.0)
 	check(game.player["action"]=="hundredsword","the fixed finish recovery stays active through 1269 ms")
 	step(1.0)
-	check(game.player["action"]=="" and finish_layers.call().is_empty(),"the finish ends at 1270 ms and clears attached layers")
+	check(game.player["action"]=="" and finish_layers.call().is_empty() and finish_trails.call().is_empty(),
+		"the finish ends at 1270 ms and clears attached layers and trails")
 
 func check_hundred_sword_automatic() -> void:
 	var profile := ProfileSession.new()

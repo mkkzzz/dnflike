@@ -68,6 +68,10 @@
    "skillfx_finishflash_7520151b": "character/swordman/effect/animation/hundredsword/finishflash.ani",
    "skillfx_finishfloor_d80f99af": "character/swordman/effect/animation/hundredsword/finishfloor.ani",
    "skillfx_finishslash_c1fd1cc2": "character/swordman/effect/animation/hundredsword/finishslash.ani",
+   "skillfx_finishtail1_b8a582fe": "character/swordman/effect/animation/hundredsword/finishtail1.ani",
+   "skillfx_finishtail2_4d04c2a8": "character/swordman/effect/animation/hundredsword/finishtail2.ani",
+   "skillfx_finishtail3_f742f328": "character/swordman/effect/animation/hundredsword/finishtail3.ani",
+   "skillfx_finishtail4_504dcdf2": "character/swordman/effect/animation/hundredsword/finishtail4.ani",
    "skillfx_fire_back_d7808a4c": "passiveobject/character/swordman/animation/firewavebig/fire-back.ani",
    "skillfx_firewavebig_sword_effect_edc95164": "character/swordman/effect/animation/firewavebig-sword-effect.ani",
    "skillfx_floor_blood_e2d7d673": "passiveobject/character/swordman/animation/outragebreak/floor_blood.ani",
@@ -5437,7 +5441,7 @@
    "fidelity_pending": [
     "sword_formation_pulls_and_repeat_contacts",
     "travel_slash_effects",
-    "finish_trails_and_camera",
+    "finish_camera",
     "rank_bonuses",
     "original_command"
    ],
@@ -5447,6 +5451,10 @@
     "disappear_ms": 300.0,
     "distance": 150,
     "effects": {
+     "finishtail1": "skillfx_finishtail1_b8a582fe",
+     "finishtail2": "skillfx_finishtail2_4d04c2a8",
+     "finishtail3": "skillfx_finishtail3_f742f328",
+     "finishtail4": "skillfx_finishtail4_504dcdf2",
      "light1": "skillfx_light1_b5a8fc47",
      "light2": "skillfx_light2_8cddc716",
      "light3": "skillfx_light3_739de2be",
@@ -5460,6 +5468,43 @@
      "swordlandglow1": "skillfx_swordlandglow1_45a764c3",
      "swordlandglow2": "skillfx_swordlandglow2_39ce5d91"
     },
+    "finish_trails": [
+     [
+      302,
+      12,
+      20
+     ],
+     [
+      267,
+      35,
+      25
+     ],
+     [
+      232,
+      30,
+      35
+     ],
+     [
+      214,
+      63,
+      45
+     ],
+     [
+      152,
+      83,
+      50
+     ],
+     [
+      105,
+      72,
+      60
+     ],
+     [
+      82,
+      95,
+      80
+     ]
+    ],
     "order": [
      13,
      6,

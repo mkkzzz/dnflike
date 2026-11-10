@@ -1151,6 +1151,8 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var preparing := int(player["stage"]) == 0
 		if cast["formation"].advance(ms,clock if preparing else -1.0):play_sound("W_GET_SPIRITS")
 		if preparing:step_hundred_sword_approach(cast,m,native_phase,clock)
+		if native_phase.get("hundred_sword_finish",false) and event_clock >= float(m["finish_impact_ms"]):
+			cast["formation"].advance_finish(player["pos"],float(player["z"]),int(event_clock-float(m["finish_impact_ms"])))
 	action_cues(stage,old_event_clock,event_clock)
 	if m.get("native_state","") == "bloody_rave":
 		if int(player["stage"]) == 0:
