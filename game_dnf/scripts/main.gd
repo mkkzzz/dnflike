@@ -5034,6 +5034,11 @@ func build_props(room: Dictionary) -> Array:
 				# Trigger OBJ files can carry an ATK used as a behaviour signal rather
 				# than a contact damage packet (GravityChanger has only [stuck]).
 				native_object_gaps[path] = ["native_object_trigger"]
+			elif item.get("source_tag") == "[special passive object]":
+				var raw: Array = array_of(item.get("raw"))
+				var count := int(raw[4]) if raw.size() >= 5 else -1
+				native_object_gaps[path] = ["opaque_special_object" if raw.size() != 5+6*count
+					else "native_special_object"]
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
 		var breakable := path.contains("breakableobject/")

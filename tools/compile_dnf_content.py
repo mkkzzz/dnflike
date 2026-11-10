@@ -1299,11 +1299,16 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
             for rel in catalog_motions(p):
                 add(rel, 'ani', p)
         throw = md.get('throw_attack') or {}
-        if throw.get('passive_object_filename'):
-            name = str(throw['passive_object_filename'])
-            # Some mobs write archive-root paths here; prefer the script-relative one when it exists.
-            relative = resolve(p, name)
-            add(relative if lib.exists(relative) else name.replace('\\', '/').lower(), 'ptl', p)
+        filenames = throw.get('passive_object_filename')
+        if filenames:
+            if not isinstance(filenames, list):
+                filenames = [filenames]
+            for name in filenames:
+                if not isinstance(name, str) or not name:
+                    continue
+                # Some mobs write archive-root paths here; prefer the script-relative one when it exists.
+                relative = resolve(p, name)
+                add(relative if lib.exists(relative) else name.replace('\\', '/').lower(), 'ptl', p)
         if throw.get('passive_object_index') is not None:
             obj_rel = passive_objects.get(int(throw['passive_object_index']))
             if obj_rel:

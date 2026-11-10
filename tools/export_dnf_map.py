@@ -40,6 +40,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/jungle.dgn',
     'dungeon/act3/darkhell.dgn',
     'dungeon/act3/whitenight.dgn',
+    'dungeon/act3/bloodhell.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
 DEFAULT_OUTPUT = ROOT / 'game_dnf/assets_local/native_maps'
@@ -113,6 +114,19 @@ def special_records(values: list, path: str, diags: list) -> list[list]:
     while i < len(values):
         head = values[i:i + 5]
         count = head[4] if len(head) == 5 else None
+        if len(head) == 5 and i + 5 < len(values) and values[i + 5] == '[hellparty]':
+            closing = i + 6
+            while closing < len(values) and values[closing] != '[/hellparty]':
+                closing += 1
+            if closing >= len(values):
+                diags.append(diag('error', 'special_object_layout', path,
+                                  f'unclosed [hellparty] block at value {i}; rest kept raw only'))
+                break
+            diags.append(diag('warning', 'opaque_special_object', path,
+                              '[hellparty] block preserved raw; behaviour unsupported'))
+            records.append(values[i:closing + 1])
+            i = closing + 1
+            continue
         end = i + 5 + 6 * count if isinstance(count, int) and count >= 0 else None
         if end is None or end > len(values) or any(not isinstance(values[j], str) for j in range(i + 5, end, 6)):
             diags.append(diag('error', 'special_object_layout', path, f'cannot split at value {i}; rest kept raw only'))

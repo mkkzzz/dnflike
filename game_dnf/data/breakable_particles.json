@@ -351,6 +351,16 @@
    "ptl_treasurepotparticle5",
    "ptl_treasurepotparticle6"
   ],
+  "passiveobject/mapobject/breakableobject/urn1.obj": [
+   "ptl_urnparticle1",
+   "ptl_urnparticle2",
+   "ptl_urnparticle3"
+  ],
+  "passiveobject/mapobject/breakableobject/urn2.obj": [
+   "ptl_urnparticle1",
+   "ptl_urnparticle2",
+   "ptl_urnparticle3"
+  ],
   "passiveobject/mapobject/breakableobject/whitenightlongchair.obj": [
    "ptl_longchairparticle1",
    "ptl_longchairparticle2",

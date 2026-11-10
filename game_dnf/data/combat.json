@@ -990,6 +990,36 @@
    "mob": "monster/zepplin/zepplinmachinegun.mob",
    "bank": "zepplin_zepplinmachinegun",
    "name": "zepplinmachinegun"
+  },
+  "zealotrebirth_rebirthbrother": {
+   "mob": "monster/zealotrebirth/rebirthbrother.mob",
+   "bank": "zealotrebirth_rebirthbrother",
+   "name": "rebirthbrother"
+  },
+  "zealotrebirth_rebirthgbl": {
+   "mob": "monster/zealotrebirth/rebirthgbl.mob",
+   "bank": "zealotrebirth_rebirthgbl",
+   "name": "rebirthgbl"
+  },
+  "zealotrebirth_rebirthgblbishop": {
+   "mob": "monster/zealotrebirth/rebirthgblbishop.mob",
+   "bank": "zealotrebirth_rebirthgblbishop",
+   "name": "rebirthgblbishop"
+  },
+  "zealotrebirth_rebirthgblleader": {
+   "mob": "monster/zealotrebirth/rebirthgblleader.mob",
+   "bank": "zealotrebirth_rebirthgblleader",
+   "name": "rebirthgblleader"
+  },
+  "zealotrebirth_rebirthgblpriest": {
+   "mob": "monster/zealotrebirth/rebirthgblpriest.mob",
+   "bank": "zealotrebirth_rebirthgblpriest",
+   "name": "rebirthgblpriest"
+  },
+  "zealotrebirth_rebirthsister": {
+   "mob": "monster/zealotrebirth/rebirthsister.mob",
+   "bank": "zealotrebirth_rebirthsister",
+   "name": "rebirthsister"
   }
  },
  "boss_hp_lines": 3,

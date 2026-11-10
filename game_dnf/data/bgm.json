@@ -100,6 +100,10 @@
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
   },
+  "bloodhell": {
+   "normal": "bloodhell",
+   "boss": "bloodhell_boss"
+  },
   "darkhell": {
    "normal": "purgatory",
    "boss": "purgatory_boss"
@@ -298,6 +302,18 @@
    "source": "music/behemoth_b01_1.ogg",
    "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
    "bytes": 1101176
+  },
+  "bloodhell": {
+   "file": "audio/bgm/bloodhell.ogg",
+   "source": "music/bloodhell.ogg",
+   "sha256": "9ed88db4f9cf136a71e7e8caa1525d8f94ab5596c06d77260f73abf25469d112",
+   "bytes": 1644641
+  },
+  "bloodhell_boss": {
+   "file": "audio/bgm/bloodhell_boss.ogg",
+   "source": "music/bloodhell_boss.ogg",
+   "sha256": "107ae0b2e0ba88a97511601d38fa4fce2a4ee616bc623844a077bf791df9c7e6",
+   "bytes": 1069590
   },
   "purgatory": {
    "file": "audio/bgm/purgatory.ogg",

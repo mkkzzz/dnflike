@@ -785,9 +785,9 @@
     "id": 27,
     "min_level": 36,
     "path": "dungeon/act3/bloodhell.dgn",
-    "runtime_id": "",
+    "runtime_id": "bloodhell",
     "sha256": "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 40,
@@ -4935,40 +4935,40 @@
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealotrebirth/rebirthbrother.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthbrother",
+    "state": "runtime"
    },
    {
     "id": 1040,
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealotrebirth/rebirthgbl.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthgbl",
+    "state": "runtime"
    },
    {
     "id": 1042,
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealotrebirth/rebirthgblbishop.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthgblbishop",
+    "state": "runtime"
    },
    {
     "id": 1041,
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealotrebirth/rebirthgblpriest.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthgblpriest",
+    "state": "runtime"
    },
    {
     "id": 1039,
     "level_max": 35,
     "level_min": 29,
     "path": "monster/zealotrebirth/rebirthsister.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthsister",
+    "state": "runtime"
    },
    {
     "id": 1053,
@@ -7607,8 +7607,8 @@
     "level_max": 43,
     "level_min": 38,
     "path": "monster/zealotrebirth/rebirthgblleader.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealotrebirth_rebirthgblleader",
+    "state": "runtime"
    },
    {
     "id": 62649,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 21,
+   "runtime": 22,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 97,
+   "runtime": 103,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

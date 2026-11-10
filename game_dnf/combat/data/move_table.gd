@@ -1117,6 +1117,10 @@ func _first_path(paths) -> String:
 	if not paths is Array or paths.is_empty():return ""
 	return String(paths[0]).to_lower()
 
+func _first_number(value) -> float:
+	if value is Array:return float(value[0]) if not value.is_empty() and (value[0] is int or value[0] is float) else 0.0
+	return float(value) if value is int or value is float else 0.0
+
 ## Newmonsters .mob action slots point to .act files; [BASE ANI] is the source motion.
 func _action_ani(act_path: String) -> String:
 	if act_path == "":return ""
@@ -1355,14 +1359,22 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 	if not throw.is_empty():
 		var objects_index: Dictionary = db.index("passive_objects")
 		var obj := object(String(objects_index.get(str(int(throw.get("passive_object_index",-1))),"")))
-		var filename:=String(throw.get("passive_object_filename","")).to_lower()
-		var ptl_path:=filename if filename.begins_with("passiveobject/") else path.get_base_dir().path_join(filename)
-		var ptl: Dictionary = db.record(ptl_path).get("decoded",{})
+		var filenames = throw.get("passive_object_filename",[])
+		if not filenames is Array:filenames = [filenames]
+		var ptl_paths: Array[String] = []
+		var ptl: Dictionary = {}
+		for value in filenames:
+			if not value is String or value == "":continue
+			var filename := String(value).to_lower()
+			var ptl_path := filename if filename.begins_with("passiveobject/") else path.get_base_dir().path_join(filename)
+			ptl_paths.append(ptl_path)
+			if ptl.is_empty():ptl = db.record(ptl_path).get("decoded",{})
 		var speed: Array = ptl.get("axes",{}).get("x",{}).get("move_variable_1",[0])
 		m["throw"] = {"object":obj,"frame":int(throw.get("throw_frame",0)),"sound":String(throw.get("throw_sound","")),
-			"start":Vector3(float(throw.get("passive_object_start_x_cood",0)),float(throw.get("passive_object_start_y_cood",0)),
-				float(throw.get("passive_object_start_z_cood",0))),
-			"speed":float(speed[0]),"life_ms":float(ptl.get("life_time",1000))}
+			"start":Vector3(_first_number(throw.get("passive_object_start_x_cood",0)),
+				_first_number(throw.get("passive_object_start_y_cood",0)),
+				_first_number(throw.get("passive_object_start_z_cood",0))),
+			"speed":float(speed[0]),"life_ms":float(ptl.get("life_time",1000)),"particles":ptl_paths}
 		if obj.is_empty() or ptl.is_empty():problems.append("throw object/particle missing for "+path)
 		m["atk"] = obj.get("atk",{})
 	# Explicit content adaptation for the archived Gero MOB: no attack info or

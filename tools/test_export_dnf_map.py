@@ -55,6 +55,17 @@ class Rules(unittest.TestCase):
         self.assertEqual(len(records), 1)
         self.assertEqual(diags[0]['code'], 'special_object_layout')
 
+    def test_hellparty_special_object_is_preserved_opaque(self):
+        values = [30507, 783, 289, 0, 1, '[hellparty]', 125, 25, 1, 63, 20, 2, '[/hellparty]']
+        diags = []
+        records = m.special_records(values, '60025.map', diags)
+        self.assertEqual(records, [values])
+        self.assertEqual([(d['level'], d['code']) for d in diags],
+                         [('warning', 'opaque_special_object')])
+        diags = []
+        self.assertEqual(m.special_records(values[:-1], '60025.map', diags), [])
+        self.assertEqual(diags[0]['code'], 'special_object_layout')
+
     def test_uneven_groups_are_reported(self):
         diags = []
         self.assertEqual(m.groups([1, 2, 3, 4, 5], 2, '[x]', 'p', diags), [[1, 2], [3, 4]])
