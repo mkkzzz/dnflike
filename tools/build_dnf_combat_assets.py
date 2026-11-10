@@ -35,7 +35,8 @@ from dnf_asset_store import ROOT
 from dnf_pvf import first_values, open_library, resolve
 from dnf_locomotion import build as build_locomotion
 from build_dnf_particles import parse as parse_particle
-from build_dnf_skill_runtime import HUNDRED_SWORD_FINISH_PARTICLE, OUTRAGE_PARTICLES, WEAPON_COMBO_LIGHT_DEPTHS
+from build_dnf_skill_runtime import (HUNDRED_SWORD_FINISH_PARTICLE, OUTRAGE_PARTICLES,
+                                     WEAPON_COMBO_LIGHT_DEPTHS, hundred_sword_blade_banks)
 from compile_dnf_content import (NATIVE_JAR_GAS_SHA, NATIVE_JAR_TRAP_OBJECTS, NATIVE_JAR_TRAP_SHA, NATIVE_JAR_TRAP_WARNING,
                                  NATIVE_OUTERWALL_BANKS, NATIVE_OUTERWALL_BREAKABLES,
                                  NATIVE_POISON_PARTICLE, NATIVE_POISON_VISUAL_SHA,
@@ -602,7 +603,7 @@ CUE_SOUNDS = {
     'goblin_die': ['sounds/mon/act1/gbn_die_01.ogg', 'sounds/mon/act1/gbn_die_02.ogg'],
 }
 SOUND_KEYS = ['STAFF_HIT', 'R_STICK_HIT', 'R_DRAWING_SWORD_HIT', 'R_SLESSSWDA_HIT', 'R_SQUARESWDC_HIT',
-              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'UPPER_SLASH_01', 'W_WEAPON_DRIVE']
+              'R_GORECROSS_HIT', 'THROW_STONE', 'GORECROSS_ATK3', 'UPPER_SLASH_01', 'W_WEAPON_DRIVE', 'W_GET_SPIRITS']
 MONSTER_HP_IMG = 'sprite/interface/newstyle/windows/monster_hp/monster_hp.img'
 
 
@@ -745,17 +746,21 @@ def refresh_animation_metadata(src: Source, manifest: dict) -> dict:
     return result
 
 
-def effect_bank(src: Source, key: str, ani_path: str, unresolved: list) -> dict:
+def effect_bank(src: Source, key: str, ani_path: str, unresolved: list, *, image_variant: int | None = None) -> dict:
     ani = src.animation(ani_path)
     atlas, frames = Atlas('fx_' + key), []
     bounds = None
     for n, f in enumerate(ani['frames']):
         rec = dict(f)
         if f.get('img'):
+            image_path = f['img']
+            if image_variant is not None and '%02d' in image_path:
+                image_path = image_path % image_variant
+                rec['img'] = image_path
             try:
-                image, meta = src.frame(f['img'], f['img_frame'])
+                image, meta = src.frame(image_path, f['img_frame'])
             except KeyError:
-                unresolved.append({'kind': 'image', 'path': f['img'], 'for': ani_path})
+                unresolved.append({'kind': 'image', 'path': image_path, 'for': ani_path})
                 frames.append(rec)
                 continue
             image, offset = cropped(image, meta)
@@ -1173,6 +1178,9 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     objects.update(runtime_assets.get('objects', {}))
     effects = dict(EFFECTS)
     effects.update(runtime_assets.get('effect_anims', {}))
+    if 'formation' in runtime.get('moves', {}).get('hundredsword', {}):
+        for key, spec in hundred_sword_blade_banks().items():
+            manifest['effects'][key] = effect_bank(src, key, spec['ani'], unresolved, image_variant=spec['image_variant'])
     manifest['native_jar_traps'], trap_effects, trap_pins = native_jar_trap_assets(src)
     manifest['native_spirit_summons'], summon_effects = native_spirit_summon_assets(src)
     manifest['native_status_visuals'] = native_status_visuals(src)
@@ -1461,7 +1469,10 @@ def extend_skill_banks(library: Path | None, output: Path, specs: list, *, pack_
                 manifest[section][key] = bank
                 additions.extend(clip['file'] for clip in bank)
                 continue
-            if section == 'monsters':
+            if section == 'variant_effects':
+                bank = effect_bank(src, key, path['ani'], unresolved, image_variant=path['image_variant'])
+                section = 'effects'
+            elif section == 'monsters':
                 bank = native_monster_bank(src, key, path, unresolved)
             else:
                 ani = src.object_animation(path) if section == 'objects' else path
@@ -1728,15 +1739,18 @@ def main() -> int:
         return 0
     if args.extend_hundred_sword_ready:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
-        stages = runtime['moves']['hundredsword']['stages']
+        move = runtime['moves']['hundredsword']
+        stages = move['stages']
         stage = stages[0]
         field, = stage['hits']
         controller = field['native_controller']
         keys = (stage['fx'][0]['key'], controller['overlay'], *controller['exit_layers'],
-                *(layer['key'] for layer in stages[-1]['fx']))
+                *(layer['key'] for layer in stages[-1]['fx']), *move['formation']['effects'].values())
         specs = [('effects', key, runtime['assets']['effect_anims'][key]) for key in keys]
+        specs.extend(('variant_effects', key, spec) for key, spec in hundred_sword_blade_banks().items())
         specs.append(('objects', field['object'], field['object']))
         specs.append(('audio', 'W_WEAPON_DRIVE', 'sounds/char/swordman/effect/W_weapon_drive.ogg'))
+        specs.append(('audio', 'W_GET_SPIRITS', 'sounds/char/swordman/effect/W_get_spirits.ogg'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_rapid_move_slash:

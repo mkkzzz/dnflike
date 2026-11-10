@@ -95,6 +95,9 @@
    "skillfx_khazanareaappear2_fbc292d4": "passiveobject/character/swordman/animation/khazanareaappear2.ani",
    "skillfx_khazanareadisappear_6c00971a": "passiveobject/character/swordman/animation/khazanareadisappear.ani",
    "skillfx_khazanareastay_1bc3c7a4": "passiveobject/character/swordman/animation/khazanareastay.ani",
+   "skillfx_light1_b5a8fc47": "character/swordman/effect/animation/hundredsword/light1.ani",
+   "skillfx_light2_8cddc716": "character/swordman/effect/animation/hundredsword/light2.ani",
+   "skillfx_light3_739de2be": "character/swordman/effect/animation/hundredsword/light3.ani",
    "skillfx_line1_e722e7d8": "character/swordman/effect/animation/bloodyrave/line1.ani",
    "skillfx_line2_3c639b26": "character/swordman/effect/animation/bloodyrave/line2.ani",
    "skillfx_loop1_531a5c7f": "character/swordman/effect/animation/bloodyrave/loop1.ani",
@@ -148,6 +151,9 @@
    "skillfx_sword_slash_ldodge_f39e3051": "character/swordman/effect/animation/outragebreak/sword_slash_ldodge.ani",
    "skillfx_sword_slash_none_b381d2e0": "character/swordman/effect/animation/outragebreak/sword_slash_none.ani",
    "skillfx_sword_slash_stone_4ecdaf58": "character/swordman/effect/animation/outragebreak/sword_slash_stone.ani",
+   "skillfx_swordairglow_f0c06cf0": "character/swordman/effect/animation/hundredsword/swordairglow.ani",
+   "skillfx_swordlandglow1_45a764c3": "character/swordman/effect/animation/hundredsword/swordlandglow1.ani",
+   "skillfx_swordlandglow2_39ce5d91": "character/swordman/effect/animation/hundredsword/swordlandglow2.ani",
    "skillfx_tn_balltail1_246e0c4a": "character/swordman/effect/animation/hellbenter/(tn)balltail1.ani",
    "skillfx_tombstonerain_7396cb89": "passiveobject/actionobject/monster/wooden_doll/animation/tombstonerain.ani",
    "skillfx_typhoon_91cf2988": "character/swordman/effect/animation/bloodyrave/typhoon.ani",
@@ -5431,6 +5437,43 @@
    ],
    "finish_impact_ms": 560,
    "finish_particle": "character/swordman/effect/particle/hundredswordfinish.ptl",
+   "formation": {
+    "distance": 150,
+    "effects": {
+     "light1": "skillfx_light1_b5a8fc47",
+     "light2": "skillfx_light2_8cddc716",
+     "light3": "skillfx_light3_739de2be",
+     "swordairglow": "skillfx_swordairglow_f0c06cf0",
+     "swordlandglow1": "skillfx_swordlandglow1_45a764c3",
+     "swordlandglow2": "skillfx_swordlandglow2_39ce5d91"
+    },
+    "styles": [
+     3,
+     0,
+     2,
+     3,
+     5,
+     2,
+     0,
+     1,
+     5,
+     3,
+     0,
+     2,
+     1,
+     5,
+     1,
+     0,
+     3,
+     5,
+     0,
+     1,
+     2,
+     5,
+     2,
+     1
+    ]
+   },
    "material_cost": {
     "amount": 5,
     "source_id": 3037
@@ -14558,7 +14601,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "161c35c9905f58220e37a67ff546317e5418b64d713210f7707402010a99d905"
+  "pack_sha256": "3e10c5a44a5d55415d55b540072dea973146be28bcc83d70e6fda5a7b9828149"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

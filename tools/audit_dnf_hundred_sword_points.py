@@ -18,7 +18,7 @@ OWNER, OUT, VTABLE, GETTERS, SWORDS = range(0x60000000, 0x60500000, 0x100000)
 STACK, RETURN = 0x70000000, 0xDEADBEEF
 
 
-def replay(source, ordinal, origin, positions, air_slots=()):
+def replay(source, ordinal, origin, positions, ground_slots=()):
     from dnf_native_vm_probe import CPU
 
     cpu = CPU(source)
@@ -38,7 +38,7 @@ def replay(source, ordinal, origin, positions, air_slots=()):
         if point is None:
             continue
         cpu.write(sword, 4, VTABLE)
-        cpu.write(sword+0x224, 1, int(index in air_slots))
+        cpu.write(sword+0x224, 1, int(index in ground_slots))
         for axis, value in enumerate(point):
             cpu.write(sword+0x44+axis*4, 4, value)
     cpu.reg['ecx'] = OWNER
@@ -67,15 +67,19 @@ def replay(source, ordinal, origin, positions, air_slots=()):
 
 
 def audit(source):
+    from build_dnf_skill_runtime import HUNDRED_SWORD_STYLES
+
     order = unpack('<24I', source.source_bytes(ORDER_TABLE, 96))
     if sorted(order) != list(range(24)):
         raise ValueError('Unexpected sword slot order')
+    if list(unpack('<24I', source.source_bytes(0x16EBB78, 96))) != HUNDRED_SWORD_STYLES:
+        raise ValueError('Formation variant table differs from the original')
     positions = [(263+i*17, 333-i*12, i*7-31) for i in range(24)]
-    for air_slots in ((), range(24)):
+    for ground_slots in ((), range(24)):
         for ordinal, slot in enumerate(order):
             x, y, z = positions[slot]
-            expected = (x, y, z+(40 if air_slots else 0))
-            if replay(source, ordinal, (-405, 277), positions, air_slots) != expected:
+            expected = (x, y, z+(40 if ground_slots else 0))
+            if replay(source, ordinal, (-405, 277), positions, ground_slots) != expected:
                 raise ValueError(f'Wrong waypoint at {ordinal=} {slot=}')
     origin = (-405, 277)
     if replay(source, 24, origin, positions) != (*origin, 40):

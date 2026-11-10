@@ -1261,6 +1261,19 @@ OUTRAGE_OBJECT_ANIM = OBJ_ROOT + "animation/outragebreak/"
 HUNDRED_SWORD_FINISH_PARTICLE = "character/swordman/effect/particle/hundredswordfinish.ptl"
 HUNDRED_SWORD_FINISH_LAYERS = (("finishslash", 1), ("finishflash", 2), ("finishfloor", -1),
                              *((f"finishcircle{i}", i + 1) for i in range(1, 5)))
+HUNDRED_SWORD_STYLES = [3, 0, 2, 3, 5, 2, 0, 1, 5, 3, 0, 2, 1, 5, 1, 0, 3, 5, 0, 1, 2, 5, 2, 1]
+HUNDRED_SWORD_BLADES = ("swordspread", "swordair", "swordland")
+HUNDRED_SWORD_FORMATION_LAYERS = ("light1", "light2", "light3", "swordairglow",
+                                 "swordlandglow1", "swordlandglow2")
+
+
+def hundred_sword_blade_banks():
+    return {
+        f"hundred_sword_{stem}{layer}_{style:02d}": {
+            "ani": CHR_FX + f"hundredsword/{stem}{layer}.ani", "image_variant": style,
+        }
+        for stem in HUNDRED_SWORD_BLADES for layer in (1, 2) for style in sorted(set(HUNDRED_SWORD_STYLES))
+    }
 
 OUTRAGE_PARTICLES = {
     "stone": "character/swordman/effect/particle/outragebreak_stone_part.ptl",
@@ -1601,8 +1614,13 @@ def build_move(
                 )
     result = {"skill": str(skill["path"]), "name": str(skill["name"]), "stages": stages}
     if key == "hundredsword":
+        formation_fx = {stem: add_fx(fx, effects, CHR_FX + f"hundredsword/{stem}.ani")
+                        for stem in HUNDRED_SWORD_FORMATION_LAYERS}
+        if not all(formation_fx.values()):
+            raise ValueError("Missing original Hundred Sword formation effects")
         result.update(native_state="hundred_sword", material_cost=fixed_cube_cost(skill, records),
                       finish_impact_ms=impact, finish_particle=HUNDRED_SWORD_FINISH_PARTICLE,
+                      formation={"distance": distance, "styles": HUNDRED_SWORD_STYLES, "effects": formation_fx},
                       fidelity_pending=["sword_formation_pulls_and_repeat_contacts", "automatic_travel_sequence",
                                         "finish_trails_and_camera", "rank_bonuses", "original_command"])
     if key == "normalwave":
@@ -2208,6 +2226,8 @@ def main() -> int:
         SAFE_EFFECTS.update(path for path in records[hundred_sword_field]["decoded"]["etc_motions"]
                             if safe_animation(library, path))
         SAFE_EFFECTS.update(path for stem, _ in HUNDRED_SWORD_FINISH_LAYERS
+                            if safe_animation(library, path := CHR_FX + f"hundredsword/{stem}.ani"))
+        SAFE_EFFECTS.update(path for stem in HUNDRED_SWORD_FORMATION_LAYERS
                             if safe_animation(library, path := CHR_FX + f"hundredsword/{stem}.ani"))
         object_candidates.add(OBJ_ROOT + "momentaryslashwave.obj")
         object_candidates.update(OBJ_ROOT + f"illusionslashmelee{index}.obj" for index in range(1, 5))

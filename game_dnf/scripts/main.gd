@@ -16,6 +16,7 @@ const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
 const FrenzyRecovery = preload("res://combat/resolve/frenzy_recovery.gd")
+const HundredSwordFormation = preload("res://combat/action/hundred_sword_formation.gd")
 const NativeBoxLoot = preload("res://loot/native_box.gd")
 const COMBAT_ASSETS := "res://assets_local/combat/manifest.json"
 const PLAYER_ID := 0
@@ -1142,6 +1143,9 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
 	var old_event_clock := old_outrage_event_clock if outrage else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
+	if name == "hundredsword":
+		var formation: RefCounted = player["hundred_sword_cast"]["formation"]
+		if formation.advance(ms,clock if int(player["stage"])==0 else -1.0):play_sound("W_GET_SPIRITS")
 	action_cues(stage,old_event_clock,event_clock)
 	if m.get("native_state","") == "bloody_rave":
 		if int(player["stage"]) == 0:
@@ -2091,7 +2095,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		if turn != 0:player["facing"] = turn
 	if name == "hundredsword" and index == 0:
 		# CD1E09..CD1E9A takes the cast origin before the object exists.
-		player["hundred_sword_cast"] = {"origin":Vector2(Vector2i(player["pos"])),"facing":player["facing"]}
+		var origin := Vector2(Vector2i(player["pos"]))
+		var facing := int(player["facing"])
+		var formation := HundredSwordFormation.new(origin,facing,player["native_phase"]["hundred_sword_ready_timeline"],
+			m["formation"],rng.seed_value^action_seq)
+		player["hundred_sword_cast"] = {"origin":origin,"facing":facing,
+			"formation":formation}
 	elif player["native_phase"].get("hundred_sword_finish",false):
 		# CD2859 reads the terminal point from the saved origin. CD288B and
 		# CD28A4 restore cast direction and write the saved XY with Z zero.
@@ -5154,6 +5163,7 @@ func view_snapshot() -> Dictionary:
 			"alive":float(companion["hp"])>0,"death_ms":float(companion["death_ms"]),
 			"poison":companion["numeric"].effects.poison_visual() if float(companion["hp"])>0 else 0})
 	var objs: Array = []
+	if player.has("hundred_sword_cast"):player["hundred_sword_cast"]["formation"].append_view(objs)
 	for o: Dictionary in objects:
 		if o.get("retired",false):continue
 		var controller: Dictionary = o["hit"].get("native_controller",{})

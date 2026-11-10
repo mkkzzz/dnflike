@@ -460,6 +460,7 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["normal_cancel_job"] = "weaponmaster"
 		move["finish_impact_ms"] = float(spec["finish_impact_ms"])
 		move["finish_particle"] = String(spec["finish_particle"])
+		move["formation"] = spec["formation"]
 	if spec.get("native_state","") == "thirst":
 		var values: Array = skill["static"]
 		move.merge({"native_state":"thirst","hp_percent":int(values[0]),

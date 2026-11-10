@@ -3190,7 +3190,29 @@ func check_hundred_sword_ready() -> void:
 		"the finish uses original ATK 62 and rank column two without an unrelated object")
 	game.player["pos"] = POINT+Vector2(17,7)
 	game.player["facing"] = 1
-	step(1959.0)
+	var swords := func(stem: String):
+		return game.view_snapshot()["objects"].filter(func(o):
+			return str(o["id"]).begins_with("hundred_sword:") and String(o["effect"]).contains(stem))
+	var center := POINT-Vector2(150,0)
+	step(79.0)
+	check(swords.call("light").is_empty() and cues("W_GET_SPIRITS").is_empty(),"no swords or collection cue at 319 ms")
+	step(1.0)
+	var lights: Array = swords.call("light1")
+	check(lights.size()==8 and lights[0]["pos"]==center+Vector2(-30,71) and lights[0]["z"]==150.0
+		and cues("W_GET_SPIRITS").size()==1 and game.view.audio.variants["W_GET_SPIRITS"][0] is AudioStreamOggVorbis,
+		"frame four spawns eight lights around the original mirrored center and plays the original collection sound")
+	step(430.0)
+	lights = swords.call("light1")
+	check(lights.size()==8 and lights[0]["pos"]==center+Vector2(22,-53),
+		"halfway to frame eleven the first eight lights rotate by 180 degrees and narrow to radius 187")
+	step(430.0)
+	var spread: Array = swords.call("swordspread1")
+	check(spread.size()==24 and spread.all(func(o):return o["pos"]==center and o["z"]==150.0)
+		and game.view.object_views["hundred_sword:4:swordspread:1"].data["frames"][0]["img"].to_lower().ends_with("/sword05.img"),
+		"frame eleven adds the remaining sixteen swords at the center and renders the native style table")
+	step(1019.0)
+	check(swords.call("swordspread1").size()==24 and swords.call("swordland1").is_empty(),
+		"the spread formation stays in its airborne preparation pose through frame seventeen")
 	check(game.objects.is_empty(),"the field waits until ready frame eighteen")
 	var fresh: int = game._next_entity_id
 	step(1.0)
@@ -3198,7 +3220,11 @@ func check_hundred_sword_ready() -> void:
 	check(game.objects.size()==1,"ready frame eighteen creates exactly one field")
 	if game.objects.size()!=1:return
 	var field: Dictionary = game.objects[0]
-	var center := POINT-Vector2(150,0)
+	var ground: Array = swords.call("swordland1")
+	var air: Array = swords.call("swordair1")
+	check(ground.size()==12 and air.size()==12 and ground[0]["z"]==0.0 and air[0]["z"]==156.0
+		and ground[0]["pos"]==center+Vector2(-30,71) and air[0]["pos"]==center+Vector2(-93,67),
+		"frame eighteen places twelve swords on the ground and twelve in the air at the final orbit points")
 	check(field["pos"]==center and field["facing"]==-1 and field["z"]==0.0 and field["clock"]==0.0
 		and field["hit"]["percent"]==626.0 and field["hit"]["atk_path"].ends_with("/hundredswordhit.atk"),
 		"the new field starts at age zero at the saved cast origin and uses original rank column zero")
