@@ -1596,6 +1596,11 @@ func check_gorecross_wave() -> void:
 		game.numeric_player.values["attack_speed"] = 1.0
 		press(KEY_A)
 		step(0)
+		var entry_sounds: Array = game.bus.events_of("combat.cue").filter(func(event):
+			return event["kind"]=="sound" and event["key"] in ["R_TSLASH","gorecross"])
+		check(entry_sounds.map(func(event):return event["key"])==["R_TSLASH","gorecross"]
+			and game.view.audio.variants["gorecross"][0] is AudioStreamOggVorbis,
+			"Gore Cross requests the swing and its original voice together at entry")
 		game.numeric_player.values.merge({"hit":1.0,"physical_attack":1000.0,
 			"strength":0.0,"physical_crit":0.0,"damage_rate":1.0,"skill_rate":1.0},true)
 		step(99)
@@ -1603,13 +1608,22 @@ func check_gorecross_wave() -> void:
 		step(1)
 		check(game.hit_count==1 and not target["numeric"].effects.active.has("bleed"),
 			"Gore Cross first weapon layer hits at frame 2 without bleed")
+		check(game.player["stuck_ms"]==70.0 and target["stuck_ms"]==70.0,
+			"The first Gore Cross swing gives both actors the katana's native pause")
 		game.player["stuck_ms"] = 0.0
-		step(249)
+		step(199)
+		check(cues("R_TSLASH").size()==1,"Gore Cross has no second swing sound before frame six")
+		step(1)
+		check(cues("R_TSLASH").size()==2 and cues("gorecross").size()==1,
+			"Gore Cross repeats the swing sound without replaying the voice at frame six")
+		step(49)
 		check(game.hit_count==1,"Gore Cross retains its first weapon contact through 349 ms")
 		move_target(target,POINT+Vector2(35*facing,0))
 		step(1)
 		check(game.hit_count==2 and not target["numeric"].effects.active.has("bleed"),
 			"Gore Cross's second weapon layer can hit the same target and has no wave bleed")
+		check(game.player["stuck_ms"]==70.0 and target["stuck_ms"]==70.0,
+			"The second ATK installation keeps the katana's native pause")
 		game.player["stuck_ms"] = 0.0
 		step(149)
 		check(game.objects.is_empty(),"Gore Cross waits for the original attached ANI release marker")
@@ -1656,6 +1670,30 @@ func check_gorecross_wave() -> void:
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 	game.rng = previous_rng
+
+func check_gorecross_weapon_pause() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rage_slash"]
+	for sample: Array in [["shortsword",100,90],["club",150,100],["greatsword",100,120],["beamsword",100,60]]:
+		start_room("",sample[0],1,spec,"berserker")
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(35,0))
+		game.numeric_player.values.merge({"attack_speed":1.0,"hit":1.0},true)
+		press(KEY_A)
+		game.step_game(0.0)
+		game.step_game(sample[1])
+		check(game.hit_count==1 and game.player["stuck_ms"]==sample[2] and target["stuck_ms"]==sample[2],
+			"Gore Cross freezes both actors for the original %s pause without consuming its first update"%sample[0])
+		game.step_game(sample[2]-1)
+		check(game.player["clock"]==sample[1] and game.player["stuck_ms"]==1.0 and target["stuck_ms"]==1.0,
+			"The weapon and its target keep the last millisecond of pause")
+		game.step_game(1.0)
+		game.step_game(1.0)
+		check(game.player["clock"]==sample[1]+1 and target["stuck_ms"]==0.0,
+			"The Gore Cross body resumes on the update after its native pause")
 
 func check_gorecross_cost() -> void:
 	for sample: Array in [[1,0,17],[1,1,8],[2,1,12]]:
@@ -1779,7 +1817,8 @@ func check_gorecross_followup() -> void:
 		step(229)
 		check(cues("GORECROSS_ATK3").is_empty(),"Gore Cross waits for body frame 14 before the third swing sound")
 		step(1)
-		check(cues("GORECROSS_ATK3").size()==1,"Gore Cross plays the third swing sound on body frame 14")
+		check(cues("GORECROSS_ATK3").size()==1 and cues("gorecross").size()==1,
+			"Gore Cross plays the third swing on body frame 14 without replaying the entry voice")
 		step(30)
 		check(game.objects.is_empty(),"The second body tag arms the extra wave without an ordinary wave")
 		step(1)
@@ -8327,6 +8366,7 @@ func run() -> void:
 	check_frenzy_bleed()
 	check_hopsmash_bleed()
 	check_gorecross_wave()
+	check_gorecross_weapon_pause()
 	check_gorecross_cost()
 	check_gorecross_wave_direction()
 	check_gorecross_followup()

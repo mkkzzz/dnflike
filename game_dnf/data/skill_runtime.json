@@ -8445,6 +8445,10 @@
      ],
      "sounds": [
       {
+       "at": 0,
+       "key": "gorecross"
+      },
+      {
        "at": 300,
        "key": "R_TSLASH"
       }
@@ -16316,7 +16320,7 @@
   "catalog": "game_dnf/data/skill_catalog.json",
   "fidelity": "unverified_engine_adapters; catalog coverage is not original fidelity",
   "pack": "game_dnf/assets_local/content/combat_content.json",
-  "pack_sha256": "e10b25fd744016b2739f0334324c9d0c62d137079affcdeff8b98919f9d56bde"
+  "pack_sha256": "5972ad86629ef2a0fc97f1989ab9d165b0d3b4ebbcec275a27873af5755b43cf"
  },
  "tree_active_count": 52,
  "tree_passive_count": 26,

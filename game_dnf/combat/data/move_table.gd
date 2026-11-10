@@ -783,6 +783,9 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			var segments := Timeline.attached_attack_segments(stage["timeline"],[Timeline.from_ani(track)])
 			var swing := _build_stage({"ani":"gorecross","hits":[{"atk":"character/swordman/attackinfo/gorecross2.atk",
 				"attached_weapon":true,"percent_col":0}]},skill,segments)
+			# 83F7FF fills the omitted ATK pause from the active CHR weapon row.
+			for hit: Dictionary in swing["hits"]:
+				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],float(weapon_hit_info(weapon)[2]))
 			stage["hits"].append_array(swing["hits"])
 	if name == "hopsmash":
 		var row: Array = skill["level_row"]

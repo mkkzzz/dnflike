@@ -1450,7 +1450,9 @@ def build_move(
                 "cross_wave_motion": motion,
                 "cross_followup": {"opens_at": followup_gate, "closes_at": release, "seek_to": body[10]["start_ms"]},
                 "stages": [{"ani": "gorecross", "voice": "R_TSLASH",
-                    "sounds": [{"key": "R_TSLASH", "at": body[6]["start_ms"]}], "fx": [
+                    # CCB9DE/CCBA21 play the swing and SM_GORECROSS together at entry.
+                    "sounds": [{"key": "gorecross", "at": 0},
+                               {"key": "R_TSLASH", "at": body[6]["start_ms"]}], "fx": [
                     {"key": key, "at": 0, "action_clock": True} for key in ("gore_slash1", "gore_slash2")],
                     "hits": [{**wave_hit, "at": release, "native_controller": {"kind": "gorecross_wave"}}]},
                     {"ani": "gorecross", "fx": [
