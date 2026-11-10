@@ -2296,21 +2296,34 @@ func check_outrage_break_impact() -> void:
 		check(game.view.player_actor.pose=="outragebreakready" and game.player["hp"]==sample[1]-400.0
 			and game.player["mp"]==before_mp and payments==[[3037,2]] and cues("OUTRAGE_READY").size()==1,
 			"Outrage Break enters the original ready pose and pays its rank cost once")
-		step(560.0/rate-1.0)
+		var ready_ms := 279.0 if rate == 2.0 else 560.0
+		var landing_ms := 299.0 if rate == 2.0 else 600.0
+		var apex_ms := 149.0 if rate == 2.0 else 300.0
+		step(ready_ms-1.0)
 		check(game.player["stage"]==0 and game.player["pos"]==POINT and game.player["z"]==0.0
 			and target["hp"]==50000.0 and game.objects.is_empty(),"the ready frame cannot move or damage")
 		step(1)
 		check(game.player["stage"]==1 and game.view.player_actor.pose=="outragebreakslash" and game.player["clock"]==0.0,
 			"the original ready ANI advances automatically on completion")
-		step(300.0/rate)
-		check(game.player["z"]==150.0 and game.player["pos"]==POINT+Vector2(65*facing,0) and target["hp"]==50000.0,
+		step(apex_ms)
+		check(game.player["z"]==150.0 and game.player["pos"]==POINT+Vector2((64 if rate == 2.0 else 65)*facing,0)
+			and target["hp"]==50000.0,
 			"the leap peaks at the middle of the speed-scaled travel interval")
-		step(300.0/rate-1.0)
-		check(game.objects.is_empty() and target["hp"]==50000.0 and game.player["pos"]==POINT+Vector2(129*facing,0),
-			"the last airborne sample uses the native integer displacement")
+		if rate == 2.0:
+			step(294.0-apex_ms)
+			check(game.hit_count==0 and game.objects.is_empty(),"the doubled-speed body frame is still closed at 294 ms")
+			step(1.0)
+			check(game.hit_count==1 and game.objects.is_empty() and cues("OUTRAGE_SWING").is_empty(),
+				"the body hits at 295 ms while the landing effect and floor object still wait")
+			step(landing_ms-296.0)
+		else:
+			step(landing_ms-apex_ms-1.0)
+			check(target["hp"]==50000.0,"the normal-speed body and landing gates coincide")
+		check(game.objects.is_empty() and game.player["pos"]==POINT+Vector2(129*facing,0),
+			"the final pre-impact sample uses the native integer displacement")
 		step(1)
 		check(game.player["z"]==0.0 and target["hp"]<50000.0 and game.hit_count==1 and not target["numeric"].effects.active.has("bleed"),
-			"the original body ATK hits at frame five without a synthetic bleed")
+			"the original body ATK hits once without a synthetic bleed")
 		check(game.objects.size()==1 and game.objects[0]["pos"]==POINT+Vector2(279*facing,0)
 			and game.objects[0]["hit"]["fixed_amount"]==5846.0 and game.objects[0]["clock"]==0.0
 			and cues("OUTRAGE_SWING").size()==1 and cues("CCRASH_CRASH").size()==1,
@@ -2445,9 +2458,9 @@ func check_outrage_break_eruption() -> void:
 	press(KEY_A)
 	step(0)
 	step(430)
-	step(461)
+	step(460)
 	check(game.objects.is_empty() and native_particle_cues(stone).is_empty(),
-		"fractional attack speed cannot start the emitter at the rounded travel end")
+		"fractional attack speed cannot start the emitter one millisecond before landing")
 	step(1)
 	check(game.objects.size()==1 and native_particle_cues(stone).is_empty(),
 		"the actual impact update arms the stone emitter without sampling it")
@@ -2471,7 +2484,7 @@ func check_outrage_break_armor() -> void:
 	piercing_atk["ignore_super_armor"] = 1
 	for sample: Array in [[0,559.0,1.0,false,false],[1,239.0,1.0,false,false],
 			[1,240.0,1.0,false,true],[1,779.0,1.0,false,true],[1,780.0,1.0,false,false],
-			[1,191.0,1.25,false,false],[1,192.0,1.25,false,true],[1,241.0,1.0,true,false]]:
+			[1,189.0,1.25,false,false],[1,190.0,1.25,false,true],[1,241.0,1.0,true,false]]:
 		start_room("original_27601","katana",1,spec,"berserker")
 		game.apply_skill_effect("buff","frenzy")
 		game.numeric_player.values["attack_speed"] = sample[2]
@@ -2483,7 +2496,7 @@ func check_outrage_break_armor() -> void:
 		for enemy: Dictionary in game.monsters:move_target(enemy,POINT+Vector2(900,0))
 		press(KEY_A)
 		step(0)
-		if sample[0] == 1:step(560.0/float(sample[2]))
+		if sample[0] == 1:step(447.0 if sample[2] == 1.25 else 560.0)
 		step(sample[1])
 		var atk: Dictionary = piercing_atk if sample[3] else normal_atk
 		var hit_reaction: String = game.hurt_player(7,{"pos":game.player["pos"]+Vector2(50,0)},atk,-1)

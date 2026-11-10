@@ -667,6 +667,8 @@ func action_ani_clock(elapsed: float) -> float:
 	if phase.has("grab_pose_ms"):return float(phase["grab_pose_ms"])
 	if phase.has("thirst_loop_ms"):
 		return float(phase["body_clock"])
+	if phase.has("outrage_timeline"):
+		return _source_animation_clock(elapsed,phase["outrage_timeline"],action_def()["timeline"])
 	if phase.has("cast_stage_rate"):return elapsed*float(phase["cast_stage_rate"])
 	if phase.has("charge_rate"):
 		var release_at := float(phase["wait_ms"])
@@ -1074,10 +1076,10 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var cast: Dictionary = player["illusion_cast"]
 		cast["animation_ms"] += ms
 		if refresh_ani_rate:
-			var rate := illusion_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
+			var rate := attack_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
 			var old_rate := float(cast["animation_percent"])
 			if rate != old_rate:
-				var timeline := illusion_timed_frames(stage["timeline"],rate)
+				var timeline := native_timed_frames(stage["timeline"],rate)
 				var first_slash := int(cast["slash"]) == 0 and int(m["illusion_chain"]["first_frame_rate"]) == 0
 				var old_offset := float(cast["timeline"][0]["end_ms"]) if first_slash else 0.0
 				var new_offset := float(timeline[0]["end_ms"]) if first_slash else 0.0
@@ -1562,9 +1564,13 @@ func thirst_hp_cost(percent: int) -> int:
 func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> void:
 	var impact := int(phase["outrage_impact_ms"])
 	var elapsed := int(clock)
+	phase["outrage_landed_now"] = false
 	# CB44A7..CB4557 samples absolute X and Z only before frame five.
 	if elapsed >= impact:
 		player["z"] = 0.0
+		if not phase.has("outrage_landed"):
+			phase["outrage_landed"] = true
+			phase["outrage_landed_now"] = true
 		if phase.erase("outrage_stone_pending"):
 			# CB4920..CB49BC first samples the emitter on the update after
 			# the impact latch. Its origin follows actor X +/- 150 and YZ.
@@ -1574,11 +1580,14 @@ func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> v
 				"action_instance":action_seq,"follow_x":150,"action_clock":clock})
 		return
 	var travel: Vector2 = move["outrage_motion"]
-	var x := int(phase["outrage_origin_x"])+int(player["facing"])*int(travel.x*elapsed/impact)
+	var x := int(phase["outrage_origin_x"])+int(player["facing"])*_native_interpolate(0,int(travel.x),elapsed,impact)
 	move_along_ground_pixels(x-float(player["pos"].x))
 	var half := maxi(1,impact>>1)
-	var progress := float(elapsed)/half-1.0
-	player["z"] = float(int(travel.y*(1.0-progress*progress)))
+	var time := clampi(mini(elapsed,2*half-elapsed),0,half)
+	# 11AF052 and 11AF05B round the two coefficients before x87 evaluation.
+	var slope := _native_float32(travel.y*2.0/half)
+	var curve := _native_float32(slope/half)
+	player["z"] = travel.y if time == half else float(int((slope-0.5*curve*time)*time))
 
 func stop_bloody_rave_loop() -> void:
 	if player.erase("bloody_rave_loop"):
@@ -1937,9 +1946,9 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	player["native_phase"] = {}
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
-		var rate := illusion_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
+		var rate := attack_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
 		cast["animation_percent"] = rate
-		var timeline := illusion_timed_frames(action_def()["timeline"],rate)
+		var timeline := native_timed_frames(action_def()["timeline"],rate)
 		cast["timeline"] = timeline
 		cast["animation_ms"] = float(timeline[0]["end_ms"]) if opening_clock > 0.0 else 0.0
 	if m.get("native_state","") in ["normalwave","wave_cast"]:
@@ -1994,13 +2003,16 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],m["suction_bleed_base"])
 			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "outrage_break":
-		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
-		var rate := maxi(1,int(attack_rate*1000.0))/1000.0
+		var rate := attack_animation_percent(0)
 		var stage := action_def()
-		var phase := {"cast_stage_rate":rate,"end_ms":int(float(stage["duration"])/rate)}
+		var timeline := native_timed_frames(stage["timeline"],rate)
+		var phase := {"outrage_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
 		if index == 1:
 			phase["outrage_origin_x"] = int(player["pos"].x)
-			phase["outrage_impact_ms"] = int(float(stage["timeline"][m["impact_frame"]]["start_ms"])/rate)
+			# CB44A7 calls 10857E0, which adjusts the sum of the raw delays.
+			var impact_at := float(stage["timeline"][m["impact_frame"]]["start_ms"])
+			phase["outrage_impact_at"] = impact_at
+			phase["outrage_impact_ms"] = _native_ani_delay(impact_at,rate)
 		player["native_phase"] = phase
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
@@ -2284,9 +2296,10 @@ func apply_skill_effect(skill_id: String, effect_id: String) -> void:
 func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 	for fx: Dictionary in stage.get("fx",[]):
 		var at := float(fx["at"])
-		if at > old_t and at <= new_t:
+		if action_timed_crossed(at,old_t,new_t):
 			var left := action_duration(String(player["action"]))-at
 			var synchronized := bool(fx.get("action_clock",false))
+			if player["native_phase"].get("outrage_impact_at",-1.0) == at:at = new_t
 			bus.emit("combat.cue",{"kind":"fx","key":String(fx["key"]),"point":Vector2(player["pos"]),"height":float(player["z"]),
 				"facing":int(player["facing"]),"tag":String(player["fx_tag"]),"follow":PLAYER_ID,"max_ms":-1.0 if synchronized else maxf(left,1.0),
 				"action_clock_at":at if synchronized else -1.0,"action_instance":action_seq,"offset_x":float(fx.get("offset_x",0)),
@@ -2295,7 +2308,7 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 				"repeat_from_ms":float(fx.get("repeat_from_ms",-1.0))})
 	for s: Dictionary in stage.get("sounds",[]):
 		var at := float(s["at"])
-		if at > old_t and at <= new_t:play_sound(String(s["key"]))
+		if action_timed_crossed(at,old_t,new_t):play_sound(String(s["key"]))
 	var rec: Dictionary = content.record(Kernel.MoveTable.CHR_ANI+String(stage.get("ani",""))+".ani")
 	if rec.is_empty():return
 	var events: Array = rec["decoded"].get("sound_events",[])
@@ -2303,6 +2316,13 @@ func action_cues(stage: Dictionary, old_t: float, new_t: float) -> void:
 	for f: Dictionary in Kernel.Timeline.crossed_frames(stage["timeline"],old_t,new_t):
 		for e: Dictionary in events:
 			if int(e["frame"]) == int(f["frame"]):play_sound(String(e["sound"]))
+
+func action_timed_crossed(at: float, old_t: float, new_t: float) -> bool:
+	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("outrage_impact_at") and at == float(phase["outrage_impact_at"]):
+		# The aggregate landing gate is separate from the body ANI's hit frames.
+		return phase.get("outrage_landed_now",false)
+	return at > old_t and at <= new_t
 
 func try_grab_blast(stage: Dictionary, clock: float) -> bool:
 	# State 26 starts on frame 3. The active box belongs to the current Grab.ani frame.
@@ -2470,7 +2490,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		var hit: Dictionary = stage["hits"][i]
 		if hit["kind"] == "object":
 			var at := float(hit["at"])
-			if at > old_t and at <= new_t:
+			if action_timed_crossed(at,old_t,new_t):
 				if hit.get("skill_id","") == "bloodblast" and numeric_player != null:
 					hit = prepare_bloodblast_damage(hit)
 				elif hit.get("skill_id","") == "bloodyrave":
@@ -2556,7 +2576,7 @@ func draw_hit_delay(timeline: Array, clock: float) -> int:
 		delay += _native_ani_delay(frame_ms,rate_percent)
 	return delay
 
-func illusion_animation_percent(bonus: int) -> float:
+func attack_animation_percent(bonus: int) -> float:
 	var base := float(rules["buff"]["attack_speed"]) if float(player["buff_ms"]) > 0.0 else 1.0
 	if numeric_player != null:base = float(numeric_player.values["attack_speed"])
 	# CCD522 and 82857E apply the mastery multiplier to the integer attack speed.
@@ -2567,7 +2587,7 @@ func illusion_animation_percent(bonus: int) -> float:
 	# 1091ECF preserves the ANI's initial 100 if the difference is at most one relative epsilon.
 	return 100.0 if absf(rate-100.0) <= absf(rate)*0.00000011920928955078125 else rate
 
-func illusion_timed_frames(source: Array, rate: float) -> Array:
+func native_timed_frames(source: Array, rate: float) -> Array:
 	var adjusted: Array = []
 	var elapsed := 0
 	for original: Dictionary in source:
@@ -3702,7 +3722,7 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 	var kind := String(controller.get("kind",""))
 	if kind == "illusion_melee":
 		# 25218B4 copies the current body rate into the payload. A70624 applies it to the new ANI.
-		entity["timeline"] = illusion_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))
+		entity["timeline"] = native_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))
 	if kind == "draw_short_wave":
 		# A60D6B..A60E68 holds frame zero until the object has travelled
 		# the mastery distance. The original animation then runs normally.
