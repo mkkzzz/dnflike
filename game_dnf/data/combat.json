@@ -1890,6 +1890,36 @@
    "mob": "monster/newmonsters/heaven/vulcherspecialforce/vulcherspecialforce.mob",
    "bank": "newmonsters_heaven_vulcherspecialforce_vulcherspecialforce",
    "name": "vulcherspecialforce"
+  },
+  "goblin_goblinkrazyivancaptain": {
+   "mob": "monster/goblin/goblinkrazyivancaptain.mob",
+   "bank": "goblin_goblinkrazyivancaptain",
+   "name": "goblinkrazyivancaptain"
+  },
+  "lugaru_bloodlugaru": {
+   "mob": "monster/lugaru/bloodlugaru.mob",
+   "bank": "lugaru_bloodlugaru",
+   "name": "bloodlugaru"
+  },
+  "lugaru_ciel": {
+   "mob": "monster/lugaru/ciel.mob",
+   "bank": "lugaru_ciel",
+   "name": "ciel"
+  },
+  "lugaru_heart": {
+   "mob": "monster/lugaru/heart.mob",
+   "bank": "lugaru_heart",
+   "name": "heart"
+  },
+  "tau_taucaptain": {
+   "mob": "monster/tau/taucaptain.mob",
+   "bank": "tau_taucaptain",
+   "name": "taucaptain"
+  },
+  "tau_taumetacow": {
+   "mob": "monster/tau/taumetacow.mob",
+   "bank": "tau_taumetacow",
+   "name": "taumetacow"
   }
  },
  "boss_hp_lines": 3,

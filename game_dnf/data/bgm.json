@@ -212,6 +212,10 @@
    "normal": "underfoot_enterence",
    "boss": "underfoot_enterence_boss"
   },
+  "vilmark": {
+   "normal": "vilmark",
+   "boss": "vilmark_boss"
+  },
   "whiteland": {
    "normal": "whiteland",
    "boss": "whiteland_boss"
@@ -723,6 +727,18 @@
    "source": "music/underfoot_enterence_boss.ogg",
    "sha256": "c38ed08621a42cd784ffb47ab942c3310b90cf3cc86c4b48f8ba56bea2bc0377",
    "bytes": 1452675
+  },
+  "vilmark": {
+   "file": "audio/bgm/vilmark.ogg",
+   "source": "music/vilmark.ogg",
+   "sha256": "d79f6b216073759b27f1d517bcb642243a4f8eddccfe34414d80f789a302cff4",
+   "bytes": 1761301
+  },
+  "vilmark_boss": {
+   "file": "audio/bgm/vilmark_boss.ogg",
+   "source": "music/vilmark_boss.ogg",
+   "sha256": "ba4dd962887364a3e3c333b90885f963b09f90e06d4845c7e2c9b5878861c1e4",
+   "bytes": 1137190
   },
   "whiteland": {
    "file": "audio/bgm/whiteland.ogg",

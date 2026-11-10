@@ -79,6 +79,10 @@ SOURCES = {
         'dungeon/village/cartelarad/odesa.dgn',
         '1fed07147d1f2be9a4071572589b208a7e2c493410925df8f92d8655f7d5ed7b',
     ),
+    'vilmark': (
+        'dungeon/ancient/vilmark.dgn',
+        '4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d',
+    ),
 }
 
 

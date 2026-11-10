@@ -1159,9 +1159,9 @@
     "id": 1500,
     "min_level": 55,
     "path": "dungeon/ancient/vilmark.dgn",
-    "runtime_id": "",
+    "runtime_id": "vilmark",
     "sha256": "4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 55,
@@ -3463,8 +3463,8 @@
     "level_max": 6,
     "level_min": 6,
     "path": "monster/goblin/goblinkrazyivancaptain.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "goblin_goblinkrazyivancaptain",
+    "state": "runtime"
    },
    {
     "id": 50076,
@@ -4207,16 +4207,16 @@
     "level_max": 19,
     "level_min": 19,
     "path": "monster/lugaru/bloodlugaru.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "lugaru_bloodlugaru",
+    "state": "runtime"
    },
    {
     "id": 5007,
     "level_max": 19,
     "level_min": 19,
     "path": "monster/lugaru/ciel.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "lugaru_ciel",
+    "state": "runtime"
    },
    {
     "id": 56421,
@@ -9911,8 +9911,8 @@
     "level_max": 54,
     "level_min": 54,
     "path": "monster/lugaru/heart.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "lugaru_heart",
+    "state": "runtime"
    },
    {
     "id": 61708,
@@ -9991,16 +9991,16 @@
     "level_max": 54,
     "level_min": 54,
     "path": "monster/tau/taucaptain.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "tau_taucaptain",
+    "state": "runtime"
    },
    {
     "id": 17,
     "level_max": 54,
     "level_min": 54,
     "path": "monster/tau/taumetacow.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "tau_taumetacow",
+    "state": "runtime"
    },
    {
     "id": 62678,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 48,
+   "runtime": 49,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 277,
+   "runtime": 283,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

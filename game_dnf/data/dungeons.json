@@ -483,6 +483,20 @@
     "sha256": "064337edb39b84d7a4dc7c7fbef089378ae64c6c1b61857224f2f9371d06d1a0"
    }
   },
+  "vilmark": {
+   "name": "比尔马克帝国试验场",
+   "region": "elvengard",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/vilmark_v1/map_export.json",
+   "min_level": 55,
+   "monster_level": 58,
+   "source": {
+    "path": "dungeon/ancient/vilmark.dgn",
+    "sha256": "4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d"
+   }
+  },
   "gbl_hatchery": {
    "name": "GBL教孵化场",
    "region": "behemoth",

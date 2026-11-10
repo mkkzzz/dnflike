@@ -780,6 +780,46 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len(selected), 1)
         self.assertIn('selected maze block 1 of 2', selected[0]['detail'])
 
+    def test_vilmark_export_keeps_six_fixed_rooms_and_item_groups(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/vilmark_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 1500)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(len(dungeon['maze_blocks']), 1)
+        self.assertEqual(dungeon['size'], [6, 1])
+        self.assertEqual(dungeon['start_map_raw'], [0, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 0])
+        self.assertEqual(len(dungeon['rooms']), 6)
+        self.assertEqual(len(dungeon['placements']), 18)
+        self.assertEqual(len(export['images']), 47)
+        self.assertEqual(len(dungeon['cells']), 6)
+        self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 10)
+        block = dungeon['maze_blocks'][0]
+        self.assertEqual(block['map_specifications'], [
+            [5, 0, 5206], [4, 0, 5205], [3, 0, 5204],
+            [2, 0, 5203], [1, 0, 5202], [0, 0, 5201],
+        ])
+        self.assertEqual(block['boss_map_specifications'], [])
+        self.assertEqual(block['hell_dungeon'], [1])
+        self.assertEqual(block['seal_door_map_index'], [60038])
+        self.assertEqual(block['seal_door_pos'], [4, 0])
+        self.assertEqual(block['seal_door_appear_rate'], [10])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(0, 0)]['map_candidates'], ['map/vilmark/s5201.map'])
+        self.assertEqual(cells[(5, 0)]['map_candidates'], ['map/vilmark/b5201.map'])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 37)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 209)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] in ('error', 'warning')])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 6)
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

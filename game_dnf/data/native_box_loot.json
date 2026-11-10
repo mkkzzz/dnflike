@@ -522,6 +522,37 @@
       "group_levels": {
         "0": -1
       }
+    },
+    "4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d": {
+      "id": "vilmark",
+      "source": {
+        "path": "dungeon/ancient/vilmark.dgn",
+        "sha256": "4505427c9068da16427cd32547f070e9f912352d7d9f9cd00ae51dcd26fee45d"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1091",
+            2000
+          ],
+          [
+            "original_1092",
+            2000
+          ]
+        ],
+        "1": [],
+        "2": [
+          [
+            "original_1079",
+            2000
+          ]
+        ]
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1,
+        "2": -1
+      }
     }
   },
   "items": {

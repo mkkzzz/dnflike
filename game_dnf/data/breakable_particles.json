@@ -364,6 +364,22 @@
    "ptl_questcagedest06",
    "ptl_questcagedest07"
   ],
+  "passiveobject/mapobject/breakableobject/eventbarrier_1.obj": [
+   "ptl_eventbarrierparticle00",
+   "ptl_eventbarrierparticle01",
+   "ptl_eventbarrierparticle02",
+   "ptl_eventbarrierparticle03",
+   "ptl_eventbarrierparticle04",
+   "ptl_eventbarrierparticle05"
+  ],
+  "passiveobject/mapobject/breakableobject/eventbarrier_2.obj": [
+   "ptl_eventbarrierparticle00",
+   "ptl_eventbarrierparticle01",
+   "ptl_eventbarrierparticle02",
+   "ptl_eventbarrierparticle03",
+   "ptl_eventbarrierparticle04",
+   "ptl_eventbarrierparticle05"
+  ],
   "passiveobject/mapobject/breakableobject/frozentree.obj": [
    "ptl_frozentreeparticle01",
    "ptl_frozentreeparticle02",
@@ -451,6 +467,46 @@
    "ptl_magmasphereshineparticle1",
    "ptl_magmasphereshineparticle2",
    "ptl_magmasphereshineparticle3"
+  ],
+  "passiveobject/mapobject/breakableobject/mobgen_1.obj": [
+   "ptl_mobgenparticle00",
+   "ptl_mobgenparticle01",
+   "ptl_mobgenparticle02",
+   "ptl_mobgenparticle03",
+   "ptl_mobgenparticle04",
+   "ptl_mobgenparticle05",
+   "ptl_mobgenparticle06",
+   "ptl_mobgenparticle07",
+   "ptl_mobgenparticle08",
+   "ptl_transporterparticle00",
+   "ptl_transporterparticle01",
+   "ptl_transporterparticle02",
+   "ptl_transporterparticle03",
+   "ptl_transporterparticle04",
+   "ptl_transporterparticle05",
+   "ptl_transporterparticle06",
+   "ptl_transporterparticle07",
+   "ptl_transporterparticle08"
+  ],
+  "passiveobject/mapobject/breakableobject/mobgen_2.obj": [
+   "ptl_mobgenparticle00",
+   "ptl_mobgenparticle01",
+   "ptl_mobgenparticle02",
+   "ptl_mobgenparticle03",
+   "ptl_mobgenparticle04",
+   "ptl_mobgenparticle05",
+   "ptl_mobgenparticle06",
+   "ptl_mobgenparticle07",
+   "ptl_mobgenparticle08",
+   "ptl_transporterparticle00",
+   "ptl_transporterparticle01",
+   "ptl_transporterparticle02",
+   "ptl_transporterparticle03",
+   "ptl_transporterparticle04",
+   "ptl_transporterparticle05",
+   "ptl_transporterparticle06",
+   "ptl_transporterparticle07",
+   "ptl_transporterparticle08"
   ],
   "passiveobject/mapobject/breakableobject/outerwalllongchair.obj": [
    "ptl_longchairparticle1",
@@ -637,6 +693,28 @@
    "ptl_stonetombparticle05",
    "ptl_stonetombparticle06",
    "ptl_stonetombparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/transporter_1.obj": [
+   "ptl_transporterparticle00",
+   "ptl_transporterparticle01",
+   "ptl_transporterparticle02",
+   "ptl_transporterparticle03",
+   "ptl_transporterparticle04",
+   "ptl_transporterparticle05",
+   "ptl_transporterparticle06",
+   "ptl_transporterparticle07",
+   "ptl_transporterparticle08"
+  ],
+  "passiveobject/mapobject/breakableobject/transporter_2.obj": [
+   "ptl_transporterparticle00",
+   "ptl_transporterparticle01",
+   "ptl_transporterparticle02",
+   "ptl_transporterparticle03",
+   "ptl_transporterparticle04",
+   "ptl_transporterparticle05",
+   "ptl_transporterparticle06",
+   "ptl_transporterparticle07",
+   "ptl_transporterparticle08"
   ],
   "passiveobject/mapobject/breakableobject/treasurepot.obj": [
    "ptl_treasurepotparticle1",
