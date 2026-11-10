@@ -83,7 +83,8 @@ func run() -> void:
 				var move: Dictionary = battle.table.moves.get(id,{})
 				if not move.is_empty():
 					var body: RichTextLabel = detail.get_node("skill_detail_body")
-					var expected_meta := "MP：%d    冷却：%.1f秒" % [int(move.get("mp",0)),float(move.get("cool_ms",0))/1000.0]
+					var cooldown: int = battle.table.weapon_cooldown_ms(move,int(move.get("cool_ms",0)))
+					var expected_meta := "MP：%d    冷却：%.1f秒" % [int(battle.skill_mp_cost(move)),cooldown/1000.0]
 					check(body.text.contains(expected_meta),mode+" "+id+" detail resources match combat")
 					var hits: Array = move.get("hits",[])
 					if id in ["khazan", "bremen", "epidemicrasa"]:
@@ -116,7 +117,8 @@ func run() -> void:
 		var expected: Dictionary = battle.table.moves["normalwave"]
 		check(game.skill_catalog.table.skill_levels==battle.table.skill_levels,"preview includes entire effective skill context")
 		check(game.skill_catalog.table.job==battle.table.job and game.skill_catalog.table.weapon==battle.table.weapon,"preview job and weapon agree with combat")
-		check(values["mp"]==float(expected.get("mp",0)) and values["cooldown"]==float(expected.get("cool_ms",0))/1000.0,"variant resource values agree with combat")
+		var cooldown: int = battle.table.weapon_cooldown_ms(expected,int(expected.get("cool_ms",0)))
+		check(values["mp"]==battle.skill_mp_cost(expected) and values["cooldown"]==cooldown/1000.0,"variant resource values agree with combat")
 		var preview_move: Dictionary = game.skill_catalog.table.moves["normalwave"]
 		game.skill_catalog.get_profile_skill("guard",game.session.profile)
 		check(is_same(preview_move, game.skill_catalog.table.moves["normalwave"]), "selecting another skill in the same context reuses compiled preview moves")

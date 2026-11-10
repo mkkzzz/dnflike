@@ -1668,7 +1668,8 @@ func begin_skill_cooldown(name: String, move: Dictionary) -> void:
 	player["cooldowns"][name] = duration_ms / 1000.0
 
 func skill_mp_cost(move: Dictionary) -> float:
-	return float(move["mp"])*(float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0)
+	var rate := float(numeric_player.values["mp_cost_rate"]) if numeric_player != null else 1.0
+	return float(table.skill_mp_cost(move,rate))
 
 func start_action(name: String, cancel := false) -> bool:
 	var m: Dictionary = table.moves.get(name,{})
@@ -1740,7 +1741,7 @@ func start_action(name: String, cancel := false) -> bool:
 		# CBCFA1 rejects HP equal to the cost before entering the skill.
 		if int(player["hp"]) <= int(hp_cost):return reject_action(name,"hp")
 	elif hp_cost > 0 and float(player["hp"]) <= hp_cost:return reject_action(name,"hp")
-	var mp_cost := 0.0 if cross_hp_payment else skill_mp_cost(m)
+	var mp_cost := skill_mp_cost(m)
 	if float(player["mp"]) < mp_cost:return reject_action(name,"mp")
 	if m.has("material_cost"):
 		var cost: Dictionary = m["material_cost"]

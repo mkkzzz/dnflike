@@ -53,7 +53,7 @@ func run() -> void:
 		check(game.numeric_player.values["intelligence"]-before["intelligence"]==rank*15,"actual cast receives source-ranked intelligence")
 		check(game.numeric_player.values["magical_attack"]==before["magical_attack"],"actual cast has no fabricated weapon-attack percentage")
 		check(game.player["buff_ms"]==20000 and game.numeric_player.effects.active["magical_memory"]["remaining_ms"]==20000,"effect presentation receives sampled duration")
-		check(is_equal_approx(game.player["mp"],game.max_mp-float(move["mp"])*float(before["mp_cost_rate"])),"existing sampled MP is paid once; interpolation is not native-certified here")
+		check(game.player["mp"]==game.max_mp-int(move["mp"]),"the unarmed cast pays its sampled MP as a whole number once")
 		game.player["state"] = "idle"
 		check(not game.start_action("magicalattackup"),"cooldown still rejects a repeat cast")
 		game.numeric_player.step(20000)

@@ -198,20 +198,29 @@ func weapon_wav(weapon: String) -> Array:
 	return rows[index] if index < rows.size() else []
 
 func weapon_cooldown_ms(move: Dictionary, base_ms: int) -> int:
-	if _swordman_weapon_item.is_empty():return base_ms
+	# 90927E consumes the binary32 CHR value and 909283 truncates before later corrections.
+	return int(NativeMotion.f32(NativeMotion.f32(float(base_ms))*_weapon_skill_rate(move,1,3)))
+
+func skill_mp_cost(move: Dictionary, rate := 1.0) -> int:
+	if move.has("cross_hp_cost"):return 0
+	# The original MP getter combines both rates before multiplying the base MP.
+	var adjusted_rate := NativeMotion.f32(NativeMotion.f32(rate)*_weapon_skill_rate(move,0,2))
+	var base_mp := NativeMotion.f32(float(move.get("mp",0)))
+	return int(NativeMotion.f32(base_mp*adjusted_rate))
+
+func _weapon_skill_rate(move: Dictionary, physical: int, magical: int) -> float:
+	if _swordman_weapon_item.is_empty():return 1.0
 	var index := int(rules["player"]["weapon_index"].get(weapon,-1))
-	if index < 0:return base_ms
+	if index < 0:return 1.0
 	var types: Array = db.original(String(move.get("skill","")),"weapon_effect_type",[])
 	var column: int
 	match types.front() if not types.is_empty() else "":
-		"[physical]":column = 1
-		"[magical]":column = 3
-		_:return base_ms
+		"[physical]":column = physical
+		"[magical]":column = magical
+		_:return 1.0
 	var values: Array = player["weapon_skill_info"]
 	var offset := index*4+column
-	if offset >= values.size():return base_ms
-	# 90927E consumes the binary32 CHR value and 909283 truncates before later corrections.
-	return int(NativeMotion.f32(NativeMotion.f32(float(base_ms))*float(values[offset])))
+	return float(values[offset]) if offset < values.size() else 1.0
 
 func _skill_row(path: String) -> Dictionary:
 	var rec: Dictionary = db.record(path)

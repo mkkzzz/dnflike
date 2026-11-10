@@ -887,15 +887,18 @@ func check_triple_cooldown() -> void:
 		game.step_game(100.0)
 		check(game.player["cooldowns"].get("triple",0.0)==4.175,
 			"the cooldown ticks after leaving state 22")
+	step(370)
+	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
+		"the next cast uses the refreshed normal three-stage move")
 
-func check_weapon_skill_cooldown() -> void:
+func check_weapon_skill_costs() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
 	profile.command("numbers.growtype",{"growtype":"berserker"})
 	for skill: String in ["normalwave","grabblastblood"]:
 		profile.command("numbers.skill_grant",{"id":skill,"level":1})
 	var catalog := SkillCatalog.new()
-	for sample: Array in [["original_27000","shortsword",2000,3149],["original_27601","katana",1900,3000],["","katana",2000,3000]]:
+	for sample: Array in [["original_27000","shortsword",2000,3149,6,19],["original_27601","katana",1900,3000,5,17],["","katana",2000,3000,6,17]]:
 		if String(sample[0]).is_empty():
 			check(profile.command("numbers.gear_unequip",{"slot":"weapon"})["ok"],"remove the weapon through the profile")
 		else:
@@ -905,20 +908,25 @@ func check_weapon_skill_cooldown() -> void:
 		var spec := profile.stats()
 		spec["skill_slots"] = ["normalwave","grabblastblood"]
 		start_room(sample[0],sample[1],1,spec,"berserker")
-		for cast: Array in [["upper",KEY_Z,sample[2]],["normalwave",KEY_A,sample[3]],["grabblastblood",KEY_S,6000]]:
+		for cast: Array in [["upper",KEY_Z,sample[2],sample[4]],["normalwave",KEY_A,sample[3],sample[5]],["grabblastblood",KEY_S,6000,37]]:
 			var skill: String = cast[0]
 			var expected := float(cast[2])/1000.0
-			game.player["mp"] = 5000.0
+			var cost := float(cast[3])
+			game.player["mp"] = cost-1.0
 			press(cast[1])
 			step(0)
-			check(game.player["action"]==skill and game.player["cooldowns"].get(skill,0.0)==expected,
-				"the weapon class adjusts the actual shortcut cooldown for "+skill+" "+sample[0])
-			check(catalog.get_profile_skill(skill,profile.profile)["cooldown"]==expected,
-				"the profile skill preview shows the same source cooldown for "+skill+" "+sample[0])
+			check(game.player["action"]=="" and game.player["mp"]==cost-1.0 and not game.player["cooldowns"].has(skill),
+				"the shortcut rejects one MP below the original fee for "+skill+" "+sample[0])
+			game.player["mp"] = cost
+			press(cast[1])
+			step(0)
+			check(game.player["action"]==skill and game.player["mp"]==0.0
+				and game.player["cooldowns"].get(skill,0.0)==expected,
+				"the shortcut pays exactly the original fee and uses the original cooldown for "+skill+" "+sample[0])
+			var preview := catalog.get_profile_skill(skill,profile.profile)
+			check(preview["cooldown"]==expected and preview["mp"]==cost,
+				"the profile preview shows the same MP and cooldown for "+skill+" "+sample[0])
 			game.end_action()
-	step(370)
-	check(game.player["action"]!="triple" and game.move_def("triple")["stages"].size()==3,
-		"the next cast uses the refreshed normal three-stage move")
 
 func check_weapon_combo() -> void:
 	var profile := ProfileSession.new()
@@ -973,16 +981,16 @@ func check_weapon_combo() -> void:
 	start_room("original_27601","katana",1,spec)
 	game.numeric_player.values["attack_speed"] = 1.0
 	game.numeric_player.values["mp_cost_rate"] = 0.75
-	game.player["mp"] = 8.5
+	game.player["mp"] = 7.0
 	press(KEY_A)
 	step(0)
 	press(KEY_A)
 	step(180)
-	check(game.player["stage"]==0 and game.player["mp"]==4.0 and game.player["queued_skill"]=="",
+	check(game.player["stage"]==0 and game.player["mp"]==3.0 and game.player["queued_skill"]=="",
 		"Insufficient MP rejects the buffered stage at the gate without charging or truncating the current swing")
-	game.player["mp"] = 4.5
+	game.player["mp"] = 4.0
 	step(1)
-	check(game.player["stage"]==0 and game.player["mp"]==4.5,"A rejected stage does not retry without another press")
+	check(game.player["stage"]==0 and game.player["mp"]==4.0,"A rejected stage does not retry without another press")
 	press(KEY_A)
 	step(0)
 	check(game.player["stage"]==1 and game.player["mp"]==0.0,"A fresh continuation accepts exactly the adjusted MP cost")
@@ -2018,13 +2026,17 @@ func check_gorecross_weapon_contact() -> void:
 				"The adult blood layers honor the target's blood flag")
 
 func check_gorecross_cost() -> void:
-	for sample: Array in [[1,0,17],[1,1,8],[2,1,12]]:
+	var catalog := SkillCatalog.new()
+	for sample: Array in [[1,0,16],[1,1,8],[2,1,12]]:
 		var profile := ProfileSession.new()
 		profile.command("numbers.level",{"level":60})
 		profile.command("numbers.growtype",{"growtype":"berserker"})
 		profile.command("numbers.skill_grant",{"id":"rage_slash","level":sample[0]})
 		var hp_payment: bool = sample[1]>0
-		if hp_payment:profile.command("numbers.skill_grant",{"id":"bloody_vigorous","level":sample[1]})
+		if hp_payment:
+			profile.command("numbers.skill_grant",{"id":"bloody_vigorous","level":sample[1]})
+			check(catalog.get_profile_skill("rage_slash",profile.profile)["mp"]==0.0,
+				"the Gore Cross preview shows zero MP when Bloodlust substitutes the HP fee")
 		var spec := profile.stats()
 		spec["skill_slots"] = ["rage_slash"]
 		start_room("original_27601","katana",1,spec,"berserker")
@@ -6900,25 +6912,25 @@ func check_rapid_move_slash_fee_failure() -> void:
 	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rapidmoveslash"]
-	for interrupted: bool in [false,true]:
+	for exit_mode: String in ["natural","interrupted","continued"]:
 		start_room("original_27601","katana",1,spec)
 		game.clear_monsters()
 		game.numeric_player.values["attack_speed"] = 1.0
 		game.numeric_player.values["mp_cost_rate"] = 1.0
 		game.numeric_player.values["cooldown_rate"] = 1.0
-		game.player["mp"] = 24.0
+		game.player["mp"] = 22.0
 		var payments: Array = []
 		session.set_skill_material_spender(func(id: int,amount: int):
 			payments.append([id,amount])
 			return false)
 		press(KEY_A)
 		step(0)
-		check(game.player["action"]=="" and payments.is_empty() and game.player["mp"]==24.0,
+		check(game.player["action"]=="" and payments.is_empty() and game.player["mp"]==22.0,
 			"an opening MP failure does not attempt material payment")
-		game.player["mp"] = 25.0
+		game.player["mp"] = 23.0
 		press(KEY_A)
 		step(0)
-		check(game.player["action"]=="" and payments==[[3037,1]] and game.player["mp"]==25.0
+		check(game.player["action"]=="" and payments==[[3037,1]] and game.player["mp"]==23.0
 			and not game.player["cooldowns"].has("rapidmoveslash"),
 			"an opening material failure leaves MP and cooldown unchanged")
 		session.set_skill_material_spender(func(id: int,amount: int):
@@ -6928,20 +6940,29 @@ func check_rapid_move_slash_fee_failure() -> void:
 		step(0)
 		check(game.player["action"]=="rapidmoveslash" and game.player["mp"]==0.0,
 			"MP exactly equal to the opening cost is accepted")
-		if interrupted:
+		if exit_mode == "interrupted":
 			game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
 		else:
 			step(160)
 			step(200)
+			game.player["mp"] = 22.0
 			press(KEY_A)
 			step(0)
 			var rejected: Array = game.bus.events_of("combat.action_rejected")
-			check(game.player["stage"]==1 and game.player["mp"]==0.0 and rejected[-1]["reason"]=="mp"
+			check(game.player["stage"]==1 and game.player["mp"]==22.0 and rejected[-1]["reason"]=="mp"
 				and not game.player["cooldowns"].has("rapidmoveslash"),
 				"an unaffordable repeat leaves the current slash and does not start cooldown early")
-			step(300)
+			if exit_mode == "continued":
+				game.player["mp"] = 23.0
+				press(KEY_A)
+				step(0)
+				check(game.player["stage"]==2 and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
+					"the next slash accepts exactly 23 MP with a katana and never charges another cube")
+				game.hurt_player(1,{"pos":POINT+Vector2(40,0)},{},-1)
+			else:
+				step(300)
 		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==19.0
-			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
+			and game.player["mp"]==(22.0 if exit_mode=="natural" else 0.0) and payments==[[3037,1],[3037,1]],
 			"interruption or natural exit starts the cooldown without another payment")
 
 func check_rapid_move_slash_afterimages() -> void:
@@ -7042,11 +7063,11 @@ func check_rapid_move_slash_animation_speed() -> void:
 		"the speed refresh keeps the already-installed 40 ms horizontal trajectory")
 	press(KEY_A)
 	step(68)
-	check(game.player["stage"]==1 and game.player["mp"]==75.0,
+	check(game.player["stage"]==1 and game.player["mp"]==77.0,
 		"the retimed slash rejects a repeat at 97 ms, one millisecond before frame two")
 	press(KEY_A)
 	step(1)
-	check(game.player["stage"]==2 and game.player["mp"]==50.0
+	check(game.player["stage"]==2 and game.player["mp"]==54.0
 		and game.action_duration("rapidmoveslash")==78.0,
 		"frame two opens at 98 ms and the next ready uses two independent 39 ms frames")
 	step(78)
@@ -7080,7 +7101,7 @@ func check_rapid_move_slash_repeat_direction() -> void:
 		step(160)
 		var duration: float = game.action_duration("rapidmoveslash")
 		step(duration-1.0)
-		check(game.player["stage"]==1 and game.player["mp"]==75.0,
+		check(game.player["stage"]==1 and game.player["mp"]==77.0,
 			"the first Rapid Move Slash remains active one millisecond before completion")
 		session.submit_key(KEY_RIGHT,true)
 		session.submit_key(KEY_LEFT,true)
@@ -7088,7 +7109,7 @@ func check_rapid_move_slash_repeat_direction() -> void:
 		if sample[1]:game.numeric_player.effects.add("confuse",{"duration_ms":1.0})
 		press(KEY_A)
 		step(1.0)
-		check(game.player["stage"]==2 and game.player["mp"]==50.0
+		check(game.player["stage"]==2 and game.player["mp"]==54.0
 			and not game.player["cooldowns"].has("rapidmoveslash"),
 			"Rapid Move Slash accepts the repeat before idle on the completion update")
 		check(game.player["facing"]==sample[2],
@@ -8677,7 +8698,7 @@ func run() -> void:
 		move_target(outside,POINT+Vector2(85,0),110.0)
 		step(50)
 		check(game.hit_count==2 and cues("upper1").size()==1 and cues("upper2").is_empty()
-			and game.player["mp"]==before_mp-game.table.moves["upper"]["mp"],
+			and game.player["mp"]==before_mp-(5.0 if family=="katana" else 6.0),
 			"at 350 ms the last box is gone, with one cast cost and no follow-up FX")
 
 	start_room("original_27000","shortsword")
@@ -8697,7 +8718,7 @@ func run() -> void:
 	check_triple_slash()
 	check_enhanced_triple_slash()
 	check_triple_cooldown()
-	check_weapon_skill_cooldown()
+	check_weapon_skill_costs()
 	check_overdrive_attributes()
 	check_reckless_attributes()
 	check_reckless_hit_strength()
