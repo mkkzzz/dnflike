@@ -1619,6 +1619,26 @@ func check_frenzy_bleed() -> void:
 			game.monsters.erase(target)
 			game.player["stuck_ms"] = 0.0
 			game.end_action()
+		for scenario: Array in [[true,5000 if rank==1 else 5364],[false,3000]]:
+			var target: Dictionary = api.spawn_dummy(POINT+Vector2(60,0))
+			target["numeric"].values["level"] = status_level
+			game.apply_effect({"kind":"effect","id":"thirst","rank":3-rank})
+			game.rng.reseed(seeds[599])
+			press(KEY_X)
+			step(0)
+			if not scenario[0]:game.numeric_player.remove_effect("thirst")
+			step(120)
+			var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
+			var duration: int = scenario[1]
+			check(bleed.get("remaining_ms")==float(duration),
+				"Frenzy samples the Thirst gate at contact and indexes its duration bonus with the Frenzy rank")
+			target["numeric"].step(duration-1)
+			check(target["numeric"].effects.active.has("bleed"),"Frenzy keeps the submitted duration through its last millisecond")
+			target["numeric"].step(1)
+			check(not target["numeric"].effects.active.has("bleed"),"Frenzy expires at the submitted duration")
+			game.monsters.erase(target)
+			game.player["stuck_ms"] = 0.0
+			game.end_action()
 
 func check_frenzy_recovery() -> void:
 	session.set_skill_material_spender(func(id: int, amount: int):return id==3037 and amount==1)

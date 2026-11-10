@@ -3540,6 +3540,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"added"})
 				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
+				if by_player and effect.get("native_frenzy",false) and not active_effect("thirst").is_empty():
+					# CC26A8 passes the current Frenzy rank to Sacrifice's column 1 lookup.
+					var row: Array = Numbers.Skills.sample(Numbers.record("sacrifice"),int(skill_levels.get("buff",1)))["level_row"]
+					if row.size() > 1:effect["duration_ms"] += int(row[1])
 				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player,int(attacker.get("id",-1))):
 					announce_source_bleed(int(target["id"]))
 				continue
