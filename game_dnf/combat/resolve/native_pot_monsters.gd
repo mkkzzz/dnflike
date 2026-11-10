@@ -1,19 +1,25 @@
 extends RefCounted
-## Hidden OBJ771 monsters selected when the source map catalog is loaded.
-const MOBS := {250:"monster/starfish/starfish.mob",260:"monster/zealot/raxy-a.mob"}
+## Hidden [monster] rows on special MAP objects, resolved through the original
+## monster index instead of a dungeon-specific numeric whitelist.
+const CATALOG := "res://data/monster_catalog.json"
+const SPRING_MOB := "monster/starfish/starfish.mob"
 const GRAVITY := -1500.0
 static var _catalog: Dictionary = {}
+static var _mob_by_id: Dictionary = {}
 
 static func rows(item: Dictionary) -> Array:
 	var raw: Array = item.get("raw",[])
-	if item.get("source_tag") != "[special passive object]" or raw.size() < 11 or raw[0] != 771:return []
+	if item.get("source_tag") != "[special passive object]" or raw.size() < 11:return []
 	var count := int(raw[4])
 	if raw.size() != 5+6*count:return []
 	var result: Array = []
 	for at in range(5,raw.size(),6):
-		if raw[at] != "[monster]" or not MOBS.has(int(raw[at+1])):return []
-		if raw[at+2] < 1 or raw[at+2] > 200 or raw[at+4] <= 0:return []
-		result.append(raw.slice(at+1,at+6))
+		if raw[at] != "[monster]":continue
+		var monster_id := int(raw[at+1])
+		var mob := _mob_path(monster_id)
+		if mob.is_empty() or raw[at+2] < 1 or raw[at+2] > 200 or raw[at+3] <= 0 or raw[at+4] <= 0:return []
+		result.append({"monster_id":monster_id,"mob":mob,"level":int(raw[at+2]),
+			"chance":int(raw[at+3]),"limit":int(raw[at+4]),"force_ground":int(raw[at+5]) != -1})
 	return result
 
 static func prepare_catalog(dungeon: Dictionary, rolls = null) -> void:
@@ -33,17 +39,36 @@ static func prepare_catalog(dungeon: Dictionary, rolls = null) -> void:
 		if not candidates.is_empty():maps[room["sha256"]] = candidates
 	_catalog[key] = maps
 
+static func reset_catalog() -> void:
+	_catalog.clear()
+
 static func prepared(dungeon_sha: String, map_sha: String, node: int) -> Array:
 	return _catalog.get(dungeon_sha,{}).get(map_sha,{}).get(node,[]).duplicate(true)
 
 ## 1031 CMap::set_map 834E5E8..6B4 uses a truncated percentage and an inclusive check.
 static func select(children: Array, rolls) -> Array:
 	var roster: Array = []
-	for row: Array in children:
-		var threshold := int(float(row[2])*100.0/float(row[3]))
-		if rolls.randi_range(0,99) <= threshold:
-			roster.append({"mob":MOBS[int(row[0])],"level":int(row[1]),"force_ground":row[4]!=-1})
+	for row in children:
+		var data: Dictionary = row if row is Dictionary else {}
+		if data.is_empty():continue
+		var threshold := int(float(data["chance"])*100.0/float(data["limit"]))
+		var roll: int = rolls.randi_range(0,99) if rolls.has_method("randi_range") else rolls.range_int(0,99)
+		if roll <= threshold:
+			roster.append({"mob":String(data["mob"]),"monster_id":int(data["monster_id"]),
+				"level":int(data["level"]),"force_ground":bool(data["force_ground"])})
 	return roster
+
+static func mob_path(monster_id: int) -> String:
+	return _mob_path(monster_id)
+
+static func _mob_path(monster_id: int) -> String:
+	if _mob_by_id.is_empty():
+		var doc = JSON.parse_string(FileAccess.get_file_as_string(CATALOG))
+		if doc is Dictionary and doc.get("schema") == "dnf_monster_catalog/1":
+			for entry in doc.get("monsters",{}).values():
+				if entry is Dictionary and entry.has("id"):
+					_mob_by_id[str(int(entry["id"]))] = String(entry.get("path","")).to_lower()
+	return String(_mob_by_id.get(str(monster_id),"")).to_lower()
 
 ## A35970 sends the ground branch or the style 1, eight-byte launch payload.
 ## The receiver applies the two signed planar axes and a mode 2 jump height.

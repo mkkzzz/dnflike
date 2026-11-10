@@ -91,6 +91,20 @@
     "sha256": "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8"
    }
   },
+  "jungle": {
+   "name": "树精丛林",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/jungle_v1/map_export.json",
+   "min_level": 28,
+   "monster_level": 31,
+   "source": {
+    "path": "dungeon/act3/jungle.dgn",
+    "sha256": "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

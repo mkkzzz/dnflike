@@ -1,0 +1,345 @@
+{
+  "schema": "dnf_native_box_loot/1",
+  "evidence": "Original DGN [special passive object item] groups and stackable sources",
+  "dungeons": {
+    "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8": {
+      "id": "outerwall",
+      "source": {
+        "path": "dungeon/act3/outerwall.dgn",
+        "sha256": "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1068",
+            1000
+          ],
+          [
+            "original_1069",
+            1500
+          ],
+          [
+            "original_1070",
+            500
+          ],
+          [
+            "original_1071",
+            500
+          ],
+          [
+            "original_1072",
+            3000
+          ]
+        ]
+      },
+      "group_levels": {
+        "0": -1
+      }
+    },
+    "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291": {
+      "id": "jungle",
+      "source": {
+        "path": "dungeon/act3/jungle.dgn",
+        "sha256": "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1068",
+            1000
+          ],
+          [
+            "original_1069",
+            1500
+          ],
+          [
+            "original_1070",
+            500
+          ],
+          [
+            "original_1071",
+            500
+          ],
+          [
+            "original_1072",
+            3000
+          ]
+        ],
+        "1": [],
+        "2": []
+      },
+      "group_levels": {
+        "0": -1,
+        "1": -1,
+        "2": 32
+      }
+    }
+  },
+  "items": {
+    "original_1068": {
+      "name": "黄金圣餐",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1160,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        10
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1068,
+        "path": "stackable/eucharist_blue.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "65ef074a21e893dc31ac2cce3fafa09cbde5e6440606c7d1df677a51431e6a19",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1068"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          0
+        ],
+        "[hp recovery]": [
+          "+",
+          680,
+          1000,
+          "myself"
+        ],
+        "[stat change]": [
+          "%",
+          20,
+          "physical equipment defense"
+        ],
+        "[stat change duration]": [
+          20000,
+          "myself"
+        ]
+      }
+    },
+    "original_1069": {
+      "name": "神圣葡萄酒",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1200,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        11
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1069,
+        "path": "stackable/wine_holygrape.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "60e9457584427d8a327373a6e8e706682ee4688c560279560aed269957e63a3b",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1069"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          1
+        ],
+        "[mp recovery]": [
+          "+",
+          330,
+          1000,
+          "myself"
+        ],
+        "[stat change]": [
+          "+",
+          45,
+          "magical defense"
+        ],
+        "[stat change duration]": [
+          60000,
+          "myself"
+        ]
+      }
+    },
+    "original_1070": {
+      "name": "蓝色圣经",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1280,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        12
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1070,
+        "path": "stackable/bible_blue.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "edee3b3bd045460bda7b3509bbfc3e0a3f8c498dbfbd8e2b73b20ca7b2d5f16a",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1070"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          10
+        ],
+        "[stat change]": [
+          "+",
+          30,
+          "physical defense",
+          "+",
+          200,
+          "stuck resistance"
+        ],
+        "[stat change duration]": [
+          60000,
+          "myself"
+        ]
+      }
+    },
+    "original_1071": {
+      "name": "圣杯",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1280,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        13
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1071,
+        "path": "stackable/grail_blue.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "561d841af0f0774034c7e74c419208795f287dd4a78dfbffe058931850eac161",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1071"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          30000
+        ],
+        "[cooltime group]": [
+          10
+        ],
+        "[stat change]": [
+          "+",
+          40,
+          "magical attack",
+          "+",
+          20,
+          "all activestatus resistance"
+        ],
+        "[stat change duration]": [
+          60000,
+          "myself"
+        ]
+      }
+    },
+    "original_1072": {
+      "name": "邪恶药剂",
+      "kind": "consumable",
+      "description": "",
+      "level": 1,
+      "rarity": 1,
+      "weight": 0.02,
+      "price": 1360,
+      "stack_limit": 1000,
+      "icon": [
+        "Item/stackable/consumption.img",
+        14
+      ],
+      "field_image": [
+        "Item/FieldImage.img",
+        33
+      ],
+      "source": {
+        "id": 1072,
+        "path": "stackable/water_wicked.stk",
+        "list": "stackable/stackable.lst",
+        "sha256": "c72e34843fce53407de333f583340fb76b68a090713af643be7d0d2380ee16d9",
+        "name_table": "stackable/stackable.kor.str",
+        "name_key": "name_1072"
+      },
+      "source_fields": {
+        "[stackable type]": [
+          "[waste]",
+          4
+        ],
+        "[cool time]": [
+          10000
+        ],
+        "[cooltime group]": [
+          10
+        ],
+        "[stat change]": [
+          "+",
+          45,
+          "physical attack",
+          "+",
+          45,
+          "magical attack",
+          "+",
+          -45,
+          "physical defense",
+          "+",
+          -45,
+          "magical defense",
+          "+",
+          -30,
+          "all elemental resistance"
+        ],
+        "[stat change duration]": [
+          60000,
+          "myself"
+        ]
+      }
+    }
+  }
+}

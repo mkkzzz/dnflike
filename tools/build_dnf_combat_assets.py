@@ -1305,6 +1305,48 @@ def publish_tree(stage: Path, target: Path, *, backup_parent: Path | None = None
     return None
 
 
+def preserve_existing_banks(manifest: dict, stage: Path, output: Path) -> None:
+    """Keep optional banks from the current tree that this static build did not regenerate."""
+    path = output / 'manifest.json'
+    if not path.is_file():
+        return
+    previous = json.loads(path.read_text(encoding='utf-8'))
+    prefix = 'res://assets_local/combat/'
+
+    def asset_paths(value):
+        if isinstance(value, str):
+            if value.startswith(prefix):
+                yield value.removeprefix(prefix)
+        elif isinstance(value, dict):
+            for child in value.values():
+                yield from asset_paths(child)
+        elif isinstance(value, list):
+            for child in value:
+                yield from asset_paths(child)
+
+    for section in ('monsters', 'objects', 'effects', 'audio', 'weapon_sounds'):
+        old_section = previous.get(section, {})
+        current = manifest.setdefault(section, {})
+        for key, entry in old_section.items():
+            if key in current:
+                continue
+            current[key] = entry
+            for relative in asset_paths(entry):
+                source = output / relative
+                target = stage / relative
+                if source.is_file() and not target.exists():
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(source, target)
+    for source, digest in previous.get('sources', {}).items():
+        manifest.setdefault('sources', {}).setdefault(source, digest)
+    known = {json.dumps(item, sort_keys=True, ensure_ascii=False) for item in manifest.get('unresolved', [])}
+    for item in previous.get('unresolved', []):
+        key = json.dumps(item, sort_keys=True, ensure_ascii=False)
+        if key not in known:
+            manifest.setdefault('unresolved', []).append(item)
+            known.add(key)
+
+
 def build(library: Path | None, output: Path = OUT) -> dict:
     global ACTIVE_OUT
     # Validate the full source library before replacing a consumable runtime.
@@ -1312,6 +1354,8 @@ def build(library: Path | None, output: Path = OUT) -> dict:
     staging_root = ROOT / 'temp'
     staging_root.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix='dnf-combat-build-', dir=staging_root))
+    if output.exists():
+        shutil.copytree(output, stage, dirs_exist_ok=True)
     ACTIVE_OUT = stage
     unresolved: list = []
     manifest = {'schema': SCHEMA, 'build_version': BUILD_VERSION, 'asset_version': src.lib.asset_version,
@@ -1449,6 +1493,7 @@ def build(library: Path | None, output: Path = OUT) -> dict:
         manifest['weapon_sounds'][weapon] = keys
     manifest['player_locomotion'] = build_locomotion(src, Atlas)
     manifest['sources'] = dict(sorted(src.sources.items()))
+    preserve_existing_banks(manifest, stage, output)
     (ACTIVE_OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     summary = {'monsters': list(manifest['monsters']), 'objects': list(manifest['objects']),
                'effects': len(manifest['effects']), 'digits': len(manifest['digits']['items']),

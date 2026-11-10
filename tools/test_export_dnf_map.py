@@ -112,6 +112,17 @@ class LibraryExport(unittest.TestCase):
             self.assertEqual(dungeon['gate_objects']['5542']['parts'], [])
             self.assertEqual(dungeon['gate_objects']['5545']['parts'], [])
 
+    def test_jungle_export_uses_verified_layout_and_ingress_pairs(self):
+        export = json.loads((ROOT / 'game_dnf/assets_local/native_maps/jungle_v1/map_export.json').read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['rooms']['map/jungle/s3201(1,3).map']['greed_pairs'], [[1, 1]])
+        self.assertEqual(dungeon['rooms']['map/jungle/b3202(3,0).map']['greed_pairs'], [[4, 4]])
+        self.assertEqual(len(dungeon['rooms']), 20)
+        self.assertEqual(len(dungeon['placements']), 52)
+        self.assertEqual(sum(len(cell['doors']) for cell in dungeon['cells']), 36)
+
     def test_outerwall_export_and_first_entry_use_native_map_pairs(self):
         from build_dnf_dungeon_route import build, cell_graph, resolve_selected_room
 

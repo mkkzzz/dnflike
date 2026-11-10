@@ -22,10 +22,10 @@ const NativeBreakable = preload("res://combat/resolve/native_breakable.gd")
 const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
 const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
 const NativeZealotSummons = preload("res://combat/resolve/native_zealot_summons.gd")
-const NativeBoxLoot = preload("res://loot/native_box.gd")
 const DetRng = preload("res://core/det_rng.gd")
 
 var game: Node
+var last_start_error := ""
 
 func mount(parent: Node, external := true) -> Node:
 	game = (load(SCENE) as PackedScene).instantiate()
@@ -55,22 +55,36 @@ func set_skill_material_spender(spend: Callable) -> void:
 	if _alive():game.skill_material_spender = spend
 
 func start_room(spec: Dictionary) -> bool:
+	last_start_error = ""
 	if not _alive() or game.missing_assets:return false
 	var player_spec: Dictionary=spec.get("player",{})
 	if not preload("res://content/api/weapon_appearance.gd").valid_spec(player_spec):return false
 	var route: Dictionary=spec.get("route",{})
 	var maze: NativeMaze
 	if route.get("mode","") == "native_maze":
-		if not route.has("map_export") or spec.get("dungeon") != "outerwall":return false
-		var probe = game.map_loader.get_script().new()
-		if not probe.load_export(String(route["map_export"])):return false
-		maze = NativeMaze.new()
-		if not maze.start(probe.data,DetRng.new(hash(String(spec.get("run_id","standalone"))))):return false
-		if not NativeBoxLoot.ready(probe.data["dungeon"]):return false
-		if not NativeJarTraps.ready(game.combat_assets):return false
-		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
+		if not route.has("map_export"):
+			last_start_error = "native_maze route has no map export"
 			return false
-		NativePotMonsters.prepare_catalog(probe.data["dungeon"])
+		var probe = game.map_loader.get_script().new()
+		if not probe.load_export(String(route["map_export"])):
+			last_start_error = "native_maze export failed to load"
+			return false
+		maze = NativeMaze.new()
+		if not maze.start(probe.data,DetRng.new(hash(String(spec.get("run_id","standalone")))),
+				route.get("source",{})):
+			last_start_error = "native_maze preparation: " + maze.last_error
+			return false
+		if not game.prepare_native_box_loot(probe.data["dungeon"]):
+			last_start_error = "native box loot dependency failed"
+			return false
+		if not NativeJarTraps.ready(game.combat_assets):
+			last_start_error = "native jar trap dependency failed"
+			return false
+		if not _validate_native_maze(probe,maze) or not game.view.audio.has_dungeon_music(String(spec["dungeon"])):
+			if last_start_error.is_empty():last_start_error = "native maze BGM dependency failed"
+			return false
+		NativePotMonsters.prepare_catalog(probe.data["dungeon"],
+			DetRng.new(hash(String(spec.get("run_id","standalone"))+":pot-catalog")))
 		_use_map_export(probe)
 	elif not route.has("map_export") and game.native_maze != null:
 		var probe = game.map_loader.get_script().new()
@@ -127,7 +141,9 @@ func _use_map_export(loader) -> void:
 	game.map_loader.errors.clear()
 
 func _validate_native_maze(loader, maze: NativeMaze) -> bool:
-	if maze.basis_level <= 0:return false
+	if maze.basis_level <= 0:
+		last_start_error = "native maze basis level is missing"
+		return false
 	var pending: Array[String] = []
 	var checked := {}
 	var checked_props := {}
@@ -137,17 +153,23 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 			var mob := String(monster["mob"])
 			if mob not in pending:pending.append(mob)
 		for companion: Dictionary in room.get("companions",[]):
-			if not game.can_spawn_companion(companion):return false
+			if not game.can_spawn_companion(companion):
+				last_start_error = "native maze companion dependency missing in " + path
+				return false
 		for item: Dictionary in room.get("objects",[]):
 			if not NativeBreakable.supports(item):continue
-			for row: Array in NativePotMonsters.rows(item):
-				var mob: String = NativePotMonsters.MOBS[int(row[0])]
+			for child: Dictionary in NativePotMonsters.rows(item):
+				var mob := String(child["mob"])
 				if mob not in pending:pending.append(mob)
 			var obj := String(item["obj"])
 			var source: Dictionary = game.content.record(obj).get("native_breakable",{})
-			if source.is_empty() or int(source["object_index"]) != int(item["id"]):return false
+			if source.is_empty() or int(source["object_index"]) != int(item["id"]):
+				last_start_error = "native breakable metadata missing for " + obj
+				return false
 			var sprite: Dictionary = item.get("sprite",{})
-			if sprite.get("ani") != source["motion_ani"] or sprite.get("ani_sha256") != source["source_hashes"][source["motion_ani"]]:return false
+			if sprite.get("ani") != source["motion_ani"] or sprite.get("ani_sha256") != source["source_hashes"][source["motion_ani"]]:
+				last_start_error = "native breakable sprite mismatch for " + obj
+				return false
 			if not checked_props.has(obj):
 				if not _validate_native_breakable(source):return false
 				checked_props[obj] = true
@@ -156,11 +178,15 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 		if checked.has(mob):continue
 		checked[mob] = true
 		var kind: String = game.table.monster_by_mob(mob)
-		if kind == "":return false
+		if kind == "":
+			last_start_error = "native maze monster runtime missing: " + mob
+			return false
 		var definition: Dictionary = game.table.monsters[kind]
 		var bank: Dictionary = game.combat_assets.get("monsters",{}).get(definition["bank"],{})
 		var texture := String(bank.get("atlas",{}).get("texture",""))
-		if texture == "" or not ResourceLoader.exists(texture,"Texture2D"):return false
+		if texture == "" or not ResourceLoader.exists(texture,"Texture2D"):
+			last_start_error = "native maze monster atlas missing: " + mob
+			return false
 		if mob in NativeZealotSummons.CASTERS:
 			var summon: Dictionary = definition.get("native_spirit_summon",{})
 			if not _validate_zealot_summon(summon,bank):return false
@@ -169,7 +195,9 @@ func _validate_native_maze(loader, maze: NativeMaze) -> bool:
 		for child: String in definition.get("native_suicide",{}).get("spawn",{}).get("mobs",[]):
 			if child not in pending:pending.append(child)
 	for image: Dictionary in loader.data["images"].values():
-		if not FileAccess.file_exists(loader.base_dir.path_join(String(image["file"]))):return false
+		if not FileAccess.file_exists(loader.base_dir.path_join(String(image["file"]))):
+			last_start_error = "native map image missing: " + String(image["file"])
+			return false
 	return true
 
 func _validate_zealot_summon(summon: Dictionary, actor_bank: Dictionary) -> bool:
@@ -185,17 +213,39 @@ func _validate_zealot_summon(summon: Dictionary, actor_bank: Dictionary) -> bool
 
 func _validate_native_breakable(source: Dictionary) -> bool:
 	var timeline: Array = game.table.timeline(source["motion_ani"])
-	if timeline.size() != 1 or timeline[0]["damage_boxes"].is_empty():return false
+	if timeline.size() != 1 or timeline[0]["damage_boxes"].is_empty():
+		last_start_error = "native breakable timeline invalid: " + String(source["motion_ani"])
+		return false
 	var particle := String(source["destroy_particle"])
 	var template: Dictionary = game.combat_assets.get("particles",{}).get(particle,{})
-	if template.get("sha256") != source["source_hashes"][particle]:return false
-	var textures := {}
-	for bank: Dictionary in game.combat_assets.get("effects",{}).values():
-		if bank.has("source"):textures[bank["source"]] = bank.get("atlas",{}).get("texture","")
-	for entry: Dictionary in template["decoded"]["object_entries"]:
-		if not ResourceLoader.exists(String(textures.get(entry["path"],"")),"Texture2D"):return false
+	var pinned: bool = source.get("source",{}).has("factory")
+	if pinned and template.is_empty():
+		last_start_error = "native breakable particle template missing: " + particle
+		return false
+	if not template.is_empty():
+		if template.get("sha256") != source["source_hashes"][particle]:
+			last_start_error = "native breakable particle mismatch: " + particle
+			return false
+		var textures := {}
+		for bank: Dictionary in game.combat_assets.get("effects",{}).values():
+			if bank.has("source"):textures[bank["source"]] = bank.get("atlas",{}).get("texture","")
+		for entry: Dictionary in template["decoded"]["object_entries"]:
+			if not ResourceLoader.exists(String(textures.get(entry["path"],"")),"Texture2D"):
+				last_start_error = "native breakable particle atlas missing: " + String(entry["path"])
+				return false
+	else:
+		var keys: Array = game.breakable_particle_keys(String(source.get("object_path","")))
+		if keys.is_empty():
+			last_start_error = "native breakable particle banks missing: " + particle
+			return false
+		for key in keys:
+			var texture := String(game.combat_assets.get("effects",{}).get(String(key),{}).get("atlas",{}).get("texture",""))
+			if not ResourceLoader.exists(texture,"Texture2D"):
+				last_start_error = "native breakable effect atlas missing: " + String(key)
+				return false
 	for clip: Dictionary in game.combat_assets.get("audio",{}).get(source["hit_sound"],[]):
 		if ResourceLoader.exists(String(clip.get("file","")),"AudioStream"):return true
+	last_start_error = "native breakable hit sound missing: " + String(source["hit_sound"])
 	return false
 
 ## The outer flow owns configurable hotkeys; the internal test harness uses this bridge.

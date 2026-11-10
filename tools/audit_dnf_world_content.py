@@ -95,6 +95,45 @@ def audit() -> dict:
             str(entry.get("id", "")): entry
             for entry in source.get("placements", [])
         }
+        if dungeon.get("mode") == "native_maze":
+            species: Counter[str] = Counter()
+            monster_count = 0
+            map_ids: list[int] = []
+            source_rooms = source.get("rooms", {})
+            for map_path, room_map in source_rooms.items():
+                if room_map.get("map_id") is not None:
+                    map_ids.append(int(room_map["map_id"]))
+                for monster in room_map.get("monsters", []):
+                    source_mob = monster.get("mob")
+                    mob = str(source_mob).lower() if source_mob else ""
+                    if not mob:
+                        warnings.append(
+                            f"{dungeon_id}: {map_path} has an unparsed source monster row"
+                        )
+                        continue
+                    species[mob] += 1
+                    monster_count += 1
+                    if mob not in combat_mobs:
+                        errors.append(f"{dungeon_id}: unresolved combat mob {mob} in {map_path}")
+            rows.append(
+                {
+                    "id": dungeon_id,
+                    "name": dungeon.get("name", dungeon_id),
+                    "source": source_path,
+                    "sha256": source_sha,
+                    "min_level": minimum,
+                    "basis_level": basis,
+                    "runtime_min_level": dungeon.get("min_level"),
+                    "runtime_monster_level": dungeon.get("monster_level"),
+                    "mode": "native_maze",
+                    "rooms": len(source_rooms),
+                    "placements": len(placements),
+                    "monsters": monster_count,
+                    "species": dict(sorted(species.items())),
+                    "map_ids": map_ids,
+                }
+            )
+            continue
         rooms = dungeon.get("rooms", [])
         if not rooms:
             errors.append(f"{dungeon_id}: no runtime rooms")
@@ -143,6 +182,7 @@ def audit() -> dict:
                 "basis_level": basis,
                 "runtime_min_level": dungeon.get("min_level"),
                 "runtime_monster_level": dungeon.get("monster_level"),
+                "mode": "fixed",
                 "rooms": len(rooms),
                 "monsters": monster_count,
                 "species": dict(sorted(species.items())),

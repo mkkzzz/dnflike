@@ -93,6 +93,29 @@ def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str]
     return {role: next(iter(candidates)) for role, candidates in tracks.items()}
 
 
+def source_native_dungeon_tracks(export: dict, music: dict[str, str]) -> dict[str, str]:
+    tracks = {'normal': set(), 'boss': set()}
+    for map_path, room in export['dungeon']['rooms'].items():
+        role = ''
+        for span in room.get('raw', []):
+            if span.get('tag') != '[type]':
+                continue
+            values = span.get('values') or []
+            if len(values) == 1 and len(values[0]) >= 3:
+                role = str(values[0][2])
+            break
+        if role not in ('[normal]', '[boss]'):
+            raise ValueError(f'{map_path}: native MAP has no normal/boss role')
+        candidates = {music[key] for key in room.get('sound', []) if key in music}
+        if len(candidates) != 1:
+            raise ValueError(f'{map_path}: expected one audio.xml music cue, found {room.get("sound", [])}')
+        tracks['boss' if role == '[boss]' else 'normal'].update(candidates)
+    for role, candidates in tracks.items():
+        if len(candidates) != 1:
+            raise ValueError(f'{export["dungeon"]["path"]}: expected one {role} track, found {sorted(candidates)}')
+    return {role: next(iter(candidates)) for role, candidates in tracks.items()}
+
+
 def dungeon_music_sources(cat, library: Path) -> dict:
     routes = json.loads((GAME / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
     missing = sorted(routes.keys() - DUNGEONS.keys())
@@ -111,7 +134,10 @@ def dungeon_music_sources(cat, library: Path) -> dict:
         route = routes[key]
         export_path = route['map_export'].removeprefix('res://')
         export = json.loads((GAME / export_path).read_text(encoding='utf-8'))
-        result[key] = source_dungeon_tracks(export, route['rooms'], music)
+        if route.get('mode') == 'native_maze':
+            result[key] = source_native_dungeon_tracks(export, music)
+        else:
+            result[key] = source_dungeon_tracks(export, route['rooms'], music)
     return result
 
 

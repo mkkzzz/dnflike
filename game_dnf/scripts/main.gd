@@ -81,6 +81,7 @@ var native_maze: NativeMaze
 var native_room: Dictionary = {}
 var native_route_name := ""
 var native_bgm_volume_db := -28.0
+var native_object_gaps: Dictionary = {}
 var room_map: Dictionary = {}
 var room_width := 640.0
 var _walk_component_ready := false
@@ -3231,15 +3232,19 @@ func apply_native_prop_hits(world: Array, hit: Dictionary, power: float, seen: D
 			entry["launch"] = NativePotMonsters.launch(rng,child["force_ground"],height)
 			entry["facing"] = int(prop["facing"])
 			spawn_enemy(pos,false,table.monster_by_mob(child["mob"]),entry)
-			if not entry["launch"].is_empty() and child["mob"] == NativePotMonsters.MOBS[250]:play_sound("ZGM_SPRING")
+			if not entry["launch"].is_empty() and child["mob"] == NativePotMonsters.SPRING_MOB:play_sound("ZGM_SPRING")
 		complete_native_prop_break(prop)
 
 func complete_native_prop_break(prop: Dictionary) -> void:
 	prop["broken"] = true
 	var source: Dictionary = prop["native_breakable"]
-	var offset: Array = source["particle_offset"]
-	bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
-		"point":Vector2(prop["pos"])+Vector2(float(offset[0]),float(offset[1])),"height":float(prop["z"])+float(offset[2])})
+	if combat_assets.get("particles",{}).has(String(source["destroy_particle"])):
+		var offset: Array = source["particle_offset"]
+		bus.emit("combat.cue",{"kind":"native_particle","path":source["destroy_particle"],
+			"point":Vector2(prop["pos"])+Vector2(float(offset[0]),float(offset[1])),"height":float(prop["z"])+float(offset[2])})
+	else:
+		for particle in breakable_particle_keys(String(prop["source_path"])):
+			spawn_effect(String(particle),Vector2(prop["pos"])-Vector2(0,16),int(prop["facing"]))
 	if not String(source["destroy_sound"]).is_empty():play_sound(String(source["destroy_sound"]))
 	bus.emit("combat.prop_broken",{"node":prop["node"]})
 
@@ -4917,6 +4922,7 @@ func breakable_particle_keys(path: String) -> Array:
 
 func build_props(room: Dictionary) -> Array:
 	var out: Array = []
+	native_object_gaps.clear()
 	var objects: Array = array_of(room.get("objects"))
 	for object_index in objects.size():
 		var item: Dictionary = objects[object_index]
@@ -4925,7 +4931,8 @@ func build_props(room: Dictionary) -> Array:
 			# Source routes only enable the exact payloads supported by the adapter.
 			if NativeBreakable.supports(item):
 				var trap := NativeJarTraps.prepare(item,hash("%s:%s:trap:%d"%[run_id,room_id,object_index]))
-				var source: Dictionary = content.record(path)["native_breakable"]
+				var source: Dictionary = content.record(path).get("native_breakable",{})
+				if source.is_empty():continue
 				var timeline: Array = table.timeline(source["motion_ani"])
 				var prop := NativeBreakable.create(item,source,timeline[0]["damage_boxes"],object_index)
 				if not trap.is_empty():prop["jar_trap"] = trap
@@ -4938,6 +4945,10 @@ func build_props(room: Dictionary) -> Array:
 						child["id"] = _next_entity_id
 						_next_entity_id += 1
 					prop["pot_monsters"] = roster
+				var unresolved_traps := NativeJarTraps.unresolved_ids(item)
+				if not unresolved_traps.is_empty():
+					prop["unresolved_trap_ids"] = unresolved_traps
+					native_object_gaps[path] = unresolved_traps
 				out.append(prop)
 			continue
 		# 两类场景物件：可破坏物（打碎）与陷阱（trap/* 里有 [attack info] 的会伤害玩家）。
@@ -4991,6 +5002,9 @@ func build_props(room: Dictionary) -> Array:
 			prop["jar_trap_miss"] = true
 		out.append(prop)
 	return out
+
+func prepare_native_box_loot(dungeon: Dictionary) -> bool:
+	return NativeBoxLoot.ready(dungeon)
 
 func breakable_stage_count(data: Array) -> int:
 	if data.size() >= 7:

@@ -51,6 +51,18 @@ static func candidate_rows(item: Dictionary) -> Array:
 		result.append(raw.slice(at+1,at+6))
 	return result
 
+static func unresolved_ids(item: Dictionary) -> Array[int]:
+	var raw: Array = item.get("raw",[])
+	if item.get("source_tag") != "[special passive object]" or raw.size() < 11:return []
+	var count := int(raw[4])
+	if raw.size() != 5+6*count:return []
+	var result: Array[int] = []
+	for at in range(5,raw.size(),6):
+		if raw[at] != "[trap]":continue
+		var source_id := int(raw[at+1])
+		if source_id not in IDS and source_id not in result:result.append(source_id)
+	return result
+
 ## 7DD4DA..523 consumes rows in source order and stops at the first success.
 static func select(children: Array, rolls) -> Dictionary:
 	for row: Array in children:

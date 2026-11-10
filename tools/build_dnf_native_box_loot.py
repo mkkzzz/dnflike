@@ -1,0 +1,153 @@
+"""Compile original special passive-object item groups for native mazes."""
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+from audit_dnf_reusable_data import TextResolver
+from build_dnf_native_catalog import chinese
+from dnf_pvf import open_library, resolve
+
+
+ROOT = Path(__file__).resolve().parents[1]
+GAME = ROOT / 'game_dnf'
+OUTPUT = GAME / 'data/native_box_loot.json'
+LISTING = 'stackable/stackable.lst'
+SOURCES = {
+    'outerwall': (
+        'dungeon/act3/outerwall.dgn',
+        '4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8',
+    ),
+    'jungle': (
+        'dungeon/act3/jungle.dgn',
+        'aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291',
+    ),
+}
+
+
+def referenced_groups(route: dict) -> set[str]:
+    export_path = route.get('map_export', '').removeprefix('res://')
+    export = json.loads((GAME / export_path).read_text(encoding='utf-8'))
+    groups: set[str] = set()
+    for room in (export.get('dungeon', {}).get('rooms') or {}).values():
+        for item in room.get('objects', []):
+            raw = item.get('raw', [])
+            if item.get('source_tag') != '[special passive object]' or len(raw) < 11:
+                continue
+            if int(raw[0]) not in (300, 800):
+                continue
+            count = int(raw[4])
+            if len(raw) != 5 + 6 * count:
+                continue
+            for at in range(5, len(raw), 6):
+                if raw[at] != '[item]':
+                    continue
+                draws = int(raw[at + 2])
+                if draws < 0 and at + 3 < len(raw):
+                    draws = int(raw[at + 3])
+                if draws > 0:
+                    groups.add(str(int(raw[at + 1])))
+    return groups
+
+
+def compile_source(lib) -> dict:
+    routes = json.loads((GAME / 'data/dungeons.json').read_text(encoding='utf-8'))['dungeons']
+    index = lib.listing(LISTING)
+    text = TextResolver(lib)
+    item_cache: dict[str, dict] = {}
+    item_ids: dict[str, int] = {}
+    dungeons: dict[str, dict] = {}
+    for dungeon_id, (path, expected_sha) in SOURCES.items():
+        script = lib.script(path)
+        if not script or script['sha256'] != expected_sha:
+            raise ValueError(f'Source {path} changed')
+        fields = {field['tag']: field['values'] for field in script['fields']}
+        rows = fields.get('[special passive object item]') or []
+        groups: dict[str, list[list]] = {}
+        group_levels: dict[str, int] = {}
+        at = 0
+        while at < len(rows):
+            if at + 3 > len(rows):
+                raise ValueError(f'{path}: truncated box group')
+            group_id, level, count = rows[at:at + 3]
+            at += 3
+            if not isinstance(level, int) or not isinstance(count, int) or count < 0 or at + count * 2 > len(rows):
+                raise ValueError(f'{path}: unsupported box group')
+            entries = []
+            for cursor in range(at, at + count * 2, 2):
+                item_id, weight = rows[cursor:cursor + 2]
+                key = f'original_{int(item_id)}'
+                entries.append([key, int(weight)])
+                item_ids.setdefault(key, int(item_id))
+            at += count * 2
+            groups[str(int(group_id))] = entries
+            group_levels[str(int(group_id))] = level
+        used = referenced_groups(routes[dungeon_id])
+        if not used or not used.issubset(groups):
+            raise ValueError(f'{path}: referenced box groups are not fully compiled')
+        dungeons[expected_sha] = {
+            'id': dungeon_id,
+            'source': {'path': path, 'sha256': expected_sha},
+            'groups': {group: groups[group] for group in sorted(used, key=int)},
+            'group_levels': {group: group_levels[group] for group in sorted(used, key=int)},
+        }
+    used_items = {
+        key
+        for dungeon in dungeons.values()
+        for entries in dungeon['groups'].values()
+        for key, _ in entries
+    }
+    for key in sorted(used_items):
+        item_id = item_ids[key]
+        item_path = resolve(LISTING, index[item_id])
+        item = lib.script(item_path)
+        if not item:
+            raise ValueError(f'Missing stackable {item_id}: {item_path}')
+        item_fields = {field['tag']: field['values'] for field in item['fields']}
+        name = text.fields(lib.raw(item_path)[0])['[name]'][0]
+        stack_type = item_fields['[stackable type]'][0]
+        kind = 'consumable' if stack_type == '[waste]' else 'throwable' if stack_type == '[throw]' else 'material'
+        item_cache[key] = {
+            'name': chinese(name['text']), 'kind': kind, 'description': '',
+            'level': item_fields['[minimum level]'][0], 'rarity': item_fields['[rarity]'][0],
+            'weight': item_fields['[weight]'][0] / 1000, 'price': item_fields['[price]'][0],
+            'stack_limit': item_fields.get('[stack limit]', [1])[0],
+            'icon': item_fields['[icon]'], 'field_image': item_fields['[field image]'],
+            'source': {'id': item_id, 'path': item_path, 'list': LISTING,
+                       'sha256': item['sha256'], 'name_table': name['table'], 'name_key': name['key']},
+            'source_fields': {
+                tag: item_fields[tag] for tag in
+                ('[stackable type]', '[cool time]', '[cooltime group]', '[hp recovery]',
+                 '[mp recovery]', '[stat change]', '[stat change duration]')
+                if tag in item_fields
+            },
+        }
+    return {
+        'schema': 'dnf_native_box_loot/1',
+        'evidence': 'Original DGN [special passive object item] groups and stackable sources',
+        'dungeons': dungeons,
+        'items': {key: item_cache[key] for key in sorted(used_items)},
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--library', type=Path)
+    parser.add_argument('--check', action='store_true')
+    args = parser.parse_args()
+    lib = open_library(args.library)
+    try:
+        output = json.dumps(compile_source(lib), ensure_ascii=False, indent=2) + '\n'
+    finally:
+        lib.close()
+    if args.check:
+        if not OUTPUT.is_file() or OUTPUT.read_text(encoding='utf-8') != output:
+            raise ValueError('Native box loot differs from pinned source')
+    else:
+        OUTPUT.write_text(output, encoding='utf-8', newline='\n')
+    print('NATIVE BOX LOOT VERIFIED')
+
+
+if __name__ == '__main__':
+    main()

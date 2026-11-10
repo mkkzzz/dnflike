@@ -65,6 +65,15 @@
    "ptl_barrelparticle11",
    "ptl_barrelparticle12"
   ],
+  "passiveobject/mapobject/breakableobject/collectionboxforlotus.obj": [
+   "ptl_collectionboxparticle1",
+   "ptl_collectionboxparticle2",
+   "ptl_collectionboxparticle3",
+   "ptl_collectionboxparticle4",
+   "ptl_collectionboxparticle5",
+   "ptl_collectionboxparticle6",
+   "ptl_collectionboxparticle7"
+  ],
   "passiveobject/mapobject/breakableobject/deadcoral.obj": [
    "ptl_deadcoralparticle1",
    "ptl_deadcoralparticle2",
@@ -100,6 +109,22 @@
    "ptl_questcagedest05",
    "ptl_questcagedest06",
    "ptl_questcagedest07"
+  ],
+  "passiveobject/mapobject/breakableobject/junglelongchair.obj": [
+   "ptl_longchairparticle1",
+   "ptl_longchairparticle2",
+   "ptl_longchairparticle3",
+   "ptl_longchairparticle4",
+   "ptl_longchairparticle5",
+   "ptl_longchairparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/junglelongpot.obj": [
+   "ptl_longpotparticle1",
+   "ptl_longpotparticle2",
+   "ptl_longpotparticle3",
+   "ptl_longpotparticle4",
+   "ptl_longpotparticle5",
+   "ptl_longpotparticle6"
   ],
   "passiveobject/mapobject/breakableobject/largegrassgrakkarak.obj": [
    "ptl_grassparticle01",
@@ -148,6 +173,22 @@
    "ptl_grassparticle08",
    "ptl_grassparticle09",
    "ptl_grassparticle10"
+  ],
+  "passiveobject/mapobject/breakableobject/outerwalllongchair.obj": [
+   "ptl_longchairparticle1",
+   "ptl_longchairparticle2",
+   "ptl_longchairparticle3",
+   "ptl_longchairparticle4",
+   "ptl_longchairparticle5",
+   "ptl_longchairparticle6"
+  ],
+  "passiveobject/mapobject/breakableobject/outerwalllongpot.obj": [
+   "ptl_longpotparticle1",
+   "ptl_longpotparticle2",
+   "ptl_longpotparticle3",
+   "ptl_longpotparticle4",
+   "ptl_longpotparticle5",
+   "ptl_longpotparticle6"
   ],
   "passiveobject/mapobject/breakableobject/seagrass.obj": [
    "ptl_seagrassparticle01",
@@ -285,6 +326,14 @@
    "ptl_stoneimage_destroy3",
    "ptl_stoneimage_destroy4",
    "ptl_stoneimage_destroy5"
+  ],
+  "passiveobject/mapobject/breakableobject/treasurepot.obj": [
+   "ptl_treasurepotparticle1",
+   "ptl_treasurepotparticle2",
+   "ptl_treasurepotparticle3",
+   "ptl_treasurepotparticle4",
+   "ptl_treasurepotparticle5",
+   "ptl_treasurepotparticle6"
   ]
  }
 }

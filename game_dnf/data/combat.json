@@ -244,13 +244,23 @@
     {
      "ani": "tripleslash4",
      "atk": "character/swordman/attackinfo/tripleslash4.atk",
-     "hits": [{"percent_col": 1, "fixed_col": 4}],
+     "hits": [
+      {
+       "percent_col": 1,
+       "fixed_col": 4
+      }
+     ],
      "voice": "triple2"
     },
     {
      "ani": "tripleslash5",
      "atk": "character/swordman/attackinfo/tripleslash5.atk",
-     "hits": [{"percent_col": 2, "fixed_col": 5}],
+     "hits": [
+      {
+       "percent_col": 2,
+       "fixed_col": 5
+      }
+     ],
      "voice": "triple3"
     }
    ],
@@ -314,8 +324,8 @@
       150,
       420
      ],
-       "percent_col": 0,
-       "fixed_col": 1
+     "percent_col": 0,
+     "fixed_col": 1
     }
    ],
    "fx": [
@@ -910,6 +920,36 @@
    "mob": "monster/tau/shauta.mob",
    "bank": "tau_shauta",
    "name": "shauta"
+  },
+  "dendroid_dendroid": {
+   "mob": "monster/dendroid/dendroid.mob",
+   "bank": "dendroid_dendroid",
+   "name": "dendroid"
+  },
+  "dendroid_goliden": {
+   "mob": "monster/dendroid/goliden.mob",
+   "bank": "dendroid_goliden",
+   "name": "goliden"
+  },
+  "dendroid_rodinglo": {
+   "mob": "monster/dendroid/rodinglo.mob",
+   "bank": "dendroid_rodinglo",
+   "name": "rodinglo"
+  },
+  "hunter_alex": {
+   "mob": "monster/hunter/alex.mob",
+   "bank": "hunter_alex",
+   "name": "alex"
+  },
+  "hunter_hunter": {
+   "mob": "monster/hunter/hunter.mob",
+   "bank": "hunter_hunter",
+   "name": "hunter"
+  },
+  "hunter_rollinghunter": {
+   "mob": "monster/hunter/rollinghunter.mob",
+   "bank": "hunter_rollinghunter",
+   "name": "rollinghunter"
   }
  },
  "boss_hp_lines": 3,

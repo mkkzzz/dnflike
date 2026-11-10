@@ -56,6 +56,7 @@ def verify() -> int:
     checks = [
         ('性能防回归', [tool('check_dnf_performance.py')]),
         ('副本契约', [tool('check_dnf_dungeons.py')]),
+        ('原生宝箱表', [tool('build_dnf_native_box_loot.py'), '--check']),
         ('BGM 覆盖', [tool('check_dnf_bgm.py')]),
         ('走区一致', [tool('check_dnf_walk.py')]),
         ('任务进度', [tool('check_dnf_quests.py')]),

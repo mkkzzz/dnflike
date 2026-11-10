@@ -1,9 +1,7 @@
 extends RefCounted
-## Per-run selection for the verified ordinary OuterWall maze. Input is the
-## existing native map export, so placements, room contents and art stay shared.
+## Per-run selection for a verified native maze export. Placements, room
+## contents and art stay shared with the original DGN/MAP export.
 
-const SOURCE := "dungeon/act3/outerwall.dgn"
-const SOURCE_SHA := "4bc1517d37fdefdd4288ff0766a0bdc52d4c03248ca5e8d395e02354f05b08b8"
 const SIDES := {"left":Vector2i.LEFT,"right":Vector2i.RIGHT,"up":Vector2i.UP,"down":Vector2i.DOWN}
 const OPPOSITE := {"left":"right","right":"left","up":"down","down":"up"}
 const MASK := {"right":1,"up":2,"left":4,"down":8}
@@ -19,12 +17,17 @@ var _boss := Vector2i.ZERO
 var _current := Vector2i.ZERO
 var _ingress := ""
 var _revisit := false
+var last_error := ""
 
-func start(export: Dictionary, roll_source: RefCounted) -> bool:
+func start(export: Dictionary, roll_source: RefCounted, expected_source: Dictionary = {}) -> bool:
+	last_error = ""
 	if not _pools.is_empty() or roll_source == null or not roll_source.has_method("range_int"):return false
 	var dungeon = export.get("dungeon")
 	if export.get("schema") != "dnf_native_map/1" or not dungeon is Dictionary:return false
-	if dungeon.get("path") != SOURCE or dungeon.get("sha256") != SOURCE_SHA:return false
+	var path = dungeon.get("path")
+	var sha = dungeon.get("sha256")
+	if not path is String or path.is_empty() or not sha is String or sha.is_empty() or not dungeon.get("crc_ok",false):return false
+	if not expected_source.is_empty() and (path != expected_source.get("path") or sha != expected_source.get("sha256")):return false
 	var size := _point(dungeon.get("size"))
 	if size.x < 1 or size.y < 1:return false
 	for field: Dictionary in dungeon.get("raw",[]):
@@ -91,14 +94,24 @@ func current_room() -> Dictionary:
 ## Side is the departure door. A revisit reuses the original selection and
 ## clear state even when the new entrance would exclude that MAP on first visit.
 func move(side: String) -> Dictionary:
-	if not _cleared.has(_current) or _cleared.has(_boss):return {}
-	if side not in _cells[_current]["doors"]:return {}
+	last_error = ""
+	if not _cleared.has(_current):
+		last_error = "current native room is not cleared"
+		return {}
+	if _cleared.has(_boss):
+		last_error = "native boss room is already cleared"
+		return {}
+	if side not in _cells[_current]["doors"]:
+		last_error = "native room has no %s exit" % side
+		return {}
 	var target: Vector2i = _current + SIDES[side]
 	var revisited := _visited.has(target)
 	if not revisited:
 		var pool: Array = _pools[target]
 		var slot := _roll(_rolls,pool.size())
-		if slot < 0:return {}
+		if slot < 0:
+			last_error = "native map roll failed for cell %s" % target
+			return {}
 		_visited[target] = pool[slot]
 	_current = target
 	_ingress = OPPOSITE[side]
@@ -118,25 +131,34 @@ func _read_pools(dungeon: Dictionary, cells: Dictionary, entry: Vector2i, boss: 
 	var placements = dungeon.get("placements")
 	var slots = dungeon.get("pathgate_slots")
 	var gates = dungeon.get("gate_objects")
-	if not rooms is Dictionary or not placements is Array or not slots is Dictionary or not gates is Dictionary:return {}
+	if not rooms is Dictionary or not placements is Array or not slots is Dictionary or not gates is Dictionary:
+		last_error = "native maze lacks rooms, placements, gate slots or gate objects"
+		return {}
 	var specs := _read_specifications(dungeon.get("raw"),cells)
-	if specs.is_empty():return {}
+	if specs.is_empty():
+		last_error = "native maze specifications are incomplete"
+		return {}
 	var placed := {}
 	for placement in placements:
-		if not placement is Dictionary:return {}
+		if not placement is Dictionary:
+			last_error = "native maze placement is not a dictionary"
+			return {}
 		if placement.get("quest_maze","") != "":continue
 		var cell := _point(placement.get("cell"))
 		var path = placement.get("map")
-		if not cells.has(cell) or not path is String or not rooms.has(path):return {}
+		if not cells.has(cell) or not path is String or not rooms.has(path):
+			last_error = "native maze placement references an unknown cell or map"
+			return {}
 		if not placed.has(cell):placed[cell] = {}
-		if placed[cell].has(path):return {}
+		if placed[cell].has(path):
+			last_error = "native maze placement duplicates a cell map"
+			return {}
 		placed[cell][path] = placement
-	# The verified source topology is a tree. Each first visit consequently has
-	# one ingress from this run's start. Return paths do not filter the cache.
+	# Reachability is checked from this run's start. The source graph may be a
+	# tree or contain cycles; return paths never filter an already selected MAP.
 	var pending: Array[Vector2i] = [entry]
 	var arrivals := {entry:""}
 	var pools := {}
-	var edge_count := 0
 	while not pending.is_empty():
 		var cell: Vector2i = pending.pop_front()
 		var spec: Dictionary = cells[cell]
@@ -144,25 +166,36 @@ func _read_pools(dungeon: Dictionary, cells: Dictionary, entry: Vector2i, boss: 
 		var fixed: Array = [] if cell == entry else specs["boss" if cell == boss else "normal"].get(cell,[])
 		var pool: Array[Dictionary] = []
 		for path: String in spec["map_candidates"]:
-			if not rooms.get(path) is Dictionary or not placed.get(cell,{}).has(path):return {}
+			if not rooms.get(path) is Dictionary or not placed.get(cell,{}).has(path):
+				last_error = "native maze cell %s has an unplaced map candidate %s" % [cell, path]
+				return {}
 			var room: Dictionary = rooms[path]
 			if not _room_eligible(room,spec,cell == entry,cell == boss,ingress,fixed):continue
 			var placement := _bind_gates(placed[cell][path],cell,boss,spec["doors"],slots,gates)
-			if placement.is_empty():return {}
+			if placement.is_empty():
+				last_error = "native maze cell %s cannot bind all source gates for %s" % [cell, path]
+				return {}
 			pool.append({"map_id":int(room["map_id"]),"placement":placement})
-		if pool.is_empty():return {}
+		if pool.is_empty():
+			last_error = "native maze cell %s has no eligible first-visit map" % cell
+			return {}
 		pools[cell] = pool
 		for side: String in spec["doors"]:
 			var neighbour: Vector2i = cell + SIDES[side]
 			var opposite: String = OPPOSITE[side]
-			if not cells.has(neighbour) or opposite not in cells[neighbour]["doors"]:return {}
-			edge_count += 1
+			if not cells.has(neighbour) or opposite not in cells[neighbour]["doors"]:
+				last_error = "native maze cell %s has an unpaired %s door" % [cell, side]
+				return {}
 			if arrivals.has(neighbour):continue
 			arrivals[neighbour] = opposite
 			pending.append(neighbour)
-	if not pools.has(boss) or edge_count != 2*(pools.size()-1):return {}
+	if not pools.has(boss):
+		last_error = "native maze cannot reach the selected boss cell"
+		return {}
 	for cell: Vector2i in cells:
-		if not cells[cell]["doors"].is_empty() and not pools.has(cell):return {}
+		if not cells[cell]["doors"].is_empty() and not pools.has(cell):
+			last_error = "native maze cannot reach connected cell %s" % cell
+			return {}
 	return pools
 
 func _room_eligible(room: Dictionary, cell: Dictionary, entry: bool, boss: bool, ingress: String, fixed: Array) -> bool:

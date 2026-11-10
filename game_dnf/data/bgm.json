@@ -99,6 +99,10 @@
   "outerwall": {
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
+  },
+  "jungle": {
+   "normal": "dendroid",
+   "boss": "behemoth_b01_1"
   }
  },
  "ambience": {
@@ -286,6 +290,12 @@
    "source": "music/behemoth_b01_1.ogg",
    "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
    "bytes": 1101176
+  },
+  "dendroid": {
+   "file": "audio/bgm/dendroid.ogg",
+   "source": "music/dendroid.ogg",
+   "sha256": "0e46258f6ae02ce5e8f34c5be8aef9ec63b44af4d41aa1511477ab23ad722674",
+   "bytes": 1781155
   },
   "amb_town_01": {
    "file": "audio/bgm/amb_town_01.ogg",

@@ -686,8 +686,10 @@ func prepare_pot_fixture() -> void:
 	var unused := PotRolls.new([0])
 	NativePotMonsters.prepare_catalog(dungeon,unused)
 	check(unused.queue == [0],"later adventures reuse the prepared source catalog")
-	var miss := NativePotMonsters.select([[260,30,1,5,-1]],PotRolls.new([21]))
-	var match_edge := NativePotMonsters.select([[260,30,1,5,-1]],PotRolls.new([20]))
+	var row := {"mob":NativePotMonsters.mob_path(260),"monster_id":260,"level":30,
+		"force_ground":true,"chance":1,"limit":5}
+	var miss := NativePotMonsters.select([row],PotRolls.new([21]))
+	var match_edge := NativePotMonsters.select([row],PotRolls.new([20]))
 	check(miss.is_empty() and match_edge.size() == 1,"catalog chance rejects above the threshold and accepts equality")
 	check(NativePotMonsters.launch(PotRolls.new([1]),true,17.0).is_empty(),"the original override forces a ground release")
 
@@ -734,7 +736,7 @@ func check_pot_run() -> void:
 	check(game.monsters.size() == 1,"striking the first pot creates its one selected actor")
 	if game.monsters.size() != 1:return
 	var enemy: Dictionary = game.monsters[0]
-	check(enemy["id"] == reserved_ids[0] and enemy["mob"] == NativePotMonsters.MOBS[250]
+	check(enemy["id"] == reserved_ids[0] and enemy["mob"] == NativePotMonsters.mob_path(250)
 		and enemy["pos"] == game.constrain_pos(first["pos"]) and enemy["facing"] == 1 and enemy["z"] == 10.0
 		and enemy["native_jump_velocity"] == Vector2(-50,25) and enemy["numeric"].values["level"] == 30,
 		"airborne Starfish uses original reserved id, position, facing, signed velocity and level")
@@ -768,7 +770,7 @@ func check_pot_run() -> void:
 	game.rng = real_rng
 	var children: Array = game.monsters.filter(func(actor):return actor["hp"] > 0)
 	check(children.map(func(actor):return actor["id"]) == reserved_ids.slice(1)
-		and children.map(func(actor):return actor["mob"]) == [NativePotMonsters.MOBS[250],NativePotMonsters.MOBS[250],NativePotMonsters.MOBS[260]]
+		and children.map(func(actor):return actor["mob"]) == [NativePotMonsters.mob_path(250),NativePotMonsters.mob_path(250),NativePotMonsters.mob_path(260)]
 		and children.slice(0,2).all(func(actor):return actor["z"] == 0.0 and actor["facing"] == 1 and actor["state"] == "idle")
 		and children[2]["z"] == 10.0 and children[2]["facing"] == 1 and children[2]["native_jump_velocity"] == Vector2(-149,-74),
 		"one pot releases the ordered original mix of two grounded Starfish and one airborne Raxy")

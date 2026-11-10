@@ -1,20 +1,21 @@
 extends RefCounted
 
 const HitJudge = preload("res://combat/hit/hit_judge.gd")
-const NativeBoxLoot = preload("res://loot/native_box.gd")
-const NativePotMonsters = preload("res://combat/resolve/native_pot_monsters.gd")
-const NativeJarTraps = preload("res://combat/resolve/native_jar_traps.gd")
-const OBJECT_IDS := [300, 770, 771]
 
 ## The final header field of a special row is its nested payload count.
 static func supports(item: Dictionary) -> bool:
 	var raw: Array = item.get("raw", [])
-	if raw.size() < 4 or int(raw[0]) not in OBJECT_IDS:return false
+	var path := String(item.get("obj","")).to_lower()
+	if raw.size() < 4 or not path.contains("breakableobject/"):return false
 	match item.get("source_tag"):
 		"[passive object]":return raw.size() == 4
 		"[special passive object]":
-			return (raw.size() == 5 and int(raw[4]) == 0) or NativeBoxLoot.draw_count(item) > 0 \
-				or not NativePotMonsters.rows(item).is_empty() or not NativeJarTraps.rows(item).is_empty()
+			if raw.size() < 5:return false
+			var count := int(raw[4])
+			if raw.size() != 5+6*count:return false
+			if count == 0:return true
+			for at in range(5,raw.size(),6):
+				if raw[at] in ["[item]", "[monster]", "[trap]"]:return true
 	return false
 
 static func create(item: Dictionary, source: Dictionary, damage_boxes: Array, node: int) -> Dictionary:
@@ -22,6 +23,7 @@ static func create(item: Dictionary, source: Dictionary, damage_boxes: Array, no
 	var pos := Vector3(float(anchor[0]), float(anchor[1]), float(anchor[2]))
 	return {
 		"id": "%s#%d" % [item["obj"], node], "node": node, "native_breakable": source,
+		"source_path": String(item["obj"]).to_lower(),
 		"pos": Vector2(pos.x, pos.y), "z": pos.z, "facing": 1, "hp": int(source["hp"]),
 		"stage": 0, "broken": false, "damage_boxes": HitJudge.world_boxes(damage_boxes, pos, 1),
 	}

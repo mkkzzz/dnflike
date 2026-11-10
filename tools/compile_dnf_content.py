@@ -1015,13 +1015,54 @@ def compile_native_outerwall_breakables(passive_index: dict, add) -> None:
                 raise ValueError(f'Original breakable particle animation missing: {animation}')
             hashes[animation] = row['source']['sha256']
         obj['native_breakable'] = {
-            'object_index': source_id, 'motion_ani': motion, 'destroy_particle': particle,
+            'object_index': source_id, 'object_path': path, 'motion_ani': motion, 'destroy_particle': particle,
             'particle_offset': integers[3:6], 'hp': integers[6],
             'trigger_stage': integers[0], 'stages': integers[1], 'destroy_on_final_stage': bool(integers[2]),
             'hit_sound': strings[4], 'destroy_sound': strings[5], 'source_hashes': hashes,
             'source': {'engine_sha256': NATIVE_ZEALOT_SOURCE_SHA, 'factory': '0xA1CF36',
                        'initialize': '0xA38DB0', 'damage': '0x7FAEB7..0x7FAF85',
                        'stage': '0xA36600', 'destroy': '0xA368D0'},
+        }
+
+
+def compile_native_generic_breakables(passive_index: dict, add, records: dict) -> None:
+    """Attach the shared breakable contract to every referenced source object."""
+    reverse = {('passiveobject/' + rel).lower(): int(index) for index, rel in passive_index.items()}
+    for path in referenced_breakable_objects():
+        obj = add(path, 'obj', 'map [passive object]')
+        if not obj or 'native_breakable' in obj:
+            continue
+        fields = obj['decoded']
+        integers = fields.get('int_data') or []
+        strings = fields.get('string_data') or []
+        motions = fields.get('basic_motion') or []
+        if len(integers) != 7 or len(strings) < 6 or len(motions) != 1 or not strings[2]:
+            continue
+        motion = str(motions[0])
+        particle = resolve(path, strings[2])
+        ani = add(motion, 'ani', path)
+        ptl = add(particle, 'ptl', path)
+        if not ani or not ptl or ptl.get('unsupported') or not ptl.get('decoded'):
+            continue
+        hashes = {path: obj['source']['sha256'], motion: ani['source']['sha256'],
+                  particle: ptl['source']['sha256']}
+        complete = True
+        for entry in ptl['decoded'].get('object_entries', []):
+            animation = entry['path']
+            row = add(animation, 'ani', particle) if entry['parameter'] == -1 else records.get(animation)
+            if not row or not row.get('decoded', {}).get('timeline'):
+                complete = False
+                break
+            hashes[animation] = row['source']['sha256']
+        if not complete:
+            continue
+        obj['native_breakable'] = {
+            'object_index': reverse[path], 'object_path': path, 'motion_ani': motion, 'destroy_particle': particle,
+            'particle_offset': integers[3:6], 'hp': max(1, integers[6]),
+            'trigger_stage': integers[0], 'stages': max(1, integers[1]),
+            'destroy_on_final_stage': bool(integers[2]),
+            'hit_sound': strings[4], 'destroy_sound': strings[5], 'source_hashes': hashes,
+            'source': {'evidence': 'E-PARSE', 'motion': motion, 'destroy_particle': particle},
         }
 
 
@@ -1215,6 +1256,7 @@ def compile_scope(lib: Library, *, extra_mob_paths: tuple[str, ...] = ()) -> dic
     needed = referenced_mob_paths() | required
     passive_objects = lib.listing('passiveobject/passiveobject.lst')
     compile_native_outerwall_breakables(passive_objects, add)
+    compile_native_generic_breakables(passive_objects, add, records)
     compile_native_jar_traps(lib, passive_objects, add)
     compile_native_poison_visual(add)
     for index, rel in sorted(monsters.items()):

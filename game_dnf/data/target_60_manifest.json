@@ -694,9 +694,9 @@
     "id": 22,
     "min_level": 28,
     "path": "dungeon/act3/jungle.dgn",
-    "runtime_id": "",
+    "runtime_id": "jungle",
     "sha256": "aaa68a88b6cea80c7749fe4b5dabcea5aca6b290f27ebf1de01dc880a9457291",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 32,
@@ -4991,8 +4991,8 @@
     "level_max": 35,
     "level_min": 30,
     "path": "monster/dendroid/dendroid.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dendroid_dendroid",
+    "state": "runtime"
    },
    {
     "id": 61603,
@@ -5007,8 +5007,8 @@
     "level_max": 35,
     "level_min": 30,
     "path": "monster/dendroid/rodinglo.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dendroid_rodinglo",
+    "state": "runtime"
    },
    {
     "id": 1011,
@@ -5071,8 +5071,8 @@
     "level_max": 33,
     "level_min": 30,
     "path": "monster/hunter/rollinghunter.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "hunter_rollinghunter",
+    "state": "runtime"
    },
    {
     "id": 55014,
@@ -6279,8 +6279,8 @@
     "level_max": 36,
     "level_min": 31,
     "path": "monster/dendroid/goliden.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dendroid_goliden",
+    "state": "runtime"
    },
    {
     "id": 62607,
@@ -6383,8 +6383,8 @@
     "level_max": 36,
     "level_min": 31,
     "path": "monster/hunter/hunter.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "hunter_hunter",
+    "state": "runtime"
    },
    {
     "id": 61118,
@@ -6559,8 +6559,8 @@
     "level_max": 38,
     "level_min": 32,
     "path": "monster/hunter/alex.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "hunter_alex",
+    "state": "runtime"
    },
    {
     "id": 3015,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 18,
+   "runtime": 19,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 83,
+   "runtime": 89,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,
