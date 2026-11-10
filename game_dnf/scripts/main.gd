@@ -68,6 +68,7 @@ var companions: Array[Dictionary] = []
 var _companion_programs: Dictionary = {}
 var objects: Array = []
 var props: Array = []
+var room_blockers: Array = []
 var native_jar_traps := NativeJarTraps.new()
 var native_zealot_summons := NativeZealotSummons.new()
 var frenzy_recovery := FrenzyRecovery.new()
@@ -2917,6 +2918,9 @@ func complete_legacy_prop_break(prop: Dictionary) -> void:
 	saved["cleared"] = bool(saved.get("cleared",room_cleared))
 	saved["props"] = props.duplicate(true)
 	room_snapshots[room_index] = saved
+	for blocker: Dictionary in room_blockers:
+		if int(blocker.get("node",-1)) == int(prop.get("node",-1)):
+			blocker["active"] = false
 	bus.emit("combat.prop_broken",{"node":int(prop.get("node",-1))})
 
 func draw_hit_delay(timeline: Array, clock: float) -> int:
@@ -3590,7 +3594,7 @@ func update_enemy(enemy: Dictionary, ms: float) -> void:
 			return
 		elif Vector2(intent["move"]).length_squared() > 0:
 			var dir: Vector2 = intent["move"]
-			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt*(float(enemy["numeric"].values["move_speed"]) if enemy.has("numeric") else 1.0))
+			enemy["pos"] = move_in_world(enemy["pos"],Vector2(dir.x,dir.y*float(rules["units"]["depth_speed_ratio"]))*float(m["speed"])*dt*(float(enemy["numeric"].values["move_speed"]) if enemy.has("numeric") else 1.0),float(enemy["z"]))
 			if state != "move":enemy["clock"] = 0.0
 			enemy["state"] = "move"
 		else:
@@ -3658,7 +3662,7 @@ func advance_native_flight(enemy: Dictionary, dt: float) -> bool:
 	var velocity: Vector2 = enemy["native_jump_velocity"]
 	var gravity := float(enemy["native_jump_gravity"])
 	var vz := float(enemy["vz"])
-	enemy["pos"] = move_in_world(enemy["pos"],velocity*dt)
+	enemy["pos"] = move_in_world(enemy["pos"],velocity*dt,float(enemy["z"]))
 	enemy["z"] = maxf(0.0,float(enemy["z"])+(vz+0.5*gravity*dt)*dt)
 	enemy["vz"] = vz+gravity*dt
 	var landed := float(enemy["z"]) == 0.0 and float(enemy["vz"]) <= 0.0
@@ -4903,6 +4907,40 @@ func breakable_destroy_sound(strings: Array) -> String:
 		return String(strings[2])
 	return ""
 
+func build_room_blockers(room: Dictionary) -> Array:
+	var broken := {}
+	for prop: Dictionary in props:
+		if bool(prop.get("broken",false)):
+			broken[int(prop["node"])] = true
+	var out: Array = []
+	var objects: Array = array_of(room.get("objects"))
+	for object_index in objects.size():
+		var item: Dictionary = objects[object_index]
+		var pass_type := str(item.get("pass_type",""))
+		if pass_type not in ["[do not pass]","[pass only float type]"]:
+			continue
+		var anchor: Array = array_of(item.get("anchor"))
+		if anchor.size() < 2:
+			continue
+		# Hanging lamps and banners carry an overhead source height and do not
+		# obstruct the ground plane.
+		var height := float(anchor[2]) if anchor.size() > 2 else 0.0
+		if height >= 100.0:
+			continue
+		var width: Array = array_of(item.get("width"))
+		if width.size() < 2 or float(width[0]) <= 0.0 or float(width[1]) <= 0.0:
+			continue
+		var pos := Vector2(float(anchor[0]),float(anchor[1]))
+		var size := Vector2(float(width[0]),float(width[1]))
+		out.append({
+			"node":object_index,
+			"source_path":str(item.get("obj","")).to_lower(),
+			"pass_type":pass_type,
+			"collision":Rect2(pos.x-size.x*0.5,pos.y-size.y,size.x,size.y),
+			"active":not broken.has(object_index),
+		})
+	return out
+
 ## 陷阱的伤害间隔：原版 .obj 的 [int data] 里有一位像冷却（cryplant 为 2000），
 ## 语义未完全确定，先统一按 2 秒（E-INFER）。
 const HAZARD_INTERVAL_MS := 2000.0
@@ -4959,6 +4997,17 @@ func route_exit_target(alive_count: int) -> Vector2:
 func walkable(p: Vector2) -> bool:
 	if room_map.is_empty() or p.x < 0 or p.x >= room_width:return false
 	return map_loader.is_walkable(room_map,p.x,p.y)
+
+func ground_passable(p: Vector2, z := 0.0) -> bool:
+	if not walkable(p):return false
+	for blocker: Dictionary in room_blockers:
+		if blocker_blocks_at(blocker,p,z):return false
+	return true
+
+func blocker_blocks_at(blocker: Dictionary, p: Vector2, z := 0.0) -> bool:
+	if not bool(blocker.get("active",true)) or not (blocker["collision"] as Rect2).has_point(p):
+		return false
+	return String(blocker["pass_type"]) != "[pass only float type]" or z <= 0.0
 
 ## Route doors must use the room's main connected floor, not a decorative or isolated pass island.
 func main_walk_cells() -> Dictionary:
@@ -5069,14 +5118,14 @@ func constrain_pos(value: Vector2) -> Vector2:
 			if walkable(value+d):return value+d
 	return value
 
-func move_in_world(from: Vector2,delta: Vector2) -> Vector2:
+func move_in_world(from: Vector2,delta: Vector2,z := 0.0) -> Vector2:
 	var result := from
-	if walkable(from+Vector2(delta.x,0)):result = from+Vector2(delta.x,0)
-	if walkable(result+Vector2(0,delta.y)):result += Vector2(0,delta.y)
+	if ground_passable(from+Vector2(delta.x,0),z):result = from+Vector2(delta.x,0)
+	if ground_passable(result+Vector2(0,delta.y),z):result += Vector2(0,delta.y)
 	return result
 
 func move_player(delta: Vector2) -> void:
-	player["pos"] = move_in_world(player["pos"],delta)
+	player["pos"] = move_in_world(player["pos"],delta,float(player["z"]))
 
 func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 	var pos: Vector2 = player["pos"]
@@ -5090,7 +5139,7 @@ func move_along_ground_pixels(dx: float, dy := 0.0) -> void:
 		var direction := signi(target-start)
 		while pixel[axis] != target:
 			pixel[axis] += direction
-			if not walkable(Vector2(pixel)):break
+			if not ground_passable(Vector2(pixel),float(player["z"])):break
 			start = pixel[axis]
 		# 8A8D63 writes the last clear pixel when blocked.
 		pos[axis] = pos[axis]+distance if start == target else float(start)
@@ -5106,6 +5155,7 @@ func load_room(index: int, from_side: String) -> void:
 	native_jar_traps.clear(self)
 	update_khazan_aura()
 	leave_action()
+	room_blockers.clear()
 	room_index = index
 	room_id = "%s:%d"%[dungeon_id,index]
 	bar_target = -1
@@ -5133,6 +5183,7 @@ func load_room(index: int, from_side: String) -> void:
 			doors.append({"side":next_side,"to":index+1,"pos":door_point(next_side)})
 		room_cleared = bool(saved.get("cleared",false))
 		props = saved["props"].duplicate(true) if saved.has("props") else build_props(room_map)
+	room_blockers = build_room_blockers(room_map)
 	# props 由地图静态美术承载（native_map_loader 已画），这里不再交给视图二次渲染；
 	# 破坏时用 combat.prop_broken 按 prop_node 下标隐藏对应节点。
 	bus.emit("combat.room_loaded",{"room_index":index,"room_id":room_id,"placement":String(placement["id"]),"props":[]})
@@ -5333,7 +5384,7 @@ func update_companion(companion: Dictionary, ms: float) -> void:
 	var move := Vector2(signf(offset.x) if absf(offset.x)>keep else 0.0,signf(offset.y) if absf(offset.y)>8.0 else 0.0)
 	if not move.is_zero_approx():
 		var speed := float(rules["player"]["walk_speed"])*float(actor.values["move_speed"])*ms/1000.0
-		companion["pos"] = move_in_world(origin,Vector2(move.x,move.y*float(rules["units"]["depth_speed_ratio"]))*speed)
+		companion["pos"] = move_in_world(origin,Vector2(move.x,move.y*float(rules["units"]["depth_speed_ratio"]))*speed,float(companion["z"]))
 		companion["state"] = "move"
 	else:companion["state"] = "idle"
 	companion["clock"] = float(companion["clock"])+ms if state==companion["state"] else 0.0
@@ -5393,7 +5444,7 @@ func step_companion_action(companion: Dictionary, ms: float) -> void:
 	companion["clock"] = t
 	if not phase.is_empty():
 		var dx := Kernel.NativeWave.distance(phase,t)-Kernel.NativeWave.distance(phase,old_t)
-		if dx != 0.0:companion["pos"] = move_in_world(companion["pos"],Vector2(dx*int(companion["facing"]),0))
+		if dx != 0.0:companion["pos"] = move_in_world(companion["pos"],Vector2(dx*int(companion["facing"]),0),float(companion["z"]))
 	companion_action_events(companion,move,companion_action_clock(companion,old_t),companion_action_clock(companion,t))
 	var duration := float(move["duration"] if phase.is_empty() else phase["end_ms"])
 	if t >= duration:
