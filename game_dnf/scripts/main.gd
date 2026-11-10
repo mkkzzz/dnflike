@@ -504,9 +504,13 @@ func _input(event: InputEvent) -> void:
 	var code := int(key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode)
 	if external_mode and code in FLOW_OWNED_KEYS:return
 	if key_event.echo:return
-	if key_event.pressed and not held.get(code,false):
-		if code in [KEY_UP,KEY_DOWN]:last_depth_key = code
-		elif code in [KEY_LEFT,KEY_RIGHT]:last_horizontal_key = code
+	if key_event.pressed:
+		if not held.get(code,false):
+			if code in [KEY_UP,KEY_DOWN]:last_depth_key = code
+			elif code in [KEY_LEFT,KEY_RIGHT]:last_horizontal_key = code
+		elif player.get("action","") == "rage_slash" and (code == KEY_X or skill_request(code) == "rage_slash"):
+			# 113D840 accepts a fresh press for the basic attack and shortcut queries.
+			return
 	held[code] = key_event.pressed
 	if code in [KEY_LEFT,KEY_RIGHT]:
 		var direction := -1 if code == KEY_LEFT else 1

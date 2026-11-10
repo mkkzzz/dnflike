@@ -1646,23 +1646,39 @@ func check_gorecross_wave() -> void:
 
 func check_gorecross_followup() -> void:
 	for sample: Array in [[349,KEY_X,"berserker",false],[350,KEY_X,"berserker",true],
-			[499,KEY_A,"berserker",true],[500,KEY_A,"berserker",false],[350,KEY_X,"weaponmaster",false]]:
+			[499,KEY_D,"berserker",true],[500,KEY_A,"berserker",false],[350,KEY_X,"weaponmaster",false]]:
 		var profile := ProfileSession.new()
 		profile.command("numbers.level",{"level":60})
 		profile.command("numbers.growtype",{"growtype":sample[2]})
 		profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
 		var spec := profile.stats()
-		spec["skill_slots"] = ["rage_slash"]
+		var hold_cast_key: bool = sample[1]==KEY_D
+		spec["skill_slots"] = ["","","rage_slash"] if hold_cast_key else ["rage_slash"]
 		var facing := -1 if sample[0]==499 else 1
 		start_room("original_27601","katana",facing,spec,sample[2])
-		press(KEY_A)
+		var send_followup := func(down: bool, echo := false):
+			if hold_cast_key:session.submit_skill(2,down,echo)
+			else:session.submit_key(sample[1],down,echo)
+		if hold_cast_key:send_followup.call(true)
+		else:press(KEY_A)
 		step(0)
 		game.numeric_player.values["attack_speed"] = 1.0
-		step(float(sample[0])-1.0)
+		if sample[3]:
+			if not hold_cast_key:send_followup.call(true)
+			step(200)
+			step(float(sample[0])-201.0)
+			send_followup.call(true,true)
+			send_followup.call(true)
+			step(1)
+			check(game.player["stage"]==0,"Gore Cross rejects a held key and repeated key-down within the window")
+			send_followup.call(false)
+		else:
+			step(float(sample[0])-1.0)
 		var mp: float = game.player["mp"]
 		var hp: float = game.player["hp"]
-		press(sample[1])
-		step(1)
+		send_followup.call(true)
+		send_followup.call(false)
+		step(0 if sample[3] else 1)
 		check((game.player["stage"]==1)==sample[3],"Gore Cross checks job, shortcut and both native input boundaries: %s"%[sample])
 		if not sample[3]:
 			step(502.0-float(sample[0]))
