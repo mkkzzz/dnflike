@@ -5043,8 +5043,11 @@ func check_illusion_finish() -> void:
 		and game.objects[0]["life_ms"]==800 and game.objects[0]["next_hit_reset"]==160.0
 		and game.objects[0]["hit_resets_left"]==4,
 		"the fully charged wave uses the upper damage, lifetime and contact limits")
-	for sample: Array in [[6,1,KEY_DOWN,500,125,3,"illusion_wave_bottom1",20],
-			[7,-1,KEY_UP,600,60,9,"illusion_wave_bottom2",70]]:
+	for sample: Array in [[6,1,[KEY_DOWN],500,125,3,"illusion_wave_bottom1",20],
+			[7,-1,[KEY_UP],600,60,9,"illusion_wave_bottom2",70],
+			[6,1,[KEY_UP,KEY_DOWN],500,125,3,"illusion_wave_bottom1",20],
+			[7,-1,[KEY_DOWN,KEY_UP],600,60,9,"illusion_wave_bottom2",70],
+			[7,-1,[KEY_UP,KEY_DOWN],600,60,9,"illusion_wave_bottom2",70,true]]:
 		spec["skills"]["shortswordmastery"] = sample[0]
 		var facing: int = sample[1]
 		start_room("","shortsword",facing,spec)
@@ -5057,9 +5060,10 @@ func check_illusion_finish() -> void:
 		for slash: int in 9:step(150)
 		check(game.player["stage"]==4,"the short sword automatically reaches the finisher")
 		game.step_objects(1000.0)
-		session.submit_key(int(sample[2]),true)
+		for key: int in sample[2]:session.submit_key(key,true)
+		if sample.size()>8:session.submit_key(KEY_DOWN,false)
 		step(300.0)
-		session.submit_key(int(sample[2]),false)
+		for key: int in sample[2]:session.submit_key(key,false)
 		var wave: Dictionary = game.objects[0]
 		var visible: Array = game.view_snapshot()["objects"]
 		check(wave["life_ms"]==sample[3] and wave["next_hit_reset"]==sample[4]
@@ -5375,7 +5379,8 @@ func check_rapid_move_slash_depth() -> void:
 	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["rapidmoveslash"]
-	for sample: Array in [[1,KEY_DOWN,1.0,1],[-1,KEY_UP,1.25,-1],[1,KEY_UP,1.0,0]]:
+	for sample: Array in [[1,KEY_DOWN,1.0,1],[-1,KEY_UP,1.25,-1],[1,KEY_UP,1.0,0],
+			[1,KEY_DOWN,1.0,1,KEY_UP],[-1,KEY_UP,1.25,-1,KEY_DOWN]]:
 		start_room("original_27601","katana",sample[0],spec)
 		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
 		game.clear_monsters()
@@ -5386,6 +5391,7 @@ func check_rapid_move_slash_depth() -> void:
 		for row: Array in game.room_map["walk_grid"]:row.fill(0)
 		press(KEY_A)
 		step(159.0/rate)
+		if sample.size()>4:session.submit_key(sample[4],true)
 		session.submit_key(sample[1],true)
 		check(game.player["pos"]==POINT,"Rapid Move Slash stays still while reading the ready animation")
 		if depth == 0:session.submit_key(sample[1],false)

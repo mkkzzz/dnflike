@@ -92,6 +92,7 @@ var taps: Dictionary = {}
 var requests: Array = []
 var last_direction_tap: Dictionary = {}
 var last_direction_release: Dictionary = {}
+var last_depth_key: int = KEY_UP
 var run_direction := 0
 var bar_target := -1
 var max_hp := 0.0
@@ -483,6 +484,8 @@ func _input(event: InputEvent) -> void:
 	var code := int(key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode)
 	if external_mode and code in FLOW_OWNED_KEYS:return
 	if key_event.echo:return
+	if key_event.pressed and code in [KEY_UP,KEY_DOWN] and not held.get(code,false):
+		last_depth_key = code
 	held[code] = key_event.pressed
 	if code in [KEY_LEFT,KEY_RIGHT]:
 		var direction := -1 if code == KEY_LEFT else 1
@@ -2306,7 +2309,7 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		begin_action_slide(m["rapid_slide"],attack_rate)
 		# CBD472 samples depth at ready completion. CCC7D0/CCC820 lock it for the slash.
-		var depth := int(bool(held.get(KEY_DOWN,false)))-int(bool(held.get(KEY_UP,false)))
+		var depth := native_skill_depth()
 		if depth != 0:
 			var motion := action_slide_axis(m["rapid_depth_slide"],attack_rate)
 			motion["direction"] = depth
@@ -4200,13 +4203,19 @@ func damage_player(amount: float, source: Vector2) -> void:
 
 # ---------------------------------------------------------------- passive objects
 
+func native_skill_depth() -> int:
+	# 113CBE0 scans registered held inputs from newest to oldest.
+	if held.get(KEY_DOWN,false):
+		return -1 if last_depth_key == KEY_UP and held.get(KEY_UP,false) else 1
+	return -1 if held.get(KEY_UP,false) else 0
+
 func prepare_illusion_wave(template: Dictionary) -> Dictionary:
 	var cast: Dictionary = player["illusion_cast"]
 	var config: Dictionary = cast["move"]["illusion_wave"]
 	var ratio: int = cast["wave_ratio"]
 	var life := _native_interpolate(int(config["life"][0]),int(config["life"][1]),ratio,100)
 	var contacts := _native_interpolate(int(config["contacts"][0]),int(config["contacts"][1]),ratio,100)
-	var depth := int(bool(held.get(KEY_DOWN,false)))-int(bool(held.get(KEY_UP,false)))
+	var depth := native_skill_depth()
 	var motion: Dictionary = config["motion"].duplicate()
 	# CB539F/CB53C4 write PTL lifetime and the first rotation angle.
 	motion["life_time"] = life
