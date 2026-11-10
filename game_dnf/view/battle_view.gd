@@ -21,6 +21,8 @@ const BLIND_LAYERS := {"BlindBack":"blind_back","BlindFront":"blind_front"}
 ## Afterimage of a cancelled pose (E-ADAPT: engine-drawn in the original, no data file).
 const GHOST_MS := 320.0
 const GHOST_TINT := Color(0.62,0.78,1.0,0.6)
+const RAPID_AFTERIMAGE_MS := 240.0
+const RAPID_AFTERIMAGE_TINT := Color8(30,80,20)
 
 var world: Node2D
 var stage
@@ -253,14 +255,16 @@ func present(s: Dictionary, frame_ms: float, sim_ms: float) -> void:
 	_present_objects(s.get("objects",[]))
 	for i in range(ghosts.size()-1,-1,-1):
 		var g: Dictionary = ghosts[i]
-		g["ms"] = float(g["ms"])+frame_ms
+		var rapid := bool(g["rapid"])
+		if not g.erase("fresh"):g["ms"] = float(g["ms"])+(sim_ms if rapid else frame_ms)
 		var node = g["node"]
-		if float(g["ms"]) >= GHOST_MS or not is_instance_valid(node):
+		var duration := RAPID_AFTERIMAGE_MS if rapid else GHOST_MS
+		if float(g["ms"]) >= duration or not is_instance_valid(node):
 			if is_instance_valid(node):node.queue_free()
 			ghosts.remove_at(i)
 			continue
-		var c := GHOST_TINT
-		c.a *= 1.0-float(g["ms"])/GHOST_MS
+		var c := Color.WHITE if rapid else GHOST_TINT
+		c.a = floorf(255.0*(duration-int(g["ms"]))/duration)/255.0 if rapid else c.a*(1.0-float(g["ms"])/duration)
 		node.tint = c
 		node.queue_redraw()
 	camera_x = stage.camera_for(float(s.get("camera_focus_x",_player_pos.x)))
@@ -562,6 +566,7 @@ func _on_cue(event: Dictionary) -> void:
 					fx.fade = float(event["opacity"])
 					fx.freeze_first_frame = true
 		"ghost":_spawn_ghost(event)
+		"rapid_afterimage":_spawn_ghost(event,true)
 
 func _spawn_screen_flash(event: Dictionary) -> void:
 	var center := Vector2i(_canvas(event["point"],float(event["height"]))+world.position)
@@ -757,17 +762,31 @@ func _spawn_fx(event: Dictionary) -> void:
 				break
 	effects.append(fx)
 
-## Translucent copy of the player's pose at the moment an action is cancelled.
-func _spawn_ghost(event: Dictionary) -> void:
+## A snapshot retains its own pose, coordinates and fade clock.
+func _spawn_ghost(event: Dictionary, rapid := false) -> void:
+	if rapid and event["replace_last"]:
+		for index in range(ghosts.size()-1,-1,-1):
+			if not ghosts[index]["rapid"]:continue
+			ghosts[index]["node"].queue_free()
+			ghosts.remove_at(index)
+			break
 	var node = ActorView.new()
 	world.add_child(node)
-	if _item_appearance_enabled:WeaponAppearance.apply(node,_weapon_item,_player_clips)
+	if rapid:node.setup(player_actor.bank,player_actor.clips,player_actor.pose_banks)
+	elif _item_appearance_enabled:WeaponAppearance.apply(node,_weapon_item,_player_clips)
 	else:setup_weapon_family(node,_weapon)
 	node.shadow_width = 0
 	node.position = _canvas(Vector2(event["pos"]), 0.0)
-	node.z_index = int(Vector2(event["pos"]).y)-1
-	node.present(String(event["ani"]),float(event["clock"]),int(event["facing"]),float(event["z"]),0.0,GHOST_TINT)
-	ghosts.append({"node":node,"ms":0.0})
+	node.z_index = int(Vector2(event["pos"]).y)
+	if rapid:
+		world.move_child(node,player_actor.get_index())
+		node.set_monochrome(RAPID_AFTERIMAGE_TINT)
+	else:node.z_index -= 1
+	node.present(String(event["ani"]),float(event["clock"]),int(event["facing"]),float(event["z"]),0.0,
+		Color.WHITE if rapid else GHOST_TINT)
+	var snapshot := {"node":node,"ms":0.0,"rapid":rapid}
+	if rapid:snapshot["fresh"] = true
+	ghosts.append(snapshot)
 
 ## Bitmap damage digits (sprite/common/etc/combo.img): monster damage white, damage taken red.
 ## Positions are canvas coordinates; the HUD subtracts the camera.

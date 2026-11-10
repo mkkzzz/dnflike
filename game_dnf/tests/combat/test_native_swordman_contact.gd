@@ -5545,6 +5545,69 @@ func check_rapid_move_slash_fee_failure() -> void:
 			and game.player["mp"]==0.0 and payments==[[3037,1],[3037,1]],
 			"interruption or natural exit starts the cooldown without another payment")
 
+func check_rapid_move_slash_afterimages() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	start_room("original_27601","katana",1,spec)
+	api.spawn_dummy(POINT+Vector2(1200,100))
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.player["pos"] = POINT+Vector2(0.75,0)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	var tick := func(ms: float):
+		game.step_game(ms)
+		game.view.present(game.view_snapshot(),ms,ms)
+	var captures := func() -> Array:
+		return game.bus.events_of("combat.cue").filter(func(cue):return cue.get("kind","")=="rapid_afterimage")
+	press(KEY_A)
+	tick.call(159.0)
+	check(captures.call().is_empty(),"Rapid Move Slash does not sample its ready pose")
+	tick.call(1.0)
+	var samples: Array = captures.call()
+	var dust: Array = game.view.effects.filter(func(fx):return fx.cue_key=="rapid_move_slash_dust")
+	check(samples.size()==1 and game.view.ghosts.size()==1 and dust.size()==1,
+		"Rapid Move Slash creates a first snapshot and separate dust on entering the slash")
+	if samples.size()!=1 or game.view.ghosts.size()!=1 or dust.size()!=1:return
+	var first = game.view.ghosts[0]["node"]
+	var first_anchor: Vector2 = first.position
+	check(samples[0]["pos"]==POINT+Vector2.RIGHT and samples[0]["clock"]==0.0
+		and first.z_index==int(POINT.y) and first.get_index()<game.view.player_actor.get_index()
+		and dust[0].position==first_anchor and dust[0].clock_ms==0.0 and dust[0].follow==-1,
+		"snapshot and dust start at the rounded origin and consume no birth tick")
+	tick.call(39.0)
+	check(captures.call().size()==1 and dust[0].frame["frame"]==0,"no second snapshot before 40 ms")
+	tick.call(1.0)
+	samples = captures.call()
+	check(samples.size()==2 and samples[-1]["pos"]==Vector2(game.player["pos"]).round()
+		and first.position==first_anchor,"the second snapshot uses the new origin without dragging the first")
+	tick.call(160.0)
+	check(captures.call().size()==3 and dust[0].frame["frame"]==2 and dust[0].position==first_anchor,
+		"a late update samples once and the dust stays on its own 90 ms frame clock")
+	press(KEY_A)
+	tick.call(0.0)
+	tick.call(39.0)
+	check(game.player["stage"]==2 and captures.call().size()==3 and is_equal_approx(first.tint.a,1.0/255.0),
+		"the next ready suspends capture and the first snapshot survives through age 239")
+	tick.call(1.0)
+	check(first.is_queued_for_deletion(),"the first snapshot retires at 240 ms")
+	tick.call(120.0)
+	check(game.player["stage"]==3 and captures.call().size()==4,"the next slash resumes the same capture schedule")
+	var last = game.view.ghosts[-1]["node"]
+	game.player["stuck_ms"] = 40.0
+	tick.call(40.0)
+	samples = captures.call()
+	check(samples.size()==5 and samples[-1]["replace_last"] and last.is_queued_for_deletion()
+		and game.view.ghosts.size()==2,"an identical stationary pose replaces the latest snapshot without stacking opacity")
+	game.end_action()
+	tick.call(50.0)
+	check(captures.call().size()==5 and game.view.ghosts.size()==1 and dust[0].is_queued_for_deletion(),
+		"state exit stops capture but snapshots and the 450 ms dust retire independently")
+	tick.call(190.0)
+	check(game.view.ghosts.is_empty(),"the last snapshot drains after state exit")
+
 func check_rapid_move_slash_animation_speed() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -7098,6 +7161,7 @@ func run() -> void:
 	check_hundred_sword_automatic()
 	check_rapid_move_slash_shock()
 	check_rapid_move_slash_fee_failure()
+	check_rapid_move_slash_afterimages()
 	check_rapid_move_slash_animation_speed()
 	check_rapid_move_slash_repeat_direction()
 	check_rapid_move_slash_depth()

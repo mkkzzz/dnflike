@@ -817,6 +817,7 @@ func leave_action() -> void:
 	if player.has("rapid_move_slash_cast"):
 		begin_skill_cooldown("rapidmoveslash",player["rapid_move_slash_cast"])
 		player.erase("rapid_move_slash_cast")
+		player.erase("rapid_afterimage")
 	if player.erase("illusion_cast"):
 		# CC5290..CC52D1 removes only this actor's melee objects on leaving state 40.
 		# A hostile object can interrupt the skill from inside step_objects.
@@ -895,6 +896,7 @@ func step_game(ms: float) -> void:
 		_stepping_player = true
 		step_player(ms,move)
 		_stepping_player = false
+	if player.has("rapid_afterimage"):step_rapid_afterimage(ms)
 	# A creature admitted by another monster participates in clear checks now,
 	# and receives its first movement update on the following battle tick.
 	for index in monsters.size():update_enemy(monsters[index],ms)
@@ -2407,8 +2409,10 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	var stage := action_def()
 	if name == "rapidmoveslash":
 		if index % 2 == 1:
-			# CCCDCB positions the independent dust at the start of the slash.
-			spawn_effect("rapid_move_slash_dust",Vector2(player["pos"]).round(),int(player["facing"]),float(player["z"]))
+			if index == 1:player["rapid_afterimage"] = {"age_ms":0.0,"last_ms":-40.0,"last_pose":[]}
+			# CCCDCB places a separate drawing object at the rounded start position.
+			bus.emit("combat.cue",{"kind":"fx","key":"rapid_move_slash_dust","point":Vector2(player["pos"]).round(),
+				"height":roundf(player["z"]),"facing":int(player["facing"]),"depth_offset":0,"fresh":true})
 			play_sound("MENGRYOUNG_ATK")
 		elif index == 0:play_sound("SM_MENGRYONG_START")
 		elif index == m["stages"].size()-2:play_sound("SM_MENGRYONG_FIN")
@@ -2432,6 +2436,23 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	var event_clock := action_event_clock(opening_clock)
 	action_cues(stage,-1.0,event_clock)
 	apply_player_hits(stage,-1.0,event_clock)
+
+func step_rapid_afterimage(ms: float) -> void:
+	var trail: Dictionary = player["rapid_afterimage"]
+	if float(trail["last_ms"]) >= 0.0:trail["age_ms"] += ms
+	# 9888ED suspends capture during preparation. Late updates take one sample.
+	if int(player["stage"]) % 2 == 0 or int(trail["age_ms"]) < int(trail["last_ms"])+40:return
+	trail["last_ms"] = int(trail["age_ms"])
+	var ani := player_ani()
+	var frame := Kernel.Timeline.frame_at(action_def()["timeline"],float(ani[1]))
+	var pos := Vector2(player["pos"]).round()
+	var height := roundf(player["z"])
+	var facing := int(player["facing"])
+	var pose := [ani[0],frame["frame"],pos,height,facing]
+	# 9887CB replaces the latest snapshot when its pose and coordinates match.
+	bus.emit("combat.cue",{"kind":"rapid_afterimage","pos":pos,"z":height,"facing":facing,
+		"ani":ani[0],"clock":ani[1],"replace_last":pose==trail["last_pose"]})
+	trail["last_pose"] = pose
 
 func step_draw_charge(ms: float) -> void:
 	var config: Dictionary = move_def("draw")["draw_charge"]

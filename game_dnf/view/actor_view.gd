@@ -43,6 +43,10 @@ func clear_equipment_layers() -> void:
 	if has_meta("weapon_item"):remove_meta("weapon_item")
 	if has_meta("weapon_appearance"):remove_meta("weapon_appearance")
 
+func set_monochrome(color: Color) -> void:
+	_flash_material.set_shader_parameter("source_monochrome",true)
+	_flash_material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
+
 func set_equipment_layers(layers: Array) -> void:
 	clear_equipment_layers()
 	for info: Dictionary in layers:
