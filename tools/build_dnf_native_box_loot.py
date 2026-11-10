@@ -27,6 +27,10 @@ SOURCES = {
         'dungeon/act3/darkhell.dgn',
         'fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974',
     ),
+    'whitenight': (
+        'dungeon/act3/whitenight.dgn',
+        'a50170f3734e0a88917e27a8b741834bb68e19fcd99ec25280228c8703f94a71',
+    ),
 }
 
 

@@ -960,6 +960,36 @@
    "mob": "monster/zombie/summon_zombieholloweye.mob",
    "bank": "zombie_summon_zombieholloweye",
    "name": "summon_zombieholloweye"
+  },
+  "vehicle_battlingram": {
+   "mob": "monster/vehicle/battlingram.mob",
+   "bank": "vehicle_battlingram",
+   "name": "battlingram"
+  },
+  "vehicle_catapultflame": {
+   "mob": "monster/vehicle/catapultflame.mob",
+   "bank": "vehicle_catapultflame",
+   "name": "catapultflame"
+  },
+  "zealot_craxy": {
+   "mob": "monster/zealot/craxy.mob",
+   "bank": "zealot_craxy",
+   "name": "craxy"
+  },
+  "zealot_pope": {
+   "mob": "monster/zealot/pope.mob",
+   "bank": "zealot_pope",
+   "name": "pope"
+  },
+  "zepplin_zepplin": {
+   "mob": "monster/zepplin/zepplin.mob",
+   "bank": "zepplin_zepplin",
+   "name": "zepplin"
+  },
+  "zepplin_zepplinmachinegun": {
+   "mob": "monster/zepplin/zepplinmachinegun.mob",
+   "bank": "zepplin_zepplinmachinegun",
+   "name": "zepplinmachinegun"
   }
  },
  "boss_hp_lines": 3,

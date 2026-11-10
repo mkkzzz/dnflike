@@ -39,6 +39,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act3/outerwall.dgn',
     'dungeon/act3/jungle.dgn',
     'dungeon/act3/darkhell.dgn',
+    'dungeon/act3/whitenight.dgn',
 }
 LAYERS = ['distantback', 'middleback', 'bottom', 'closeback', 'normal', 'close']
 DEFAULT_OUTPUT = ROOT / 'game_dnf/assets_local/native_maps'

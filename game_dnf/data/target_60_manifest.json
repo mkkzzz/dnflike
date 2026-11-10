@@ -720,9 +720,9 @@
     "id": 24,
     "min_level": 30,
     "path": "dungeon/act3/whitenight.dgn",
-    "runtime_id": "",
+    "runtime_id": "whitenight",
     "sha256": "a50170f3734e0a88917e27a8b741834bb68e19fcd99ec25280228c8703f94a71",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 35,
@@ -6503,8 +6503,8 @@
     "level_max": 38,
     "level_min": 31,
     "path": "monster/zealot/pope.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealot_pope",
+    "state": "runtime"
    },
    {
     "id": 55024,
@@ -6631,32 +6631,32 @@
     "level_max": 34,
     "level_min": 32,
     "path": "monster/vehicle/battlingram.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "vehicle_battlingram",
+    "state": "runtime"
    },
    {
     "id": 272,
     "level_max": 34,
     "level_min": 32,
     "path": "monster/vehicle/catapultflame.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "vehicle_catapultflame",
+    "state": "runtime"
    },
    {
     "id": 263,
     "level_max": 38,
     "level_min": 32,
     "path": "monster/zealot/craxy.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealot_craxy",
+    "state": "runtime"
    },
    {
     "id": 281,
     "level_max": 35,
     "level_min": 32,
     "path": "monster/zepplin/zepplinmachinegun.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zepplin_zepplinmachinegun",
+    "state": "runtime"
    },
    {
     "id": 62765,
@@ -6711,8 +6711,8 @@
     "level_max": 36,
     "level_min": 33,
     "path": "monster/zepplin/zepplin.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zepplin_zepplin",
+    "state": "runtime"
    },
    {
     "id": 62627,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 20,
+   "runtime": 21,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 91,
+   "runtime": 97,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

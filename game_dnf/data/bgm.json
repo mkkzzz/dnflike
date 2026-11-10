@@ -107,6 +107,10 @@
   "jungle": {
    "normal": "dendroid",
    "boss": "behemoth_b01_1"
+  },
+  "whitenight": {
+   "normal": "whitenight",
+   "boss": "whitenight_boss"
   }
  },
  "ambience": {
@@ -312,6 +316,18 @@
    "source": "music/dendroid.ogg",
    "sha256": "0e46258f6ae02ce5e8f34c5be8aef9ec63b44af4d41aa1511477ab23ad722674",
    "bytes": 1781155
+  },
+  "whitenight": {
+   "file": "audio/bgm/whitenight.ogg",
+   "source": "music/whitenight.ogg",
+   "sha256": "2a74ff0e1114027a19109508dca642eaf1583a2ce7a27b68975bd16fd44b0988",
+   "bytes": 1314939
+  },
+  "whitenight_boss": {
+   "file": "audio/bgm/whitenight_boss.ogg",
+   "source": "music/whitenight_boss.ogg",
+   "sha256": "1add9540293e5eff6e85c23419ce6a499b075c836951b038fe72b20d4a5db688",
+   "bytes": 2053515
   },
   "amb_town_01": {
    "file": "audio/bgm/amb_town_01.ogg",

@@ -119,6 +119,20 @@
     "sha256": "fd954e4d7abc752b5ac7b6048a4099fa7bbfc7e752e3cefa37ecb7fe18639974"
    }
   },
+  "whitenight": {
+   "name": "极昼",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/whitenight_v1/map_export.json",
+   "min_level": 30,
+   "monster_level": 33,
+   "source": {
+    "path": "dungeon/act3/whitenight.dgn",
+    "sha256": "a50170f3734e0a88917e27a8b741834bb68e19fcd99ec25280228c8703f94a71"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],
