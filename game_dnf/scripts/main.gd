@@ -2934,6 +2934,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
 		var outrage_slash: bool = hit.get("native_controller",{}).get("kind","") == "outrage_slash"
+		var native_body_gate: bool = outrage_slash or hit.get("native_controller",{}).get("kind","") == "rapid_slash"
 		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
@@ -2950,7 +2951,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if player["hits"].has(id) or float(enemy["hp"])<=0:continue
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
-				if outrage_slash and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
+				if native_body_gate and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
 				var first_target: bool = outrage_slash and not player["hits"].keys().any(func(key):return not String(key).begins_with("prop:"))
 				player["hits"][id] = true
 				land_hit(player,enemy,contact,c["point"],facing,attack_power(),first_target)
@@ -3148,7 +3149,7 @@ func apply_native_stagger_reaction(target: Dictionary, atk: Dictionary, facing: 
 		target["stun_ms"] = float(int(_native_float32((minimum+maxi(0,delta))*delay_factor)))
 	return reaction
 
-func apply_hundred_sword_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor: float) -> String:
+func apply_native_damage_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor: float) -> String:
 	if target.has("numeric"):
 		var effects: Dictionary = target["numeric"].effects.active
 		if effects.has("freeze") or effects.has("stone"):return "none"
@@ -3160,13 +3161,13 @@ func apply_hundred_sword_reaction(target: Dictionary, atk: Dictionary, facing: i
 		return apply_native_down_flight(target,-facing,int(atk["push_aside"]),int(atk["lift_up"]),true,int(atk["ignore_weight"])!=0)
 	return apply_native_ground_stagger(target,atk,facing,recovery,delay_factor)
 
-func apply_native_down_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float) -> String:
+func apply_native_down_reaction(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor := 1.0) -> String:
 	var effects: Dictionary = target["numeric"].effects.active if target.has("numeric") else {}
 	if effects.has("freeze") or effects.has("stone"):return "none"
 	# 8186EB checks the DOWN motion or action. Overturn alone is insufficient.
 	if target["def"]["motions"].get("down","") != "":
 		return apply_native_down_flight(target,-facing,int(atk.get("push_aside",0)),int(atk.get("lift_up",0)),true)
-	return apply_native_ground_stagger(target,atk,facing,recovery,1.0)
+	return apply_native_ground_stagger(target,atk,facing,recovery,delay_factor)
 
 func apply_native_ground_stagger(target: Dictionary, atk: Dictionary, facing: int, recovery: float, delay_factor: float) -> String:
 	var reaction := apply_native_stagger_reaction(target,atk,facing,recovery,delay_factor,true)
@@ -3330,6 +3331,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
 	var native_down := native_outrage or native_kind == "bloodblast"
+	var rapid_slash := native_kind == "rapid_slash"
+	var native_reaction := native_down or rapid_slash or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3410,15 +3413,17 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
-		var armor_blocks_reaction := (native_down or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
+		var armor_blocks_reaction := (native_reaction or native_kind in ["draw_short_wave","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_native_stagger_reaction(target,atk,facing,recovery)
 			if reaction != "none":target["clock"] = 0.0
-		elif native_kind == "hundred_sword_field" and not armor_blocks_reaction:
-			reaction = apply_hundred_sword_reaction(target,atk,facing,recovery,float(hit["stagger_factor"]))
-		elif native_down and not armor_blocks_reaction:
-			reaction = apply_native_down_reaction(target,atk,facing,recovery)
+		elif native_reaction and not armor_blocks_reaction:
+			var delay_factor := float(hit.get("stagger_factor",1.0))
+			if native_down or (rapid_slash and Kernel.MoveTable.enum_value(atk,"damage_reaction") == "[down]"):
+				reaction = apply_native_down_reaction(target,atk,facing,recovery,delay_factor)
+			else:
+				reaction = apply_native_damage_reaction(target,atk,facing,recovery,delay_factor)
 		elif hit.has("native_down_facing"):
 			reaction = apply_native_down_flight(target,int(hit["native_down_facing"]),int(atk.get("push_aside",0)),int(atk.get("lift_up",0)))
 		elif not armor_blocks_reaction and (not contact_only or target["state"] == NativeZealotSummons.CAST_STATE):
@@ -3427,7 +3432,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			if reaction != "none":
 				target.erase("native_down_phase")
 				target.erase("native_down_peak")
-		if not armor_blocks_reaction and (reaction != "none" or (not native_down and native_kind != "hundred_sword_field")):
+		if not armor_blocks_reaction and (reaction != "none" or not native_reaction):
 			target["clock"] = 0.0
 		target["flash_ms"] = 65.0
 		if victim == "monster" and by_player and not draw_impact:

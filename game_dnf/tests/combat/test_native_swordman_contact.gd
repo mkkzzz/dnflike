@@ -5372,6 +5372,7 @@ func check_rapid_move_slash() -> void:
 			return true)
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
 		target["hp"] = 50000.0
+		target["numeric"].values["hit_recovery"] = 0.0
 		var move: Dictionary = game.move_def("rapidmoveslash")
 		var count := 4 if rank == 3 else 5
 		check(game.skill_levels["shortswordmastery"]==rank+3 and move["stages"].size()==2*count,
@@ -5389,6 +5390,8 @@ func check_rapid_move_slash() -> void:
 			and opener["atk_path"].ends_with("/rapidmoveslash1.atk"),
 			"the ready ANI advances to a first-frame weapon hit without a second press")
 		check(game.player["mp"]==180.0,"an automatic transition does not charge MP")
+		check(target["state"]=="hurt" and target["stun_ms"]==2.0*game.move_def("draw")["draw_stagger"]["max_ms"]
+			and target["vz"]==0.0,"an ordinary Rapid Move Slash applies the source ground stagger and 2.0 delay factor")
 		check(game.player["stuck_ms"]==15.0 and target["stuck_ms"]==15.0 and cues("JAKYEOL_HIT").size()==1
 			and cues("MENGRYOUNG_ATK").size()==1 and cues("rapid_move_slash_dust").size()==1,
 			"the opening contact and dash use the original pause and audio/dust cues")
@@ -5408,14 +5411,16 @@ func check_rapid_move_slash() -> void:
 		press(KEY_A)
 		step(99)
 		check(game.player["stage"]==1 and game.player["mp"]==180.0,"an early repeat neither skips frame two nor pays MP")
+		var victim: Dictionary
 		for slash in range(1,count):
 			step(1 if slash==1 else 200)
 			press(KEY_A)
 			step(0)
 			check(game.player["stage"]==2*slash,"a valid repeat starts the next ready phase")
 			if slash == count-1:
-				var victim: Dictionary = api.spawn_dummy(Vector2(game.player["pos"])+Vector2(20,0))
+				victim = api.spawn_dummy(Vector2(game.player["pos"])+Vector2(20,0))
 				victim["hp"] = 50000.0
+				victim["def"] = victim["def"].merged({"weight":45000 if rank==3 else 300000},true)
 			step(160)
 			check(game.player["stage"]==2*slash+1,"the next ready phase automatically slashes")
 			check(game.player["mp"]==180.0-20.0*slash and payments==[[3037,1]]
@@ -5428,6 +5433,12 @@ func check_rapid_move_slash() -> void:
 		check(game.hit_count==2 and game.bus.events_of("combat.damage")[-1]["reaction"]=="launch"
 			and is_equal_approx(game.action_def()["fx"][1]["scale"],0.77),
 			"the final weapon contact launches and applies the short sword finisher scale")
+		var rise := roundi(float(victim["vz"])*float(victim["vz"])/3000.0)
+		var speed := int(victim.get("native_jump_velocity",Vector2.ZERO).x)
+		var range_check := (rise>=119 and rise<=146 and speed>=63 and speed<=94) if rank==3 \
+			else (rise>=24 and rise<=29 and speed>=28 and speed<=42)
+		check(victim["state"]=="native_down_flight" and victim.get("native_down_phase")==0 and range_check,
+			"the final slash starts the original weighted down flight for short sword rank %d" % rank)
 		game.player["stuck_ms"] = 0.0
 		game.clear_monsters()
 		press(KEY_A)
@@ -5437,6 +5448,34 @@ func check_rapid_move_slash() -> void:
 		step(300)
 		check(game.player["action"]=="" and game.player["cooldowns"]["rapidmoveslash"]==15.0,
 			"final recovery starts the full source cooldown with the actor modifier")
+
+func check_rapid_move_slash_body_modes() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"weaponmaster"})
+	profile.command("numbers.skill_grant",{"id":"rapidmoveslash","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["rapidmoveslash"]
+	for guard: String in ["timed","body_immune","body_armor"]:
+		start_room("original_27601","katana",1,spec)
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["mp"] = 200.0
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		var target: Dictionary = api.spawn_dummy(POINT+Vector2(45,0))
+		target["clock"] = 31.0
+		var items: Dictionary = game.enemy_frame(target)["items"]
+		var original_mode = items.get("13")
+		if guard == "timed":target["invuln_ms"] = 100.0
+		else:items["13"] = 2 if guard == "body_immune" else 1
+		press(KEY_A)
+		step(160)
+		if original_mode == null:items.erase("13")
+		else:items["13"] = original_mode
+		var armored := guard == "body_armor"
+		check(game.hit_count==int(armored) and game.player["hits"].size()==int(armored)
+			and (float(target["hp"])<5000.0)==armored and target["state"]=="idle" and target["clock"]==31.0,
+			"Rapid Move Slash preserves the pose and admits HP/contact only through super armor: "+guard)
 
 func check_rapid_move_slash_shock() -> void:
 	var profile := ProfileSession.new()
@@ -7154,6 +7193,7 @@ func run() -> void:
 	check_draw_target_deadlines()
 	check_charge_crash_uppercut()
 	check_rapid_move_slash()
+	check_rapid_move_slash_body_modes()
 	check_illusion_finish()
 	check_hundred_sword_ready()
 	check_hundred_sword_field_body_modes()

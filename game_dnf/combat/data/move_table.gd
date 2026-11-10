@@ -588,6 +588,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 			if name == "rapidmoveslash" and not built["hits"].is_empty():
 				var hit: Dictionary = built["hits"][0]
 				hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
+				hit["native_controller"] = {"kind":"rapid_slash"}
+				hit["stagger_factor"] = float(enum_args(hit["atk"],"hit_info",1)[1])
 				built["cancel_at"] = built["duration"]
 				# CCCBF3..CCCC8E scales the slash attachment by weapon and ordinal.
 				var final_slash: bool = stage["ani"] == "rapidmoveslashmove2"
