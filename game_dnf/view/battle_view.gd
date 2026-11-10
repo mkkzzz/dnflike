@@ -780,7 +780,8 @@ func _spawn_ghost(event: Dictionary, rapid := false) -> void:
 	node.z_index = int(Vector2(event["pos"]).y)
 	if rapid:
 		world.move_child(node,player_actor.get_index())
-		node.set_monochrome(RAPID_AFTERIMAGE_TINT)
+		# 1085B48 selects source alpha + destination, then 1085B7B supplies monochrome RGB.
+		node.set_additive_monochrome(RAPID_AFTERIMAGE_TINT)
 	else:node.z_index -= 1
 	node.present(String(event["ani"]),float(event["clock"]),int(event["facing"]),float(event["z"]),0.0,
 		Color.WHITE if rapid else GHOST_TINT)

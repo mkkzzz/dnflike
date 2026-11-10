@@ -1,7 +1,22 @@
 extends Node2D
 ## The simulation supplies one absolute ANI clock. Presentation never advances it.
 const TextureCache = preload("res://view/texture_cache.gd")
+const ACTOR_SHADER_CODE := """
+uniform float hit_flash = 0.0;
+uniform bool source_monochrome = false;
+uniform vec3 mono_rgb = vec3(1.0);
+
+void fragment() {
+	vec4 sprite_color = texture(TEXTURE, UV) * COLOR;
+	if (source_monochrome) {
+		sprite_color.rgb = mono_rgb * COLOR.rgb;
+	}
+	sprite_color.rgb = mix(sprite_color.rgb, vec3(1.0), hit_flash);
+	COLOR = sprite_color;
+}
+"""
 static var _flash_shader: Shader
+static var _additive_shader: Shader
 
 var bank: Dictionary
 var clips: Dictionary
@@ -30,7 +45,7 @@ func setup(atlas_bank: Dictionary, animation_clips: Dictionary, overrides: Dicti
 	atlas = TextureCache.load_texture(String(bank.get("texture","")))
 	if _flash_shader == null:
 		_flash_shader = Shader.new()
-		_flash_shader.code = "shader_type canvas_item; uniform float hit_flash=0.0; uniform bool source_monochrome=false; uniform vec3 mono_rgb=vec3(1.0); void fragment(){ vec4 c=texture(TEXTURE,UV)*COLOR; if(source_monochrome){c.rgb=mono_rgb*COLOR.rgb;} c.rgb=mix(c.rgb,vec3(1.0),hit_flash); COLOR=c; }"
+		_flash_shader.code = "shader_type canvas_item; " + ACTOR_SHADER_CODE
 	_flash_material = ShaderMaterial.new()
 	_flash_material.shader = _flash_shader
 	material = _flash_material
@@ -43,7 +58,11 @@ func clear_equipment_layers() -> void:
 	if has_meta("weapon_item"):remove_meta("weapon_item")
 	if has_meta("weapon_appearance"):remove_meta("weapon_appearance")
 
-func set_monochrome(color: Color) -> void:
+func set_additive_monochrome(color: Color) -> void:
+	if _additive_shader == null:
+		_additive_shader = Shader.new()
+		_additive_shader.code = "shader_type canvas_item; render_mode blend_add; " + ACTOR_SHADER_CODE
+	_flash_material.shader = _additive_shader
 	_flash_material.set_shader_parameter("source_monochrome",true)
 	_flash_material.set_shader_parameter("mono_rgb",Vector3(color.r,color.g,color.b))
 
