@@ -5176,7 +5176,9 @@ func check_illusion_finish() -> void:
 		check(game.objects[0]["pos"]==POINT+Vector2(65,0) and game.objects[0]["hit"]["percent"]==421.0,
 			"the neutral finisher uses the original forward offset and lower damage column")
 		game.clear_monsters()
-		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(70,0))
+		var rear_contact := family == "beamsword" and int(sample[1]) == 6
+		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(45 if rear_contact else 70,0))
+		var wave_push := -1 if rear_contact else 1
 		var immune: Dictionary = game.spawn_enemy(POINT+Vector2(70,0))
 		immune["invuln_ms"] = 10000.0
 		var immune_hp := float(immune["hp"])
@@ -5193,7 +5195,8 @@ func check_illusion_finish() -> void:
 		check(wave_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
 			"the sword wave applies its 40 ms ATK pause only to the target")
 		check(wave_target["state"]=="hurt" and wave_target["stun_ms"]==166.0 and wave_target["push_ms"]==166.0
-			and wave_target["push_v"]==800.0 and wave_target["push_accel"]==-4819.0,
+			and wave_target["push_v"]==800.0*wave_push and wave_target["push_accel"]==-4819.0*wave_push
+			and wave_target["facing"]==-wave_push,
 			"the sword wave's knockback mode one uses its fixed native stagger and deceleration")
 		check(immune["hp"]==immune_hp and not game.objects[0]["hits"].has(immune["id"]),
 			"the sword wave skips damage and contact registration for a timed invulnerable target")
@@ -5203,12 +5206,19 @@ func check_illusion_finish() -> void:
 		var hit_fx: Array = cues("illusion_wave_hit")
 		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and absf(float(hit_fx[0]["angle"]))<=0.801,
 			"the wave creates its own angled impact animation at the target's ground depth")
-		if family == "beamsword" and int(sample[1]) == 6:
+		if rear_contact:
 			var wave: Dictionary = game.objects[0]
+			check(cues("native_contact_blood").back()["facing"]==-1,
+				"at age zero a rear target sets the ETC wave blood direction")
+			var moving_target: Dictionary = game.spawn_enemy(POINT+Vector2(64,0))
+			moving_target["numeric"].values["hit_recovery"] = 0.0
 			game.update_enemy(wave_target,39.0)
 			game.step_objects(39.0)
 			check(wave_target["stuck_ms"]==1.0 and wave["clock"]==39.0 and wave["pos"]==POINT+Vector2(84,0),
 				"the sword wave keeps moving while the target is paused")
+			check(wave["hits"].has(moving_target["id"]) and moving_target["facing"]==-1
+				and moving_target["push_v"]==800.0 and cues("native_contact_blood").back()["facing"]==1,
+				"a moving wave within 150 pixels follows travel even when the target is behind it")
 			game.update_enemy(wave_target,1.0)
 			check(wave_target["stuck_ms"]==0.0,"the sword-wave target resumes at 40 ms")
 		if family == "katana" and int(sample[1]) == 6:

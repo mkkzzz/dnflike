@@ -3335,7 +3335,7 @@ func complete_native_prop_break(prop: Dictionary) -> void:
 
 ## One landed hit, attacker -> target. Damage, reaction, local hitstop, events and cues.
 func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: Vector3, facing: int, power: float,
-		first_counter_target := false) -> void:
+		first_counter_target := false, object_facing := 0) -> void:
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
@@ -3483,7 +3483,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var roll := rng.range_int(0,99)
 		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
 		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),roundi(target["pos"].y)),
-			"height":int(point.z),"facing":facing,"angle":angle,"fresh":true})
+			"height":int(point.z),"facing":object_facing if object_facing != 0 else facing,"angle":angle,"fresh":true})
 	elif native_kind == "hundred_sword_field":
 		# A6BF20 initializes the neutral direction and 1.57-radian angle.
 		# A6E1EB..A6E242 places SlashLarge2 at the overlap X/Z and target Y.
@@ -3501,7 +3501,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > NATIVE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
 		var blood_allowed: bool = not native_blood or target["def"].get("hit_blood_allowed",true)
-		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_allowed,native_blood)
+		# 870345 uses the source facing for cut. The ETC wave uses 870397 instead.
+		var cue_facing := object_facing if native_kind == "illusion_melee" and object_facing != 0 else facing
+		hit_cues(atk,effect_point,cue_facing,by_player,native_common_hit,show_counter,blood_allowed,native_blood)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -4432,6 +4434,20 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		spawn_effect(String(obj["add_fx"]),entity["pos"],facing,float(entity["z"]))
 	return entity
 
+func sample_illusion_object_travel(object: Dictionary, age_ms: int) -> int:
+	var x := int(object["pos"].x)
+	var current := Vector2i(x,age_ms)
+	# 86E5C0 seeds both samples on the first update. 86E607 rolls them at 100 ms.
+	var latest: Vector2i = object.get("latest_hit_x_sample",current)
+	var previous: Vector2i = object.get("previous_hit_x_sample",current)
+	if age_ms-latest.y >= 100:
+		previous = latest
+		latest = current
+	object["latest_hit_x_sample"] = latest
+	object["previous_hit_x_sample"] = previous
+	# 867320 truncates the signed speed in pixels per second.
+	return signi(int(1000.0*(x-previous.x)/float(age_ms-previous.y))) if age_ms != previous.y else 0
+
 func step_objects(ms: float, first_new_object_id := -1) -> void:
 	var khazan_field: Dictionary = {}
 	var bremen_field: Dictionary = {}
@@ -4469,6 +4485,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 			o["z"] = float(position.z)
 		else:
 			o["pos"] = Vector2(o["pos"])+Vector2(float(o["speed"])*int(o["facing"])*object_ms/1000.0,0)
+		var illusion_travel := kind in ["illusion_melee","illusion_wave"]
+		var travel_direction := sample_illusion_object_travel(o,int(t)) if illusion_travel else 0
 		if kind in GHOST_FIELD_KINDS:
 			if o.has("first_update_sound"):
 				# A67B64 checks a per-object latch, independent of the pulse clock.
@@ -4631,7 +4649,7 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var targets := monsters if friendly else friendly_targets()
 				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
 				var stationary_impact := kind in OUTRAGE_IMPACTS or kind == "illusion_club_wave"
-				var common_impact := stationary_impact or kind in ["illusion_melee","illusion_wave"]
+				var common_impact := stationary_impact or illusion_travel
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
@@ -4652,6 +4670,11 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# 867485 compares rounded world X for stationary eruption objects.
 						var delta_x := roundi(target["pos"].x)-roundi(o["pos"].x)
 						if delta_x != 0:hit_facing = signi(delta_x)
+					elif illusion_travel:
+						# 867370 follows nonzero travel strictly inside 150 px.
+						var delta_x := roundi(target["pos"].x)-int(o["pos"].x)
+						if travel_direction != 0 and absi(delta_x) < 150:hit_facing = travel_direction
+						elif delta_x != 0:hit_facing = signi(delta_x)
 					elif stationary_impact or kind == "draw_short_wave":
 						# 867370 uses the target's side for stationary objects.
 						# Moving waves keep their flight direction within 150 px.
@@ -4659,7 +4682,8 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						var delta_x := roundi(target["pos"].x)-source_x
 						if delta_x != 0 and (stationary_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
-					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target)
+					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target,
+						int(o["facing"]) if illusion_travel else 0)
 					if int(obj["piercing"]) <= 0:
 						done = true
 						if not friendly:break
