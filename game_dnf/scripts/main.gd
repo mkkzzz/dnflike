@@ -2214,10 +2214,10 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 		player["native_phase"] = {"wait_ms":release_at,"charge_rate":cast_speed/1000.0,
 			"end_ms":release_at+float(m["native_recovery_ms"])}
 	elif m.get("native_state","") in ["bloodblast","hellbenter_cast"]:
-		# Both skills use throw slot 1. CC05DE selects mode 3 for both Hellbenter phases.
+		# 858E19..858E43 and CC05DE select mode 3 for both throw-slot-one phases.
 		var rate := 1.0
 		if numeric_player != null:
-			rate = numeric_player.native_non_weapon_attack_rate() if name == "hellbenter" else float(numeric_player.values["attack_speed"])
+			rate = numeric_player.native_non_weapon_attack_rate()
 		var speed := maxi(1,roundi(rate*1000.0))
 		var base_ms := float(m["cast_ms"] if index == 0 else m["native_recovery_ms"])
 		player["native_phase"] = {"cast_stage_rate":speed/1000.0,"end_ms":int(base_ms*1000.0/speed)}
@@ -3274,6 +3274,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
+	var native_down := native_outrage or native_kind == "bloodblast"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3353,7 +3354,6 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		var native_down := native_kind == "bloodblast" or native_outrage
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
 		var armor_blocks_reaction := (native_down or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
@@ -3422,12 +3422,12 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	if not draw_impact and native_kind != "hundred_sword_field":
 		var effect_point := point
 		# 87055B uses overlap X/Z and the target's integer depth for the common effect.
-		if native_outrage:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
+		if native_down:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
 		# 867720 uses a strict interval on the struck actor. Keep the full-effect option (2).
 		var show_counter := first_counter_target and counter \
 			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > OUTRAGE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
-		hit_cues(atk,effect_point,facing,by_player,native_outrage,show_counter)
+		hit_cues(atk,effect_point,facing,by_player,native_down,show_counter)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3501,7 +3501,7 @@ func trigger_source_shock(target: Dictionary, point: Vector3) -> void:
 
 ## Hit effect and hit sound from ATK [hit info]/[hit wav]; weapon rows of the CHR when the
 ## ATK leaves them to the weapon (normal attacks).
-func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_outrage: bool, show_counter: bool) -> void:
+func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, native_common_hit: bool, show_counter: bool) -> void:
 	var kind := Kernel.MoveTable.enum_value(atk,"hit_info","")
 	var blood := ""
 	var size := 100.0
@@ -3519,7 +3519,7 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 		size = float(row[2])
 		scale = float(row[3])
 	var large := size >= 100
-	if native_outrage:
+	if native_common_hit:
 		# 7E656B chooses one size for both effects. The ATK numbers are pause and stagger.
 		large = rng.range_int(0,1) == 0
 		scale = 1.0
@@ -3528,8 +3528,8 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 	match kind:
 		"[blow]":fx = "hit_blow_"+size_key
 		"":fx = "hit_blow_s"
-		# The only Outrage cut uses [hit down]. 7E6947 picks slash variant 1 for that flag.
-		_:fx = "hit_cut_%s%d" % [size_key,1 if native_outrage else rng.range_int(1,3)]
+		# The native cut uses [hit down]. 7E6947 picks slash variant 1 for that flag.
+		_:fx = "hit_cut_%s%d" % [size_key,1 if native_common_hit else rng.range_int(1,3)]
 	var ground := Vector2(point.x,point.y)
 	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,"scale":1.5 if show_counter else scale})
 	if show_counter:
@@ -3537,7 +3537,7 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
 	if blood == "[blood]":
 		# 7E6B97 selects small blood variant 3 for [hit down].
-		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(3 if native_outrage else rng.range_int(1,3))
+		var bfx := "hit_blood_l" if large else "hit_blood_s%d"%(3 if native_common_hit else rng.range_int(1,3))
 		bus.emit("combat.cue",{"kind":"fx","key":bfx,"point":ground,"height":point.z,"facing":facing,"scale":scale})
 	var wav := String(atk.get("hit_wav",""))
 	if wav == "" and by_player:

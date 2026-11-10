@@ -6499,12 +6499,13 @@ func check_bloodblast() -> void:
 	step(0)
 	check(game.player["action"]=="" and game.player["mp"]==mp and game.objects.is_empty(),
 		"Blood Blast rejects a missing cube before charging MP or starting the cast")
-	game.numeric_player.values["attack_speed"] = 1.25
-	game.numeric_player.values["cast_speed"] = 1.0
+	game.numeric_player.values["attack_speed"] = 1.5
+	game.numeric_player.weapon_attack_speed_per_mille = 250
+	game.numeric_player.values["cast_speed"] = 0.75
 	press(KEY_A)
 	step(395)
 	check(game.view.player_actor.pose=="summon1" and game.objects.is_empty() and cues("SM_BLOOD_CAST").is_empty(),
-		"rank two Blood Blast charges for 396 ms at 1.25 attack speed, independently of cast speed")
+		"rank two Blood Blast charges for 396 ms at 1.25 non-weapon attack speed")
 	check(cues("BLOOD_CIRCLE_CREATE").is_empty(),"the pillar entry sound waits for the object to exist")
 	game.numeric_player.values["independent_attack"] = 126.0
 	step(1)
@@ -6546,6 +6547,8 @@ func check_bloodblast() -> void:
 	game.step_objects(1)
 	check(ground["hits"].has(target["id"]) and sub["hits"].is_empty() and pillar["hits"].is_empty(),
 		"at 100 ms only the ground burst registers contact with the centered target")
+	check(cues("FIRE_PILLAR_HIT").size()==1 and game.view.audio.variants["FIRE_PILLAR_HIT"][0] is AudioStreamOggVorbis,
+		"the ground burst plays the hit sound from its ATK")
 	check(game.last_damage["trace"]["fixed_part"]==1448.0,
 		"the damage pipeline uses the released integer even after independent attack changes")
 	var rise := roundi(pow(float(target["vz"]),2.0)/3000.0)
@@ -6582,6 +6585,7 @@ func check_bloodblast() -> void:
 		"the pillar launches at 1000 ms with the weighted 450 lift stored in both eruption ATKs")
 	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
 		"the main pillar applies its original 50 ms pause to the target")
+	check(cues("FIRE_PILLAR_HIT").size()==2,"the main pillar uses the same original ATK hit cue")
 	game.monsters.clear()
 	pillar["hits"][99] = true
 	sub["hits"][99] = true
@@ -6623,6 +6627,16 @@ func check_bloodblast() -> void:
 		"the centered spray launches the heavy target at 1120 ms using the same 450 lift")
 	check(target["stuck_ms"]==50.0 and game.player["stuck_ms"]==0.0,
 		"the centered spray applies its original 50 ms pause to the target")
+	var impact_cues: Array = game.bus.events_of("combat.cue").filter(func(cue):return cue.get("key","") in ["hit_blow_s","hit_blow_l"])
+	check(impact_cues.size()==3 and cues("FIRE_PILLAR_HIT").size()==3
+		and impact_cues.all(func(cue):return cue["scale"]==1.0)
+		and not game.bus.events_of("combat.cue").any(func(cue):return String(cue.get("key","")).begins_with("hit_blood_")),
+		"all three original ATKs use unit-scale knock effects and their common sound without a generic blood cue")
+	if impact_cues.size()==3:
+		var overlap: Vector3 = game.bus.events_of("combat.hit")[-1]["point"]
+		var impact: Dictionary = impact_cues[-1]
+		check(impact["point"]==Vector2(int(overlap.x),roundi(target["pos"].y)) and impact["height"]==int(overlap.z),
+			"the centered spray's knock effect uses overlap X/Z and the target's rounded depth")
 	var contact_origin := Vector2(Vector2i(target["pos"]))
 	check(contact_keys.all(func(key):return (cues(key).size()==1 and cues(key)[0]["point"]==contact_origin
 		and cues(key)[0]["height"]==0.0 and cues(key)[0]["facing"]==1)),
@@ -6645,7 +6659,7 @@ func check_bloodblast() -> void:
 	check(target["stuck_ms"]==70.0,"the centered spray preserves the airborne target's longer pause")
 	game.monsters.clear()
 	step(559)
-	check(game.player["action"]=="bloodblast","recovery holds at 559 ms")
+	check(game.player["action"]=="bloodblast","recovery still holds at 559 ms with weapon speed excluded")
 	step(1)
 	check(game.player["action"]=="" and game.objects.size()==2,"560 ms recovery leaves live spray objects independent of the caster")
 	game.step_objects(120)
