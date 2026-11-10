@@ -1,6 +1,7 @@
 extends SceneTree
 
 const CombatSession = preload("res://combat/api/combat_session.gd")
+const MonsterAI = preload("res://combat/ai/monster_ai.gd")
 const DUNGEONS := "res://data/dungeons.json"
 
 var session := CombatSession.new()
@@ -100,3 +101,17 @@ func check_attack_contract(mob: String, definition: Dictionary) -> void:
 	can_attack = can_attack or not (definition.get("attack_segments", []) as Array).is_empty()
 	can_attack = can_attack or not (definition.get("native_suicide", {}) as Dictionary).is_empty()
 	check(can_attack, mob + " exposes at least one reachable attack or projectile")
+	if not can_attack:
+		return
+	var selected := false
+	var origin := Vector2(700, 250)
+	var sight := maxi(40, int(definition.get("sight", 300)))
+	for distance in range(4, mini(sight, 400) + 1, 8):
+		var intent: Dictionary = MonsterAI.think(
+			{"pos": origin, "facing": 1, "cooldown_ms": 0.0, "skill_cd": {}},
+			definition, origin + Vector2(distance, 0), 0.0
+		)
+		if bool(intent.get("attack", false)):
+			selected = true
+			break
+	check(selected, mob + " can select an attack at a source-visible distance")
