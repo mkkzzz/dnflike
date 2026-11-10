@@ -12,6 +12,7 @@
    "skillfx_autoguard_ldodge_cd812bbd": "character/swordman/effect/animation/autoguard_ldodge.ani",
    "skillfx_ballhead_bb847343": "character/swordman/effect/animation/blache/ballhead.ani",
    "skillfx_balltail1_fe1b6b78": "character/swordman/effect/animation/blache/balltail1.ani",
+   "skillfx_blade_cbafa5d0": "character/swordman/effect/animation/hellbenter/blade.ani",
    "skillfx_blast1_08fc54d5": "character/swordman/effect/animation/standalonewave/blast1.ani",
    "skillfx_blast2_13b8f710": "character/swordman/effect/animation/standalonewave/blast2.ani",
    "skillfx_blast_back_c66f1708": "passiveobject/character/swordman/animation/firewavebig/blast-back.ani",
@@ -41,6 +42,9 @@
    "skillfx_bremenareaappear2_3c6655df": "passiveobject/character/swordman/animation/bremenareaappear2.ani",
    "skillfx_bremenareadisappear_69a734b7": "passiveobject/character/swordman/animation/bremenareadisappear.ani",
    "skillfx_bremenareastay_65cedcf5": "passiveobject/character/swordman/animation/bremenareastay.ani",
+   "skillfx_buffmark1_c6787153": "character/swordman/effect/animation/hellbenter/buffmark1.ani",
+   "skillfx_buffmark2_8bd1ecb7": "character/swordman/effect/animation/hellbenter/buffmark2.ani",
+   "skillfx_buffmark3_d868c856": "character/swordman/effect/animation/hellbenter/buffmark3.ani",
    "skillfx_cast1_f3b0165d": "character/swordman/effect/animation/hellbenter/cast1.ani",
    "skillfx_cast2_d59b9126": "character/swordman/effect/animation/hellbenter/cast2.ani",
    "skillfx_charge1_28f02c73": "character/swordman/effect/animation/momentaryslash/charge1.ani",
@@ -152,6 +156,8 @@
    "skillfx_stay_fe49f3a2": "passiveobject/character/swordman/animation/sayaex/stay.ani",
    "skillfx_stay_ldodge_e8328c3d": "passiveobject/character/swordman/animation/epidemicrasa/stay_ldodge.ani",
    "skillfx_sword1_2c85afcf": "character/swordman/effect/animation/bloodyrave/sword1.ani",
+   "skillfx_sword1_6dc3fb42": "character/swordman/effect/animation/hellbenter/sword1.ani",
+   "skillfx_sword2_dbbbc612": "character/swordman/effect/animation/hellbenter/sword2.ani",
    "skillfx_sword3_f71eb3aa": "character/swordman/effect/animation/bloodyrave/sword3.ani",
    "skillfx_sword4_7bc4b286": "character/swordman/effect/animation/bloodyrave/sword4.ani",
    "skillfx_sword_ready_ldodge_ff4a8814": "character/swordman/effect/animation/outragebreak/sword_ready_ldodge.ani",
@@ -5326,10 +5332,34 @@
    ]
   },
   "hellbenter": {
+   "appearance": {
+    "body_height": 100,
+    "cast": [
+     "skillfx_cast1_f3b0165d",
+     "skillfx_cast2_d59b9126"
+    ],
+    "cast_end": 500,
+    "mark": [
+     "skillfx_buffmark1_c6787153",
+     "skillfx_buffmark2_8bd1ecb7",
+     "skillfx_buffmark3_d868c856"
+    ],
+    "mark_end": 500,
+    "sound": {
+     "at": 100,
+     "key": "B_START"
+    },
+    "sword": [
+     "skillfx_sword1_6dc3fb42",
+     "skillfx_sword2_dbbbc612",
+     "skillfx_blade_cbafa5d0"
+    ],
+    "visible_at": 340
+   },
    "effect_id": "hellbenter",
    "fidelity_pending": [
     "blood_absorption",
-    "sword_layers",
+    "sword_growth",
     "finish",
     "original_command"
    ],
@@ -5345,21 +5375,7 @@
      "ani": "summon1"
     },
     {
-     "ani": "summon2",
-     "fx": [
-      {
-       "at": 0,
-       "depth_offset": -1,
-       "key": "skillfx_cast1_f3b0165d",
-       "offset_y": -70
-      },
-      {
-       "at": 0,
-       "depth_offset": -1,
-       "key": "skillfx_cast2_d59b9126",
-       "offset_y": -70
-      }
-     ]
+     "ani": "summon2"
     }
    ]
   },

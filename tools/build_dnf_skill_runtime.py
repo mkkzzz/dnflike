@@ -218,6 +218,11 @@ NATIVE_ANIMATION_BINDINGS = {
 
 SAFE_EFFECTS: set[str] = set()
 SAFE_OBJECTS: set[str] = set()
+HELLBENTER_APPEARANCE = {
+    "cast": ("cast1", "cast2"),
+    "mark": ("buffmark1", "buffmark2", "buffmark3"),
+    "sword": ("sword1", "sword2", "blade"),
+}
 IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
 
@@ -1489,17 +1494,28 @@ def build_move(
                                      "etc_layer_order", "hit_fx_nested_lifetime", "non_weapon_attack_speed"],
                 "stages": [{"ani": "summon1"}, {"ani": "summon2", "voice": "SM_BLOOD_CAST", "hits": hits}]}
     if key == "hellbenter":
-        layers = []
-        for index in (1, 2):
-            effect = add_fx(fx, effects, CHR_FX + f"hellbenter/cast{index}.ani")
-            if not effect:
-                raise ValueError(f"Missing original Hellbenter Cast{index}.ani")
-            layers.append({"key": effect, "at": 0, "offset_y": -70, "depth_offset": -1})
+        appearance = {}
+        for group, stems in HELLBENTER_APPEARANCE.items():
+            paths = [CHR_FX + f"hellbenter/{stem}.ani" for stem in stems]
+            appearance[group] = [add_fx(fx, effects, path) for path in paths]
+            if not all(appearance[group]):
+                raise ValueError(f"Incomplete original Hellbenter {group} animations")
+        cast, glow, mark = (records[CHR_FX + f"hellbenter/{stem}.ani"]["decoded"]
+                            for stem in ("cast1", "cast2", "buffmark1"))
+        sound, = glow["sound_events"]
+        # 829F4A/1086316 use the standing body frame's top. For the default
+        # Swordman skin, Stay frame 0 uses IMG frame 90 at -333 + 233.
+        appearance.update(visible_at=cast["timeline"][4]["start_ms"],
+                          cast_end=cast["timeline"][-1]["end_ms"],
+                          mark_end=mark["timeline"][-1]["end_ms"],
+                          body_height=100,
+                          sound={"key": sound["sound"], "at": glow["timeline"][sound["frame"]]["start_ms"]})
         # CC057E..CC062C sends static columns 0 and 1 and throw slot 1 to state 13.
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "hellbenter_cast",
                 "effect_id": "hellbenter", "material_cost": fixed_cube_cost(skill, records),
-                "stages": [{"ani": "summon1"}, {"ani": "summon2", "fx": layers}],
-                "fidelity_pending": ["blood_absorption", "sword_layers", "finish", "original_command"]}
+                "stages": [{"ani": "summon1"}, {"ani": "summon2"}],
+                "appearance": appearance,
+                "fidelity_pending": ["blood_absorption", "sword_growth", "finish", "original_command"]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -2234,8 +2250,8 @@ def main() -> int:
             raise ValueError("Unexpected Bloody Rave animation slots")
         SAFE_EFFECTS.clear()
         SAFE_EFFECTS.update(path for path in effect_paths if supported_animation_binding(library, path))
-        SAFE_EFFECTS.update(path for index in (1, 2)
-                            if safe_animation(library, path := CHR_FX + f"hellbenter/cast{index}.ani"))
+        SAFE_EFFECTS.update(path for group in HELLBENTER_APPEARANCE.values() for stem in group
+                            if safe_animation(library, path := CHR_FX + f"hellbenter/{stem}.ani"))
         SAFE_EFFECTS.update(layer["path"] for layer in bloodblast_script["layers"]
                             if safe_animation(library, layer["path"]))
         SAFE_EFFECTS.update(path for path in (illusion_club_layers["attached"], *illusion_club_layers["detached"])

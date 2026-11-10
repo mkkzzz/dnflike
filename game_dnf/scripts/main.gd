@@ -280,7 +280,14 @@ func configure_enemy_numbers(enemy: Dictionary) -> void:
 
 func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 	if float(body["hp"])<=0:return
+	var hellbenter: Dictionary = active_effect("hellbenter") if body["id"] == PLAYER_ID else {}
+	var previous := float(hellbenter.get("remaining_ms",0.0))
 	var events: Array = actor.step(ms,body["state"]=="down")
+	if not hellbenter.is_empty() and actor.effects.active.has("hellbenter"):
+		# Cast2 runs on the appendage clock even if the owner's release is interrupted.
+		var cue: Dictionary = move_def("hellbenter")["appearance"]["sound"]
+		var sound_at := float(hellbenter["definition"]["duration_ms"])-float(cue["at"])
+		if previous > sound_at and float(hellbenter["remaining_ms"]) <= sound_at:play_sound(cue["key"])
 	if int(body["id"])!=PLAYER_ID:
 		body["max_hp"] = float(actor.values["hp_max"])
 		body["attack"] = float(actor.values["physical_attack"])
@@ -5225,6 +5232,54 @@ func monster_bar() -> Dictionary:
 		"lines":int(rules["boss_hp_lines"]) if pick["chief"] else 1}
 
 ## Read-only per-tick state for view/ and ui/combat/ (contract doc 29 section 4). Values only.
+func append_hellbenter_view(out: Array) -> void:
+	var effect := active_effect("hellbenter")
+	if effect.is_empty() or float(player["hp"]) <= 0.0:return
+	var config: Dictionary = move_def("hellbenter")["appearance"]
+	var duration := int(effect["definition"]["duration_ms"])
+	var age := int(duration-float(effect["remaining_ms"]))
+	var remaining := duration-age
+	var origin: Vector2 = player["pos"]
+	var facing := int(player["facing"])
+	var layer := {"pos":origin,"z":player["z"],"facing":facing,"clock":age}
+	# 99BF10 draws both Cast layers until Cast1 ends, even though Cast2 is longer.
+	if age < int(config["cast_end"]):
+		for key: String in config["cast"]:
+			out.append(layer.merged({"id":"hellbenter:"+key,"effect":key,"screen_offset":Vector2(0,-70),"depth_offset":-1}))
+	if age < int(config["visible_at"]):return
+	# 99BE63 gates the mark on Cast1 frame four. BuffMark3 loops on its own clock.
+	var body_height := int(config["body_height"])
+	layer["screen_offset"] = Vector2(0,-body_height)
+	var marks: Array = config["mark"]
+	if age < int(config["mark_end"]):
+		out.append(layer.merged({"id":"hellbenter:mark_entry","effect":marks[0],"depth_offset":1}))
+	else:
+		out.append(layer.merged({"id":"hellbenter:mark_base","effect":marks[1],"hold_last_frame":true,"depth_offset":1}))
+		out.append(layer.merged({"id":"hellbenter:mark_glow","effect":marks[2],"loop":true,"depth_offset":1}))
+	# 99BF7A..99BFEE places the sword opposite the actor's facing and bobs it over 1400 ms.
+	var phase := age%1400
+	var bob := int(Kernel.NativeMotion.ramp(-5,5,phase,700) if phase < 700
+		else Kernel.NativeMotion.ramp(5,-5,phase-700,700))
+	layer["screen_offset"] = Vector2(-60*facing,bob-body_height)
+	layer["depth_offset"] = -1
+	var fade := 1.0
+	# 99B8A7..99B93B uses increasingly fast alpha pulses as the effect expires.
+	var lower := 0
+	for band: Array in [[2000,150,100],[3000,130,167],[4000,110,250],[5600,90,400],[7600,60,500]]:
+		if remaining < band[0]:
+			var half_period := int(band[2])
+			phase = (remaining-lower)%(2*half_period)
+			var minimum := int(band[1])
+			var alpha := Kernel.NativeMotion.ramp(minimum,255,phase,half_period) if phase < half_period \
+				else Kernel.NativeMotion.ramp(255,minimum,phase-half_period,half_period)
+			fade = int(alpha)/255.0
+			break
+		lower = band[0]
+	var sword: Array = config["sword"]
+	out.append(layer.merged({"id":"hellbenter:sword_base","effect":sword[0],"hold_last_frame":true,"fade":fade}))
+	out.append(layer.merged({"id":"hellbenter:sword_glow","effect":sword[1],"hold_last_frame":true}))
+	out.append(layer.merged({"id":"hellbenter:blade","effect":sword[2],"loop":true,"fade":fade}))
+
 func view_snapshot() -> Dictionary:
 	var ani := player_ani()
 	var enemies: Array = []
@@ -5378,6 +5433,7 @@ func view_snapshot() -> Dictionary:
 		objs.append({"id":"player:thirst","effect":move_def("sacrifice")["cast_fx"],
 			"pos":Vector2(player["pos"]),"z":float(player["z"]),"facing":int(player["facing"]),
 			"clock":age,"loop":true,"depth_offset":1})
+	append_hellbenter_view(objs)
 	var phase: Dictionary = player.get("native_phase",{})
 	return {"frame":_frame,"paused":paused,"status_clock_ms":native_jar_traps.clock_ms,
 		"player":{"id":PLAYER_ID,"pos":Vector2(player["pos"]),"z":float(player["z"]),"state":String(player["state"]),"action":String(player["action"]),

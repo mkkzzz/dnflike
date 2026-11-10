@@ -2299,21 +2299,57 @@ func check_hellbenter_first_cast() -> void:
 	check(game.view.player_actor.pose=="summon2" and game.player["facing"]==-1
 		and effect.get("remaining_ms",0)==100100.0 and game.player["native_phase"]["end_ms"]==640,
 		"Hellbenter activates on phase one and uses the original recovery and rank duration")
-	var layers: Array = game.view.effects.filter(func(fx):return String(fx.data["source"]).contains("/hellbenter/cast"))
-	var anchored := func(fx):
-		return fx.follow==game.player["id"] and fx.follow_offset==Vector2(0,-70) and fx.z_index==int(POINT.y)-1
-	check(layers.size()==2 and layers.all(anchored),
-		"both original cast effects follow the character at the native draw offset")
+	var layers := func(stem):
+		return game.view.object_views.values().filter(func(fx):
+			return String(fx.data["source"]).get_file().begins_with(stem))
+	var canvas_origin: Vector2 = game.view._canvas(POINT,0.0)
+	check(layers.call("cast").size()==2 and layers.call("cast")[0].position==canvas_origin-Vector2(0,70),
+		"both original cast effects start at the native draw offset")
 	var modifiers: Array = effect.get("definition",{}).get("modifiers",[])
 	check(modifiers.size()==2 and is_equal_approx(modifiers[0]["value"],0.003)
 		and is_equal_approx(modifiers[1]["value"],0.003),"initial speed gains use the two original rank-one columns")
-	step(639.0)
+	var advance := func(ms):
+		game.step_numeric_actor(game.player,game.numeric_player,ms)
+		step(ms)
+	advance.call(99.0)
+	check(cues("B_START").is_empty() and layers.call("sword").is_empty(),"the cast does not play its sound before frame one")
+	advance.call(1.0)
+	check(cues("B_START").size()==1 and game.view.audio.variants["B_START"][0] is AudioStreamOggVorbis,
+		"Cast2 plays the original sound once at appendage age 100")
+	advance.call(239.0)
+	check(layers.call("sword").is_empty() and layers.call("buffmark").is_empty(),"Cast1 gates the sword and mark through 339 ms")
+	advance.call(1.0)
+	var entry_marks: Array = layers.call("buffmark1")
+	check(layers.call("sword").size()==2 and layers.call("blade").size()==1 and entry_marks.size()==1,
+		"Cast1 frame four reveals both sword layers, the blood blade and the first mark")
+	check(entry_marks.size()==1 and entry_marks[0].position==canvas_origin-Vector2(0,100),
+		"the original standing body frame height anchors the Hellbenter mark")
+	advance.call(159.0)
+	check(layers.call("cast").size()==2 and layers.call("buffmark1").size()==1,"Cast1 and BuffMark1 are still active at age 499")
+	advance.call(1.0)
+	check(layers.call("cast").is_empty() and layers.call("buffmark1").is_empty()
+		and layers.call("buffmark2").size()==1 and layers.call("buffmark3").size()==1,
+		"both Cast layers end with Cast1, and the persistent two-part mark replaces BuffMark1")
+	advance.call(139.0)
 	check(game.player["action"]=="hellbenter","Hellbenter recovery lasts through 639 ms")
-	step(1.0)
+	advance.call(1.0)
 	check(game.player["action"]=="" and requests.size()==2 and not hellbenter.call().is_empty(),
 		"recovery ends without a second charge and the appendage stays active")
-	game.numeric_player.step(100100)
-	check(hellbenter.call().is_empty(),"the original rank-one duration expires")
+	advance.call(60.0)
+	var sword = game.view.object_views.get("hellbenter:sword_base")
+	check(sword!=null and sword.position==canvas_origin+Vector2(60,-95) and sword.frame["img_frame"]==1,
+		"the left-facing sword holds its last frame and reaches the bottom of its 700 ms half-cycle")
+	game.player["facing"] = 1
+	game.player["pos"] = POINT+Vector2(35,15)
+	step(0.0)
+	check(sword!=null and sword.position==canvas_origin+Vector2(-25,-80) and sword.facing==1,
+		"the floating sword follows its owner and mirrors its horizontal offset")
+	advance.call(99350.0)
+	check(sword!=null and is_equal_approx(sword.fade,202.0/255.0) and cues("B_START").size()==1,
+		"the normal sword enters the original last-band alpha pulse without replaying the cast sound")
+	advance.call(50.0)
+	check(hellbenter.call().is_empty() and not game.view.object_views.has("hellbenter:sword_base")
+		and layers.call("buffmark").is_empty(),"the existing expiry removes the appendage and all held layers")
 	check(game.numeric_player.add_effect("hellbenter",6) and hellbenter.call()["remaining_ms"]==130130.0,
 		"rank six uses the extended duration from the original level table")
 

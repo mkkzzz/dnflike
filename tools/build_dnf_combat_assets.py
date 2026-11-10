@@ -1542,7 +1542,7 @@ def main() -> int:
     parser.add_argument('--extend-thirst', action='store_true',
                         help='Add the original Thirst cast and release effects and sounds')
     parser.add_argument('--extend-hellbenter', action='store_true',
-                        help='Add the original Hellbenter first-cast layers')
+                        help='Add the original Hellbenter cast and sword layers and cue')
     parser.add_argument('--extend-draw', action='store_true',
                         help='Add the original Draw Sword slash and charge layers, short-sword wave and sounds')
     parser.add_argument('--extend-overdrive', action='store_true',
@@ -1703,10 +1703,10 @@ def main() -> int:
     if args.extend_hellbenter:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
         effects = runtime['assets']['effect_anims']
-        release = runtime['moves']['hellbenter']['stages'][1]
-        print(json.dumps(extend_skill_banks(args.library, OUT, [
-            ('effects', cue['key'], effects[cue['key']]) for cue in release['fx']
-        ])))
+        appearance = runtime['moves']['hellbenter']['appearance']
+        specs = [('effects', key, effects[key]) for group in ('cast', 'mark', 'sword') for key in appearance[group]]
+        specs.append(('audio', appearance['sound']['key'], 'sounds/char/swordman/effect/b_start.ogg'))
+        print(json.dumps(extend_skill_banks(args.library, OUT, specs)))
         return 0
     if args.extend_thirst:
         runtime = json.loads(SKILL_RUNTIME.read_bytes())
