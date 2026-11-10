@@ -1060,6 +1060,10 @@ func step_action(ms: float, move: Vector2) -> void:
 	var clock := old_clock+ms*speed
 	var native_phase: Dictionary = player.get("native_phase",{})
 	if not native_phase.is_empty():clock = old_clock+ms
+	if name == "illusionslash":
+		var cast: Dictionary = player["illusion_cast"]
+		cast["animation_ms"] += ms
+		clock = _source_animation_clock(float(cast["animation_ms"]),cast["timeline"],stage["timeline"])
 	player["clock"] = clock
 	if m.get("native_state","") == "outrage_break":
 		if int(player["stage"]) == 0 and clock >= float(native_phase["end_ms"]):
@@ -1907,6 +1911,13 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 	action_seq += 1
 	var m := move_def(name)
 	player["native_phase"] = {}
+	if name == "illusionslash":
+		var cast: Dictionary = player["illusion_cast"]
+		var rate := illusion_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
+		cast["animation_percent"] = rate
+		var timeline := illusion_timed_frames(action_def()["timeline"],rate)
+		cast["timeline"] = timeline
+		cast["animation_ms"] = float(timeline[0]["end_ms"]) if opening_clock > 0.0 else 0.0
 	if m.get("native_state","") in ["normalwave","wave_cast"]:
 		var attack_rate := float(numeric_player.values["attack_speed"]) if numeric_player != null else 1.0
 		var cast_rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
@@ -2515,8 +2526,35 @@ func draw_hit_delay(timeline: Array, clock: float) -> int:
 	for index in range(first,7):
 		var frame: Dictionary = timeline[index]
 		var frame_ms := float(frame["end_ms"])-float(frame["start_ms"])
-		delay += int(Kernel.NativeMotion.f32(Kernel.NativeMotion.f32(frame_ms*100.0)/rate_percent))
+		delay += _native_ani_delay(frame_ms,rate_percent)
 	return delay
+
+func illusion_animation_percent(bonus: int) -> float:
+	var base := float(rules["buff"]["attack_speed"]) if float(player["buff_ms"]) > 0.0 else 1.0
+	if numeric_player != null:base = float(numeric_player.values["attack_speed"])
+	# CCD522 and 82857E apply the mastery multiplier to the integer attack speed.
+	var native_base := int(_native_float32(_native_float32(base)*1000.0))
+	var multiplier := _native_float32(1.0+_native_float32(float(bonus)*0.0010000000474974513))
+	var per_mille := maxi(1,int(_native_float32(native_base*multiplier)))
+	var rate := _native_float32(_native_float32(per_mille*100.0)*0.0010000000474974513)
+	# 1091ECF preserves the ANI's initial 100 if the difference is at most one relative epsilon.
+	return 100.0 if absf(rate-100.0) <= absf(rate)*0.00000011920928955078125 else rate
+
+func illusion_timed_frames(source: Array, rate: float) -> Array:
+	var adjusted: Array = []
+	var elapsed := 0
+	for original: Dictionary in source:
+		var frame := original.duplicate()
+		var delay := _native_ani_delay(float(frame["end_ms"])-float(frame["start_ms"]),rate)
+		frame["start_ms"] = elapsed
+		elapsed += delay
+		frame["end_ms"] = elapsed
+		adjusted.append(frame)
+	return adjusted
+
+func _native_ani_delay(frame_ms: float, rate_percent: float) -> int:
+	# 5B0146..5B0157 multiplies, divides, and truncates each frame independently.
+	return int(_native_float32(_native_float32(frame_ms*100.0)/rate_percent))
 
 func queue_draw_hit(target: Dictionary, facing: int, delay: int) -> void:
 	# CADAB1 keeps this ledger across the two slashes. The temporary object
@@ -3635,6 +3673,9 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
+	if kind == "illusion_melee":
+		# 25218B4 copies the current body rate into the payload. A70624 applies it to the new ANI.
+		entity["timeline"] = illusion_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))
 	if kind == "draw_short_wave":
 		# A60D6B..A60E68 holds frame zero until the object has travelled
 		# the mastery distance. The original animation then runs normally.
@@ -4178,8 +4219,9 @@ func _native_float32(value: float) -> float:
 func object_view_clock(o: Dictionary) -> float:
 	var clock := float(o["clock"])
 	if not o.has("timeline"):return clock
-	var timeline: Array = o["timeline"]
-	var source: Array = o["def"]["timeline"]
+	return _source_animation_clock(clock,o["timeline"],o["def"]["timeline"])
+
+func _source_animation_clock(clock: float, timeline: Array, source: Array) -> float:
 	for i in timeline.size():
 		var frame: Dictionary = timeline[i]
 		if clock < float(frame["end_ms"]):

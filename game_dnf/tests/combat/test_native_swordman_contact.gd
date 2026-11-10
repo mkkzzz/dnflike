@@ -3078,9 +3078,11 @@ func check_illusion_finish() -> void:
 	profile.command("numbers.skill_grant",{"id":"illusionslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["illusionslash"]
-	for sample: Array in [["katana",6,281,281,10,281],["katana",7,140,140,20,140],
-			["beamsword",7,281,210,20,210],["club",0,281,0,10,281]]:
+	for sample: Array in [["katana",6,281,281,10,281,1.06,47],["katana",7,140,140,20,140,1.0,24],
+			["beamsword",6,281,281,10,281,1.0,50],["beamsword",7,281,210,20,210,1.0,24],
+			["club",0,281,0,10,281,1.0,50]]:
 		var family: String = sample[0]
+		var frame_ms := float(sample[7])
 		spec["skills"]["blademastery"] = sample[1] if family == "katana" else 0
 		spec["skills"]["lightswordmastery"] = sample[1] if family == "beamsword" else 0
 		start_room("",family,1,spec)
@@ -3089,23 +3091,24 @@ func check_illusion_finish() -> void:
 			spent.append([id,amount])
 			return true)
 		game.clear_monsters()
-		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["attack_speed"] = sample[6]
 		game.numeric_player.values["hit"] = 1.0
 		game.player["mp"] = 1000.0
 		press(KEY_A)
 		step(0)
 		check(spent==[[3037,2]] and cues("SM_HOANYOUNG_START").size()==1,
 			"the entry uses the original two cubes and start voice")
-		if family == "katana" and int(sample[1]) == 6:
+		if family == "katana":
 			var melee_target: Dictionary = api.spawn_dummy(POINT+Vector2(95,0))
 			var melee: Dictionary = game.objects[0]
-			game.step_objects(99.0)
-			check(game.hit_count==0 and melee["pos"]==POINT+Vector2(19,1) and melee["z"]==1.0,
+			var before := frame_ms*2.0-1.0
+			game.step_objects(before)
+			check(game.hit_count==0 and melee["pos"]==POINT+Vector2(int(before*0.2),1) and melee["z"]==1.0,
 				"the melee object advances on the original particle axis and its first two frames are blank")
 			game.step_objects(1.0)
 			check(game.hit_count==1 and melee["hits"].has(melee_target["id"]) and cues("R_SQUARESWDC_HIT").size()==1
-				and cues("HOANYOUNG_WAVE").size()==1,
-				"the independent melee object hits on its first native attack frame")
+				and cues("HOANYOUNG_WAVE").size()==1 and game.object_view_clock(melee)==100.0,
+				"the melee object uses the actor rate for its first attack frame and presents that same frame")
 			game.clear_monsters()
 			game.hit_count = 0
 		var slash_order := [0,2,1,3,2,0,3,1]
@@ -3115,12 +3118,17 @@ func check_illusion_finish() -> void:
 			var contact: Dictionary = game.objects.back()
 			check(game.player["stage"]==slot and contact["def"]["path"].ends_with("/illusionslashmelee%d.obj"%(slot+1))
 				and contact["hit"]["percent"]==melee_percent,"the original order selects the corresponding melee object and damage")
-			var remaining := float(game.action_def()["timeline"][3]["start_ms"])-float(game.player["clock"])
+			var remaining := frame_ms*(2.0 if slash == 0 else 3.0)
 			step(remaining-1.0)
 			check(game.player["stage"]==slot,"the next slash waits for body frame three")
 			step(1.0)
 		check(game.player["stage"]==4 and cues("R_SM_HOANYOUNG").size()==int(sample[4])-1,
 			"the minimum slash count completes automatically with a repeat voice after each transition")
+		if family == "katana" and int(sample[1]) == 7:
+			game.step_objects(344.0)
+			check(not game.objects.is_empty(),"the mastered melee object still has its animation tail at 344 ms")
+			game.step_objects(1.0)
+			check(game.objects.is_empty(),"the mastered melee object retires at the sum of individually truncated frames")
 		game.step_objects(1000.0)
 		var finish: Dictionary = game.action_def()
 		var direct: Array = finish["hits"].filter(func(hit):return hit["kind"]=="boxes")
@@ -3136,7 +3144,7 @@ func check_illusion_finish() -> void:
 		var far: Dictionary = game.spawn_enemy(POINT+Vector2(118,0))
 		near["hp"] = 50000.0
 		far["hp"] = 50000.0
-		step(99)
+		step(frame_ms*2.0-1.0)
 		check(game.hit_count==0 and game.attack_body_armor(),"the armored first two frames do not borrow a visual rectangle")
 		step(1)
 		check(game.hit_count==1 and game.player["stuck_ms"]==40.0 and far["hp"]==50000.0,
@@ -3144,12 +3152,12 @@ func check_illusion_finish() -> void:
 		game.player["stuck_ms"] = 0.0
 		move_target(near,POINT+Vector2(55,0))
 		near["invuln_ms"] = 0.0
-		step(150)
+		step(frame_ms*3.0)
 		check(game.hit_count==(2 if family == "club" else 1) and cues("SM_HOANYOUNG_FIN").is_empty(),
 			"only the club C layer reaches the target on frame five, before the finishing voice")
 		check(game.objects.is_empty(),"the sword wave has not spawned before the smash frame")
 		var wave_id: int = game._next_entity_id
-		step(50)
+		step(frame_ms)
 		check(game.hit_count==(2 if family == "club" else 3)
 			and cues("skillfx_upper_4c1c9ad1").filter(func(cue):return cue["action_clock_at"]==100.0).size()==1
 			and cues("skillfx_smash_c789bbe3").filter(func(cue):return cue["action_clock_at"]==300.0).size()==1
