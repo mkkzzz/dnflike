@@ -5300,25 +5300,63 @@ func check_illusion_finish() -> void:
 		for key: String in controller["detached"]:
 			check(cues(key).size()==1 and cues(key)[0]["point"]==origin,
 				"the four original draw-only layers start at the same ground point")
-		var victim: Dictionary = api.spawn_dummy(origin)
+		var heavy := int(sample[0])==8
+		var victim: Dictionary = api.spawn_dummy(origin+Vector2(-20*facing if heavy else 0,0))
 		victim["hp"] = 50000.0
+		victim["def"] = victim["def"].merged({"weight":300000 if heavy else 45000},true)
 		game.step_objects(16.0,first_new_id)
 		var debris: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==controller["particle"])
 		check(wave["clock"]==0.0 and wave["hits"].has(victim["id"]) and game.hit_count==1
-			and cues("R_SQUARESWDC_HIT").size()==1 and victim["state"]=="air" and victim["stuck_ms"]==40.0,
+			and cues("R_SQUARESWDC_HIT").size()==1 and victim["state"]=="native_down_flight" and victim["stuck_ms"]==40.0,
 			"the ground object knocks down at frame zero using the original impact cue")
+		var speed: Vector2 = victim.get("native_jump_velocity",Vector2.ZERO)
+		var rise := roundi(float(victim["vz"])*float(victim["vz"])/3000.0)
+		check((rise>=9 and rise<=11 and speed.x>=28 and speed.x<=42) if heavy
+			else (rise>=46 and rise<=57 and speed.x>=63 and speed.x<=94),
+			"ground-wave launch uses target weight and pushes away from the stationary object")
+		var impacts := cues("hit_blow_s")+cues("hit_blow_l")
+		check(impacts.size()==1 and impacts[0]["scale"]==1.0 and impacts[0]["fresh"]
+			and (cues("hit_blood_l")+cues("hit_blood_s1")+cues("hit_blood_s2")+cues("hit_blood_s3")).is_empty(),
+			"the blunt ground wave uses the original unscaled impact and no blood")
 		check(debris.size()==1 and debris[0]["point"]==origin,"the first object update emits one original stone burst")
 		game.view.present(game.view_snapshot(),0.0,0.0)
 		check(game.view.effects.any(func(effect):return effect.has_meta("source_ptl") \
 			and effect.get_meta("source_ptl")==controller["particle"]),
 			"the original stone particle sprites load into the battle view")
+		if not heavy:
+			for guard: String in ["timed","immune_frame","armor","no_down"]:
+				game.clear_monsters()
+				var target: Dictionary = game.spawn_enemy(origin,false,"new_golem_platany" if guard=="no_down" else "goblin")
+				target["hp"] = 50000.0
+				target["clock"] = 19.0
+				target["numeric"].values["hit_recovery"] = 0.0
+				var items: Dictionary = game.enemy_frame(target)["items"]
+				var original_mode = items.get("13")
+				match guard:
+					"timed":target["invuln_ms"] = 100.0
+					"immune_frame":items["13"] = 2
+					"armor":items["13"] = 1
+				game.step_objects(0.0)
+				if original_mode == null:items.erase("13")
+				else:items["13"] = original_mode
+				var allowed := guard in ["armor","no_down"]
+				check(wave["hits"].has(target["id"])==allowed and (float(target["hp"])<50000.0)==allowed,
+					"the ground-wave contact table follows native body permission for "+guard)
+				if guard=="no_down":
+					check(target["state"]=="hurt" and target["stun_ms"]==500.0 and target["push_v"]==0.0,
+						"a monster without a down motion staggers in place for knockback -1 (%s, %s ms, %s px/s)" %
+						[target["state"],target["stun_ms"],target["push_v"]])
+				else:
+					check(target["state"]=="idle" and target["clock"]==19.0,
+						"the native ground wave preserves the pose and clock for "+guard)
+		var hit_total: int = game.hit_count
 		game.step_objects(560.0)
 		var late: Dictionary = api.spawn_dummy(origin)
 		game.step_objects(79.0)
 		check(game.objects.size()==1 and wave["pos"]==origin and not wave["hits"].has(late["id"]),
 			"the ground wave stays in place, and its final frame has no attack box")
 		game.step_objects(1.0)
-		check(game.objects.is_empty() and game.hit_count==1,"the ground object retires at 640 ms without reopening its hit ledger")
+		check(game.objects.is_empty() and game.hit_count==hit_total,"the ground object retires at 640 ms without reopening its hit ledger")
 	for interrupted: bool in [true,false]:
 		spec["skills"]["bluntmastery"] = 0
 		start_room("","club",1,spec)

@@ -3178,7 +3178,14 @@ func apply_native_ground_stagger(target: Dictionary, atk: Dictionary, facing: in
 		target.erase("native_jump_gravity")
 		target.erase("native_down_phase")
 		target.erase("native_down_peak")
-		Kernel.Reaction.start_native_stagger_slide(target,facing)
+		var knock_back: Array = atk.get("knock_back",[])
+		if not knock_back.is_empty() and int(knock_back[0]) == -1:
+			# 8291E2 sets zero horizontal speed for the explicit no-slide mode.
+			target["push_ms"] = 0.0
+			target["push_v"] = 0.0
+			target.erase("push_accel")
+		else:
+			Kernel.Reaction.start_native_stagger_slide(target,facing)
 	return reaction
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
@@ -3329,7 +3336,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var atk: Dictionary = hit["atk"]
 	var native_kind := String(hit.get("native_controller",{}).get("kind",""))
 	var native_outrage := native_kind == "outrage_slash" or native_kind in OUTRAGE_IMPACTS
-	var native_down := native_outrage or native_kind == "bloodblast"
+	var club_wave := native_kind == "illusion_club_wave"
+	var native_down := native_outrage or club_wave or native_kind == "bloodblast"
 	var rapid_slash := native_kind == "rapid_slash"
 	var native_cut := rapid_slash or native_kind == "illusion_finish"
 	var native_reaction := native_down or native_cut or native_kind == "hundred_sword_field"
@@ -3347,7 +3355,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var grab_strike := bool(hit.get("grab_strike",false))
 	var target_state := String(target["state"])
 	# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
-	var counter := target_state in ["attack","action"] or ((native_outrage or native_cut) \
+	var counter := target_state in ["attack","action"] or ((native_outrage or club_wave or native_cut) \
 		and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
@@ -4615,16 +4623,16 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var friendly: bool = o["owner"] in ["player","companion"]
 				var targets := monsters if friendly else friendly_targets()
 				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
-				var outrage_impact := kind in OUTRAGE_IMPACTS
+				var stationary_impact := kind in OUTRAGE_IMPACTS or kind == "illusion_club_wave"
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
-					if outrage_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
+					if stationary_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
-					var first_target: bool = outrage_impact and not o["hits"].keys().any(func(key):return key is int)
+					var first_target: bool = stationary_impact and not o["hits"].keys().any(func(key):return key is int)
 					o["hits"][target["id"]] = true
 					var hit_facing := int(o["facing"])
 					if inward:
@@ -4636,12 +4644,12 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 						# 867485 compares rounded world X for stationary eruption objects.
 						var delta_x := roundi(target["pos"].x)-roundi(o["pos"].x)
 						if delta_x != 0:hit_facing = signi(delta_x)
-					elif outrage_impact or kind == "draw_short_wave":
+					elif stationary_impact or kind == "draw_short_wave":
 						# 867370 uses the target's side for stationary objects.
 						# Moving waves keep their flight direction within 150 px.
 						var source_x := int(o["pos"].x)
 						var delta_x := roundi(target["pos"].x)-source_x
-						if delta_x != 0 and (outrage_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
+						if delta_x != 0 and (stationary_impact or absi(delta_x) >= 150 or source_x == o["ptl_motion"].origin.x):
 							hit_facing = signi(delta_x)
 					land_hit(attacker,target,hit,c["point"],hit_facing,float(o["power"]),first_target)
 					if int(obj["piercing"]) <= 0:
