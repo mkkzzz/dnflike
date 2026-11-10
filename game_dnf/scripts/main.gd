@@ -400,6 +400,7 @@ func apply_combat_weapon(family: String) -> void:
 func new_player() -> Dictionary:
 	return {"id":PLAYER_ID,"pos":Vector2(125,250),"z":0.0,"vz":0.0,"air_ms":0.0,"hp":max_hp,"mp":max_mp,
 		"facing":1,"state":"idle","action":"","stage":0,"clock":0.0,"motion_clock":0.0,
+		"next_ani_rate_refresh_ms":300.0,
 		"guard_hold_ms":0.0,"guard_recoil_ms":0.0,
 		"guard_recoil_speed":0.0,"guard_recoil_accel":0.0,
 		"guard_dust_emitted":false,
@@ -909,7 +910,11 @@ func finish_current_room() -> void:
 
 func step_player(ms: float, move: Vector2) -> void:
 	var dt := ms/1000
-	player["motion_clock"] = float(player["motion_clock"])+ms
+	var motion_clock := float(player["motion_clock"])+ms
+	player["motion_clock"] = motion_clock
+	# 821503/82A2E1 runs a repeating actor timer even outside the skill.
+	var refresh_ani_rate := motion_clock >= float(player["next_ani_rate_refresh_ms"])
+	if refresh_ani_rate:player["next_ani_rate_refresh_ms"] = motion_clock+300.0
 	if player["state"] != "idle" or float(player["landing_ms"]) > 0.0:
 		player.erase("thirst_idle_origin_ms")
 	if player["state"] == "guard":
@@ -977,7 +982,7 @@ func step_player(ms: float, move: Vector2) -> void:
 	requests.clear()
 	state = player["state"]
 	if state == "action":
-		step_action(ms,move)
+		step_action(ms,move,refresh_ani_rate)
 	elif state in ["hurt","air","down"]:
 		var gravity := float(player.get("starfish_fall_gravity",rules["player"]["gravity"]))
 		if Kernel.Reaction.step_body(player,ms,gravity,rules["reaction"],move_in_world) == "landed":
@@ -1018,7 +1023,7 @@ func step_player(ms: float, move: Vector2) -> void:
 	else:
 		player.erase("thirst_idle_origin_ms")
 
-func step_action(ms: float, move: Vector2) -> void:
+func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 	if player.has("charge_crash_hold"):
 		step_charge_crash_hold(ms)
 		return
@@ -1068,6 +1073,20 @@ func step_action(ms: float, move: Vector2) -> void:
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
 		cast["animation_ms"] += ms
+		if refresh_ani_rate:
+			var rate := illusion_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
+			var old_rate := float(cast["animation_percent"])
+			if rate != old_rate:
+				var timeline := illusion_timed_frames(stage["timeline"],rate)
+				var first_slash := int(cast["slash"]) == 0 and int(m["illusion_chain"]["first_frame_rate"]) == 0
+				var old_offset := float(cast["timeline"][0]["end_ms"]) if first_slash else 0.0
+				var new_offset := float(timeline[0]["end_ms"]) if first_slash else 0.0
+				# 1091F09 rescales elapsed ANI time, excluding the skipped opening frame.
+				var elapsed := int(maxf(0.0,float(cast["animation_ms"])-old_offset))
+				var adjusted := int(_native_float32(_native_float32(elapsed*old_rate)/rate))
+				cast["animation_ms"] = new_offset+adjusted
+				cast["animation_percent"] = rate
+				cast["timeline"] = timeline
 		clock = _source_animation_clock(float(cast["animation_ms"]),cast["timeline"],stage["timeline"])
 	player["clock"] = clock
 	if m.get("native_state","") == "outrage_break":

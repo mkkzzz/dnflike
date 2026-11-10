@@ -3078,6 +3078,30 @@ func check_illusion_finish() -> void:
 	profile.command("numbers.skill_grant",{"id":"illusionslash","level":1})
 	var spec := profile.stats()
 	spec["skill_slots"] = ["illusionslash"]
+	start_room("","katana",1,spec)
+	session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+	game.clear_monsters()
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.player["mp"] = 1000.0
+	step(250.0)
+	press(KEY_A)
+	step(0.0)
+	var opening_slash: Dictionary = game.objects[0]
+	game.numeric_player.values["attack_speed"] = 2.0
+	step(49.0)
+	check(game.player["illusion_cast"]["animation_percent"]==100.0 and game.player["stage"]==0,
+		"attack speed waits for the actor timer even if it changes during the opening slash")
+	step(1.0)
+	check(game.player["illusion_cast"]["animation_ms"]==48.0
+		and game.player["illusion_cast"]["timeline"][3]["start_ms"]==72
+		and opening_slash["timeline"][2]["start_ms"]==100,
+		"the timer rescales body time without changing the object that was already spawned")
+	step(23.0)
+	check(game.player["stage"]==0,"the shortened opening slash still waits for body frame three")
+	step(1.0)
+	check(game.player["stage"]==2 and game.objects.size()==2
+		and game.objects[1]["timeline"][2]["start_ms"]==48,
+		"the next slash object receives the refreshed attack speed at creation")
 	for sample: Array in [["katana",6,281,281,10,281,1.06,47],["katana",7,140,140,20,140,1.0,24],
 			["beamsword",6,281,281,10,281,1.0,50],["beamsword",7,281,210,20,210,1.0,24],
 			["club",0,281,0,10,281,1.0,50]]:
