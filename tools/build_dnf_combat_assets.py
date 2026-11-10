@@ -461,7 +461,7 @@ EFFECTS = {
 }
 # combo.img frame ranges, read from the image itself (temp contact sheet, 2026-10-22).
 DIGITS = {'combo': (0, 10), 'combo_label': (10, 11), 'damage': (44, 54), 'damage_crit': (54, 64),
-          'heal': (64, 74), 'mp': (74, 84), 'damage_taken': (88, 98)}
+          'heal': (64, 74), 'mp': (74, 84), 'damage_taken': (88, 98), 'damage_bleed': (143, 153)}
 # Sound keys -> filename stems. R_ prefix = random variants (_01.._0n) of the stem.
 # Aliases are inferred from file naming in the archive (E-INFER); unknown keys stay unresolved.
 SOUND_ALIASES = {'MINERAL_SWD': 'MINSWD', 'MINERALSWD': 'MINSWD', 'SQUARESWD': 'SQRSWD', 'KATANA': 'KAT',

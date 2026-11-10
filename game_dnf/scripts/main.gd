@@ -332,11 +332,18 @@ func step_numeric_actor(body: Dictionary, actor, ms: float) -> void:
 			amount = int(resolved["amount"])
 		body["hp"] = maxf(0,float(body["hp"])-amount)
 		if event.get("native_number",false):
-			var height := HellbenterBlood.target_display_height(self,body)
+			var victim := victim_kind(body)
+			var height := HellbenterBlood.target_display_height(self,body) if victim == "monster" else 100
 			# 998249..99828A uses the same number renderer as Bloody Rave's Thirst pulse.
 			var number_point := Vector3(Vector3i(point))+Vector3(0,1,height+15)
+			var digits := "damage"
+			if event["id"] == "bleed":
+				# 8B2DE6..8B2E4D uses target Y and selects the digits by source and victim.
+				number_point = Vector3(roundi(point.x),roundi(point.y),roundi(point.z)+height+15)
+				if event.get("player_bleed",false):digits = "damage_bleed"
+				elif victim == "player":digits = "damage_crit"
 			bus.emit("combat.damage_number",{"target":body["id"],"amount":amount,"id":event["id"],
-				"victim":victim_kind(body),"point":number_point,"native_direct":true})
+				"victim":victim,"point":number_point,"native_direct":true,"digits":digits})
 			if event.has("native_fx"):
 				var burst_height := 2*int(height/3.0)
 				bus.emit("combat.cue",{"kind":"fx","key":event["native_fx"],"point":body["pos"],
@@ -1898,7 +1905,7 @@ func step_bloody_rave_suction(move: Dictionary, stage: Dictionary, from: float, 
 		phase["suction_seen"][id] = true
 		# The ATK status is resolved separately from the pull permission.
 		if enemy.has("numeric") and not phase["suction_bleed"].is_empty():
-			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+			if enemy["numeric"].apply_source_bleed(phase["suction_bleed"],rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),true):
 				bus.emit("combat.status",{"target":id,"id":"bleed","change":"added"})
 		bloody_rave_contact_cue(move,enemy,contact["point"])
 		# 869DDB rejects body mode 2. This contact uses a different gate from Bloodlust.
@@ -3518,7 +3525,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 					bus.emit("combat.status",{"target":target["id"],"id":"shock","change":"added"})
 				continue
 			if effect.get("native_frenzy",false) or effect.has("source_bleed_total"):
-				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1)):
+				if target["numeric"].apply_source_bleed(effect,rng.range_int(0,ActorNumbers.STATUS_ROLL_SIZE-1),by_player):
 					bus.emit("combat.status",{"target":target["id"],"id":"bleed","change":"added"})
 				continue
 			var chance := float(effect.get("chance",1))

@@ -29,7 +29,7 @@ func add_bloodlust_strength(amount: int, duration_ms: int) -> bool:
 	effect["stacks"] = grants.size()
 	return true
 
-func add_source_bleed(total: int, duration_ms: int, status_level: int) -> bool:
+func add_source_bleed(total: int, duration_ms: int, status_level: int, from_player := false) -> bool:
 	if duration_ms <= 0:return false
 	if not active.has("bleed"):add("bleed",{"name":"出血"})
 	var bleed: Dictionary = active["bleed"]
@@ -41,7 +41,9 @@ func add_source_bleed(total: int, duration_ms: int, status_level: int) -> bool:
 	@warning_ignore("integer_division")
 	var ticks := maxi(1,duration_ms/500)
 	var amount := int(PackedFloat32Array([float(total)/ticks])[0])
-	source["applications"].append({"remaining_ms":float(duration_ms),"amount":amount,"status_level":status_level})
+	var application := {"remaining_ms":float(duration_ms),"amount":amount,"status_level":status_level}
+	if from_player:application["from_player"] = true
+	source["applications"].append(application)
 	return true
 
 func add_source_shock(amount: int, duration_ms: int, hit_ms: int) -> bool:
@@ -195,10 +197,14 @@ func step_source_bleed(effect: Dictionary, ms: float, events: Array) -> void:
 	if float(source["next_tick_ms"]) <= 0.0:
 		source["next_tick_ms"] = 500.0
 		var amount := 0
-		for application: Dictionary in applications:amount += int(application["amount"])
+		var player_amount := 0
+		for application: Dictionary in applications:
+			var tick := int(application["amount"])
+			amount += tick
+			if application.get("from_player",false):player_amount += tick
 		if amount > 0:
-			events.append({"type":"damage_number","id":"bleed","damage":amount,"damage_type":"physical"})
-			events.append({"type":"direct_damage","id":"bleed","damage":amount,"damage_type":"physical"})
+			events.append({"type":"direct_damage","id":"bleed","damage":amount,"damage_type":"physical",
+				"native_number":true,"player_bleed":player_amount>0})
 	for index in range(applications.size()-1,-1,-1):
 		applications[index]["remaining_ms"] -= ms
 		if float(applications[index]["remaining_ms"]) <= 0.0:applications.remove_at(index)

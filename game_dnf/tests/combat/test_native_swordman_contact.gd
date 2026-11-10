@@ -3979,7 +3979,7 @@ func check_bloody_rave_contact_bleed() -> void:
 			"Bloody Rave contact roll and resistance gate without direct damage: "+scenario)
 		if entry.is_empty():continue
 		var applications: Array = entry["source_bleed"]["applications"]
-		check(applications==[{"remaining_ms":5000.0,"amount":55,"status_level":level}],
+		check(applications==[{"remaining_ms":5000.0,"amount":55,"status_level":level,"from_player":true}],
 			"the inhale uses the original bleed duration, damage base and effective status level")
 		if scenario != "repeat":continue
 		var targets: Dictionary = game.player["native_phase"]["suction_targets"]
@@ -4293,7 +4293,8 @@ func check_grab_blast_thirst() -> void:
 			var bleed: Dictionary = victim["numeric"].effects.active.get("bleed",{})
 			var applications: Array = bleed.get("source_bleed",{}).get("applications",[])
 			check(applications.size()==(2 if large and victim==target else 1)
-				and applications.back()=={"remaining_ms":3000.0,"amount":22 if large else 21,"status_level":expected["status_level"]},
+				and applications.back()=={"remaining_ms":3000.0,"amount":22 if large else 21,
+					"status_level":expected["status_level"],"from_player":true},
 				"the source spray applies the same bleed to the held victim and bystander without duplicating the held hit")
 	var audio = game.view.audio
 	audio.muted = false
@@ -5558,7 +5559,7 @@ func check_illusion_blade_bleed() -> void:
 		game.rng.reseed(seeds[3319])
 		game.step_objects(100.0)
 		var bleed: Dictionary = target["numeric"].effects.active.get("bleed",{})
-		var expected := [{"remaining_ms":3000.0,"amount":104,"status_level":24}] if rank==3 else []
+		var expected := [{"remaining_ms":3000.0,"amount":104,"status_level":24,"from_player":true}] if rank==3 else []
 		check(game.hit_count==1 and bleed.get("source_bleed",{}).get("applications",[])==expected,
 			"Illusion Slash melee uses the original katana mastery threshold and bleed payload")
 		game.clear_monsters()
@@ -6557,7 +6558,8 @@ func check_draw_second_slash() -> void:
 			check(is_equal_approx(effect["chance"],0.912) and effect["source_bleed_total"]==2779 and not active.is_empty(),
 				"rank seven Katana Mastery installs source bleeding on the second slash at owner level 60")
 			if not active.is_empty():
-				check(active["source_bleed"]["applications"]==[{"remaining_ms":9000.0,"amount":154,"status_level":38}],
+				check(active["source_bleed"]["applications"]==[{"remaining_ms":9000.0,"amount":154,
+					"status_level":38,"from_player":true}],
 					"second slash bleeding preserves native duration, level and per-tick integer conversion")
 		else:
 			var effect: Dictionary = game.action_def()["hits"][0]["effects"][0]
@@ -7008,8 +7010,17 @@ func check_thirst_burst() -> void:
 		and views[burst["id"]].z_index<views[layer_id].z_index
 		and is_equal_approx(views[layer_id].base_scale,1.65),
 		"front and back clips follow the source layering and share the scale")
+	first["z"] = 30.0
 	game.step_numeric_actor(first,first["numeric"],0)
 	check(first["hp"]==hp-78,"first native tick floors 1096 / floor(7000 / 500)")
+	var numbers: Array = game.bus.events_of("combat.damage_number").filter(
+		func(event):return event["id"]=="bleed" and event["target"]==first["id"])
+	var bank: Dictionary = game.table.assets["monsters"][first["def"]["bank"]]
+	check(numbers.size()==1 and numbers[0]["amount"]==78 and numbers[0]["digits"]=="damage_bleed"
+		and numbers[0]["native_direct"] and numbers[0]["point"]==Vector3(first["pos"].x,first["pos"].y,45+int(bank["number_height"]))
+		and game.view.numbers.back()["end_ms"]==1000.0 and game.view.hud.digits.has("damage_bleed_7"),
+		"owned bleed draws the native gold digits at the victim's standing height plus airborne Z and 15 pixels")
+	first["z"] = 0.0
 	game.step_numeric_actor(first,first["numeric"],499)
 	check(first["hp"]==hp-78,"native bleed does not tick again before 500 ms")
 	first["state"] = "move"
@@ -7032,6 +7043,30 @@ func check_thirst_burst() -> void:
 	check(mixed["stacks"]==1 and mixed.has("source_bleed"),"generic bleed keeps its own stack count and preserves the source timer")
 	effects.step(1000)
 	check(effects.active.has("bleed") and not mixed.has("source_bleed"),"the source timer expires independently of generic bleed")
+	effects.remove("bleed")
+	second["numeric"].values["hp_max"] = 5000.0
+	second["hp"] = 5000.0
+	effects.add_source_bleed(50,1100,40)
+	game.step_numeric_actor(second,second["numeric"],0)
+	var last_number: Dictionary = game.bus.events_of("combat.damage_number").back()
+	check(last_number["amount"]==25 and last_number["digits"]=="damage",
+		"external bleed damage uses the native white digits")
+	game.step_numeric_actor(second,second["numeric"],100)
+	effects.add_source_bleed(30,500,40,true)
+	game.step_numeric_actor(second,second["numeric"],0)
+	last_number = game.bus.events_of("combat.damage_number").back()
+	check(last_number["amount"]==55 and last_number["digits"]=="damage_bleed",
+		"a new owned application reopens the shared tick and displays the combined damage in gold")
+	var tick_count: int = game.bus.events_of("combat.damage_number").size()
+	game.step_numeric_actor(second,second["numeric"],500)
+	var ticks_at_expiry: Array = game.bus.events_of("combat.damage_number")
+	check(ticks_at_expiry.size()==tick_count+1 and ticks_at_expiry.back()["amount"]==55
+		and ticks_at_expiry.back()["digits"]=="damage_bleed",
+		"the due tick still includes the owned application at its exact expiry")
+	game.step_numeric_actor(second,second["numeric"],500)
+	last_number = game.bus.events_of("combat.damage_number").back()
+	check(last_number["amount"]==25 and last_number["digits"]=="damage",
+		"the surviving external application returns to white after owned bleed expires")
 
 func check_bloodblast_speed_refresh() -> void:
 	var profile := ProfileSession.new()

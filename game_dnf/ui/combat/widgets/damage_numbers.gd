@@ -15,7 +15,7 @@ func paint(h, s: Dictionary) -> void:
 			rise += lerpf(0.0,30.0,clampf((age-800.0)/200.0,0.0,1.0))
 			var alpha := lerpf(255.0,128.0,clampf((age-600.0)/200.0,0.0,1.0))
 			alpha -= lerpf(0.0,128.0,clampf((age-800.0)/200.0,0.0,1.0))
-			h.native_direct_damage_number(int(number["value"]),pos-Vector2(0,rise),alpha/255.0)
+			h.native_direct_damage_number(int(number["value"]),pos-Vector2(0,rise),alpha/255.0,String(number.get("digits","damage")))
 			continue
 		var life := float(number["ms"])/650
 		pos.y -= life*28
