@@ -55,6 +55,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/act5/bwanga.dgn',
     'dungeon/act5/icepalace.dgn',
     'dungeon/act6/astraythief.dgn',
+    'dungeon/village/moonlightpub/aganzo.dgn',
     'dungeon/village/gbl/gbl_branchofarad.dgn',
     'dungeon/village/gbl/gbl_hatchery.dgn',
     'dungeon/village/gbl/gbl_laboratory.dgn',
@@ -402,13 +403,22 @@ def source_map_greed_pairs(room: dict) -> list[list[int]]:
     return [masks[index:index + 2] for index in range(0, len(masks), 2)]
 
 
-def map_role_hint(path: str) -> str:
+def map_role_hint(path: str, room: dict) -> str:
     stem = PurePosixPath(path).stem.lower()
     marker = stem[stem.rfind('(') + 1:stem.rfind(')')] if '(' in stem and ')' in stem else ''
-    if marker == 's' or stem.startswith('s'):
+    if isinstance(room.get('start_area'), list) and len(room['start_area']) == 4:
         return 'start'
     if marker == 'bn' or stem.startswith('bn'):
         return 'boss_near_or_unknown'
+    for span in room.get('raw', []):
+        if span.get('tag') != '[type]':
+            continue
+        values = span.get('values')
+        if isinstance(values, list) and len(values) == 1 and len(values[0]) >= 3:
+            if values[0][2] == '[boss]':
+                return 'boss'
+    if marker == 's' or stem.startswith('s'):
+        return 'start'
     if marker == 'b' or stem.startswith('b'):
         return 'boss'
     return 'normal'
@@ -629,6 +639,54 @@ def dungeon_placement(room: dict, cell: dict, slots: dict, boss_cells: set, vari
     return {'id': f'{x}_{y}:{variant}{stem}', 'cell': [x, y], 'map': room['path'], 'gates': gates}
 
 
+def split_maze_blocks(spans: list[dict]) -> list[dict]:
+    blocks = []
+    current = None
+    for span in spans:
+        if span['tag'] == '[maze info]':
+            current = {'index': len(blocks), 'spans': []}
+            blocks.append(current)
+        elif current is not None:
+            current['spans'].append(span)
+    return blocks
+
+
+def export_maze_blocks(spans: list[dict], dungeon_path: str, diags: list) -> list[dict]:
+    result = []
+    for block in split_maze_blocks(spans):
+        block_spans = block['spans']
+        size = span_values(block_spans, '[size]') or [0, 0]
+        greed_values = [value for value in flatten(span_values(block_spans, '[greed]') or [])
+                        if isinstance(value, str)]
+        greed = ' '.join(greed_values)
+        cells = parse_greed(greed, size[0], size[1], dungeon_path, diags) if size and greed else {}
+        normal_specs = []
+        for span in block_spans:
+            if span['tag'] == '[map specification]':
+                row = plain(span['values'])
+                if len(row) >= 3:
+                    normal_specs.append(row[:3])
+        boss_specs = []
+        for span in block_spans:
+            if span['tag'] == '[boss map specification]':
+                row = plain(span['values'])
+                if len(row) >= 3:
+                    boss_specs.append(row[:3])
+        result.append({
+            'index': block['index'], 'size': size, 'greed': greed, 'cell_count': len(cells),
+            'start_map_raw': span_values(block_spans, '[start map]'),
+            'boss_map_raw': span_values(block_spans, '[boss map]'),
+            'map_specifications': normal_specs, 'boss_map_specifications': boss_specs,
+            'quest_connection': span_values(block_spans, '[quest connection]'),
+            'escape_hell': span_values(block_spans, '[escape hell]'),
+            'hell_dungeon': span_values(block_spans, '[hell dungeon]'),
+            'seal_door_map_index': span_values(block_spans, '[seal door map index]'),
+            'seal_door_pos': span_values(block_spans, '[seal door pos]'),
+            'seal_door_appear_rate': span_values(block_spans, '[seal door appear rate]'),
+        })
+    return result
+
+
 def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> dict:
     ids = {'maps': lib.listing('map/map.lst'), 'objects': lib.listing('passiveobject/passiveobject.lst'),
            'monsters': lib.listing('monster/monster.lst'), 'dungeons': lib.listing('dungeon/dungeon.lst')}
@@ -637,10 +695,24 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
         raise ValueError('Dungeon script absent: ' + dungeon_path)
     spans = script['spans']
     dungeon_index = next((k for k, v in ids['dungeons'].items() if ('dungeon/' + v).lower() == dungeon_path), None)
-    size = span_values(spans, '[size]') or [0, 0]
-    greed = span_values(spans, '[greed]') or ['']
-    cells = parse_greed(greed[0], size[0], size[1], dungeon_path, lib.diags)
-    start_raw, boss_raw = span_values(spans, '[start map]'), span_values(spans, '[boss map]')
+    maze_blocks = export_maze_blocks(spans, dungeon_path, lib.diags)
+    if not maze_blocks:
+        raise ValueError(f'Dungeon has no maze blocks: {dungeon_path}')
+    ordinary_blocks = [block for block in maze_blocks
+                       if not block['quest_connection'] and not block['escape_hell']
+                       and not block['hell_dungeon']]
+    selected_block = ordinary_blocks[0] if ordinary_blocks else maze_blocks[0]
+    selected_index = int(selected_block['index'])
+    for block in maze_blocks:
+        block['selected'] = int(block['index']) == selected_index
+    if len(maze_blocks) > 1:
+        lib.diags.append(diag('info', 'maze_block_selected', dungeon_path,
+                              f'selected maze block {selected_index} of {len(maze_blocks)}; '
+                              f'ordinary candidates={[block["index"] for block in ordinary_blocks]}'))
+    size = selected_block['size']
+    greed = selected_block['greed']
+    cells = parse_greed(greed, size[0], size[1], dungeon_path, lib.diags)
+    start_raw, boss_raw = selected_block['start_map_raw'], selected_block['boss_map_raw']
     as_cells = lambda raw: [raw[i:i + 2] for i in range(0, len(raw) - 1, 2)] if raw else []
     boss_cells = {tuple(c) for c in as_cells(boss_raw)}
     gate_ids = span_values(spans, '[pathgate object]') or []
@@ -669,7 +741,7 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
             if not room['greed_pairs']:
                 lib.diags.append(diag('info', 'layout_absent', path,
                                       'MAP has no [greed] layout; retained raw without ordinary cell placement'))
-        room['role_hint'] = map_role_hint(path)
+        room['role_hint'] = map_role_hint(path, room)
 
     gate_objects = {str(i): export_gate_object(lib, i, ids['objects']) for i in sorted(set(slots.values()))}
     placements = []
@@ -691,6 +763,7 @@ def export_dungeon(lib: Library, dungeon_path: str, extra_maps: list[str]) -> di
     return {'path': dungeon_path, 'sha256': script['sha256'], 'crc_ok': script['crc_ok'], 'index': dungeon_index,
             'raw': raw_spans(script), 'size': size,
             'cells': [cells[k] for k in sorted(cells, key=lambda c: (c[1], c[0]))],
+            'maze_block_index': selected_index, 'maze_blocks': maze_blocks,
             'start_map_raw': start_raw, 'boss_map_raw': boss_raw,
             'start_boss_interpretation': 'E-INFER: value pairs are candidate cells (x,y); random choice unverified',
             'background_pos_raw': span_values(spans, '[background pos]'), 'pathgate_slots': slots,

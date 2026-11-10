@@ -100,6 +100,10 @@
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
   },
+  "aganzo": {
+   "normal": "aganzo",
+   "boss": "aganzo"
+  },
   "astraythief": {
    "normal": "thief",
    "boss": "thief_boss"
@@ -374,6 +378,12 @@
    "source": "music/behemoth_b01_1.ogg",
    "sha256": "5986f1d354055f00835eddaa0f9e9af9150c718a37a464bced49c0bc92106858",
    "bytes": 1101176
+  },
+  "aganzo": {
+   "file": "audio/bgm/aganzo.ogg",
+   "source": "music/aganzo.ogg",
+   "sha256": "65cfb5af423eb9ce0828247898eff7d8acce09ec1f1046b505b8767ffeee8072",
+   "bytes": 1610805
   },
   "thief": {
    "file": "audio/bgm/thief.ogg",

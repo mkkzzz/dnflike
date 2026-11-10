@@ -115,7 +115,33 @@ def source_dungeon_tracks(export: dict, rooms: list[dict], music: dict[str, str]
 def source_native_dungeon_tracks(export: dict, music: dict[str, str],
                                  random_music: dict[str, set[str]]) -> dict[str, str]:
     tracks = {'normal': Counter(), 'boss': Counter()}
-    for map_path, room in export['dungeon']['rooms'].items():
+    dungeon = export['dungeon']
+    if len(dungeon.get('maze_blocks') or []) > 1:
+        selected = dungeon['maze_blocks'][dungeon['maze_block_index']]
+        fixed = {}
+        for row in (selected.get('map_specifications') or []) + (selected.get('boss_map_specifications') or []):
+            fixed.setdefault((int(row[0]), int(row[1])), set()).add(int(row[2]))
+        start = tuple(dungeon.get('start_map_raw') or [])
+        boss = tuple(dungeon.get('boss_map_raw') or [])
+        map_paths = []
+        for placement in dungeon.get('placements', []):
+            map_path = placement['map']
+            cell = tuple(placement.get('cell') or [])
+            room = dungeon['rooms'][map_path]
+            if cell in fixed and int(room['map_id']) not in fixed[cell]:
+                continue
+            if cell == start and not room.get('start_area'):
+                continue
+            role = next((str(span['values'][0][2]) for span in room.get('raw', [])
+                         if span.get('tag') == '[type]' and span.get('values')
+                         and len(span['values'][0]) >= 3), '')
+            if cell == boss and role != '[boss]':
+                continue
+            map_paths.append(map_path)
+    else:
+        map_paths = sorted(dungeon['rooms'])
+    for map_path in map_paths:
+        room = dungeon['rooms'][map_path]
         role = ''
         for span in room.get('raw', []):
             if span.get('tag') != '[type]':
@@ -127,8 +153,8 @@ def source_native_dungeon_tracks(export: dict, music: dict[str, str],
         if role not in ('[normal]', '[boss]'):
             raise ValueError(f'{map_path}: native MAP has no normal/boss role')
         candidates = music_candidates(room.get('sound', []), music, random_music)
-        if len(candidates) != 1:
-            raise ValueError(f'{map_path}: expected one audio.xml music cue, found {room.get("sound", [])}')
+        if not candidates:
+            raise ValueError(f'{map_path}: no audio.xml music cue, found {room.get("sound", [])}')
         tracks['boss' if role == '[boss]' else 'normal'].update(candidates)
     result = {}
     for role, counts in tracks.items():

@@ -346,6 +346,49 @@ class LibraryExport(unittest.TestCase):
         self.assertFalse([span for span in dungeon['raw']
                           if span['tag'] == '[boss map specification]'])
 
+    def test_aganzo_export_selects_the_only_ordinary_maze_block(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/aganzo_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '882dc960c67fc9378e11b20e2331ad628cf012f78cc581c6e2f463280461524e')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['maze_block_index'], 4)
+        self.assertEqual(dungeon['size'], [5, 4])
+        self.assertEqual(dungeon['start_map_raw'], [4, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [3, 3])
+        self.assertEqual(len(dungeon['rooms']), 13)
+        self.assertEqual(len(dungeon['placements']), 21)
+        self.assertEqual(len(export['images']), 95)
+        self.assertEqual([block['size'] for block in dungeon['maze_blocks']], [
+            [2, 1], [2, 1], [5, 1], [5, 2], [5, 4], [5, 4],
+        ])
+        self.assertEqual([block['index'] for block in dungeon['maze_blocks']
+                          if block['selected']], [4])
+        ordinary = [block['index'] for block in dungeon['maze_blocks']
+                    if not block['quest_connection'] and not block['escape_hell']
+                    and not block['hell_dungeon']]
+        self.assertEqual(ordinary, [4])
+        selected = dungeon['maze_blocks'][4]
+        self.assertEqual([row[2] for row in selected['map_specifications']],
+                         [16005, 16003, 16002, 16001, 16006, 16007, 16008])
+        self.assertEqual(selected['boss_map_specifications'], [[3, 3, 16009]])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(sum(cell['code'] != 'AA' for cell in dungeon['cells']), 10)
+        self.assertEqual(cells[(4, 1)]['map_candidates'], [
+            'map/aganzo/(3.3)aganzoboss.map',
+            'map/aganzo/(4,1)aganzostart.map',
+        ])
+        self.assertEqual(cells[(3, 3)]['map_candidates'], [
+            'map/aganzo/(3.3)aganzoboss.map',
+            'map/aganzo/(4,1)aganzostart.map',
+        ])
+        self.assertEqual(dungeon['rooms']['map/aganzo/(4,1)aganzostart.map']['role_hint'], 'start')
+        self.assertEqual(dungeon['rooms']['map/aganzo/(3.3)aganzoboss.map']['role_hint'], 'boss')
+        selected_diag = [row for row in export['diagnostics'] if row['code'] == 'maze_block_selected']
+        self.assertEqual(len(selected_diag), 1)
+        self.assertIn('selected maze block 4 of 6', selected_diag[0]['detail'])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

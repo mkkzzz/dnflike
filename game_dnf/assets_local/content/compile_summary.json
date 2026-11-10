@@ -1,17 +1,17 @@
 {
  "records": {
   "chr": 1,
-  "atk": 682,
-  "ani": 3985,
+  "atk": 689,
+  "ani": 4031,
   "skl": 175,
   "ptl": 111,
-  "obj": 298,
-  "mob": 264,
-  "act": 529
+  "obj": 300,
+  "mob": 269,
+  "act": 578
  },
  "missing_references": 1,
- "pack_sha256": "ffd8939f9e0fc47794d7d407a7e46d3ee85184fe13d85373a49d0b6592180def",
- "unsupported_in_scope": 2107,
+ "pack_sha256": "94adf3899e9773c46d74d8e1db4106e6046f304fe2ed8f640dfdfc5e04ff8d17",
+ "unsupported_in_scope": 2187,
  "coverage": {
   "atk": {
    "files": 6089,

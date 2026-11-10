@@ -2,6 +2,14 @@
  "schema": "dnf_breakable_particles/1",
  "evidence": ".obj 的 [destroy particle] → .ptl 的 [object] ANI 列表",
  "objects": {
+  "passiveobject/actionobject/breakableobject/aganzo_siktak.obj": [
+   "ptl_aganzo_siktak_particle1",
+   "ptl_aganzo_siktak_particle2",
+   "ptl_aganzo_siktak_particle3",
+   "ptl_aganzo_siktak_particle4",
+   "ptl_aganzo_siktak_particle5",
+   "ptl_aganzo_siktak_particle6"
+  ],
   "passiveobject/actionobject/breakableobject/bookcase.obj": [
    "ptl_bookcaseparticle1",
    "ptl_bookcaseparticle2",

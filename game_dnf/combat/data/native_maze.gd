@@ -134,7 +134,8 @@ func _read_pools(dungeon: Dictionary, cells: Dictionary, entry: Vector2i, boss: 
 	if not rooms is Dictionary or not placements is Array or not slots is Dictionary or not gates is Dictionary:
 		last_error = "native maze lacks rooms, placements, gate slots or gate objects"
 		return {}
-	var specs := _read_specifications(dungeon.get("raw"),cells)
+	var specs := _read_specifications(dungeon.get("raw"),cells,
+		int(dungeon.get("maze_block_index",0)))
 	if specs.is_empty():
 		last_error = "native maze specifications are incomplete"
 		return {}
@@ -272,7 +273,7 @@ func _read_endpoint_cells(raw, cells: Dictionary, flag: String) -> Array[Vector2
 		points.append(point)
 	return points
 
-func _read_specifications(raw, cells: Dictionary) -> Dictionary:
+func _read_specifications(raw, cells: Dictionary, selected_block: int = 0) -> Dictionary:
 	if not raw is Array:return {}
 	var pools := {"normal":{},"boss":{}}
 	var maze_blocks := 0
@@ -281,10 +282,10 @@ func _read_specifications(raw, cells: Dictionary) -> Dictionary:
 		var tag = span.get("tag")
 		if tag == "[maze info]":
 			maze_blocks += 1
-			# Some ACT3/4 scripts append a quest/hell variant after the ordinary layout.
-			# Runtime consumes the first block until that variant's selector is proven.
-			if maze_blocks > 1:break
+			# Exporters may select a later ordinary block when earlier blocks are quest-only.
+			if maze_blocks > selected_block + 1:break
 			continue
+		if maze_blocks != selected_block + 1:continue
 		if tag == "[layered map specification]":return {}
 		if tag not in ["[map specification]","[boss map specification]"]:continue
 		var values = span.get("values")
@@ -296,7 +297,7 @@ func _read_specifications(raw, cells: Dictionary) -> Dictionary:
 		var point := Vector2i(row[0],row[1])
 		if not cells.has(point):return {}
 		pools["boss" if tag == "[boss map specification]" else "normal"][point] = row.slice(2)
-	return pools if maze_blocks else {}
+	return pools if maze_blocks > selected_block else {}
 
 func _roll(source: RefCounted, count: int) -> int:
 	var result = source.range_int(0,count-1)

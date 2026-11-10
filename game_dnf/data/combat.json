@@ -1625,6 +1625,31 @@
    "mob": "monster/thief/thiefmalemad.mob",
    "bank": "thief_thiefmalemad",
    "name": "thiefmalemad"
+  },
+  "newmonsters_aganzo_cutpurse_cutpurse": {
+   "mob": "monster/newmonsters/aganzo/cutpurse/cutpurse.mob",
+   "bank": "newmonsters_aganzo_cutpurse_cutpurse",
+   "name": "cutpurse"
+  },
+  "newmonsters_aganzo_gang_gang": {
+   "mob": "monster/newmonsters/aganzo/gang/gang.mob",
+   "bank": "newmonsters_aganzo_gang_gang",
+   "name": "gang"
+  },
+  "newmonsters_aganzo_gang2_gang2": {
+   "mob": "monster/newmonsters/aganzo/gang2/gang2.mob",
+   "bank": "newmonsters_aganzo_gang2_gang2",
+   "name": "gang2"
+  },
+  "newmonsters_aganzo_pubman_gang3": {
+   "mob": "monster/newmonsters/aganzo/pubman/gang3.mob",
+   "bank": "newmonsters_aganzo_pubman_gang3",
+   "name": "gang3"
+  },
+  "newmonsters_aganzo_sinead_sinead": {
+   "mob": "monster/newmonsters/aganzo/sinead/sinead.mob",
+   "bank": "newmonsters_aganzo_sinead_sinead",
+   "name": "sinead"
   }
  },
  "boss_hp_lines": 3,
