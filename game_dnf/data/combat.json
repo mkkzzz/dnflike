@@ -1770,6 +1770,41 @@
    "mob": "monster/newmonsters/cartel/westcoast/special_rod_aradman/special_rod_aradman.mob",
    "bank": "newmonsters_cartel_westcoast_special_rod_aradman_special_rod_aradman",
    "name": "special_rod_aradman"
+  },
+  "darkelf_darkelf_guard": {
+   "mob": "monster/darkelf/darkelf_guard.mob",
+   "bank": "darkelf_darkelf_guard",
+   "name": "darkelf_guard"
+  },
+  "dingo_humpri_dingo": {
+   "mob": "monster/dingo_humpri/dingo.mob",
+   "bank": "dingo_humpri_dingo",
+   "name": "dingo"
+  },
+  "dingo_humpri_humpri": {
+   "mob": "monster/dingo_humpri/humpri.mob",
+   "bank": "dingo_humpri_humpri",
+   "name": "humpri"
+  },
+  "ghoul_ghoulheadless": {
+   "mob": "monster/ghoul/ghoulheadless.mob",
+   "bank": "ghoul_ghoulheadless",
+   "name": "ghoulheadless"
+  },
+  "headlessknight_headlessknight": {
+   "mob": "monster/headlessknight/headlessknight.mob",
+   "bank": "headlessknight_headlessknight",
+   "name": "headlessknight"
+  },
+  "magma_incompletegoliath": {
+   "mob": "monster/magma/incompletegoliath.mob",
+   "bank": "magma_incompletegoliath",
+   "name": "incompletegoliath"
+  },
+  "skeleton_skeleton_headless": {
+   "mob": "monster/skeleton/skeleton_headless.mob",
+   "bank": "skeleton_skeleton_headless",
+   "name": "skeleton_headless"
   }
  },
  "boss_hp_lines": 3,

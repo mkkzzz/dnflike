@@ -590,6 +590,46 @@ class LibraryExport(unittest.TestCase):
         self.assertIn('selected maze block 4 of 5', selected_diag[0]['detail'])
         self.assertIn('hell-base candidates=[4]', selected_diag[0]['detail'])
 
+    def test_underfoot_export_uses_single_hell_base_layout(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/underfoot_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '01413357d13471901ca0dcceabc466ada9449f3f888eba97c00cd5dfd8687546')
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        self.assertEqual(dungeon['index'], 36)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(len(dungeon['maze_blocks']), 1)
+        self.assertEqual(dungeon['size'], [6, 3])
+        self.assertEqual(dungeon['start_map_raw'], [0, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 1])
+        self.assertEqual(len(dungeon['rooms']), 15)
+        self.assertEqual(len(dungeon['placements']), 23)
+        self.assertEqual(len(export['images']), 111)
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual(len(selected['map_specifications']), 13)
+        self.assertEqual(selected['boss_map_specifications'], [])
+        self.assertEqual(sum(bool(cell['doors']) for cell in dungeon['cells']), 15)
+        self.assertEqual(sum(cell['code'] == 'AA' for cell in dungeon['cells']), 3)
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertEqual(cells[(0, 1)]['map_candidates'], ['map/underfoot/s6601.map'])
+        self.assertEqual(cells[(5, 1)]['map_candidates'], ['map/underfoot/b6615.map'])
+        self.assertEqual(dungeon['rooms']['map/underfoot/s6601.map']['role_hint'], 'start')
+        boss_room = dungeon['rooms']['map/underfoot/b6615.map']
+        self.assertEqual(next(span['values'][0][2] for span in boss_room['raw']
+                              if span['tag'] == '[type]'), '[boss]')
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 120)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 222)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 3)
+        self.assertFalse([row for row in diagnostics if row['code'] == 'object_unrendered'])
+        self.assertFalse([row for row in diagnostics if row['code'] == 'maze_block_selected'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 15)
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

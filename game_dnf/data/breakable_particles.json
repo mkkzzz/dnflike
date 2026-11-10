@@ -186,6 +186,15 @@
    "ptl_barrelparticle11",
    "ptl_barrelparticle12"
   ],
+  "passiveobject/mapobject/breakableobject/actionbrazier.obj": [
+   "ptl_cagedest01",
+   "ptl_cagedest02",
+   "ptl_cagedest03",
+   "ptl_cagedest04",
+   "ptl_cagedest05",
+   "ptl_cagedest06",
+   "ptl_cagedest07"
+  ],
   "passiveobject/mapobject/breakableobject/actionfountain.obj": [
    "ptl_fountainparticle1",
    "ptl_fountainparticle2",
@@ -200,6 +209,15 @@
    "ptl_stonepillarparticle2",
    "ptl_stonepillarparticle3",
    "ptl_stonepillarparticle4"
+  ],
+  "passiveobject/mapobject/breakableobject/actiontorchilght.obj": [
+   "ptl_cagedest01",
+   "ptl_cagedest02",
+   "ptl_cagedest03",
+   "ptl_cagedest04",
+   "ptl_cagedest05",
+   "ptl_cagedest06",
+   "ptl_cagedest07"
   ],
   "passiveobject/mapobject/breakableobject/actiontree1lorien.obj": [
    "ptl_actiontreeparticle1",

@@ -1081,9 +1081,9 @@
     "id": 36,
     "min_level": 51,
     "path": "dungeon/act4/underfoot.dgn",
-    "runtime_id": "",
+    "runtime_id": "underfoot",
     "sha256": "01413357d13471901ca0dcceabc466ada9449f3f888eba97c00cd5dfd8687546",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 55,
@@ -7383,8 +7383,8 @@
     "level_max": 45,
     "level_min": 38,
     "path": "monster/ghoul/ghoulheadless.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "ghoul_ghoulheadless",
+    "state": "runtime"
    },
    {
     "id": 405,
@@ -9175,8 +9175,8 @@
     "level_max": 56,
     "level_min": 49,
     "path": "monster/magma/incompletegoliath.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "magma_incompletegoliath",
+    "state": "runtime"
    },
    {
     "id": 56704,
@@ -9255,8 +9255,8 @@
     "level_max": 55,
     "level_min": 50,
     "path": "monster/dingo_humpri/dingo.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dingo_humpri_dingo",
+    "state": "runtime"
    },
    {
     "id": 55026,
@@ -9759,8 +9759,8 @@
     "level_max": 55,
     "level_min": 52,
     "path": "monster/skeleton/skeleton_headless.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "skeleton_skeleton_headless",
+    "state": "runtime"
    },
    {
     "id": 50093,
@@ -9783,16 +9783,16 @@
     "level_max": 58,
     "level_min": 53,
     "path": "monster/darkelf/darkelf_guard.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "darkelf_darkelf_guard",
+    "state": "runtime"
    },
    {
     "id": 50091,
     "level_max": 58,
     "level_min": 53,
     "path": "monster/dingo_humpri/humpri.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "dingo_humpri_humpri",
+    "state": "runtime"
    },
    {
     "id": 62671,
@@ -9807,8 +9807,8 @@
     "level_max": 58,
     "level_min": 53,
     "path": "monster/headlessknight/headlessknight.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "headlessknight_headlessknight",
+    "state": "runtime"
    },
    {
     "id": 56113,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 44,
+   "runtime": 45,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 253,
+   "runtime": 260,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,

@@ -245,6 +245,20 @@
     "sha256": "ee3566c5e528abf12e13edcd1721a18aaf4be8677e450222dccc113a472520b0"
    }
   },
+  "underfoot": {
+   "name": "暗黑城入口",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/underfoot_v1/map_export.json",
+   "min_level": 51,
+   "monster_level": 54,
+   "source": {
+    "path": "dungeon/act4/underfoot.dgn",
+    "sha256": "01413357d13471901ca0dcceabc466ada9449f3f888eba97c00cd5dfd8687546"
+   }
+  },
   "magmacave": {
    "name": "熔岩穴",
    "region": "noierfera",

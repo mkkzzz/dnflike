@@ -196,6 +196,10 @@
    "normal": "cold_boy",
    "boss": "cold_boy"
   },
+  "underfoot": {
+   "normal": "underfoot_enterence",
+   "boss": "underfoot_enterence_boss"
+  },
   "whiteland": {
    "normal": "whiteland",
    "boss": "whiteland_boss"
@@ -659,6 +663,18 @@
    "source": "music/cold_boy.ogg",
    "sha256": "bb9bf3247a52aac9629c8fdbc4f69a7c079d2776ac34b8b4d4a46f6b1a6e8e47",
    "bytes": 2251132
+  },
+  "underfoot_enterence": {
+   "file": "audio/bgm/underfoot_enterence.ogg",
+   "source": "music/underfoot_enterence.ogg",
+   "sha256": "797c1aba542ca63ae53248c1937c0c4488afa541c11bc6bf2cfaebdc19c81902",
+   "bytes": 1435661
+  },
+  "underfoot_enterence_boss": {
+   "file": "audio/bgm/underfoot_enterence_boss.ogg",
+   "source": "music/underfoot_enterence_boss.ogg",
+   "sha256": "c38ed08621a42cd784ffb47ab942c3310b90cf3cc86c4b48f8ba56bea2bc0377",
+   "bytes": 1452675
   },
   "whiteland": {
    "file": "audio/bgm/whiteland.ogg",
