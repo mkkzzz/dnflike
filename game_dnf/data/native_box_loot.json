@@ -150,6 +150,40 @@
         "4": 34
       }
     },
+    "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc": {
+      "id": "secondbackbone",
+      "source": {
+        "path": "dungeon/act3/2ndbackbone.dgn",
+        "sha256": "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc"
+      },
+      "groups": {
+        "0": [
+          [
+            "original_1068",
+            1000
+          ],
+          [
+            "original_1069",
+            1500
+          ],
+          [
+            "original_1070",
+            500
+          ],
+          [
+            "original_1071",
+            500
+          ],
+          [
+            "original_1072",
+            3000
+          ]
+        ]
+      },
+      "group_levels": {
+        "0": -1
+      }
+    },
     "8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57": {
       "id": "bloodhell",
       "source": {

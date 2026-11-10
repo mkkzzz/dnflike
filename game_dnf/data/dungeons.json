@@ -175,6 +175,20 @@
     "sha256": "5ca157ff900f7f3522614e9f186e1712ec1d2470726daac32da6f6f40f23c8a5"
    }
   },
+  "secondbackbone": {
+   "name": "第二脊椎",
+   "region": "behemoth",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/secondbackbone_v1/map_export.json",
+   "min_level": 34,
+   "monster_level": 37,
+   "source": {
+    "path": "dungeon/act3/2ndbackbone.dgn",
+    "sha256": "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc"
+   }
+  },
   "forest_trial": {
    "name": "密林试炼（旧样板）",
    "requires": [],

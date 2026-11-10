@@ -5104,10 +5104,6 @@ func build_props(room: Dictionary) -> Array:
 					prop["unresolved_trap_ids"] = unresolved_traps
 					add_native_object_gaps(path, unresolved_traps)
 				out.append(prop)
-			elif path.contains("/trap/"):
-				# Trigger OBJ files can carry an ATK used as a behaviour signal rather
-				# than a contact damage packet (GravityChanger has only [stuck]).
-				add_native_object_gaps(path, ["native_object_trigger"])
 			elif item.get("source_tag") == "[special passive object]":
 				var raw: Array = array_of(item.get("raw"))
 				var count := int(raw[4]) if raw.size() >= 5 else -1
@@ -5118,6 +5114,10 @@ func build_props(room: Dictionary) -> Array:
 					special_gaps.append("native_action_object_behavior")
 					if item.get("sprite") == null:special_gaps.append("native_action_object_visual")
 				add_native_object_gaps(path, special_gaps)
+			elif path.contains("/trap/"):
+				# Trigger OBJ files can carry an ATK used as a behaviour signal rather
+				# than a contact damage packet (GravityChanger has only [stuck]).
+				add_native_object_gaps(path, ["native_object_trigger"])
 			elif path.contains("/actionobject/"):
 				var action_gaps: Array[String] = []
 				if not path.contains("/actionobject/obstacle/"):

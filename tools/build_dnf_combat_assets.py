@@ -181,8 +181,11 @@ def monster_number_height(src, mob: str) -> int | None:
         return None
     try:
         frame = src.animation(waiting[0])['frames'][0]
-        _, meta = src.frame(frame['img'], frame['img_frame'])
-    except (KeyError, IndexError, TypeError):
+        image = frame.get('img')
+        if not isinstance(image, str) or not image:
+            return None
+        _, meta = src.frame(image, frame['img_frame'])
+    except (AttributeError, KeyError, IndexError, TypeError):
         return None
     return -(frame['pos'][1] + meta['y'])
 

@@ -31,6 +31,10 @@ SOURCES = {
         'dungeon/act3/whitenight.dgn',
         'a50170f3734e0a88917e27a8b741834bb68e19fcd99ec25280228c8703f94a71',
     ),
+    'secondbackbone': (
+        'dungeon/act3/2ndbackbone.dgn',
+        '0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc',
+    ),
     'bloodhell': (
         'dungeon/act3/bloodhell.dgn',
         '8b4d8a743b8b57bc3118575bab15c85f67277bc8991056dc82b3d1c4dcfc8a57',

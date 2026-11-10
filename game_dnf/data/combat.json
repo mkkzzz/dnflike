@@ -1085,6 +1085,26 @@
    "mob": "monster/newmonsters/gbl_breeding/woody_plant/woody_plant.mob",
    "bank": "newmonsters_gbl_breeding_woody_plant_woody_plant",
    "name": "woody_plant"
+  },
+  "lotus_lotus": {
+   "mob": "monster/lotus/lotus.mob",
+   "bank": "lotus_lotus",
+   "name": "lotus"
+  },
+  "starfish_starfishdevourer": {
+   "mob": "monster/starfish/starfishdevourer.mob",
+   "bank": "starfish_starfishdevourer",
+   "name": "starfishdevourer"
+  },
+  "vehicle_catapultlaser": {
+   "mob": "monster/vehicle/catapultlaser.mob",
+   "bank": "vehicle_catapultlaser",
+   "name": "catapultlaser"
+  },
+  "zealot_father": {
+   "mob": "monster/zealot/father.mob",
+   "bank": "zealot_father",
+   "name": "father"
   }
  },
  "boss_hp_lines": 3,

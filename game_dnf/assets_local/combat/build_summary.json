@@ -51,10 +51,13 @@
   "zombie_zombiezombie",
   "zombie_zombieholloweye",
   "zombie_zombieghoulgwish",
+  "starfish_starfishdevourer",
+  "zealot_father",
   "zealot_pope",
   "zealot_craxy",
   "vehicle_battlingram",
   "vehicle_catapultflame",
+  "vehicle_catapultlaser",
   "zepplin_zepplin",
   "zepplin_zepplinmachinegun",
   "dendroid_dendroid",
@@ -78,6 +81,7 @@
   "goblin_nightvisionkagel",
   "lordoflight_lordoflight",
   "new_golem_platany",
+  "lotus_lotus",
   "lugaru_sirogaru",
   "lugaru_penril",
   "lugaru_gardener_ral",
@@ -180,7 +184,7 @@
  "effects": 564,
  "digits": 61,
  "audio_keys": 308,
- "unresolved": 34,
+ "unresolved": 35,
  "particle_templates": 26,
  "unresolved_items": [
   {
@@ -220,6 +224,16 @@
    "monster": "monster/new_golem/greatgolemr.mob",
    "path": "equipment/monster/new_golem/greatarm.equ",
    "note": "equipment file absent; appearance drawn from body IMG only"
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/lotus/lotus.mob",
+   "images": [
+    "Monster/Lotus/AttackFromUp.img",
+    "Monster/Lotus/Die.img",
+    "Monster/Lotus/Lair.img",
+    "Monster/Lotus/SwingOnGround.img"
+   ]
   },
   {
    "kind": "monster_image",

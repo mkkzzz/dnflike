@@ -759,9 +759,9 @@
     "id": 26,
     "min_level": 34,
     "path": "dungeon/act3/2ndbackbone.dgn",
-    "runtime_id": "",
+    "runtime_id": "secondbackbone",
     "sha256": "0c5b269fe35d1699c652beb77ec946eb6e3b6c417fd70f18d24a9bfa10e417cc",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 38,
@@ -6495,8 +6495,8 @@
     "level_max": 38,
     "level_min": 31,
     "path": "monster/zealot/father.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "zealot_father",
+    "state": "runtime"
    },
    {
     "id": 262,
@@ -7103,8 +7103,8 @@
     "level_max": 38,
     "level_min": 35,
     "path": "monster/starfish/starfishdevourer.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "starfish_starfishdevourer",
+    "state": "runtime"
    },
    {
     "id": 60100,
@@ -7167,8 +7167,8 @@
     "level_max": 41,
     "level_min": 36,
     "path": "monster/lotus/lotus.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "lotus_lotus",
+    "state": "runtime"
    },
    {
     "id": 61805,
@@ -7287,8 +7287,8 @@
     "level_max": 38,
     "level_min": 36,
     "path": "monster/vehicle/catapultlaser.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "vehicle_catapultlaser",
+    "state": "runtime"
    },
    {
     "id": 62638,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 24,
+   "runtime": 25,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 116,
+   "runtime": 120,
    "runtime_post_60": 11,
    "source": 1937,
    "target": 1429,
