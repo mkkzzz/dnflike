@@ -563,6 +563,11 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				stage_hits = Timeline.attached_attack_segments(player_timeline(stage["ani"]),[Timeline.from_ani(track)])
 			var built := _build_stage(stage,skill,stage_hits)
 			var frames: Array = built["timeline"]
+			if name == "outragebreak" and stage["ani"] == "outragebreakslash":
+				var slash: Dictionary = built["hits"][0]
+				# CCBD7B installs the body ATK through CAB190 -> 83F760.
+				slash["hitstop_ms"] = _atk_hitstop(slash["atk"],float(weapon_hit_info(weapon)[2]))
+				slash["native_controller"] = {"kind":"outrage_slash"}
 			if name == "illusionslash" and stage["ani"] == "illusionslashfinal":
 				if job == "weaponmaster" and weapon == "club":
 					var mastery := _skill_row(BLUNT_MASTERY_SKL)

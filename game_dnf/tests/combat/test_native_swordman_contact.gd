@@ -2988,6 +2988,7 @@ func check_outrage_break_impact() -> void:
 			return sample[2])
 		var target: Dictionary = api.spawn_dummy(POINT+Vector2(180*facing,0))
 		target["hp"] = 50000.0
+		target["numeric"].values["hp_max"] = 50000.0
 		press(KEY_A)
 		step(0)
 		if not sample[0] or sample[1] < 401.0 or not sample[2]:
@@ -3014,9 +3015,23 @@ func check_outrage_break_impact() -> void:
 		if rate == 2.0:
 			step(294.0-apex_ms)
 			check(game.hit_count==0 and game.objects.is_empty(),"the doubled-speed body frame is still closed at 294 ms")
-			step(1.0)
+			var protected: Dictionary = game.spawn_enemy(target["pos"])
+			protected["hp"] = 50000.0
+			protected["numeric"].values["hp_max"] = 50000.0
+			protected["ai"] = false
+			protected["invuln_ms"] = 1000.0
+			game.step_game(1.0)
 			check(game.hit_count==1 and game.objects.is_empty() and cues("OUTRAGE_SWING").is_empty(),
 				"the body hits at 295 ms while the landing effect and floor object still wait")
+			check(game.player["stuck_ms"]==70.0 and target["stuck_ms"]==70.0
+				and protected["hp"]==50000.0 and protected["stuck_ms"]==0.0,
+				"the katana slash pauses both participants for 70 ms and skips the invulnerable target")
+			game.step_game(69.0)
+			check(game.player["stuck_ms"]==1.0 and target["stuck_ms"]==1.0
+				and game.player["clock"]==295.0 and game.objects.is_empty(),"hitstop holds the leap before landing through 69 ms")
+			game.step_game(1.0)
+			check(game.player["stuck_ms"]==0.0 and target["stuck_ms"]==0.0
+				and game.player["clock"]==295.0,"the landing clock resumes after the 70 ms pause")
 			step(landing_ms-296.0)
 		else:
 			step(landing_ms-apex_ms-1.0)
@@ -3026,6 +3041,8 @@ func check_outrage_break_impact() -> void:
 		step(1)
 		check(game.player["z"]==0.0 and target["hp"]<50000.0 and game.hit_count==1 and not target["numeric"].effects.active.has("bleed"),
 			"the original body ATK hits once without a synthetic bleed")
+		check(target["state"]=="native_down_flight" and target["vz"]>0.0,
+			"the body slash uses the original weighted knockdown")
 		check(game.objects.size()==1 and game.objects[0]["pos"]==POINT+Vector2(279*facing,0)
 			and game.objects[0]["hit"]["fixed_amount"]==5846.0 and game.objects[0]["clock"]==0.0
 			and cues("OUTRAGE_SWING").size()==1 and cues("CCRASH_CRASH").size()==1,

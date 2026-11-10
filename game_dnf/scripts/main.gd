@@ -2877,6 +2877,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 			continue
 		# The original actor ledger survives all layers and frames until a new ATK is installed.
 		var attached: bool = hit.get("source","") == "attached_weapon"
+		var outrage_slash: bool = hit.get("native_controller",{}).get("kind","") == "outrage_slash"
 		var sample_from := new_t if attached or hit.get("skill_id","") == "charge_crash" else old_t
 		var contact := hit
 		if hit.get("skill_id","") == "draw":
@@ -2893,6 +2894,7 @@ func apply_player_hits(stage: Dictionary, old_t: float, new_t: float) -> void:
 				if player["hits"].has(id) or float(enemy["hp"])<=0:continue
 				var c: Dictionary = Kernel.HitJudge.contact(world,enemy_damage_boxes(enemy))
 				if c.is_empty():continue
+				if outrage_slash and (target_invulnerable(enemy) or int(enemy_frame(enemy).get("items",{}).get("13",0)) == 2):continue
 				player["hits"][id] = true
 				land_hit(player,enemy,contact,c["point"],facing,attack_power())
 			if native_maze != null:
@@ -3343,7 +3345,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 			bus.emit("combat.status",{"target":target["id"],"id":"sleep","change":"removed"})
 		var recovery := float(target["numeric"].values["hit_recovery"]) if target.has("numeric") else float(target["def"]["hit_recovery"])
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
-		var native_down := native_kind == "bloodblast" or native_kind in OUTRAGE_IMPACTS
+		var native_down := native_kind in ["bloodblast","outrage_slash"] or native_kind in OUTRAGE_IMPACTS
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
 		var armor_blocks_reaction := (native_down or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
