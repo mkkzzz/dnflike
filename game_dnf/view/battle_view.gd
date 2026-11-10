@@ -441,6 +441,8 @@ func _present_objects(list: Array) -> void:
 		v.z_index = int(Vector2(o["pos"]).y)+int(o.get("depth_offset",2))
 		v.base_scale = float(o.get("size_rate",1))
 		v.base_rotation = float(o.get("rotation",0.0))
+		v.frame_rotations = o.get("frame_rotations",{})
+		v.uniform_frame_ms = float(o.get("uniform_frame_ms",-1.0))
 		v.fade = float(o.get("fade",1))
 		v.seek(float(o["clock"]))
 		var rear = v.get_node_or_null("RearAnimation")

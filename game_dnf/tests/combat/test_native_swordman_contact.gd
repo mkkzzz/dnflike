@@ -3201,10 +3201,26 @@ func check_hundred_sword_ready() -> void:
 	check(lights.size()==8 and lights[0]["pos"]==center+Vector2(-30,71) and lights[0]["z"]==150.0
 		and cues("W_GET_SPIRITS").size()==1 and game.view.audio.variants["W_GET_SPIRITS"][0] is AudioStreamOggVorbis,
 		"frame four spawns eight lights around the original mirrored center and plays the original collection sound")
-	step(430.0)
+	var tint = game.view.object_views["hundred_sword:0:light:1"]
+	var flash = game.view.object_views["hundred_sword:0:light:2"]
+	var flash_angles: Dictionary = flash.frame_rotations
+	check(tint.uniform_frame_ms==860.0 and tint.frame_color()==Color.WHITE
+		and not flash.frame.has("sprite") and flash_angles.keys()==[1,3,5],
+		"the gathering light starts white and samples only the three visible flash frames")
+	for frame_index in [1,3,5]:
+		step(40.0 if frame_index==1 else 80.0)
+		var angle_index := float(flash.frame_rotation())*99.0/6.28
+		check(flash.frame["frame"]==frame_index and flash.frame.has("sprite")
+			and flash.frame_rotation()==flash_angles[frame_index] and angle_index>=0.0 and angle_index<=99.001
+			and absf(angle_index-roundf(angle_index))<0.001,
+			"each visible gathering flash uses its own sampled angle at frame %d"%frame_index)
+	step(230.0)
 	lights = swords.call("light1")
 	check(lights.size()==8 and lights[0]["pos"]==center+Vector2(22,-53),
 		"halfway to frame eleven the first eight lights rotate by 180 degrees and narrow to radius 187")
+	check(is_equal_approx(tint.frame_color().r,(255.0+150.0)/510.0)
+		and tint.frame_color().b==1.0 and flash.frame_rotations==flash_angles,
+		"the gathering tint is still interpolating halfway through the orbit and keeps the same flash angles")
 	step(430.0)
 	var spread: Array = swords.call("swordspread1")
 	check(spread.size()==24 and spread.all(func(o):return o["pos"]==center and o["z"]==150.0)

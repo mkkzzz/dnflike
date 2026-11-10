@@ -19,6 +19,8 @@ var hold_last_frame := false
 ## Whole-effect scale from ATK/CHR hit info (1.0 = native pixels).
 var base_scale := 1.0
 var base_rotation := 0.0
+## Instance-specific values written into original ANI frames by a state entry.
+var frame_rotations: Dictionary = {}
 ## Effects tied to a skill can be cut early (e.g. gore-cross marks end when the cross flies).
 var tag := ""
 var max_ms := -1.0
@@ -138,16 +140,21 @@ func frame_scale() -> Vector2:
 		value = value.lerp(Vector2(float(target[0]),float(target[1])),weight)
 	return value
 
+func frame_rotation() -> float:
+	# [ROTATE] is in radians; [INTERPOLATION] (item 10) eases it toward the next frame.
+	var index := int(frame.get("frame",0))
+	var rotate := float(frame_rotations.get(index,frame.get("items",{}).get("8",0.0)))
+	var weight := _interpolation_weight()
+	if weight > 0.0:
+		var next := (index+1)%int(data["frames"].size())
+		rotate = lerpf(rotate,float(frame_rotations.get(next,_next_items.get("8",0.0))),weight)
+	return rotate
+
 func _draw() -> void:
 	if atlas == null or not frame.has("sprite"):return
 	var item: Dictionary = data["atlas"]["items"][frame["sprite"]]
 	var r: Array = item["rect"]
 	var o: Array = item["offset"]
 	var rate := frame_scale()*base_scale
-	# [ROTATE] is in radians; [INTERPOLATION] (item 10) eases it toward the next frame.
-	var rotate := float(frame.get("items",{}).get("8",0.0))
-	var weight := _interpolation_weight()
-	if weight > 0.0:
-		rotate = lerpf(rotate,float(_next_items.get("8",0.0)),weight)
-	draw_set_transform(Vector2.ZERO,(rotate+base_rotation)*facing,Vector2(facing*rate.x,rate.y))
+	draw_set_transform(Vector2.ZERO,(frame_rotation()+base_rotation)*facing,Vector2(facing*rate.x,rate.y))
 	draw_texture_rect_region(atlas,Rect2(float(o[0]),float(o[1]),float(r[2]),float(r[3])),Rect2(float(r[0]),float(r[1]),float(r[2]),float(r[3])),frame_color())

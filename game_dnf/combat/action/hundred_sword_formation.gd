@@ -12,6 +12,7 @@ var _facing: int
 var _styles: Array
 var _art_facing: Array[int] = []
 var _disappear_fx: Array[String] = []
+var _light_rotations: Dictionary = {}
 var _spent: Dictionary = {}
 var _disappear_ms: float
 var _effects: Dictionary
@@ -34,6 +35,9 @@ func _init(origin: Vector2, facing: int, timeline: Array, config: Dictionary, co
 	for slot in _styles.size():
 		_art_facing.append(2*_art_rng.range_int(0,1)-1)
 		_disappear_fx.append(_effects["sworddisappear%d"%_art_rng.range_int(1,2)])
+	# A6CD63..A6CE62 assigns a separate angle to each visible Light3 frame.
+	for slot in range(0,_styles.size(),3):
+		_light_rotations[slot] = {1:_random_rotation(),3:_random_rotation(),5:_random_rotation()}
 	_entry_ms = int(timeline[4]["start_ms"])
 	_spread_ms = int(timeline[11]["start_ms"])
 	_settle_ms = int(timeline[16]["start_ms"])
@@ -54,8 +58,7 @@ func consume(slot: int) -> Vector3i:
 	var point := waypoint(slot)
 	# CD22CD selects CNHundredSword state 4 before CD2305 reads its point.
 	# A6D256..A6D2E4 assigns one sampled rotation to every frame of ETC 12.
-	var rotation := Motion.f32(Motion.f32(6.28)*_art_rng.range_int(0,99)/99.0)
-	_spent[slot] = {"point":point,"at_ms":_age,"rotation":rotation}
+	_spent[slot] = {"point":point,"at_ms":_age,"rotation":_random_rotation()}
 	return point
 
 func append_view(out: Array) -> void:
@@ -97,8 +100,11 @@ func append_view(out: Array) -> void:
 			height = 0.0 if ground else _air_height(slot,now)
 		if now < _spread_ms:
 			_layer(out,slot,id+":light",_effects["light1"],point,height,phase_ms,0,true)
-			_layer(out,slot,id+":light",_effects["light2"],point,height,phase_ms,1,true)
-			_layer(out,slot,id+":light",_effects["light3"],point,height,phase_ms,2,false,true)
+			# A6CE6F..A6CEB6 sets Light2's first delay to the owner's frame 4–11 interval.
+			var tint := _layer(out,slot,id+":light",_effects["light2"],point,height,phase_ms,1,true)
+			tint["uniform_frame_ms"] = _spread_ms-_entry_ms
+			var flash := _layer(out,slot,id+":light",_effects["light3"],point,height,phase_ms,2,false,true)
+			flash["frame_rotations"] = _light_rotations[slot]
 		else:
 			var stem := "swordspread" if now < _land_ms else "swordland" if ground else "swordair"
 			for layer in [1,2]:
@@ -121,6 +127,9 @@ func _air_height(slot: int, now: int) -> int:
 	var wave := (now-born)%3000
 	if wave > 1500:wave = 3000-wave
 	return HEIGHT+int(Motion.ramp(0.0,10.0,wave,1500))
+
+func _random_rotation() -> float:
+	return Motion.f32(Motion.f32(6.28)*_art_rng.range_int(0,99)/99.0)
 
 func _layer(out: Array, slot: int, id: String, bank: String, pos: Vector2, z: float, clock: float, depth: int,
 		hold: bool, loop := false) -> Dictionary:
