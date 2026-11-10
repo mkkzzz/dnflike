@@ -154,6 +154,7 @@ func check_moves() -> void:
 	var lakius: Dictionary = game.table.monsters.get("draconian_lakius", {})
 	var harse: Dictionary = game.table.monsters.get("flydragon_harseseri", {})
 	var loose: Dictionary = game.table.monsters.get("flydragon_looseseri", {})
+	var selion: Dictionary = game.table.monsters.get("flydragon_selion", {})
 	var mirkius_source: Array = game.content.original(
 		"monster/draconian/mirkius.mob", "attack_motions", []
 	)
@@ -166,6 +167,9 @@ func check_moves() -> void:
 	check(minius.get("moves", []).size() == 3, "Minius preserves its three attack slots")
 	check(lakius.get("moves", []).size() == 5, "Lakius preserves all five source attacks")
 	check(harse.has("atk") and loose.has("atk"), "Harseseri and Looseseri retain their bite attack info")
+	check(selion.get("moves", []).size() == 3 and (selion.get("moves", []) as Array).all(
+		func(move): return not (move.get("segments", []) as Array).is_empty()
+	), "Selion keeps all three source contact ranges without an independent ATK file")
 	for definition in [mirkius, minius, lakius]:
 		for move: Dictionary in definition.get("moves", []):
 			check(not move.get("ani", "") == "" and not move.get("atk", {}).is_empty(),
@@ -188,3 +192,9 @@ func check_moves() -> void:
 		"Lakius selects its close source attack at close range")
 	check(bool(lakius_long.get("attack", false)) and int(lakius_long.get("move_index", -1)) == 2,
 		"Lakius selects the long source attack outside close reach")
+	var selion_choice: Dictionary = MonsterAI.think(
+		{"pos": Vector2(1399, 332), "facing": 1, "cooldown_ms": 0.0, "skill_cd": {}},
+		selion, Vector2(1425, 332), 0.0
+	)
+	check(bool(selion_choice.get("attack", false)) and int(selion_choice.get("move_index", -1)) == 0,
+		"Selion selects its source contact attack when the player is close")

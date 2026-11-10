@@ -1213,8 +1213,9 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		if act_path == "" or ani_path == "":continue
 		var stem := act_path.get_file().get_basename()
 		var move_timeline := timeline(ani_path)
+		var move_segments := Timeline.monster_attack_segments(move_timeline)
 		var move := {"stem":stem, "act":act_path, "ani":ani_path, "timeline":move_timeline,
-			"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+			"segments":move_segments, "reach":reach_of(move_segments)}
 		ani_paths[stem] = ani_path
 		if index < attack_infos.size():
 			var atk_path := String(attack_infos[index]).to_lower()
@@ -1242,9 +1243,10 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 				stem = previous_stem
 			if stem == "":continue
 			var move_timeline := timeline(String(motion_dir).path_join(stem + ".ani"))
+			var move_segments := Timeline.monster_attack_segments(move_timeline)
 			var move := {"stem":stem, "ani":String(motion_dir).path_join(stem + ".ani").to_lower(),
 				"source_slot":index,"timeline":move_timeline,
-				"segments":Timeline.attack_segments(move_timeline), "reach":reach_of(move_timeline)}
+				"segments":move_segments, "reach":reach_of(move_segments)}
 			ani_paths[stem] = move["ani"]
 			if index < attack_infos.size():
 				var atk_path := String(attack_infos[index]).to_lower()
@@ -1285,7 +1287,7 @@ func _build_monster(key: String, spec: Dictionary) -> Dictionary:
 		var old_attack_path := String(motion_dir).path_join(String(motions["attack"])+".ani").to_lower() if motion_dir != "" and String(motions["attack"]) != "" else ""
 		m["attack_timeline"] = timeline(old_attack_path) if old_attack_path != "" else []
 		if old_attack_path != "":ani_paths[String(motions["attack"])] = old_attack_path
-	m["attack_segments"] = Timeline.attack_segments(m["attack_timeline"])
+	m["attack_segments"] = Timeline.monster_attack_segments(m["attack_timeline"])
 	m["atk"] = first_attack.get("atk",atk(String(attack_infos[0])) if not attack_infos.is_empty() else {})
 	# 原版选招规则：按 .mob 文件名（不含扩展名）在反编译出的规则表里查。
 	# 规则形如 [{skill, area, cooldown_checked}]，area 为空的是无条件分支（多为大招）。
@@ -1408,16 +1410,17 @@ func _bind_native_starfish_bite(monster: Dictionary, source: Dictionary, moves: 
 		"percent":100.0+float(attack["damage_bonus"]),"lift":-1.0}
 	monster["native_starfish_bite"] = bite
 
-func reach_of(tl: Array) -> Array:
+func reach_of(segments: Array) -> Array:
 	var low := INF
 	var high := -INF
-	for f: Dictionary in tl:
-		for box in f.get("attack_boxes", []):
-			if not box is Array or box.size() < 4:continue
-			var x := float(box[0])
-			var w := float(box[3])
-			low = minf(low, x)
-			high = maxf(high, x + w)
+	for segment: Dictionary in segments:
+		for f: Dictionary in segment.get("frames", []):
+			for box in f.get("boxes", []):
+				if not box is Array or box.size() < 4:continue
+				var x := float(box[0])
+				var w := float(box[3])
+				low = minf(low, x)
+				high = maxf(high, x + w)
 	if low == INF:return []
 	return [low, high]
 

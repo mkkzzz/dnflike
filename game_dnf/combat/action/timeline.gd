@@ -36,17 +36,28 @@ static func frame_at(timeline: Array, t: float, loop := false) -> Dictionary:
 ## hit at most once per run, and a gap without boxes starts a new run (E-INFER, matches the
 ## three separated thrusts of triplestab.ani and the single long box of dashattack.ani).
 static func attack_segments(timeline: Array) -> Array:
+	return _segments_for_field(timeline, "attack_boxes")
+
+## Old-architecture monster attacks sometimes author only damage boxes. The boss-move
+## source tool has always treated those frames as the contact reach.
+static func monster_attack_segments(timeline: Array) -> Array:
+	for f: Dictionary in timeline:
+		if not f["attack_boxes"].is_empty():
+			return attack_segments(timeline)
+	return _segments_for_field(timeline, "damage_boxes")
+
+static func _segments_for_field(timeline: Array, field: String) -> Array:
 	var out: Array = []
 	var current: Dictionary = {}
 	for f: Dictionary in timeline:
-		if f["attack_boxes"].is_empty():
+		if f[field].is_empty():
 			if not current.is_empty():
 				out.append(current)
 				current = {}
 			continue
 		if current.is_empty():current = {"start":float(f["start_ms"]),"end":float(f["end_ms"]),"frames":[]}
 		current["end"] = float(f["end_ms"])
-		current["frames"].append({"start":float(f["start_ms"]),"end":float(f["end_ms"]),"boxes":f["attack_boxes"]})
+		current["frames"].append({"start":float(f["start_ms"]),"end":float(f["end_ms"]),"boxes":f[field]})
 	if not current.is_empty():out.append(current)
 	return out
 

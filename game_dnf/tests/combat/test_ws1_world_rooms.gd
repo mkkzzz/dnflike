@@ -8,6 +8,7 @@ var game
 var checks := 0
 var failures := 0
 var audited_rooms := 0
+var checked_attack_mobs := {}
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -80,9 +81,22 @@ func check_room(dungeon_id: String, index: int) -> void:
 		live_counts[mob] = int(live_counts.get(mob, 0)) + 1
 		if bool(enemy.get("chief", false)):
 			live_bosses += 1
+		check_attack_contract(String(enemy.get("mob", "")), enemy.get("def", {}))
 	var label := "%s room %d" % [dungeon_id, index + 1]
 	check(game.room_index == index, label + " loads the requested index")
 	check(live_counts == source_counts, label + " spawns its exact source monster lineup")
 	check(live_bosses == source_bosses, label + " preserves source boss markers")
 	check(game.route_boss_room() == bool((game.rules["rooms"][index] as Dictionary).get("boss", false)),
 		label + " boss state matches the route definition")
+
+func check_attack_contract(mob: String, definition: Dictionary) -> void:
+	if checked_attack_mobs.has(mob):
+		return
+	checked_attack_mobs[mob] = true
+	var can_attack := definition.has("throw")
+	for move: Dictionary in definition.get("moves", []):
+		can_attack = can_attack or not (move.get("segments", []) as Array).is_empty()
+		can_attack = can_attack or not (move.get("emission", {}) as Dictionary).is_empty()
+	can_attack = can_attack or not (definition.get("attack_segments", []) as Array).is_empty()
+	can_attack = can_attack or not (definition.get("native_suicide", {}) as Dictionary).is_empty()
+	check(can_attack, mob + " exposes at least one reachable attack or projectile")
