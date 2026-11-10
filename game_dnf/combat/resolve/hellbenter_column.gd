@@ -153,21 +153,23 @@ static func step(game, object: Dictionary) -> bool:
 	var world := HitJudge.world_boxes(boxes,anchor,facing,float(object["size_rate"]))
 	for enemy: Dictionary in game.monsters:
 		var id := int(enemy["id"])
-		if object["hits"].has(id) or float(enemy["hp"]) <= 0.0:continue
+		if object["hits"].has(id) or float(enemy["hp"]) <= 0.0 or game.target_invulnerable(enemy):continue
 		var contact := HitJudge.contact(world,game.enemy_damage_boxes(enemy))
 		if contact.is_empty():continue
+		var target_frame: Dictionary = game.enemy_frame(enemy)
+		var body_mode := int(target_frame.get("items",{}).get("13",0))
+		# 869DE0 rejects mode 2 before the column contact callback runs.
+		if body_mode == 2:continue
 		object["hits"][id] = true
 		Blood.mark_column_contact(enemy,int(game.player["id"]),column["wound"])
 		var reaction_hit := hit
 		if within_reaction_radius(game,object,contact["overlap"],int(column["down_radius"])):
-			var target_frame: Dictionary = game.enemy_frame(enemy)
-			var body_mode := int(target_frame.get("items",{}).get("13",0))
 			if can_force_down(enemy,body_mode):
 				var center_x := int(object["pos"].x)
 				var target_x := int(enemy["pos"].x)
 				var toward := -facing if center_x == target_x else (1 if center_x > target_x else -1)
 				reaction_hit = hit.merged({"native_down_facing":toward})
-			elif body_mode != 2:
+			else:
 				# A6B06A uses +384 after +380 fails. Contact already has a current hurt box.
 				reaction_hit = hit.merged({"hellbenter_hold_mode":int(phase < 2)})
 		game.land_hit(game.player,enemy,reaction_hit,contact["point"],facing,float(object["power"]))

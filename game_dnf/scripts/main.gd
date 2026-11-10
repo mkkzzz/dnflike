@@ -3287,7 +3287,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if target["state"] == NativeZealotSummons.CAST_STATE:recovery += NativeZealotSummons.CAST_RECOVERY_ADD
 		var outrage_impact := native_kind in OUTRAGE_IMPACTS
 		# 8184DF..818640 keeps the current pose when these ATKs hit ordinary super armor.
-		var armor_blocks_reaction := (outrage_impact or native_kind in ["draw_short_wave","hundred_sword_field"]) \
+		var armor_blocks_reaction := (outrage_impact or native_kind in ["draw_short_wave","hundred_sword_field","hellbenter_column"]) \
 			and int(enemy_frame(target).get("items",{}).get("13",0)) == 1
 		if draw_impact:
 			reaction = apply_draw_impact_reaction(target,atk,facing,recovery)

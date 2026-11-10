@@ -2633,12 +2633,16 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	check(layers.call("appear").size()==5 and game.hit_count==start and cues("B_FIRE_EXPLOSION").is_empty()
 		and loop_particles.call().is_empty(),
 		"five original appearance tracks play without attacking through 1679 ms")
+	var first_body_frame: Dictionary = game.enemy_frame(target)
+	var first_body_items: Dictionary = first_body_frame.get("items",{})
+	first_body_frame["items"] = first_body_items.merged({"13":1},true)
 	game.step_objects(1.0)
+	first_body_frame["items"] = first_body_items
 	check(game.hit_count==start+1 and game.last_damage["trace"]["fixed_part"]==normal_amount
 		and cues("B_FIRE_EXPLOSION").size()==1,"Appear5 starts the first contact exactly at 1680 ms")
 	check(target["state"]=="native_down_flight" and target["native_jump_velocity"]==Vector2.ZERO
 		and target["native_jump_gravity"]==-1500.0 and target["vz"]>0.0,
-		"the original state-four override lifts a valid target despite the ordinary grab ban")
+		"the original state-four override lifts a valid target despite super armor and the ordinary grab ban")
 	var mark: Dictionary = target.get("hellbenter_column_mark",{})
 	check(mark.get("expires_at")==600 and not outside.has("hellbenter_column_mark")
 		and not target["numeric"].effects.active.has("bleed"),
@@ -2752,6 +2756,45 @@ func check_hellbenter_column(object: Dictionary, target: Dictionary, outside: Di
 	game.view.present(game.view_snapshot(),0.0,0.0)
 	check(not target.has("hellbenter_column_mark") and not marked_actor._status_overlay.visible,
 		"the original mark expires at the refreshed deadline")
+
+func check_hellbenter_column_body_modes() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"hellbenter","level":1})
+	for phase: String in ["appearance","final"]:
+		start_room("original_27601","katana",1,profile.stats(),"berserker")
+		game.clear_monsters()
+		game.numeric_player.values["hit"] = 1.0
+		var object := HellbenterColumn.spawn(game,game.move_def("hellbenter"),40)
+		if phase=="final":game.step_objects(1780.0)
+		var target: Dictionary = api.spawn_dummy(Vector2(object["pos"])+Vector2(165,0))
+		target["hp"] = 500000.0
+		target["max_hp"] = target["hp"]
+		target["numeric"].values["hp_max"] = target["hp"]
+		target["clock"] = 19.0
+		target["hellbenter_frenzy_wound"] = {"owner":game.player["id"]}
+		var hp := float(target["hp"])
+		var frame: Dictionary = game.enemy_frame(target)
+		var original_items: Dictionary = frame.get("items",{})
+		frame["items"] = original_items.merged({"13":2},true)
+		game.step_objects(3000.0 if phase=="final" else 1680.0)
+		check(target["hp"]==hp and not object["hits"].has(target["id"])
+			and not target.has("hellbenter_column_mark") and not target.has("hellbenter_column_wound"),
+			"the column's %s hit skips an invulnerable frame before applying any contact effects"%phase)
+		frame["items"] = original_items.merged({"13":1},true)
+		target["invuln_ms"] = 1.0
+		game.step_objects(0.0)
+		check(target["hp"]==hp and not object["hits"].has(target["id"]),
+			"the column's %s hit also respects the active invulnerability timer"%phase)
+		target["invuln_ms"] = 0.0
+		game.step_objects(0.0)
+		frame["items"] = original_items
+		check(target["hp"]<hp and object["hits"].has(target["id"])
+			and target.has("hellbenter_column_mark") and target.has("hellbenter_column_wound")
+			and target["state"]=="idle" and target["clock"]==19.0 and target["vz"]==0.0,
+			"the column's %s hit damages super armor outside its control radius (offset=%s, hp=%s, state=%s, age=%s)" % [
+				phase,target["pos"]-object["pos"],target["hp"],target["state"],object["clock"]])
 
 func check_hellbenter_column_hold() -> void:
 	var profile := ProfileSession.new()
@@ -6397,6 +6440,7 @@ func run() -> void:
 	check_outrage_break_landing_near_wall()
 	check_hellbenter_first_cast()
 	check_hellbenter_manual_finish()
+	check_hellbenter_column_body_modes()
 	check_hellbenter_column_hold()
 	check_hellbenter_special_wounds()
 	check_outrage_break_speed_refresh()
