@@ -5161,6 +5161,12 @@ func check_illusion_finish() -> void:
 			"the neutral finisher uses the original forward offset and lower damage column")
 		game.clear_monsters()
 		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(70,0))
+		var immune: Dictionary = game.spawn_enemy(POINT+Vector2(70,0))
+		immune["invuln_ms"] = 10000.0
+		var immune_hp := float(immune["hp"])
+		var cuts_before: int = game.bus.events_of("combat.cue").filter(
+			func(event):return String(event.get("key","")).begins_with("hit_cut_")).size()
+		var deposits_before := cues("native_contact_blood").size()
 		game.player["stuck_ms"] = 0.0
 		game.step_objects(50.0,wave_id)
 		check(game.objects.size()==1 and game.objects[0]["clock"]==0.0,
@@ -5170,6 +5176,14 @@ func check_illusion_finish() -> void:
 			"a sword-wave contact plays the hit cue from its original attack record")
 		check(wave_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
 			"the sword wave applies its 40 ms ATK pause only to the target")
+		check(wave_target["state"]=="hurt" and wave_target["stun_ms"]==166.0 and wave_target["push_ms"]==166.0
+			and wave_target["push_v"]==800.0 and wave_target["push_accel"]==-4819.0,
+			"the sword wave's knockback mode one uses its fixed native stagger and deceleration")
+		check(immune["hp"]==immune_hp and not game.objects[0]["hits"].has(immune["id"]),
+			"the sword wave skips damage and contact registration for a timed invulnerable target")
+		check(game.bus.events_of("combat.cue").filter(func(event):return String(event.get("key","")).begins_with("hit_cut_")).size()==cuts_before
+			and cues("native_contact_blood").size()==deposits_before+1,
+			"the ETC sword wave emits its own impact and adult blood without a common weapon slash")
 		var hit_fx: Array = cues("illusion_wave_hit")
 		check(hit_fx.size()==1 and hit_fx[0]["point"].y==wave_target["pos"].y and absf(float(hit_fx[0]["angle"]))<=0.801,
 			"the wave creates its own angled impact animation at the target's ground depth")
@@ -5254,6 +5268,23 @@ func check_illusion_finish() -> void:
 			"only rank seven short sword mastery replaces wave lifetime and contact columns")
 		check(visible[1]["effect"]==sample[6] and visible[0]["particle_trail"]["offset"]==Vector2(facing*int(sample[7]),-1),
 			"the direction selects the original lower layer and moving trail anchor")
+		if int(sample[0])==7 and sample[2].size()==1:
+			var target: Dictionary = api.spawn_dummy(wave["pos"])
+			target["hp"] = 50000.0
+			game.numeric_player.values["hit"] = 1.0
+			game.step_objects(0.0)
+			check(cues("HOANYOUNG_HIT").size()==1,"the mastered short-sword wave hits on frame zero")
+			for index in range(1,10):
+				move_target(target,Vector2(wave["pos"])+Vector2(facing*26,-4))
+				game.step_objects(59.0)
+				check(cues("HOANYOUNG_HIT").size()==index,"the mastered short-sword ledger stays closed through 59 ms")
+				game.step_objects(1.0)
+				check(cues("HOANYOUNG_HIT").size()==index+1 and target["stun_ms"]==166.0,
+					"each mastered short-sword reset reapplies its original stagger")
+			game.step_objects(60.0)
+			check(game.objects.is_empty() and cues("HOANYOUNG_HIT").size()==10,
+				"the mastered short-sword wave ends at 600 ms after ten contacts")
+			continue
 		game.step_objects(200.0)
 		check(wave["pos"]==POINT+Vector2(facing*151,facing*14),
 			"the original angle and 29 percent depth projection turn the wave without mirroring depth")

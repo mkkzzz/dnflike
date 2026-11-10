@@ -3179,13 +3179,16 @@ func apply_native_ground_stagger(target: Dictionary, atk: Dictionary, facing: in
 		target.erase("native_down_phase")
 		target.erase("native_down_peak")
 		var knock_back: Array = atk.get("knock_back",[])
-		if not knock_back.is_empty() and int(knock_back[0]) == -1:
-			# 8291E2 sets zero horizontal speed for the explicit no-slide mode.
-			target["push_ms"] = 0.0
-			target["push_v"] = 0.0
-			target.erase("push_accel")
-		else:
-			Kernel.Reaction.start_native_stagger_slide(target,facing)
+		var speed := 400
+		var slide_ms := mini(150,int(target["stun_ms"]))
+		match int(knock_back[0]) if not knock_back.is_empty() else 0:
+			-1:slide_ms = 0 # 8291E2 sets zero horizontal speed.
+			1:
+				# 829196..8291AA selects the fixed-rate stagger without target recovery.
+				slide_ms = int(_native_float32(333.0*delay_factor))
+				target["stun_ms"] = float(slide_ms)
+				speed = 800
+		Kernel.Reaction.start_native_stagger_slide(target,facing,speed,slide_ms)
 	return reaction
 
 func draw_count_adjusted_attack(amount: int, rates: Array, count: int) -> int:
@@ -3339,8 +3342,9 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var club_wave := native_kind == "illusion_club_wave"
 	var native_down := native_outrage or club_wave or native_kind == "bloodblast"
 	var rapid_slash := native_kind == "rapid_slash"
-	var native_cut := rapid_slash or native_kind == "illusion_finish"
-	var native_reaction := native_down or native_cut or native_kind == "hundred_sword_field"
+	var illusion_wave := native_kind == "illusion_wave"
+	var native_blood := rapid_slash or illusion_wave or native_kind == "illusion_finish"
+	var native_reaction := native_down or native_blood or native_kind == "hundred_sword_field"
 	var starfish_grab := bool(hit.get("starfish_grab",false))
 	var by_player := int(attacker.get("id",-1)) == PLAYER_ID
 	var by_companion := attacker.has("companion_id")
@@ -3355,7 +3359,7 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var grab_strike := bool(hit.get("grab_strike",false))
 	var target_state := String(target["state"])
 	# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
-	var counter := target_state in ["attack","action"] or ((native_outrage or club_wave or native_cut) \
+	var counter := target_state in ["attack","action"] or ((native_outrage or club_wave or native_blood) \
 		and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 	var amount := 0 if contact_only else Kernel.Reaction.damage(power*(float(rules["buff"]["damage"]) if by_player and float(player["buff_ms"])>0 else 1.0),percent)
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
@@ -3474,11 +3478,11 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		var wear_units := int(numeric_player.weapon_wear_units(int(skill_levels.get("durabilityup",0))))
 		if wear_units!=Numbers.WEAR_UNITS_PER_HIT:damage_event["weapon_wear_units"] = wear_units
 	bus.emit("combat.damage",damage_event)
-	if native_kind == "illusion_wave":
+	if illusion_wave:
 		# A709EF..A70A66 uses the overlap center X/Z and the victim's ground Y.
 		var roll := rng.range_int(0,99)
 		var angle := _native_float32(-0.800000011920929+1.600000023841858*roll/100.0)
-		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),int(target["pos"].y)),
+		bus.emit("combat.cue",{"kind":"fx","key":"illusion_wave_hit","point":Vector2(int(point.x),roundi(target["pos"].y)),
 			"height":int(point.z),"facing":facing,"angle":angle,"fresh":true})
 	elif native_kind == "hundred_sword_field":
 		# A6BF20 initializes the neutral direction and 1.57-radian angle.
@@ -3489,15 +3493,15 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		play_sound(String(atk["hit_wav"]))
 	if not draw_impact and native_kind != "hundred_sword_field":
 		var effect_point := point
-		var native_common_hit := native_down or native_cut
+		var native_common_hit := native_down or native_blood
 		# 87055B uses overlap X/Z and the target's integer depth for the common effect.
 		if native_common_hit:effect_point = Vector3(int(point.x),roundi(target["pos"].y),int(point.z))
 		# 867720 uses a strict interval on the struck actor. Keep the full-effect option (2).
 		var show_counter := first_counter_target and counter \
 			and int(elapsed_ms)-int(target["counter_cue_at_ms"]) > NATIVE_COUNTER_CUE_MS
 		if show_counter:target["counter_cue_at_ms"] = elapsed_ms
-		var blood_allowed: bool = not native_cut or target["def"].get("hit_blood_allowed",true)
-		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_allowed,native_cut)
+		var blood_allowed: bool = not native_blood or target["def"].get("hit_blood_allowed",true)
+		hit_cues(atk,effect_point,facing,by_player,native_common_hit,show_counter,blood_allowed,native_blood)
 	if victim == "monster" and not contact_only and amount > 0 and float(target["hp"]) > 0.0 and native_attack_has_damage(atk):
 		trigger_source_shock(target,point)
 	if numeric_player != null and not target_is_player and float(target["hp"])>0 and not (draw_contact and contact_only):
@@ -3600,15 +3604,17 @@ func hit_cues(atk: Dictionary, point: Vector3, facing: int, by_player: bool, nat
 			"[hit lift up]":slash_variant = 3
 			"[hit horizon]":slash_variant = 2
 	var size_key := "l" if large else "s"
-	var fx := ""
-	match kind:
-		"[blow]":fx = "hit_blow_"+size_key
-		"":fx = "hit_blow_s"
-		_:fx = "hit_cut_%s%d" % [size_key,slash_variant if native_common_hit else rng.range_int(1,3)]
 	var ground := Vector2(point.x,point.y)
-	# 7E62B5 attaches the new ANI at the hit effect object's current time.
-	bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,
-		"scale":1.5 if show_counter else scale,"fresh":native_common_hit})
+	# The native ETC branch skips the common impact when +0x3A4 supplies an empty ANI.
+	if not (native_common_hit and kind == "[etc]"):
+		var fx := ""
+		match kind:
+			"[blow]":fx = "hit_blow_"+size_key
+			"":fx = "hit_blow_s"
+			_:fx = "hit_cut_%s%d" % [size_key,slash_variant if native_common_hit else rng.range_int(1,3)]
+		# 7E62B5 attaches the new ANI at the hit effect object's current time.
+		bus.emit("combat.cue",{"kind":"fx","key":fx,"point":ground,"height":point.z,"facing":facing,
+			"scale":1.5 if show_counter else scale,"fresh":native_common_hit})
 	if show_counter:
 		# 7E6A75 appends Counter+.ani before the unscaled blood layer.
 		bus.emit("combat.cue",{"kind":"fx","key":"hit_counter","point":ground,"height":point.z,"facing":facing,"scale":0.7,"fresh":true})
@@ -4342,6 +4348,7 @@ func prepare_illusion_wave(template: Dictionary) -> Dictionary:
 	var hit := template.duplicate()
 	hit["percent"] = 100+_native_interpolate(int(damage[0])-100,int(damage[1])-100,ratio,100)
 	hit["life_ms"] = life
+	hit["stagger_factor"] = float(Kernel.MoveTable.enum_args(hit["atk"],"hit_info",1)[1])
 	hit["ptl_motion"] = motion
 	@warning_ignore("integer_division")
 	var interval := life/contacts
@@ -4624,15 +4631,16 @@ func step_objects(ms: float, first_new_object_id := -1) -> void:
 				var targets := monsters if friendly else friendly_targets()
 				var inward := kind == "hundred_sword_field" and Kernel.MoveTable.enum_value(hit["atk"],"hit_direction") == "[inner]"
 				var stationary_impact := kind in OUTRAGE_IMPACTS or kind == "illusion_club_wave"
+				var common_impact := stationary_impact or kind == "illusion_wave"
 				for target: Dictionary in targets:
 					if o["hits"].has(target["id"]) or float(target["hp"])<=0:continue
 					var target_boxes := enemy_damage_boxes(target) if friendly else friendly_damage_boxes(target)
 					var c: Dictionary = Kernel.HitJudge.contact(world,target_boxes)
 					if c.is_empty():continue
-					if stationary_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
+					if common_impact or kind in ["bloodblast","draw_short_wave","hundred_sword_field"]:
 						# 869DDB and 81E746 reject damage in body mode 2.
 						if target_invulnerable(target) or int(enemy_frame(target).get("items",{}).get("13",0)) == 2:continue
-					var first_target: bool = stationary_impact and not o["hits"].keys().any(func(key):return key is int)
+					var first_target: bool = common_impact and not o["hits"].keys().any(func(key):return key is int)
 					o["hits"][target["id"]] = true
 					var hit_facing := int(o["facing"])
 					if inward:

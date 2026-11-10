@@ -41,13 +41,12 @@ static func apply(body: Dictionary, atk: Dictionary, attacker_facing: int, rp: D
 	body["stun_ms"] = float(rp["stun_base_ms"])*float(rp["stun_reference_recovery"])/maxf(1.0,recovery)
 	return "stagger"
 
-static func start_native_stagger_slide(body: Dictionary, facing: int) -> void:
-	# 8291ED/82935F starts at 400 px/s and truncates the signed acceleration.
-	var duration := mini(150,int(body["stun_ms"]))
+static func start_native_stagger_slide(body: Dictionary, facing: int, speed: int, duration: int) -> void:
+	# 82935F truncates the signed acceleration.
 	body["push_ms"] = float(duration)
 	if duration > 0:
-		body["push_v"] = float(400*facing)
-		body["push_accel"] = float(-int(400000.0/duration)*facing)
+		body["push_v"] = float(speed*facing)
+		body["push_accel"] = float(-int(1000.0*speed/duration)*facing)
 	else:
 		body["push_v"] = 0.0
 		body.erase("push_accel")
