@@ -589,6 +589,10 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 				if weapon != "greatsword":
 					var scales := [0.77,0.83] if final_slash else [0.85,0.9]
 					built["fx"][1]["scale"] = scales[0 if weapon == "shortsword" else 1]
+			if name == "hundredsword":
+				# Object 20051 leaves its ATK pause at -1. The finish installs its explicit 50 ms.
+				for hit: Dictionary in built["hits"]:
+					hit["hitstop_ms"] = _atk_hitstop(hit["atk"],0.0)
 			if name == "charge_crash":
 				# CD0279/CD0561/CD07E8 use the ordinary weapon ATK installer.
 				for hit: Dictionary in built["hits"]:
@@ -718,8 +722,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 
 static func _atk_hitstop(atk: Dictionary, fallback: float) -> float:
 	# 12D1365 stores the first numeric hit-info value as ATK hitstop.
-	var info: Array = atk.get("hit_info",[])
-	if info.size() < 2:return fallback
+	var info = atk.get("hit_info")
+	if not info is Array or info.size() < 2:return fallback
 	var args: Array = info[1]["args"]
 	if args.is_empty() or int(args[0]) == -1:return fallback
 	return float(args[0])

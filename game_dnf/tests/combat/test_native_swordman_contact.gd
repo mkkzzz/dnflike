@@ -4273,6 +4273,8 @@ func check_hundred_sword_ready() -> void:
 		"the original three-box contact and its archived cue open at age 100")
 	check(first["push_v"]<0.0 and centered["hp"]<5000.0 and centered["push_v"]>0.0,
 		"the field pulls from the right and uses reverse cast facing for a victim on the same integer X")
+	check(first["stuck_ms"]==0.0 and centered["stuck_ms"]==0.0 and game.player["stuck_ms"]==0.0,
+		"the field's -1 hit-info pause keeps both victims and caster moving on the opening hit")
 	var hits: Array = game.bus.events_of("combat.hit").filter(func(event):
 		return String(event.get("atk","")).ends_with("/hundredswordhit.atk"))
 	var flashes := cues("hundred_sword_contact")
@@ -4332,6 +4334,8 @@ func check_hundred_sword_ready() -> void:
 		and field.get("repeat_started_at")==167 and repeat_flash["angle"]==contact_angle
 		and repeat_flash["facing"]==contact_facing and first["push_v"]<0.0,
 		"the first field update hits the same target with the outgoing slash visual and inward ATK direction")
+	check(first["stuck_ms"]==0.0 and game.player["stuck_ms"]==0.0,
+		"the repeated field attack also leaves both clocks free of hitstop")
 	after_contact = first["hp"]
 	move_target(first,center+Vector2(80,0))
 	move_target(late,center-Vector2(80,0))
@@ -4404,6 +4408,14 @@ func check_hundred_sword_ready() -> void:
 	check(not drawn.is_empty() and drawn.all(func(fx):return String(fx.data["source"]).get_file() in [
 		"finishparticle1.ani","finishparticle2.ani"]),
 		"the finish burst renders instances of the two authored particle animations")
+	check(game.player["stuck_ms"]==50.0 and first["stuck_ms"]==50.0 and late["stuck_ms"]==0.0,
+		"the finish freezes the caster and actual victim for its authored 50 ms")
+	game.step_game(49.0)
+	check(game.player["clock"]==560.0 and game.player["stuck_ms"]==1.0 and first["stuck_ms"]==1.0,
+		"the finish stays on the impact frame while its native pause runs down")
+	game.step_game(1.0)
+	check(game.player["clock"]==560.0 and game.player["stuck_ms"]==0.0 and first["stuck_ms"]==0.0,
+		"the finish consumes the last millisecond before advancing the body clock")
 	for sample in 12:
 		step(10.0)
 	var heads := [Vector2i(-35,378),Vector2i(-31,388),Vector2i(-55,349),Vector2i(-89,338),
