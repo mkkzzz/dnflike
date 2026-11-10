@@ -6474,6 +6474,41 @@ func check_bloodblast() -> void:
 		and game.objects[1]["hit"]["fixed_amount"]==1048 and game.objects[2]["hit"]["fixed_amount"]==1399,
 		"active rank one Frenzy applies its one percent after the original truncation on all three objects")
 
+	for sample: Array in [[0,1120],[1,1000],[2,100]]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		game.clear_monsters()
+		game.numeric_player.values["attack_speed"] = 1.0
+		game.numeric_player.values["hit"] = 1.0
+		press(KEY_A)
+		step(495)
+		if game.objects.size()!=3:
+			check(false,"the Blood Blast body mode fixture releases all three objects")
+			continue
+		var eruption: Dictionary = game.objects[int(sample[0])]
+		game.objects.assign([eruption])
+		var victim: Dictionary = api.spawn_dummy(POINT)
+		victim["clock"] = 19.0
+		var frame: Dictionary = game.enemy_frame(victim)
+		var original_items: Dictionary = frame.get("items",{})
+		var effects: Array = eruption["hit"]["native_controller"].get("ground_hit_fx",[])
+		frame["items"] = original_items.merged({"13":2},true)
+		game.step_objects(float(sample[1]))
+		check(victim["hp"]==5000.0 and victim["stuck_ms"]==0.0 and not eruption["hits"].has(victim["id"])
+			and effects.all(func(key):return cues(key).is_empty()),
+			"Blood Blast skips body mode two before damage, hitstop, effects and ledger entry: "+str(sample))
+		frame["items"] = original_items.merged({"13":1},true)
+		victim["invuln_ms"] = 20.0
+		game.step_objects(0.0)
+		check(victim["hp"]==5000.0 and not eruption["hits"].has(victim["id"]),
+			"Blood Blast also skips an invulnerability timer on an armored target: "+str(sample))
+		victim["invuln_ms"] = 0.0
+		game.step_objects(0.0)
+		frame["items"] = original_items
+		check(victim["hp"]<5000.0 and eruption["hits"].has(victim["id"]) and victim["stuck_ms"]==50.0
+			and victim["state"]=="idle" and victim["clock"]==19.0 and victim["vz"]==0.0,
+			"Blood Blast still damages armored targets without replacing their pose or launching them: "+str(sample))
+
 func run() -> void:
 	game = session.mount(root)
 	game.set_physics_process(false)
