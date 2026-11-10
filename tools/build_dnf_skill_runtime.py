@@ -1444,8 +1444,10 @@ def build_move(
         body = records[CHR_ANI + "gorecross.ani"]["decoded"]["timeline"]
         followup_gate = next(frame["start_ms"] for frame in body if frame["items"].get("23") == 1)
         followup_release = next(frame["start_ms"] for frame in body if frame["items"].get("23") == 2)
+        motion = records["character/swordman/particle/gorecross.ptl"]["decoded"]
         wave_hit = {"object": wave, "percent_col": 1, "offset": [85, 0, 82], "starts_at_zero": True}
         return {"skill": str(skill["path"]), "name": str(skill["name"]),
+                "cross_wave_motion": motion,
                 "cross_followup": {"opens_at": followup_gate, "closes_at": release, "seek_to": body[10]["start_ms"]},
                 "stages": [{"ani": "gorecross", "voice": "R_TSLASH",
                     "sounds": [{"key": "R_TSLASH", "at": body[6]["start_ms"]}], "fx": [

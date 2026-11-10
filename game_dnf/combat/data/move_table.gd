@@ -753,10 +753,20 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		var stage: Dictionary = move["stages"][0]
 		# CBD073 ends the ordinary route when body frame 10 is reached.
 		stage["duration"] = float(stage["timeline"][10]["start_ms"])
-		for cross_stage: Dictionary in move["stages"]:
+		for index in move["stages"].size():
+			var cross_stage: Dictionary = move["stages"][index]
 			var wave: Dictionary = cross_stage["hits"][0]
 			wave["hitstop_ms"] = _atk_hitstop(wave["atk"],0.0)
 			wave["size_rate"] = NativeMotion.f32(float(skill["static"][1])*NativeMotion.f32(0.01))
+			var motion: Dictionary = spec["cross_wave_motion"].duplicate(true)
+			var speeds: Array = motion["axes"]["x"]["move_variable_1"]
+			# CB435E scales the PTL's X velocity pair, then CB43AF scales the additional slash.
+			var speed_rate := NativeMotion.f32(float(skill["static"][2])*NativeMotion.f32(0.01))
+			var followup_rate := NativeMotion.f32(float(skill["static"][0])*NativeMotion.f32(0.01))
+			for axis in speeds.size():
+				speeds[axis] = int(NativeMotion.f32(float(speeds[axis])*speed_rate))
+				if index == 1:speeds[axis] = int(NativeMotion.f32(float(speeds[axis])*followup_rate))
+			wave["ptl_motion"] = motion
 			cross_stage["cancel_at"] = cross_stage["duration"]
 		var bleed_percent := NativeMotion.f32(float(row[2])*NativeMotion.f32(0.1))
 		if int(skill_levels.get("bloody_vigorous",0)) > 0:

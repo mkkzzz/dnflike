@@ -8291,6 +8291,19 @@
     "opens_at": 350,
     "seek_to": 730
    },
+   "cross_wave_motion": {
+    "axes": {
+     "x": {
+      "move_type": "[straight line]",
+      "move_variable_1": [
+       400,
+       0
+      ]
+     }
+    },
+    "changing_term": 280,
+    "changing_type": "[keep last value]"
+   },
    "fixed_attack_base": {
     "by_level": [
      63,

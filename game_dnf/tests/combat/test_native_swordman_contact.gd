@@ -1619,9 +1619,11 @@ func check_gorecross_wave() -> void:
 			"Gore Cross snapshots native probability, level, duration and status damage")
 		check(game.view.object_views.has(wave["id"]) and game.view.object_views.has("%s:front"%wave["id"]),
 			"Gore Cross draws both object layers from its shared object clock")
-		move_target(target,wave["pos"])
+		var origin: Vector2 = wave["pos"]
+		move_target(target,origin+Vector2(14*facing,0))
 		game.step_objects(39.0)
-		check(wave["hits"].is_empty(),"Gore Cross wave's first frame has no attack box")
+		check(wave["hits"].is_empty() and wave["pos"]==origin+Vector2(14*facing,0),
+			"Gore Cross moves before its first active attack frame")
 		game.step_objects(1.0)
 		check(wave["hits"].has(target["id"]) and target["numeric"].effects.active.has("bleed"),
 			"Gore Cross wave applies the captured bleed on its first active frame")
@@ -1632,8 +1634,13 @@ func check_gorecross_wave() -> void:
 		check(game.player["action"]=="rage_slash","The ordinary Gore Cross keeps its motion through 729 ms")
 		step(1)
 		check(game.player["state"]=="idle","The ordinary Gore Cross recovers on body frame 10")
-		game.step_objects(279.0)
-		check(game.objects.has(wave),"The Gore Cross object remains through 319 ms")
+		game.step_objects(239.0)
+		check(wave["pos"]==origin+Vector2(55*facing,0),"Gore Cross samples the last millisecond of deceleration")
+		game.step_objects(1.0)
+		check(wave["pos"]==origin+Vector2(56*facing,0),"Gore Cross reaches its final travel at 280 ms")
+		game.step_objects(39.0)
+		check(game.objects.has(wave) and wave["pos"]==origin+Vector2(56*facing,0),
+			"Gore Cross keeps its last position through 319 ms")
 		game.step_objects(1.0)
 		check(not game.objects.has(wave),"The Gore Cross object expires on the source ANI boundary")
 
@@ -1646,7 +1653,8 @@ func check_gorecross_followup() -> void:
 		profile.command("numbers.skill_grant",{"id":"rage_slash","level":1})
 		var spec := profile.stats()
 		spec["skill_slots"] = ["rage_slash"]
-		start_room("original_27601","katana",1,spec,sample[2])
+		var facing := -1 if sample[0]==499 else 1
+		start_room("original_27601","katana",facing,spec,sample[2])
 		press(KEY_A)
 		step(0)
 		game.numeric_player.values["attack_speed"] = 1.0
@@ -1678,8 +1686,10 @@ func check_gorecross_followup() -> void:
 			"Gore Cross equips the original follow-up ATK at the base wave damage column")
 		for layer: String in ["gore_cross3","gore_cross4"]:
 			check(game.view.object_views.has("%s:%s"%[wave["id"],layer]),"Gore Cross draws the original "+layer)
-		var target: Dictionary = api.spawn_dummy(wave["pos"])
-		var other: Dictionary = game.spawn_enemy(wave["pos"])
+		var origin: Vector2 = wave["pos"]
+		var contact := origin+Vector2(22*facing,0)
+		var target: Dictionary = api.spawn_dummy(contact)
+		var other: Dictionary = game.spawn_enemy(contact)
 		other["hp"] = 5000.0
 		game.numeric_player.values["hit"] = 1.0
 		check(wave["hit"]["fixed_amount"]==136.0 and wave["hit"]["effects"].is_empty(),
@@ -1688,12 +1698,22 @@ func check_gorecross_followup() -> void:
 		check(wave["hits"].is_empty(),"Gore Cross's follow-up wave starts with the original blank attack frame")
 		var count: int = game.hit_count
 		game.step_objects(1.0)
+		check(wave["pos"]==contact,"Gore Cross's follow-up travels 22 pixels by the first attack frame")
 		check(wave["hits"].has(target["id"]) and target["state"]=="native_down_flight",
 			"Gore Cross uses the original follow-up launch reaction (%s, %s)"%[target["state"],wave["hits"]])
 		check(wave["hits"].has(other["id"]) and game.hit_count==count+3,
 			"Gore Cross repeats contact once on the first target and only once on later targets (%s, %s)"%[game.hit_count-count,wave["hits"]])
 		check(wave["hit"]["percent"]==167.0 and wave["hit"]["fixed_amount"]==145.0 and wave["hit"]["effects"].size()==1,
 			"Gore Cross installs columns 10 and 11 and restores bleed for the second ATK")
+		game.step_objects(60.0)
+		var view_layers: Array = game.view_snapshot()["objects"]
+		check(view_layers.size()==4 and view_layers.all(func(layer):return layer["pos"]==origin+Vector2(49*facing,0)),
+			"All four adult follow-up layers move with the native collision origin")
+		game.step_objects(179.0)
+		check(wave["pos"]==origin+Vector2(83*facing,0),"The follow-up still decelerates at 279 ms")
+		game.step_objects(40.0)
+		check(game.objects.has(wave) and wave["pos"]==origin+Vector2(84*facing,0),
+			"The first-contact ATK change preserves the follow-up's motion through 319 ms")
 		step(338)
 		check(game.player["action"]=="rage_slash","Gore Cross follows through to the final body frame")
 		step(1)
