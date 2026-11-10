@@ -5080,10 +5080,15 @@ func check_illusion_finish() -> void:
 			var immune_hp: float = immune["hp"]
 			var melee: Dictionary = game.objects[0]
 			var before := frame_ms*2.0-1.0
+			var physical_attack: float = game.numeric_player.values["physical_attack"]
+			game.numeric_player.values["physical_attack"] = physical_attack+36.0
 			game.step_objects(before)
 			check(game.hit_count==0 and melee["pos"]==POINT+Vector2(int(before*0.2),1) and melee["z"]==1.0,
 				"the melee object advances on the original particle axis and its first two frames are blank")
 			game.step_objects(1.0)
+			check(game.last_damage["trace"]["attack"]==physical_attack+36.0,
+				"the already spawned melee object reads the updated physical attack at contact")
+			game.numeric_player.values["physical_attack"] = physical_attack
 			check(game.hit_count==1 and melee["hits"].has(melee_target["id"]) and cues("R_SQUARESWDC_HIT").size()==1
 				and cues("HOANYOUNG_WAVE").size()==1 and game.object_view_clock(melee)==100.0,
 				"the melee object uses the actor rate for its first attack frame and presents that same frame")
@@ -5161,6 +5166,13 @@ func check_illusion_finish() -> void:
 			"only the club C layer reaches the target on frame five, before the finishing voice")
 		check(game.objects.is_empty(),"the sword wave has not spawned before the smash frame")
 		var wave_id: int = game._next_entity_id
+		var rear_contact := family == "beamsword" and int(sample[1]) == 6
+		var wave_attack: float = game.numeric_player.values["physical_attack"]
+		if rear_contact:
+			check(game.apply_effect({"kind":"effect","id":"overdrive","rank":2}),
+				"Overdrive is active as the wave is created")
+			game.numeric_player.values["hit"] = 1.0
+			wave_attack = game.numeric_player.values["physical_attack"]
 		step(frame_ms)
 		check(game.hit_count==(2 if family == "club" else 3)
 			and cues("skillfx_upper_4c1c9ad1").filter(func(cue):return cue["action_clock_at"]==100.0).size()==1
@@ -5176,7 +5188,11 @@ func check_illusion_finish() -> void:
 		check(game.objects[0]["pos"]==POINT+Vector2(65,0) and game.objects[0]["hit"]["percent"]==421.0,
 			"the neutral finisher uses the original forward offset and lower damage column")
 		game.clear_monsters()
-		var rear_contact := family == "beamsword" and int(sample[1]) == 6
+		if rear_contact:
+			game.step_numeric_actor(game.player,game.numeric_player,120000.0)
+			check(game.active_effect("overdrive").is_empty() and game.numeric_player.values["physical_attack"]<wave_attack,
+				"Overdrive expires after the wave was created and before its first hit")
+			game.numeric_player.values["hit"] = 1.0
 		var wave_target: Dictionary = api.spawn_dummy(POINT+Vector2(45 if rear_contact else 70,0))
 		var wave_push := -1 if rear_contact else 1
 		var immune: Dictionary = game.spawn_enemy(POINT+Vector2(70,0))
@@ -5205,6 +5221,8 @@ func check_illusion_finish() -> void:
 		check(game.objects.size()==1 and game.objects[0]["hits"].has(wave_target["id"])
 			and cues("HOANYOUNG_HIT").size()==1 and game.table.assets["audio"].has("HOANYOUNG_HIT"),
 			"a sword-wave contact plays the hit cue from its original attack record")
+		check(game.last_damage["trace"]["attack"]==wave_attack,
+			"the sword wave resolves contact with the physical attack captured at creation")
 		check(wave_target["stuck_ms"]==40.0 and game.player["stuck_ms"]==0.0,
 			"the sword wave applies its 40 ms ATK pause only to the target")
 		check(wave_target["state"]=="hurt" and wave_target["stun_ms"]==166.0 and wave_target["push_ms"]==166.0
@@ -5237,6 +5255,8 @@ func check_illusion_finish() -> void:
 			check(wave["hits"].has(moving_target["id"]) and moving_target["facing"]==-1
 				and moving_target["push_v"]==800.0 and cues("native_contact_blood").back()["facing"]==1,
 				"a moving wave within 150 pixels follows travel even when the target is behind it")
+			check(game.last_damage["trace"]["attack"]==wave_attack,
+				"the moving wave retains the same creation-time attack on a later target")
 			game.update_enemy(wave_target,1.0)
 			check(wave_target["stuck_ms"]==0.0,"the sword-wave target resumes at 40 ms")
 		if family == "katana" and int(sample[1]) == 6:
@@ -5387,7 +5407,12 @@ func check_illusion_finish() -> void:
 		var victim: Dictionary = api.spawn_dummy(origin+Vector2(-20*facing if heavy else 0,0))
 		victim["hp"] = 50000.0
 		victim["def"] = victim["def"].merged({"weight":300000 if heavy else 45000},true)
+		var ground_wave_attack: float = game.numeric_player.values["physical_attack"]
+		game.numeric_player.values["physical_attack"] = ground_wave_attack+36.0
 		game.step_objects(16.0,first_new_id)
+		check(game.last_damage["trace"]["attack"]==ground_wave_attack,
+			"the mastered club ground wave also keeps its creation-time physical attack")
+		game.numeric_player.values["physical_attack"] = ground_wave_attack
 		var debris: Array = game.bus.events_of("combat.cue").filter(func(event):return event.get("path","")==controller["particle"])
 		check(wave["clock"]==0.0 and wave["hits"].has(victim["id"]) and game.hit_count==1
 			and cues("R_SQUARESWDC_HIT").size()==1 and victim["state"]=="native_down_flight" and victim["stuck_ms"]==40.0,

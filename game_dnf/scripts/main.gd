@@ -3365,6 +3365,8 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 	var resolved := {"critical":false,"category":hit.get("damage_type","physical") if contact_only else "physical","missed":false}
 	if numeric_player != null and (not contact_only or draw_contact):
 		var source_stats: Dictionary = numeric_player.values if by_player else attacker.get("numeric").values if attacker.get("numeric") != null else {"physical_attack":power,"magical_attack":power,"level":numeric_monster_level}
+		if hit.has("source_physical_attack"):
+			source_stats = source_stats.merged({"physical_attack":hit["source_physical_attack"]},true)
 		var target_stats: Dictionary = numeric_player.values if int(target["id"])==PLAYER_ID else target["numeric"].values
 		if target["state"] == NativeZealotSummons.CAST_STATE:
 			target_stats = target_stats.duplicate()
@@ -4370,6 +4372,9 @@ func spawn_object(hit: Dictionary, owner: String, pos: Vector2, z: float, facing
 		entity["ptl_motion"] = Kernel.NativeMotion.new(hit["ptl_motion"],origin,facing < 0)
 	var controller: Dictionary = hit.get("native_controller",{})
 	var kind := String(controller.get("kind",""))
+	if owner == "player" and numeric_player != null and kind in ["illusion_wave","illusion_club_wave"]:
+		# 7F7D60 binds the owner's attack fields. Only the melee callback refreshes them at contact.
+		entity["hit"] = hit.merged({"source_physical_attack":numeric_player.values["physical_attack"]},true)
 	if kind == "illusion_melee":
 		# 25218B4 copies the current body rate into the payload. A70624 applies it to the new ANI.
 		entity["timeline"] = native_timed_frames(obj["timeline"],float(player["illusion_cast"]["animation_percent"]))
