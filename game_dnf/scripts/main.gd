@@ -1071,22 +1071,28 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		if name == "grabblastblood":speed = numeric_player.native_non_weapon_attack_rate()
 	var clock := old_clock+ms*speed
 	var native_phase: Dictionary = player.get("native_phase",{})
+	var outrage := native_phase.has("outrage_timeline")
+	var old_outrage_event_clock := action_event_clock(old_clock) if outrage else 0.0
 	if not native_phase.is_empty():clock = old_clock+ms
+	if outrage and refresh_ani_rate:
+		var old_rate := float(native_phase["outrage_rate"])
+		var rate := attack_animation_percent(0,old_rate)
+		if rate != old_rate:
+			clock = _rescale_native_ani_ms(clock,old_rate,rate)
+			retime_outrage_phase(native_phase,stage,rate)
 	if name == "illusionslash":
 		var cast: Dictionary = player["illusion_cast"]
 		cast["animation_ms"] += ms
 		if refresh_ani_rate:
-			var rate := attack_animation_percent(int(m["illusion_chain"]["animation_bonus"]))
 			var old_rate := float(cast["animation_percent"])
+			var rate := attack_animation_percent(int(m["illusion_chain"]["animation_bonus"]),old_rate)
 			if rate != old_rate:
 				var timeline := native_timed_frames(stage["timeline"],rate)
 				var first_slash := int(cast["slash"]) == 0 and int(m["illusion_chain"]["first_frame_rate"]) == 0
 				var old_offset := float(cast["timeline"][0]["end_ms"]) if first_slash else 0.0
 				var new_offset := float(timeline[0]["end_ms"]) if first_slash else 0.0
-				# 1091F09 rescales elapsed ANI time, excluding the skipped opening frame.
-				var elapsed := int(maxf(0.0,float(cast["animation_ms"])-old_offset))
-				var adjusted := int(_native_float32(_native_float32(elapsed*old_rate)/rate))
-				cast["animation_ms"] = new_offset+adjusted
+				# Exclude the skipped opening frame from the elapsed ANI time.
+				cast["animation_ms"] = new_offset+_rescale_native_ani_ms(float(cast["animation_ms"])-old_offset,old_rate,rate)
 				cast["animation_percent"] = rate
 				cast["timeline"] = timeline
 		clock = _source_animation_clock(float(cast["animation_ms"]),cast["timeline"],stage["timeline"])
@@ -1130,7 +1136,7 @@ func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
 		var air_speed := float(player.get("air_move_speed",rules["player"]["walk_speed"]))
 		if air_speed <= 0.0:air_speed = float(rules["player"]["walk_speed"])
 		move_player(Vector2(move.x*air_speed,move.y*air_speed*float(rules["units"]["depth_speed_ratio"]))*ms/1000.0)
-	var old_event_clock := action_event_clock(old_clock)
+	var old_event_clock := old_outrage_event_clock if outrage else action_event_clock(old_clock)
 	var event_clock := action_event_clock(clock)
 	action_cues(stage,old_event_clock,event_clock)
 	if m.get("native_state","") == "bloody_rave":
@@ -1561,17 +1567,27 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
 
+func retime_outrage_phase(phase: Dictionary, stage: Dictionary, rate: float) -> void:
+	var timeline := native_timed_frames(stage["timeline"],rate)
+	phase["outrage_rate"] = rate
+	phase["outrage_timeline"] = timeline
+	phase["end_ms"] = Kernel.Timeline.duration(timeline)
+	if phase.has("outrage_impact_at"):
+		# CB44A7 calls 10857E0 on every airborne update using the current ANI rate.
+		phase["outrage_impact_ms"] = _native_ani_delay(float(phase["outrage_impact_at"]),rate)
+
 func step_outrage_motion(move: Dictionary, phase: Dictionary, clock: float) -> void:
 	var impact := int(phase["outrage_impact_ms"])
 	var elapsed := int(clock)
 	phase["outrage_landed_now"] = false
-	# CB44A7..CB4557 samples absolute X and Z only before frame five.
-	if elapsed >= impact:
+	# CB449F skips the flight calculation after landing, even if the ANI clock moves back.
+	if phase.has("outrage_landed") or elapsed >= impact:
 		player["z"] = 0.0
 		if not phase.has("outrage_landed"):
 			phase["outrage_landed"] = true
 			phase["outrage_landed_now"] = true
-		if phase.erase("outrage_stone_pending"):
+		if phase.has("outrage_stone_pending") and elapsed >= int(phase["outrage_timeline"][move["impact_frame"]]["start_ms"]):
+			phase.erase("outrage_stone_pending")
 			# CB4920..CB49BC first samples the emitter on the update after
 			# the impact latch. Its origin follows actor X +/- 150 and YZ.
 			var facing := int(player["facing"])
@@ -2003,16 +2019,12 @@ func start_stage(index: int, opening_clock := 0.0) -> void:
 			bleed["source_bleed_total"] = native_status_attack_amount(bleed["damage_percent"],m["suction_bleed_base"])
 			player["native_phase"]["suction_bleed"] = bleed
 	elif m.get("native_state","") == "outrage_break":
-		var rate := attack_animation_percent(0)
 		var stage := action_def()
-		var timeline := native_timed_frames(stage["timeline"],rate)
-		var phase := {"outrage_timeline":timeline,"end_ms":Kernel.Timeline.duration(timeline)}
+		var phase := {}
 		if index == 1:
 			phase["outrage_origin_x"] = int(player["pos"].x)
-			# CB44A7 calls 10857E0, which adjusts the sum of the raw delays.
-			var impact_at := float(stage["timeline"][m["impact_frame"]]["start_ms"])
-			phase["outrage_impact_at"] = impact_at
-			phase["outrage_impact_ms"] = _native_ani_delay(impact_at,rate)
+			phase["outrage_impact_at"] = float(stage["timeline"][m["impact_frame"]]["start_ms"])
+		retime_outrage_phase(phase,stage,attack_animation_percent(0))
 		player["native_phase"] = phase
 	elif m.get("native_state","") == "thirst":
 		var rate := float(numeric_player.values["cast_speed"]) if numeric_player != null else 1.0
@@ -2576,7 +2588,7 @@ func draw_hit_delay(timeline: Array, clock: float) -> int:
 		delay += _native_ani_delay(frame_ms,rate_percent)
 	return delay
 
-func attack_animation_percent(bonus: int) -> float:
+func attack_animation_percent(bonus: int, previous := 100.0) -> float:
 	var base := float(rules["buff"]["attack_speed"]) if float(player["buff_ms"]) > 0.0 else 1.0
 	if numeric_player != null:base = float(numeric_player.values["attack_speed"])
 	# CCD522 and 82857E apply the mastery multiplier to the integer attack speed.
@@ -2584,8 +2596,13 @@ func attack_animation_percent(bonus: int) -> float:
 	var multiplier := _native_float32(1.0+_native_float32(float(bonus)*0.0010000000474974513))
 	var per_mille := maxi(1,int(_native_float32(native_base*multiplier)))
 	var rate := _native_float32(_native_float32(per_mille*100.0)*0.0010000000474974513)
-	# 1091ECF preserves the ANI's initial 100 if the difference is at most one relative epsilon.
-	return 100.0 if absf(rate-100.0) <= absf(rate)*0.00000011920928955078125 else rate
+	# 1091ECF preserves the current ANI speed within one relative epsilon.
+	return previous if absf(_native_float32(rate-previous)) <= absf(rate)*0.00000011920928955078125 else rate
+
+func _rescale_native_ani_ms(clock: float, old_rate: float, rate: float) -> float:
+	# 1091F09..1091F18 rescales the elapsed integer time and truncates again.
+	var elapsed := int(maxf(0.0,clock))
+	return float(int(_native_float32(_native_float32(elapsed*old_rate)/rate)))
 
 func native_timed_frames(source: Array, rate: float) -> Array:
 	var adjusted: Array = []

@@ -2337,6 +2337,73 @@ func check_outrage_break_impact() -> void:
 			check(floor_target["hp"]<50000.0 and game.objects[0]["clock"]==0.0 and not cues("FLAMES_HIT").is_empty(),
 				"the original floor ATK lands independently on its first frame")
 
+func check_outrage_break_speed_refresh() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	for skill: String in ["outragebreak","buff"]:
+		profile.command("numbers.skill_grant",{"id":skill,"level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["outragebreak"]
+	for phase: String in ["ready","leap","landed"]:
+		start_room("original_27601","katana",1,spec,"berserker")
+		game.clear_monsters()
+		game.apply_skill_effect("buff","frenzy")
+		game.numeric_player.values["attack_speed"] = 2.0 if phase == "landed" else 1.0
+		game.numeric_player.values["hit"] = 1.0
+		game.player["hp"] = 1000.0
+		session.set_skill_material_spender(func(_id: int,_amount: int):return true)
+		if phase == "landed":step(21.5)
+		press(KEY_A)
+		step(0.0)
+		if phase == "ready":
+			step(298.0)
+			game.numeric_player.values["attack_speed"] = 2.0
+			step(1.0)
+			check(game.player["clock"]==299.0 and game.action_duration("outragebreak")==560.0,
+				"changing attack speed does not shorten the ready frame before the actor refresh")
+			step(1.0)
+			check(game.player["clock"]==149.0 and game.action_duration("outragebreak")==279.0,
+				"the ready ANI rescales its elapsed time and its frame length at 300 ms")
+			step(129.0)
+			check(game.player["stage"]==0 and game.objects.is_empty(),"the shortened ready motion still waits for its last millisecond")
+			step(1.0)
+			check(game.player["stage"]==1 and game.player["clock"]==0.0,"the shortened ready motion advances once")
+		elif phase == "leap":
+			step(560.0)
+			step(298.0)
+			game.numeric_player.values["attack_speed"] = 2.0
+			step(1.0)
+			check(game.player["clock"]==299.0 and game.player["native_phase"]["outrage_impact_ms"]==600,
+				"the airborne phase keeps its old landing threshold until the actor refresh")
+			step(1.0)
+			check(game.player["clock"]==149.0 and game.player["native_phase"]["outrage_impact_ms"]==299
+				and game.player["z"]==150.0 and game.player["pos"]==POINT+Vector2(64,0),
+				"the airborne refresh rescales time and samples movement from the same original launch point")
+			var target: Dictionary = api.spawn_dummy(POINT+Vector2(180,0))
+			target["hp"] = 50000.0
+			step(145.0)
+			check(game.hit_count==0 and game.objects.is_empty(),"the refreshed frame five still waits at 294 ms")
+			step(1.0)
+			check(game.hit_count==1 and game.objects.is_empty(),"the refreshed body frame hits four milliseconds before landing")
+			step(4.0)
+			check(game.hit_count==1 and game.objects.size()==1 and game.player["z"]==0.0
+				and cues("OUTRAGE_SWING").size()==1,"the refreshed leap lands once and creates exactly one floor object")
+		else:
+			step(278.5)
+			step(0.5)
+			step(298.0)
+			step(1.0)
+			var landed: Vector2 = game.player["pos"]
+			var stone := String(game.move_def("outragebreak")["stone_particle"])
+			game.numeric_player.values["attack_speed"] = 1.0
+			step(0.5)
+			check(game.player["clock"]==598.0 and game.player["native_phase"]["outrage_impact_ms"]==599,
+				"single-precision rounding can remap the clock to before the new landing threshold")
+			check(game.player["pos"]==landed and game.player["z"]==0.0 and game.objects.size()==1
+				and cues("OUTRAGE_SWING").size()==1 and native_particle_cues(stone).size()==1,
+				"a post-landing speed change keeps the landing latch and samples the stone emitter once")
+
 func check_outrage_break_eruption() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -4732,6 +4799,7 @@ func run() -> void:
 	check_bloody_rave_cancel()
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
+	check_outrage_break_speed_refresh()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()
 	check_outrage_break_camera()
