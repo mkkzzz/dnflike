@@ -657,6 +657,7 @@ func pulse_passive_auras() -> void:
 
 ## Current stage of the running action (three-stage skills keep one move with stages).
 func action_def() -> Dictionary:
+	if player.has("hellbenter_finish"):return player["hellbenter_finish"]
 	if player.has("hardattack_release"):return player["hardattack_release"]
 	if player.has("weapon_combo_release"):return player["weapon_combo_release"]
 	if player.has("charge_crash_release"):return player["charge_crash_release"]
@@ -675,6 +676,10 @@ func action_duration(action: String) -> float:
 
 func action_ani_clock(elapsed: float) -> float:
 	var phase: Dictionary = player.get("native_phase",{})
+	if phase.has("hellbenter_lead"):
+		if elapsed < float(phase["impact_ms"]):
+			return _source_animation_clock(elapsed,phase["hellbenter_lead"],action_def()["timeline"])
+		return elapsed-float(phase["impact_ms"])+float(action_def()["timeline"][3]["start_ms"])
 	if phase.has("grab_pose_ms"):return float(phase["grab_pose_ms"])
 	if phase.has("thirst_loop_ms"):
 		return float(phase["body_clock"])
@@ -773,6 +778,9 @@ func end_action_fx() -> void:
 	player["fx_tag"] = ""
 
 func leave_action() -> void:
+	# CC5685 removes the appendage on leaving state 46, including interrupts.
+	if player.erase("hellbenter_finish") and numeric_player != null and numeric_player.remove_effect("hellbenter"):
+		bus.emit("combat.status",{"target":PLAYER_ID,"id":"hellbenter","change":"removed"})
 	# CC490C starts the cooldown only when leaving state 22, not on another stage.
 	if player.has("triple_cast"):
 		begin_skill_cooldown("triple",player["triple_cast"])
@@ -1045,6 +1053,9 @@ func step_player(ms: float, move: Vector2) -> void:
 		player.erase("thirst_idle_origin_ms")
 
 func step_action(ms: float, move: Vector2, refresh_ani_rate := false) -> void:
+	if player.has("hellbenter_finish"):
+		step_hellbenter_finish(ms,refresh_ani_rate)
+		return
 	if player.has("charge_crash_hold"):
 		step_charge_crash_hold(ms)
 		return
@@ -1495,6 +1506,14 @@ func start_action(name: String, cancel := false) -> bool:
 		if state == "action" and float(player["clock"]) < action_duration(String(player["action"])):
 			if not cancel or not normal_attack_cancel_allowed(m):
 				return reject_action(name,"state")
+	if name == "hellbenter":
+		var blood_sword := active_effect(name)
+		if not blood_sword.is_empty():
+			if player.has("hellbenter_finish") or (player["state"] == "move" and run_direction == 0):
+				return reject_action(name,"state")
+			# CC048D..CC04C9 requests state 46 without repeating the initial payment.
+			start_hellbenter_finish(m,blood_sword)
+			return true
 	if float(player["cooldowns"].get(name,0))>0:return reject_action(name,"cooldown")
 	var normal_index := Kernel.MoveTable.NORMAL_ATTACK_CHAIN.find(name)
 	# Preserve both ordinals across a direct attack transition, then clear on recovery or interruption.
@@ -1627,6 +1646,63 @@ func attach_frenzy_fx(key: String, delay := -1) -> void:
 	bus.emit("combat.cue",{"kind":"fx","key":key,"point":player["pos"],"height":player["z"],
 		"facing":player["facing"],"tag":player["fx_tag"],"follow":PLAYER_ID,
 		"action_clock_at":0.0,"action_instance":action_seq,"uniform_frame_ms":delay})
+
+func start_hellbenter_finish(move: Dictionary, blood_sword: Dictionary) -> void:
+	leave_action()
+	var stage: Dictionary = move["finish"].duplicate()
+	var row: Array = table._skill_row(move["skill"])["level_row"]
+	var base := native_fixed_attack_base(move["fixed_attack_base"])
+	var weak := int(native_fixed_attack_product(row[0],base))
+	var strong := int(native_fixed_attack_product(row[1],base))
+	var amount := _native_interpolate(weak,strong,int(blood_sword.get("blood_count",0)),int(move["blood"]["capacity"]))
+	var hit := native_fixed_hit(stage["hits"][0],amount)
+	hit["percent"] = 0.0
+	stage["hits"] = [hit]
+	player["state"] = "action"
+	player["action"] = "hellbenter"
+	player["stage"] = 0
+	player["clock"] = 0.0
+	player["hits"] = {}
+	player["queued_combo"] = false
+	player["queued_skill"] = ""
+	player["queued_jump"] = false
+	player["queued_backstep"] = false
+	player["hellbenter_finish"] = stage
+	player["native_phase"] = {}
+	set_hellbenter_finish_speed(stage,_native_animation_percent(numeric_player.native_non_weapon_attack_rate()))
+	action_seq += 1
+	player["fx_tag"] = "act:%d"%action_seq
+	bus.emit("combat.action_started",{"entity_id":PLAYER_ID,"action":"hellbenter","stage":0,"instance":action_seq})
+	action_cues(stage,-1.0,0.0)
+
+func set_hellbenter_finish_speed(stage: Dictionary, rate: float) -> void:
+	var phase: Dictionary = player["native_phase"]
+	var source: Array = stage["timeline"]
+	# CD1ADB sets mode 3. CB86E9 restores the 1000 rate on frame three.
+	var lead := native_timed_frames(source.slice(0,3),rate)
+	var impact := Kernel.Timeline.duration(lead)
+	phase["hellbenter_lead"] = lead
+	phase["impact_ms"] = impact
+	phase["rate"] = rate
+	phase["end_ms"] = impact+float(stage["duration"])-float(source[3]["start_ms"])
+
+func step_hellbenter_finish(ms: float, refresh_ani_rate: bool) -> void:
+	var stage := action_def()
+	var phase: Dictionary = player["native_phase"]
+	var previous := float(player["clock"])
+	var previous_ani := action_ani_clock(previous)
+	var next := previous+ms
+	if refresh_ani_rate and previous < float(phase["impact_ms"]):
+		var old_rate := float(phase["rate"])
+		var rate := _native_animation_percent(numeric_player.native_non_weapon_attack_rate(),old_rate)
+		if rate != old_rate:
+			next = _rescale_native_ani_ms(next,old_rate,rate)
+			set_hellbenter_finish_speed(stage,rate)
+	player["clock"] = minf(next,float(phase["end_ms"]))
+	var current := action_ani_clock(float(player["clock"]))
+	action_cues(stage,previous_ani,current)
+	apply_player_hits(stage,previous_ani,current)
+	if next >= float(phase["end_ms"]):end_action()
 
 func thirst_hp_cost(percent: int) -> int:
 	return int(int(max_hp)*percent/100.0)
@@ -5261,6 +5337,7 @@ func append_hellbenter_view(out: Array) -> void:
 	else:
 		out.append(layer.merged({"id":"hellbenter:mark_base","effect":marks[1],"hold_last_frame":true,"depth_offset":1}))
 		out.append(layer.merged({"id":"hellbenter:mark_glow","effect":marks[2],"loop":true,"depth_offset":1}))
+	if player.has("hellbenter_finish"):return
 	# 99BF7A..99BFEE places the sword opposite the actor's facing and bobs it over 1400 ms.
 	var phase := age%1400
 	var bob := int(Kernel.NativeMotion.ramp(-5,5,phase,700) if phase < 700

@@ -39,7 +39,7 @@ func step(game, ms: float) -> void:
 		if Motion.trail_projection(point).distance_squared_to(Motion.trail_projection(previous)) >= TAIL_STEP*TAIL_STEP:
 			history.append(point)
 		orb["point"] = point
-	if effect.is_empty():
+	if effect.is_empty() or game.player.has("hellbenter_finish"):
 		marks.clear()
 		return
 	var age := float(effect["definition"]["duration_ms"])-float(effect["remaining_ms"])

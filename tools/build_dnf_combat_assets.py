@@ -1706,8 +1706,10 @@ def main() -> int:
         appearance = runtime['moves']['hellbenter']['appearance']
         specs = [('effects', key, effects[key])
                  for group in ('cast', 'mark', 'sword', 'target_mark', 'target_bleeding', 'ball', 'absorb',
-                               'complete_sword', 'complete_flash')
+                               'complete_sword', 'complete_flash', 'finish')
                  for key in appearance[group]]
+        finish = runtime['moves']['hellbenter']['finish']['ani']
+        specs.append(('player_clips', finish, runtime['assets']['player_anims'][finish]))
         specs.append(('audio', appearance['sound']['key'], 'sounds/char/swordman/effect/b_start.ogg'))
         specs.append(('audio', appearance['complete_sound'], 'sounds/char/swordman/effect/w_spirits_flash.ogg'))
         print(json.dumps(extend_skill_banks(args.library, OUT, specs)))

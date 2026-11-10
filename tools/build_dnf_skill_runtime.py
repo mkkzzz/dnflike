@@ -228,6 +228,7 @@ HELLBENTER_APPEARANCE = {
     "absorb": ("absorb",),
     "complete_sword": ("completesword1", "completesword2", "completesword3"),
     "complete_flash": ("completeflash1", "completeflash2"),
+    "finish": ("finish1", "finish2", "finish3"),
 }
 IMAGE_DB = None
 IMAGE_PATHS: set[str] | None = None
@@ -1530,13 +1531,23 @@ def build_move(
                           body_height=100,
                           sound={"key": sound["sound"], "at": glow["timeline"][sound["frame"]]["start_ms"]})
         # CC057E..CC062C sends static columns 0 and 1 and throw slot 1 to state 13.
+        finish_fx = records[CHR_FX + "hellbenter/finish1.ani"]["decoded"]
+        finish = {
+            "ani": "hellbenterfinish",
+            "atk": "character/swordman/attackinfo/hellbenterfinish.atk",
+            "hits": [{"body": True}],
+            "fx": [{"key": effect, "at": 0, "action_clock": True, "depth_offset": 4 + index}
+                   for index, effect in enumerate(appearance["finish"])],
+            "sounds": [{"key": event["sound"], "at": finish_fx["timeline"][event["frame"]]["start_ms"]}
+                       for event in finish_fx["sound_events"]],
+        }
         return {"skill": str(skill["path"]), "name": str(skill["name"]), "native_state": "hellbenter_cast",
                 "effect_id": "hellbenter", "material_cost": fixed_cube_cost(skill, records),
                 "stages": [{"ani": "summon1"}, {"ani": "summon2"}],
-                "appearance": appearance,
+                "appearance": appearance, "finish": finish,
                 "blood": {"capacity": static[3], "scan_ms": 250, "pulse_ms": static[10],
                           "range": static[11], "flight_ms": 600},
-                "fidelity_pending": ["special_bleed", "finish", "original_command"]}
+                "fidelity_pending": ["special_bleed", "finish_object", "expiry_finish", "original_command"]}
     if key in BUFF_SKILLS:
         stages.append({"ani": CAST_ANIM, "atk": "", "hits": []})
         effect_path = pick_effect(key, effect_paths, skill_key=key)
@@ -2447,8 +2458,11 @@ def main() -> int:
                 final["fx"] = [{"key": upper, "at": upper_at, "action_clock": True, "depth_offset": 1},
                                {"key": smash, "at": smash_at, "action_clock": True, "depth_offset": 2}]
                 final["sounds"] = [{"key": "SM_HOANYOUNG_FIN", "at": smash_at}]
-            if key in ("bloodblast", "grabblastblood", "chargecrash"):
+            if key in ("bloodblast", "grabblastblood", "chargecrash", "hellbenter"):
                 move["fixed_attack_base"] = fixed_attack_base
+            if key == "hellbenter":
+                ani = move["finish"]["ani"]
+                player_anims[ani] = CHR_ANI + ani + ".ani"
             if key == "chargecrash":
                 move["finish_weapon_tracks"] = charge_finish_tracks
             if key == "grabblastblood":

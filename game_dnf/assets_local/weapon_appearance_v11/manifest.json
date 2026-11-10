@@ -1,0 +1,2104 @@
+{
+ "schema": "dnf_weapon_pose_overlay/1",
+ "base_manifest_sha256": "e67cb0bc4f6fb20d44ea9345602e4a7de2d88375d23733b6d786341bdb3731eb",
+ "bindings": {
+  "equipment/character/swordman/weapon/ssword/sswdb/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/sswdb/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/sswdc/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/katana/katanab/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/katana/katanab/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/katana/katanac/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/katana/katanac/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/bswdb/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/bswdc/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/gemswdb/hellbenterfinish.ani"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/stay.ani": {
+   "hellbenterfinish": "equipment/character/swordman/weapon/ssword/gemswdc/hellbenterfinish.ani"
+  }
+ },
+ "animations": {
+  "equipment/character/swordman/weapon/ssword/sswdb/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdb/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/ssword/sswdc/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/sswdc/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/katana/katanab/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/katana/katanab/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/katana/katanac/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/katana/katanac/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdb/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdb/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/ssword/bswdc/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/bswdc/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdb/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdb/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  },
+  "equipment/character/swordman/weapon/ssword/gemswdc/hellbenterfinish.ani": {
+   "frames": [
+    {
+     "frame": 0,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 1,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 2,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 120
+     },
+     "delay_ms": 120
+    },
+    {
+     "frame": 3,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 100
+     },
+     "delay_ms": 100
+    },
+    {
+     "frame": 4,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 5,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 6,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 7,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 8,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 9,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 10,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 11,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 12,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 13,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 14,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 15,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 16,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 50
+     },
+     "delay_ms": 50
+    },
+    {
+     "frame": 17,
+     "img": null,
+     "img_frame": null,
+     "pos": [
+      -232,
+      -333
+     ],
+     "boxes": [],
+     "items": {
+      "12": 200
+     },
+     "delay_ms": 200
+    }
+   ],
+   "duration_ms": 1310,
+   "source_ani": "equipment/character/swordman/weapon/ssword/gemswdc/hellbenterfinish.ani",
+   "sha256": "0c481252edd96edde600364977f5044356030bad23545e3b4fe0880252239aec"
+  }
+ }
+}

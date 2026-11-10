@@ -420,6 +420,8 @@ func _build_move(name: String, spec: Dictionary) -> Dictionary:
 		move["normal_cancel_job"] = "berserker"
 		move["appearance"] = spec["appearance"]
 		move["blood"] = spec["blood"]
+		move["finish"] = _build_stage(spec["finish"],skill)
+		move["fixed_attack_base"] = spec["fixed_attack_base"]["by_level"]
 	if spec.get("native_state","") == "grab_blast":
 		move["native_state"] = "grab_blast"
 		move["grab_duration_ms"] = float(skill["static"][0])

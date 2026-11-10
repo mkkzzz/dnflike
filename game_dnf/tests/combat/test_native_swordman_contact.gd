@@ -2444,6 +2444,87 @@ func check_hellbenter_first_cast() -> void:
 	check(hellbenter.call().is_empty() and layers.call("completesword").is_empty(),
 		"appendage expiry clears the completed sword layers")
 
+func check_hellbenter_manual_finish() -> void:
+	var profile := ProfileSession.new()
+	profile.command("numbers.level",{"level":60})
+	profile.command("numbers.growtype",{"growtype":"berserker"})
+	profile.command("numbers.skill_grant",{"id":"hellbenter","level":1})
+	var spec := profile.stats()
+	spec["skill_slots"] = ["hellbenter"]
+	start_room("original_27601","katana",1,spec,"berserker")
+	game.clear_monsters()
+	var fees := [0]
+	session.set_skill_material_spender(func(id: int, count: int):
+		fees[0] += count
+		return id==3037 and fees[0]==5)
+	game.player["mp"] = 2000.0
+	game.numeric_player.values["attack_speed"] = 1.0
+	game.numeric_player.weapon_attack_speed_per_mille = 0
+	press(KEY_A)
+	step(600.0)
+	step(800.0)
+	var effect: Dictionary = game.active_effect("hellbenter")
+	check(not effect.is_empty() and game.player["action"]=="","the first shortcut cast leaves the original sword equipped")
+	if effect.is_empty():return
+	effect["remaining_ms"] -= 800.0
+	effect["blood_count"] = 40
+	var cooldown := float(game.player["cooldowns"]["hellbenter"])
+	game.player["mp"] = 0.0
+	game.numeric_player.values["attack_speed"] = 1.33
+	game.numeric_player.weapon_attack_speed_per_mille = 80
+	game.numeric_player.values["hit"] = 1.0
+	var target: Dictionary = api.spawn_dummy(POINT+Vector2(140,0))
+	var outside: Dictionary = game.spawn_enemy(POINT+Vector2(-140,0))
+	outside["ai"] = false
+	var before := int(game.hit_count)
+	game.bus.clear_history()
+	press(KEY_A)
+	step(0.0)
+	check(game.player["mp"]==0.0 and fees[0]==5 and cooldown>0.0 and game.player["cooldowns"]["hellbenter"]==cooldown
+		and game.view.player_actor.pose=="hellbenterfinish",
+		"the second shortcut use enters state 46 without MP, materials or a fresh cooldown")
+	if not game.player.has("hellbenter_finish"):return
+	var stage: Dictionary = game.action_def()
+	var swing: Dictionary = stage["hits"][0]
+	var phase: Dictionary = game.player["native_phase"]
+	var base: int = game.native_fixed_attack_base(game.move_def("hellbenter")["fixed_attack_base"])
+	var expected := int((int(base*2.05)+int(base*6.19))*0.5)
+	check(phase["impact_ms"]==285.0 and swing["fixed_amount"]==expected
+		and swing["percent"]==0.0 and swing["source"]=="body",
+		"the finisher uses mode three and the integer midpoint of the two fixed attack results")
+	var attachments: Array = game.view.effects.filter(func(fx):return fx.data["source"].get_file() in ["finish1.ani","finish2.ani","finish3.ani"])
+	check(attachments.size()==3 and cues("CCRASH_MOVING").size()==1 and cues("SM_MUSSANG_START").size()==1
+		and not game.view.object_views.has("hellbenter:sword_base"),
+		"the finisher hides the carried sword and attaches three original layers with both startup cues")
+	step(284.0)
+	check(game.hit_count==before and cues("DRAWING_SWORD").is_empty(),"the mode-three first three frames do not strike")
+	step(1.0)
+	check(game.player_ani()[1]==360.0 and game.hit_count==before+1 and target["hp"]<target["max_hp"]
+		and outside["hp"]==outside["max_hp"] and game.last_damage["trace"]["fixed_part"]==expected,
+		"the swing first connects on frame three using the original body geometry and fixed attack")
+	check(attachments.all(func(fx):return fx.clock_ms==360.0) and cues("DRAWING_SWORD").size()==1
+		and cues("SM_BLOOD_RAVE_ATK").size()==1 and game.view.player_actor.equipment_layers.size()==2
+		and game.view.player_actor.equipment_layers.all(func(layer):
+			return int(layer.frame.get("frame",-1))==3 and layer.frame.get("img")==null),
+		"the effects and sounds align with the hit frame while both original equipment tracks stay blank")
+	step(120.0)
+	check(game.player_ani()[1]==480.0 and game.hit_count==before+1,"recovery uses base speed and keeps the same hit ledger")
+	press(KEY_A)
+	step(2559.0)
+	check(game.player["action"]=="hellbenter" and not game.active_effect("hellbenter").is_empty(),
+		"repeated input cannot restart the finisher and the appendage remains until state exit")
+	step(1.0)
+	check(game.player["action"]=="" and game.active_effect("hellbenter").is_empty()
+		and cues("SM_MUSSANG_START").size()==1,"finisher exit removes the original appendage and does not retrigger")
+	check(game.numeric_player.add_effect("hellbenter",1),"a fresh sword can be installed after leaving the finisher")
+	press(KEY_A)
+	step(100.0)
+	game.hurt_player(1,outside,{"ignore_super_armor":1},1)
+	step(0.0)
+	check(not game.player.has("hellbenter_finish") and game.active_effect("hellbenter").is_empty()
+		and game.view.effects.all(func(fx):return fx.data["source"].get_file() not in ["finish1.ani","finish2.ani","finish3.ani"]),
+		"being interrupted before the swing consumes the sword and clears the attached finish effects")
+
 func check_outrage_break_impact() -> void:
 	var profile := ProfileSession.new()
 	profile.command("numbers.level",{"level":60})
@@ -5345,6 +5426,7 @@ func run() -> void:
 	check_bloody_rave_thirst()
 	check_outrage_break_impact()
 	check_hellbenter_first_cast()
+	check_hellbenter_manual_finish()
 	check_outrage_break_speed_refresh()
 	check_outrage_break_eruption()
 	check_outrage_break_armor()
