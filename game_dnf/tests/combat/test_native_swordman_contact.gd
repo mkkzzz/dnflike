@@ -3585,7 +3585,8 @@ func check_outrage_break_special_targets() -> void:
 		game.bus.clear_history()
 		for target_case: Array in [["goblin","launch"],["dendroid_dendroid","stagger"],
 				["new_golem_platany","stagger"],["dendroid_dendroid","no_poses"],
-				["goblin","freeze"],["goblin","stone"]]:
+				["goblin","freeze"],["goblin","stone"],
+				["native_bossfather","summoning"],["native_raxy","suicide"]]:
 			var victim: Dictionary = game.spawn_enemy(position,false,target_case[0])
 			victim["clock"] = 19.0
 			victim["hp"] = 50000.0
@@ -3594,6 +3595,16 @@ func check_outrage_break_special_targets() -> void:
 				victim["def"] = victim["def"].merged({"motions":motions},true)
 			elif target_case[1] in ["freeze","stone"]:
 				victim["numeric"].effects.add(target_case[1],{"duration_ms":2000.0})
+			elif target_case[1] == "summoning":
+				game.native_zealot_summons.start(game,victim)
+			elif target_case[1] == "suicide":
+				var suicide: Dictionary = victim["def"]["native_suicide"].merged({"chance":[1,1]},true)
+				check(game.start_native_suicide(victim,suicide),"the Raxy fixture starts the original suicide state")
+				victim["clock"] = 99.0
+				game.step_objects(0.0)
+				check(victim["hp"]==50000.0 and not impact["hits"].has(victim["id"]),
+					"the invulnerable opening frame of Raxy's suicide does not consume the contact")
+				victim["clock"] = 100.0
 			game.step_objects(0.0)
 			var label := str([sample[0],target_case[0],target_case[1]])
 			check(impact["hits"].has(victim["id"]) and victim["hp"]<50000.0 and victim["stuck_ms"]==sample[1]
@@ -3605,6 +3616,7 @@ func check_outrage_break_special_targets() -> void:
 						and cues("FLAMES_HIT").size()==1 and game.bus.events_of("combat.cue").all(
 							func(cue):return not String(cue.get("key","")).begins_with("hit_blood")),
 						"the source ATK uses a knock effect without blood and retains its flame hit sound: "+label)
+					check(game.last_damage["trace"]["situation_factor"]==1.0,"the standing target has no counter bonus: "+label)
 					check(victim["state"]=="native_down_flight" and victim["vz"]>0.0,"down animation allows launch: "+label)
 					game.update_enemy(victim,sample[1]-1.0)
 					check(victim["stuck_ms"]==1.0 and victim["z"]==0.0,"launch stays paused until the final millisecond: "+label)
@@ -3613,6 +3625,9 @@ func check_outrage_break_special_targets() -> void:
 				"stagger":
 					check(victim["state"]=="hurt" and victim["hit_motion"] in ["damage1","damage2"]
 						and victim["vz"]==0.0 and not victim.has("native_down_phase"),"no down action falls back to stagger: "+label)
+				"summoning","suicide":
+					check(game.last_damage["trace"]["situation_factor"]==1.25,
+						"the original zealot action qualifies for counter damage before the hit reaction: "+label)
 				_:
 					check(victim["state"]=="idle" and victim["clock"]==19.0 and victim["vz"]==0.0,
 						"a denied reaction preserves the current pose and clock: "+label)

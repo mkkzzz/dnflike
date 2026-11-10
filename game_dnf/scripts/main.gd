@@ -3297,7 +3297,10 @@ func land_hit(attacker: Dictionary, target: Dictionary, hit: Dictionary, point: 
 		if context.has("fixed_amount_bleeding") and target["numeric"].effects.active.has("bleed"):
 			context["fixed_amount"] = context["fixed_amount_bleeding"]
 		if by_player and String(context.get("element","none")) not in ["fire","water","light","dark"]:context["element"] = numeric_player.effective_element()
-		context["counter"] = String(target["state"]) in ["attack","action"]
+		var target_state := String(target["state"])
+		# 867600 -> 877300 -> 8293B0 admits the original zealot states 13 and 18.
+		context["counter"] = target_state in ["attack","action"] or (native_outrage \
+			and target_state in [NativeZealotSummons.CAST_STATE,"native_suicide"])
 		context["back"] = int(target["facing"])==facing
 		# CB6932/CB6984 bypass the ordinary hit gate on the already-held target.
 		var hit_roll := 0.0 if grab_strike else rng.next_float()
