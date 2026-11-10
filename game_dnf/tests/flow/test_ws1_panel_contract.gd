@@ -68,6 +68,7 @@ func setup() -> void:
 	game.ui.add_child(game.modal)
 	game.hud = Control.new()
 	game.ui.add_child(game.hud)
+	game.store.path = "res://../temp/ws1_panel_contract/profile_%s.json" % Crypto.new().generate_random_bytes(8).hex_encode()
 	game.session.profile["growtype"] = "weaponmaster"
 	game.session.profile["level"] = 60
 	game.session.profile["sp_bonus"] = 2000
@@ -224,6 +225,15 @@ func measure_median(label: String, action: Callable, budget_ms: float) -> float:
 func performance_checks() -> void:
 	game.show_overlay("")
 	await process_frame
+	var learn_key := ""
+	var rank_before := 0
+	for key: String in panel._node_views:
+		var skill: Dictionary = panel._node_views[key]["skill"]
+		if String(skill.get("local_id", "")) != "" and bool(panel._state(skill)["ok"]):
+			learn_key = key
+			rank_before = int(game.session.profile["skills"].get(String(skill["local_id"]), 0))
+			break
+	check(learn_key != "", "performance fixture finds a learnable skill")
 	await measure_once("first_open", func():
 		game.number_windows.tab = 1
 		game.show_overlay("numbers"), 120.0)
@@ -236,6 +246,17 @@ func performance_checks() -> void:
 	await measure_median("long_detail_refresh", func():
 		panel.select_skill(long_skill_key())
 		panel._refresh_progress(), 40.0)
+	if learn_key != "":
+		var local := String(panel.by_key[learn_key]["local_id"])
+		await measure_once("actual_learn", func():
+			panel.selected = learn_key
+			panel.change(learn_key, 1), 500.0)
+		check(int(game.session.profile["skills"].get(local, 0)) == rank_before + 1,
+			"actual learn transaction updates the rank")
+		await measure_once("actual_refund", func():
+			panel.change(learn_key, -1), 500.0)
+		check(int(game.session.profile["skills"].get(local, 0)) == rank_before,
+			"actual refund restores the rank")
 
 func run() -> void:
 	setup()
