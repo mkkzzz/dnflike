@@ -91,6 +91,20 @@
   "passiveobject/actionobject/breakableobject/roadlamp_half.obj": [
    "ptl_roadlamp_particle"
   ],
+  "passiveobject/actionobject/breakableobject/rscbigjar.obj": [
+   "ptl_rsc_bigjar_particle1",
+   "ptl_rsc_bigjar_particle2",
+   "ptl_rsc_bigjar_particle3",
+   "ptl_rsc_bigjar_particle4",
+   "ptl_rsc_bigjar_particle5",
+   "ptl_rsc_bigjar_particle6",
+   "ptl_rsc_bigjar_particle7",
+   "ptl_rsc_bigjar_particle8",
+   "ptl_rsc_bigjar_particle9",
+   "ptl_rsc_bigjar_particle10",
+   "ptl_rsc_bigjar_particle11",
+   "ptl_rsc_bigjar_particle12"
+  ],
   "passiveobject/actionobject/breakableobject/smalllamp.obj": [
    "ptl_smalllamp_particle0",
    "ptl_smalllamp_particle1",

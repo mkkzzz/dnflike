@@ -1083,6 +1083,56 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 7)
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 2)
 
+    def test_activeskycastle_export_keeps_six_rooms_and_object_roles(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/activeskycastle_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'bbe82a8a5cd3785d56f21c133a91be18274f077899badd0f8af6207e222f915e')
+        self.assertEqual(dungeon['index'], 63)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'ordinary')
+        self.assertEqual(dungeon['size'], [6, 1])
+        self.assertEqual(dungeon['start_map_raw'], [0, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 0])
+        self.assertEqual(len(dungeon['cells']), 6)
+        self.assertEqual(len(dungeon['placements']), 18)
+        self.assertEqual(len(dungeon['rooms']), 6)
+        self.assertEqual(len(export['images']), 80)
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual([row[2] for row in selected['map_specifications']],
+                         [16201, 16202, 16203, 16204, 16205])
+        self.assertEqual(selected['boss_map_specifications'], [])
+        self.assertEqual(dungeon['raw'][0]['tag'], '[background pos]')
+        raw = {span['tag']: [[token[2] for token in span['values']]]
+               for span in dungeon['raw'] if not span['tag'].startswith('[/')}
+        self.assertEqual(raw['[necessary party]'], [[3]])
+        self.assertEqual(raw['[dimension dungeon]'], [[2, 3]])
+        self.assertEqual(raw['[coin limit]'], [[8]])
+        self.assertEqual(raw['[champion]'], [[0, 0, 0, 0, 0]])
+        self.assertEqual(raw['[pathgate object]'], [[411, 412, 413, 414, 415,
+                                                      416, 417, 418, 419, 420]])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 36)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 35)
+        mobs = {monster['mob'] for room in dungeon['rooms'].values()
+                for monster in room['monsters']}
+        self.assertEqual(len(mobs), 18)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual(len({item['obj'] for item in objects}), 10)
+        self.assertEqual(sum(item['obj'].endswith('/flappingbanner.obj') for item in objects), 14)
+        self.assertEqual(sum(item['obj'].endswith('/crystalpillar.obj') for item in objects), 6)
+        self.assertEqual(sum(item['obj'].endswith('/rscbigjar.obj') for item in objects), 4)
+        self.assertEqual(sum(item['obj'].endswith('/skycastle_squarebox.obj') for item in objects), 2)
+        boss_room = dungeon['rooms']['map/realskycastle/realskycastle06.map']
+        self.assertEqual(len(boss_room['monsters']), 11)
+        self.assertEqual(sum(1 for span in boss_room['raw'] if span['tag'] == '[NPC]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 5)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 6)
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

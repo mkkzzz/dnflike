@@ -1250,9 +1250,9 @@
     "id": 63,
     "min_level": 60,
     "path": "dungeon/impossible/activeskycastle.dgn",
-    "runtime_id": "",
+    "runtime_id": "activeskycastle",
     "sha256": "bbe82a8a5cd3785d56f21c133a91be18274f077899badd0f8af6207e222f915e",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 60,
@@ -2511,8 +2511,8 @@
     "level_max": 60,
     "level_min": 1,
     "path": "monster/newmonsters/realsky/mirkius/mirkius.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_realsky_mirkius_mirkius",
+    "state": "runtime"
    },
    {
     "id": 61735,
@@ -4575,8 +4575,8 @@
     "level_max": 29,
     "level_min": 22,
     "path": "monster/newmonsters/realsky/minius/minius.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_realsky_minius_minius",
+    "state": "runtime"
    },
    {
     "id": 3013,
@@ -7087,16 +7087,16 @@
     "level_max": 50,
     "level_min": 35,
     "path": "monster/newmonsters/lizardman/dragon_man/dragon_man.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_dragon_man_dragon_man",
+    "state": "runtime"
    },
    {
     "id": 61413,
     "level_max": 50,
     "level_min": 35,
     "path": "monster/newmonsters/lizardman/lizard_man/lizard_man.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizard_man_lizard_man",
+    "state": "runtime"
    },
    {
     "id": 253,
@@ -11631,32 +11631,32 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/dollmaster/calamary/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_dollmaster_calamary_body",
+    "state": "runtime"
    },
    {
     "id": 61345,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/dollmaster/lobotomy/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_dollmaster_lobotomy_body",
+    "state": "runtime"
    },
    {
     "id": 61344,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/dollmaster/teleport/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_dollmaster_teleport_body",
+    "state": "runtime"
    },
    {
     "id": 61343,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/dollmaster/underdog/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_dollmaster_underdog_body",
+    "state": "runtime"
    },
    {
     "id": 62000,
@@ -11999,24 +11999,24 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/avengers/alecto/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_avengers_alecto_body",
+    "state": "runtime"
    },
    {
     "id": 61349,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/avengers/megaira/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_avengers_megaira_body",
+    "state": "runtime"
    },
    {
     "id": 61348,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/avengers/tispone/body.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_avengers_tispone_body",
+    "state": "runtime"
    },
    {
     "id": 61350,
@@ -12047,40 +12047,40 @@
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard",
+    "state": "runtime"
    },
    {
     "id": 61130,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard01.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard01",
+    "state": "runtime"
    },
    {
     "id": 61131,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard02.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard02",
+    "state": "runtime"
    },
    {
     "id": 61132,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard03.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard03",
+    "state": "runtime"
    },
    {
     "id": 61133,
     "level_max": 60,
     "level_min": 60,
     "path": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard04.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard04",
+    "state": "runtime"
    },
    {
     "id": 62107,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 54,
+   "runtime": 55,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,8 +41994,8 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 313,
-   "runtime_post_60": 18,
+   "runtime": 329,
+   "runtime_post_60": 20,
    "source": 1937,
    "target": 1429,
    "unknown_level": 0

@@ -100,6 +100,10 @@
    "normal": "outer_temple",
    "boss": "behemoth_b01_1"
   },
+  "activeskycastle": {
+   "normal": "skycastle",
+   "boss": "skycastle_boss"
+  },
   "aganzo": {
    "normal": "aganzo",
    "boss": "aganzo"

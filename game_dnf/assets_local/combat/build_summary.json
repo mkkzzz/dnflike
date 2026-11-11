@@ -254,6 +254,12 @@
   "newmonsters_heaven_specialforce_specialforce",
   "newmonsters_gbl_ladyzealot_ladyzealot_characterteam",
   "newmonsters_gbl_isadora_isadora2",
+  "newmonsters_lizardman_basilisk_basilisk",
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard",
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard01",
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard02",
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard03",
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard04",
   "newmonsters_screamingcave_kingnugol_kingnugol",
   "newmonsters_screamingcave_babynugol_babynugol",
   "newmonsters_cartel_cypher_poltergeistchair_poltergeistchair",
@@ -281,6 +287,15 @@
   "newmonsters_cartel_cypher_cypher_cypher",
   "newmonsters_aganzo_cutpurse_cutpurse",
   "newmonsters_aganzo_sinead_sinead",
+  "newmonsters_dollmaster_underdog_body",
+  "newmonsters_dollmaster_teleport_body",
+  "newmonsters_dollmaster_lobotomy_body",
+  "newmonsters_dollmaster_calamary_body",
+  "newmonsters_lizardman_avengers_alecto_body",
+  "newmonsters_lizardman_avengers_tispone_body",
+  "newmonsters_lizardman_avengers_megaira_body",
+  "newmonsters_lizardman_dragon_man_dragon_man",
+  "newmonsters_lizardman_lizard_man_lizard_man",
   "newmonsters_ancient_infected_ghoula_infected_ghoula",
   "newmonsters_ancient_infected_ghoulb_infected_ghoulb",
   "newmonsters_bantu_rabbitman_rabbitman",
@@ -293,6 +308,8 @@
   "newmonsters_aradwoman_gbl_libraian_gbl_libraian",
   "newmonsters_aganzo_gang_gang",
   "newmonsters_aganzo_gang2_gang2",
+  "newmonsters_realsky_mirkius_mirkius",
+  "newmonsters_realsky_minius_minius",
   "newmonsters_gbl_breeding_new_gbl_woman_new_gbl_woman",
   "newmonsters_gbl_breeding_flare_worm_flare_worm",
   "newmonsters_gbl_breeding_new_gbl_nomal_new_gbl_nomal",
@@ -314,6 +331,7 @@
   "newmonsters_cartel_incendiarysoldier_incendiarysoldier",
   "newmonsters_gbl_combinetentacle_combinetentacle",
   "newmonsters_bwanga_bwanga",
+  "newmonsters_draconian_magneus_magneus",
   "newmonsters_leshphon_the_wicked_disease_direzie_the_wicked_disease_direzie",
   "newmonsters_leshphon_melt_knight_melt_knight",
   "newmonsters_leshphon_divol_divol1",
@@ -382,10 +400,10 @@
   "passiveobject/character/swordman/sayaexice.obj",
   "passiveobject/character/swordman/wavespinarea.obj"
  ],
- "effects": 738,
+ "effects": 750,
  "digits": 71,
  "audio_keys": 318,
- "unresolved": 69,
+ "unresolved": 83,
  "particle_templates": 28,
  "unresolved_items": [
   {
@@ -578,6 +596,46 @@
   },
   {
    "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "Monster/Lizardman/Stone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard01.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "Monster/Lizardman/Stone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard02.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "Monster/Lizardman/Stone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard03.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "Monster/Lizardman/Stone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard04.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "Monster/Lizardman/Stone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
    "monster": "monster/newmonsters/screamingcave/kingnugol/kingnugol.mob",
    "images": [
     "Monster/Nugol/kingbug2.img",
@@ -708,6 +766,70 @@
   },
   {
    "kind": "monster_layers",
+   "monster": "monster/newmonsters/dollmaster/teleport/body.mob",
+   "images": [
+    "Monster/DollMaster/Hypnos.img",
+    "Monster/DollMaster/HypnosCast.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/dollmaster/lobotomy/body.mob",
+   "images": [
+    "Monster/DollMaster/Morpheus.img",
+    "Monster/DollMaster/MorpheusCast.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/dollmaster/calamary/body.mob",
+   "images": [
+    "Monster/DollMaster/Oite.img",
+    "Monster/DollMaster/OiteCast.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/avengers/alecto/body.mob",
+   "images": [
+    "Monster/Lizardman/Alecto.img",
+    "monster/Lizardman/Alecto.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/avengers/tispone/body.mob",
+   "images": [
+    "Monster/Lizardman/Tispone.img",
+    "monster/Lizardman/Tispone.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/avengers/megaira/body.mob",
+   "images": [
+    "Monster/Lizardman/Megaira.img",
+    "monster/Lizardman/Megaira.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/dragon_man/dragon_man.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "monster/Lizardman/Lizardman.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/lizardman/lizard_man/lizard_man.mob",
+   "images": [
+    "Monster/Lizardman/Lizardman.img",
+    "monster/Lizardman/Lizardman.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
    "monster": "monster/newmonsters/ancient/infected_ghoula/infected_ghoula.mob",
    "images": [
     "Monster/Ancient/Infected_GhoulA.img",
@@ -745,6 +867,14 @@
    "images": [
     "Monster/Arad/PubMan.img",
     "monster/Arad/PubMan.img"
+   ]
+  },
+  {
+   "kind": "monster_layers",
+   "monster": "monster/newmonsters/draconian/magneus/magneus.mob",
+   "images": [
+    "monster/Draconian/Draco_Magneus.img",
+    "monster/Draconian/EF_Magneus_Hallucination.img"
    ]
   },
   {

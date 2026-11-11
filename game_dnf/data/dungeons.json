@@ -1627,6 +1627,54 @@
     "sha256": "92da771e3991f446d27948ca2747f300f9f4290159258fb869f0ec6af2088484",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
+  },
+  "activeskycastle": {
+   "name": "真·天空之城",
+   "region": "dimension",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/activeskycastle_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "真·天空之城",
+     "placement": "0_0:realskycastle01",
+     "next": "right"
+    },
+    {
+     "name": "真·天空之城",
+     "placement": "1_0:realskycastle02",
+     "next": "right"
+    },
+    {
+     "name": "真·天空之城",
+     "placement": "2_0:realskycastle03",
+     "next": "right"
+    },
+    {
+     "name": "真·天空之城",
+     "placement": "3_0:realskycastle04",
+     "next": "right"
+    },
+    {
+     "name": "真·天空之城",
+     "placement": "4_0:realskycastle05",
+     "next": "right"
+    },
+    {
+     "name": "真·天空之城",
+     "placement": "5_0:realskycastle06",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 60,
+   "monster_level": 60,
+   "source": {
+    "path": "dungeon/impossible/activeskycastle.dgn",
+    "sha256": "bbe82a8a5cd3785d56f21c133a91be18274f077899badd0f8af6207e222f915e",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
  }
 }

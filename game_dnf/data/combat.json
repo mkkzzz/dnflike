@@ -2105,6 +2105,96 @@
    "mob": "monster/newmonsters/albert/albert.mob",
    "bank": "newmonsters_albert_albert",
    "name": "albert"
+  },
+  "newmonsters_dollmaster_calamary_body": {
+   "mob": "monster/newmonsters/dollmaster/calamary/body.mob",
+   "bank": "newmonsters_dollmaster_calamary_body",
+   "name": "body"
+  },
+  "newmonsters_dollmaster_lobotomy_body": {
+   "mob": "monster/newmonsters/dollmaster/lobotomy/body.mob",
+   "bank": "newmonsters_dollmaster_lobotomy_body",
+   "name": "body"
+  },
+  "newmonsters_dollmaster_teleport_body": {
+   "mob": "monster/newmonsters/dollmaster/teleport/body.mob",
+   "bank": "newmonsters_dollmaster_teleport_body",
+   "name": "body"
+  },
+  "newmonsters_dollmaster_underdog_body": {
+   "mob": "monster/newmonsters/dollmaster/underdog/body.mob",
+   "bank": "newmonsters_dollmaster_underdog_body",
+   "name": "body"
+  },
+  "newmonsters_draconian_magneus_magneus": {
+   "mob": "monster/newmonsters/draconian/magneus/magneus.mob",
+   "bank": "newmonsters_draconian_magneus_magneus",
+   "name": "magneus"
+  },
+  "newmonsters_lizardman_avengers_alecto_body": {
+   "mob": "monster/newmonsters/lizardman/avengers/alecto/body.mob",
+   "bank": "newmonsters_lizardman_avengers_alecto_body",
+   "name": "body"
+  },
+  "newmonsters_lizardman_avengers_megaira_body": {
+   "mob": "monster/newmonsters/lizardman/avengers/megaira/body.mob",
+   "bank": "newmonsters_lizardman_avengers_megaira_body",
+   "name": "body"
+  },
+  "newmonsters_lizardman_avengers_tispone_body": {
+   "mob": "monster/newmonsters/lizardman/avengers/tispone/body.mob",
+   "bank": "newmonsters_lizardman_avengers_tispone_body",
+   "name": "body"
+  },
+  "newmonsters_lizardman_basilisk_basilisk": {
+   "mob": "monster/newmonsters/lizardman/basilisk/basilisk.mob",
+   "bank": "newmonsters_lizardman_basilisk_basilisk",
+   "name": "basilisk"
+  },
+  "newmonsters_lizardman_dragon_man_dragon_man": {
+   "mob": "monster/newmonsters/lizardman/dragon_man/dragon_man.mob",
+   "bank": "newmonsters_lizardman_dragon_man_dragon_man",
+   "name": "dragon_man"
+  },
+  "newmonsters_lizardman_lizard_man_lizard_man": {
+   "mob": "monster/newmonsters/lizardman/lizard_man/lizard_man.mob",
+   "bank": "newmonsters_lizardman_lizard_man_lizard_man",
+   "name": "lizard_man"
+  },
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard": {
+   "mob": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard.mob",
+   "bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard",
+   "name": "lizardman_guard"
+  },
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard01": {
+   "mob": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard01.mob",
+   "bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard01",
+   "name": "lizardman_guard01"
+  },
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard02": {
+   "mob": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard02.mob",
+   "bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard02",
+   "name": "lizardman_guard02"
+  },
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard03": {
+   "mob": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard03.mob",
+   "bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard03",
+   "name": "lizardman_guard03"
+  },
+  "newmonsters_lizardman_lizardman_guard_lizardman_guard04": {
+   "mob": "monster/newmonsters/lizardman/lizardman_guard/lizardman_guard04.mob",
+   "bank": "newmonsters_lizardman_lizardman_guard_lizardman_guard04",
+   "name": "lizardman_guard04"
+  },
+  "newmonsters_realsky_minius_minius": {
+   "mob": "monster/newmonsters/realsky/minius/minius.mob",
+   "bank": "newmonsters_realsky_minius_minius",
+   "name": "minius"
+  },
+  "newmonsters_realsky_mirkius_mirkius": {
+   "mob": "monster/newmonsters/realsky/mirkius/mirkius.mob",
+   "bank": "newmonsters_realsky_mirkius_mirkius",
+   "name": "mirkius"
   }
  },
  "boss_hp_lines": 3,
