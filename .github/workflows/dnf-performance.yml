@@ -46,15 +46,31 @@ jobs:
       - name: Check source job identity and learning columns
         run: python3 tools/test_dnf_job_identity.py
       - name: Check native CHR scopes and compiled awakening records
+        shell: bash
         run: |
-          python3 tools/test_dnf_chr_scope.py
-          python3 tools/test_dnf_chr_numbers.py
-          python3 tools/test_dnf_chr_writeback.py
-          python3 tools/test_dnf_chr_core_stats.py
-          python3 tools/test_dnf_chr_refill.py
-          python3 tools/test_dnf_mp_current.py
-          python3 tools/test_dnf_stamina_input.py
-          python3 tools/test_dnf_pvf.py
+          set +e
+          output=$(set -e
+            {
+              python3 tools/test_dnf_chr_scope.py
+              python3 tools/test_dnf_chr_numbers.py
+              python3 tools/test_dnf_chr_writeback.py
+              python3 tools/test_dnf_chr_core_stats.py
+              python3 tools/test_dnf_chr_refill.py
+              python3 tools/test_dnf_mp_current.py
+              python3 tools/test_dnf_stamina_input.py
+              python3 tools/test_dnf_pvf.py
+            } 2>&1
+          )
+          status=$?
+          printf '%s\n' "$output"
+          if [ "$status" -ne 0 ]; then
+            detail=$(printf '%s\n' "$output" | tail -n 100)
+            detail=${detail//'%'/'%25'}
+            detail=${detail//$'\r'/'%0D'}
+            detail=${detail//$'\n'/'%0A'}
+            printf '::error title=Native CHR regression::%s\n' "$detail"
+          fi
+          exit "$status"
       - name: Preserve archive CRC checks when decoding the client directory
         run: python3 tools/test_dnf_pvf_archive.py
       - name: Verify native string decoder with original byte fixtures
