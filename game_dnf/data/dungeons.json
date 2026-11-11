@@ -1804,6 +1804,39 @@
     "sha256": "bbe82a8a5cd3785d56f21c133a91be18274f077899badd0f8af6207e222f915e",
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
+  },
+  "training_striker": {
+   "name": "月光修炼场",
+   "region": "training_striker",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/training_striker_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "月光修炼场",
+     "placement": "2_0:15111training",
+     "next": "left"
+    },
+    {
+     "name": "月光修炼场",
+     "placement": "1_0:15112training",
+     "next": "left"
+    },
+    {
+     "name": "月光修炼场",
+     "placement": "0_0:15113training",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 20,
+   "monster_level": 23,
+   "source": {
+    "path": "dungeon/quest/training_striker.dgn",
+    "sha256": "9a232e2ae73a73c78a2c587b1c005a3797e917cfbb0194b9f10657e9e96566dd",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
  }
 }
