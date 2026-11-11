@@ -6,10 +6,12 @@
 |---|---|
 | 使用者 | rainmk |
 | 状态 | 正在做 |
-| 正在做 | 原版全部副本世界内容线：已建立 59 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地、暗黑城入口、熔岩穴、山脊、斯卡萨之巢、根特周边、根特东门、比尔马克帝国试验场、痛苦之村列瑟芬、诺伊佩拉、迷乱之村哈穆林、悲鸣洞穴、20/48 级月光修炼场、真·天空之城、20/15 级亡月雷鸣废墟、冰心少年、利库天井、白色废墟、布万加、冰雪宫殿、GBL教阿拉德分部、GBL教研究所、GBL教孵化场、堕落的盗贼、月光酒馆、王的遗迹、绿都格罗兹尼、热血八番街与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 58/97 runtime、39 parsed，怪物 runtime 330，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
+| 正在做 | 原版全部副本世界内容线：已建立 60 条非 legacy 正式路由（17 个可见固定副本、隐藏阿登、隐藏神殿周边、树精丛林、炼狱、极昼、天帷禁地、GBL女神殿、树精繁殖地、第二脊椎、第一脊椎、蜘蛛洞穴、暗精灵墓地、暗黑城入口、熔岩穴、山脊、斯卡萨之巢、根特周边、根特东门、比尔马克帝国试验场、痛苦之村列瑟芬、诺伊佩拉、迷乱之村哈穆林、悲鸣洞穴、20/48 级月光修炼场、20/23 级月光修炼场职业变体、真·天空之城、20/15 级亡月雷鸣废墟、冰心少年、利库天井、白色废墟、布万加、冰雪宫殿、GBL教阿拉德分部、GBL教研究所、GBL教孵化场、堕落的盗贼、月光酒馆、王的遗迹、绿都格罗兹尼、热血八番街与浅栖之地原生迷宫），闭合 17 个可见副本 107 房阵容、63 个怪种攻击路径、18 个领主真实伤害入口和 896/152 个可破坏物/伤害陷阱实例；60 级 DGN 为 59/97 runtime、38 parsed，怪物 runtime 330，继续逐副本补齐来源、特殊 AI、投放、任务、结算和正式入口 |
 | 产出位置 | `game_dnf/core/`、`game_dnf/content/api/`、`game_dnf/combat/`（action/hit/resolve/ai/data/api/fields）、`game_dnf/quests/`、`game_dnf/data/`（含 `campaign_1_16.json`、60 级基线 JSON）、`game_dnf/view/`、`game_dnf/ui/combat/`、`game_dnf/ui/flow/`、`game_dnf/town/`、`game_dnf/debug/`、`game_dnf/tests/`（含 `act8/`）、`tools/`、`docs/design/49_单机60级一致基线.md`、`docs/reports/ws1/2026-10/`、`docs/reports/ws1/2026-11/` |
 
 ## 最近完成
+
+- 2026-11-11 完成[DGN505 月光修炼场原生职业变体](../../reports/ws1/2026-11/2026-11-11_DGN505月光修炼场原生职业变体.md)：把 `training_striker.dgn` 接入独立隐藏 region 的 `native_maze`，闭合 3×1 源网格、3 房、35 只怪、6 个 MOB、5 个索引动作槽、23 个对象、Kinol 领主行和 `M_AGANZO`。同目录 DGN507/DGN508 完成差分审计，Boss 房只有 `[ai character] 1514`、NPC1008 和对象，当前缺少敌方 AICharacter/APC 战斗内核，未以空房或普通怪替身接入。专项 70、全部原生迷宫 44 文件 4,321、地图 Python 43、世界 573/9,286/6,302/966/90 项及七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 59 runtime、38 parsed，怪物 baseline 330。
 
 - 2026-11-11 完成[20 级月光修炼场与亡月雷鸣废墟原生变体](../../reports/ws1/2026-11/2026-11-11_20级月光修炼场与亡月雷鸣废墟原生变体.md)：把 `training.dgn` 与 `deadmoon.dgn` 分别接入独立隐藏 region 的 `native_maze`，闭合两个 3×1 源网格、6 房、17 个 MOB、63 只怪、38 个索引动作槽、4 条 Boss 行、63 个对象和两套原曲。训练场 5 类角色雕像走 legacy 单招；亡月 Gero 无直接 ATK/投掷记录，家具与草堆保持破坏源缺口。新增 1 个运行 monster bank；专项 87/91、全部原生迷宫 43 文件 4,251、地图 Python 42、世界 573/9,286/6,302/966/90 项及七道内容闸门通过；依赖门禁 0 违规。60 级 DGN 更新为 58 runtime、39 parsed，怪物 baseline 330。
 
@@ -116,7 +118,7 @@
 - 根特周边的 73/72 个灯柱/APC/果袋 breakable source、果袋 trap 2200/2201/2210、43/37 个 drum tongue 行为、封印门 60034、事件怪 61728、hell、Bentinck 12 招阶段与 `gent` 城镇入口/奖励/结算只保留 raw/gap。
 - 根特东门的 55/56 个灯柱/果袋 breakable source、trap 2200/2201/2210/2211、6/12 个 spider mine、quest 4212/escape block、封印门 60034、事件怪 61728、hell、Captain Shured 10 招阶段与 `gent` 城镇入口/奖励/结算只保留 raw/gap。
 - 浅栖之地的第二套 quest/hell 布局只保留 raw，2 个 `shallowkeepfreezingluna` 与 21 个混合未知 trap 未执行；特殊棺/罐 `ghoulstand` 的生成/位置/生命周期、箱组随机和首领阶段仍需逐项取证。
-- 60 级目标 DGN 仍有 42 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
+- 60 级目标 DGN 仍有 38 个 `parsed`。下一批须按现有地图导出、城镇/区域、任务依赖和怪物覆盖选择普通路线；任务专用 `dungeon/quest/` 路线先单独核对生命周期与单机语义。
 - 月光修炼场的 DGN511 两房、Albert 7 槽、Boss 行 NPC1009 与独立 NPC1000 已运行；任务 983 的月光酒馆入口、清房后转对话 NPC、交付/奖励、7 个 Aganzo 家具 breakable source 和 event/pvp raw 字段仍未接入。
 - `ranjerusdogs` 已调查：6×1、29 怪、13 个 MOB、无 AICharacter；其中多数 MOB 使用 `[action list]`，当前 WS2 持有的共用 `move_table` 只消费 `[attack action]`，本批未修改跨界战斗内核，暂不作为普通单招内容接入。
 - `r_vilmark` 已调查：6×1、6 房、41 怪、168 对象，6 个 MOB 均可由当前 move_table 消费；但源图缺 198 个 timegate 远景/电话杆 validated IMG，不能以缺大面积背景的画面接入。
