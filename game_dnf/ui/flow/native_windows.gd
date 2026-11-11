@@ -134,7 +134,7 @@ func original_texture(id: String, kind: String) -> Texture2D:
 			native_item_textures[key]=texture
 		return native_item_textures[key]
 	if original_icons.is_empty():
-		for pack: String in ["items_original_v1","items_original_v2","items_original_v3","items_original_v4","items_original_v5","items_original_v6","items_original_v7","items_original_v8","items_original_v9","items_original_v10","items_original_v11"]:
+		for pack: String in ["items_original_v1","items_original_v2","items_original_v3","items_original_v4","items_original_v5","items_original_v6","items_original_v7","items_original_v8","items_original_v9","items_original_v10","items_original_v11","items_original_v12"]:
 			var base: String="res://assets_local/"+pack+"/"
 			var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(base+"manifest.json"))
 			for group: String in ["items","field_images"]:

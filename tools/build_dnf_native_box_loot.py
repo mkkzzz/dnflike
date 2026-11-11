@@ -55,6 +55,10 @@ SOURCES = {
         'dungeon/act4/kingsruins.dgn',
         'f03c598f40d969f903f61266b0c33c38ab09c4e6cbf2ee92a60ebdf5118d1346',
     ),
+    'deadmoon_new': (
+        'dungeon/quest/deadmoon_new.dgn',
+        '7bcb3e4d0b6964e05ffd80cc4e1f4eb5dcd2784be30c679d5093d162c722d7fd',
+    ),
     'magmacave': (
         'dungeon/act4/magmacave.dgn',
         '5b47aac76324fb52d63eedb834b5f32bb7cfd1cedba610ce9fccf12873d775e8',

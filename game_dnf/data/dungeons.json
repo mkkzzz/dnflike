@@ -1628,6 +1628,69 @@
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
   },
+  "deadmoon_new": {
+   "name": "亡月雷鸣废墟",
+   "region": "deadmoon",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/deadmoon_new_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "0_1:start1",
+     "next": "up"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "0_0:h1",
+     "next": "right"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "1_0:h2",
+     "next": "right"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "2_0:h3",
+     "next": "down"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "2_1:h4",
+     "next": "right"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "3_1:h5",
+     "next": "up"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "3_0:h6",
+     "next": "right"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "4_0:h7",
+     "next": "right"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "5_0:boss1",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 15,
+   "monster_level": 18,
+   "source": {
+    "path": "dungeon/quest/deadmoon_new.dgn",
+    "sha256": "7bcb3e4d0b6964e05ffd80cc4e1f4eb5dcd2784be30c679d5093d162c722d7fd",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
+  },
   "activeskycastle": {
    "name": "真·天空之城",
    "region": "dimension",

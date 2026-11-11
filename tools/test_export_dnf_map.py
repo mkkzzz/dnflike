@@ -1083,6 +1083,68 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 7)
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 2)
 
+    def test_deadmoon_new_export_keeps_paired_masks_and_source_objects(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/deadmoon_new_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '7bcb3e4d0b6964e05ffd80cc4e1f4eb5dcd2784be30c679d5093d162c722d7fd')
+        self.assertEqual(dungeon['index'], 521)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'ordinary')
+        self.assertEqual(dungeon['size'], [6, 2])
+        self.assertEqual(dungeon['start_map_raw'], [0, 1])
+        self.assertEqual(dungeon['boss_map_raw'], [5, 0])
+        self.assertEqual(len(dungeon['cells']), 12)
+        self.assertEqual(len(dungeon['placements']), 13)
+        self.assertEqual(len(dungeon['rooms']), 9)
+        self.assertEqual(len(export['images']), 151)
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual(selected['map_specifications'], [
+            [0, 0, 13302], [1, 0, 13303], [3, 0, 13307], [4, 0, 13308]])
+        self.assertEqual(selected['boss_map_specifications'], [[5, 0, 13300]])
+        raw = {span['tag']: [[token[2] for token in span['values']]]
+               for span in dungeon['raw'] if not span['tag'].startswith('[/')}
+        self.assertEqual(raw['[minimum required level]'], [[15]])
+        self.assertEqual(raw['[basis level]'], [[18]])
+        self.assertEqual(raw['[limit party count]'], [[1]])
+        self.assertEqual(raw['[designate dungeon difficulty]'], [[0]])
+        self.assertEqual(raw['[pathgate object]'],
+                         [[381, 382, 383, 384, 385, 386, 387, 388, 389, 390]])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 66)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 222)
+        mobs = {monster['mob'] for room in dungeon['rooms'].values()
+                for monster in room['monsters']}
+        self.assertEqual(len(mobs), 13)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 1)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual(len({item['obj'] for item in objects}), 27)
+        self.assertEqual(sum(item['obj'].endswith('/barrel.obj') for item in objects), 61)
+        self.assertEqual(sum(item['obj'].endswith('/treasurebox.obj') for item in objects), 4)
+        self.assertEqual(sum(item['obj'].endswith('/actionstonepillar.obj') for item in objects), 5)
+        boss_room = dungeon['rooms']['map/deadmoon_new/boss1.map']
+        self.assertEqual(len(boss_room['monsters']), 11)
+        self.assertEqual(sum(1 for span in boss_room['raw'] if span['tag'] == '[NPC]'), 1)
+        self.assertEqual({
+            dungeon['rooms'][path]['map_id']: dungeon['rooms'][path]['greed_pairs']
+            for path in (
+                'map/deadmoon_new/start1.map', 'map/deadmoon_new/h1.map',
+                'map/deadmoon_new/h2.map', 'map/deadmoon_new/h3.map',
+                'map/deadmoon_new/h4.map', 'map/deadmoon_new/h5.map',
+                'map/deadmoon_new/h6.map', 'map/deadmoon_new/h7.map',
+                'map/deadmoon_new/boss1.map')
+        }, {
+            13300: [[4, 4]], 13301: [[2, 2]], 13302: [[9, 9]],
+            13303: [[5, 5]], 13304: [[12, 12]], 13305: [[3, 3]],
+            13306: [[6, 6]], 13307: [[9, 9]], 13308: [[5, 5]],
+        })
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 3)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 9)
+
     def test_activeskycastle_export_keeps_six_rooms_and_object_roles(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/activeskycastle_v1/map_export.json')
