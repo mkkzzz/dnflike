@@ -306,7 +306,9 @@ class SkillRuntimeTest(unittest.TestCase):
         triple = self.runtime["variants"]["triple"][0]
         self.assertEqual(triple["job"], "weaponmaster")
         self.assertEqual(len(triple["replace_stages"]), 5)
-        self.assertEqual(self.runtime["variants"]["rage_slash"][0]["job"], "berserker")
+        self.assertNotIn("rage_slash", self.runtime["variants"])
+        cross_hit = self.moves["rage_slash"]["stages"][0]["hits"][0]
+        self.assertEqual(cross_hit["native_controller"]["kind"], "gorecross_wave")
         self.assertEqual(self.runtime["variants"]["moonlight"][0]["job"], "soulbringer")
 
     def test_draw_sword_preserves_native_weapon_families(self):
