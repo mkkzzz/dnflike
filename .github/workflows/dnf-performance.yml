@@ -22,7 +22,20 @@ jobs:
       - name: Reject runtime catalog copies and skill tree rebuilds
         run: python3 tools/check_dnf_performance.py
       - name: Check skill data regressions (not original fidelity sign-off)
-        run: python3 tools/test_dnf_skill_runtime.py
+        shell: bash
+        run: |
+          set +e
+          output=$(python3 tools/test_dnf_skill_runtime.py 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          if [ "$status" -ne 0 ]; then
+            detail=$(printf '%s\n' "$output" | tail -n 80)
+            detail=${detail//'%'/'%25'}
+            detail=${detail//$'\r'/'%0D'}
+            detail=${detail//$'\n'/'%0A'}
+            printf '::error title=Skill runtime regression::%s\n' "$detail"
+          fi
+          exit "$status"
       - name: Check source job identity and learning columns
         run: python3 tools/test_dnf_job_identity.py
       - name: Check native CHR scopes and compiled awakening records
