@@ -4,11 +4,13 @@ on:
     paths:
       - 'game_dnf/**'
       - 'tools/**'
+      - 'docs/reports/ws2/2026-11/native_chr_*.json'
       - '.github/workflows/dnf-performance.yml'
   pull_request:
     paths:
       - 'game_dnf/**'
       - 'tools/**'
+      - 'docs/reports/ws2/2026-11/native_chr_*.json'
       - '.github/workflows/dnf-performance.yml'
 permissions:
   contents: read
