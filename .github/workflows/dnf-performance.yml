@@ -5,12 +5,16 @@ on:
       - 'game_dnf/**'
       - 'tools/**'
       - 'docs/reports/ws2/2026-11/native_chr_*.json'
+      - 'docs/reports/ws2/2026-11/native_mp_current.json'
+      - 'docs/reports/ws2/2026-11/native_stamina_input.json'
       - '.github/workflows/dnf-performance.yml'
   pull_request:
     paths:
       - 'game_dnf/**'
       - 'tools/**'
       - 'docs/reports/ws2/2026-11/native_chr_*.json'
+      - 'docs/reports/ws2/2026-11/native_mp_current.json'
+      - 'docs/reports/ws2/2026-11/native_stamina_input.json'
       - '.github/workflows/dnf-performance.yml'
 permissions:
   contents: read
