@@ -56,6 +56,10 @@
    "normal": "sunderland",
    "boss": "sunderland_boss"
   },
+  "deadmoon": {
+   "normal": "sunderland_boss",
+   "boss": "sunderland_boss"
+  },
   "deadmoon_new": {
    "normal": "sunderland",
    "boss": "sunderland_boss"
@@ -229,6 +233,10 @@
    "boss": "cold_boy"
   },
   "training2": {
+   "normal": "aganzo",
+   "boss": "aganzo"
+  },
+  "training": {
    "normal": "aganzo",
    "boss": "aganzo"
   },

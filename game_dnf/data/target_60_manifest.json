@@ -411,9 +411,9 @@
     "id": 500,
     "min_level": 20,
     "path": "dungeon/quest/training.dgn",
-    "runtime_id": "",
+    "runtime_id": "training",
     "sha256": "ae81eed6631cc6232efda6c88769887308f2ce54b951b7d95b0cfaf62e45fa75",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 23,
@@ -424,9 +424,9 @@
     "id": 503,
     "min_level": 20,
     "path": "dungeon/quest/deadmoon.dgn",
-    "runtime_id": "",
+    "runtime_id": "deadmoon",
     "sha256": "07b325e117ca93583d08afc7e2e6b4d278dff87263e7b582ba8a02748311bdb4",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 23,
@@ -3199,8 +3199,8 @@
     "level_max": 99,
     "level_min": 1,
     "path": "monster/villageattacked/goblinthrowertaskmaster.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "villageattacked_goblinthrowertaskmaster",
+    "state": "runtime"
    },
    {
     "id": 61818,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 56,
+   "runtime": 58,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 329,
+   "runtime": 330,
    "runtime_post_60": 20,
    "source": 1937,
    "target": 1429,

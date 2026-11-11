@@ -2195,6 +2195,11 @@
    "mob": "monster/newmonsters/realsky/mirkius/mirkius.mob",
    "bank": "newmonsters_realsky_mirkius_mirkius",
    "name": "mirkius"
+  },
+  "villageattacked_goblinthrowertaskmaster": {
+   "mob": "monster/villageattacked/goblinthrowertaskmaster.mob",
+   "bank": "villageattacked_goblinthrowertaskmaster",
+   "name": "goblinthrowertaskmaster"
   }
  },
  "boss_hp_lines": 3,

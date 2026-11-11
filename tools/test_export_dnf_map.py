@@ -1145,6 +1145,101 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 3)
         self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 9)
 
+    def test_training_export_keeps_two_bosses_and_furniture_contract(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/training_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], 'ae81eed6631cc6232efda6c88769887308f2ce54b951b7d95b0cfaf62e45fa75')
+        self.assertEqual(dungeon['index'], 500)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'ordinary')
+        self.assertEqual(dungeon['size'], [3, 1])
+        self.assertEqual(dungeon['start_map_raw'], [2, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+        self.assertEqual(len(dungeon['cells']), 3)
+        self.assertEqual(len(dungeon['placements']), 3)
+        self.assertEqual(len(dungeon['rooms']), 3)
+        self.assertEqual(len(export['images']), 49)
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual(selected['map_specifications'], [[2, 0, 15090], [1, 0, 15109]])
+        self.assertEqual(selected['boss_map_specifications'], [[0, 0, 15089]])
+        raw = {span['tag']: [[token[2] for token in span['values']]]
+               for span in dungeon['raw'] if not span['tag'].startswith('[/')}
+        self.assertEqual(raw['[minimum required level]'], [[20]])
+        self.assertEqual(raw['[basis level]'], [[23]])
+        self.assertEqual(raw['[limit party count]'], [[1]])
+        self.assertEqual(raw['[designate dungeon difficulty]'], [[0]])
+        self.assertEqual(raw['[champion]'], [[6, 12, 18, 24, 26]])
+        self.assertEqual(raw['[pathgate object]'],
+                         [[5540, 5541, 5542, 5543, 5544, 5545, 5546, 5547, 5548, 5549]])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 33)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 23)
+        mobs = {monster['mob'] for room in dungeon['rooms'].values()
+                for monster in room['monsters']}
+        self.assertEqual(len(mobs), 9)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 2)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual(len({item['obj'] for item in objects}), 4)
+        self.assertEqual(sum(item['obj'].endswith('/aganzo_chair.obj') for item in objects), 11)
+        self.assertEqual(sum(item['obj'].endswith('/aganzo_namutong.obj') for item in objects), 7)
+        self.assertEqual(sum(item['obj'].endswith('/aganzo_siktak.obj') for item in objects), 2)
+        boss_room = dungeon['rooms']['map/training/15089training.map']
+        self.assertEqual(sum(1 for span in boss_room['raw'] if span['tag'] == '[NPC]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'object_unrendered']), 20)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 3)
+
+    def test_deadmoon_level20_export_keeps_two_bosses_and_grass_contract(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/deadmoon_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '07b325e117ca93583d08afc7e2e6b4d278dff87263e7b582ba8a02748311bdb4')
+        self.assertEqual(dungeon['index'], 503)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'ordinary')
+        self.assertEqual(dungeon['size'], [3, 1])
+        self.assertEqual(dungeon['start_map_raw'], [2, 0])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0])
+        self.assertEqual(len(dungeon['cells']), 3)
+        self.assertEqual(len(dungeon['placements']), 3)
+        self.assertEqual(len(dungeon['rooms']), 3)
+        self.assertEqual(len(export['images']), 67)
+        self.assertIn('E-PARSE', dungeon['cell_map_rule'])
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual(selected['map_specifications'], [[2, 0, 15093], [1, 0, 15108]])
+        self.assertEqual(selected['boss_map_specifications'], [[0, 0, 15094]])
+        raw = {span['tag']: [[token[2] for token in span['values']]]
+               for span in dungeon['raw'] if not span['tag'].startswith('[/')}
+        self.assertEqual(raw['[minimum required level]'], [[20]])
+        self.assertEqual(raw['[basis level]'], [[23]])
+        self.assertEqual(raw['[limit party count]'], [[1]])
+        self.assertEqual(raw['[designate dungeon difficulty]'], [[0]])
+        self.assertEqual(raw['[champion]'], [[3, 6, 9, 12, 14]])
+        self.assertEqual(raw['[pathgate object]'],
+                         [[381, 382, 383, 384, 385, 386, 387, 388, 389, 390]])
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 30)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 40)
+        mobs = {monster['mob'] for room in dungeon['rooms'].values()
+                for monster in room['monsters']}
+        self.assertEqual(len(mobs), 8)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 2)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual(len({item['obj'] for item in objects}), 4)
+        self.assertEqual(sum(item['obj'].endswith('/largegrasssunderland.obj') for item in objects), 10)
+        self.assertEqual(sum(item['obj'].endswith('/smallgrasssunderland.obj') for item in objects), 19)
+        boss_room = dungeon['rooms']['map/deadmoon/15094deadmoon.map']
+        self.assertEqual(sum(1 for span in boss_room['raw'] if span['tag'] == '[NPC]'), 1)
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertFalse([row for row in diagnostics if row['level'] == 'warning'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 3)
+
     def test_activeskycastle_export_keeps_six_rooms_and_object_roles(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/activeskycastle_v1/map_export.json')

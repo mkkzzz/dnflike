@@ -1628,6 +1628,72 @@
     "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
    }
   },
+  "training": {
+   "name": "月光修炼场",
+   "region": "training",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/training_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "月光修炼场",
+     "placement": "2_0:15090training",
+     "next": "left"
+    },
+    {
+     "name": "月光修炼场",
+     "placement": "1_0:15109training",
+     "next": "left"
+    },
+    {
+     "name": "月光修炼场",
+     "placement": "0_0:15089training",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 20,
+   "monster_level": 23,
+   "source": {
+    "path": "dungeon/quest/training.dgn",
+    "sha256": "ae81eed6631cc6232efda6c88769887308f2ce54b951b7d95b0cfaf62e45fa75",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
+  },
+  "deadmoon": {
+   "name": "亡月雷鸣废墟",
+   "region": "deadmoon",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/deadmoon_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "2_0:15093deadmoon",
+     "next": "left"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "1_0:15108deadmoon",
+     "next": "left"
+    },
+    {
+     "name": "亡月雷鸣废墟",
+     "placement": "0_0:15094deadmoon",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 20,
+   "monster_level": 23,
+   "source": {
+    "path": "dungeon/quest/deadmoon.dgn",
+    "sha256": "07b325e117ca93583d08afc7e2e6b4d278dff87263e7b582ba8a02748311bdb4",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
+  },
   "deadmoon_new": {
    "name": "亡月雷鸣废墟",
    "region": "deadmoon",
