@@ -65,6 +65,7 @@ VERIFIED_MAP_GREED_DUNGEONS = {
     'dungeon/ancient/noirpera.dgn',
     'dungeon/ancient/screamingcave.dgn',
     'dungeon/ancient/vilmark.dgn',
+    'dungeon/quest/training2.dgn',
     'dungeon/village/moonlightpub/aganzo.dgn',
     'dungeon/village/cartelarad/grozni.dgn',
     'dungeon/village/cartelarad/odesa.dgn',

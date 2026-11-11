@@ -2100,6 +2100,11 @@
    "mob": "monster/thief/racksha.mob",
    "bank": "thief_racksha",
    "name": "racksha"
+  },
+  "newmonsters_albert_albert": {
+   "mob": "monster/newmonsters/albert/albert.mob",
+   "bank": "newmonsters_albert_albert",
+   "name": "albert"
   }
  },
  "boss_hp_lines": 3,

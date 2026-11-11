@@ -1599,6 +1599,34 @@
     "sha256": "f7bdf1dc94b047058b35cef9d6227c03624c8e4d7165b8532282c1fb52a7cece",
     "evidence": "由 tools/build_dnf_dungeon_route.py --apply-all 按原版 cell 图自动生成"
    }
+  },
+  "training2": {
+   "name": "月光修炼场",
+   "region": "noierfera",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/training2_v1/map_export.json",
+   "rooms": [
+    {
+     "name": "月光修炼场",
+     "placement": "1_0:15129training",
+     "next": "left"
+    },
+    {
+     "name": "月光修炼场",
+     "placement": "0_0:15270training",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "min_level": 48,
+   "monster_level": 50,
+   "source": {
+    "path": "dungeon/quest/training2.dgn",
+    "sha256": "92da771e3991f446d27948ca2747f300f9f4290159258fb869f0ec6af2088484",
+    "evidence": "由 tools/build_dnf_dungeon_route.py 按原版 cell 图自动生成路线"
+   }
   }
  }
 }

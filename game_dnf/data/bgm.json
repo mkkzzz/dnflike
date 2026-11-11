@@ -220,6 +220,10 @@
    "normal": "cold_boy",
    "boss": "cold_boy"
   },
+  "training2": {
+   "normal": "aganzo",
+   "boss": "aganzo"
+  },
   "underfoot": {
    "normal": "underfoot_enterence",
    "boss": "underfoot_enterence_boss"
