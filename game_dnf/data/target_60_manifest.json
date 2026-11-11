@@ -1032,9 +1032,9 @@
     "id": 51,
     "min_level": 50,
     "path": "dungeon/act6/villageoftemptation.dgn",
-    "runtime_id": "",
+    "runtime_id": "villageoftemptation",
     "sha256": "8a5c04698a9c51fa62c86e87a4cc33f1af1dd69643d64081adba4dafb03f2aa2",
-    "state": "parsed"
+    "state": "runtime"
    },
    {
     "basis_level": 60,
@@ -8927,24 +8927,24 @@
     "level_max": 55,
     "level_min": 47,
     "path": "monster/peterthepiper/bigrat.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "peterthepiper_bigrat",
+    "state": "runtime"
    },
    {
     "id": 1097,
     "level_max": 55,
     "level_min": 47,
     "path": "monster/peterthepiper/biterat.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "peterthepiper_biterat",
+    "state": "runtime"
    },
    {
     "id": 1078,
     "level_max": 55,
     "level_min": 47,
     "path": "monster/peterthepiper/fake_peterthepiper.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "peterthepiper_fake_peterthepiper",
+    "state": "runtime"
    },
    {
     "id": 1096,
@@ -8991,8 +8991,8 @@
     "level_max": 55,
     "level_min": 47,
     "path": "monster/thief/mouseheadsue.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_mouseheadsue",
+    "state": "runtime"
    },
    {
     "id": 1071,
@@ -9751,8 +9751,8 @@
     "level_max": 57,
     "level_min": 52,
     "path": "monster/peterthepiper/peterthepiper.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "peterthepiper_peterthepiper",
+    "state": "runtime"
    },
    {
     "id": 1094,
@@ -9767,8 +9767,8 @@
     "level_max": 57,
     "level_min": 52,
     "path": "monster/thief/racksha.mob",
-    "runtime_bank": "",
-    "state": "parsed"
+    "runtime_bank": "thief_racksha",
+    "state": "runtime"
    },
    {
     "id": 42015,
@@ -41963,7 +41963,7 @@
   "dungeons": {
    "accepted": 0,
    "post_60": 197,
-   "runtime": 52,
+   "runtime": 53,
    "runtime_post_60": 1,
    "source": 294,
    "target": 97,
@@ -41994,7 +41994,7 @@
   "monsters": {
    "accepted": 0,
    "post_60": 508,
-   "runtime": 306,
+   "runtime": 312,
    "runtime_post_60": 18,
    "source": 1937,
    "target": 1429,

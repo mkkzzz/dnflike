@@ -224,6 +224,10 @@
    "normal": "underfoot_enterence",
    "boss": "underfoot_enterence_boss"
   },
+  "villageoftemptation": {
+   "normal": "hameln",
+   "boss": "hameln_boss"
+  },
   "vilmark": {
    "normal": "vilmark",
    "boss": "vilmark_boss"
@@ -255,6 +259,32 @@
     "sound": [
      "M_TEMP_MCGEE",
      "AMB_TOWN_02"
+    ]
+   }
+  },
+  "villageoftemptation": {
+   "map/villigeoftemptation/d6418.map": {
+    "reason": "native MAP role is not consumed as a normal or boss room",
+    "role": "[dummy]",
+    "sound": [
+     "M_HAMELN_BOSS",
+     "AMB_TOWN_01"
+    ]
+   },
+   "map/villigeoftemptation/d6420.map": {
+    "reason": "native MAP role is not consumed as a normal or boss room",
+    "role": "[dummy]",
+    "sound": [
+     "M_HAMELN_BOSS",
+     "AMB_TOWN_01"
+    ]
+   },
+   "map/villigeoftemptation/d6424.map": {
+    "reason": "native MAP role is not consumed as a normal or boss room",
+    "role": "[dummy]",
+    "sound": [
+     "M_HAMELN_BOSS",
+     "AMB_TOWN_01"
     ]
    }
   }
@@ -775,6 +805,18 @@
    "source": "music/underfoot_enterence_boss.ogg",
    "sha256": "c38ed08621a42cd784ffb47ab942c3310b90cf3cc86c4b48f8ba56bea2bc0377",
    "bytes": 1452675
+  },
+  "hameln": {
+   "file": "audio/bgm/hameln.ogg",
+   "source": "music/hameln.ogg",
+   "sha256": "6d6a2b04c84043f5e3d38ab6e52c90f3ba7089206cd92738bb8a0e432d610f35",
+   "bytes": 1123280
+  },
+  "hameln_boss": {
+   "file": "audio/bgm/hameln_boss.ogg",
+   "source": "music/hameln_boss.ogg",
+   "sha256": "729968c34d5009545e0c013dc8aa19012757ea54cf7e5bd7d159e5e60966ef7d",
+   "bytes": 810876
   },
   "vilmark": {
    "file": "audio/bgm/vilmark.ogg",

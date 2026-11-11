@@ -172,7 +172,25 @@
    "ptl_act6statueparticle06",
    "ptl_act6statueparticle07"
   ],
+  "passiveobject/mapobject/breakableobject/act6statue1_peter.obj": [
+   "ptl_act6statueparticle01",
+   "ptl_act6statueparticle02",
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
   "passiveobject/mapobject/breakableobject/act6statue2.obj": [
+   "ptl_act6statueparticle01",
+   "ptl_act6statueparticle02",
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statue2_peter.obj": [
    "ptl_act6statueparticle01",
    "ptl_act6statueparticle02",
    "ptl_act6statueparticle03",
@@ -188,7 +206,28 @@
    "ptl_act6statueparticle06",
    "ptl_act6statueparticle07"
   ],
+  "passiveobject/mapobject/breakableobject/act6statuepodium1_peter.obj": [
+   "ptl_act6statueparticle03",
+   "ptl_act6statueparticle04",
+   "ptl_act6statueparticle05",
+   "ptl_act6statueparticle06",
+   "ptl_act6statueparticle07"
+  ],
   "passiveobject/mapobject/breakableobject/act6statuepodium2.obj": [
+   "ptl_barrelparticle01",
+   "ptl_barrelparticle02",
+   "ptl_barrelparticle03",
+   "ptl_barrelparticle04",
+   "ptl_barrelparticle05",
+   "ptl_barrelparticle06",
+   "ptl_barrelparticle07",
+   "ptl_barrelparticle08",
+   "ptl_barrelparticle09",
+   "ptl_barrelparticle10",
+   "ptl_barrelparticle11",
+   "ptl_barrelparticle12"
+  ],
+  "passiveobject/mapobject/breakableobject/act6statuepodium2_peter.obj": [
    "ptl_barrelparticle01",
    "ptl_barrelparticle02",
    "ptl_barrelparticle03",

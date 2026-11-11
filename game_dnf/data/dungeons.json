@@ -525,6 +525,63 @@
     "sha256": "123d44302169bc52aae44ac4220e220b9caae708a221984a5298c8c788aab56f"
    }
   },
+  "villageoftemptation": {
+   "name": "迷乱之村哈穆林",
+   "region": "northmyre",
+   "mode": "native_maze",
+   "hidden": true,
+   "requires": [],
+   "map_export": "res://assets_local/native_maps/villageoftemptation_v1/map_export.json",
+   "min_level": 50,
+   "monster_level": 53,
+   "rooms": [
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "2_4:s6401",
+     "next": "up"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "2_3:n6402",
+     "next": "left"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "1_3:w6403",
+     "next": "up"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "1_2:h6405",
+     "next": "up"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "1_1:h6407",
+     "next": "right"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "2_1:ew6408",
+     "next": "up"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "2_0:h6410",
+     "next": "left"
+    },
+    {
+     "name": "迷乱之村哈穆林",
+     "placement": "1_0:b6423",
+     "next": "",
+     "boss": true
+    }
+   ],
+   "source": {
+    "path": "dungeon/act6/villageoftemptation.dgn",
+    "sha256": "8a5c04698a9c51fa62c86e87a4cc33f1af1dd69643d64081adba4dafb03f2aa2"
+   }
+  },
   "screamingcave": {
    "name": "悲鸣洞穴",
    "region": "elvengard",

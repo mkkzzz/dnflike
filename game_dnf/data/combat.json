@@ -2070,6 +2070,36 @@
    "mob": "monster/nugol/nugol.mob",
    "bank": "nugol_nugol",
    "name": "nugol"
+  },
+  "peterthepiper_bigrat": {
+   "mob": "monster/peterthepiper/bigrat.mob",
+   "bank": "peterthepiper_bigrat",
+   "name": "bigrat"
+  },
+  "peterthepiper_biterat": {
+   "mob": "monster/peterthepiper/biterat.mob",
+   "bank": "peterthepiper_biterat",
+   "name": "biterat"
+  },
+  "peterthepiper_fake_peterthepiper": {
+   "mob": "monster/peterthepiper/fake_peterthepiper.mob",
+   "bank": "peterthepiper_fake_peterthepiper",
+   "name": "fake_peterthepiper"
+  },
+  "peterthepiper_peterthepiper": {
+   "mob": "monster/peterthepiper/peterthepiper.mob",
+   "bank": "peterthepiper_peterthepiper",
+   "name": "peterthepiper"
+  },
+  "thief_mouseheadsue": {
+   "mob": "monster/thief/mouseheadsue.mob",
+   "bank": "thief_mouseheadsue",
+   "name": "mouseheadsue"
+  },
+  "thief_racksha": {
+   "mob": "monster/thief/racksha.mob",
+   "bank": "thief_racksha",
+   "name": "racksha"
   }
  },
  "boss_hp_lines": 3,

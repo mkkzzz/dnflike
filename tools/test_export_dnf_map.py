@@ -958,6 +958,84 @@ class LibraryExport(unittest.TestCase):
         self.assertEqual(len(selected_rows), 1)
         self.assertIn('selected maze block 0 of 3', selected_rows[0]['detail'])
 
+    def test_villageoftemptation_export_keeps_three_boss_candidates_and_dummy_maps(self):
+        export = json.loads(
+            (ROOT / 'game_dnf/assets_local/native_maps/villageoftemptation_v1/map_export.json')
+            .read_text(encoding='utf-8'))
+        dungeon = export['dungeon']
+        self.assertEqual(dungeon['sha256'], '8a5c04698a9c51fa62c86e87a4cc33f1af1dd69643d64081adba4dafb03f2aa2')
+        self.assertEqual(dungeon['index'], 51)
+        self.assertEqual(dungeon['maze_block_index'], 0)
+        self.assertEqual(dungeon['maze_block_selection'], 'hell_base')
+        self.assertEqual(dungeon['size'], [5, 5])
+        self.assertEqual(dungeon['start_map_raw'], [2, 4])
+        self.assertEqual(dungeon['boss_map_raw'], [0, 0, 0, 1, 1, 0])
+        self.assertEqual(len(dungeon['maze_blocks']), 1)
+        self.assertEqual(len(dungeon['cells']), 25)
+        self.assertEqual(len(dungeon['placements']), 46)
+        self.assertEqual(len(dungeon['rooms']), 22)
+        self.assertEqual(len(export['images']), 75)
+        selected = dungeon['maze_blocks'][0]
+        self.assertEqual([row[2] for row in selected['map_specifications']], [6410, 6402, 6415])
+        self.assertEqual(selected['boss_map_specifications'], [])
+        self.assertEqual(selected['hell_dungeon'], [1])
+        self.assertEqual(selected['seal_door_map_index'], [60019])
+        self.assertEqual(selected['seal_door_pos'], [3, 0])
+        self.assertEqual(selected['seal_door_appear_rate'], [1])
+        cells = {(cell['x'], cell['y']): cell for cell in dungeon['cells']}
+        self.assertTrue(cells[(2, 4)]['start_candidate'])
+        self.assertEqual([(x, y) for (x, y), cell in cells.items() if cell['boss_candidate']],
+                         [(0, 0), (1, 0), (0, 1)])
+        self.assertIn('map/villigeoftemptation/s6401.map', cells[(2, 4)]['map_candidates'])
+        self.assertEqual(len(cells[(2, 4)]['map_candidates']), 5)
+        self.assertEqual(cells[(2, 3)]['map_candidates'],
+                         ['map/villigeoftemptation/h6410.map',
+                          'map/villigeoftemptation/n6402.map'])
+        self.assertIn('map/villigeoftemptation/n6415.map', cells[(4, 1)]['map_candidates'])
+        self.assertEqual(len(cells[(4, 1)]['map_candidates']), 5)
+        self.assertEqual(len(cells[(0, 0)]['map_candidates']), 4)
+        self.assertEqual(len(cells[(0, 1)]['map_candidates']), 5)
+        self.assertEqual(len(cells[(1, 0)]['map_candidates']), 4)
+        self.assertEqual(sum(not cell['map_candidates'] for cell in cells.values()), 9)
+        self.assertEqual(sum(len(room['monsters']) for room in dungeon['rooms'].values()), 172)
+        self.assertEqual(sum(len(room['objects']) for room in dungeon['rooms'].values()), 337)
+        mobs = {monster['mob'] for room in dungeon['rooms'].values()
+                for monster in room['monsters']}
+        self.assertEqual(len(mobs), 9)
+        self.assertEqual(sum(1 for room in dungeon['rooms'].values()
+                             for monster in room['monsters'] if monster['raw'][-1] == '[boss]'), 6)
+        objects = [item for room in dungeon['rooms'].values() for item in room['objects']]
+        self.assertEqual({item['source_tag'] for item in objects},
+                         {'[passive object]', '[special passive object]'})
+        self.assertEqual(len({item['obj'] for item in objects}), 15)
+        self.assertEqual(sum('breakableobject/' in item['obj'] for item in objects), 27)
+        special = next(span for span in dungeon['raw']
+                       if span['tag'] == '[special passive object item]')
+        self.assertEqual([row[2] for row in special['values']],
+                         [0, -1, 3, 1089, 1000, 1090, 1000, 3217, 3000])
+        self.assertEqual(next(span for span in dungeon['raw']
+                              if span['tag'] == '[champion]')['values'],
+                         [[2, '06000000', 6], [2, '0c000000', 12],
+                          [2, '12000000', 18], [2, '18000000', 24],
+                          [2, '1a000000', 26]])
+        self.assertEqual([token[2] for token in next(
+            span for span in dungeon['raw'] if span['tag'] == '[event monster]')['values']],
+            [1, 10000, 61728, 1, 300, 80, 1])
+        roles = {}
+        for path, room in dungeon['rooms'].items():
+            for span in room['raw']:
+                if span['tag'] == '[type]' and span['values']:
+                    roles[room['map_id']] = span['values'][0][2]
+                    break
+        self.assertEqual({map_id: roles[map_id] for map_id in (6418, 6420, 6424)},
+                         {6418: '[dummy]', 6420: '[dummy]', 6424: '[dummy]'})
+        diagnostics = export['diagnostics']
+        self.assertFalse([row for row in diagnostics if row['level'] == 'error'])
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'cell_without_map']), 9)
+        self.assertEqual(len([row for row in diagnostics if row['code'] == 'unhandled_tags']), 22)
+        selected_rows = [row for row in diagnostics if row['code'] == 'maze_block_selected']
+        self.assertEqual(selected_rows, [])
+
     def test_bwanga_export_separates_ordinary_and_quest_boss_maps(self):
         export = json.loads(
             (ROOT / 'game_dnf/assets_local/native_maps/bwanga_v1/map_export.json').read_text(encoding='utf-8'))

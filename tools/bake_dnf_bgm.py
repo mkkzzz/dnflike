@@ -152,7 +152,12 @@ def source_native_dungeon_tracks(export: dict, music: dict[str, str],
                 role = str(values[0][2])
             break
         if role not in ('[normal]', '[boss]'):
-            raise ValueError(f'{map_path}: native MAP has no normal/boss role')
+            gaps[map_path] = {
+                'reason': 'native MAP role is not consumed as a normal or boss room',
+                'role': role or None,
+                'sound': list(room.get('sound', [])),
+            }
+            continue
         candidates = music_candidates(room.get('sound', []), music, random_music)
         if not candidates:
             gaps[map_path] = {
